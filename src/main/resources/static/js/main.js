@@ -10,3 +10,12 @@ phonecatApp.controller('NewsController', function ($scope, $http, $sce) {
         $scope.newslist = data;
     });
 });
+
+phonecatApp.controller('LoginController', function ($scope, $http) {
+    $scope.user = {};
+
+    $scope.submit = function() {
+        $http.post('/user/login', $scope.user).success(function(data, status, headers, config) {
+        });
+    };
+});

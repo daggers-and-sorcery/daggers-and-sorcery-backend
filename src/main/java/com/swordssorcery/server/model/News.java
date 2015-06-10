@@ -11,6 +11,7 @@ public class News {
     private long timestamp;
     private String title;
     private String message;
+    private String icon;
 
     public int getId() {
         return id;
@@ -26,5 +27,9 @@ public class News {
 
     public String getMessage() {
         return message;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 }

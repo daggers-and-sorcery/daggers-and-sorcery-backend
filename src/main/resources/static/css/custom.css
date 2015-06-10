@@ -29,6 +29,8 @@ body {
 
 .panel-default > .panel-heading {
     background-color: rgba(0,1,1,0.1);
+    font-weight: 700;
+    font-size: 17px;
 }
 
 .panel-default > .panel-heading:not(.no-border) {
@@ -63,4 +65,54 @@ body {
 
 html, body, .container {
     height: 100%;
+}
+
+/** News **/
+.news-title {
+    font-size: 16 px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.news-divider {
+    border-color: gray;
+}
+
+.news-subtitle {
+    font-size: 12px;
+}
+
+.news-title-holder {
+    margin-bottom: 10px;
+}
+
+.news-icon {
+    width:32px;
+    height:32px;
+    float: left;
+    margin-right: 5px;
+}
+
+/** Button **/
+.btn-default:hover {
+    box-shadow: inset 0 1px 0 #9b413f;
+    background: -webkit-linear-gradient(top,#851e1b,#6e1a16);
+    background: linear-gradient(to bottom,#851e1b,#6e1a16);
+    border: 1px solid #56120f;
+    color: #fff!important;
+}
+
+.btn-default {
+    height: 30px;
+    line-height: 1.0;
+    background: linear-gradient(to bottom,#f0ebd7,#e6dbc1);
+    border: 1px solid #cebf93;
+    color: #861f1e!important;
+    box-shadow: none;
+}
+
+/** Login **/
+.login-button-holder {
+    text-align: center;
+    margin-top: 15px;
 }
