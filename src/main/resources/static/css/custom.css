@@ -1,3 +1,66 @@
+/** Containers **/
 .container {
-    background-color: lightgray;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #2A3134;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 0;
+}
+
+body {
+    background-color: #272A2B;
+}
+
+/** Navbar **/
+
+.navbar {
+    margin: 0;
+}
+
+/** Panel **/
+.panel {
+    background-color: #F2E9D0;
+    margin: 15px;
+}
+
+.panel-shadow {
+    border: 1px solid rgba(0,0,0,0.2);
+    box-shadow: 3px 3px 1px rgba(0,0,0,0.2);
+}
+
+.panel-default > .panel-heading {
+    background-color: rgba(0,1,1,0.1);
+}
+
+.panel-default > .panel-heading:not(.no-border) {
+    border-bottom: 1px solid #aaa;
+}
+
+/** Sticky footer **/
+.page-wrap {
+    min-height: 100%;
+    /* equal to footer height */
+    margin-bottom: -50px;
+    background-color: #2A3134;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding-top: 0;
+}
+
+.page-wrap:after {
+    content: "";
+    display: block;
+}
+
+.site-footer, .page-wrap:after {
+    height: 50px;
+    background-color: #2A3134;
+}
+
+.site-footer {
+    padding: 0 15px;
+    border-left: 1px solid rgba(0,0,0,0.2);
+    border-right: 1px solid rgba(0,0,0,0.2);
+}
+
+html, body, .container {
+    height: 100%;
 }
