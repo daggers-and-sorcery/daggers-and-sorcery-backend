@@ -24,7 +24,9 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                     $scope.user = {};
 
                     $scope.submit = function() {
-                        $http.post('/user/login', $scope.user).success(function(data, status, headers, config) {
+                        $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+                        $http.post('/user/login', $.param($scope.user)).success(function(data, status, headers, config) {
+                            //TODO: login response handling
                         });
                     };
                 }

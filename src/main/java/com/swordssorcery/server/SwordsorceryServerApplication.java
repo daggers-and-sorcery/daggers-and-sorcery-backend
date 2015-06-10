@@ -1,11 +1,16 @@
 package com.swordssorcery.server;
 
+import com.swordssorcery.server.filter.SessionLoginFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.ArrayList;
 
 @SpringBootApplication
 @Configuration
@@ -15,5 +20,20 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
 
     public static void main(String[] args) {
         SpringApplication.run(SwordsorceryServerApplication.class, args);
+    }
+
+    @Bean
+    public FilterRegistrationBean filterSessionLoginBean() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        SessionLoginFilter sessionFilter = new SessionLoginFilter();
+
+        registrationBean.setFilter(sessionFilter);
+
+        ArrayList<String> urlPatterns = new ArrayList<>();
+        urlPatterns.add("/admin/*");
+
+        registrationBean.setUrlPatterns(urlPatterns);
+
+        return registrationBean;
     }
 }
