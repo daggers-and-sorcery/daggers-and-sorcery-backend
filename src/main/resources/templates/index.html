@@ -7,8 +7,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.js"></script>
         <script src="/js/main.js"></script>
 
@@ -37,44 +38,9 @@
                     </nav>
                 </div>
                 <div class="row">
-                    <div class="col-md-9" style="padding-right: 0px;" ng-controller="NewsController">
-                        <div class="panel panel-default panel-shadow">
-                            <div class="panel-heading">News</div>
-                            <div class="panel-body">
-                                <div ng-repeat="news in newslist">
-                                    <div>
-                                        <div class="news-title-holder">
-                                            <img ng-if="news.icon" class="news-icon" ng-src="/icon/{{news.icon}}.svg"/>
-                                            <img ng-if="!news.icon" class="news-icon" src="/icon/buble.svg"/>
-                                            <h5 class="news-title" ng-bind-html="news.title"></h5>
-                                            <div class="news-subtitle" ng-bind="news.timestamp | date:'MMM dd, yyyy'"></div>
-                                        </div>
-                                        <div ng-bind-html="news.message"></div>
-                                        <hr class="news-divider" ng-if="!$last" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-9" style="padding-right: 0px;" ui-view="main">
                     </div>
-                    <div class="col-md-3" style="padding-left: 0px;" ng-controller="LoginController">
-                        <div class="panel panel-default panel-shadow" style="margin-left: 0;">
-                            <div class="panel-heading">Login</div>
-                            <div class="panel-body">
-                                <form ng-submit="submit()">
-                                    <div class="form-group">
-                                        <label for="username">Email address</label>
-                                        <input type="text" class="form-control" id="username" placeholder="Username" ng-model="user.username"/>
-                                    </div>
-                                    <div class="password">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password" placeholder="Password" ng-model="user.password"/>
-                                    </div>
-                                    <div class="login-button-holder">
-                                        <button type="submit" class="btn btn-default">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                    <div class="col-md-3" style="padding-left: 0px;" ui-view="right">
                     </div>
                 </div>
             </div>
