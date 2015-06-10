@@ -20,14 +20,14 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             },
             "right": {
                 templateUrl: "/sub/login.html",
-                controller: function($scope){
+                controller: function($scope, $http){
                     $scope.user = {};
 
                     $scope.submit = function() {
                         $http.post('/user/login', $scope.user).success(function(data, status, headers, config) {
                         });
                     };
-                },
+                }
             }
         }
     });
