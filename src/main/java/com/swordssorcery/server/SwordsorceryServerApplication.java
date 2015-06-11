@@ -8,7 +8,6 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -37,7 +36,7 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         registrationBean.setFilter(sessionFilter);
 
         ArrayList<String> urlPatterns = new ArrayList<>();
-        urlPatterns.add("/admin/*");
+        urlPatterns.add("/user/logout");
 
         registrationBean.setUrlPatterns(urlPatterns);
 

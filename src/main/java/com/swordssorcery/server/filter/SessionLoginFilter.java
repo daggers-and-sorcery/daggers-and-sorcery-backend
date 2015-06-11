@@ -23,8 +23,10 @@ public class SessionLoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        if (!request.getRequestURI().endsWith("login") && request.getSession().getAttribute(SessionType.USER) == null) {
-            response.sendRedirect("/");
+        if (request.getSession().getAttribute(SessionType.USER) == null) {
+            response.sendError(401);
+
+            return;
         }
 
         chain.doFilter(req, res);
