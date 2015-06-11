@@ -21,6 +21,9 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/')
     $stateProvider.state('index', {
         url: '/',
+        data: {
+            visibleWhenNotLoggedIn: true,
+        },
         views: {
             'top': {
                 templateUrl: '/sub/top-empty.html',
@@ -58,7 +61,28 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                 }
             }
         }
-    }).state('logout', {});
+    }).state('logout', {
+    }).state('register', {
+        url: '/register/',
+        data: {
+            visibleWhenNotLoggedIn: true,
+        },
+        views: {
+            'top': {
+                templateUrl: '/sub/top-empty.html',
+            },
+            'main': {
+                templateUrl: '/sub/register.html',
+                controller: function($scope){
+                }
+            },
+            'right': {
+                templateUrl: '/sub/login.html',
+                controller: function($scope){
+                }
+            }
+        }
+    });
 });
 
 swordssorceryApp.controller('MainController',   function($scope, $rootScope, $state, $http) {
@@ -79,7 +103,7 @@ swordssorceryApp.controller('MainController',   function($scope, $rootScope, $st
         }
 
         //Always redirect to index if not logged in
-        if(toState.name !== 'index' && !$rootScope.loggedIn) {
+        if(!(toState.hasOwnProperty('data') && toState.data.hasOwnProperty('visibleWhenNotLoggedIn') && toState.data.visibleWhenNotLoggedIn) && !$rootScope.loggedIn && toState.name !== 'index') {
             event.preventDefault();
             $state.go('index');
         }

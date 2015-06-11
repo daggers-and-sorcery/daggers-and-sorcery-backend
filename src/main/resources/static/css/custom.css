@@ -116,3 +116,8 @@ html, body, .container {
     text-align: center;
     margin-top: 15px;
 }
+
+.login-create-account-button {
+    margin-bottom: 10px;
+    width: 100%;
+}
