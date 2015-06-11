@@ -40,4 +40,26 @@ public class UserController {
 
         return response;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/info", method = RequestMethod.GET)
+    public HashMap<String, String> info(HttpSession session) {
+        HashMap<String, String> response = new HashMap<>();
+
+        response.put("loggedIn", String.valueOf(session.getAttribute(SessionType.USER) != null));
+
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/logout", method = RequestMethod.GET)
+    public HashMap<String, String> logout(HttpSession session) {
+        session.invalidate();
+
+        HashMap<String, String> response = new HashMap<>();
+
+        response.put("loggedIn", "false");
+
+        return response;
+    }
 }
