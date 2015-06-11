@@ -1,7 +1,7 @@
 var swordssorceryApp = angular.module('swordssorcery', ['ui.router']);
 
 swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
-    mainView = {
+    indexMainView = {
         templateUrl: "/sub/index.html",
         resolve: {
             newslist:  function($http){
@@ -18,6 +18,29 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         }
     };
 
+    indexLoginView = {
+         templateUrl: '/sub/login.html',
+         controller: function($scope, $http, $state, $rootScope) {
+             $scope.user = {};
+
+             $scope.submit = function() {
+                 $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+                 $http.post('/user/login', $.param($scope.user)).success(function(data, status, headers, config) {
+                     if(data.success) {
+                         $rootScope.loggedIn = true;
+                         $state.go('home');
+                     } else {
+                         //TODO: print error
+                     }
+                 });
+             };
+         }
+    }
+
+    indexTopView = {
+        templateUrl: '/sub/top-empty.html',
+    }
+
     $urlRouterProvider.otherwise('/')
     $stateProvider.state('index', {
         url: '/',
@@ -25,28 +48,9 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             visibleWhenNotLoggedIn: true,
         },
         views: {
-            'top': {
-                templateUrl: '/sub/top-empty.html',
-            },
-            'main': mainView,
-            'right': {
-                templateUrl: '/sub/login.html',
-                controller: function($scope, $http, $state, $rootScope) {
-                    $scope.user = {};
-
-                    $scope.submit = function() {
-                        $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-                        $http.post('/user/login', $.param($scope.user)).success(function(data, status, headers, config) {
-                            if(data.success) {
-                                $rootScope.loggedIn = true;
-                                $state.go('home');
-                            } else {
-                                //TODO: print error
-                            }
-                        });
-                    };
-                }
-            }
+            'top': indexTopView,
+            'main': indexMainView,
+            'right': indexLoginView
         }
     }).state('home', {
         url: '/home/',
@@ -54,7 +58,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             'top': {
                 templateUrl: '/sub/top-login.html',
             },
-            'main': mainView,
+            'main': indexMainView,
             'right': {
                 templateUrl: "/sub/menu.html",
                 controller: function($scope){
@@ -68,19 +72,25 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             visibleWhenNotLoggedIn: true,
         },
         views: {
-            'top': {
-                templateUrl: '/sub/top-empty.html',
-            },
+            'top': indexTopView,
             'main': {
                 templateUrl: '/sub/register.html',
                 controller: function($scope){
                 }
             },
-            'right': {
-                templateUrl: '/sub/login.html',
-                controller: function($scope){
-                }
-            }
+            'right': indexLoginView
+        }
+    }).state('knowledge', {
+        url: '/knowledge/',
+        data: {
+            visibleWhenNotLoggedIn: true,
+        },
+        views: {
+            'top': indexTopView,
+            'main': {
+                templateUrl: '/sub/knowledge.html',
+            },
+            'right': indexLoginView
         }
     });
 });

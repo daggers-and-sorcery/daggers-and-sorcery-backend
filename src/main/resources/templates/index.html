@@ -38,7 +38,16 @@
                 <div class="row">
                     <div class="col-md-9" style="padding-right: 0px;" ui-view="main">
                     </div>
-                    <div class="col-md-3" style="padding-left: 0px;" ui-view="right">
+                    <div class="col-md-3" style="padding-left: 0px;">
+                        <div ui-view="right"></div>
+                        <div>
+                            <div class="panel panel-default panel-shadow" style="margin-left: 0;">
+                                <div class="panel-heading">Usefull links</div>
+                                <div class="panel-body">
+                                    <a class="btn btn-default login-create-account-button" ui-sref="knowledge">Knowledge base</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
