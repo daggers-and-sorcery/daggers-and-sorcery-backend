@@ -23,7 +23,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             },
             'right': {
                 templateUrl: "/sub/login.html",
-                controller: function($scope, $http, $state, $rootScope){
+                controller: function($scope, $http, $state, $rootScope) {
                     $scope.user = {};
 
                     $scope.submit = function() {
@@ -63,4 +63,13 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             }
         }
     });
+});
+
+swordssorceryApp.controller('MainController',   function($scope, $rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        if(toState.name !== 'index' && !$rootScope.loggedIn) {
+            event.preventDefault();
+            $state.go('index');
+        }
+    })
 });
