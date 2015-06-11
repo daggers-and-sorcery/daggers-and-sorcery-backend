@@ -8,6 +8,8 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
@@ -20,6 +22,11 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
 
     public static void main(String[] args) {
         SpringApplication.run(SwordsorceryServerApplication.class, args);
+    }
+
+    @Bean
+    public ShaPasswordEncoder shaPasswordEncoder() {
+        return new ShaPasswordEncoder(256);
     }
 
     @Bean
