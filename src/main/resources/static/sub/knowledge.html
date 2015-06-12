@@ -3,6 +3,7 @@ Egészség - vitality
 Állóképesség - endurance
 Gyorsaság - swiftness
 Észlelés - perception
+Ügyesség - dexterity
 -->
 
 <div class="panel panel-default panel-shadow">
@@ -15,90 +16,326 @@ Gyorsaság - swiftness
                     <div class="media-body">
                         <h4 class="media-heading">Movement point (MVP)</h4>
                         <p>
-                            How many things can a character do under a turn. It's used up for every movement. The character regenerate
-                            30 movement points / turn.
+                            How many things can a character do under a turn. It's used up for every movement.
+                            A new human character's movement points is 30 and it regenerates 1 points / turn.
                         </p>
                     </div>
                 </li>
-                <li lass="media">
+            </ul>
+            <h3 style="margin-top: 0;">Combat attributes</h3>
+            <ul class="media-list">
+                <li class="media">
                     <div class="media-body">
                         <h4 class="media-heading">Life points (LP)</h4>
                         <p>
                             Life points shows the amount of damage a character can receive before dying. If the character's LP reach 0 then it dies.
                             The base life point is 15 + half of the vitality and endurance attributes.
-                            A starting human characters life points is 30 and it regenerates 3 points / turn.
+                            A new human character's life points is 30 and it regenerates 3 points / turn.
                         </p>
                     </div>
                 </li>
-                <li id="karakter-manapont" class="media">
+                <li class="media">
                     <div class="media-body">
                         <h4 class="media-heading">Mana points (MP)</h4>
                         <p>
                             Mana points are used for spellcasting. A starting character's MP is 0 + half of the intelligence, wisdom, charisma, willpower
-                            attributes. A starting human characters mana points is 30 and it regenerates 3 points / turn.
+                            attributes. A new human character's mana points is 30 and it regenerates 3 points / turn.
                         </p>
                     </div>
                 </li>
-                <li id="karakter-kezdemenyezes" class="media">
+                <li class="media">
                     <div class="media-body">
                         <h4 class="media-heading">Initiation</h4>
                         <p>
                             The initiation attribute determines who attack first in combat. The starting initiation is 5 + half of the swiftness and perception attributes.
-                            A starting human characters initiation points is 20.
+                            A new human character's initiation points is 20.
                         </p>
                     </div>
                 </li>
-                <li id="karakter-tamadas" class="media">
+                <li class="media">
                     <div class="media-body">
-                        <h4 class="media-heading">Támadás</h4>
+                        <h4 class="media-heading">Attack</h4>
                         <p>
-                            A támadási érték határozza meg hogy a karakter mekkora eséllyel találja el ellenfelét közelhacban. A támadás kezdeti értéke 5, ehhez
-                            adódik az ügyesség és a gyorsaság fele valamint a tárgyakból és varázslatokból adódó bónuszok. Kezdetben egy ember fajú karakter maximum
-                            támadás értéke 20.
+                            The attack attribute determines the chance of damaging the enemy in meele combat. The starting attack is 5 + half of the dexterity and swiftness.
+                            A new human character's attack points is 20.
                         </p>
                     </div>
                 </li>
-                <li id="karakter-celzas" class="media">
+                <li class="media">
                     <div class="media-body">
-                        <h4 class="media-heading">Célzás</h4>
+                        <h4 class="media-heading">Aiming</h4>
                         <p>
-                            A célzási érték határozza meg hogy a karakter mekkora eséllyel találja el ellenfelét távolsági harcban. A célzás kezdeti értéke 5, ehhez
-                            adódik az ügyesség és az észlelés fele valamint a tárgyakból és varázslatokból adódó bónuszok. Kezdetben egy ember fajú karakter maximum
-                            célzás értéke 20.
+                            The attack attribute determines the chance of damaging the enemy in ranged combat. The starting aiming is 5 + half of the dexterity and perception.
+                            A new human character's aiming points is 20.
                         </p>
                     </div>
                 </li>
-                <li id="karakter-vedekezes" class="media">
+                <li class="media">
                     <div class="media-body">
-                        <h4 class="media-heading">Védekezés</h4>
+                        <h4 class="media-heading">Defense</h4>
                         <p>
-                            A védekezés érték határozza meg hogy a karakter mekkora eséllyel hárítja a támadásokat a harcban. A védekezés kezdeti értéke 5, ehhez
-                            adódik az állóképesség és az ügyesség fele valamint a tárgyakból és varázslatokból adódó bónuszok. Kezdetben egy ember fajú karakter maximum
-                            védekezés értéke 20.
+                            The defense attribute determines the chance of avoiding the opponents attacks in combat. The starting defense is 5 + half of the endurance and dexterity.
+                            A new human character's defense points is 20.
                         </p>
                     </div>
                 </li>
-                <li id="karakter-magiaellenallas" class="media">
+                <li class="media">
                     <div class="media-body">
-                        <h4 class="media-heading">Mágiaellenállás</h4>
+                        <h4 class="media-heading">Spell resistance</h4>
                         <p>
-                            A mágiaellenállás érték határozza meg hogy a karakter mekkora eséllyel hárítja/csökkenti az ellene asznált mágikus képességeket a harcban.
-                            A mágiaellenállás kezdeti értéke 5, ehhez adódik az akaraterő és az intelligencia fele valamint a tárgyakból és varázslatokból adódó
-                            bónuszok. Kezdetben egy ember fajú karakter maximum mágiaellenállási értéke 20.
+                            The spell resistance attribute determines the chance of avoiding or decreasing the opponents magical attacks or damage in combat. The starting spell resistance
+                            is 5 + half of the willpower and intelligence. A new human character's spell resistance points is 20.
                         </p>
                     </div>
                 </li>
-                <li id="karakter-sebzes" class="media">
+                <li class="media">
                     <div class="media-body">
-                        <h4 class="media-heading">Sebzés</h4>
+                        <h4 class="media-heading">Damage</h4>
                         <p>
-                            A sebzés érték határozza meg hogy a karakter mekkora sebesüléseket okoz ellenfelének sikeres támadási találotok esetén a harcban.
-                            A sebzés kezdeti értéke 1, ehhez adódik az erő negyede valamint a tárgyakból és varázslatokból adódó
-                            bónuszok. Kezdetben egy ember fajú karakter maximum sebzése értéke 3.
+                            The damage attribute determines the amount of casualty the character can deal to it's opponent in meele combat. The starting damage is 1 + the quarter of the strength
+                            attribute. A new human character's damage is 3.
+                        </p>
+                    </div>
+                </li>
+                <li class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">Ranged damage</h4>
+                        <p>
+                            The damage attribute determines the amount of casualty the character can deal to it's opponent in ranged combat. The starting ranged damage is 1 + the quarter of the dexterity
+                            attribute. A new human character's damage is 3.
                         </p>
                     </div>
                 </li>
             </ul>
+            <!--<h3 style="margin-top: 0;">Primary attributes</h3>
+            <p>
+                A tulajdonságok közt két különálló típust különböztetünk meg, mégpedig a fizikai és a szellemi tulajdonságokat.
+                A tulajdonságok kezdeti értéke 15, ehhez az értékhez hozzáadódik még a karakter fajból adódó módosítója.
+                A tulajdonságok fejlődhetnek (növekedhetnek) a tulajdonságpontok segítségével. Kezdetben minden tulajdonság
+                0 tulajdonságpontal rendelkezik. Amikor a játékos szintet lép egy a tulajdonságra épülő képzettségben akkor
+                az a tulajdonság kap egy tulajdonságpontot. Ha a tulajdonságpontok száma eléri a 10-et a tulajdonság értéke növekszik
+                1-el, a tulajdonságpontok száma pedig visszaáll 0-ra. A tulajdonságpontok tulajdonságonként külön számlálódnak.
+            </p>
+            <h4 style="margin-top: 0;">Mental attributes</h4>
+            <ul class="media-list">
+                <li class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/wizard-staff.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Intelligencia</h5>
+                        <p>
+                            Az intelligencia a karakter memóriáját, logikai készségét, kreativítását valamint találékonyságát mutatja.
+                            A nagy intelligenciával rendelkező karakterek könnyebben tanulnak és jönnek rá különböző összefüggésekre mint a
+                            kevesebb intelligenciával rendelkező társaik. Az intelligencia növeli a játékos manapontjait valamint bizonyos
+                            varázslatoknál a varázslat hatékonyságát.
+                        </p>
+                        <p class="italic">Az intelligenciához tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Természetmágia</li>
+                            <li>Szakácsmesterség</li>
+                            <li>Alkímia</li>
+                            <li>Mechanika</li>
+                            <li>Építészet</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/book-aura.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Bölcsesség</h5>
+                        <p>
+                            A bölcsesség mutatja a karakter szellemi rátermettségét. Ezen tulajdonság felel azért hogy a karakter
+                            a megfigyelései és helyzetfelismerése alapján hosszú távon is célszerű, hatékony döntéseket tudjon hozni. A bölcsesség
+                            növeli a játékos manapontjait valamint bizonyos varázslatoknál a varázslat hatékonyságát.
+                        </p>
+                        <p class="italic">A bölcsességhez tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Papi mágia</li>
+                            <li>Növényismeret</li>
+                            <li>Gyógyítás</li>
+                            <li>Helyreállítás</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/meditation.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Akaraterő</h5>
+                        <p>
+                            Az akaraterő azt határozza meg hogy mennyire elszánt, kitartó és céljaihoz ragaszkodó a karakter.
+                            A nagy akarakerővel rendelkező karaktereket nehéz megtörni. Nagy elszántsággal rendelkeznek és ezáltal
+                            bagy eredményeket érhetnek el az általuk választott területeken. Az akaraterő növeli a karakter mágiaellenállását
+                            valamint bizonyos varázslatoknál a varázslat hatékonyságát.
+                        </p>
+                        <p class="italic">Az akaraterőhöz tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Pusztítás</li>
+                            <li>Átkok</li>
+                            <li>Rúnamágia</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/backup.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Karizma</h5>
+                        <p>
+                            A karizma a karakter magabiztosságát valamint személyiségének erejét mutatja. Ezen képességével tudja valaki könnyedén
+                            manipulálni az embereket. Minél nagyobb egy karakter karizma képessége az emberek annál könnyebben bíznak meg benne.
+                        </p>
+                        <p class="italic">Az karizmához tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Alkudozás</li>
+                            <li>Illúziók</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <h4 style="margin-top: 0;">Mental attributes</h4>
+            <ul class="media-list" style="padding-top:10px;">
+                <li id="karakter-tulajdonsagok-ero" class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/muscle-up.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Erő</h5>
+                        <p>
+                            Az erő tulajdonság mutatja meg azt hogy a karakter mekkora fizikai erő kifejtésére képes. Az erő tulajdonság
+                            növeli a karakter teherbírását valamint sebzését.
+                        </p>
+                        <p class="italic">Az erőhöz tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Balták</li>
+                            <li>Kétkezes balták</li>
+                            <li>Ökölharc</li>
+                            <li>Egykezes zúzófegyverek</li>
+                            <li>Kétkezes zúzófegyverek</li>
+                            <li>Kovácsolás</li>
+                            <li>Hosszúkardok</li>
+                            <li>Kétkezes kardok</li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="karakter-tulajdonsagok-ugyesseg" class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/juggler.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Ügyesség</h5>
+                        <p>
+                            Az ügyesség  tulajdonság a karakter kézügyességét és mozgáskultúráját mutatja. Különössen fontos
+                            tulajdonság akkor ha a karakter sok aprólékos és precíz mozdulatot végez kalandozásai során. Az ügyesség
+                            tulajdonság növeli a karakter célzás, támadás valamint védekezését.
+                        </p>
+                        <p class="italic">Az erőhöz tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Dobófegyverek</li>
+                            <li>Íjak</li>
+                            <li>Kétkezes harc</li>
+                            <li>Lovaglás</li>
+                            <li>Bőrművesség</li>
+                            <li>Lopakodás</li>
+                            <li>Zárnyitás</li>
+                            <li>Tolvajlás</li>
+                            <li>Szálfegyverek</li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="karakter-tulajdonsagok-eszleles" class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/beams-aura.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Észlelés</h5>
+                        <p>
+                            Az észlelés képesség a karakter figyelmességét valamint az események gyors megfigyelését mutatja,
+                            szükséges ahhoz hogy a karakter minél előbb észlelje a körülötte lefolyó változásokat és megfelelő
+                            gyorsasággal tudjon reagálni rájuk.
+                        </p>
+                        <p class="italic">Az erőhöz tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Kutatás</li>
+                            <li>Újrahasznosítás</li>
+                            <li>Vadonismeret</li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="karakter-tulajdonsagok-gyorsasag" class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/sprint.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Gyorsaság</h5>
+                        <p>
+
+                        </p>
+                        <p class="italic">Az gyorsaság tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Rövidkardok</li>
+                            <li>Tőrök</li>
+                            <li>Atlétika</li>
+                            <li>Akrobatika</li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="karakter-tulajdonsagok-egeszseg" class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/chained-heart.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Egészség</h5>
+                        <p>
+
+                        </p>
+                        <p class="italic">Az egészséghez tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Úszás</li>
+                            <li>Vízharc</li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="karakter-tulajdonsagok-allokepesseg" class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/shield-reflect.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Állóképesség</h5>
+                        <p>
+
+                        </p>
+                        <p class="italic">Az állóképességhez tartozó szakértelmek:</p>
+                        <ul>
+                            <li>Könnyűvért</li>
+                            <li>Nehézvért</li>
+                            <li>Vért nélkül</li>
+                            <li>Pajzshasználat</li>
+                            <li>Bányászat</li>
+                            <li>Favágás</li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="karakter-tulajdonsagok-szepseg" class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object skillicon" src="http://game-icons.net/icons/lorc/originals/svg/rose.svg" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">Szépség</h5>
+                        <p>
+
+                        </p>
+                        <p class="italic">Az szépséghez tartozó szakértelmek:</p>
+                        <ul>
+                        </ul>
+                    </div>
+                </li>
+            </ul>-->
         </div>
     </div>
 </div>
