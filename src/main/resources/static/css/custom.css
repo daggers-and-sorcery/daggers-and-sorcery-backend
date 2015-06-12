@@ -142,3 +142,8 @@ html, body, .container {
     margin-left: 30px;
     font-weight: 700;
 }
+
+/** Form **/
+.help-block {
+    margin-bottom: 0;
+}

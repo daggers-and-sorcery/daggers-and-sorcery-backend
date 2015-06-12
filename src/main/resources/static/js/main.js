@@ -76,6 +76,15 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             'main': {
                 templateUrl: '/sub/register.html',
                 controller: function($scope){
+                    $scope.user = {};
+
+                    $scope.submit = function(valid) {
+                        /*if(valid) {
+                            alert('valid');
+                        } else {
+                            alert('invalid');
+                        }*/
+                    };
                 }
             },
             'right': indexLoginView

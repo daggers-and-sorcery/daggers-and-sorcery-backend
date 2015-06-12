@@ -1,29 +1,36 @@
 <div class="panel panel-default panel-shadow">
     <div class="panel-heading">Registration</div>
     <div class="panel-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" autocomplete="off" name="registration_form"  ng-submit="submit(registration_form.$valid)" novalidate>
             <div class="form-group">
                 <label for="email" class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" ng-model="user.email" ng-required="true">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : registration_form.username.$invalid && registration_form.username.$touched, 'has-success': registration_form.username.$valid && registration_form.username.$touched}">
                 <label for="username" class="col-sm-2 control-label">Username</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="username" placeholder="Username">
+                    <input type="text" class="form-control" name="username" id="username" ng-minlength="6" ng-maxlength="16" ng-pattern="/^[0-9a-zA-Z]+$/" placeholder="Username" ng-model="user.username" ng-required="true">
+                    <div ng-messages="registration_form.username.$error" role="alert">
+                        <span class="help-block" ng-message="required">The username is required.</span>
+                        <span class="help-block" ng-message="minlength">The minimum username length is 6 characters.</span>
+                        <span class="help-block" ng-message="maxlength">The maximum username length is 6 characters.</span>
+                        <span class="help-block" ng-message="pattern">The username can only contain letters (a-z, A-Z) or numbers.</span>
+                    </div>
+                    <span ng-show="registration_form.username.$touched" ng-class="registration_form.username.$invalid && registration_form.username.$touched ? 'glyphicon-warning-sign' : 'glyphicon-ok'" class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Password</label>
+                <label for="password_first" class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" class="form-control" name="password_first" id="password_first" placeholder="Password" ng-minlength="6" ng-maxlength="16" ng-model="user.password_first" ng-required="true">
                 </div>
             </div>
             <div class="form-group">
-                <label for="secondpassword" class="col-sm-2 control-label">Password again</label>
+                <label for="password_second" class="col-sm-2 control-label">Password again</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="secondpassword" placeholder="Password again">
+                    <input type="password" class="form-control" name="password_second" id="password_second" placeholder="Password again" ng-minlength="6" ng-maxlength="16" ng-model="user.password_second" ng-required="true">
                 </div>
             </div><div class="form-group">
             <label class="col-sm-2 control-label">Race</label>
@@ -40,7 +47,7 @@
         </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10 text-center">
-                    <button type="submit" class="btn btn-default">Register</button>
+                    <button type="submit" class="btn btn-default" ng-disabled="userForm.$invalid">Register</button>
                 </div>
             </div>
         </form>
