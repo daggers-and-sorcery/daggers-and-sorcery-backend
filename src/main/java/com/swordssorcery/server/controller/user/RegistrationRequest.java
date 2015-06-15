@@ -1,22 +1,29 @@
 package com.swordssorcery.server.controller.user;
 
+import com.swordssorcery.server.model.User;
+import com.swordssorcery.server.validator.annotation.UniqueInDb;
 import org.hibernate.validator.constraints.Email;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class RegistrationRequest {
 
     @NotNull(message = "Email is required.")
     @Email(message = "Email must be a valid email.")
+    @UniqueInDb(field = "email", model = User.class, message = "An user with this email already exists.")
     private String email;
     @NotNull(message = "Username is required.")
-    @Size(min = 6, max = 16, message="Username must be between 6 and 16 characters.")
+    @Size(min = 6, max = 16, message = "Username must be between 6 and 16 characters.")
+    @UniqueInDb(field = "username", model = User.class, message = "An user with this username already exists.")
     private String username;
     @NotNull(message = "Password is required.")
-    @Size(min = 6, max = 16, message="Password must be between 6 and 16 characters.")
+    @Size(min = 6, max = 16, message = "Password must be between 6 and 16 characters.")
     private String passwordFirst;
     @NotNull(message = "Second password is required.")
-    @Size(min = 6, max = 16, message="Second password must be between 6 and 16 characters.")
+    @Size(min = 6, max = 16, message = "Second password must be between 6 and 16 characters.")
     private String passwordSecond;
     @Max(value = 7, message = "Invalid race id.")
     @Min(value = 0, message = "Invalid race id.")

@@ -54,12 +54,6 @@ public class UserController {
         if (!registrationRequest.getPasswordFirst().equals(registrationRequest.getPasswordSecond())) {
             result.addError(new ObjectError(String.valueOf(User.class), "The two passwords must be equals."));
         }
-        if (userRepository.findByUsername(registrationRequest.getUsername()) != null) {
-            result.addError(new ObjectError(String.valueOf(User.class), "An user with this username already exists."));
-        }
-        if (userRepository.findByEmail(registrationRequest.getEmail()) != null) {
-            result.addError(new ObjectError(String.valueOf(User.class), "An user with this email already exists."));
-        }
 
         if (result.hasErrors()) {
             ArrayList<String> resultAsList = new ArrayList<>();
