@@ -17,13 +17,4 @@ class UserRepositoryImpl implements CustomUserRepository {
 
         this.operations = operations;
     }
-
-    @Override
-    public User queryByNameAndPass(String username, String password) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(username).and("password").is(password));
-
-        return operations.findOne(query, User.class);
-    }
-
 }

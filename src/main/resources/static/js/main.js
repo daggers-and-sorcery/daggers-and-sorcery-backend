@@ -24,8 +24,13 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
              $scope.user = {};
 
              $scope.submit = function() {
-                 $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-                 $http.post('/user/login', $.param($scope.user)).success(function(data, status, headers, config) {
+                 var requestConfig = {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                 }
+
+                 $http.post('/user/login', $.param($scope.user), requestConfig).success(function(data, status, headers, config) {
                      if(data.success) {
                          $rootScope.loggedIn = true;
                          $state.go('home');
@@ -78,6 +83,8 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                 controller: function($scope, $http){
                     $scope.user = {};
                     $scope.visibleRace = 0;
+                    $scope.errorList = [];
+                    $scope.successfulRegistration = false;
                     $scope.race = [
                         {
                             name: 'Human',
@@ -129,10 +136,14 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                     }
                     $scope.submit = function(valid) {
                         if(valid) {
-                            $http.post('/user/register', $.param($scope.user)).success(function(data, status, headers, config) {
+                            dataToSend = $scope.user;
+                            dataToSend.race = $scope.visibleRace;
 
+                            $http.post('/user/register', dataToSend).success(function(data, status, headers, config) {
+                                $scope.errorList = [];
+                                $scope.successfulRegistration = true;
                             }).error(function(data, status, headers, config) {
-
+                                $scope.errorList = data;
                             });
                         }
                     };
