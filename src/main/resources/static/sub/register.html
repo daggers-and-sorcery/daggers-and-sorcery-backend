@@ -55,13 +55,19 @@
             <label class="col-sm-2 control-label">Race</label>
             <div class="col-sm-10">
                 <div class="text-center race-paging-holder">
-                    <button class="btn btn-default btn-no-outline race-paging-btn"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
-                    <span class="race-name-holder">~ <span>Human</span> ~</span>
-                    <button class="btn btn-default btn-no-outline race-paging-btn"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                    <div class="row">
+                        <div class="col-sm-4" style="text-align: right; padding: 0;">
+                            <button class="btn btn-default btn-no-outline race-paging-btn" ng-click="decreaseRace()"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+                        </div>
+                        <div class="col-sm-4" style="line-height: 2.2;">
+                            <span class="race-name-holder">~ <span ng-bind="race[visibleRace].name"></span> ~</span>
+                        </div>
+                        <div class="col-sm-4" style="text-align: left; padding: 0;">
+                            <button class="btn btn-default btn-no-outline race-paging-btn" ng-click="increaseRace()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur urna metus, blandit at dui nec, tincidunt semper lectus. Quisque ligula nisi, volutpat ut posuere ac, sodales in diam. Vivamus dapibus enim et hendrerit ornare. Nulla vestibulum et purus at rutrum. Morbi faucibus sem id mi gravida dignissim. Mauris pharetra posuere ullamcorper. Fusce molestie commodo auctor. Sed mattis purus risus, at semper risus varius non. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut at pretium purus, a aliquam est. Aenean sed metus dui. Nullam a posuere magna, eu vestibulum ex. Sed eu neque neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi et nibh dui.
-                </div>
+                <div ng-bind="race[visibleRace].description"></div>
             </div>
         </div>
             <div class="form-group">

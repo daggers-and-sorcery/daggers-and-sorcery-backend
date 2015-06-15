@@ -75,15 +75,66 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             'top': indexTopView,
             'main': {
                 templateUrl: '/sub/register.html',
-                controller: function($scope){
+                controller: function($scope, $http){
                     $scope.user = {};
+                    $scope.visibleRace = 0;
+                    $scope.race = [
+                        {
+                            name: 'Human',
+                            description: 'Human Description',
+                        },
+                        {
+                            name: 'Orc',
+                            description: 'Orc Description',
+                        },
+                        {
+                            name: 'Dwarf',
+                            description: 'Dwarf Description',
+                        },
+                        {
+                            name: 'Elf',
+                            description: 'Elf Description',
+                        },
+                        {
+                            name: 'Dark Elf',
+                            description: 'Dark elf Description',
+                        },
+                        {
+                            name: 'Lizardmen',
+                            description: 'Lizardmen Description',
+                        },
+                        {
+                            name: 'Gnome',
+                            description: 'Human Description',
+                        },
+                        {
+                            name: 'Draconic',
+                            description: 'Draconic Description',
+                        },
+                    ];
 
-                    $scope.submit = function(valid) {
-                        /*if(valid) {
-                            alert('valid');
+                    $scope.decreaseRace = function() {
+                        if ($scope.visibleRace == 0) {
+                            $scope.visibleRace = $scope.race.length - 1;
                         } else {
-                            alert('invalid');
-                        }*/
+                            $scope.visibleRace--;
+                        }
+                    }
+                    $scope.increaseRace = function() {
+                        if ($scope.visibleRace == $scope.race.length - 1) {
+                            $scope.visibleRace = 0;
+                        } else {
+                            $scope.visibleRace++;
+                        }
+                    }
+                    $scope.submit = function(valid) {
+                        if(valid) {
+                            $http.post('/user/register', $.param($scope.user)).success(function(data, status, headers, config) {
+
+                            }).error(function(data, status, headers, config) {
+
+                            });
+                        }
                     };
                 }
             },
