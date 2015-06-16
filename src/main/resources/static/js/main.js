@@ -2,7 +2,7 @@ var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ngMessages
 
 swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     indexMainView = {
-        templateUrl: "/sub/index.html",
+        templateUrl: "/partial/index.html",
         resolve: {
             newslist:  function($http){
                 return $http({method: 'GET', url: '/news/last'});
@@ -19,7 +19,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     };
 
     indexLoginView = {
-         templateUrl: '/sub/login.html',
+         templateUrl: '/partial/login.html',
          controller: function($scope, $http, $state, $rootScope) {
              $scope.user = {};
              $scope.error = '';
@@ -44,7 +44,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     }
 
     indexTopView = {
-        templateUrl: '/sub/top-empty.html',
+        templateUrl: '/partial/top-empty.html',
     }
 
     $urlRouterProvider.otherwise('/')
@@ -62,11 +62,11 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         url: '/home/',
         views: {
             'top': {
-                templateUrl: '/sub/top-login.html',
+                templateUrl: '/partial/top-login.html',
             },
             'main': indexMainView,
             'right': {
-                templateUrl: "/sub/menu.html",
+                templateUrl: "/partial/menu.html",
                 controller: function($scope){
                 }
             }
@@ -80,7 +80,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         views: {
             'top': indexTopView,
             'main': {
-                templateUrl: '/sub/register.html',
+                templateUrl: '/partial/register.html',
                 controller: function($scope, $http){
                     $scope.user = {};
                     $scope.visibleRace = 0;
@@ -160,7 +160,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         views: {
             'top': indexTopView,
             'main': {
-                templateUrl: '/sub/knowledge.html',
+                templateUrl: '/partial/knowledge.html',
             },
             'right': indexLoginView
         }
