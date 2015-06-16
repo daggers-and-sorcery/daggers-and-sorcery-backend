@@ -22,6 +22,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
          templateUrl: '/sub/login.html',
          controller: function($scope, $http, $state, $rootScope) {
              $scope.user = {};
+             $scope.error = '';
 
              $scope.submit = function() {
                  var requestConfig = {
@@ -35,7 +36,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                          $rootScope.loggedIn = true;
                          $state.go('home');
                      } else {
-                         //TODO: print error
+                         $scope.error = data.error;
                      }
                  });
              };

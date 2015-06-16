@@ -42,6 +42,7 @@ public class UserController {
 
             session.setAttribute(SessionType.USER, login);
         } else {
+            response.put("success", "false");
             response.put("error", "Wrong username or password!");
         }
 
@@ -73,7 +74,7 @@ public class UserController {
 
             userRepository.save(user);
 
-            //TODO: add user validation
+            //TODO: add user email validation
 
             return new ResponseEntity<>("{}", HttpStatus.OK);
         }
