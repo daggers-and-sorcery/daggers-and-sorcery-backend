@@ -16,6 +16,17 @@ body {
     margin: 0;
 }
 
+.navbar-collapse {
+    color:white;
+    padding:0;
+}
+
+.navbar-button-holder {
+    height: 50px;
+    line-height: 45px;
+    float: right;
+}
+
 /** Panel **/
 .panel {
     background-color: #F2E9D0;
