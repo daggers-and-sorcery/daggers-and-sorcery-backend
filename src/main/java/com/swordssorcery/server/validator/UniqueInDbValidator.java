@@ -26,9 +26,6 @@ public class UniqueInDbValidator implements ConstraintValidator<UniqueInDb, Stri
         Query query2 = new Query();
         query2.addCriteria(Criteria.where(uniqueInDb.field()).is(value));
 
-        System.out.println("value = " + value);
-        System.out.println("exists = " + mongoOperation.exists(query2, uniqueInDb.model()));
-
         return !mongoOperation.exists(query2, uniqueInDb.model());
     }
 

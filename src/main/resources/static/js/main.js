@@ -1,57 +1,57 @@
 var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ngMessages']);
 
 swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
-    indexMainView = {
+    var indexMainView = {
         templateUrl: "/partial/index.html",
         resolve: {
-            newslist:  function($http){
+            newslist: function ($http) {
                 return $http({method: 'GET', url: '/news/last'});
-            },
+            }
         },
-        controller: function($scope, $http, $sce, newslist) {
-            for(i = 0; i < newslist.data.length; i++) {
-                 newslist.data[i].message = $sce.trustAsHtml(newslist.data[i].message);
-                 newslist.data[i].title = $sce.trustAsHtml(newslist.data[i].title);
+        controller: function ($scope, $http, $sce, newslist) {
+            for (var i = 0; i < newslist.data.length; i++) {
+                newslist.data[i].message = $sce.trustAsHtml(newslist.data[i].message);
+                newslist.data[i].title = $sce.trustAsHtml(newslist.data[i].title);
             }
 
             $scope.newslist = newslist.data;
         }
     };
 
-    indexLoginView = {
-         templateUrl: '/partial/login.html',
-         controller: function($scope, $http, $state, $rootScope) {
-             $scope.user = {};
-             $scope.error = '';
+    var indexLoginView = {
+        templateUrl: '/partial/login.html',
+        controller: function ($scope, $http, $state, $rootScope) {
+            $scope.user = {};
+            $scope.error = '';
 
-             $scope.submit = function() {
-                 var requestConfig = {
+            $scope.submit = function () {
+                var requestConfig = {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     }
-                 }
+                };
 
-                 $http.post('/user/login', $.param($scope.user), requestConfig).success(function(data, status, headers, config) {
-                     if(data.success) {
-                         $rootScope.loggedIn = true;
-                         $state.go('home');
-                     } else {
-                         $scope.error = data.error;
-                     }
-                 });
-             };
-         }
-    }
+                $http.post('/user/login', $.param($scope.user), requestConfig).success(function (data, status, headers, config) {
+                    if (data.success === 'true') {
+                        $rootScope.loggedIn = true;
+                        $state.go('home');
+                    } else {
+                        $scope.error = data.error;
+                    }
+                });
+            };
+        }
+    };
 
-    indexTopView = {
-        templateUrl: '/partial/top-empty.html',
-    }
+    var indexTopView = {
+        templateUrl: '/partial/top-empty.html'
+    };
 
-    $urlRouterProvider.otherwise('/')
+    $urlRouterProvider.otherwise('/');
     $stateProvider.state('index', {
         url: '/',
         data: {
-            visibleWhenNotLoggedIn: true,
+            visibleWhenNotLoggedIn: true
         },
         views: {
             'top': indexTopView,
@@ -62,7 +62,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         url: '/home/',
         views: {
             'top': {
-                templateUrl: '/partial/top-login.html',
+                templateUrl: '/partial/top-login.html'
             },
             'main': indexMainView,
             'right': {
@@ -75,7 +75,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     }).state('register', {
         url: '/register/',
         data: {
-            visibleWhenNotLoggedIn: true,
+            visibleWhenNotLoggedIn: true
         },
         views: {
             'top': indexTopView,
@@ -89,35 +89,35 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                     $scope.race = [
                         {
                             name: 'Human',
-                            description: 'Human Description',
+                            description: 'Human Description'
                         },
                         {
                             name: 'Orc',
-                            description: 'Orc Description',
+                            description: 'Orc Description'
                         },
                         {
                             name: 'Dwarf',
-                            description: 'Dwarf Description',
+                            description: 'Dwarf Description'
                         },
                         {
                             name: 'Elf',
-                            description: 'Elf Description',
+                            description: 'Elf Description'
                         },
                         {
                             name: 'Dark Elf',
-                            description: 'Dark elf Description',
+                            description: 'Dark elf Description'
                         },
                         {
                             name: 'Lizardmen',
-                            description: 'Lizardmen Description',
+                            description: 'Lizardmen Description'
                         },
                         {
                             name: 'Gnome',
-                            description: 'Human Description',
+                            description: 'Human Description'
                         },
                         {
                             name: 'Draconic',
-                            description: 'Draconic Description',
+                            description: 'Draconic Description'
                         },
                     ];
 
@@ -127,14 +127,14 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                         } else {
                             $scope.visibleRace--;
                         }
-                    }
+                    };
                     $scope.increaseRace = function() {
                         if ($scope.visibleRace == $scope.race.length - 1) {
                             $scope.visibleRace = 0;
                         } else {
                             $scope.visibleRace++;
                         }
-                    }
+                    };
                     $scope.submit = function(valid) {
                         if(valid) {
                             dataToSend = $scope.user;
