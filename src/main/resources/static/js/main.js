@@ -44,7 +44,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     };
 
     var indexTopView = {
-        templateUrl: '/partial/top-empty.html'
+        templateUrl: '/partial/top/navbar.html'
     };
 
     $urlRouterProvider.otherwise('/');
@@ -61,14 +61,10 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     }).state('home', {
         url: '/home/',
         views: {
-            'top': {
-                templateUrl: '/partial/top/navbar.html'
-            },
+            'top': indexTopView,
             'main': indexMainView,
             'right': {
                 templateUrl: "/partial/right/menu.html",
-                controller: function($scope){
-                }
             }
         }
     }).state('logout', {
