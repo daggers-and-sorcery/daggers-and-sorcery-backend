@@ -1,7 +1,10 @@
 package com.swordssorcery.server.controller.character;
 
-import com.swordssorcery.server.game.attribute.AttributeData;
-import com.swordssorcery.server.game.attribute.DefaultAttributeData;
+import com.swordssorcery.server.game.attribute.Attribute;
+import com.swordssorcery.server.game.attribute.AttributeCalculator;
+import com.swordssorcery.server.game.attribute.AttributeType;
+import com.swordssorcery.server.game.attribute.data.AttributeData;
+import com.swordssorcery.server.game.attribute.data.DefaultAttributeData;
 import com.swordssorcery.server.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,50 +14,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @Controller
 public class CharacterController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AttributeCalculator attributeCalculator;
 
     @ResponseBody
     @RequestMapping(value = "/character/info", method = RequestMethod.GET)
-    public HashMap<String, HashMap<String, AttributeData>> info(HttpSession session) {
-        HashMap<String, HashMap<String, AttributeData>> response = new HashMap<>();
+    public HashMap<String, LinkedHashMap<String, AttributeData>> info(HttpSession session) {
+        HashMap<String, LinkedHashMap<String, AttributeData>> response = new HashMap<>();
 
-        HashMap<String, AttributeData> basicAttributes = new HashMap<>();
-        response.put("basic", basicAttributes);
+        for (AttributeType attributeType : AttributeType.values()) {
+            LinkedHashMap<String, AttributeData> attributeDataHolder = new LinkedHashMap<>();
+            response.put(attributeType.getShortName(), attributeDataHolder);
 
-        DefaultAttributeData movementPoint = new DefaultAttributeData();
-        movementPoint.setActual(30);
-        movementPoint.setMaximum(30);
-        basicAttributes.put("movement", movementPoint);
-
-        HashMap<String, AttributeData> combatAttributes = new HashMap<>();
-        response.put("combat", combatAttributes);
-
-        DefaultAttributeData lifepoint = new DefaultAttributeData();
-        lifepoint.setActual(30);
-        lifepoint.setMaximum(30);
-        combatAttributes.put("life", lifepoint);
-
-        DefaultAttributeData manapoint = new DefaultAttributeData();
-        manapoint.setActual(30);
-        manapoint.setMaximum(30);
-        combatAttributes.put("mana", manapoint);
-
-        DefaultAttributeData initiationpoint = new DefaultAttributeData();
-        initiationpoint.setActual(30);
-        combatAttributes.put("initiation", initiationpoint);
-
-        DefaultAttributeData attackpoint = new DefaultAttributeData();
-        attackpoint.setActual(30);
-        combatAttributes.put("attack", attackpoint);
-
-        DefaultAttributeData aimingpoint = new DefaultAttributeData();
-        aimingpoint.setActual(30);
-        combatAttributes.put("aiming", aimingpoint);
+            for (Attribute attribute : Attribute.values()) {
+                if (attribute.getAttributeType() == attributeType) {
+                    attributeDataHolder.put(attribute.name(), attributeCalculator.calculateAttributeValue(null, attribute));
+                }
+            }
+        }
 
         return response;
     }

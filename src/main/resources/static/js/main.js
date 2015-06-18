@@ -1,6 +1,6 @@
 var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ngMessages']);
 
-swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
+swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
     var indexMainView = {
         templateUrl: "/partial/main/index.html",
         resolve: {
@@ -65,8 +65,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             'main': indexMainView,
             'right': indexMenuView
         }
-    }).state('logout', {
-    }).state('register', {
+    }).state('logout', {}).state('register', {
         url: '/register/',
         data: {
             visibleWhenNotLoggedIn: true
@@ -75,7 +74,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             'top': indexTopView,
             'main': {
                 templateUrl: '/partial/main/register.html',
-                controller: function($scope, $http){
+                controller: function ($scope, $http) {
                     $scope.user = {};
                     $scope.visibleRace = 0;
                     $scope.errorList = [];
@@ -115,29 +114,29 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                         }
                     ];
 
-                    $scope.decreaseRace = function() {
+                    $scope.decreaseRace = function () {
                         if ($scope.visibleRace == 0) {
                             $scope.visibleRace = $scope.race.length - 1;
                         } else {
                             $scope.visibleRace--;
                         }
                     };
-                    $scope.increaseRace = function() {
+                    $scope.increaseRace = function () {
                         if ($scope.visibleRace == $scope.race.length - 1) {
                             $scope.visibleRace = 0;
                         } else {
                             $scope.visibleRace++;
                         }
                     };
-                    $scope.submit = function(valid) {
-                        if(valid) {
+                    $scope.submit = function (valid) {
+                        if (valid) {
                             dataToSend = $scope.user;
                             dataToSend.race = $scope.visibleRace;
 
-                            $http.post('/user/register', dataToSend).success(function(data, status, headers, config) {
+                            $http.post('/user/register', dataToSend).success(function (data, status, headers, config) {
                                 $scope.errorList = [];
                                 $scope.successfulRegistration = true;
-                            }).error(function(data, status, headers, config) {
+                            }).error(function (data, status, headers, config) {
                                 $scope.errorList = data;
                             });
                         }
@@ -164,13 +163,13 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             'top': indexTopView,
             'main': {
                 templateUrl: '/partial/main/character.html',
-                controller: function($scope, $http){
+                controller: function ($scope, $http) {
                     $scope.attributes = {
                         basic: {},
                         combat: {}
                     };
 
-                    $http.get('/character/info').success(function(data, status, headers, config) {
+                    $http.get('/character/info').success(function (data, status, headers, config) {
                         $scope.attributes = data;
                     });
                 }
@@ -180,17 +179,17 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     });
 });
 
-swordssorceryApp.controller('MainController',   function($scope, $rootScope, $state, $http) {
+swordssorceryApp.controller('MainController', function ($scope, $rootScope, $state, $http) {
     //Get user info at start
-    $http.get('/user/info').success(function(data, status, headers, config) {
+    $http.get('/user/info').success(function (data, status, headers, config) {
         $rootScope.loggedIn = data.loggedIn === 'true';
         $state.go('home');
     });
 
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         //Logout the user
-        if(toState.name === 'logout') {
-            $http.get('/user/logout').success(function(data, status, headers, config) {
+        if (toState.name === 'logout') {
+            $http.get('/user/logout').success(function (data, status, headers, config) {
                 $rootScope.loggedIn = false;
                 $state.go('index');
             });
@@ -198,49 +197,49 @@ swordssorceryApp.controller('MainController',   function($scope, $rootScope, $st
         }
 
         //Always redirect to index if not logged in
-        if(!(toState.hasOwnProperty('data') && toState.data.hasOwnProperty('visibleWhenNotLoggedIn') && toState.data.visibleWhenNotLoggedIn) && !$rootScope.loggedIn && toState.name !== 'index') {
+        if (!(toState.hasOwnProperty('data') && toState.data.hasOwnProperty('visibleWhenNotLoggedIn') && toState.data.visibleWhenNotLoggedIn) && !$rootScope.loggedIn && toState.name !== 'index') {
             event.preventDefault();
             $state.go('index');
         }
 
         //If logged in redirect index to home
-        if(toState.name === 'index' && $rootScope.loggedIn) {
+        if (toState.name === 'index' && $rootScope.loggedIn) {
             event.preventDefault();
             $state.go('home');
         }
     })
 });
 
-swordssorceryApp.directive('equals', function() {
-  return {
-    restrict: 'A', // only activate on element attribute
-    require: '?ngModel', // get a hold of NgModelController
-    link: function(scope, elem, attrs, ngModel) {
-      if(!ngModel) return; // do nothing if no ng-model
+swordssorceryApp.directive('equals', function () {
+    return {
+        restrict: 'A', // only activate on element attribute
+        require: '?ngModel', // get a hold of NgModelController
+        link: function (scope, elem, attrs, ngModel) {
+            if (!ngModel) return; // do nothing if no ng-model
 
-      // watch own value and re-validate on change
-      scope.$watch(attrs.ngModel, function() {
-        validate();
-      });
+            // watch own value and re-validate on change
+            scope.$watch(attrs.ngModel, function () {
+                validate();
+            });
 
-      // observe the other value and re-validate on change
-      attrs.$observe('equals', function (val) {
-        validate();
-      });
+            // observe the other value and re-validate on change
+            attrs.$observe('equals', function (val) {
+                validate();
+            });
 
-      var validate = function() {
-        // values
-        var val1 = ngModel.$viewValue;
-        var val2 = attrs.equals;
+            var validate = function () {
+                // values
+                var val1 = ngModel.$viewValue;
+                var val2 = attrs.equals;
 
-        // set validity
-        ngModel.$setValidity('equals', ! val1 || ! val2 || val1 === val2);
-      };
+                // set validity
+                ngModel.$setValidity('equals', !val1 || !val2 || val1 === val2);
+            };
+        }
     }
-  }
 });
 
-swordssorceryApp.directive('attributeListColumn', function() {
+swordssorceryApp.directive('attributeListColumn', function () {
     return {
         restrict: 'E',
         scope: {
@@ -248,14 +247,32 @@ swordssorceryApp.directive('attributeListColumn', function() {
             columnAlign: '@columnAlign',
             attributes: '=source'
         },
-        controller: function($scope) {
+        controller: function ($scope) {
             $scope.attributeNameMap = {
-                'movement': 'Movement Points',
-                'life': 'Life Points',
-                'mana': 'Mana Points',
-                'initiation': 'Initiation Points',
-                'attack': 'Attack Points',
-                'aiming': 'Aiming Points'
+                'MOVEMENT': 'Movement Points',
+
+                'LIFE': 'Life Points',
+                'MANA': 'Mana Points',
+                'INITIATION': 'Initiation',
+                'ATTACK': 'Attack',
+                'AIMING': 'Aiming',
+                'DEFENSE': 'Defense',
+                'SPELL_RESISTANCE': 'Spell resistance',
+                'DAMAGE': 'Damage',
+                'RANGED_DAMAGE': 'Ranged Damage',
+
+                'STRENGTH': 'Strength',
+                'PERCEPTION': 'Perception',
+                'DEXTERITY': 'Dexterity',
+                'SWIFTNESS': 'Swiftness',
+                'VITALITY': 'Vitality',
+                'ENDURANCE': 'Endurance',
+                'BEAUTY': 'Beauty',
+
+                'INTELLIGENCE': 'Intelligence',
+                'WISDOM': 'Wisdom',
+                'WILLPOWER': 'Willpower',
+                'CHARISMA': 'Charisma'
             }
         },
         templateUrl: '/directive/attribute-list-column.html'
