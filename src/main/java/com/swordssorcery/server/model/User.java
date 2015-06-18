@@ -1,8 +1,15 @@
 package com.swordssorcery.server.model;
 
+import com.swordssorcery.server.game.attribute.Attribute;
+import com.swordssorcery.server.game.attribute.AttributeModifierType;
+import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
+import com.swordssorcery.server.game.attribute.data.DefaultAttributeModifierData;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @Document
 public class User {
@@ -18,6 +25,7 @@ public class User {
     
     private String password;
     private int race;
+    private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
 
     public User(String username, String password) {
         this.username = username;
@@ -54,5 +62,13 @@ public class User {
 
     public void setRace(int race) {
         this.race = race;
+    }
+
+    public void setAttributeModifier(Attribute attribute, AttributeModifierData attributeModifierData) {
+        attributeModifierMap.put(attribute, attributeModifierData);
+    }
+
+    public AttributeModifierData getAttributeModifier(Attribute attribute) {
+        return attributeModifierMap.get(attribute);
     }
 }
