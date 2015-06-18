@@ -1,6 +1,6 @@
 <div class="col-xs-4 attribute-list-column-{{columnAlign}}">
     <ul class="list-group attribute-list-group">
-        <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes" ng-if="$index%3===columnAlignId">
+        <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes" ng-if="$index % 3 === columnAlignId">
             <span ng-show="attribute.maximum > 0" class="badge attribute-badge">{{attribute.actual}} / {{attribute.maximum}}</span>
             <span ng-show="attribute.maximum == 0" class="badge attribute-badge">{{attribute.actual}}</span>
             {{attributeNameMap[attributeName]}}

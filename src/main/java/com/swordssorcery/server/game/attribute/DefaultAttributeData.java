@@ -1,4 +1,6 @@
-package com.swordssorcery.server.model;
+package com.swordssorcery.server.game.attribute;
+
+import com.swordssorcery.server.game.attribute.AttributeData;
 
 public class DefaultAttributeData implements AttributeData {
 

@@ -112,7 +112,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                         {
                             name: 'Draconic',
                             description: 'Draconic Description'
-                        },
+                        }
                     ];
 
                     $scope.decreaseRace = function() {
@@ -169,14 +169,6 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                         basic: {},
                         combat: {}
                     };
-            $scope.attributeNameMap = {
-                'movement': 'Movement Points',
-                'life': 'Life Points',
-                'mana': 'Mana Points',
-                'initiation': 'Initiation Points',
-                'attack': 'Attack Points',
-                'aiming': 'Aiming Points',
-            }
 
                     $http.get('/character/info').success(function(data, status, headers, config) {
                         $scope.attributes = data;
@@ -252,9 +244,9 @@ swordssorceryApp.directive('attributeListColumn', function() {
     return {
         restrict: 'E',
         scope: {
-            columnAlign: '=columnAlign',
             columnAlignId: '=columnAlignId',
-            attributes: '=source',
+            columnAlign: '@columnAlign',
+            attributes: '=source'
         },
         controller: function($scope) {
             $scope.attributeNameMap = {
@@ -263,9 +255,9 @@ swordssorceryApp.directive('attributeListColumn', function() {
                 'mana': 'Mana Points',
                 'initiation': 'Initiation Points',
                 'attack': 'Attack Points',
-                'aiming': 'Aiming Points',
+                'aiming': 'Aiming Points'
             }
         },
-        templateUrl: '/directive/attribute-list-column.html',
+        templateUrl: '/directive/attribute-list-column.html'
     };
 });

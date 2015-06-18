@@ -1,7 +1,7 @@
-package com.swordssorcery.server.controller.user;
+package com.swordssorcery.server.controller.character;
 
-import com.swordssorcery.server.model.AttributeData;
-import com.swordssorcery.server.model.DefaultAttributeData;
+import com.swordssorcery.server.game.attribute.AttributeData;
+import com.swordssorcery.server.game.attribute.DefaultAttributeData;
 import com.swordssorcery.server.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
