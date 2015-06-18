@@ -62,11 +62,11 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         url: '/home/',
         views: {
             'top': {
-                templateUrl: '/partial/top-login.html'
+                templateUrl: '/partial/top/navbar.html'
             },
             'main': indexMainView,
             'right': {
-                templateUrl: "/partial/menu.html",
+                templateUrl: "/partial/right/menu.html",
                 controller: function($scope){
                 }
             }
