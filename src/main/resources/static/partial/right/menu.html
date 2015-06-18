@@ -1,10 +1,10 @@
 <div ng-show="$root.loggedIn" class="panel panel-default panel-shadow" style="margin-left: 0;">
     <div class="panel-heading">Menu</div>
     <div class="panel-body">
-       <a class="btn btn-default right-menu-button">Character</a>
-       <a class="btn btn-default right-menu-button">Map</a>
-       <a class="btn btn-default right-menu-button">Shop</a>
-       <a class="btn btn-default right-menu-button">Auction</a>
+       <a ui-sref="character" class="btn btn-default right-menu-button">Character</a>
+       <a ui-sref="map" class="btn btn-default right-menu-button">Map</a>
+       <a ui-sref="shop" class="btn btn-default right-menu-button">Shop</a>
+       <a ui-sref="auction" class="btn btn-default right-menu-button">Auction</a>
     </div>
 </div>
 <div ng-hide="$root.loggedIn" class="panel panel-default panel-shadow" style="margin-left: 0;">

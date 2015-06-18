@@ -158,6 +158,33 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             },
             'right': indexMenuView
         }
+    }).state('character', {
+        url: '/character/',
+        views: {
+            'top': indexTopView,
+            'main': {
+                templateUrl: '/partial/main/character.html',
+                controller: function($scope, $http){
+                    $scope.attributes = {
+                        basic: {},
+                        combat: {}
+                    };
+                    $scope.attributeNameMap = {
+                        'movement': 'Movement Points',
+                        'life': 'Life Points',
+                        'mana': 'Mana Points',
+                        'initiation': 'Initiation Points',
+                        'attack': 'Attack Points',
+                        'aiming': 'Aiming Points',
+                    }
+
+                    $http.get('/character/info').success(function(data, status, headers, config) {
+                        $scope.attributes = data;
+                    });
+                }
+            },
+            'right': indexMenuView
+        }
     });
 });
 

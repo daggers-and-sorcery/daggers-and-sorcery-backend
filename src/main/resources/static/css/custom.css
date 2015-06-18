@@ -162,3 +162,39 @@ html, body, .container {
 .help-block {
     margin-bottom: 0;
 }
+
+/** Character **/
+.attribute-list-item {
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.attribute-list-item:last-child {
+    margin-bottom: 0;
+}
+
+.attribute-list-group {
+    margin-bottom: 0;
+}
+
+.attribute-list-column-left {
+    padding-right: 5px;
+}
+
+.attribute-list-column-center {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.attribute-list-column-right {
+    padding-left: 5px;
+}
+
+.attribute-list-name {
+    margin-top: 15px;
+}
+
+.attribute-badge {
+  padding: 7px;
+  margin-top: -3px;
+}
