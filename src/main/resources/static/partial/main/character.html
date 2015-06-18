@@ -2,67 +2,17 @@
     <div class="panel-heading">Character</div>
     <div class="panel-body">
         <h4 class="attribute-list-name">Basic attributes</h4>
-
         <div class="row">
-            <div class="col-xs-4 attribute-list-column-left">
-                <ul class="list-group attribute-list-group">
-                    <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes.basic" ng-if="$index%3===0">
-                        <span ng-show="attribute.maximum > 0" class="badge attribute-badge">{{attribute.actual}} / {{attribute.maximum}}</span>
-                        <span ng-show="attribute.maximum == 0" class="badge attribute-badge">{{attribute.actual}}</span>
-                        {{attributeNameMap[attributeName]}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-4 attribute-list-column-center">
-                <ul class="list-group attribute-list-group">
-                    <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes.basic" ng-if="$index%3===1">
-                        <span ng-show="attribute.maximum > 0" class="badge attribute-badge">{{attribute.actual}} / {{attribute.maximum}}</span>
-                        <span ng-show="attribute.maximum == 0" class="badge attribute-badge">{{attribute.actual}}</span>
-                        {{attributeNameMap[attributeName]}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-4 attribute-list-column-right">
-                <ul class="list-group attribute-list-group">
-                    <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes.basic" ng-if="$index%3===2">
-                        <span ng-show="attribute.maximum > 0" class="badge attribute-badge">{{attribute.actual}} / {{attribute.maximum}}</span>
-                        <span ng-show="attribute.maximum == 0" class="badge attribute-badge">{{attribute.actual}}</span>
-                        {{attributeNameMap[attributeName]}}
-                    </li>
-                </ul>
-            </div>
+            <attribute-list-column column-align="left" column-align-id="0" source="attributes.basic"></attribute-list-column>
+            <attribute-list-column column-align="center" column-align-id="1" source="attributes.basic"></attribute-list-column>
+            <attribute-list-column column-align="right" column-align-id="2" source="attributes.basic"></attribute-list-column>
         </div>
 
         <h4 class="attribute-list-name">Combat attributes</h4>
-
         <div class="row">
-            <div class="col-xs-4 attribute-list-column-left">
-                <ul class="list-group attribute-list-group">
-                    <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes.combat" ng-if="$index%3===0">
-                        <span ng-show="attribute.maximum > 0" class="badge attribute-badge">{{attribute.actual}} / {{attribute.maximum}}</span>
-                        <span ng-show="attribute.maximum == 0" class="badge attribute-badge">{{attribute.actual}}</span>
-                        {{attributeNameMap[attributeName]}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-4 attribute-list-column-center">
-                <ul class="list-group attribute-list-group">
-                    <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes.combat" ng-if="$index%3===1">
-                        <span ng-show="attribute.maximum > 0" class="badge attribute-badge">{{attribute.actual}} / {{attribute.maximum}}</span>
-                        <span ng-show="attribute.maximum == 0" class="badge attribute-badge">{{attribute.actual}}</span>
-                        {{attributeNameMap[attributeName]}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-xs-4 attribute-list-column-right">
-                <ul class="list-group attribute-list-group">
-                    <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes.combat" ng-if="$index%3===2">
-                        <span ng-show="attribute.maximum > 0" class="badge attribute-badge">{{attribute.actual}} / {{attribute.maximum}}</span>
-                        <span ng-show="attribute.maximum == 0" class="badge attribute-badge">{{attribute.actual}}</span>
-                        {{attributeNameMap[attributeName]}}
-                    </li>
-                </ul>
-            </div>
+            <attribute-list-column column-align="left" column-align-id="0" source="attributes.combat"></attribute-list-column>
+            <attribute-list-column column-align="center" column-align-id="1" source="attributes.combat"></attribute-list-column>
+            <attribute-list-column column-align="right" column-align-id="2" source="attributes.combat"></attribute-list-column>
         </div>
     </div>
 </div>

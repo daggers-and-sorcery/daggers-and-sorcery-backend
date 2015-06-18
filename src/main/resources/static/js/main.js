@@ -169,14 +169,14 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                         basic: {},
                         combat: {}
                     };
-                    $scope.attributeNameMap = {
-                        'movement': 'Movement Points',
-                        'life': 'Life Points',
-                        'mana': 'Mana Points',
-                        'initiation': 'Initiation Points',
-                        'attack': 'Attack Points',
-                        'aiming': 'Aiming Points',
-                    }
+            $scope.attributeNameMap = {
+                'movement': 'Movement Points',
+                'life': 'Life Points',
+                'mana': 'Mana Points',
+                'initiation': 'Initiation Points',
+                'attack': 'Attack Points',
+                'aiming': 'Aiming Points',
+            }
 
                     $http.get('/character/info').success(function(data, status, headers, config) {
                         $scope.attributes = data;
@@ -246,4 +246,26 @@ swordssorceryApp.directive('equals', function() {
       };
     }
   }
+});
+
+swordssorceryApp.directive('attributeListColumn', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            columnAlign: '=columnAlign',
+            columnAlignId: '=columnAlignId',
+            attributes: '=source',
+        },
+        controller: function($scope) {
+            $scope.attributeNameMap = {
+                'movement': 'Movement Points',
+                'life': 'Life Points',
+                'mana': 'Mana Points',
+                'initiation': 'Initiation Points',
+                'attack': 'Attack Points',
+                'aiming': 'Aiming Points',
+            }
+        },
+        templateUrl: '/directive/attribute-list-column.html',
+    };
 });
