@@ -2,7 +2,7 @@ var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ngMessages
 
 swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
     var indexMainView = {
-        templateUrl: "/partial/index.html",
+        templateUrl: "/partial/main/index.html",
         resolve: {
             newslist: function ($http) {
                 return $http({method: 'GET', url: '/news/last'});
@@ -74,7 +74,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         views: {
             'top': indexTopView,
             'main': {
-                templateUrl: '/partial/register.html',
+                templateUrl: '/partial/main/register.html',
                 controller: function($scope, $http){
                     $scope.user = {};
                     $scope.visibleRace = 0;
@@ -154,7 +154,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         views: {
             'top': indexTopView,
             'main': {
-                templateUrl: '/partial/knowledge.html',
+                templateUrl: '/partial/main/knowledge.html',
             },
             'right': indexMenuView
         }
