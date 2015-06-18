@@ -18,8 +18,8 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         }
     };
 
-    var indexLoginView = {
-        templateUrl: '/partial/login.html',
+    var indexMenuView = {
+        templateUrl: '/partial/right/menu.html',
         controller: function ($scope, $http, $state, $rootScope) {
             $scope.user = {};
             $scope.error = '';
@@ -56,16 +56,14 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
         views: {
             'top': indexTopView,
             'main': indexMainView,
-            'right': indexLoginView
+            'right': indexMenuView
         }
     }).state('home', {
         url: '/home/',
         views: {
             'top': indexTopView,
             'main': indexMainView,
-            'right': {
-                templateUrl: "/partial/right/menu.html",
-            }
+            'right': indexMenuView
         }
     }).state('logout', {
     }).state('register', {
@@ -146,7 +144,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
                     };
                 }
             },
-            'right': indexLoginView
+            'right': indexMenuView
         }
     }).state('knowledge', {
         url: '/knowledge/',
@@ -158,7 +156,7 @@ swordssorceryApp.config(function($stateProvider, $urlRouterProvider){
             'main': {
                 templateUrl: '/partial/knowledge.html',
             },
-            'right': indexLoginView
+            'right': indexMenuView
         }
     });
 });
