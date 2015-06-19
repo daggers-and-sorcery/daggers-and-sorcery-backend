@@ -1,12 +1,14 @@
 package com.swordssorcery.server.game.attribute.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DefaultAttributeData implements AttributeData {
 
     private int actual;
     private int maximum;
-    private ArrayList<AttributeModifierData> attributeModifierDatas = new ArrayList<>();
+    private List<AttributeModifierData> attributeModifierDatas = new ArrayList<>();
 
     public int getMaximum() {
         return maximum;
@@ -26,6 +28,10 @@ public class DefaultAttributeData implements AttributeData {
 
     public void addAttributeModifierData(AttributeModifierData attributeModifierData) {
         attributeModifierDatas.add(attributeModifierData);
+    }
+
+    public void setAttributeModifierDataArray(AttributeModifierData[] attributeModifierDataArray) {
+        attributeModifierDatas = Arrays.asList(attributeModifierDataArray);
     }
 
     public AttributeModifierData[] getAttributeModifierDataArray() {

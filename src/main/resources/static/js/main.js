@@ -1,4 +1,4 @@
-var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ngMessages']);
+var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ui.bootstrap', 'ngMessages']);
 
 swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
     var indexMainView = {
@@ -281,7 +281,16 @@ swordssorceryApp.directive('attributeListColumn', function () {
                 'WISDOM': 'Wisdom',
                 'WILLPOWER': 'Willpower',
                 'CHARISMA': 'Charisma'
-            }
+            };
+
+            $scope.attributePopover = {
+                templateUrl: '/partial/popover/attribute.html',
+            };
+
+            $scope.attributeBonusNameMap = {
+                'INITIAL': 'Initial value',
+                'RACIAL': 'Racial bonus'
+            };
         },
         templateUrl: '/directive/attribute-list-column.html'
     };

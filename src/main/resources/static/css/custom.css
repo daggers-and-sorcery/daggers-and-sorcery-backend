@@ -198,3 +198,7 @@ html, body, .container {
   padding: 7px;
   margin-top: -3px;
 }
+
+.attribute-list-item .popover {
+    width: 250px;
+}
