@@ -2,6 +2,7 @@ package com.swordssorcery.server.game.attribute;
 
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.game.attribute.data.DefaultAttributeData;
+import com.swordssorcery.server.game.attribute.data.DefaultAttributeModifierData;
 import com.swordssorcery.server.model.User;
 import org.springframework.stereotype.Component;
 
@@ -14,11 +15,16 @@ public class AttributeCalculator {
         attributeData.setActual(calculateActualValue(user, attribute));
         attributeData.setMaximum(calculateMaximumValue(user, attribute));
 
+        int racialModifier = user.getRace().getRacialModifier(attribute);
+        if(racialModifier != 0) {
+            attributeData.addAttributeModifierData(new DefaultAttributeModifierData(AttributeModifierType.RACIAL, racialModifier));
+        }
+
         return attributeData;
     }
 
     private int calculateActualValue(User user, Attribute attribute) {
-        return attribute.getInitialValue();
+        return attribute.getInitialValue() + user.getRace().getRacialModifier(attribute);
     }
 
     private int calculateMaximumValue(User user, Attribute attribute) {

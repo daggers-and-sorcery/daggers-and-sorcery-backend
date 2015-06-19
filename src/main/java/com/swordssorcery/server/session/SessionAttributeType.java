@@ -1,7 +1,7 @@
 package com.swordssorcery.server.session;
 
-public class SessionType {
+public class SessionAttributeType {
 
-    public static final String USER = "user";
+    public static final String USER_ID = "user";
     public static final String LOCALE = "locale";
 }

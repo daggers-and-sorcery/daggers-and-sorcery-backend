@@ -1,6 +1,6 @@
 package com.swordssorcery.server.filter;
 
-import com.swordssorcery.server.session.SessionType;
+import com.swordssorcery.server.session.SessionAttributeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ public class SessionLoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        if (request.getSession().getAttribute(SessionType.USER) == null) {
+        if (request.getSession().getAttribute(SessionAttributeType.USER_ID) == null) {
             response.sendError(401);
 
             return;

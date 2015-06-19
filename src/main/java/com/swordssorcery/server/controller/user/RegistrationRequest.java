@@ -1,6 +1,8 @@
 package com.swordssorcery.server.controller.user;
 
+import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
+import com.swordssorcery.server.validator.annotation.StringEnumeration;
 import com.swordssorcery.server.validator.annotation.UniqueInDb;
 import org.hibernate.validator.constraints.Email;
 
@@ -25,9 +27,8 @@ public class RegistrationRequest {
     @NotNull(message = "Second password is required.")
     @Size(min = 6, max = 16, message = "Second password must be between 6 and 16 characters.")
     private String passwordSecond;
-    @Max(value = 7, message = "Invalid race id.")
-    @Min(value = 0, message = "Invalid race id.")
-    private int race;
+    @StringEnumeration(enumClass = Race.class)
+    private String race;
 
     public String getEmail() {
         return email;
@@ -61,11 +62,11 @@ public class RegistrationRequest {
         this.passwordSecond = passwordSecond;
     }
 
-    public int getRace() {
+    public String getRace() {
         return race;
     }
 
-    public void setRace(int race) {
+    public void setRace(String race) {
         this.race = race;
     }
 }

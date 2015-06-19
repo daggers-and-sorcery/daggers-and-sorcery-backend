@@ -1,15 +1,13 @@
 package com.swordssorcery.server.model;
 
 import com.swordssorcery.server.game.attribute.Attribute;
-import com.swordssorcery.server.game.attribute.AttributeModifierType;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
-import com.swordssorcery.server.game.attribute.data.DefaultAttributeModifierData;
+import com.swordssorcery.server.game.race.Race;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 @Document
 public class User {
@@ -22,9 +20,9 @@ public class User {
 
     @Indexed(unique = true)
     private String username;
-    
+
     private String password;
-    private int race;
+    private Race race;
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
 
     public User(String username, String password) {
@@ -56,11 +54,11 @@ public class User {
         this.email = email;
     }
 
-    public int getRace() {
+    public Race getRace() {
         return race;
     }
 
-    public void setRace(int race) {
+    public void setRace(Race race) {
         this.race = race;
     }
 
@@ -70,5 +68,9 @@ public class User {
 
     public AttributeModifierData getAttributeModifier(Attribute attribute) {
         return attributeModifierMap.get(attribute);
+    }
+
+    public String toString() {
+        return "[id: " + id + " name: " + username + "]";
     }
 }

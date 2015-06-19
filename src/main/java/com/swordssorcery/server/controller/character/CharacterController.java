@@ -4,8 +4,9 @@ import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeType;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
-import com.swordssorcery.server.game.attribute.data.DefaultAttributeData;
+import com.swordssorcery.server.model.User;
 import com.swordssorcery.server.model.repository.UserRepository;
+import com.swordssorcery.server.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,8 @@ public class CharacterController {
     @ResponseBody
     @RequestMapping(value = "/character/info", method = RequestMethod.GET)
     public HashMap<String, LinkedHashMap<String, AttributeData>> info(HttpSession session) {
+        User user = userRepository.findOne((String) session.getAttribute(SessionAttributeType.USER_ID));
+
         HashMap<String, LinkedHashMap<String, AttributeData>> response = new HashMap<>();
 
         for (AttributeType attributeType : AttributeType.values()) {
@@ -35,7 +38,7 @@ public class CharacterController {
 
             for (Attribute attribute : Attribute.values()) {
                 if (attribute.getAttributeType() == attributeType) {
-                    attributeDataHolder.put(attribute.name(), attributeCalculator.calculateAttributeValue(null, attribute));
+                    attributeDataHolder.put(attribute.name(), attributeCalculator.calculateAttributeValue(user, attribute));
                 }
             }
         }

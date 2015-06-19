@@ -1,15 +1,15 @@
 package com.swordssorcery.server.controller.user;
 
+import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
 import com.swordssorcery.server.model.repository.UserRepository;
-import com.swordssorcery.server.session.SessionType;
+import com.swordssorcery.server.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,7 @@ public class UserController {
         if (login != null) {
             response.put("success", "true");
 
-            session.setAttribute(SessionType.USER, login);
+            session.setAttribute(SessionAttributeType.USER_ID, login.getId());
         } else {
             response.put("success", "false");
             response.put("error", "Wrong username or password!");
@@ -70,7 +70,7 @@ public class UserController {
 
             User user = new User(username, password);
             user.setEmail(registrationRequest.getEmail());
-            user.setRace(registrationRequest.getRace());
+            user.setRace(Race.valueOf(registrationRequest.getRace()));
 
             userRepository.save(user);
 
@@ -85,7 +85,7 @@ public class UserController {
     public HashMap<String, String> info(HttpSession session) {
         HashMap<String, String> response = new HashMap<>();
 
-        response.put("loggedIn", String.valueOf(session.getAttribute(SessionType.USER) != null));
+        response.put("loggedIn", String.valueOf(session.getAttribute(SessionAttributeType.USER_ID) != null));
 
         return response;
     }

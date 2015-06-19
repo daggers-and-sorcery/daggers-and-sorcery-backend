@@ -81,34 +81,42 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                     $scope.successfulRegistration = false;
                     $scope.race = [
                         {
+                            id: 'HUMAN',
                             name: 'Human',
                             description: 'Human Description'
                         },
                         {
+                            id: 'ORC',
                             name: 'Orc',
                             description: 'Orc Description'
                         },
                         {
+                            id: 'DWARF',
                             name: 'Dwarf',
                             description: 'Dwarf Description'
                         },
                         {
+                            id: 'ELF',
                             name: 'Elf',
                             description: 'Elf Description'
                         },
                         {
+                            id: 'DARK_ELF',
                             name: 'Dark Elf',
                             description: 'Dark elf Description'
                         },
                         {
+                            id: 'LIZARDMEN',
                             name: 'Lizardmen',
                             description: 'Lizardmen Description'
                         },
                         {
+                            id: 'GNOME',
                             name: 'Gnome',
                             description: 'Human Description'
                         },
                         {
+                            id: 'DRACONIC',
                             name: 'Draconic',
                             description: 'Draconic Description'
                         }
@@ -131,7 +139,7 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                     $scope.submit = function (valid) {
                         if (valid) {
                             dataToSend = $scope.user;
-                            dataToSend.race = $scope.visibleRace;
+                            dataToSend.race = $scope.race[$scope.visibleRace].id;
 
                             $http.post('/user/register', dataToSend).success(function (data, status, headers, config) {
                                 $scope.errorList = [];
