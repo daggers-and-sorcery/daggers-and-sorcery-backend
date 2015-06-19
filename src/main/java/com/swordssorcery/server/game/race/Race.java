@@ -1,5 +1,5 @@
 package com.swordssorcery.server.game.race;
 
 public enum Race {
-    XXX, YYY
+    HUMAN, ORC, DWARF, ELF, DARK_ELF, LIZARDMEN, GNOME, DRACONIC;
 }
