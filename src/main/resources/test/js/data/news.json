@@ -1,0 +1,12 @@
+[
+  {
+    "_id": 1,
+    "_class": "com.swordssorcery.server.model.News",
+    "timestamp": {
+      "$numberLong": "1111111111000"
+    },
+    "title": "This is some test title",
+    "message": "Lorem ipsum dolor sit ameth....",
+    "icon": "buble"
+  }
+]

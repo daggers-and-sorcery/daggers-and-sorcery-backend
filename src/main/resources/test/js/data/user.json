@@ -1,0 +1,23 @@
+[
+  {
+    "_id": {
+      "$oid": "5581dafc44ae3923c9f0a5d1"
+    },
+    "_class": "com.swordssorcery.server.model.User",
+    "email": "laxika91@gmail.com",
+    "username": "asdasd",
+    "password": "5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8",
+    "race": 0
+  },
+  {
+    "_id": {
+      "$oid": "55871d7c44ae1141fbe67365"
+    },
+    "_class": "com.swordssorcery.server.model.User",
+    "email": "asdasdasd@asd",
+    "username": "asdasd23",
+    "password": "5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8",
+    "race": "HUMAN",
+    "attributeModifierMap": {}
+  }
+]
