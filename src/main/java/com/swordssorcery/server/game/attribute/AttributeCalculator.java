@@ -4,6 +4,7 @@ import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
 import com.swordssorcery.server.game.attribute.data.DefaultAttributeData;
 import com.swordssorcery.server.game.attribute.data.DefaultAttributeModifierData;
+import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +23,12 @@ public class AttributeCalculator {
         return attributeData;
     }
 
+    private int calculateActualBeforePercentageMultiplication(User user, Attribute attribute) {
+        return attribute.getInitialValue();
+    }
+
     private int calculateActualValue(User user, Attribute attribute) {
-        return attribute.getInitialValue() + user.getRace().getRacialModifier(attribute);
+        return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
     }
 
     private int calculateMaximumValue(User user, Attribute attribute) {
@@ -34,11 +39,17 @@ public class AttributeCalculator {
         ArrayList<DefaultAttributeModifierData> attributeModifierDataList = new ArrayList<>();
 
         attributeModifierDataList.add(new DefaultAttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
-        int racialModifier = user.getRace().getRacialModifier(attribute);
-        if(racialModifier != 0) {
-            attributeModifierDataList.add(new DefaultAttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, racialModifier));
+        int racialModifierPercentage = user.getRace().getRacialModifier(attribute);
+        if(racialModifierPercentage != Race.NO_RACIAL_MODIFIER) {
+            int racialModifierValue = calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifierPercentage) - calculateActualBeforePercentageMultiplication(user, attribute);
+
+            attributeModifierDataList.add(new DefaultAttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, racialModifierPercentage, racialModifierValue));
         }
 
         return attributeModifierDataList.toArray(new AttributeModifierData[attributeModifierDataList.size()]);
+    }
+
+    private int calculatePercentageModifiedAttribute(int attributeValue, int percentage) {
+        return (int) (attributeValue * ((double) percentage / 100 + 1));
     }
 }
