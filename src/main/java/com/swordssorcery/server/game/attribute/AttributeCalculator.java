@@ -2,6 +2,7 @@ package com.swordssorcery.server.game.attribute;
 
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
+import com.swordssorcery.server.game.attribute.data.PercentageAttributeModifierData;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,7 @@ public class AttributeCalculator {
         if(racialModifierPercentage != Race.NO_RACIAL_MODIFIER) {
             int racialModifierValue = calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifierPercentage) - calculateActualBeforePercentageMultiplication(user, attribute);
 
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, racialModifierPercentage, racialModifierValue));
+            attributeModifierDataList.add(new PercentageAttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, racialModifierValue, racialModifierPercentage));
         }
 
         return attributeModifierDataList.toArray(new AttributeModifierData[attributeModifierDataList.size()]);
