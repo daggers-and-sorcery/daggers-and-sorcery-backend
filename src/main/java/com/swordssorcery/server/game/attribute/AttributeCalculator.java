@@ -33,10 +33,10 @@ public class AttributeCalculator {
     private AttributeModifierData[] calculateModifierData(User user, Attribute attribute) {
         ArrayList<DefaultAttributeModifierData> attributeModifierDataList = new ArrayList<>();
 
-        attributeModifierDataList.add(new DefaultAttributeModifierData(AttributeModifierType.INITIAL, attribute.getInitialValue()));
+        attributeModifierDataList.add(new DefaultAttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
         int racialModifier = user.getRace().getRacialModifier(attribute);
         if(racialModifier != 0) {
-            attributeModifierDataList.add(new DefaultAttributeModifierData(AttributeModifierType.RACIAL, racialModifier));
+            attributeModifierDataList.add(new DefaultAttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, racialModifier));
         }
 
         return attributeModifierDataList.toArray(new AttributeModifierData[attributeModifierDataList.size()]);
