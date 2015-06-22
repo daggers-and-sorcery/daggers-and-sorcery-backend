@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class AttributeCalculator {
 
     public AttributeData calculateAttributeValue(User user, Attribute attribute) {
-        AttributeData attributeData = new AttributeData();
+        AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder();
 
-        attributeData.setActual(calculateActualValue(user, attribute));
-        attributeData.setMaximum(calculateMaximumValue(user, attribute));
-        attributeData.setAttributeModifierDataArray(calculateModifierData(user, attribute));
+        attributeDataBuilder.setActual(calculateActualValue(user, attribute));
+        attributeDataBuilder.setMaximum(calculateMaximumValue(user, attribute));
+        attributeDataBuilder.setAttributeModifierDataArray(calculateModifierData(user, attribute));
 
-        return attributeData;
+        return attributeDataBuilder.build();
     }
 
     private int calculateActualBeforePercentageMultiplication(User user, Attribute attribute) {

@@ -1,40 +1,48 @@
 package com.swordssorcery.server.game.attribute.data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class AttributeData {
 
-    private int actual;
-    private int maximum;
-    private List<AttributeModifierData> attributeModifierDatas = new ArrayList<>();
+    private final int actual;
+    private final int maximum;
+    private final AttributeModifierData[] modifierDataArray;
+
+    private AttributeData(int actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
+        this.actual = actual;
+        this.maximum = maximum;
+        this.modifierDataArray = attributeModifierDataArray;
+    }
 
     public int getMaximum() {
         return maximum;
-    }
-
-    public void setMaximum(int maximum) {
-        this.maximum = maximum;
     }
 
     public int getActual() {
         return actual;
     }
 
-    public void setActual(int actual) {
-        this.actual = actual;
+    public AttributeModifierData[] getModifierDataArray() {
+        return modifierDataArray;
     }
 
-    public void addAttributeModifierData(AttributeModifierData attributeModifierData) {
-        attributeModifierDatas.add(attributeModifierData);
-    }
+    public static class AttributeDataBuilder {
+        private int actual;
+        private int maximum;
+        private AttributeModifierData[] attributeModifierArray;
 
-    public void setAttributeModifierDataArray(AttributeModifierData[] attributeModifierDataArray) {
-        attributeModifierDatas = Arrays.asList(attributeModifierDataArray);
-    }
+        public void setMaximum(int maximum) {
+            this.maximum = maximum;
+        }
 
-    public AttributeModifierData[] getAttributeModifierDataArray() {
-        return attributeModifierDatas.toArray(new AttributeModifierData[attributeModifierDatas.size()]);
+        public void setActual(int actual) {
+            this.actual = actual;
+        }
+
+        public void setAttributeModifierDataArray(AttributeModifierData[] attributeModifierArray) {
+            this.attributeModifierArray = attributeModifierArray;
+        }
+
+        public AttributeData build() {
+            return new AttributeData(actual, maximum, attributeModifierArray);
+        }
     }
 }
