@@ -52,6 +52,12 @@
             <artifactId>spring-security-core</artifactId>
             <version>4.0.1.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.9.4</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
