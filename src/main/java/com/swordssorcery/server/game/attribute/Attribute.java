@@ -27,7 +27,7 @@ public enum Attribute {
     WILLPOWER(AttributeType.GENERAL_MENTAL, 10, true),
     CHARISMA(AttributeType.GENERAL_MENTAL, 10, true);
 
-    public static final int UNLIMITED_PLACEHOLDER = 0;
+    public static final int NO_MAXIMUM_VALUE = 0;
 
     private final AttributeType attributeType;
     private final int initialValue;

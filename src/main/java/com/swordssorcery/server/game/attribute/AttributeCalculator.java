@@ -31,7 +31,7 @@ public class AttributeCalculator {
     }
 
     private int calculateMaximumValue(User user, Attribute attribute) {
-        return attribute.isUnlimited() ? Attribute.UNLIMITED_PLACEHOLDER : attribute.getInitialValue();
+        return attribute.isUnlimited() ? Attribute.NO_MAXIMUM_VALUE : attribute.getInitialValue();
     }
 
     private AttributeModifierData[] calculateModifierData(User user, Attribute attribute) {
