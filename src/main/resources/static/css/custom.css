@@ -169,6 +169,7 @@ html, body, .container {
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.06);
     border-color: rgba(0,0,0, 0.3);
+    box-shadow: 2px 2px 1px RGBa(0,0,0, 0.035);
 }
 
 .attribute-list-item:last-child {
