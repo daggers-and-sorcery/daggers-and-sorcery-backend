@@ -1,12 +1,16 @@
 package com.swordssorcery.server.game.attribute.data;
 
+import com.swordssorcery.server.game.attribute.Attribute;
+
 public class AttributeData {
 
     private final int actual;
     private final int maximum;
     private final AttributeModifierData[] modifierDataArray;
+    private final Attribute attribute;
 
-    private AttributeData(int actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
+    private AttributeData(Attribute attribute, int actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
+        this.attribute = attribute;
         this.actual = actual;
         this.maximum = maximum;
         this.modifierDataArray = attributeModifierDataArray;
@@ -24,10 +28,20 @@ public class AttributeData {
         return modifierDataArray;
     }
 
+    public Attribute getAttribute() {
+        return attribute;
+    }
+
     public static class AttributeDataBuilder {
-        private int actual;
+
+        private Attribute attribute;
         private int maximum;
+        private int actual;
         private AttributeModifierData[] attributeModifierArray;
+
+        public AttributeDataBuilder(Attribute attribute) {
+            this.attribute = attribute;
+        }
 
         public void setMaximum(int maximum) {
             this.maximum = maximum;
@@ -42,7 +56,7 @@ public class AttributeData {
         }
 
         public AttributeData build() {
-            return new AttributeData(actual, maximum, attributeModifierArray);
+            return new AttributeData(attribute, actual, maximum, attributeModifierArray);
         }
     }
 }

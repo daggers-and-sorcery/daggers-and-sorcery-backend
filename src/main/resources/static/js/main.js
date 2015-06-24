@@ -178,7 +178,24 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                     };
 
                     $http.get('/character/info').success(function (data, status, headers, config) {
-                        $scope.attributes = data;
+                        var sortedAttributes = {};
+
+                        sortedAttributes['COMBAT'] = data['COMBAT']
+                        sortedAttributes['BASIC'] = data['BASIC']
+                        sortedAttributes['GENERAL_PHYSICAL'] = {};
+                        sortedAttributes['GENERAL_MENTAL'] = {};
+
+                        angular.forEach(data['GENERAL'], function(value, key) {
+                            if(value.attribute.generalAttributeType === 'PHYSICAL') {
+                                sortedAttributes['GENERAL_PHYSICAL'][key] = value;
+                            } else {
+                                sortedAttributes['GENERAL_MENTAL'][key] = value;
+                            }
+                        });
+                        console.log(sortedAttributes['COMBAT']);
+                        console.log(sortedAttributes['GENERAL_MENTAL']);
+
+                        $scope.attributes = sortedAttributes;
                     });
                 }
             },

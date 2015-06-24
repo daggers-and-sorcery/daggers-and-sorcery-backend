@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class AttributeCalculator {
 
     public AttributeData calculateAttributeValue(User user, Attribute attribute) {
-        AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder();
+        AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder(attribute);
 
         attributeDataBuilder.setActual(calculateActualValue(user, attribute));
         attributeDataBuilder.setMaximum(calculateMaximumValue(user, attribute));
@@ -31,7 +31,7 @@ public class AttributeCalculator {
     }
 
     private int calculateMaximumValue(User user, Attribute attribute) {
-        return attribute.isUnlimited() ? Attribute.NO_MAXIMUM_VALUE : attribute.getInitialValue();
+        return attribute.isUnlimited() ? 0 : attribute.getInitialValue();
     }
 
     private AttributeModifierData[] calculateModifierData(User user, Attribute attribute) {

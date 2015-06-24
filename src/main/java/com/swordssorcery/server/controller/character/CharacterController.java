@@ -1,8 +1,8 @@
 package com.swordssorcery.server.controller.character;
 
-import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeType;
+import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.model.User;
 import com.swordssorcery.server.model.repository.UserRepository;
@@ -24,23 +24,22 @@ public class CharacterController {
     private UserRepository userRepository;
     @Autowired
     private AttributeCalculator attributeCalculator;
+    @Autowired
+    private AttributeUtil attributeUtil;
 
     @ResponseBody
     @RequestMapping(value = "/character/info", method = RequestMethod.GET)
-    public HashMap<String, LinkedHashMap<String, AttributeData>> info(HttpSession session) {
+    public HashMap<AttributeType, LinkedHashMap<String, AttributeData>> info(HttpSession session) {
         User user = userRepository.findOne((String) session.getAttribute(SessionAttributeType.USER_ID));
 
-        HashMap<String, LinkedHashMap<String, AttributeData>> response = new HashMap<>();
+        HashMap<AttributeType, LinkedHashMap<String, AttributeData>> response = new HashMap<>();
 
         for (AttributeType attributeType : AttributeType.values()) {
             LinkedHashMap<String, AttributeData> attributeDataHolder = new LinkedHashMap<>();
-            response.put(attributeType.getShortName(), attributeDataHolder);
+            response.put(attributeType, attributeDataHolder);
 
-            for (Attribute attribute : Attribute.values()) {
-                if (attribute.getAttributeType() == attributeType) {
-                    attributeDataHolder.put(attribute.name(), attributeCalculator.calculateAttributeValue(user, attribute));
-                }
-            }
+            attributeUtil.getAllAttributes().stream().filter(attribute -> attribute.getAttributeType() == attributeType)
+                    .forEach(attribute -> attributeDataHolder.put(attribute.getName(), attributeCalculator.calculateAttributeValue(user, attribute)));
         }
 
         return response;

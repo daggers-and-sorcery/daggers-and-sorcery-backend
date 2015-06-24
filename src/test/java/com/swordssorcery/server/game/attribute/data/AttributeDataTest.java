@@ -2,6 +2,7 @@ package com.swordssorcery.server.game.attribute.data;
 
 import com.swordssorcery.server.game.attribute.AttributeModifierType;
 import com.swordssorcery.server.game.attribute.AttributeModifierValueType;
+import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -10,7 +11,7 @@ public class AttributeDataTest {
 
     @Test
     public void testAttributeDataBuilder() {
-        AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder();
+        AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder(GeneralAttribute.STRENGTH);
         attributeDataBuilder.setActual(10);
         attributeDataBuilder.setMaximum(11);
         attributeDataBuilder.setAttributeModifierDataArray(new AttributeModifierData[]{
