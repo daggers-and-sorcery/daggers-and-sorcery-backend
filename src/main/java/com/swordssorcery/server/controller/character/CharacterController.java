@@ -1,7 +1,7 @@
 package com.swordssorcery.server.controller.character;
 
+import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeCalculator;
-import com.swordssorcery.server.game.attribute.AttributeType;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.model.User;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 @Controller
 public class CharacterController {
@@ -29,17 +29,16 @@ public class CharacterController {
 
     @ResponseBody
     @RequestMapping(value = "/character/info", method = RequestMethod.GET)
-    public HashMap<AttributeType, LinkedHashMap<String, AttributeData>> info(HttpSession session) {
+    public HashMap<String, Object> info(HttpSession session) {
         User user = userRepository.findOne((String) session.getAttribute(SessionAttributeType.USER_ID));
 
-        HashMap<AttributeType, LinkedHashMap<String, AttributeData>> response = new HashMap<>();
+        HashMap<String, Object> response = new HashMap<>();
 
-        for (AttributeType attributeType : AttributeType.values()) {
-            LinkedHashMap<String, AttributeData> attributeDataHolder = new LinkedHashMap<>();
-            response.put(attributeType, attributeDataHolder);
+        LinkedList<AttributeData> attributeData = new LinkedList<AttributeData>();
+        response.put("attribute", attributeData);
 
-            attributeUtil.getAllAttributes().stream().filter(attribute -> attribute.getAttributeType() == attributeType)
-                    .forEach(attribute -> attributeDataHolder.put(attribute.getName(), attributeCalculator.calculateAttributeValue(user, attribute)));
+        for (Attribute attribute : attributeUtil.getAllAttributes()) {
+            attributeData.add(attributeCalculator.calculateAttributeValue(user, attribute));
         }
 
         return response;

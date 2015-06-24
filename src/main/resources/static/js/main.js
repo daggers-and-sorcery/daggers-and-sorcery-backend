@@ -178,24 +178,28 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                     };
 
                     $http.get('/character/info').success(function (data, status, headers, config) {
-                        var sortedAttributes = {};
+                        var structuredAttributes = {
+                            'GENERAL_PHYSICAL': {},
+                            'GENERAL_MENTAL': {}
+                        };
 
-                        sortedAttributes['COMBAT'] = data['COMBAT']
-                        sortedAttributes['BASIC'] = data['BASIC']
-                        sortedAttributes['GENERAL_PHYSICAL'] = {};
-                        sortedAttributes['GENERAL_MENTAL'] = {};
-
-                        angular.forEach(data['GENERAL'], function(value, key) {
-                            if(value.attribute.generalAttributeType === 'PHYSICAL') {
-                                sortedAttributes['GENERAL_PHYSICAL'][key] = value;
+                        angular.forEach(data.attribute, function(value, key) {
+                            if (value.attribute.attributeType === 'GENERAL') {
+                                if(value.attribute.generalAttributeType === 'PHYSICAL') {
+                                    structuredAttributes['GENERAL_PHYSICAL'][value.attribute.name] = value;
+                                } else {
+                                    structuredAttributes['GENERAL_MENTAL'][value.attribute.name] = value;
+                                }
                             } else {
-                                sortedAttributes['GENERAL_MENTAL'][key] = value;
+                                if(structuredAttributes[value.attribute.attributeType] === undefined) {
+                                    structuredAttributes[value.attribute.attributeType] = {};
+                                }
+
+                                structuredAttributes[value.attribute.attributeType][value.attribute.name] = value;
                             }
                         });
-                        console.log(sortedAttributes['COMBAT']);
-                        console.log(sortedAttributes['GENERAL_MENTAL']);
 
-                        $scope.attributes = sortedAttributes;
+                        $scope.attributes = structuredAttributes;
                     });
                 }
             },
