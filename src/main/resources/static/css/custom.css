@@ -196,6 +196,15 @@ html, body, .container {
     margin-top: 15px;
 }
 
+.attribute-list-item .popover {
+    background-color: #E2DAC3;
+    border-color: #9E9888;
+}
+
+.attribute-list-item .popover > .arrow:after {
+    border-right-color: #9E9888;
+}
+
 .attribute-badge {
   padding: 7px;
   margin-top: -3px;
