@@ -13,6 +13,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
 
+/*
+ * TODO:
+ *  - Write a saver/calculator for attribute modifiers. (A calculator an be better because then we can change the
+ *    calculation method on the fly without too much db management.)
+ */
+
 @SpringBootApplication
 @Configuration
 @EnableWebMvc
