@@ -7,7 +7,7 @@
                     <img ng-if="news.icon" class="news-icon" ng-src="/icon/{{news.icon}}.svg"/>
                     <img ng-if="!news.icon" class="news-icon" src="/icon/buble.svg"/>
                     <h5 class="news-title" ng-bind-html="news.title"></h5>
-                    <div class="news-subtitle" ng-bind="news.timestamp | date:'MMM dd, yyyy'"></div>
+                    <div class="news-subtitle" ng-bind="news.date | date:'MMM dd, yyyy'"></div>
                 </div>
                 <div ng-bind-html="news.message"></div>
                 <hr class="news-divider" ng-if="!$last" />
