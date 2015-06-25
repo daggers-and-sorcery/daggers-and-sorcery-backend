@@ -41,6 +41,11 @@ public class CharacterController {
             attributeData.add(attributeCalculator.calculateAttributeValue(user, attribute));
         }
 
+        response.put("username", user.getUsername());
+        response.put("race", user.getRace());
+        response.put("registrationDate", user.getRegistrationDate());
+        response.put("lastLoginDate", user.getLastLoginDate());
+
         return response;
     }
 }

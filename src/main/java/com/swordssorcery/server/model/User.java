@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
 import java.util.HashMap;
 
 @Document
@@ -24,6 +25,8 @@ public class User {
     private String password;
     private Race race;
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
+    private Date registrationDate = new Date();
+    private Date lastLoginDate = new Date();
 
     public User(String username, String password) {
         this.username = username;
@@ -72,5 +75,21 @@ public class User {
 
     public String toString() {
         return "[id: " + id + " name: " + username + "]";
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public Date getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    public void setLastLoginDate(Date lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
     }
 }

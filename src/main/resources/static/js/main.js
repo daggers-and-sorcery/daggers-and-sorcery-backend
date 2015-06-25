@@ -199,7 +199,9 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                             }
                         });
 
-                        $scope.attributes = structuredAttributes;
+                        data.attribute = structuredAttributes;
+
+                        $scope.user = data;
                     });
                 }
             },
@@ -266,6 +268,18 @@ swordssorceryApp.directive('equals', function () {
             };
         }
     }
+});
+
+swordssorceryApp.filter('capitalize', function() {
+  return function(value, scope) {
+    if (value != undefined) {
+        value = value.toLowerCase();
+
+        value = value.substring(0,1).toUpperCase()+value.substring(1);
+    }
+
+    return value;
+  }
 });
 
 swordssorceryApp.directive('attributeListColumn', function () {

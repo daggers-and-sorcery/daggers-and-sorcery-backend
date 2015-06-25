@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 @Controller
@@ -33,14 +34,17 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public HashMap<String, String> login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
-        User login = userRepository.findByUsernameAndPassword(username, shaPasswordEncoder.encodePassword(password, null));
+        User user = userRepository.findByUsernameAndPassword(username, shaPasswordEncoder.encodePassword(password, null));
 
         HashMap<String, String> response = new HashMap<>();
 
-        if (login != null) {
+        if (user != null) {
             response.put("success", "true");
 
-            session.setAttribute(SessionAttributeType.USER_ID, login.getId());
+            session.setAttribute(SessionAttributeType.USER_ID, user.getId());
+
+            user.setLastLoginDate(new Date());
+            userRepository.save(user);
         } else {
             response.put("success", "false");
             response.put("error", "Wrong username or password!");
