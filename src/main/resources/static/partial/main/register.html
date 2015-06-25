@@ -67,14 +67,22 @@
                                 <a class="btn btn-default btn-no-outline race-paging-btn" ng-click="decreaseRace()"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
                             </div>
                             <div class="col-sm-4" style="line-height: 2.2;">
-                                <span class="race-name-holder">~ <span ng-bind="race[visibleRace].name"></span> ~</span>
+                                <span class="race-name-holder">~ <span ng-bind="race[visibleRace].name | replace:'_':' ' | capitalize"></span> ~</span>
                             </div>
                             <div class="col-sm-4" style="text-align: left; padding: 0;">
                                 <a class="btn btn-default btn-no-outline race-paging-btn" ng-click="increaseRace()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                             </div>
                         </div>
                     </div>
-                    <div ng-bind="race[visibleRace].description"></div>
+                    <div>
+                        <div class="bold italic" style="margin-bottom: 5px;">Racial modifiers:</div>
+                        <div>
+                            <ul ng-if="raceAttributeModifierCount(visibleRace) > 0">
+                                <li ng-repeat="(attribute, value) in race[visibleRace].racialAttributeModifiers">{{value}} - {{attribute | capitalize}}</li>
+                            </ul>
+                            <span class="italic" style="padding-left: 30px;" ng-if="raceAttributeModifierCount(visibleRace) == 0">Humans doesn't have any advantages nor disadvantages.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">

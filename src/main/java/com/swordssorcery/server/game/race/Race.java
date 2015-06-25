@@ -1,10 +1,14 @@
 package com.swordssorcery.server.game.race;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Race {
     HUMAN, ORC, DWARF, ELF, DARK_ELF, LIZARDMEN, GNOME, DRACONIC;
 
@@ -59,7 +63,7 @@ public enum Race {
 
     public static final int NO_RACIAL_MODIFIER = 0;
 
-    private final HashMap<Attribute, Integer> racialAttributeModifiers = new HashMap<>();
+    private final LinkedHashMap<Attribute, Integer> racialAttributeModifiers = new LinkedHashMap<>();
 
     private void setRacialModifier(Attribute attribute, int value) {
         racialAttributeModifiers.put(attribute, value);
@@ -67,5 +71,13 @@ public enum Race {
 
     public int getRacialModifier(Attribute attribute) {
         return racialAttributeModifiers.containsKey(attribute) ? racialAttributeModifiers.get(attribute) : NO_RACIAL_MODIFIER;
+    }
+
+    public String getName() {
+        return this.name();
+    }
+
+    public Map<Attribute, Integer> getRacialAttributeModifiers() {
+        return racialAttributeModifiers;
     }
 }

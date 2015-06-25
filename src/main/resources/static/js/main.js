@@ -73,54 +73,18 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
         views: {
             'top': indexTopView,
             'main': {
+                resolve: {
+                     racelist: function ($http) {
+                         return $http({method: 'GET', url: '/user/race/list'});
+                     }
+                 },
                 templateUrl: '/partial/main/register.html',
-                controller: function ($scope, $http) {
+                controller: function ($scope, $http, racelist) {
                     $scope.user = {};
                     $scope.visibleRace = 0;
                     $scope.errorList = [];
                     $scope.successfulRegistration = false;
-                    $scope.race = [
-                        {
-                            id: 'HUMAN',
-                            name: 'Human',
-                            description: 'Human Description'
-                        },
-                        {
-                            id: 'ORC',
-                            name: 'Orc',
-                            description: 'Orc Description'
-                        },
-                        {
-                            id: 'DWARF',
-                            name: 'Dwarf',
-                            description: 'Dwarf Description'
-                        },
-                        {
-                            id: 'ELF',
-                            name: 'Elf',
-                            description: 'Elf Description'
-                        },
-                        {
-                            id: 'DARK_ELF',
-                            name: 'Dark Elf',
-                            description: 'Dark elf Description'
-                        },
-                        {
-                            id: 'LIZARDMEN',
-                            name: 'Lizardmen',
-                            description: 'Lizardmen Description'
-                        },
-                        {
-                            id: 'GNOME',
-                            name: 'Gnome',
-                            description: 'Human Description'
-                        },
-                        {
-                            id: 'DRACONIC',
-                            name: 'Draconic',
-                            description: 'Draconic Description'
-                        }
-                    ];
+                    $scope.race = racelist.data;
 
                     $scope.decreaseRace = function () {
                         if ($scope.visibleRace == 0) {
@@ -139,7 +103,7 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                     $scope.submit = function (valid) {
                         if (valid) {
                             dataToSend = $scope.user;
-                            dataToSend.race = $scope.race[$scope.visibleRace].id;
+                            dataToSend.race = $scope.race[$scope.visibleRace].name;
 
                             $http.post('/user/register', dataToSend).success(function (data, status, headers, config) {
                                 $scope.errorList = [];
@@ -148,6 +112,9 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                                 $scope.errorList = data;
                             });
                         }
+                    };
+                    $scope.raceAttributeModifierCount = function(raceId) {
+                        return Object.keys($scope.race[raceId].racialAttributeModifiers).length;
                     };
                 }
             },
@@ -270,17 +237,36 @@ swordssorceryApp.directive('equals', function () {
     }
 });
 
-swordssorceryApp.filter('capitalize', function() {
-  return function(value, scope) {
-    if (value != undefined) {
-        value = value.toLowerCase();
-
-        value = value.substring(0,1).toUpperCase()+value.substring(1);
+swordssorceryApp.filter('replace', function () {
+    return function (input, target, replacement) {
+        return input.replace(target, replacement);
     }
-
-    return value;
-  }
 });
+
+swordssorceryApp.filter('capitalize', function () {
+                     return function (input, format) {
+                       if (!input) {
+                         return input;
+                       }
+                       format = format || 'all';
+                       if (format === 'first') {
+                         // Capitalize the first letter of a sentence
+                         return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+                       } else {
+                         var words = input.split(' ');
+                         var result = [];
+                         words.forEach(function(word) {
+                           if (word.length === 2 && format === 'team') {
+                             // Uppercase team abbreviations like FC, CD, SD
+                             result.push(word.toUpperCase());
+                           } else {
+                             result.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+                           }
+                         });
+                         return result.join(' ');
+                       }
+                     }
+                     });
 
 swordssorceryApp.directive('attributeListColumn', function () {
     return {

@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -82,6 +83,12 @@ public class UserController {
 
             return new ResponseEntity<>("{}", HttpStatus.OK);
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/race/list", method = RequestMethod.GET)
+    public Race[] raceList() {
+        return Race.values();
     }
 
     @ResponseBody

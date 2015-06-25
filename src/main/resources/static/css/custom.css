@@ -1,3 +1,13 @@
+/** Typography **/
+
+.bold {
+    font-weight: 700;
+}
+
+.italic {
+    font-style: italic;
+}
+
 /** Containers **/
 .container {
     font-family: 'Open Sans', sans-serif;
