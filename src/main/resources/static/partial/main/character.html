@@ -46,9 +46,26 @@
 
         <h4 class="attribute-list-name">Skills</h4>
         <div class="row">
-            <attribute-list-column column-align="left" column-align-id="0" source="user.attribute.SKILL"></attribute-list-column>
-            <attribute-list-column column-align="center" column-align-id="1" source="user.attribute.SKILL"></attribute-list-column>
-            <attribute-list-column column-align="right" column-align-id="2" source="user.attribute.SKILL"></attribute-list-column>
+            <div class="col-xs-12">
+                <ul class="list-group attribute-list-group">
+                    <li class="list-group-item attribute-list-item" ng-repeat="(attributeName, attribute) in user.attribute.SKILL">
+                        <div class="row">
+                            <div class="col-md-4" style="padding-right:0;">
+                                {{attributeName | replace:'_':' ' | capitalize}}:
+                            </div>
+                            <div class="col-md-1">
+                                <span ng-if="attribute.maximum == 0" class="badge attribute-badge pull-right" popover-template="attributePopover.templateUrl" popover-trigger="mouseenter" popover-placement="right">{{attribute.actual}}</span>
+                            </div>
+                            <div class="col-md-7" style="padding-left:0;">
+                                <span style="position: absolute;font-size: 10px;width: 100%;text-align: center;padding-right: 20px;top: 4px;">100/1000</span>
+                                <div class="progress" style="margin-top:5px;margin-bottom:0; height: 10px;">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10" style="width:0%; background-color: #B75555;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <h4 class="attribute-list-name">Other</h4>

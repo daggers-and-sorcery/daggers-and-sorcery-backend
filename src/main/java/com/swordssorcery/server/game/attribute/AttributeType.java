@@ -1,5 +1,5 @@
 package com.swordssorcery.server.game.attribute;
 
 public enum AttributeType {
-    BASIC, COMBAT, GENERAL
+    BASIC, COMBAT, GENERAL, SKILL
 }

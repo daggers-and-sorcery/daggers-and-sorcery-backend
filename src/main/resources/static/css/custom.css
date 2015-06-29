@@ -224,3 +224,8 @@ html, body, .container {
 .attribute-list-item .popover {
     width: 250px;
 }
+
+/** Progress bar **/
+.progress {
+  box-shadow: 0px 0px 4px RGBa(0,0,0, 0.55);
+}

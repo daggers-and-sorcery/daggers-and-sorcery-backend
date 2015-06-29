@@ -144,6 +144,15 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                         combat: {}
                     };
 
+            $scope.attributePopover = {
+                templateUrl: '/partial/popover/attribute.html',
+            };
+
+            $scope.attributeBonusNameMap = {
+                'INITIAL': 'Initial value',
+                'RACIAL': 'Racial bonus'
+            };
+
                     $http.get('/character/info').success(function (data, status, headers, config) {
                         var structuredAttributes = {
                             'GENERAL_PHYSICAL': {},
@@ -239,7 +248,7 @@ swordssorceryApp.directive('equals', function () {
 
 swordssorceryApp.filter('replace', function () {
     return function (input, target, replacement) {
-        return input.replace(target, replacement);
+        return input.split(target).join(replacement);
     }
 });
 
