@@ -3,6 +3,8 @@ package com.swordssorcery.server.game.attribute;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
 import com.swordssorcery.server.game.attribute.data.PercentageAttributeModifierData;
+import com.swordssorcery.server.game.attribute.data.SkillAttributeData;
+import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,26 @@ import java.util.ArrayList;
 public class AttributeCalculator {
 
     public AttributeData calculateAttributeValue(User user, Attribute attribute) {
+        if(attribute instanceof SkillAttribute) {
+            return calculateSkillAttributeData(user, (SkillAttribute) attribute);
+        }
+
+        return calculateOtherAttributeData(user, attribute);
+    }
+
+    public SkillAttributeData calculateSkillAttributeData(User user, SkillAttribute attribute) {
+        SkillAttributeData.SkillAttributeDataBuilder attributeDataBuilder = new SkillAttributeData.SkillAttributeDataBuilder(attribute);
+
+        attributeDataBuilder.setActual(calculateActualValue(user, attribute));
+        attributeDataBuilder.setMaximum(calculateMaximumValue(user, attribute));
+        attributeDataBuilder.setAttributeModifierDataArray(calculateModifierData(user, attribute));
+        attributeDataBuilder.setActualXp(0);
+        attributeDataBuilder.setNextLevelXp(100);
+
+        return attributeDataBuilder.build();
+    }
+    
+    public AttributeData calculateOtherAttributeData(User user, Attribute attribute) {
         AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder(attribute);
 
         attributeDataBuilder.setActual(calculateActualValue(user, attribute));

@@ -57,7 +57,7 @@
                                 <span ng-if="attribute.maximum == 0" class="badge attribute-badge pull-right" popover-template="attributePopover.templateUrl" popover-trigger="mouseenter" popover-placement="right">{{attribute.actual}}</span>
                             </div>
                             <div class="col-md-7" style="padding-left:0;">
-                                <span style="position: absolute;font-size: 10px;width: 100%;text-align: center;padding-right: 20px;top: 4px;">100/1000</span>
+                                <span style="position: absolute;font-size: 10px;width: 100%;text-align: center;padding-right: 20px;top: 4px;">{{attribute.actualXp}}/{{attribute.nextLevelXp}}</span>
                                 <div class="progress" style="margin-top:5px;margin-bottom:0; height: 10px;">
                                     <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10" style="width:0%; background-color: #B75555;"></div>
                                 </div>

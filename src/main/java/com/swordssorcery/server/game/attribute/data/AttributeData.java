@@ -9,7 +9,7 @@ public class AttributeData {
     private final AttributeModifierData[] modifierDataArray;
     private final Attribute attribute;
 
-    private AttributeData(Attribute attribute, int actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
+    protected AttributeData(Attribute attribute, int actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
         this.attribute = attribute;
         this.actual = actual;
         this.maximum = maximum;
@@ -34,10 +34,10 @@ public class AttributeData {
 
     public static class AttributeDataBuilder {
 
-        private Attribute attribute;
-        private int maximum;
-        private int actual;
-        private AttributeModifierData[] attributeModifierArray;
+        protected Attribute attribute;
+        protected int maximum;
+        protected int actual;
+        protected AttributeModifierData[] attributeModifierArray;
 
         public AttributeDataBuilder(Attribute attribute) {
             this.attribute = attribute;
