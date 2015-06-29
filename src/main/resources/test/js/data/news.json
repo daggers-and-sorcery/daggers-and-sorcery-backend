@@ -8,5 +8,15 @@
     "title": "This is some test title",
     "message": "Lorem ipsum dolor sit ameth....",
     "icon": "buble"
+  },
+  {
+    "_id": 2,
+    "_class": "com.swordssorcery.server.model.News",
+    "timestamp": {
+      "$numberLong": "11111111110000"
+    },
+    "title": "Some more tests",
+    "message": "ZZzz hello world...",
+    "icon": "buble"
   }
 ]

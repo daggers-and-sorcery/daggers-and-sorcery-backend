@@ -2,14 +2,14 @@
     <div class="panel-heading">News</div>
     <div class="panel-body">
         <div ng-repeat="news in newslist">
-            <div>
+            <div class="news-entry">
                 <div class="news-title-holder">
-                    <img ng-if="news.icon" class="news-icon" ng-src="/icon/{{news.icon}}.svg"/>
-                    <img ng-if="!news.icon" class="news-icon" src="/icon/buble.svg"/>
+                    <img class="news-icon" ng-if="news.icon" ng-src="/icon/{{news.icon}}.svg"/>
+                    <img class="news-icon" ng-if="!news.icon" src="/icon/buble.svg"/>
                     <h5 class="news-title" ng-bind-html="news.title"></h5>
                     <div class="news-subtitle" ng-bind="news.date | date:'dd. MMM. yyyy.'"></div>
                 </div>
-                <div ng-bind-html="news.message"></div>
+                <div class="news-message" ng-bind-html="news.message"></div>
                 <hr class="news-divider" ng-if="!$last" />
             </div>
         </div>
