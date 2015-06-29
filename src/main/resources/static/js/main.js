@@ -144,14 +144,14 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                         combat: {}
                     };
 
-            $scope.attributePopover = {
-                templateUrl: '/partial/popover/attribute.html',
-            };
+                    $scope.attributePopover = {
+                        templateUrl: '/partial/popover/attribute.html',
+                    };
 
-            $scope.attributeBonusNameMap = {
-                'INITIAL': 'Initial value',
-                'RACIAL': 'Racial bonus'
-            };
+                    $scope.attributeBonusNameMap = {
+                        'INITIAL': 'Initial value',
+                        'RACIAL': 'Racial bonus'
+                    };
 
                     $http.get('/character/info').success(function (data, status, headers, config) {
                         var structuredAttributes = {
