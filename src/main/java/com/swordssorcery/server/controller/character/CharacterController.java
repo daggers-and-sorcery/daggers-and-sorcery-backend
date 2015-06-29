@@ -4,6 +4,7 @@ import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
+import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.model.User;
 import com.swordssorcery.server.model.repository.UserRepository;
 import com.swordssorcery.server.session.SessionAttributeType;
@@ -45,6 +46,11 @@ public class CharacterController {
         response.put("race", user.getRace());
         response.put("registrationDate", user.getRegistrationDate());
         response.put("lastLoginDate", user.getLastLoginDate());
+
+        //TEST
+        user.getSkills().addSkillXp(SkillAttribute.ALCHEMY, 10);
+        userRepository.save(user);
+        //--END TEST
 
         return response;
     }

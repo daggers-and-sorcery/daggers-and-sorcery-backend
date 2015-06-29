@@ -28,8 +28,9 @@ public class AttributeCalculator {
         attributeDataBuilder.setActual(calculateActualValue(user, attribute));
         attributeDataBuilder.setMaximum(calculateMaximumValue(user, attribute));
         attributeDataBuilder.setAttributeModifierDataArray(calculateModifierData(user, attribute));
-        attributeDataBuilder.setActualXp(0);
-        attributeDataBuilder.setNextLevelXp(100);
+        attributeDataBuilder.setActualXp(user.getSkills().getSkillXp(attribute));
+        attributeDataBuilder.setNextLevelXp(user.getSkills().getSkillXpToNextLevel(attribute));
+        attributeDataBuilder.setXpBetweenLevels(user.getSkills().getSkillXpBetweenNextLevel(attribute));
 
         return attributeDataBuilder.build();
     }
@@ -45,7 +46,13 @@ public class AttributeCalculator {
     }
 
     private int calculateActualBeforePercentageMultiplication(User user, Attribute attribute) {
-        return attribute.getInitialValue();
+        int result = attribute.getInitialValue();
+
+        if (attribute instanceof SkillAttribute) {
+            result += user.getSkills().getSkillLevel((SkillAttribute) attribute);
+        }
+
+        return result;
     }
 
     private int calculateActualValue(User user, Attribute attribute) {
@@ -65,6 +72,10 @@ public class AttributeCalculator {
             int racialModifierValue = calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifierPercentage) - calculateActualBeforePercentageMultiplication(user, attribute);
 
             attributeModifierDataList.add(new PercentageAttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, racialModifierValue, racialModifierPercentage));
+        }
+
+        if (attribute instanceof SkillAttribute) {
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, user.getSkills().getSkillLevel((SkillAttribute) attribute)));
         }
 
         return attributeModifierDataList.toArray(new AttributeModifierData[attributeModifierDataList.size()]);

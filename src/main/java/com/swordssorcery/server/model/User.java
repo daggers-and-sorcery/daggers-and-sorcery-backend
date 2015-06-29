@@ -25,6 +25,7 @@ public class User {
     private String password;
     private Race race;
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
+    private Skills skills = new Skills();
     private Date registrationDate = new Date();
     private Date lastLoginDate = new Date();
 
@@ -91,5 +92,9 @@ public class User {
 
     public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
+    }
+
+    public Skills getSkills() {
+        return skills;
     }
 }

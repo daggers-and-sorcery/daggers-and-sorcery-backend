@@ -150,7 +150,8 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
 
                     $scope.attributeBonusNameMap = {
                         'INITIAL': 'Initial value',
-                        'RACIAL': 'Racial bonus'
+                        'RACIAL': 'Racial bonus',
+                'LEVEL': 'Skill level'
                     };
 
                     $http.get('/character/info').success(function (data, status, headers, config) {
@@ -319,7 +320,8 @@ swordssorceryApp.directive('attributeListColumn', function () {
 
             $scope.attributeBonusNameMap = {
                 'INITIAL': 'Initial value',
-                'RACIAL': 'Racial bonus'
+                'RACIAL': 'Racial bonus',
+                'LEVEL': 'Skill level'
             };
         },
         templateUrl: '/directive/attribute-list-column.html'
