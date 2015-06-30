@@ -33,7 +33,7 @@ public class Skills {
             return 0;
         }
 
-        return (long) (Math.pow(level, 2) * ((level * level) / 4) + 60) / 2;
+        return (long) Math.ceil((Math.pow((double) level, (double) 2) * (((double) level * (double) level) / (double) 4) + (double) 60) / (double) 2);
     }
 
     public int getSkillLevelFromXp(long xp) {
@@ -41,6 +41,6 @@ public class Skills {
             return 1;
         }
 
-        return (int) Math.round(Math.pow(8 * xp - 240, 0.25));
+        return (int) Math.floor(Math.pow((double) 8 * (double) xp - (double) 240, 0.25));
     }
 }
