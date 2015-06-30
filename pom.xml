@@ -58,6 +58,11 @@
             <version>6.9.4</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.5</version>
+        </dependency>
     </dependencies>
 
     <build>

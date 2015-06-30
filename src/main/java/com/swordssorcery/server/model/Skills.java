@@ -17,14 +17,30 @@ public class Skills {
     }
 
     public int getSkillLevel(SkillAttribute attribute) {
-        return (int) getSkillXp(attribute) / 100;
+        return getSkillLevelFromXp(getSkillXp(attribute));
     }
 
     public long getSkillXpToNextLevel(SkillAttribute attribute) {
-        return (int) (getSkillXp(attribute) / 100 + 1) * 100;
+        return getSkillXpFromLevel(getSkillLevel(attribute) + 1);
     }
 
     public long getSkillXpBetweenNextLevel(SkillAttribute attribute) {
-        return 100;
+        return getSkillXpFromLevel(getSkillLevel(attribute)+1) - getSkillXpFromLevel(getSkillLevel(attribute));
+    }
+
+    public long getSkillXpFromLevel(int level) {
+        if (level < 1) {
+            return 0;
+        }
+
+        return (long) (Math.pow(level, 2) * ((level * level) / 4) + 60) / 2;
+    }
+
+    public int getSkillLevelFromXp(long xp) {
+        if( xp < 32) {
+            return 1;
+        }
+
+        return (int) Math.round(Math.pow(8 * xp - 240, 0.25));
     }
 }
