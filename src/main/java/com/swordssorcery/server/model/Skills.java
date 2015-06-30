@@ -6,14 +6,14 @@ import java.util.HashMap;
 
 public class Skills {
 
-    private HashMap<SkillAttribute, Long> xpHolder = new HashMap<>();
+    private HashMap<SkillAttribute, Long> xp = new HashMap<>();
 
     public void addSkillXp(SkillAttribute attribute, long value) {
-        xpHolder.put(attribute, getSkillXp(attribute) + value);
+        xp.put(attribute, getSkillXp(attribute) + value);
     }
 
     public long getSkillXp(SkillAttribute attribute) {
-        return xpHolder.containsKey(attribute) ? xpHolder.get(attribute) : 0;
+        return xp.containsKey(attribute) ? xp.get(attribute) : 0;
     }
 
     public int getSkillLevel(SkillAttribute attribute) {
