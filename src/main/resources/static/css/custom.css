@@ -225,6 +225,28 @@ html, body, .container {
     width: 250px;
 }
 
+.attribute-progress-holder {
+    padding-right:0;
+}
+
+.attribute-progress {
+    margin-top:7px;
+}
+
+.attribute-list-item .progress {
+    margin-top:10px;
+    margin-bottom:0;
+    height: 10px;
+}
+
+.attribute-list-item .progress-bar {
+    background-color: #B75555;
+}
+
+.attribute-progress-bar-holder {
+    padding-left:0;
+}
+
 /** Progress bar **/
 .progress {
   box-shadow: 0px 0px 4px RGBa(0,0,0, 0.55);
