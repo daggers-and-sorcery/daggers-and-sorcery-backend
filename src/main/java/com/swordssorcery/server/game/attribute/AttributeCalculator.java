@@ -46,10 +46,12 @@ public class AttributeCalculator {
     }
 
     private int calculateActualBeforePercentageMultiplication(User user, Attribute attribute) {
-        int result = attribute.getInitialValue();
+        int result = 0;
 
         if (attribute instanceof SkillAttribute) {
             result += user.getSkills().getSkillLevel((SkillAttribute) attribute);
+        } else {
+            result += attribute.getInitialValue();
         }
 
         return result;
@@ -66,16 +68,17 @@ public class AttributeCalculator {
     private AttributeModifierData[] calculateModifierData(User user, Attribute attribute) {
         ArrayList<AttributeModifierData> attributeModifierDataList = new ArrayList<>();
 
-        attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
+        if (attribute instanceof SkillAttribute) {
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, user.getSkills().getSkillLevel((SkillAttribute) attribute)));
+        } else {
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
+        }
+
         int racialModifierPercentage = user.getRace().getRacialModifier(attribute);
         if(racialModifierPercentage != Race.NO_RACIAL_MODIFIER) {
             int racialModifierValue = calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifierPercentage) - calculateActualBeforePercentageMultiplication(user, attribute);
 
             attributeModifierDataList.add(new PercentageAttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, racialModifierValue, racialModifierPercentage));
-        }
-
-        if (attribute instanceof SkillAttribute) {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, user.getSkills().getSkillLevel((SkillAttribute) attribute)));
         }
 
         return attributeModifierDataList.toArray(new AttributeModifierData[attributeModifierDataList.size()]);
