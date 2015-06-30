@@ -26,6 +26,7 @@ public class User {
     private Race race;
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
     private Skills skills = new Skills();
+    private Inventory inventory = new Inventory();
     private Date registrationDate = new Date();
     private Date lastLoginDate = new Date();
 

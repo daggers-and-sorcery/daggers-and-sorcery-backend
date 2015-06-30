@@ -47,11 +47,6 @@ public class CharacterController {
         response.put("registrationDate", user.getRegistrationDate());
         response.put("lastLoginDate", user.getLastLoginDate());
 
-        //TEST
-        //user.getSkills().addSkillXp(SkillAttribute.ALCHEMY, 10);
-        //userRepository.save(user);
-        //--END TEST
-
         return response;
     }
 }
