@@ -160,7 +160,7 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                             'GENERAL_MENTAL': {}
                         };
 
-                        angular.forEach(data.attribute, function(value, key) {
+                        angular.forEach(data.data.attribute, function(value, key) {
                             if (value.attribute.attributeType === 'GENERAL') {
                                 if(value.attribute.generalAttributeType === 'PHYSICAL') {
                                     structuredAttributes['GENERAL_PHYSICAL'][value.attribute.name] = value;
@@ -176,9 +176,9 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                             }
                         });
 
-                        data.attribute = structuredAttributes;
+                        data.data.attribute = structuredAttributes;
 
-                        $scope.user = data;
+                        $scope.user = data.data;
                     });
                 }
             },
