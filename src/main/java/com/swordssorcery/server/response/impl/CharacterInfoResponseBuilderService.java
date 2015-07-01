@@ -24,7 +24,7 @@ public class CharacterInfoResponseBuilderService implements ResponseBuilderServi
     public Response build(User user) {
         Response response = new Response();
 
-        LinkedList<AttributeData> attributeData = new LinkedList<AttributeData>();
+        LinkedList<AttributeData> attributeData = new LinkedList<>();
         response.setData("attribute", attributeData);
 
         for (Attribute attribute : attributeUtil.getAllAttributes()) {
