@@ -4,10 +4,10 @@
             <span ng-bind="attribute.maximum > 0 ? attribute.actual + ' / ' + attribute.maximum : attribute.actual" class="badge attribute-badge pull-right" popover-template="attributePopover.templateUrl" popover-trigger="mouseenter" popover-placement="right">{{attribute.actual}} / {{attribute.maximum}}</span>
             <span ng-bind="attributeNameMap[attributeName]" />
             <div class="row">
-                <div class="col-md-3 attribute-progress-holder">
+                <div class="col-xs-3 attribute-progress-holder">
                     <div class="attribute-progress">0 / 10</div>
                 </div>
-                <div class="col-md-9 attribute-progress-bar-holder">
+                <div class="col-xs-9 attribute-progress-bar-holder">
                     <div class="progress">
                         <div class="progress-bar progress-bar-success" style="width:0%;"></div>
                     </div>

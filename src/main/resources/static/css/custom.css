@@ -20,6 +20,20 @@ body {
     background-color: #272A2B;
 }
 
+@media (min-width: 992px) {
+    .content-middle {
+        padding-right: 0px;
+    }
+
+    .content-right {
+        padding-left: 0px;
+    }
+
+    .content-right .right-panel {
+        margin-left: 0;
+    }
+}
+
 /** Navbar **/
 
 .navbar {
