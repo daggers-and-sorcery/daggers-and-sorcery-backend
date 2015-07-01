@@ -1,10 +1,8 @@
 package com.swordssorcery.server.controller.character;
 
 import com.swordssorcery.server.model.User;
-import com.swordssorcery.server.model.repository.UserRepository;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.impl.CharacterInfoResponseBuilderService;
-import com.swordssorcery.server.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +15,11 @@ import javax.servlet.http.HttpSession;
 public class CharacterController {
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private CharacterInfoResponseBuilderService characterInfoResponseBuilderService;
 
     @ResponseBody
     @RequestMapping(value = "/character/info", method = RequestMethod.GET)
-    public Response info(HttpSession session) {
-        User user = userRepository.findOne((String) session.getAttribute(SessionAttributeType.USER_ID));
-
+    public Response info(HttpSession session, User user) {
         return characterInfoResponseBuilderService.build(user);
     }
 }
