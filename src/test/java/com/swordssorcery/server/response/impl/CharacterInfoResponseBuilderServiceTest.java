@@ -1,6 +1,6 @@
 package com.swordssorcery.server.response.impl;
 
-import com.swordssorcery.server.game.attribute.AttributeCalculator;
+import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
@@ -24,7 +24,7 @@ public class CharacterInfoResponseBuilderServiceTest {
     private CharacterInfoResponseBuilderService characterInfoResponseBuilderService;
 
     @Mock
-    private AttributeCalculator attributeCalculator;
+    private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Mock
     private AttributeUtil attributeUtil;

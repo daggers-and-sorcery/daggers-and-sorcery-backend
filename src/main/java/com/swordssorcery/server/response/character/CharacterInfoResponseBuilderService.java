@@ -1,7 +1,7 @@
 package com.swordssorcery.server.response.character;
 
 import com.swordssorcery.server.game.attribute.Attribute;
-import com.swordssorcery.server.game.attribute.AttributeCalculator;
+import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.model.User;
@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class CharacterInfoResponseBuilderService implements ResponseBuilderService {
 
     @Autowired
-    private AttributeCalculator attributeCalculator;
+    private GlobalAttributeCalculator globalAttributeCalculator;
     @Autowired
     private AttributeUtil attributeUtil;
 
@@ -28,7 +28,7 @@ public class CharacterInfoResponseBuilderService implements ResponseBuilderServi
         response.setData("attribute", attributeData);
 
         for (Attribute attribute : attributeUtil.getAllAttributes()) {
-            attributeData.add(attributeCalculator.calculateAttributeValue(user, attribute));
+            attributeData.add(globalAttributeCalculator.calculateAttributeValue(user, attribute));
         }
 
         response.setData("username", user.getUsername());

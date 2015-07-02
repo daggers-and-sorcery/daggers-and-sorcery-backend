@@ -2,8 +2,8 @@ package com.swordssorcery.server.game.attribute.type;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swordssorcery.server.game.attribute.Attribute;
-import com.swordssorcery.server.game.attribute.AttributeType;
-import com.swordssorcery.server.game.attribute.GeneralAttributeType;
+import com.swordssorcery.server.game.attribute.enums.AttributeType;
+import com.swordssorcery.server.game.attribute.enums.GeneralAttributeType;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GeneralAttribute implements Attribute {

@@ -2,7 +2,7 @@ package com.swordssorcery.server.game.attribute.type;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swordssorcery.server.game.attribute.Attribute;
-import com.swordssorcery.server.game.attribute.AttributeType;
+import com.swordssorcery.server.game.attribute.enums.AttributeType;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum CombatAttribute implements Attribute {

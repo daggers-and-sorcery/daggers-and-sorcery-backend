@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 package com.swordssorcery.server.game.attribute.data;
 
-import com.swordssorcery.server.game.attribute.AttributeModifierType;
-import com.swordssorcery.server.game.attribute.AttributeModifierValueType;
+import com.swordssorcery.server.game.attribute.enums.AttributeModifierType;
+import com.swordssorcery.server.game.attribute.enums.AttributeModifierValueType;
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import org.testng.annotations.Test;
 
