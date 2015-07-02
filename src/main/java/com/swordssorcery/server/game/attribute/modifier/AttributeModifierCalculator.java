@@ -1,11 +1,13 @@
 package com.swordssorcery.server.game.attribute.modifier;
 
 import com.swordssorcery.server.game.attribute.Attribute;
-import com.swordssorcery.server.game.attribute.enums.AttributeModifierType;
-import com.swordssorcery.server.game.attribute.enums.AttributeModifierValueType;
+import com.swordssorcery.server.game.attribute.calc.GeneralAttributeCalculator;
 import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
 import com.swordssorcery.server.game.attribute.data.PercentageAttributeModifierData;
+import com.swordssorcery.server.game.attribute.enums.AttributeModifierType;
+import com.swordssorcery.server.game.attribute.enums.AttributeModifierValueType;
+import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
@@ -19,12 +21,17 @@ public class AttributeModifierCalculator {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+    @Autowired
+    private GeneralAttributeCalculator generalAttributeCalculator;
 
     public AttributeModifierData[] calculateModifierData(User user, Attribute attribute) {
         ArrayList<AttributeModifierData> attributeModifierDataList = new ArrayList<>();
 
         if (attribute instanceof SkillAttribute) {
             attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, user.getSkills().getSkillLevel((SkillAttribute) attribute)));
+        } else if (attribute instanceof GeneralAttribute) {
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.SKILL, AttributeModifierValueType.VALUE, generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute)));
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
         } else {
             attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
         }

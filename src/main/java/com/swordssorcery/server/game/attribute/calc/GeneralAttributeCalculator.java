@@ -38,7 +38,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
         return attributeDataBuilder.build();
     }
 
-    private int calculatePointsToAttributeLevel(User user, Attribute attribute) {
+    public int calculatePointsToAttributeLevel(User user, Attribute attribute) {
         int result = 0;
 
         for (SkillAttribute skill : SkillAttribute.values()) {
@@ -48,5 +48,17 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
         }
 
         return result % 10;
+    }
+
+    public int calculatePointsBonusBySkills(User user, Attribute attribute) {
+        int result = 0;
+
+        for (SkillAttribute skill : SkillAttribute.values()) {
+            if(skill.getIncrementedAttribute() == attribute) {
+                result += user.getSkills().getSkillLevel(skill) - STARTING_SKILL_LEVEL;
+            }
+        }
+
+        return result / 10;
     }
 }

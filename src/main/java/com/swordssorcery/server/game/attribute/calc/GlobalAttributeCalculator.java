@@ -34,6 +34,9 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
 
         if (attribute instanceof SkillAttribute) {
             result += user.getSkills().getSkillLevel((SkillAttribute) attribute);
+        } else if (attribute instanceof GeneralAttribute) {
+            result += generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute);
+            result += attribute.getInitialValue();
         } else {
             result += attribute.getInitialValue();
         }
