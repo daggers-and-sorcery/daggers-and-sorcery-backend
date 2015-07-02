@@ -7,8 +7,19 @@ import com.swordssorcery.server.game.attribute.enums.AttributeType;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum SkillAttribute implements Attribute {
 
-    TWO_HANDED_CRUSHING_WEAPONS,ONE_HANDED_CRUSHING_WEAPONS, ONE_HANDED_AXES,
-    TWO_HANDED_AXES, HERBLORE, WOODCUTTING, ALCHEMY;
+    TWO_HANDED_CRUSHING_WEAPONS(GeneralAttribute.STRENGTH),
+    ONE_HANDED_CRUSHING_WEAPONS(GeneralAttribute.STRENGTH),
+    ONE_HANDED_AXES(GeneralAttribute.DEXTERITY),
+    TWO_HANDED_AXES(GeneralAttribute.DEXTERITY), 
+    HERBLORE(GeneralAttribute.WISDOM), 
+    WOODCUTTING(GeneralAttribute.ENDURANCE), 
+    ALCHEMY(GeneralAttribute.INTELLIGENCE);
+
+    private final GeneralAttribute incrementedAttribute;
+
+    SkillAttribute(GeneralAttribute incrementedAttribute) {
+        this.incrementedAttribute = incrementedAttribute;
+    }
 
     @Override
     public AttributeType getAttributeType() {
@@ -28,5 +39,9 @@ public enum SkillAttribute implements Attribute {
     @Override
     public String getName() {
         return this.name();
+    }
+
+    public GeneralAttribute getIncrementedAttribute() {
+        return incrementedAttribute;
     }
 }
