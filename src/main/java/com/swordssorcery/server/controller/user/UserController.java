@@ -3,6 +3,7 @@ package com.swordssorcery.server.controller.user;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
 import com.swordssorcery.server.model.repository.UserRepository;
+import com.swordssorcery.server.request.user.RegistrationRequest;
 import com.swordssorcery.server.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 public class UserController {

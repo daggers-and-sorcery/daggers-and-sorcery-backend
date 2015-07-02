@@ -1,4 +1,4 @@
-package com.swordssorcery.server.controller.user;
+package com.swordssorcery.server.request.user;
 
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
@@ -6,8 +6,6 @@ import com.swordssorcery.server.validator.annotation.StringEnumeration;
 import com.swordssorcery.server.validator.annotation.UniqueInDb;
 import org.hibernate.validator.constraints.Email;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

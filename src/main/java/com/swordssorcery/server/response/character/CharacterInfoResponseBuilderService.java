@@ -1,4 +1,4 @@
-package com.swordssorcery.server.response.impl;
+package com.swordssorcery.server.response.character;
 
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeCalculator;

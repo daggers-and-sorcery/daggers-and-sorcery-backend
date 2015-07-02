@@ -5,6 +5,7 @@ import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.User;
 import com.swordssorcery.server.response.Response;
+import com.swordssorcery.server.response.character.CharacterInfoResponseBuilderService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
