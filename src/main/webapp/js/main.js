@@ -1,23 +1,6 @@
 var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ui.bootstrap', 'ngMessages']);
 
 swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
-    var indexMainView = {
-        templateUrl: "/partial/main/index.html",
-        resolve: {
-            newslist: function ($http) {
-                return $http({method: 'GET', url: '/news/last'});
-            }
-        },
-        controller: function ($scope, $http, $sce, newslist) {
-            for (var i = 0; i < newslist.data.length; i++) {
-                newslist.data[i].message = $sce.trustAsHtml(newslist.data[i].message);
-                newslist.data[i].title = $sce.trustAsHtml(newslist.data[i].title);
-            }
-
-            $scope.newslist = newslist.data;
-        }
-    };
-
     var indexMenuView = {
         templateUrl: '/partial/right/menu.html',
         controller: function ($scope, $http, $state, $rootScope) {
@@ -55,14 +38,14 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
         },
         views: {
             'top': indexTopView,
-            'main': indexMainView,
+            'main': window.view['main']['index'],
             'right': indexMenuView
         }
     }).state('home', {
         url: '/home/',
         views: {
             'top': indexTopView,
-            'main': indexMainView,
+            'main': window.view['main']['index'],
             'right': indexMenuView
         }
     }).state('logout', {}).state('register', {
