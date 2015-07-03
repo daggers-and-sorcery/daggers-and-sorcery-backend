@@ -17,6 +17,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+
     @Autowired
     private AttributeModifierCalculator attributeModifierCalculator;
 
