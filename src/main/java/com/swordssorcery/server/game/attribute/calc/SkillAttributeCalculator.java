@@ -15,6 +15,7 @@ public class SkillAttributeCalculator implements AttributeCalculator {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+
     @Autowired
     private AttributeModifierCalculator attributeModifierCalculator;
 

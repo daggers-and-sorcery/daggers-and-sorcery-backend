@@ -2,6 +2,7 @@ var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ui.bootstr
 
 swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
+
     $stateProvider.state('index', {
         url: '/',
         data: {
@@ -26,117 +27,24 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
         },
         views: {
             'top': window.view['top']['empty'],
-            'main': {
-                resolve: {
-                     racelist: function ($http) {
-                         return $http({method: 'GET', url: '/user/race/list'});
-                     }
-                 },
-                templateUrl: '/partial/main/register.html',
-                controller: function ($scope, $http, racelist) {
-                    $scope.user = {};
-                    $scope.visibleRace = 0;
-                    $scope.errorList = [];
-                    $scope.successfulRegistration = false;
-                    $scope.race = racelist.data;
-
-                    $scope.decreaseRace = function () {
-                        if ($scope.visibleRace == 0) {
-                            $scope.visibleRace = $scope.race.length - 1;
-                        } else {
-                            $scope.visibleRace--;
-                        }
-                    };
-                    $scope.increaseRace = function () {
-                        if ($scope.visibleRace == $scope.race.length - 1) {
-                            $scope.visibleRace = 0;
-                        } else {
-                            $scope.visibleRace++;
-                        }
-                    };
-                    $scope.submit = function (valid) {
-                        if (valid) {
-                            dataToSend = $scope.user;
-                            dataToSend.race = $scope.race[$scope.visibleRace].name;
-
-                            $http.post('/user/register', dataToSend).success(function (data, status, headers, config) {
-                                $scope.errorList = [];
-                                $scope.successfulRegistration = true;
-                            }).error(function (data, status, headers, config) {
-                                $scope.errorList = data;
-                            });
-                        }
-                    };
-                    $scope.raceAttributeModifierCount = function(raceId) {
-                        return Object.keys($scope.race[raceId].racialAttributeModifiers).length;
-                    };
-                }
-            },
+            'main': window.view['main']['registration'],
             'right': window.view['right']['menu']
         }
     }).state('knowledge', {
         url: '/knowledge/',
         data: {
-            visibleWhenNotLoggedIn: true,
+            visibleWhenNotLoggedIn: true
         },
         views: {
             'top': window.view['top']['empty'],
-            'main': {
-                templateUrl: '/partial/main/knowledge.html',
-            },
+            'main': window.view['main']['knowledge'],
             'right': window.view['right']['menu']
         }
     }).state('character', {
         url: '/character/',
         views: {
             'top': window.view['top']['empty'],
-            'main': {
-                templateUrl: '/partial/main/character.html',
-                controller: function ($scope, $http) {
-                    $scope.attributes = {
-                        basic: {},
-                        combat: {}
-                    };
-
-                    $scope.attributePopover = {
-                        templateUrl: '/partial/popover/attribute.html',
-                    };
-
-                    $scope.attributeBonusNameMap = {
-                        'INITIAL': 'Initial value',
-                        'RACIAL': 'Racial bonus',
-                        'LEVEL': 'Skill level',
-                        'SKILL': 'Skill bonus'
-                    };
-
-                    $http.get('/character/info').success(function (data, status, headers, config) {
-                        var structuredAttributes = {
-                            'GENERAL_PHYSICAL': {},
-                            'GENERAL_MENTAL': {}
-                        };
-
-                        angular.forEach(data.data.attribute, function(value, key) {
-                            if (value.attribute.attributeType === 'GENERAL') {
-                                if(value.attribute.generalAttributeType === 'PHYSICAL') {
-                                    structuredAttributes['GENERAL_PHYSICAL'][value.attribute.name] = value;
-                                } else {
-                                    structuredAttributes['GENERAL_MENTAL'][value.attribute.name] = value;
-                                }
-                            } else {
-                                if(structuredAttributes[value.attribute.attributeType] === undefined) {
-                                    structuredAttributes[value.attribute.attributeType] = {};
-                                }
-
-                                structuredAttributes[value.attribute.attributeType][value.attribute.name] = value;
-                            }
-                        });
-
-                        data.data.attribute = structuredAttributes;
-
-                        $scope.user = data.data;
-                    });
-                }
-            },
+            'main': window.view['main']['character'],
             'right': window.view['right']['menu']
         }
     });
