@@ -1,4 +1,3 @@
-var x = 1;
 window.view['main']['index'] = {
     templateUrl: "/partial/main/index.html",
     resolve: {

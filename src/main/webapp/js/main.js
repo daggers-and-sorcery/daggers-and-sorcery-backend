@@ -1,35 +1,6 @@
 var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ui.bootstrap', 'ngMessages']);
 
 swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
-    var indexMenuView = {
-        templateUrl: '/partial/right/menu.html',
-        controller: function ($scope, $http, $state, $rootScope) {
-            $scope.user = {};
-            $scope.error = '';
-
-            $scope.submit = function () {
-                var requestConfig = {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    }
-                };
-
-                $http.post('/user/login', $.param($scope.user), requestConfig).success(function (data, status, headers, config) {
-                    if (data.success === 'true') {
-                        $rootScope.loggedIn = true;
-                        $state.go('home');
-                    } else {
-                        $scope.error = data.error;
-                    }
-                });
-            };
-        }
-    };
-
-    var indexTopView = {
-        templateUrl: '/partial/top/navbar.html'
-    };
-
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('index', {
         url: '/',
@@ -37,16 +8,16 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
             visibleWhenNotLoggedIn: true
         },
         views: {
-            'top': indexTopView,
+            'top': window.view['top']['empty'],
             'main': window.view['main']['index'],
-            'right': indexMenuView
+            'right': window.view['right']['menu']
         }
     }).state('home', {
         url: '/home/',
         views: {
-            'top': indexTopView,
+            'top': window.view['top']['empty'],
             'main': window.view['main']['index'],
-            'right': indexMenuView
+            'right': window.view['right']['menu']
         }
     }).state('logout', {}).state('register', {
         url: '/register/',
@@ -54,7 +25,7 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
             visibleWhenNotLoggedIn: true
         },
         views: {
-            'top': indexTopView,
+            'top': window.view['top']['empty'],
             'main': {
                 resolve: {
                      racelist: function ($http) {
@@ -101,7 +72,7 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                     };
                 }
             },
-            'right': indexMenuView
+            'right': window.view['right']['menu']
         }
     }).state('knowledge', {
         url: '/knowledge/',
@@ -109,16 +80,16 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
             visibleWhenNotLoggedIn: true,
         },
         views: {
-            'top': indexTopView,
+            'top': window.view['top']['empty'],
             'main': {
                 templateUrl: '/partial/main/knowledge.html',
             },
-            'right': indexMenuView
+            'right': window.view['right']['menu']
         }
     }).state('character', {
         url: '/character/',
         views: {
-            'top': indexTopView,
+            'top': window.view['top']['empty'],
             'main': {
                 templateUrl: '/partial/main/character.html',
                 controller: function ($scope, $http) {
@@ -166,7 +137,7 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
                     });
                 }
             },
-            'right': indexMenuView
+            'right': window.view['right']['menu']
         }
     });
 });
