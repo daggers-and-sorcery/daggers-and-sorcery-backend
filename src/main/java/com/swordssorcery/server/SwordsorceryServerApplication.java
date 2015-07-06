@@ -9,9 +9,11 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.util.ArrayList;
@@ -64,5 +66,10 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     @Bean
     public UserHandlerMethodArgumentResolver getUserHandlerMethodArgumentResolver() {
         return new UserHandlerMethodArgumentResolver();
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").addResourceLocations("/static/");
     }
 }

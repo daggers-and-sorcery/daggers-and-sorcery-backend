@@ -16,6 +16,11 @@ public class IndexController {
     @Autowired
     private NewsRepository newsRepository;
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index() {
+        return "index.html";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/news/last", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public List<News> news() {
