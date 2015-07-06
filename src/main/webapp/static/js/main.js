@@ -3,17 +3,9 @@ var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ui.bootstr
 swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
-    $stateProvider.state('index', {
-        url: '/',
-        data: {
-            visibleWhenNotLoggedIn: true
-        },
-        views: {
-            'top': require('./view/top/empty-view'),
-            'main': require('./view/main/index-view'),
-            'right': require('./view/right/menu-view')
-        }
-    }).state('home', {
+    $stateProvider
+        .state('index', require('state/index-state.js'))
+        .state('home', {
         url: '/home/',
         views: {
             'top': require('./view/top/empty-view'),
