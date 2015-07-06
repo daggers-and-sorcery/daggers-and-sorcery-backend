@@ -1,3 +1,14 @@
+require('./view/view.js');
+
+require('./view/main/character-view');
+require('./view/main/index-view');
+require('./view/main/knowledge-view');
+require('./view/main/registration-view');
+
+require('./view/right/menu-view');
+
+require('./view/top/empty-view');
+
 var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ui.bootstrap', 'ngMessages']);
 
 swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
