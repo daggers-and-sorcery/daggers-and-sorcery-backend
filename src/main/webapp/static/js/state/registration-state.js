@@ -1,14 +1,14 @@
 'use strict';
 
 module.exports = {
-    name: 'index',
-    url: '/',
+    name: 'registration',
+    url: '/registration/',
     data: {
         visibleWhenNotLoggedIn: true
     },
     views: {
         'top': require('view/top/empty-view'),
-        'main': require('view/main/index-view'),
+        'main': require('view/main/registration-view'),
         'right': require('view/right/menu-view')
     }
 };

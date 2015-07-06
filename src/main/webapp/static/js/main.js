@@ -4,42 +4,12 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-        .state('index', require('state/index-state.js'))
-        .state('home', {
-        url: '/home/',
-        views: {
-            'top': require('./view/top/empty-view'),
-            'main': require('./view/main/index-view'),
-            'right': require('./view/right/menu-view')
-        }
-    }).state('logout', {}).state('register', {
-        url: '/register/',
-        data: {
-            visibleWhenNotLoggedIn: true
-        },
-        views: {
-            'top': require('./view/top/empty-view'),
-            'main': require('./view/main/registration-view'),
-            'right': require('./view/right/menu-view')
-        }
-    }).state('knowledge', {
-        url: '/knowledge/',
-        data: {
-            visibleWhenNotLoggedIn: true
-        },
-        views: {
-            'top': require('./view/top/empty-view'),
-            'main': require('./view/main/knowledge-view'),
-            'right': require('./view/right/menu-view')
-        }
-    }).state('character', {
-        url: '/character/',
-        views: {
-            'top': require('./view/top/empty-view'),
-            'main': require('./view/main/character-view'),
-            'right': require('./view/right/menu-view')
-        }
-    });
+        .state(require('state/index-state.js'))
+        .state(require('state/home-state.js'))
+        .state(require('state/logout-state.js'))
+        .state(require('state/registration-state.js'))
+        .state(require('state/knowledge-state.js'))
+        .state(require('state/character-state.js'));
 });
 
 swordssorceryApp.controller('MainController', function ($scope, $rootScope, $state, $http) {
@@ -109,29 +79,29 @@ swordssorceryApp.filter('replace', function () {
 });
 
 swordssorceryApp.filter('capitalize', function () {
-                     return function (input, format) {
-                       if (!input) {
-                         return input;
-                       }
-                       format = format || 'all';
-                       if (format === 'first') {
-                         // Capitalize the first letter of a sentence
-                         return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-                       } else {
-                         var words = input.split(' ');
-                         var result = [];
-                         words.forEach(function(word) {
-                           if (word.length === 2 && format === 'team') {
-                             // Uppercase team abbreviations like FC, CD, SD
-                             result.push(word.toUpperCase());
-                           } else {
-                             result.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-                           }
-                         });
-                         return result.join(' ');
-                       }
-                     }
-                     });
+    return function (input, format) {
+        if (!input) {
+            return input;
+        }
+        format = format || 'all';
+        if (format === 'first') {
+            // Capitalize the first letter of a sentence
+            return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+        } else {
+            var words = input.split(' ');
+            var result = [];
+            words.forEach(function (word) {
+                if (word.length === 2 && format === 'team') {
+                    // Uppercase team abbreviations like FC, CD, SD
+                    result.push(word.toUpperCase());
+                } else {
+                    result.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+                }
+            });
+            return result.join(' ');
+        }
+    }
+});
 
 swordssorceryApp.directive('attributeListColumn', function () {
     return {
