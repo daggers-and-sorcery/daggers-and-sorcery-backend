@@ -1,4 +1,4 @@
-window.view['main']['character'] = {
+module.exports = {
     templateUrl: '/partial/main/character.html',
     controller: function ($scope, $http) {
         $scope.attributes = {

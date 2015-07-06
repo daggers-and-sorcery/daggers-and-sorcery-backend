@@ -1,3 +1,3 @@
-window.view['main']['knowledge'] = {
+module.exports = {
     templateUrl: '/partial/main/knowledge.html'
 };

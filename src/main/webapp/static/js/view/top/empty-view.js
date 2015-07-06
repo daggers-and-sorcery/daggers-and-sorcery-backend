@@ -1,3 +1,3 @@
-window.view['top']['empty'] = {
-        templateUrl: '/partial/top/navbar.html'
+module.exports = {
+    templateUrl: '/partial/top/navbar.html'
 }

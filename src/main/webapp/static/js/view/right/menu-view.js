@@ -1,4 +1,4 @@
-window.view['right']['menu'] = {
+module.exports = {
         templateUrl: '/partial/right/menu.html',
         controller: function ($scope, $http, $state, $rootScope) {
             $scope.user = {};

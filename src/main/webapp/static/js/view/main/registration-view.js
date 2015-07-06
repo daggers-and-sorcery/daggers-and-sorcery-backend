@@ -1,4 +1,4 @@
-window.view['main']['registration'] = {
+module.exports = {
     resolve: {
         racelist: function ($http) {
             return $http({method: 'GET', url: '/user/race/list'});

@@ -1,4 +1,4 @@
-window.view['main']['index'] = {
+module.exports = {
     templateUrl: "/partial/main/index.html",
     resolve: {
         newslist: function ($http) {

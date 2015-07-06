@@ -1,14 +1,3 @@
-require('./view/view.js');
-
-require('./view/main/character-view');
-require('./view/main/index-view');
-require('./view/main/knowledge-view');
-require('./view/main/registration-view');
-
-require('./view/right/menu-view');
-
-require('./view/top/empty-view');
-
 var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ui.bootstrap', 'ngMessages']);
 
 swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
@@ -20,16 +9,16 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
             visibleWhenNotLoggedIn: true
         },
         views: {
-            'top': window.view['top']['empty'],
-            'main': window.view['main']['index'],
-            'right': window.view['right']['menu']
+            'top': require('./view/top/empty-view'),
+            'main': require('./view/main/index-view'),
+            'right': require('./view/right/menu-view')
         }
     }).state('home', {
         url: '/home/',
         views: {
-            'top': window.view['top']['empty'],
-            'main': window.view['main']['index'],
-            'right': window.view['right']['menu']
+            'top': require('./view/top/empty-view'),
+            'main': require('./view/main/index-view'),
+            'right': require('./view/right/menu-view')
         }
     }).state('logout', {}).state('register', {
         url: '/register/',
@@ -37,9 +26,9 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
             visibleWhenNotLoggedIn: true
         },
         views: {
-            'top': window.view['top']['empty'],
-            'main': window.view['main']['registration'],
-            'right': window.view['right']['menu']
+            'top': require('./view/top/empty-view'),
+            'main': require('./view/main/registration-view'),
+            'right': require('./view/right/menu-view')
         }
     }).state('knowledge', {
         url: '/knowledge/',
@@ -47,16 +36,16 @@ swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
             visibleWhenNotLoggedIn: true
         },
         views: {
-            'top': window.view['top']['empty'],
-            'main': window.view['main']['knowledge'],
-            'right': window.view['right']['menu']
+            'top': require('./view/top/empty-view'),
+            'main': require('./view/main/knowledge-view'),
+            'right': require('./view/right/menu-view')
         }
     }).state('character', {
         url: '/character/',
         views: {
-            'top': window.view['top']['empty'],
-            'main': window.view['main']['character'],
-            'right': window.view['right']['menu']
+            'top': require('./view/top/empty-view'),
+            'main': require('./view/main/character-view'),
+            'right': require('./view/right/menu-view')
         }
     });
 });
