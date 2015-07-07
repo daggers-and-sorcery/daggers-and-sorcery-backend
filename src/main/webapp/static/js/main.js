@@ -1,16 +1,6 @@
-var swordssorceryApp = angular.module('swordssorcery', ['ui.router', 'ui.bootstrap', 'ngMessages']);
+var swordssorceryApp = require('app.js');
 
-swordssorceryApp.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/');
-
-    $stateProvider
-        .state(require('state/index-state.js'))
-        .state(require('state/home-state.js'))
-        .state(require('state/logout-state.js'))
-        .state(require('state/registration-state.js'))
-        .state(require('state/knowledge-state.js'))
-        .state(require('state/character-state.js'));
-});
+require('router/router.js');
 
 swordssorceryApp.controller('MainController', function ($scope, $rootScope, $state, $http) {
     //Get user info at start
