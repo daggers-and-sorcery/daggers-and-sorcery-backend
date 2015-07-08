@@ -1,6 +1,6 @@
 module.exports = {
     templateUrl: '/partial/main/character.html',
-    controller: function ($scope, $http) {
+    controller: function ($scope, $http, ATTRIBUTE_BONUS_MAP) {
         $scope.attributes = {
             basic: {},
             combat: {}
@@ -10,13 +10,7 @@ module.exports = {
             templateUrl: '/partial/popover/attribute.html'
         };
 
-        $scope.attributeBonusNameMap = {
-            'INITIAL': 'Initial value',
-            'RACIAL': 'Racial bonus',
-            'LEVEL': 'Skill level',
-            'SKILL': 'Skill bonus',
-            'GENERAL_ATTRIBUTE': 'General attribute bonus'
-        };
+        $scope.attributeBonusNameMap = ATTRIBUTE_BONUS_MAP;
 
         $http.get('/character/info').success(function (data, status, headers, config) {
             var structuredAttributes = {

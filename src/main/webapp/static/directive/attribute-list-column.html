@@ -2,7 +2,7 @@
     <ul class="list-group attribute-list-group">
         <li class="list-group-item attribute-list-item" ng-repeat="(attributeName,attribute) in attributes" ng-if="$index % 3 === columnAlignId">
             <span ng-bind="attribute.maximum > 0 ? attribute.actual + ' / ' + attribute.maximum : attribute.actual" class="badge attribute-badge pull-right" popover-template="attributePopover.templateUrl" popover-trigger="mouseenter" popover-placement="right">{{attribute.actual}} / {{attribute.maximum}}</span>
-            <span ng-bind="attributeNameMap[attributeName]" />
+            <span ng-bind="attributeName | replace:'_':' ' | capitalize" />
             <div class="row" ng-if="attribute.attribute.attributeType === 'GENERAL'">
                 <div class="col-xs-3 attribute-progress-holder">
                     <div class="attribute-progress">{{attribute.pointsToNextLevel}} / 10</div>
