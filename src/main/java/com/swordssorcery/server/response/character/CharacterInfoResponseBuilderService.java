@@ -1,15 +1,19 @@
 package com.swordssorcery.server.response.character;
 
+import com.swordssorcery.server.data.item.ItemDefinitionManager;
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
+import com.swordssorcery.server.model.Item;
 import com.swordssorcery.server.model.User;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.ResponseBuilderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 @Service
@@ -17,6 +21,10 @@ public class CharacterInfoResponseBuilderService implements ResponseBuilderServi
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private ItemDefinitionManager itemDefinitionManager;
+
     @Autowired
     private AttributeUtil attributeUtil;
 
@@ -35,6 +43,19 @@ public class CharacterInfoResponseBuilderService implements ResponseBuilderServi
         response.setData("race", user.getRace());
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
+
+        ArrayList<HashMap<String, Object>> inventoryData = new ArrayList<>();
+
+        for (Item item : user.getInventory().getItemList()) {
+            HashMap<String, Object> itemData = new HashMap<>();
+
+            itemData.put("item", item);
+            itemData.put("definition", itemDefinitionManager.getItemDefinition(item.getId()));
+
+            inventoryData.add(itemData);
+        }
+
+        response.setData("inventory", inventoryData);
 
         return response;
     }

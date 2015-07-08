@@ -44,4 +44,8 @@ public class ItemDefinition {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String toString() {
+        return "ItemDefinition -> [id: " + id + " name: " + name + "]";
+    }
 }

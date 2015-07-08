@@ -98,4 +98,8 @@ public class User {
     public Skills getSkills() {
         return skills;
     }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
 }
