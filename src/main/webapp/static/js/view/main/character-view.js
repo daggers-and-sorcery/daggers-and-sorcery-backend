@@ -14,7 +14,8 @@ module.exports = {
             'INITIAL': 'Initial value',
             'RACIAL': 'Racial bonus',
             'LEVEL': 'Skill level',
-            'SKILL': 'Skill bonus'
+            'SKILL': 'Skill bonus',
+            'GENERAL_ATTRIBUTE': 'General attribute bonus'
         };
 
         $http.get('/character/info').success(function (data, status, headers, config) {

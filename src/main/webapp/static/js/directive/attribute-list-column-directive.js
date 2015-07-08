@@ -44,7 +44,8 @@ module.exports = require('app.js').directive('attributeListColumn', function () 
                 'INITIAL': 'Initial value',
                 'RACIAL': 'Racial bonus',
                 'SKILL': 'Skill bonus',
-                'LEVEL': 'Skill level'
+                'LEVEL': 'Skill level',
+                'GENERAL_ATTRIBUTE': 'General attribute bonus'
             };
         },
         templateUrl: '/directive/attribute-list-column.html'

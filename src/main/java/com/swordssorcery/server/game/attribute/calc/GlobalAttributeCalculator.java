@@ -3,6 +3,7 @@ package com.swordssorcery.server.game.attribute.calc;
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeCalculator;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
+import com.swordssorcery.server.game.attribute.type.CombatAttribute;
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.model.User;
@@ -17,6 +18,8 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     @Autowired
     private GeneralAttributeCalculator generalAttributeCalculator;
     @Autowired
+    private CombatAttributeCalculator combatAttributeCalculator;
+    @Autowired
     private DefaultAttributeCalculator defaultAttributeCalculator;
 
     public AttributeData calculateAttributeValue(User user, Attribute attribute) {
@@ -24,6 +27,8 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
             return skillAttributeCalculator.calculateAttributeValue(user, attribute);
         } else if (attribute instanceof GeneralAttribute) {
             return generalAttributeCalculator.calculateAttributeValue(user, attribute);
+        } else if (attribute instanceof CombatAttribute) {
+            return combatAttributeCalculator.calculateAttributeValue(user, attribute);
         }
 
         return defaultAttributeCalculator.calculateAttributeValue(user, attribute);
@@ -37,6 +42,9 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         } else if (attribute instanceof GeneralAttribute) {
             result += attribute.getInitialValue();
             result += generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute);
+        } else if (attribute instanceof CombatAttribute) {
+            result += attribute.getInitialValue();
+            result += combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, (CombatAttribute) attribute);
         } else {
             result += attribute.getInitialValue();
         }
