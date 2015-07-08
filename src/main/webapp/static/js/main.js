@@ -6,6 +6,7 @@ require('controller/main-controller.js');
 // Directives
 require('directive/equals-directive.js');
 require('directive/attribute-list-column-directive.js');
+require('directive/inventory-item-column-directive.js');
 
 // Filters
 require('filter/replace-filter.js');
