@@ -41,6 +41,10 @@ window.createGame = function(scope, injector) {
                  scope.$on('$destroy', function() {
                    game.destroy();
                  });
+
+                 scope.$on('$destroy', function() {
+                   game.destroy();
+                 });
             }
 
 require('router/router.js');

@@ -3,5 +3,9 @@ module.exports = {
     resolve: {
     },
     controller: function ($scope) {
+        $scope.move = function(dir) {
+            //$broadcast;
+            console.log(dir);
+        }
     }
 };
