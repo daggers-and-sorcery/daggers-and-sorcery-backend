@@ -54,7 +54,7 @@
                                 {{attributeName | replace:'_':' ' | capitalize}}:
                             </div>
                             <div class="col-md-1">
-                                <span ng-if="attribute.maximum == 0" class="badge attribute-badge pull-right" popover-template="attributePopover.templateUrl" popover-trigger="mouseenter" popover-placement="right">{{attribute.actual}}</span>
+                                <span ng-if="attribute.maximum == 0" class="badge attribute-badge pull-right" popover-template="attributePopoverUrl" popover-trigger="mouseenter" popover-placement="right">{{attribute.actual}}</span>
                             </div>
                             <div class="col-md-7" style="padding-left:0;">
                                 <span style="position: absolute;font-size: 10px;width: 100%;text-align: center;padding-right: 20px;top: 4px;">{{attribute.actualXp}}/{{attribute.nextLevelXp}}</span>
