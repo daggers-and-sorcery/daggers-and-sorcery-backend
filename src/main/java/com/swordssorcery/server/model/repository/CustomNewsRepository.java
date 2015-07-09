@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CustomNewsRepository {
 
-    public List<News> findLast(int amount);
+    List<News> findLast(int amount);
 }

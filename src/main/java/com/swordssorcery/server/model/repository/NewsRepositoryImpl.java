@@ -21,7 +21,7 @@ public class NewsRepositoryImpl implements CustomNewsRepository {
     public List<News> findLast(int amount) {
         Query query = new Query();
         query.limit(10);
-        query.with(new Sort(Sort.Direction.DESC, "timestamp"));
+        query.with(new Sort(Sort.Direction.DESC, "date"));
 
         return mongoOperations.find(query, News.class);
     }

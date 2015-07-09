@@ -2,8 +2,8 @@
   {
     "_id": 1,
     "_class": "com.swordssorcery.server.model.News",
-    "timestamp": {
-      "$numberLong": "1111111111000"
+    "date": {
+      "$date": 222222222231
     },
     "title": "This is some test title",
     "message": "Lorem ipsum dolor sit ameth....",
@@ -12,8 +12,8 @@
   {
     "_id": 2,
     "_class": "com.swordssorcery.server.model.News",
-    "timestamp": {
-      "$numberLong": "11111111110000"
+    "date": {
+      "$date": 1111111122232
     },
     "title": "Some more tests",
     "message": "ZZzz hello world...",
