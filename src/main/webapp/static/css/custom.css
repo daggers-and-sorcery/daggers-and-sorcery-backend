@@ -306,3 +306,27 @@ html, body, .container {
     margin-left: 20px;
 }
 
+/** Map **/
+#game-map canvas {
+    box-shadow: 0px 0px 2px rgba(0,0,0,0.6);
+    border: 1px solid rgba(0,0,0,0.5);
+}
+
+.map-event-holder {
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.06);
+    border: 1px solid #9E9888;
+    box-shadow: 2px 2px 1px rgba(0,0,0, 0.035);
+}
+
+.map-event-holder table {
+    margin-bottom: 0;
+}
+
+.map-event-holder table tr td {
+    border-top: 1px solid #9E9888
+}
+
+.map-event-holder td:last-child {
+    text-align: center;
+}
