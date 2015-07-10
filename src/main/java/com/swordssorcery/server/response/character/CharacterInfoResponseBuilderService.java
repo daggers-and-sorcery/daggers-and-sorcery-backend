@@ -1,6 +1,6 @@
 package com.swordssorcery.server.response.character;
 
-import com.swordssorcery.server.data.item.ItemDefinitionManager;
+import com.swordssorcery.server.game.item.ItemDefinitionManager;
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;

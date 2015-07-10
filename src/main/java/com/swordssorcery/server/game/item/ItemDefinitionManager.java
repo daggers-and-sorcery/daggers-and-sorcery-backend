@@ -1,4 +1,4 @@
-package com.swordssorcery.server.data.item;
+package com.swordssorcery.server.game.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

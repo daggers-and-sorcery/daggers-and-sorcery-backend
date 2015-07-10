@@ -1,4 +1,4 @@
-package com.swordssorcery.server.data.item;
+package com.swordssorcery.server.game.item;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
