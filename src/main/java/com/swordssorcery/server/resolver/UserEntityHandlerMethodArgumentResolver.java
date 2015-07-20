@@ -1,7 +1,7 @@
 package com.swordssorcery.server.resolver;
 
-import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
-import com.swordssorcery.server.model.db.user.UserRepository;
+import com.swordssorcery.server.game.user.UserManager;
+import com.swordssorcery.server.model.entity.user.UserEntity;
 import com.swordssorcery.server.session.SessionAttributeType;
 import org.apache.catalina.session.StandardSessionFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +11,18 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-public class UserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
+public class UserEntityHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserManager userManager;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(UserDatabaseEntity.class);
+        return parameter.getParameterType().equals(UserEntity.class);
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        return userRepository.findOne((String) ((StandardSessionFacade) webRequest.getSessionMutex()).getAttribute(SessionAttributeType.USER_ID));
+    public UserEntity resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        return userManager.getUser((String) ((StandardSessionFacade) webRequest.getSessionMutex()).getAttribute(SessionAttributeType.USER_ID));
     }
 }

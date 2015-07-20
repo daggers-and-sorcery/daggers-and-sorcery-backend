@@ -7,6 +7,7 @@ import com.swordssorcery.server.game.attribute.type.CombatAttribute;
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     @Autowired
     private DefaultAttributeCalculator defaultAttributeCalculator;
 
-    public AttributeData calculateAttributeValue(UserDatabaseEntity user, Attribute attribute) {
+    public AttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
         if (attribute instanceof SkillAttribute) {
             return skillAttributeCalculator.calculateAttributeValue(user, attribute);
         } else if (attribute instanceof GeneralAttribute) {
@@ -34,7 +35,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         return defaultAttributeCalculator.calculateAttributeValue(user, attribute);
     }
 
-    public int calculateActualBeforePercentageMultiplication(UserDatabaseEntity user, Attribute attribute) {
+    public int calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
         int result = 0;
 
         if (attribute instanceof SkillAttribute) {
@@ -52,11 +53,11 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         return result;
     }
 
-    public int calculateActualValue(UserDatabaseEntity user, Attribute attribute) {
+    public int calculateActualValue(UserEntity user, Attribute attribute) {
         return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
     }
 
-    public int calculateMaximumValue(UserDatabaseEntity user, Attribute attribute) {
+    public int calculateMaximumValue(UserEntity user, Attribute attribute) {
         return attribute.isUnlimited() ? 0 : attribute.getInitialValue();
     }
 

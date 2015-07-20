@@ -6,6 +6,7 @@ import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.entity.user.UserEntity;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -37,10 +38,12 @@ public class GeneralAttributeCalculatorTest {
         user.setRace(Race.ORC);
         user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
-        when(globalAttributeCalculator.calculateActualValue(user, GeneralAttribute.STRENGTH)).then(invocation -> 12);
-        when(globalAttributeCalculator.calculateMaximumValue(user, GeneralAttribute.STRENGTH)).then(invocation -> 0);
+        UserEntity userEntity = new UserEntity(user);
 
-        GeneralAttributeData attributeDataStrength = generalAttributeCalculator.calculateAttributeValue(user, GeneralAttribute.STRENGTH);
+        when(globalAttributeCalculator.calculateActualValue(userEntity, GeneralAttribute.STRENGTH)).then(invocation -> 12);
+        when(globalAttributeCalculator.calculateMaximumValue(userEntity, GeneralAttribute.STRENGTH)).then(invocation -> 0);
+
+        GeneralAttributeData attributeDataStrength = generalAttributeCalculator.calculateAttributeValue(userEntity, GeneralAttribute.STRENGTH);
 
         assertEquals(attributeDataStrength.getActual(), 12);
         assertEquals(attributeDataStrength.getMaximum(), 0);
@@ -55,7 +58,9 @@ public class GeneralAttributeCalculatorTest {
         user.setRace(Race.ORC);
         user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
-        assertEquals(generalAttributeCalculator.calculatePointsToAttributeLevel(user, GeneralAttribute.STRENGTH), 8);
+        UserEntity userEntity = new UserEntity(user);
+
+        assertEquals(generalAttributeCalculator.calculatePointsToAttributeLevel(userEntity, GeneralAttribute.STRENGTH), 8);
     }
 
     @Test
@@ -64,6 +69,8 @@ public class GeneralAttributeCalculatorTest {
         user.setRace(Race.ORC);
         user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 100000);
 
-        assertEquals(generalAttributeCalculator.calculatePointsBonusBySkills(user, GeneralAttribute.STRENGTH), 2);
+        UserEntity userEntity = new UserEntity(user);
+
+        assertEquals(generalAttributeCalculator.calculatePointsBonusBySkills(userEntity, GeneralAttribute.STRENGTH), 2);
     }
 }

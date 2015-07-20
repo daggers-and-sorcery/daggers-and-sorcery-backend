@@ -13,6 +13,7 @@ import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class AttributeModifierCalculator {
     @Autowired
     private CombatAttributeCalculator combatAttributeCalculato;
 
-    public AttributeModifierData[] calculateModifierData(UserDatabaseEntity user, Attribute attribute) {
+    public AttributeModifierData[] calculateModifierData(UserEntity user, Attribute attribute) {
         ArrayList<AttributeModifierData> attributeModifierDataList = new ArrayList<>();
 
         if (attribute instanceof SkillAttribute) {

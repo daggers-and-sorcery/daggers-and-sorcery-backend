@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.HashMap;
 
-@Document
+@Document(collection = "user")
 public class UserDatabaseEntity {
 
     @Id

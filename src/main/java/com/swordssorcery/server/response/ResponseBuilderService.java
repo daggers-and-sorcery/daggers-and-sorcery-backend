@@ -1,8 +1,8 @@
 package com.swordssorcery.server.response;
 
-import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.entity.user.UserEntity;
 
 public interface ResponseBuilderService {
 
-    Response build(UserDatabaseEntity user);
+    Response build(UserEntity user);
 }

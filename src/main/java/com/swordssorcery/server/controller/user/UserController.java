@@ -27,8 +27,10 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private ShaPasswordEncoder shaPasswordEncoder;
+
     @Autowired
     private Validator validator;
 

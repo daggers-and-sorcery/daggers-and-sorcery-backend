@@ -7,6 +7,7 @@ import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.model.db.Item;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.entity.user.UserEntity;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.ResponseBuilderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class CharacterInfoResponseBuilderService implements ResponseBuilderServi
     private AttributeUtil attributeUtil;
 
     @Override
-    public Response build(UserDatabaseEntity user) {
+    public Response build(UserEntity user) {
         Response response = new Response();
 
         LinkedList<AttributeData> attributeData = new LinkedList<>();

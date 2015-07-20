@@ -4,6 +4,7 @@ import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.entity.user.UserEntity;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.character.CharacterInfoResponseBuilderService;
 import org.mockito.InjectMocks;
@@ -39,7 +40,9 @@ public class CharacterInfoResponseBuilderServiceTest {
         UserDatabaseEntity user = new UserDatabaseEntity("testuser", "testpass");
         user.setRace(Race.ORC);
 
-        Response result = characterInfoResponseBuilderService.build(user);
+        UserEntity userEntity = new UserEntity(user);
+
+        Response result = characterInfoResponseBuilderService.build(userEntity);
 
         assertEquals(result.getData("username"), "testuser");
         assertEquals(result.getData("race"), Race.ORC);

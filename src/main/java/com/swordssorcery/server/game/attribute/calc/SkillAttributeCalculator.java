@@ -7,6 +7,7 @@ import com.swordssorcery.server.game.attribute.data.SkillAttributeData;
 import com.swordssorcery.server.game.attribute.modifier.AttributeModifierCalculator;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class SkillAttributeCalculator implements AttributeCalculator {
     private AttributeModifierCalculator attributeModifierCalculator;
 
     @Override
-    public AttributeData calculateAttributeValue(UserDatabaseEntity user, Attribute attribute) {
+    public AttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
         if (!(attribute instanceof SkillAttribute)) {
             throw new IllegalArgumentException("The attribute must be an instance of SkillAttribute.");
         }

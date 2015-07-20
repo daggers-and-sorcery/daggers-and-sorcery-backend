@@ -1,7 +1,7 @@
 package com.swordssorcery.server;
 
 import com.swordssorcery.server.filter.SessionLoginFilter;
-import com.swordssorcery.server.resolver.UserHandlerMethodArgumentResolver;
+import com.swordssorcery.server.resolver.UserEntityHandlerMethodArgumentResolver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
@@ -9,11 +9,9 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.util.ArrayList;
@@ -60,12 +58,12 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         super.addArgumentResolvers(argumentResolvers);
 
-        argumentResolvers.add(getUserHandlerMethodArgumentResolver());
+        argumentResolvers.add(getUserEntityHandlerMethodArgumentResolver());
     }
 
     @Bean
-    public UserHandlerMethodArgumentResolver getUserHandlerMethodArgumentResolver() {
-        return new UserHandlerMethodArgumentResolver();
+    public UserEntityHandlerMethodArgumentResolver getUserEntityHandlerMethodArgumentResolver() {
+        return new UserEntityHandlerMethodArgumentResolver();
     }
 
     @Override
