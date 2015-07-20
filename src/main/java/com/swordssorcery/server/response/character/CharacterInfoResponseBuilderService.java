@@ -5,8 +5,7 @@ import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
-import com.swordssorcery.server.model.db.Item;
-import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.db.user.ItemDatabaseEntity;
 import com.swordssorcery.server.model.entity.user.UserEntity;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.ResponseBuilderService;
@@ -47,7 +46,7 @@ public class CharacterInfoResponseBuilderService implements ResponseBuilderServi
 
         ArrayList<HashMap<String, Object>> inventoryData = new ArrayList<>();
 
-        for (Item item : user.getInventory().getItemList()) {
+        for (ItemDatabaseEntity item : user.getInventory().getItemList()) {
             HashMap<String, Object> itemData = new HashMap<>();
 
             itemData.put("item", item);

@@ -18,4 +18,8 @@ public class MapEntity {
     public int getId() {
         return id;
     }
+
+    public TileEntity getTileAt(int x, int y) {
+        return new TileEntity(mapDefinition.getTileDefinitionAt(x, y));
+    }
 }

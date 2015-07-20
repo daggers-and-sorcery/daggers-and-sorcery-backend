@@ -1,6 +1,8 @@
 package com.swordssorcery.server.controller.character;
 
 import com.swordssorcery.server.controller.character.request.MovementRequest;
+import com.swordssorcery.server.game.movement.MovementManager;
+import com.swordssorcery.server.game.user.UserManager;
 import com.swordssorcery.server.model.entity.user.UserEntity;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.character.CharacterInfoResponseBuilderService;
@@ -16,6 +18,12 @@ public class CharacterController {
     @Autowired
     private CharacterInfoResponseBuilderService characterInfoResponseBuilderService;
 
+    @Autowired
+    private UserManager userManager;
+
+    @Autowired
+    private MovementManager movementManager;
+
     @RequestMapping(value = "/character/info", method = RequestMethod.GET)
     public Response info(UserEntity user) {
         return characterInfoResponseBuilderService.build(user);
@@ -23,8 +31,29 @@ public class CharacterController {
 
     @RequestMapping(value = "/character/move", method = RequestMethod.POST)
     public Response move(UserEntity user, @RequestBody MovementRequest direction) {
+        boolean result = movementManager.move(user, direction.getDirection());
+
+        //TODO: combat here!
+
         Response response = new Response();
-        response.setData("success", true);
+
+        response.setData("success", result);
+        response.setData("x", user.getXPosition());
+        response.setData("y", user.getYPosition());
+        response.setData("map", user.getMap().getId());
+
+        userManager.saveUser(user);
+
+        return response;
+    }
+
+    @RequestMapping(value = "/character/position", method = RequestMethod.GET)
+    public Response position(UserEntity user) {
+        Response response = new Response();
+
+        response.setData("x", user.getXPosition());
+        response.setData("y", user.getYPosition());
+        response.setData("map", user.getMap().getId());
 
         return response;
     }

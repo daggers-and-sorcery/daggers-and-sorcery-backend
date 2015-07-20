@@ -3,12 +3,12 @@ package com.swordssorcery.server.model.db.user;
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
 import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.db.Inventory;
 import com.swordssorcery.server.model.db.Skills;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.awt.*;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -28,9 +28,10 @@ public class UserDatabaseEntity {
     private Race race;
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
     private Skills skills = new Skills();
-    private Inventory inventory = new Inventory();
+    private HashMap<Integer, ItemDatabaseEntity> inventory = new HashMap<>();
     private Date registrationDate = new Date();
     private Date lastLoginDate = new Date();
+    private PositionDatabaseEntity position = new PositionDatabaseEntity();
 
     public UserDatabaseEntity(String username, String password) {
         this.username = username;
@@ -101,7 +102,15 @@ public class UserDatabaseEntity {
         return skills;
     }
 
-    public Inventory getInventory() {
+    public HashMap<Integer, ItemDatabaseEntity> getInventory() {
         return inventory;
+    }
+
+    public PositionDatabaseEntity getPosition() {
+        return position;
+    }
+
+    public void setPosition(PositionDatabaseEntity position) {
+        this.position = position;
     }
 }
