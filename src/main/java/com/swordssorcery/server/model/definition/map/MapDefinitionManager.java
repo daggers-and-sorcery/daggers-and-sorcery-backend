@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @Service
-public class MapManager {
+public class MapDefinitionManager {
 
     @Autowired
     private ApplicationContext applicationContext;

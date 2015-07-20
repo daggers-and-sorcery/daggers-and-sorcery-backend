@@ -1,31 +1,38 @@
 package com.swordssorcery.server.model.definition.map.loader;
 
 import com.swordssorcery.server.model.definition.map.MapDefinition;
-import com.swordssorcery.server.model.definition.map.MapLayerDefinition;
+import com.swordssorcery.server.model.definition.map.TileDefinition;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 @Service
 public class MapConverter {
 
-    public MapDefinition convertRawMapToDefinition(RawMap rawMap) {
-        MapLayerDefinition[] layers = new MapLayerDefinition[rawMap.getLayers().length];
-        for (int i = 0; i < rawMap.getLayers().length; i++) {
-            RawMapLayer rawMapLayer = rawMap.getLayers()[i];
+    public final static int COLLISION_TILE_ID = 6;
+    public final static String COLLISION_LAYER_NAME = "Collision";
 
-            layers[i] = new MapLayerDefinition(rawMapLayer.getName(), rawMapLayer.getWidth(), rawMapLayer.getHeight(), convertMapData(rawMapLayer.getData(), rawMapLayer.getWidth(), rawMapLayer.getHeight()));
+    public MapDefinition convertRawMapToDefinition(RawMap rawMap) {
+        HashMap<String, RawMapLayer> layerMap = buildLayerMap(rawMap);
+
+        TileDefinition[][] tileDefinitions = new TileDefinition[rawMap.getWidth()][rawMap.getHeight()];
+
+        for (int x = 0; x < rawMap.getWidth(); x++) {
+            for (int y = 0; y < rawMap.getHeight(); y++) {
+                tileDefinitions[x][y] = new TileDefinition(layerMap.get(COLLISION_LAYER_NAME).getDataAt(x, y) != COLLISION_TILE_ID);
+            }
         }
 
-        return new MapDefinition(rawMap.getWidth(), rawMap.getHeight(), layers);
+        return new MapDefinition(rawMap.getWidth(), rawMap.getHeight(), tileDefinitions);
     }
 
-    private int[][] convertMapData( final int[] array, final int rows, final int cols ) {
-        if (array.length != (rows*cols))
-            throw new IllegalArgumentException("Invalid array length");
+    private HashMap<String, RawMapLayer> buildLayerMap(RawMap rawMap) {
+        HashMap<String, RawMapLayer> layerMap = new HashMap<>();
 
-        int[][] bidi = new int[rows][cols];
-        for ( int i = 0; i < rows; i++ )
-            System.arraycopy(array, (i*cols), bidi[i], 0, cols);
+        for (RawMapLayer layer : rawMap.getLayers()) {
+            layerMap.put(layer.getName(), layer);
+        }
 
-        return bidi;
+        return layerMap;
     }
 }

@@ -38,4 +38,8 @@ public class RawMapLayer {
     public void setWidth(int width) {
         this.width = width;
     }
+
+    public int getDataAt(int x, int y) {
+        return data[x + width * y];
+    }
 }

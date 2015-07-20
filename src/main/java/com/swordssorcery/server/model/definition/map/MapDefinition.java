@@ -4,17 +4,19 @@ public class MapDefinition {
 
     private final int height;
     private final int width;
+    private final TileDefinition[][] tileDefinitions;
 
-    //TODO: Doesn't even need layers! Just MapCell[][] and Cell.isWalkable() etc!!!
-    private final MapLayerDefinition[] layers;
-
-    public MapDefinition(int width, int height, MapLayerDefinition[] layers) {
+    public MapDefinition(int width, int height, TileDefinition[][] tileDefinitions) {
         this.width = width;
         this.height = height;
-        this.layers = layers;
+        this.tileDefinitions = tileDefinitions;
+    }
+
+    public TileDefinition getTileDefinitionAt(int x, int y) {
+        return tileDefinitions[x][y];
     }
 
     public String toString() {
-        return "MapDefinition -> [width: " + width + ", height: " + height + ", layers: " + layers.length + "]";
+        return "MapDefinition -> [width: " + width + ", height: " + height + "]";
     }
 }
