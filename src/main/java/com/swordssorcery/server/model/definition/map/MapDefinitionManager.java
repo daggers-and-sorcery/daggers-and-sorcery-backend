@@ -17,13 +17,17 @@ public class MapDefinitionManager {
     @Autowired
     private MapLoader mapLoader;
 
-    private HashMap<String, MapDefinition> mapHolder = new HashMap<>();
+    private HashMap<Integer, MapDefinition> mapHolder = new HashMap<>();
 
-    public MapDefinition getMap(String name) throws IOException {
-        if (!mapHolder.containsKey(name)) {
-            mapHolder.put(name, mapLoader.loadMapDefinition(name));
+    public MapDefinition getMap(int id) {
+        if (!mapHolder.containsKey(id)) {
+            try {
+                mapHolder.put(id, mapLoader.loadMapDefinition(id));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        return mapHolder.get(name);
+        return mapHolder.get(id);
     }
 }

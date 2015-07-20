@@ -25,16 +25,16 @@ public class MapLoader {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public boolean isMapExists(String name) {
-        return applicationContext.getResource("classpath:map/" + name + ".json").exists();
+    public boolean isMapExists(int id) {
+        return applicationContext.getResource("classpath:map/" + id + ".json").exists();
     }
 
-    public MapDefinition loadMapDefinition(String name) throws IOException {
-        if (!isMapExists(name)) {
+    public MapDefinition loadMapDefinition(int id) throws IOException {
+        if (!isMapExists(id)) {
             return null;
         }
 
-        Resource resource = applicationContext.getResource("classpath:map/" + name + ".json");
+        Resource resource = applicationContext.getResource("classpath:map/" + id + ".json");
         RawMap rawMap = objectMapper.readValue(resource.getFile(), RawMap.class);
 
         return mapConverter.convertRawMapToDefinition(rawMap);
