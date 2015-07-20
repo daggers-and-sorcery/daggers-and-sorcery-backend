@@ -18,7 +18,7 @@ window.createGame = function(scope, injector) {
                     map = game.add.tilemap('map_1');
                     map.addTilesetImage('tileset', 'tiles');
 
-                    layer = map.createLayer('Tile Layer 1');
+                    layer = map.createLayer('Ground');
 
                     layer.resizeWorld();
 
