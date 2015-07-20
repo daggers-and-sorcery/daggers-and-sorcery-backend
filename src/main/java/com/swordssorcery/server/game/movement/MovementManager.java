@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MovementManager {
 
+    //TODO: TEST!
     public boolean move(UserEntity user, MovementType type) {
         int targetX = getTargetXCoordinate(user, type);
         int targetY = getTargetYCoordinate(user, type);
