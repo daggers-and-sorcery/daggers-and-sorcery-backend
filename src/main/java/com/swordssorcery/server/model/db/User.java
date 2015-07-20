@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model;
+package com.swordssorcery.server.model.db;
 
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;

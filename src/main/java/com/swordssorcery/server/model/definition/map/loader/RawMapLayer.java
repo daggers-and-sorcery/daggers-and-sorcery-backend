@@ -1,4 +1,4 @@
-package com.swordssorcery.server.game.map.loader;
+package com.swordssorcery.server.model.definition.map.loader;
 
 public class RawMapLayer {
 

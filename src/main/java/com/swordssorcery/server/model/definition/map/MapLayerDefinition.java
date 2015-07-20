@@ -1,4 +1,4 @@
-package com.swordssorcery.server.game.map;
+package com.swordssorcery.server.model.definition.map;
 
 public class MapLayerDefinition {
 

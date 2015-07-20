@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model;
+package com.swordssorcery.server.model.db;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

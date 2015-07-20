@@ -5,7 +5,7 @@ import com.swordssorcery.server.game.attribute.modifier.AttributeModifierCalcula
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.User;
+import com.swordssorcery.server.model.db.User;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

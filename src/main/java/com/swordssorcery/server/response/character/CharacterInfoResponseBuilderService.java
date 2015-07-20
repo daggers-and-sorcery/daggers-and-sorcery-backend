@@ -1,12 +1,12 @@
 package com.swordssorcery.server.response.character;
 
-import com.swordssorcery.server.game.item.ItemDefinitionManager;
+import com.swordssorcery.server.model.definition.item.ItemDefinitionManager;
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
-import com.swordssorcery.server.model.Item;
-import com.swordssorcery.server.model.User;
+import com.swordssorcery.server.model.db.Item;
+import com.swordssorcery.server.model.db.User;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.ResponseBuilderService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.swordssorcery.server.model.repository;
+package com.swordssorcery.server.model.db.repository;
 
-import com.swordssorcery.server.model.User;
+import com.swordssorcery.server.model.db.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface UserRepository extends MongoRepository<User, String>, CustomUserRepository {

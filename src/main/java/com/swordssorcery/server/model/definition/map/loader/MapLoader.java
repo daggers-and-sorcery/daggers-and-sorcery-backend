@@ -1,8 +1,8 @@
-package com.swordssorcery.server.game.map.loader;
+package com.swordssorcery.server.model.definition.map.loader;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.swordssorcery.server.game.map.MapDefinition;
+import com.swordssorcery.server.model.definition.map.MapDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;

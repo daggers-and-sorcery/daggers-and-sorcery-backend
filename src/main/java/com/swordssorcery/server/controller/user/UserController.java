@@ -1,8 +1,8 @@
 package com.swordssorcery.server.controller.user;
 
 import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.User;
-import com.swordssorcery.server.model.repository.UserRepository;
+import com.swordssorcery.server.model.db.User;
+import com.swordssorcery.server.model.db.repository.UserRepository;
 import com.swordssorcery.server.request.user.RegistrationRequest;
 import com.swordssorcery.server.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;

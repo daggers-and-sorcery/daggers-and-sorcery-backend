@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model;
+package com.swordssorcery.server.model.db;
 
 import java.util.ArrayList;
 import java.util.Collections;

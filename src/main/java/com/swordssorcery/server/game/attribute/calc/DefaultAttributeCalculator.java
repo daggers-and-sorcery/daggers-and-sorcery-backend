@@ -4,7 +4,7 @@ import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeCalculator;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.game.attribute.modifier.AttributeModifierCalculator;
-import com.swordssorcery.server.model.User;
+import com.swordssorcery.server.model.db.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

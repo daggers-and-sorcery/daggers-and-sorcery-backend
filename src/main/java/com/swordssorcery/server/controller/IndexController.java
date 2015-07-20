@@ -1,7 +1,7 @@
 package com.swordssorcery.server.controller;
 
-import com.swordssorcery.server.model.News;
-import com.swordssorcery.server.model.repository.NewsRepository;
+import com.swordssorcery.server.model.db.News;
+import com.swordssorcery.server.model.db.repository.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

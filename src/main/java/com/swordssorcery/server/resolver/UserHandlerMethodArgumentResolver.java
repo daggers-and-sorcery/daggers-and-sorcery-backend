@@ -1,7 +1,7 @@
 package com.swordssorcery.server.resolver;
 
-import com.swordssorcery.server.model.User;
-import com.swordssorcery.server.model.repository.UserRepository;
+import com.swordssorcery.server.model.db.User;
+import com.swordssorcery.server.model.db.repository.UserRepository;
 import com.swordssorcery.server.session.SessionAttributeType;
 import org.apache.catalina.session.StandardSessionFacade;
 import org.springframework.beans.factory.annotation.Autowired;

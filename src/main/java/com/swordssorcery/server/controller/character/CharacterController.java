@@ -1,6 +1,6 @@
 package com.swordssorcery.server.controller.character;
 
-import com.swordssorcery.server.model.User;
+import com.swordssorcery.server.model.db.User;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.character.CharacterInfoResponseBuilderService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.swordssorcery.server.request.user;
 
 import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.User;
+import com.swordssorcery.server.model.db.User;
 import com.swordssorcery.server.validator.annotation.StringEnumeration;
 import com.swordssorcery.server.validator.annotation.UniqueInDb;
 import org.hibernate.validator.constraints.Email;

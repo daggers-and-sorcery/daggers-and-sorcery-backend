@@ -1,6 +1,6 @@
-package com.swordssorcery.server.model.repository;
+package com.swordssorcery.server.model.db.repository;
 
-import com.swordssorcery.server.model.News;
+import com.swordssorcery.server.model.db.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;

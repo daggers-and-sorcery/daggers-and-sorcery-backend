@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model;
+package com.swordssorcery.server.model.db;
 
 public class Item {
 
