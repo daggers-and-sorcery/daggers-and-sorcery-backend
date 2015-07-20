@@ -1,8 +1,10 @@
-package com.swordssorcery.server.model.db;
+package com.swordssorcery.server.model.db.user;
 
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
 import com.swordssorcery.server.game.race.Race;
+import com.swordssorcery.server.model.db.Inventory;
+import com.swordssorcery.server.model.db.Skills;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 @Document
-public class User {
+public class UserDatabaseEntity {
 
     @Id
     private String id;
@@ -30,7 +32,7 @@ public class User {
     private Date registrationDate = new Date();
     private Date lastLoginDate = new Date();
 
-    public User(String username, String password) {
+    public UserDatabaseEntity(String username, String password) {
         this.username = username;
         this.password = password;
     }

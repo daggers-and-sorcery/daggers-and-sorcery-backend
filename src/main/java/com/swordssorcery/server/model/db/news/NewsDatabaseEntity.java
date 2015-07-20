@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model.db;
+package com.swordssorcery.server.model.db.news;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @Document
-public class News {
+public class NewsDatabaseEntity {
 
     @Id
     private int id;

@@ -4,7 +4,7 @@ import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeCalculator;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.game.attribute.modifier.AttributeModifierCalculator;
-import com.swordssorcery.server.model.db.User;
+import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class DefaultAttributeCalculator implements AttributeCalculator {
     private AttributeModifierCalculator attributeModifierCalculator;
 
     @Override
-    public AttributeData calculateAttributeValue(User user, Attribute attribute) {
+    public AttributeData calculateAttributeValue(UserDatabaseEntity user, Attribute attribute) {
         AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder(attribute);
 
         attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, attribute));

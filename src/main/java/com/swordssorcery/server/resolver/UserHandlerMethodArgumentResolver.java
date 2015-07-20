@@ -1,7 +1,7 @@
 package com.swordssorcery.server.resolver;
 
-import com.swordssorcery.server.model.db.User;
-import com.swordssorcery.server.model.db.repository.UserRepository;
+import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.db.user.UserRepository;
 import com.swordssorcery.server.session.SessionAttributeType;
 import org.apache.catalina.session.StandardSessionFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class UserHandlerMethodArgumentResolver implements HandlerMethodArgumentR
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(User.class);
+        return parameter.getParameterType().equals(UserDatabaseEntity.class);
     }
 
     @Override

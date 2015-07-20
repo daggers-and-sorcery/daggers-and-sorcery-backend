@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model.db.repository;
+package com.swordssorcery.server.model.db.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;

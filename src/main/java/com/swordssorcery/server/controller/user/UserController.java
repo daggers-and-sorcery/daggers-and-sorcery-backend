@@ -1,8 +1,8 @@
 package com.swordssorcery.server.controller.user;
 
 import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.db.User;
-import com.swordssorcery.server.model.db.repository.UserRepository;
+import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.db.user.UserRepository;
 import com.swordssorcery.server.request.user.RegistrationRequest;
 import com.swordssorcery.server.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public HashMap<String, String> login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
-        User user = userRepository.findByUsernameAndPassword(username, shaPasswordEncoder.encodePassword(password, null));
+        UserDatabaseEntity user = userRepository.findByUsernameAndPassword(username, shaPasswordEncoder.encodePassword(password, null));
 
         HashMap<String, String> response = new HashMap<>();
 
@@ -58,7 +58,7 @@ public class UserController {
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public ResponseEntity<Object> register(@Valid @RequestBody RegistrationRequest registrationRequest, BindingResult result) throws UnsupportedEncodingException {
         if (!registrationRequest.getPasswordFirst().equals(registrationRequest.getPasswordSecond())) {
-            result.addError(new ObjectError(String.valueOf(User.class), "The two passwords must be equals."));
+            result.addError(new ObjectError(String.valueOf(UserDatabaseEntity.class), "The two passwords must be equals."));
         }
 
         if (result.hasErrors()) {
@@ -73,7 +73,7 @@ public class UserController {
             String username = registrationRequest.getUsername();
             String password = shaPasswordEncoder.encodePassword(registrationRequest.getPasswordFirst(), null);
 
-            User user = new User(username, password);
+            UserDatabaseEntity user = new UserDatabaseEntity(username, password);
             user.setEmail(registrationRequest.getEmail());
             user.setRace(Race.valueOf(registrationRequest.getRace()));
 

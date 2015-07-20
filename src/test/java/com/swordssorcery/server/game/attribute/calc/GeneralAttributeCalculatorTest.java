@@ -5,7 +5,7 @@ import com.swordssorcery.server.game.attribute.modifier.AttributeModifierCalcula
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
 import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.db.User;
+import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -33,7 +33,7 @@ public class GeneralAttributeCalculatorTest {
 
     @Test
     public void testCalculateAttributeValue() {
-        User user = new User("test", "test");
+        UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
         user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
@@ -51,7 +51,7 @@ public class GeneralAttributeCalculatorTest {
 
     @Test
     public void testCalculatePointsToAttributeLevel() {
-        User user = new User("test", "test");
+        UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
         user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
@@ -60,7 +60,7 @@ public class GeneralAttributeCalculatorTest {
 
     @Test
     public void testCalculatePointsBonusBySkills() {
-        User user = new User("test", "test");
+        UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
         user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 100000);
 

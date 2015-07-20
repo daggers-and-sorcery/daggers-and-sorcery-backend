@@ -1,7 +1,7 @@
 package com.swordssorcery.server.controller;
 
-import com.swordssorcery.server.model.db.News;
-import com.swordssorcery.server.model.db.repository.NewsRepository;
+import com.swordssorcery.server.model.db.news.NewsDatabaseEntity;
+import com.swordssorcery.server.model.db.news.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping(value = "/news/last", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public List<News> news() {
+    public List<NewsDatabaseEntity> news() {
         return newsRepository.findLast(5);
     }
 }

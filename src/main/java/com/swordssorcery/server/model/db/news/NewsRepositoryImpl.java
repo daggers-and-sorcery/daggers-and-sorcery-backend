@@ -1,6 +1,5 @@
-package com.swordssorcery.server.model.db.repository;
+package com.swordssorcery.server.model.db.news;
 
-import com.swordssorcery.server.model.db.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -18,11 +17,11 @@ public class NewsRepositoryImpl implements CustomNewsRepository {
     }
 
     @Override
-    public List<News> findLast(int amount) {
+    public List<NewsDatabaseEntity> findLast(int amount) {
         Query query = new Query();
         query.limit(10);
         query.with(new Sort(Sort.Direction.DESC, "date"));
 
-        return mongoOperations.find(query, News.class);
+        return mongoOperations.find(query, NewsDatabaseEntity.class);
     }
 }

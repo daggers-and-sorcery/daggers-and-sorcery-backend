@@ -6,7 +6,7 @@ import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.game.attribute.modifier.AttributeModifierCalculator;
 import com.swordssorcery.server.game.attribute.type.CombatAttribute;
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
-import com.swordssorcery.server.model.db.User;
+import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class CombatAttributeCalculator implements AttributeCalculator {
     private AttributeModifierCalculator attributeModifierCalculator;
 
     @Override
-    public AttributeData calculateAttributeValue(User user, Attribute attribute) {
+    public AttributeData calculateAttributeValue(UserDatabaseEntity user, Attribute attribute) {
         if (!(attribute instanceof CombatAttribute)) {
             throw new IllegalArgumentException("The attribute must be an instance of CombatAttribute.");
         }
@@ -38,7 +38,7 @@ public class CombatAttributeCalculator implements AttributeCalculator {
         return attributeDataBuilder.build();
     }
 
-    public int calculateAllBonusByGeneralAttributes(User user, CombatAttribute attribute) {
+    public int calculateAllBonusByGeneralAttributes(UserDatabaseEntity user, CombatAttribute attribute) {
         int result = 0;
 
         for(GeneralAttribute target : attribute.getBonusAttributes()) {
@@ -48,7 +48,7 @@ public class CombatAttributeCalculator implements AttributeCalculator {
         return result;
     }
 
-    public int calculateBonusByGeneralAttribute(User user, GeneralAttribute attribute, double bonusPercentage) {
+    public int calculateBonusByGeneralAttribute(UserDatabaseEntity user, GeneralAttribute attribute, double bonusPercentage) {
         return (int) Math.floor(globalAttributeCalculator.calculateActualValue(user, attribute)* bonusPercentage);
     }
 }

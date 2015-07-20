@@ -6,7 +6,7 @@ import com.swordssorcery.server.game.attribute.data.GeneralAttributeData;
 import com.swordssorcery.server.game.attribute.modifier.AttributeModifierCalculator;
 import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
 import com.swordssorcery.server.game.attribute.type.SkillAttribute;
-import com.swordssorcery.server.model.db.User;
+import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
     private AttributeModifierCalculator attributeModifierCalculator;
 
     @Override
-    public GeneralAttributeData calculateAttributeValue(User user, Attribute attribute) {
+    public GeneralAttributeData calculateAttributeValue(UserDatabaseEntity user, Attribute attribute) {
         if (!(attribute instanceof GeneralAttribute)) {
             throw new IllegalArgumentException("The attribute must be an instance of GeneralAttribute.");
         }
@@ -39,7 +39,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
         return attributeDataBuilder.build();
     }
 
-    public int calculatePointsToAttributeLevel(User user, Attribute attribute) {
+    public int calculatePointsToAttributeLevel(UserDatabaseEntity user, Attribute attribute) {
         int result = 0;
 
         for (SkillAttribute skill : SkillAttribute.values()) {
@@ -51,7 +51,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
         return result % 10;
     }
 
-    public int calculatePointsBonusBySkills(User user, Attribute attribute) {
+    public int calculatePointsBonusBySkills(UserDatabaseEntity user, Attribute attribute) {
         int result = 0;
 
         for (SkillAttribute skill : SkillAttribute.values()) {
