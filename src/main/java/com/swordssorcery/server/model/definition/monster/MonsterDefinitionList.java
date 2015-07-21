@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model.definition.item;
+package com.swordssorcery.server.model.definition.monster;
 
 import com.swordssorcery.server.loader.definition.DefinitionList;
 
@@ -8,15 +8,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-@XmlRootElement(name = "itemlist")
+@XmlRootElement(name = "monsterlist")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ItemDefinitionList extends DefinitionList<ItemDefinition> {
+public class MonsterDefinitionList extends DefinitionList<MonsterDefinition> {
 
-    @XmlElement(name = "item")
-    private List<ItemDefinition> item;
+    @XmlElement(name = "monster")
+    private List<MonsterDefinition> monster;
 
     @Override
-    public List<ItemDefinition> getDefinitionList() {
-        return item;
+    public List<MonsterDefinition> getDefinitionList() {
+        return monster;
     }
 }

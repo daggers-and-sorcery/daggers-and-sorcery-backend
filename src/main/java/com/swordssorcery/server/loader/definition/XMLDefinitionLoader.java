@@ -1,4 +1,4 @@
-package com.swordssorcery.server.definition.loader;
+package com.swordssorcery.server.loader.definition;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

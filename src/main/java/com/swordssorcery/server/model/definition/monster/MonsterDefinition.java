@@ -1,4 +1,21 @@
 package com.swordssorcery.server.model.definition.monster;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "name")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MonsterDefinition {
+
+    private int id;
+    private String name;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

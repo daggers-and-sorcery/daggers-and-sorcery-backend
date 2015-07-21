@@ -1,6 +1,6 @@
 package com.swordssorcery.server.model.definition.item;
 
-import com.swordssorcery.server.definition.loader.XMLDefinitionLoader;
+import com.swordssorcery.server.loader.definition.XMLDefinitionLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

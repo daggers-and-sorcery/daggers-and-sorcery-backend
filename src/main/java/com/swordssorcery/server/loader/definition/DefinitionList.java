@@ -1,4 +1,4 @@
-package com.swordssorcery.server.definition.loader;
+package com.swordssorcery.server.loader.definition;
 
 import java.util.List;
 
