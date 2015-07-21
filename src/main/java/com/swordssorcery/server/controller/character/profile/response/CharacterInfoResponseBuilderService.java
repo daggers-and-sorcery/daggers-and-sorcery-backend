@@ -1,12 +1,12 @@
-package com.swordssorcery.server.response.character;
+package com.swordssorcery.server.controller.character.profile.response;
 
-import com.swordssorcery.server.model.definition.item.ItemDefinitionManager;
+
 import com.swordssorcery.server.game.attribute.Attribute;
-import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
+import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
 import com.swordssorcery.server.model.db.Item;
-import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.swordssorcery.server.model.definition.item.ItemDefinitionManager;
 import com.swordssorcery.server.model.entity.user.UserEntity;
 import com.swordssorcery.server.response.Response;
 import com.swordssorcery.server.response.ResponseBuilderService;

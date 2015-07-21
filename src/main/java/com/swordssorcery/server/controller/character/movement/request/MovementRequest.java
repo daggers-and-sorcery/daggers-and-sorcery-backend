@@ -1,4 +1,4 @@
-package com.swordssorcery.server.controller.character.request;
+package com.swordssorcery.server.controller.character.movement.request;
 
 public class MovementRequest {
 

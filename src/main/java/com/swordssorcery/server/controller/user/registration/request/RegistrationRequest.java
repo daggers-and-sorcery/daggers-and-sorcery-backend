@@ -1,4 +1,4 @@
-package com.swordssorcery.server.request.user;
+package com.swordssorcery.server.controller.user.registration.request;
 
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
