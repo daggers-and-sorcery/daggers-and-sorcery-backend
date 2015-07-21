@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model.definition.item;
+package com.swordssorcery.server.definition.loader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -11,15 +11,15 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class ItemDefinitionLoader {
+public class XMLDefinitionLoader {
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    public List<ItemDefinition> loadItemDefinitionsAsList() throws JAXBException, IOException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(ItemDefinitionList.class);
+    public List loadDefinitions(Class<? extends DefinitionList> clazz, String resourcePath) throws JAXBException, IOException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-        return ((ItemDefinitionList) jaxbUnmarshaller.unmarshal(applicationContext.getResource("classpath:data/itemlist.xml").getFile())).getItemList();
+        return ((DefinitionList) jaxbUnmarshaller.unmarshal(applicationContext.getResource(resourcePath).getFile())).getDefinitionList();
     }
 }
