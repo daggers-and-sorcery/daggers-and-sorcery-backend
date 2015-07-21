@@ -2,15 +2,15 @@ module.exports = {
     templateUrl: "/partial/main/map.html",
     resolve: {
         position: function ($http) {
-            return $http.get('/character/position');
+            return $http.get('/character/position').then(function(response) {
+                return response.data.data;
+            });
         }
     },
     controller: function ($scope, $http, position) {
-        $scope.$broadcast('position', position);
+        $scope.position = position;
 
         $scope.move = function(direction) {
-            //$broadcast;
-            //console.log(dir);
             var directionData = {
                 'direction': direction
             };
@@ -19,7 +19,7 @@ module.exports = {
                 if(data.data.success) {
                     $scope.$broadcast('position', data.data);
                 }
-                //Broadcast the result to the map, show the monsters etc on the new tile
+                //TODO: Broadcast the result to the map, show the monsters etc on the new tile
             });
         }
     }

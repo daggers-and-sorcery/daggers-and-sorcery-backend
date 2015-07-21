@@ -3,6 +3,9 @@
 module.exports = require('app.js').directive('gameMap', function ($injector) {
     return {
         template: '<div id="game-map"></div>',
+        scope: {
+            position: '='
+        },
         link: function (scope, ele, attrs) {
             var game = new Phaser.Game(550, 400, Phaser.AUTO, 'game-map', {
                 preload: preload,
@@ -12,7 +15,7 @@ module.exports = require('app.js').directive('gameMap', function ($injector) {
             });
 
             function preload() {
-                game.load.tilemap('map_0', 'map/0.json', null, Phaser.Tilemap.TILED_JSON);
+                game.load.tilemap('map_'+scope.position.map, 'map/' + scope.position.map + '.json', null, Phaser.Tilemap.TILED_JSON);
                 game.load.image('tiles', 'tileset/base.png');
                 game.load.image('player', 'image/player.png');
             }
@@ -24,7 +27,7 @@ module.exports = require('app.js').directive('gameMap', function ($injector) {
             var sprite;
 
             function create() {
-                map = game.add.tilemap('map_0');
+                map = game.add.tilemap('map_'+scope.position.map);
                 map.addTilesetImage('tileset', 'tiles');
 
                 layer = map.createLayer('Ground');
@@ -33,6 +36,8 @@ module.exports = require('app.js').directive('gameMap', function ($injector) {
 
                 sprite = game.add.sprite(48, 48, 'player');
                 sprite.anchor.setTo(0, 0);
+                sprite.x = scope.position.x * 48;
+                sprite.y = scope.position.y * 48;
 
                 game.camera.follow(sprite);
 
