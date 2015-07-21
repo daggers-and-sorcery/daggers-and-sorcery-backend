@@ -1,11 +1,11 @@
-package com.swordssorcery.server.model.db;
+package com.swordssorcery.server.model.db.user;
 
-public class Item {
+public class ItemDatabaseEntity {
 
     private final int id;
     private int amount;
 
-    public Item(int id, int amount) {
+    public ItemDatabaseEntity(int id, int amount) {
         this.id = id;
         this.setAmount(amount);
     }
