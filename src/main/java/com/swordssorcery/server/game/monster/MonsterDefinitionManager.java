@@ -1,7 +1,6 @@
 package com.swordssorcery.server.game.monster;
 
 import com.swordssorcery.server.loader.definition.XMLDefinitionLoader;
-import com.swordssorcery.server.model.definition.item.ItemDefinition;
 import com.swordssorcery.server.model.definition.monster.MonsterDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
