@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<map:map xmlns:map="http://www.swordsandsorcery.com/map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.swordsandsorcery.com/map ../schema.xsd">
+    <map:id>0</map:id>
+    <map:spawn>
+        <map:timer>10</map:timer>
+        <!-- respawn in seconds -->
+        <map:alive>100</map:alive>
+        <!-- 100 npc can be alive at one time on the map -->
+        <map:spawns>
+            <map:monster>
+                <map:id>0</map:id>
+                <map:chance>3</map:chance>
+                <map:spots>
+                    <map:spot x="111" y="222"/>
+                    <map:spot x="113" y="222"/>
+                    <map:spot x="114" y="222"/>
+                    <map:spot x="115" y="222"/>
+                </map:spots>
+            </map:monster>
+        </map:spawns>
+    </map:spawn>
+    <map:objects>
+        <map:object x="111" y="22">
+            <map:name>Mapple tree</map:name>
+            <map:type>TREE</map:type>
+        </map:object>
+        <map:object x="11" y="22">
+            <map:name>Oak tree</map:name>
+            <map:type>TREE</map:type>
+        </map:object>
+    </map:objects>
+</map:map>
