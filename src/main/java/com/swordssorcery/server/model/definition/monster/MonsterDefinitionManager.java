@@ -18,11 +18,11 @@ public class MonsterDefinitionManager {
 
     @PostConstruct
     public void init() throws Exception {
-        List<MonsterDefinition> monsterDefinitionList = xmlDefinitionLoader.loadDefinitions(MonsterDefinitionList.class, "classpath:data/monsterlist.xml");
+        /*List<MonsterDefinition> monsterDefinitionList = xmlDefinitionLoader.loadDefinitions(MonsterDefinitionList.class, "classpath:data/monsterlist.xml");
 
         for (MonsterDefinition monsterDefinition : monsterDefinitionList) {
             monsterDefinitionMap.put(monsterDefinition.getId(), monsterDefinition);
-        }
+        }*/
     }
 
     public MonsterDefinition getMonsterDefinition(int monsterId) {

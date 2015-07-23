@@ -18,8 +18,9 @@ public class ItemDefinitionManager {
 
     @PostConstruct
     public void init() throws Exception {
-        //TODO: rewrite!
-        List<ItemDefinition> itemDefinitionList = xmlDefinitionLoader.loadDefinitions(ItemDefinitionList.class, "classpath:data/item/0.xml");
+        //TODO: normalize loading
+        //TODO: schema validation
+        List<ItemDefinition> itemDefinitionList = xmlDefinitionLoader.loadDefinitions(ItemDefinition.class, "classpath:data/item/definition/");
 
         for (ItemDefinition itemDefinition : itemDefinitionList) {
             itemDefinitionMap.put(itemDefinition.getId(), itemDefinition);
