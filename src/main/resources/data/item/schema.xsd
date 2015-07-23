@@ -7,7 +7,7 @@
             <xs:all>
                 <xs:element name="id" type="xs:unsignedInt" minOccurs="1" maxOccurs="1"/>
                 <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:element name="type" minOccurs="1" maxOccurs="1">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:enumeration value="GENERAL"/>
@@ -21,7 +21,7 @@
                             <xs:element name="modifier" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="target" type="xs:string" minOccurs="1" maxOccurs="1">
+                                        <xs:element name="target" minOccurs="1" maxOccurs="1">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
                                                     <xs:enumeration value="ATTACK"/>
