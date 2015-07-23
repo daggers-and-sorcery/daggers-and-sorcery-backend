@@ -5,7 +5,7 @@ import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.attribute.data.AttributeData;
-import com.swordssorcery.server.model.definition.item.ItemDefinitionManager;
+import com.swordssorcery.server.game.item.ItemDefinitionManager;
 import com.swordssorcery.server.model.db.user.ItemDatabaseEntity;
 import com.swordssorcery.server.model.entity.user.UserEntity;
 import com.swordssorcery.server.response.Response;

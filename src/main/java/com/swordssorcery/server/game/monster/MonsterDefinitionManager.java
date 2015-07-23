@@ -1,6 +1,8 @@
-package com.swordssorcery.server.model.definition.monster;
+package com.swordssorcery.server.game.monster;
 
 import com.swordssorcery.server.loader.definition.XMLDefinitionLoader;
+import com.swordssorcery.server.model.definition.item.ItemDefinition;
+import com.swordssorcery.server.model.definition.monster.MonsterDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,11 @@ public class MonsterDefinitionManager {
 
     @PostConstruct
     public void init() throws Exception {
-        /*List<MonsterDefinition> monsterDefinitionList = xmlDefinitionLoader.loadDefinitions(MonsterDefinitionList.class, "classpath:data/monsterlist.xml");
+        List<MonsterDefinition> monsterDefinitionList = xmlDefinitionLoader.loadDefinitions(MonsterDefinition.class, "classpath:data/monster/definition/", "classpath:data/monster/schema.xsd");
 
         for (MonsterDefinition monsterDefinition : monsterDefinitionList) {
             monsterDefinitionMap.put(monsterDefinition.getId(), monsterDefinition);
-        }*/
+        }
     }
 
     public MonsterDefinition getMonsterDefinition(int monsterId) {

@@ -1,7 +1,6 @@
 package com.swordssorcery.server.game.map;
 
 import com.swordssorcery.server.model.db.map.MapRepository;
-import com.swordssorcery.server.model.definition.map.MapDefinitionManager;
 import com.swordssorcery.server.model.entity.map.MapEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
