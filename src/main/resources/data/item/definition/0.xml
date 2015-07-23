@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<item:item xmlns:item="http://swordsandsorcery.com/item" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://swordsandsorcery.com/item /data/item/schema.xsd">
+    <item:id>0</item:id>
+    <item:name>Laxi's epic</item:name>
+    <item:type>GENERAL</item:type>
+    <item:weight>5</item:weight>
+    <item:modifiers>
+        <item:modifier>
+            <item:target>ATTACK</item:target>
+            <item:value>1</item:value>
+        </item:modifier>
+        <item:modifier>
+            <item:target>DEFENSE</item:target>
+            <item:value>1</item:value>
+        </item:modifier>
+    </item:modifiers>
+</item:item>
