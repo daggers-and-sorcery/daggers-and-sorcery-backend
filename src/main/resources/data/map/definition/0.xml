@@ -10,7 +10,17 @@
         <!-- 100 npc can be alive at one time on the map -->
         <map:spawns>
             <map:monster>
-                <map:id>0</map:id>
+                <map:id>10</map:id>
+                <map:chance>3</map:chance>
+                <map:spots>
+                    <map:spot x="111" y="222"/>
+                    <map:spot x="113" y="222"/>
+                    <map:spot x="114" y="222"/>
+                    <map:spot x="115" y="222"/>
+                </map:spots>
+            </map:monster>
+            <map:monster>
+                <map:id>3</map:id>
                 <map:chance>3</map:chance>
                 <map:spots>
                     <map:spot x="111" y="222"/>
