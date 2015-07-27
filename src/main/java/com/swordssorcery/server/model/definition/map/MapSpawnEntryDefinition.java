@@ -9,8 +9,8 @@ import java.util.ArrayList;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MapSpawnEntryDefinition {
 
-    @XmlElement
-    private int id;
+    @XmlElement(name = "id")
+    private int monsterId;
     
     @XmlElement
     private int chance;
@@ -19,8 +19,8 @@ public class MapSpawnEntryDefinition {
     @XmlElement(name = "spot")
     private ArrayList<MapSpawnSpotDefinition> spots;
 
-    public int getId() {
-        return id;
+    public int getMonsterId() {
+        return monsterId;
     }
 
     public int getChance() {

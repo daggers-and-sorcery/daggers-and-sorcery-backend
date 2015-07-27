@@ -6,6 +6,7 @@ import com.swordssorcery.server.model.db.map.MapDatabaseEntity;
 import com.swordssorcery.server.model.db.user.PositionDatabaseEntity;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
 import com.swordssorcery.server.model.definition.map.MapDefinition;
+import com.swordssorcery.server.model.definition.map.MapInfoDefinition;
 import com.swordssorcery.server.model.definition.map.TileDefinition;
 import com.swordssorcery.server.model.entity.map.MapEntity;
 import com.swordssorcery.server.model.entity.user.UserEntity;
@@ -84,6 +85,6 @@ public class MovementManagerTest {
     }
 
     private MapEntity buildFakeMapEntity() {
-        return new MapEntity(0, buildFakeMapDefinition(), new MapDatabaseEntity());
+        return new MapEntity(0, buildFakeMapDefinition(), new MapInfoDefinition(), new MapDatabaseEntity());
     }
 }

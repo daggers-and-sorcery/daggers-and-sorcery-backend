@@ -14,6 +14,9 @@ public class MapManager {
     private MapDefinitionManager mapDefinitionManager;
 
     @Autowired
+    private MapInfoDefinitionManager mapInfoDefinitionManager;
+
+    @Autowired
     private MapRepository mapRepository;
 
     private HashMap<Integer, MapEntity> mapEntityHashMap = new HashMap<>();
@@ -27,7 +30,7 @@ public class MapManager {
     }
 
     public MapEntity buildMapEntity(int id) {
-        return new MapEntity(id, mapDefinitionManager.getMap(id), mapRepository.findOne(id));
+        return new MapEntity(id, mapDefinitionManager.getMap(id), mapInfoDefinitionManager.getMapInfoDefinition(id), mapRepository.findOne(id));
     }
 
     public void saveMapEntity(MapEntity mapEntity) {
