@@ -2,14 +2,16 @@ package com.morethanheroic.swords.map.service.loader;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.morethanheroic.swords.map.service.loader.domain.RawMap;
 import com.morethanheroic.swords.map.service.domain.MapDefinition;
+import com.morethanheroic.swords.map.service.loader.domain.RawMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MapLoader {
@@ -30,14 +32,19 @@ public class MapLoader {
         return applicationContext.getResource("classpath:map/" + id + ".json").exists();
     }
 
-    public MapDefinition loadMapDefinition(int id) throws IOException {
-        if (!isMapExists(id)) {
-            return null;
+    public List<MapDefinition> loadMapDefinitions() throws IOException {
+        File[] maps = applicationContext.getResource("classpath:map").getFile().listFiles();
+
+        ArrayList<MapDefinition> mapDefinitions = new ArrayList<>();
+
+        for (File map : maps) {
+            mapDefinitions.add(loadMapDefinition(map));
         }
 
-        Resource resource = applicationContext.getResource("classpath:map/" + id + ".json");
-        RawMap rawMap = objectMapper.readValue(resource.getFile(), RawMap.class);
+        return mapDefinitions;
+    }
 
-        return mapConverter.convertRawMapToDefinition(rawMap);
+    public MapDefinition loadMapDefinition(File map) throws IOException {
+        return mapConverter.convertRawMapToDefinition(Integer.valueOf(map.getName().replace(".json","")),objectMapper.readValue(map, RawMap.class));
     }
 }

@@ -82,7 +82,7 @@ public class MovementManagerTest {
             }
         }
 
-        return new MapDefinition(40, 40, tileDefinitions);
+        return new MapDefinition(1, 40, 40, tileDefinitions);
     }
 
     private MapEntity buildFakeMapEntity() {

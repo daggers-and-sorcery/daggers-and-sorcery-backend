@@ -24,7 +24,7 @@ public class MapEntity {
         this.mapDatabaseEntity = mapDatabaseEntity;
 
         ArrayList<SpawnEntity> spawnEntityArrayList = new ArrayList<>();
-        for(MapSpawnEntryDefinition spawnEntryDefinition : mapInfoDefinition.getMapSpawnListDefinition().getSpawns()) {
+        for (MapSpawnEntryDefinition spawnEntryDefinition : mapInfoDefinition.getMapSpawnListDefinition().getSpawns()) {
             spawnEntityArrayList.add(new SpawnEntity(spawnEntryDefinition));
         }
 
@@ -39,7 +39,23 @@ public class MapEntity {
         return new TileEntity(mapDefinition.getTileDefinitionAt(x, y));
     }
 
+    public int getSpawnTime() {
+        return mapInfoDefinition.getMapSpawnListDefinition().getTimer();
+    }
+
+    public int getMaximumSpawnedMonsterCount() {
+        return mapInfoDefinition.getMapSpawnListDefinition().getAlive();
+    }
+
+    public int getSpawnedMonsterCount() {
+        return mapDatabaseEntity.getSpawns().size();
+    }
+
     public List<SpawnEntity> getSpawnList() {
         return spawnEntityArrayList;
+    }
+
+    public void spawnMonster(int id, int x, int y) {
+        System.out.println("New spawn! " + id + " - " + x + "/" + y);
     }
 }

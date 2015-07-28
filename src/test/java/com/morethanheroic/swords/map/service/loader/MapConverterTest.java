@@ -21,14 +21,14 @@ public class MapConverterTest {
         rawMapLayer.setHeight(3);
         rawMapLayer.setName(MapConverter.COLLISION_LAYER_NAME);
         rawMapLayer.setData(new int[]{
-                0, 0, 0, 2,
-                1, 2, 1, 0,
-                MapConverter.COLLISION_TILE_ID, 5, 3, 4
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                1, 0, 0 ,0
         });
 
         rawMap.setLayers(new RawMapLayer[]{rawMapLayer});
 
-        MapDefinition mapDefinition = mapConverter.convertRawMapToDefinition(rawMap);
+        MapDefinition mapDefinition = mapConverter.convertRawMapToDefinition(1, rawMap);
 
         Assert.assertEquals(mapDefinition.getTileDefinitionAt(0,2).isWalkable(), false);
         Assert.assertEquals(mapDefinition.getTileDefinitionAt(0,1).isWalkable(), true);
