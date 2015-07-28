@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.map.service;
 
 import com.morethanheroic.swords.map.domain.MapEntity;
+import com.morethanheroic.swords.map.service.task.SpawnTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +23,7 @@ public class SpawnScheduler {
         List<MapEntity> maps = mapManager.getMapList();
 
         for (MapEntity map : maps) {
-            int time = map.getSpawnTime();
-
-            executor.scheduleAtFixedRate(() -> {
-                System.out.println("DO THIS RUN?");
-                if (map.getSpawnedMonsterCount() < map.getMaximumSpawnedMonsterCount()) {
-                    map.spawnMonster(1,99,99);
-                }
-            }, time, time, TimeUnit.SECONDS);
+            executor.scheduleAtFixedRate(new SpawnTask(map), 0, map.getSpawnTime(), TimeUnit.SECONDS);
         }
     }
 }

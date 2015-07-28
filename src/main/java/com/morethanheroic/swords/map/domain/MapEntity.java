@@ -23,6 +23,8 @@ public class MapEntity {
         this.mapInfoDefinition = mapInfoDefinition;
         this.mapDatabaseEntity = mapDatabaseEntity;
 
+        System.out.println("DBENTRY: "+mapDatabaseEntity);
+
         ArrayList<SpawnEntity> spawnEntityArrayList = new ArrayList<>();
         for (MapSpawnEntryDefinition spawnEntryDefinition : mapInfoDefinition.getMapSpawnListDefinition().getSpawns()) {
             spawnEntityArrayList.add(new SpawnEntity(spawnEntryDefinition));

@@ -14,7 +14,7 @@ public class MapDatabaseEntity {
     private int id;
 
     @Transient
-    private ArrayList<MapObectDatabaseEntity> spawns;
+    private ArrayList<MapObectDatabaseEntity> spawns = new ArrayList<>();
 
     public int getId() {
         return id;
