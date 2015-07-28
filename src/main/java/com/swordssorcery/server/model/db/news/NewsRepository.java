@@ -1,6 +1,12 @@
 package com.swordssorcery.server.model.db.news;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
-public interface NewsRepository extends MongoRepository<NewsDatabaseEntity, String>, CustomNewsRepository {
+import java.util.List;
+
+public interface NewsRepository extends CrudRepository<NewsDatabaseEntity, String> {
+
+    @Query(value= "SELECT * FROM news ORDER BY date LIMIT 10", nativeQuery = true)
+    List<NewsDatabaseEntity> findLastTen();
 }

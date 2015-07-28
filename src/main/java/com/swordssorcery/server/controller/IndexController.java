@@ -24,6 +24,6 @@ public class IndexController {
     @ResponseBody
     @RequestMapping(value = "/news/last", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public List<NewsDatabaseEntity> news() {
-        return newsRepository.findLast(5);
+        return newsRepository.findLastTen();
     }
 }

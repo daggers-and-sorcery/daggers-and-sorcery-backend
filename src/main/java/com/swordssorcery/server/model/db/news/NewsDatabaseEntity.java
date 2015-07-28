@@ -1,18 +1,28 @@
 package com.swordssorcery.server.model.db.news;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
-@Document(collection = "news")
+@Entity(name = "news")
 public class NewsDatabaseEntity {
 
     @Id
+    @GeneratedValue
     private int id;
+
+    @Column
     private Date date = new Date();
+
+    @Column
     private String title = "";
+
+    @Column
     private String message = "";
+
+    @Column
     private String icon = "";
 
     public int getId() {

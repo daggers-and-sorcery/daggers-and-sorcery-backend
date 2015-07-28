@@ -4,34 +4,49 @@ import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.db.Skills;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.awt.*;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashMap;
 
-@Document(collection = "user")
+@Entity(name = "user")
 public class UserDatabaseEntity {
 
     @Id
+    @GeneratedValue
     private String id;
 
-    @Indexed(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Indexed(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Race race;
-    private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
-    private Skills skills = new Skills();
-    private HashMap<Integer, ItemDatabaseEntity> inventory = new HashMap<>();
+
+    @Column(name = "registration_date", nullable = false)
     private Date registrationDate = new Date();
+
+    @Column(name = "last_login_date", nullable = false)
     private Date lastLoginDate = new Date();
+
+    //TODO: Transient for now! fix em
+    @Transient
+    private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
+    @Transient
+    private Skills skills = new Skills();
+    @Transient
+    private HashMap<Integer, ItemDatabaseEntity> inventory = new HashMap<>();
+    @Transient
     private PositionDatabaseEntity position = new PositionDatabaseEntity();
+
+    public UserDatabaseEntity() {
+    }
 
     public UserDatabaseEntity(String username, String password) {
         this.username = username;

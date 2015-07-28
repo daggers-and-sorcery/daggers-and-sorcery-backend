@@ -1,6 +1,6 @@
 package com.swordssorcery.server.model.db.map;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface MapRepository extends MongoRepository<MapDatabaseEntity, Integer> {
+public interface MapRepository extends CrudRepository<MapDatabaseEntity, Integer> {
 }

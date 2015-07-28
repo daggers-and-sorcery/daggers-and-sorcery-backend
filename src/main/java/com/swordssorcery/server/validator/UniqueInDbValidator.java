@@ -1,20 +1,21 @@
 package com.swordssorcery.server.validator;
 
 import com.swordssorcery.server.validator.annotation.UniqueInDb;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 
+import javax.persistence.EntityManagerFactory;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class UniqueInDbValidator implements ConstraintValidator<UniqueInDb, String> {
 
-    @Autowired
-    private MongoOperations mongoOperation;
-
     private UniqueInDb uniqueInDb;
+
+    @Autowired
+    private EntityManagerFactory factory;
 
     @Override
     public void initialize(UniqueInDb uniqueInDb) {
@@ -23,10 +24,10 @@ public class UniqueInDbValidator implements ConstraintValidator<UniqueInDb, Stri
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext cxt) {
-        Query query2 = new Query();
-        query2.addCriteria(Criteria.where(uniqueInDb.field()).is(value));
+        Criteria criteria = factory.unwrap(SessionFactory.class).openSession().createCriteria(uniqueInDb.model());
+        criteria.add(Restrictions.eq(uniqueInDb.field(), value));
 
-        return !mongoOperation.exists(query2, uniqueInDb.model());
+        return criteria.list().size() == 0;
     }
 
 }

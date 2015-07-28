@@ -1,8 +1,8 @@
 package com.swordssorcery.server.model.db.user;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends MongoRepository<UserDatabaseEntity, String>, CustomUserRepository {
+public interface UserRepository extends CrudRepository<UserDatabaseEntity, String> {
 
     UserDatabaseEntity findByUsername(String username);
 

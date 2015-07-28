@@ -1,12 +1,14 @@
 package com.swordssorcery.server.model.db.map;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Document
+@Entity(name = "map_entity")
 public class MapDatabaseEntity {
 
     @Id
+    @GeneratedValue
     private int id;
 
     public int getId() {
