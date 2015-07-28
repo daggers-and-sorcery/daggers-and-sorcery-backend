@@ -1,7 +1,7 @@
-package com.swordssorcery.server.game.map;
+package com.morethanheroic.swords.map.service;
 
-import com.swordssorcery.server.model.db.map.MapRepository;
-import com.swordssorcery.server.model.entity.map.MapEntity;
+import com.morethanheroic.swords.map.repository.dao.MapRepository;
+import com.morethanheroic.swords.map.domain.MapEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

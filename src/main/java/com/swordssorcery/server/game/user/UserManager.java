@@ -1,6 +1,6 @@
 package com.swordssorcery.server.game.user;
 
-import com.swordssorcery.server.game.map.MapManager;
+import com.morethanheroic.swords.map.service.MapManager;
 import com.swordssorcery.server.model.db.user.UserRepository;
 import com.swordssorcery.server.model.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

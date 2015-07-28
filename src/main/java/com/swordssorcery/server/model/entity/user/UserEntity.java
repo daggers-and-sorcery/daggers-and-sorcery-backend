@@ -1,10 +1,10 @@
 package com.swordssorcery.server.model.entity.user;
 
-import com.swordssorcery.server.game.map.MapManager;
+import com.morethanheroic.swords.map.service.MapManager;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.db.Skills;
 import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
-import com.swordssorcery.server.model.entity.map.MapEntity;
+import com.morethanheroic.swords.map.domain.MapEntity;
 
 import java.util.Date;
 

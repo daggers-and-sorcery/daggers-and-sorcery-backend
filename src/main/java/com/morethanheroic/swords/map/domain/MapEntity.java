@@ -1,6 +1,6 @@
-package com.swordssorcery.server.model.entity.map;
+package com.morethanheroic.swords.map.domain;
 
-import com.swordssorcery.server.model.db.map.MapDatabaseEntity;
+import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
 import com.swordssorcery.server.model.definition.map.MapDefinition;
 import com.swordssorcery.server.model.definition.map.MapInfoDefinition;
 import com.swordssorcery.server.model.definition.map.MapSpawnEntryDefinition;

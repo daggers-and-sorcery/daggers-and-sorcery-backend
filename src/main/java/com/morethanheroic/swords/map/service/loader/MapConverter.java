@@ -1,5 +1,7 @@
-package com.swordssorcery.server.game.map.loader;
+package com.morethanheroic.swords.map.service.loader;
 
+import com.morethanheroic.swords.map.service.loader.domain.RawMap;
+import com.morethanheroic.swords.map.service.loader.domain.RawMapLayer;
 import com.swordssorcery.server.model.definition.map.MapDefinition;
 import com.swordssorcery.server.model.definition.map.TileDefinition;
 import org.springframework.stereotype.Service;

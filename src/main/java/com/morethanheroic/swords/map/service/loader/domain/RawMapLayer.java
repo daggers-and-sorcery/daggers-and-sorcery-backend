@@ -1,4 +1,4 @@
-package com.swordssorcery.server.game.map.loader;
+package com.morethanheroic.swords.map.service.loader.domain;
 
 public class RawMapLayer {
 

@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model.db.map;
+package com.morethanheroic.swords.map.repository.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

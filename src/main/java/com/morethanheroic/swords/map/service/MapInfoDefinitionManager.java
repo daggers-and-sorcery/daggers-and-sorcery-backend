@@ -1,4 +1,4 @@
-package com.swordssorcery.server.game.map;
+package com.morethanheroic.swords.map.service;
 
 import com.swordssorcery.server.loader.definition.XMLDefinitionLoader;
 import com.swordssorcery.server.model.definition.map.MapInfoDefinition;

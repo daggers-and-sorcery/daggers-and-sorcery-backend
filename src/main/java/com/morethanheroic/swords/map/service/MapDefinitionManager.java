@@ -1,6 +1,6 @@
-package com.swordssorcery.server.game.map;
+package com.morethanheroic.swords.map.service;
 
-import com.swordssorcery.server.game.map.loader.MapLoader;
+import com.morethanheroic.swords.map.service.loader.MapLoader;
 import com.swordssorcery.server.model.definition.map.MapDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

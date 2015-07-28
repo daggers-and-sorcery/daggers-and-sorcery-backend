@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model.entity.map;
+package com.morethanheroic.swords.map.domain;
 
 import com.swordssorcery.server.model.definition.map.TileDefinition;
 

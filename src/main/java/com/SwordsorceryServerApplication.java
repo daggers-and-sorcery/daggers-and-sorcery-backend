@@ -1,4 +1,4 @@
-package com.swordssorcery.server;
+package com;
 
 import com.swordssorcery.server.filter.SessionLoginFilter;
 import com.swordssorcery.server.resolver.UserEntityHandlerMethodArgumentResolver;
@@ -21,6 +21,25 @@ import java.util.List;
  * TODO:
  *  - Write a saver/calculator for attribute modifiers. (A calculator an be better because then we can change the
  *    calculation method on the fly without too much db management.)
+ */
+
+/*
+Planned project structure.
+com.morethanheroic.swords
+                        - domain
+                            - user
+                            - character
+                            - movement
+                            - map
+                            - inventory
+                            - monster
+                            - attribute
+                            - race
+                        - common
+                            - validator
+                            - session
+                            - response
+                            - resolver
  */
 
 @SpringBootApplication
