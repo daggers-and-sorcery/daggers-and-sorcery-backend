@@ -1,11 +1,11 @@
 package com.morethanheroic.swords.user.domain;
 
 import com.morethanheroic.swords.map.service.MapManager;
-import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.db.Skills;
+import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.skill.service.Skills;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.map.domain.MapEntity;
-import com.swordssorcery.server.model.entity.user.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntity;
 
 import java.util.Date;
 

@@ -1,13 +1,14 @@
 package com.swordssorcery.server.game.movement;
 
-import com.swordssorcery.server.controller.character.movement.request.MovementType;
+import com.morethanheroic.swords.movement.service.MovementManager;
+import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
 import com.morethanheroic.swords.user.repository.dao.PositionDatabaseEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
-import com.swordssorcery.server.model.definition.map.MapDefinition;
-import com.swordssorcery.server.model.definition.map.MapInfoDefinition;
-import com.swordssorcery.server.model.definition.map.TileDefinition;
+import com.morethanheroic.swords.map.service.domain.MapDefinition;
+import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
+import com.morethanheroic.swords.map.service.domain.TileDefinition;
 import com.morethanheroic.swords.map.domain.MapEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.testng.Assert;

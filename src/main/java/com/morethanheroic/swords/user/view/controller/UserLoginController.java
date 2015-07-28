@@ -2,7 +2,7 @@ package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserRepository;
-import com.swordssorcery.server.session.SessionAttributeType;
+import com.morethanheroic.swords.common.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.bind.annotation.*;

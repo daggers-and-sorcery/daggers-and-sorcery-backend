@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.map.domain;
 
-import com.swordssorcery.server.model.definition.map.TileDefinition;
+import com.morethanheroic.swords.map.service.domain.TileDefinition;
 
 public class TileEntity {
 

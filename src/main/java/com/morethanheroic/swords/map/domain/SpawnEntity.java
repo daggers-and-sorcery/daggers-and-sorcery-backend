@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.map.domain;
 
-import com.swordssorcery.server.model.definition.map.MapSpawnEntryDefinition;
+import com.morethanheroic.swords.map.service.domain.MapSpawnEntryDefinition;
 
 public class SpawnEntity {
 

@@ -1,8 +1,10 @@
 package com.swordssorcery.server.game.attribute.data;
 
-import com.swordssorcery.server.game.attribute.enums.AttributeModifierType;
-import com.swordssorcery.server.game.attribute.enums.AttributeModifierValueType;
-import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
+import com.morethanheroic.swords.attribute.model.AttributeData;
+import com.morethanheroic.swords.attribute.model.AttributeModifierData;
+import com.morethanheroic.swords.attribute.enums.AttributeModifierType;
+import com.morethanheroic.swords.attribute.enums.AttributeModifierValueType;
+import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;

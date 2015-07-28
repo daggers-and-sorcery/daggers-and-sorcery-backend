@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.user.view.request;
 
-import com.swordssorcery.server.game.race.Race;
+import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
-import com.swordssorcery.server.validator.annotation.StringEnumeration;
-import com.swordssorcery.server.validator.annotation.UniqueInDb;
+import com.morethanheroic.swords.common.validator.annotation.StringEnumeration;
+import com.morethanheroic.swords.common.validator.annotation.UniqueInDb;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.NotNull;

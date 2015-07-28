@@ -1,10 +1,12 @@
 package com.swordssorcery.server.game.attribute.calc;
 
-import com.swordssorcery.server.game.attribute.data.GeneralAttributeData;
-import com.swordssorcery.server.game.attribute.modifier.AttributeModifierCalculator;
-import com.swordssorcery.server.game.attribute.type.GeneralAttribute;
-import com.swordssorcery.server.game.attribute.type.SkillAttribute;
-import com.swordssorcery.server.game.race.Race;
+import com.morethanheroic.swords.attribute.service.calc.GeneralAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.model.GeneralAttributeData;
+import com.morethanheroic.swords.attribute.service.calc.AttributeModifierCalculator;
+import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.mockito.InjectMocks;

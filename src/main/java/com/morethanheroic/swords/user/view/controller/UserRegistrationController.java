@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.user.view.controller;
 
-import com.swordssorcery.server.game.race.Race;
+import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserRepository;
 import com.morethanheroic.swords.user.view.request.RegistrationRequest;

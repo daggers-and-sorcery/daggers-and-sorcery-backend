@@ -1,10 +1,10 @@
 package com.morethanheroic.swords.user.repository.dao;
 
-import com.swordssorcery.server.game.attribute.Attribute;
-import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
-import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.db.Skills;
-import com.swordssorcery.server.model.db.user.ItemDatabaseEntity;
+import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.model.AttributeModifierData;
+import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.skill.service.Skills;
+import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.map.domain;
 
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
-import com.swordssorcery.server.model.definition.map.MapDefinition;
-import com.swordssorcery.server.model.definition.map.MapInfoDefinition;
-import com.swordssorcery.server.model.definition.map.MapSpawnEntryDefinition;
+import com.morethanheroic.swords.map.service.domain.MapDefinition;
+import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
+import com.morethanheroic.swords.map.service.domain.MapSpawnEntryDefinition;
 
 import java.util.ArrayList;
 import java.util.Collections;
