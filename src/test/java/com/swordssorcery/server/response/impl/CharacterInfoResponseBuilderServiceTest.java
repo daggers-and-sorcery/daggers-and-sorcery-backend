@@ -4,8 +4,8 @@ import com.swordssorcery.server.controller.character.profile.response.CharacterI
 import com.swordssorcery.server.game.attribute.AttributeUtil;
 import com.swordssorcery.server.game.attribute.calc.GlobalAttributeCalculator;
 import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
-import com.swordssorcery.server.model.entity.user.UserEntity;
+import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.swordssorcery.server.response.Response;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

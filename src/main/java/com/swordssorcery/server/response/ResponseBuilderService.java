@@ -1,6 +1,6 @@
 package com.swordssorcery.server.response;
 
-import com.swordssorcery.server.model.entity.user.UserEntity;
+import com.morethanheroic.swords.user.domain.UserEntity;
 
 public interface ResponseBuilderService {
 

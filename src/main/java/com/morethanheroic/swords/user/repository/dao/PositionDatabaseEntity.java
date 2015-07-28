@@ -1,4 +1,4 @@
-package com.swordssorcery.server.model.db.user;
+package com.morethanheroic.swords.user.repository.dao;
 
 public class PositionDatabaseEntity {
 

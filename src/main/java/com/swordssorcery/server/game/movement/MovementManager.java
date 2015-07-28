@@ -1,7 +1,7 @@
 package com.swordssorcery.server.game.movement;
 
 import com.swordssorcery.server.controller.character.movement.request.MovementType;
-import com.swordssorcery.server.model.entity.user.UserEntity;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.stereotype.Service;
 
 @Service

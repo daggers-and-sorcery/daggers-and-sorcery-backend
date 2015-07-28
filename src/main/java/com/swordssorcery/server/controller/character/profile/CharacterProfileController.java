@@ -1,7 +1,7 @@
 package com.swordssorcery.server.controller.character.profile;
 
 import com.swordssorcery.server.controller.character.profile.response.CharacterInfoResponseBuilderService;
-import com.swordssorcery.server.model.entity.user.UserEntity;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.swordssorcery.server.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.swordssorcery.server.controller.user;
+package com.morethanheroic.swords.user.view.controller;
 
 import com.swordssorcery.server.game.race.Race;
 import org.springframework.web.bind.annotation.RequestMapping;

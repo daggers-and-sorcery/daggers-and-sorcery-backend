@@ -1,9 +1,9 @@
-package com.swordssorcery.server.controller.user.registration;
+package com.morethanheroic.swords.user.view.controller;
 
 import com.swordssorcery.server.game.race.Race;
-import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
-import com.swordssorcery.server.model.db.user.UserRepository;
-import com.swordssorcery.server.controller.user.registration.request.RegistrationRequest;
+import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
+import com.morethanheroic.swords.user.repository.domain.UserRepository;
+import com.morethanheroic.swords.user.view.request.RegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

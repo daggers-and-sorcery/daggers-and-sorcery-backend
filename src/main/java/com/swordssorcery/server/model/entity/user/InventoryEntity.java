@@ -1,11 +1,10 @@
 package com.swordssorcery.server.model.entity.user;
 
 import com.swordssorcery.server.model.db.user.ItemDatabaseEntity;
-import com.swordssorcery.server.model.db.user.UserDatabaseEntity;
+import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class InventoryEntity {

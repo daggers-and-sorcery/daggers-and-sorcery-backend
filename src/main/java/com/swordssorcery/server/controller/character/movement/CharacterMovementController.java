@@ -2,8 +2,8 @@ package com.swordssorcery.server.controller.character.movement;
 
 import com.swordssorcery.server.controller.character.movement.request.MovementRequest;
 import com.swordssorcery.server.game.movement.MovementManager;
-import com.swordssorcery.server.game.user.UserManager;
-import com.swordssorcery.server.model.entity.user.UserEntity;
+import com.morethanheroic.swords.user.service.UserManager;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.swordssorcery.server.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

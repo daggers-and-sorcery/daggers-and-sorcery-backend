@@ -1,9 +1,10 @@
-package com.swordssorcery.server.model.db.user;
+package com.morethanheroic.swords.user.repository.dao;
 
 import com.swordssorcery.server.game.attribute.Attribute;
 import com.swordssorcery.server.game.attribute.data.AttributeModifierData;
 import com.swordssorcery.server.game.race.Race;
 import com.swordssorcery.server.model.db.Skills;
+import com.swordssorcery.server.model.db.user.ItemDatabaseEntity;
 
 import javax.persistence.*;
 import java.util.Date;

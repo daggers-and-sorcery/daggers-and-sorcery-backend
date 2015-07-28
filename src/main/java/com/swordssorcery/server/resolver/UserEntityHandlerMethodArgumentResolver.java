@@ -1,7 +1,7 @@
 package com.swordssorcery.server.resolver;
 
-import com.swordssorcery.server.game.user.UserManager;
-import com.swordssorcery.server.model.entity.user.UserEntity;
+import com.morethanheroic.swords.user.service.UserManager;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.swordssorcery.server.session.SessionAttributeType;
 import org.apache.catalina.session.StandardSessionFacade;
 import org.springframework.beans.factory.annotation.Autowired;
