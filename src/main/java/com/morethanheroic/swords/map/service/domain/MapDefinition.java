@@ -19,10 +19,18 @@ public class MapDefinition {
     }
 
     public String toString() {
-        return "MapDefinition -> [width: " + width + ", height: " + height + "]";
+        return "MapDefinition -> [width: " + getWidth() + ", height: " + getHeight() + "]";
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

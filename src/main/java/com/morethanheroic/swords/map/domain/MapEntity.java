@@ -8,22 +8,20 @@ import com.morethanheroic.swords.map.service.domain.MapSpawnEntryDefinition;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class MapEntity {
 
-    private final int id;
     private final MapDefinition mapDefinition;
     private final MapInfoDefinition mapInfoDefinition;
     private final MapDatabaseEntity mapDatabaseEntity;
     private final List<SpawnEntity> spawnEntityArrayList;
+    private final Random random = new Random();
 
-    public MapEntity(int id, MapDefinition mapDefinition, MapInfoDefinition mapInfoDefinition, MapDatabaseEntity mapDatabaseEntity) {
-        this.id = id;
+    public MapEntity(MapDefinition mapDefinition, MapInfoDefinition mapInfoDefinition, MapDatabaseEntity mapDatabaseEntity) {
         this.mapDefinition = mapDefinition;
         this.mapInfoDefinition = mapInfoDefinition;
         this.mapDatabaseEntity = mapDatabaseEntity;
-
-        System.out.println("DBENTRY: "+mapDatabaseEntity);
 
         ArrayList<SpawnEntity> spawnEntityArrayList = new ArrayList<>();
         for (MapSpawnEntryDefinition spawnEntryDefinition : mapInfoDefinition.getMapSpawnListDefinition().getSpawns()) {
@@ -34,7 +32,7 @@ public class MapEntity {
     }
 
     public int getId() {
-        return id;
+        return mapDefinition.getId();
     }
 
     public TileEntity getTileAt(int x, int y) {
@@ -57,7 +55,17 @@ public class MapEntity {
         return spawnEntityArrayList;
     }
 
-    public void spawnMonster(int id, int x, int y) {
-        System.out.println("New spawn! " + id + " - " + x + "/" + y);
+    public TileEntity getRandomWalkableTile() {
+        TileEntity tileEntity = null;
+
+        while (tileEntity== null || !tileEntity.isWalkable()) {
+            tileEntity = getTileAt(random.nextInt(mapDefinition.getWidth()), random.nextInt(mapDefinition.getHeight()));
+        }
+
+        return tileEntity;
+    }
+
+    public void spawnMonster(int id, TileEntity position) {
+        System.out.println("New spawn! " + id + " - " + position.getX() + "/" + position.getY());
     }
 }

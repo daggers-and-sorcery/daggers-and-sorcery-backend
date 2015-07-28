@@ -13,4 +13,12 @@ public class TileEntity {
     public boolean isWalkable() {
         return tileDefinition.isWalkable();
     }
+
+    public int getX() {
+        return tileDefinition.getX();
+    }
+
+    public int getY() {
+        return tileDefinition.getY();
+    }
 }
