@@ -1,6 +1,8 @@
 package com.morethanheroic.swords.map.domain;
 
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
+import com.morethanheroic.swords.map.repository.domain.MapObectDatabaseEntity;
+import com.morethanheroic.swords.map.repository.domain.MapObjectType;
 import com.morethanheroic.swords.map.service.domain.MapDefinition;
 import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
 import com.morethanheroic.swords.map.service.domain.MapSpawnEntryDefinition;
@@ -66,6 +68,6 @@ public class MapEntity {
     }
 
     public void spawnMonster(int id, TileEntity position) {
-        System.out.println("New spawn! " + id + " - " + position.getX() + "/" + position.getY());
+        mapDatabaseEntity.addSpawn(new MapObectDatabaseEntity(mapDatabaseEntity, position.getX(), position.getY(), MapObjectType.MONSTER));
     }
 }

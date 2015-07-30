@@ -1,10 +1,8 @@
 package com.morethanheroic.swords.map.repository.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "map_entity")
 public class MapDatabaseEntity {
@@ -13,8 +11,8 @@ public class MapDatabaseEntity {
     @GeneratedValue
     private int id;
 
-    @Transient
-    private ArrayList<MapObectDatabaseEntity> spawns = new ArrayList<>();
+    @OneToMany(mappedBy = "map", fetch = FetchType.EAGER)
+    private List<MapObectDatabaseEntity> spawns = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -24,8 +22,12 @@ public class MapDatabaseEntity {
         this.id = id;
     }
 
-    public ArrayList<MapObectDatabaseEntity> getSpawns() {
+    public List<MapObectDatabaseEntity> getSpawns() {
         return spawns;
+    }
+
+    public void addSpawn(MapObectDatabaseEntity spawn) {
+        spawns.add(spawn);
     }
 
     public void setSpawns(ArrayList<MapObectDatabaseEntity> spawns) {
