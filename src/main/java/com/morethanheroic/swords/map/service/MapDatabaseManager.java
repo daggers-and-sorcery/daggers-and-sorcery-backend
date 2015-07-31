@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.map.service;
 
+import com.morethanheroic.swords.map.repository.dao.MapObjectRepository;
 import com.morethanheroic.swords.map.repository.dao.MapRepository;
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,26 @@ public class MapDatabaseManager {
     @Autowired
     private MapRepository mapRepository;
 
+    @Autowired
+    private MapObjectRepository mapObjectRepository;
+
     private HashMap<Integer, MapDatabaseEntity> mapDatabaseEntityHashMap = new HashMap<>();
 
     @PreDestroy
     public void destroy() {
         for(MapDatabaseEntity mapDatabaseEntity : mapDatabaseEntityHashMap.values()) {
-            mapRepository.save(mapDatabaseEntity);
+            try {
+                System.out.println(mapDatabaseEntity.getSpawns().size());
+                /*for (MapObectDatabaseEntity ent : mapDatabaseEntity.getSpawns()) {
+                    System.out.println("x" + ent.getX() + " y: " + ent.getY());
+                    System.out.println("id:" + ent.getMap().getId());
+                    mapObjectRepository.save(ent);
+                }*/
+
+                mapRepository.save(mapDatabaseEntity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

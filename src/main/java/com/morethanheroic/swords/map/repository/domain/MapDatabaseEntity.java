@@ -11,8 +11,9 @@ public class MapDatabaseEntity {
     @GeneratedValue
     private int id;
 
-    @OneToMany(mappedBy = "map", fetch = FetchType.EAGER)
-    private List<MapObectDatabaseEntity> spawns = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name="map_id", insertable=false, updatable=false)
+    private List<MapObjectDatabaseEntity> spawns = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -22,15 +23,15 @@ public class MapDatabaseEntity {
         this.id = id;
     }
 
-    public List<MapObectDatabaseEntity> getSpawns() {
+    public List<MapObjectDatabaseEntity> getSpawns() {
         return spawns;
     }
 
-    public void addSpawn(MapObectDatabaseEntity spawn) {
+    public void addSpawn(MapObjectDatabaseEntity spawn) {
         spawns.add(spawn);
     }
 
-    public void setSpawns(ArrayList<MapObectDatabaseEntity> spawns) {
+    public void setSpawns(ArrayList<MapObjectDatabaseEntity> spawns) {
         this.spawns = spawns;
     }
 }
