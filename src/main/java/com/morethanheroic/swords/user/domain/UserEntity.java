@@ -6,6 +6,7 @@ import com.morethanheroic.swords.skill.service.Skills;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.map.domain.MapEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntity;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
 import java.util.Date;
 
@@ -14,15 +15,17 @@ public class UserEntity {
     private final UserDatabaseEntity userDatabaseEntity;
     private final InventoryEntity inventoryEntity;
     private final MapManager mapManager;
+    private final UserMapper userMapper;
 
     public UserEntity(UserDatabaseEntity userDatabaseEntity) {
-        this(userDatabaseEntity, null);
+        this(userDatabaseEntity, null, null);
     }
 
-    public UserEntity(UserDatabaseEntity userDatabaseEntity, MapManager mapManager) {
+    public UserEntity(UserDatabaseEntity userDatabaseEntity, MapManager mapManager, UserMapper userMapper) {
         this.userDatabaseEntity = userDatabaseEntity;
         this.inventoryEntity = new InventoryEntity(userDatabaseEntity);
         this.mapManager = mapManager;
+        this.userMapper = userMapper;
     }
 
     public int getId() {
@@ -64,6 +67,12 @@ public class UserEntity {
     public void setPosition(int x, int y) {
         userDatabaseEntity.setX(x);
         userDatabaseEntity.setY(y);
+
+        userMapper.updatePosition(userDatabaseEntity.getId(), x, y);
+    }
+
+    public void setMap(int mapId) {
+        userDatabaseEntity.setMap(mapId);
     }
 
     public int getXPosition() {

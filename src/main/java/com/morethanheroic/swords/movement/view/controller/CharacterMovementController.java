@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CharacterMovementController {
 
     @Autowired
-    private UserMapper userManager;
+    private UserMapper userMapper;
 
     @Autowired
     private MovementManager movementManager;
@@ -34,7 +34,7 @@ public class CharacterMovementController {
         response.setData("y", user.getYPosition());
         response.setData("map", user.getMap().getId());
 
-        userManager.updatePosition(user.getId(), user.getXPosition(), user.getYPosition(), user.getMap().getId());
+        user.setPosition(user.getXPosition(), user.getYPosition());
 
         return response;
     }

@@ -10,16 +10,12 @@ import org.springframework.stereotype.Service;
 public class UserManager {
 
     @Autowired
-    private UserMapper userRepository;
+    private UserMapper userMapper;
 
     @Autowired
     private MapManager mapManager;
 
     public UserEntity getUser(int id) {
-        return new UserEntity(userRepository.findById(id), mapManager);
-    }
-
-    public void saveUser(UserEntity userEntity) {
-        this.userRepository.updateLastLoginDate(userEntity.getUserDatabaseEntity());
+        return new UserEntity(userMapper.findById(id), mapManager, userMapper);
     }
 }

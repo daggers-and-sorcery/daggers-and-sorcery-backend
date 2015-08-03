@@ -9,6 +9,7 @@ import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.PositionDatabaseEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -26,52 +27,54 @@ public class MovementManagerTest {
 
     @BeforeMethod
     public void init() {
-        movementManager = new MovementManager();
+        movementManager = new MovementManager(mock(UserMapper.class));
         userDatabaseEntity = new UserDatabaseEntity("test", "test");
 
         PositionDatabaseEntity positionDatabaseEntity = new PositionDatabaseEntity();
         positionDatabaseEntity.setPosition(20, 33);
         positionDatabaseEntity.setMap(0);
 
-        userDatabaseEntity.setPosition(positionDatabaseEntity);
+        userDatabaseEntity.setX(20);
+        userDatabaseEntity.setY(33);
+        userDatabaseEntity.setMap(0);
 
         MapManager mapManager = mock(MapManager.class);
         MapEntity mapEntity = buildFakeMapEntity();
         when(mapManager.getMap(0)).thenReturn(mapEntity);
 
-        user = new UserEntity(userDatabaseEntity, mapManager);
+        user = new UserEntity(userDatabaseEntity, mapManager, mock(UserMapper.class));
     }
 
     @Test
     public void testMoveDown() throws Exception {
         movementManager.move(user, MovementType.DOWN);
 
-        Assert.assertEquals(userDatabaseEntity.getPosition().getX(), 20);
-        Assert.assertEquals(userDatabaseEntity.getPosition().getY(), 34);
+        Assert.assertEquals(userDatabaseEntity.getX(), 20);
+        Assert.assertEquals(userDatabaseEntity.getY(), 34);
     }
 
     @Test
     public void testMoveUp() throws Exception {
         movementManager.move(user, MovementType.UP);
 
-        Assert.assertEquals(userDatabaseEntity.getPosition().getX(), 20);
-        Assert.assertEquals(userDatabaseEntity.getPosition().getY(), 32);
+        Assert.assertEquals(userDatabaseEntity.getX(), 20);
+        Assert.assertEquals(userDatabaseEntity.getY(), 32);
     }
 
     @Test
     public void testMoveLeft() throws Exception {
         movementManager.move(user, MovementType.LEFT);
 
-        Assert.assertEquals(userDatabaseEntity.getPosition().getX(), 19);
-        Assert.assertEquals(userDatabaseEntity.getPosition().getY(), 33);
+        Assert.assertEquals(userDatabaseEntity.getX(), 19);
+        Assert.assertEquals(userDatabaseEntity.getY(), 33);
     }
 
     @Test
     public void testMoveRight() throws Exception {
         movementManager.move(user, MovementType.RIGHT);
 
-        Assert.assertEquals(userDatabaseEntity.getPosition().getX(), 21);
-        Assert.assertEquals(userDatabaseEntity.getPosition().getY(), 33);
+        Assert.assertEquals(userDatabaseEntity.getX(), 21);
+        Assert.assertEquals(userDatabaseEntity.getY(), 33);
     }
 
     private MapDefinition buildFakeMapDefinition() {

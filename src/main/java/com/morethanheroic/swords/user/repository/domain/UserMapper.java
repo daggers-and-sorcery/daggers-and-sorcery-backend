@@ -22,7 +22,8 @@ public interface UserMapper {
     @Update("UPDATE user SET last_login_date = NOW() WHERE id = #{id} AND email = #{email} AND username = #{username}")
     void updateLastLoginDate(UserDatabaseEntity user);
 
-    void updatePosition(int userId, int x, int y, int map);
+    @Update("UPDATE user SET x = #{x}, y = #{y} WHERE id = #{userId}")
+    void updatePosition(int userId, int x, int y);
 
     @Insert("INSERT INTO user SET username = #{username}, email = #{email}, password = #{password}, race = #{race}")
     void insert(UserDatabaseEntity userDatabaseEntity);
