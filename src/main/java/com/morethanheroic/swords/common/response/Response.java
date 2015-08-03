@@ -20,4 +20,8 @@ public class Response {
     public Object getData(String name) {
         return data.get(name);
     }
+
+    public HashMap<String, Object> getDataMap() {
+        return data;
+    }
 }

@@ -1,0 +1,149 @@
+package com.morethanheroic.swords.profile.service;
+
+import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.enums.AttributeModifierType;
+import com.morethanheroic.swords.attribute.enums.AttributeModifierValueType;
+import com.morethanheroic.swords.attribute.model.AttributeData;
+import com.morethanheroic.swords.attribute.model.AttributeModifierData;
+import com.morethanheroic.swords.attribute.service.AttributeUtil;
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.inventory.service.InventoryEntity;
+import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.user.domain.UserEntity;
+import org.testng.annotations.Test;
+
+import java.util.*;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+
+public class CharacterInfoResponseBuilderServiceTest {
+
+    @Test
+    public void testBuild() {
+        CharacterInfoResponseBuilderService characterInfoResponseBuilderService = new CharacterInfoResponseBuilderService(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock());
+
+        Response response = characterInfoResponseBuilderService.build(buildUserEntityMock());
+
+        assertEquals(response.getDataMap(), buildExpectedResult());
+    }
+
+    private HashMap<String, Object> buildExpectedResult() {
+        HashMap<String, Object> expected = new HashMap<>();
+
+        expected.put("race", Race.DRACONIC);
+        expected.put("registrationDate", new Date(1111111111));
+        expected.put("lastLoginDate", new Date(2222));
+        expected.put("inventory", new ArrayList<HashMap<String, Object>>());
+        expected.put("username", "testuser");
+        expected.put("attribute", buildAttributeListExpectedResult());
+
+        return expected;
+    }
+
+    private LinkedList<HashMap<String, Object>> buildAttributeListExpectedResult() {
+        LinkedList<HashMap<String, Object>> result = new LinkedList<>();
+
+        result.add(buildDexterityAttributeExpectedResult());
+        result.add(buildWisdomAttributeExpectedResult());
+
+        return result;
+    }
+
+    private HashMap<String, Object> buildWisdomAttributeExpectedResult() {
+        HashMap<String, Object> attribute = new HashMap<>();
+        attribute.put("actual", 10);
+        attribute.put("maximum", 20);
+
+        attribute.put("modifierDataArray", buildAttributeModifierExpectedResult());
+
+        HashMap<String, Object> attributeStaticData = new HashMap<>();
+        attributeStaticData.put("attributeType", "GENERAL");
+        attributeStaticData.put("name", "WISDOM");
+        attributeStaticData.put("generalAttributeType", "MENTAL");
+        attributeStaticData.put("initialValue", 10);
+
+        attribute.put("attribute", attributeStaticData);
+
+        return attribute;
+    }
+
+    private HashMap<String, Object> buildDexterityAttributeExpectedResult() {
+        HashMap<String, Object> attribute = new HashMap<>();
+        attribute.put("actual", 10);
+        attribute.put("maximum", 20);
+
+        attribute.put("modifierDataArray", buildAttributeModifierExpectedResult());
+
+        HashMap<String, Object> attributeStaticData = new HashMap<>();
+        attributeStaticData.put("attributeType", "GENERAL");
+        attributeStaticData.put("name", "DEXTERITY");
+        attributeStaticData.put("generalAttributeType", "PHYSICAL");
+        attributeStaticData.put("initialValue", 10);
+
+        attribute.put("attribute", attributeStaticData);
+
+        return attribute;
+    }
+
+    private LinkedList<HashMap<String, Object>> buildAttributeModifierExpectedResult() {
+        LinkedList<HashMap<String, Object>> modifierList = new LinkedList<>();
+
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("attributeModifierType", "RACIAL");
+        result.put("attributeModifierValueType", "VALUE");
+        result.put("attributeModifierValue", 10);
+
+        modifierList.add(result);
+
+        return modifierList;
+    }
+
+    private GlobalAttributeCalculator buildGlobalAttributeCalculatorMock() {
+        GlobalAttributeCalculator globalAttributeCalculator = mock(GlobalAttributeCalculator.class);
+
+        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, 10, 20, new AttributeModifierData[]{new AttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, 10)});
+
+        when(globalAttributeCalculator.calculateAttributeValue(any(), any())).thenReturn(attributeData);
+
+        return globalAttributeCalculator;
+    }
+
+    private AttributeUtil buildAttributeUtilMock() {
+        AttributeUtil attributeUtil = mock(AttributeUtil.class);
+
+        Set<Attribute> attributeSet = new HashSet<>();
+        attributeSet.add(GeneralAttribute.WISDOM);
+        attributeSet.add(GeneralAttribute.DEXTERITY);
+
+        when(attributeUtil.getAllAttributes()).thenReturn(attributeSet);
+
+        return attributeUtil;
+    }
+
+    private UserEntity buildUserEntityMock() {
+        UserEntity user = mock(UserEntity.class);
+        InventoryEntity inventory = buildInventoryEntityMock();
+
+        when(user.getInventory()).thenReturn(inventory);
+        when(user.getRace()).thenReturn(Race.DRACONIC);
+        when(user.getRegistrationDate()).thenReturn(new Date(1111111111));
+        when(user.getLastLoginDate()).thenReturn(new Date(2222));
+        when(user.getUsername()).thenReturn("testuser");
+
+        return user;
+    }
+
+    private InventoryEntity buildInventoryEntityMock() {
+        InventoryEntity inventory = mock(InventoryEntity.class);
+        when(inventory.getItemList()).thenReturn(new ArrayList<>());
+
+        return inventory;
+    }
+}
