@@ -47,7 +47,7 @@ public class MapManager {
     }
 
     public MapEntity buildMapEntity(MapDefinition mapDefinition) {
-        return new MapEntity(mapDefinition, mapInfoDefinitionManager.getMapInfoDefinition(mapDefinition.getId()), mapDatabaseManager.getMapDatabaseEntity(mapDefinition.getId()), mapObjectMapper.getSpawnsForMap(mapDefinition.getId()));
+        return new MapEntity(mapDefinition, mapInfoDefinitionManager.getMapInfoDefinition(mapDefinition.getId()), mapDatabaseManager.getMapDatabaseEntity(mapDefinition.getId()), mapObjectMapper);
     }
 
     public List<MapEntity> getMapList() {

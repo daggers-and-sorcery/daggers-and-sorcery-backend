@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.map.domain;
 
+import com.morethanheroic.swords.map.repository.dao.MapObjectMapper;
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.repository.domain.MapObjectType;
@@ -19,12 +20,13 @@ public class MapEntity {
     private final MapDatabaseEntity mapDatabaseEntity;
     private final List<SpawnEntity> spawnEntityArrayList;
     private final Random random = new Random();
-    private final List<MapObjectDatabaseEntity> spawnList;
+    private final MapObjectMapper mapObjectMapper;
 
-    public MapEntity(MapDefinition mapDefinition, MapInfoDefinition mapInfoDefinition, MapDatabaseEntity mapDatabaseEntity, List<MapObjectDatabaseEntity> spawnList) {
+    public MapEntity(MapDefinition mapDefinition, MapInfoDefinition mapInfoDefinition, MapDatabaseEntity mapDatabaseEntity, MapObjectMapper mapObjectMapper) {
         this.mapDefinition = mapDefinition;
         this.mapInfoDefinition = mapInfoDefinition;
         this.mapDatabaseEntity = mapDatabaseEntity;
+        this.mapObjectMapper = mapObjectMapper;
 
         ArrayList<SpawnEntity> spawnEntityArrayList = new ArrayList<>();
         for (MapSpawnEntryDefinition spawnEntryDefinition : mapInfoDefinition.getMapSpawnListDefinition().getSpawns()) {
@@ -32,7 +34,6 @@ public class MapEntity {
         }
 
         this.spawnEntityArrayList = Collections.unmodifiableList(spawnEntityArrayList);
-        this.spawnList = spawnList;
     }
 
     public int getId() {
@@ -52,7 +53,7 @@ public class MapEntity {
     }
 
     public int getSpawnedMonsterCount() {
-        return spawnList.size();
+        return mapObjectMapper.getSpawnsForMap(mapDefinition.getId()).size();
     }
 
     public List<SpawnEntity> getSpawnList() {
@@ -70,10 +71,10 @@ public class MapEntity {
     }
 
     public void spawnMonster(int id, TileEntity position) {
-        spawnList.add(new MapObjectDatabaseEntity(id, mapDefinition.getId(), position.getX(), position.getY(), MapObjectType.MONSTER));
+        mapObjectMapper.saveSpawn(position.getX(), position.getY(), mapDefinition.getId(), MapObjectType.MONSTER, id);
     }
 
     public List<MapObjectDatabaseEntity> getSpawns() {
-        return spawnList;
+        return mapObjectMapper.getSpawnsForMap(mapDefinition.getId());
     }
 }

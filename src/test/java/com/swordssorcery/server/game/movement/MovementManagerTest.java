@@ -90,7 +90,7 @@ public class MovementManagerTest {
     }
 
     private MapEntity buildFakeMapEntity() {
-        return new MapEntity(buildFakeMapDefinition(), buildMapInfoDefinitionMock(), new MapDatabaseEntity(), new ArrayList<>());
+        return new MapEntity(buildFakeMapDefinition(), buildMapInfoDefinitionMock(), new MapDatabaseEntity(), null);
     }
 
     private MapInfoDefinition buildMapInfoDefinitionMock() {

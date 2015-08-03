@@ -1,7 +1,9 @@
 package com.morethanheroic.swords.map.repository.dao;
 
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
+import com.morethanheroic.swords.map.repository.domain.MapObjectType;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -12,5 +14,5 @@ public interface MapObjectMapper {
     List<MapObjectDatabaseEntity> getSpawnsForMap(int mapId);
 
     @Insert("INSERT INTO map_object SET x = #{x}, y = #{y}, map_id = #{mapId}, type = #{type}, object = #{object}")
-    void saveSpawns(List<MapObjectDatabaseEntity> spawns);
+    void saveSpawn(@Param("x") int x, @Param("y") int y, @Param("mapId") int mapId, @Param("type") MapObjectType type, @Param("object") int object);
 }
