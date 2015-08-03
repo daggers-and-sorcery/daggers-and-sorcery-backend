@@ -58,18 +58,19 @@ public class UserEntity {
     }
 
     public MapEntity getMap() {
-        return mapManager.getMap(userDatabaseEntity.getPosition().getMap());
+        return mapManager.getMap(userDatabaseEntity.getMap());
     }
 
     public void setPosition(int x, int y) {
-        userDatabaseEntity.getPosition().setPosition(x, y);
+        userDatabaseEntity.setX(x);
+        userDatabaseEntity.setY(y);
     }
 
     public int getXPosition() {
-        return userDatabaseEntity.getPosition().getX();
+        return userDatabaseEntity.getX();
     }
 
     public int getYPosition() {
-        return userDatabaseEntity.getPosition().getY();
+        return userDatabaseEntity.getY();
     }
 }

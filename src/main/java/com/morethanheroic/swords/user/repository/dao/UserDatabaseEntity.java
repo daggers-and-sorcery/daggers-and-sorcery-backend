@@ -2,35 +2,30 @@ package com.morethanheroic.swords.user.repository.dao;
 
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.model.AttributeModifierData;
+import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.service.Skills;
-import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.HashMap;
 
 public class UserDatabaseEntity {
 
     private int id;
-
     private String email;
-
     private String username;
-
     private String password;
-
     private Race race;
-
     private Date registrationDate = new Date();
-
     private Date lastLoginDate = new Date();
+    private int map;
+    private int x;
+    private int y;
 
     //TODO: Transient for now! fix em
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
     private Skills skills = new Skills();
     private HashMap<Integer, ItemDatabaseEntity> inventory = new HashMap<>();
-    private PositionDatabaseEntity position = new PositionDatabaseEntity();
 
     public UserDatabaseEntity() {
     }
@@ -108,11 +103,27 @@ public class UserDatabaseEntity {
         return inventory;
     }
 
-    public PositionDatabaseEntity getPosition() {
-        return position;
+    public int getMap() {
+        return map;
     }
 
-    public void setPosition(PositionDatabaseEntity position) {
-        this.position = position;
+    public void setMap(int map) {
+        this.map = map;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

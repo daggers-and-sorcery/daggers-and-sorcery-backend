@@ -2,10 +2,19 @@ package com.morethanheroic.swords.movement.service;
 
 import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovementManager {
+
+    private final UserMapper userMapper;
+
+    @Autowired
+    public MovementManager(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     //TODO: TEST!
     public boolean move(UserEntity user, MovementType type) {
