@@ -19,8 +19,9 @@ public class MapEntity {
     private final MapDatabaseEntity mapDatabaseEntity;
     private final List<SpawnEntity> spawnEntityArrayList;
     private final Random random = new Random();
+    private final List<MapObjectDatabaseEntity> spawnList;
 
-    public MapEntity(MapDefinition mapDefinition, MapInfoDefinition mapInfoDefinition, MapDatabaseEntity mapDatabaseEntity) {
+    public MapEntity(MapDefinition mapDefinition, MapInfoDefinition mapInfoDefinition, MapDatabaseEntity mapDatabaseEntity, List<MapObjectDatabaseEntity> spawnList) {
         this.mapDefinition = mapDefinition;
         this.mapInfoDefinition = mapInfoDefinition;
         this.mapDatabaseEntity = mapDatabaseEntity;
@@ -31,6 +32,7 @@ public class MapEntity {
         }
 
         this.spawnEntityArrayList = Collections.unmodifiableList(spawnEntityArrayList);
+        this.spawnList = spawnList;
     }
 
     public int getId() {
@@ -50,7 +52,7 @@ public class MapEntity {
     }
 
     public int getSpawnedMonsterCount() {
-        return mapDatabaseEntity.getSpawns().size();
+        return spawnList.size();
     }
 
     public List<SpawnEntity> getSpawnList() {
@@ -68,6 +70,10 @@ public class MapEntity {
     }
 
     public void spawnMonster(int id, TileEntity position) {
-        mapDatabaseEntity.addSpawn(new MapObjectDatabaseEntity(mapDatabaseEntity, position.getX(), position.getY(), MapObjectType.MONSTER));
+        spawnList.add(new MapObjectDatabaseEntity(id, mapDefinition.getId(), position.getX(), position.getY(), MapObjectType.MONSTER));
+    }
+
+    public List<MapObjectDatabaseEntity> getSpawns() {
+        return spawnList;
     }
 }

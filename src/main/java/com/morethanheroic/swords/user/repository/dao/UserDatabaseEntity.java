@@ -10,40 +10,26 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.HashMap;
 
-@Entity(name = "user")
 public class UserDatabaseEntity {
 
-    @Id
-    @GeneratedValue
-    private String id;
+    private int id;
 
-    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private Race race;
 
-    @Column(name = "registration_date", nullable = false)
     private Date registrationDate = new Date();
 
-    @Column(name = "last_login_date", nullable = false)
     private Date lastLoginDate = new Date();
 
     //TODO: Transient for now! fix em
-    @Transient
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
-    @Transient
     private Skills skills = new Skills();
-    @Transient
     private HashMap<Integer, ItemDatabaseEntity> inventory = new HashMap<>();
-    @Transient
     private PositionDatabaseEntity position = new PositionDatabaseEntity();
 
     public UserDatabaseEntity() {
@@ -54,7 +40,7 @@ public class UserDatabaseEntity {
         this.password = password;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

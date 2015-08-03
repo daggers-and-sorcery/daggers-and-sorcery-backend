@@ -23,6 +23,6 @@ public class UserEntityHandlerMethodArgumentResolver implements HandlerMethodArg
 
     @Override
     public UserEntity resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        return userManager.getUser((String) ((StandardSessionFacade) webRequest.getSessionMutex()).getAttribute(SessionAttributeType.USER_ID));
+        return userManager.getUser((int) ((StandardSessionFacade) webRequest.getSessionMutex()).getAttribute(SessionAttributeType.USER_ID));
     }
 }

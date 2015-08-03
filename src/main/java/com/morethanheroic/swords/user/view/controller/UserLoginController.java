@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
-import com.morethanheroic.swords.user.repository.domain.UserRepository;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import com.morethanheroic.swords.common.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class UserLoginController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserMapper userRepository;
 
     @Autowired
     private ShaPasswordEncoder shaPasswordEncoder;
@@ -32,8 +32,7 @@ public class UserLoginController {
 
             session.setAttribute(SessionAttributeType.USER_ID, user.getId());
 
-            user.setLastLoginDate(new Date());
-            userRepository.save(user);
+            userRepository.updateLastLoginDate(user);
         } else {
             response.put("success", "false");
             response.put("error", "Wrong username or password!");

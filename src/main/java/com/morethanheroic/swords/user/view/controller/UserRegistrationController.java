@@ -2,7 +2,7 @@ package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
-import com.morethanheroic.swords.user.repository.domain.UserRepository;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import com.morethanheroic.swords.user.view.request.RegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class UserRegistrationController {
     private ShaPasswordEncoder shaPasswordEncoder;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserMapper userRepository;
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public ResponseEntity<Object> register(@Valid @RequestBody RegistrationRequest registrationRequest, BindingResult result) throws UnsupportedEncodingException {
@@ -47,7 +47,7 @@ public class UserRegistrationController {
             user.setEmail(registrationRequest.getEmail());
             user.setRace(Race.valueOf(registrationRequest.getRace()));
 
-            userRepository.save(user);
+            userRepository.insert(user);
 
             //TODO: add user email validation
 

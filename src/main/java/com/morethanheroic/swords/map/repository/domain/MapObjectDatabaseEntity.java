@@ -1,32 +1,25 @@
 package com.morethanheroic.swords.map.repository.domain;
 
-import javax.persistence.*;
-
-@Entity(name = "map_object")
 public class MapObjectDatabaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="map_id")
-    private MapDatabaseEntity map;
+    private int object;
 
-    @Column
+    private int mapId;
+
     private int x;
 
-    @Column
     private int y;
 
-    @Column
     private MapObjectType type;
 
     public MapObjectDatabaseEntity() {
     }
 
-    public MapObjectDatabaseEntity(MapDatabaseEntity map, int x, int y, MapObjectType type) {
-        this.map = map;
+    public MapObjectDatabaseEntity(int object, int map, int x, int y, MapObjectType type) {
+        this.object = object;
+        this.mapId = map;
         this.x = x;
         this.y = y;
         this.type = type;
@@ -56,7 +49,7 @@ public class MapObjectDatabaseEntity {
         this.type = type;
     }
 
-    public MapDatabaseEntity getMap() {
-        return map;
+    public int getMap() {
+        return mapId;
     }
 }

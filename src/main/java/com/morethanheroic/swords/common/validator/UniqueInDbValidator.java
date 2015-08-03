@@ -1,21 +1,20 @@
 package com.morethanheroic.swords.common.validator;
 
 import com.morethanheroic.swords.common.validator.annotation.UniqueInDb;
-import org.hibernate.Criteria;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class UniqueInDbValidator implements ConstraintValidator<UniqueInDb, String> {
 
     private UniqueInDb uniqueInDb;
 
     @Autowired
-    private EntityManagerFactory factory;
+    private DataSource dataSource;
 
     @Override
     public void initialize(UniqueInDb uniqueInDb) {
@@ -24,10 +23,18 @@ public class UniqueInDbValidator implements ConstraintValidator<UniqueInDb, Stri
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext cxt) {
-        Criteria criteria = factory.unwrap(SessionFactory.class).openSession().createCriteria(uniqueInDb.model());
-        criteria.add(Restrictions.eq(uniqueInDb.field(), value));
+        try {
+            PreparedStatement statement = dataSource.getConnection().prepareStatement("SELECT * FROM " + uniqueInDb.model() + " WHERE " + uniqueInDb.field() + " = ?");
+            statement.setString(1, value);
 
-        return criteria.list().size() == 0;
+            statement.execute();
+
+            return statement.getResultSet().first();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 }

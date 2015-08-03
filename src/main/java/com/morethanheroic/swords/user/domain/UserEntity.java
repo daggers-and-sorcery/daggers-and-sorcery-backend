@@ -25,6 +25,10 @@ public class UserEntity {
         this.mapManager = mapManager;
     }
 
+    public int getId() {
+        return userDatabaseEntity.getId();
+    }
+
     public String getUsername() {
         return userDatabaseEntity.getUsername();
     }

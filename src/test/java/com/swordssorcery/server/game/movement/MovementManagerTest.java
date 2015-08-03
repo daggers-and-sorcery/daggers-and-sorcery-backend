@@ -1,19 +1,21 @@
 package com.swordssorcery.server.game.movement;
 
-import com.morethanheroic.swords.movement.service.MovementManager;
-import com.morethanheroic.swords.movement.view.request.MovementType;
-import com.morethanheroic.swords.map.service.MapManager;
+import com.morethanheroic.swords.map.domain.MapEntity;
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
-import com.morethanheroic.swords.user.repository.dao.PositionDatabaseEntity;
-import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
+import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.map.service.domain.MapDefinition;
 import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
 import com.morethanheroic.swords.map.service.domain.TileDefinition;
-import com.morethanheroic.swords.map.domain.MapEntity;
+import com.morethanheroic.swords.movement.service.MovementManager;
+import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.repository.dao.PositionDatabaseEntity;
+import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -76,8 +78,8 @@ public class MovementManagerTest {
     private MapDefinition buildFakeMapDefinition() {
         TileDefinition[][] tileDefinitions = new TileDefinition[40][80];
 
-        for(int x = 0; x < 40; x++) {
-            for(int y = 0; y < 80; y++) {
+        for (int x = 0; x < 40; x++) {
+            for (int y = 0; y < 80; y++) {
                 tileDefinitions[x][y] = new TileDefinition(true, x, y);
             }
         }
@@ -86,6 +88,6 @@ public class MovementManagerTest {
     }
 
     private MapEntity buildFakeMapEntity() {
-        return new MapEntity(buildFakeMapDefinition(), new MapInfoDefinition(), new MapDatabaseEntity());
+        return new MapEntity(buildFakeMapDefinition(), new MapInfoDefinition(), new MapDatabaseEntity(), new ArrayList<>());
     }
 }

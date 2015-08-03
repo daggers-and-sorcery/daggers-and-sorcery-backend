@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.user.service;
 
 import com.morethanheroic.swords.map.service.MapManager;
-import com.morethanheroic.swords.user.repository.domain.UserRepository;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 public class UserManager {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserMapper userRepository;
 
     @Autowired
     private MapManager mapManager;
 
-    public UserEntity getUser(String id) {
-        return new UserEntity(userRepository.findOne(id), mapManager);
+    public UserEntity getUser(int id) {
+        return new UserEntity(userRepository.findById(id), mapManager);
     }
 
     public void saveUser(UserEntity userEntity) {
-        this.userRepository.save(userEntity.getUserDatabaseEntity());
+        this.userRepository.updateLastLoginDate(userEntity.getUserDatabaseEntity());
     }
 }

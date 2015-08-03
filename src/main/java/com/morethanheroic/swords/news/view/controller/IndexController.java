@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.news.view.controller;
 
 import com.morethanheroic.swords.news.repository.dao.NewsDatabaseEntity;
-import com.morethanheroic.swords.news.repository.domain.NewsRepository;
+import com.morethanheroic.swords.news.repository.domain.NewsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private NewsRepository newsRepository;
+    private NewsMapper newsRepository;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {

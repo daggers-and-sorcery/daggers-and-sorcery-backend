@@ -1,12 +1,15 @@
 package com.morethanheroic.swords.map.service;
 
 import com.morethanheroic.swords.map.domain.MapEntity;
+import com.morethanheroic.swords.map.repository.dao.MapObjectMapper;
+import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.domain.MapDefinition;
 import com.morethanheroic.swords.map.service.loader.MapLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +28,9 @@ public class MapManager {
     @Autowired
     private MapDatabaseManager mapDatabaseManager;
 
+    @Autowired
+    private MapObjectMapper mapObjectMapper;
+
     private HashMap<Integer, MapEntity> mapEntityHashMap = new HashMap<>();
 
     @PostConstruct
@@ -41,7 +47,7 @@ public class MapManager {
     }
 
     public MapEntity buildMapEntity(MapDefinition mapDefinition) {
-        return new MapEntity(mapDefinition, mapInfoDefinitionManager.getMapInfoDefinition(mapDefinition.getId()), mapDatabaseManager.getMapDatabaseEntity(mapDefinition.getId()));
+        return new MapEntity(mapDefinition, mapInfoDefinitionManager.getMapInfoDefinition(mapDefinition.getId()), mapDatabaseManager.getMapDatabaseEntity(mapDefinition.getId()), mapObjectMapper.getSpawnsForMap(mapDefinition.getId()));
     }
 
     public List<MapEntity> getMapList() {

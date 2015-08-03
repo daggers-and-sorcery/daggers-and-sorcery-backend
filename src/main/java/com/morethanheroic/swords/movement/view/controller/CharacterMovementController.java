@@ -2,6 +2,7 @@ package com.morethanheroic.swords.movement.view.controller;
 
 import com.morethanheroic.swords.movement.view.request.MovementRequest;
 import com.morethanheroic.swords.movement.service.MovementManager;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import com.morethanheroic.swords.user.service.UserManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.common.response.Response;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CharacterMovementController {
 
     @Autowired
-    private UserManager userManager;
+    private UserMapper userManager;
 
     @Autowired
     private MovementManager movementManager;
@@ -33,7 +34,7 @@ public class CharacterMovementController {
         response.setData("y", user.getYPosition());
         response.setData("map", user.getMap().getId());
 
-        userManager.saveUser(user);
+        userManager.updatePosition(user.getId(), user.getXPosition(), user.getYPosition(), user.getMap().getId());
 
         return response;
     }
