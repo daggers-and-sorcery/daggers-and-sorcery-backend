@@ -1,20 +1,18 @@
 package com.morethanheroic.swords.attribute.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.enums.AttributeType;
 import com.morethanheroic.swords.attribute.enums.GeneralAttributeType;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GeneralAttribute implements Attribute {
 
     STRENGTH(10, true, GeneralAttributeType.PHYSICAL),
     PERCEPTION(10, true, GeneralAttributeType.PHYSICAL),
     DEXTERITY(10, true, GeneralAttributeType.PHYSICAL),
     SWIFTNESS(10, true, GeneralAttributeType.PHYSICAL),
-    VITALITY( 10, true, GeneralAttributeType.PHYSICAL),
+    VITALITY(10, true, GeneralAttributeType.PHYSICAL),
     ENDURANCE(10, true, GeneralAttributeType.PHYSICAL),
-    BEAUTY( 10, true, GeneralAttributeType.PHYSICAL),
+    BEAUTY(10, true, GeneralAttributeType.PHYSICAL),
 
     INTELLIGENCE(10, true, GeneralAttributeType.MENTAL),
     WISDOM(10, true, GeneralAttributeType.MENTAL),

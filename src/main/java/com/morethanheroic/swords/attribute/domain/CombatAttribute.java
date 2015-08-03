@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.attribute.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.enums.AttributeType;
 
@@ -8,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum CombatAttribute implements Attribute {
 
     MANA(0, false, new GeneralAttribute[]{GeneralAttribute.INTELLIGENCE, GeneralAttribute.WISDOM, GeneralAttribute.WILLPOWER}, 0.5),

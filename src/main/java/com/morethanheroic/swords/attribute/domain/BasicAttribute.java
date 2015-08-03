@@ -1,10 +1,8 @@
 package com.morethanheroic.swords.attribute.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.enums.AttributeType;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum BasicAttribute implements Attribute {
     MOVEMENT(30, false);
 
