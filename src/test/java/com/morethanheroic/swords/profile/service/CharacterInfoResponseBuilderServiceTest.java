@@ -118,7 +118,7 @@ public class CharacterInfoResponseBuilderServiceTest {
     private AttributeUtil buildAttributeUtilMock() {
         AttributeUtil attributeUtil = mock(AttributeUtil.class);
 
-        Set<Attribute> attributeSet = new HashSet<>();
+        Set<Attribute> attributeSet = new TreeSet<>();
         attributeSet.add(GeneralAttribute.WISDOM);
         attributeSet.add(GeneralAttribute.DEXTERITY);
 

@@ -3,9 +3,7 @@ package com.swordssorcery.server.game.movement;
 import com.morethanheroic.swords.map.domain.MapEntity;
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
-import com.morethanheroic.swords.map.service.domain.MapDefinition;
-import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
-import com.morethanheroic.swords.map.service.domain.TileDefinition;
+import com.morethanheroic.swords.map.service.domain.*;
 import com.morethanheroic.swords.movement.service.MovementManager;
 import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -38,7 +36,8 @@ public class MovementManagerTest {
         userDatabaseEntity.setPosition(positionDatabaseEntity);
 
         MapManager mapManager = mock(MapManager.class);
-        when(mapManager.getMap(0)).thenReturn(buildFakeMapEntity());
+        MapEntity mapEntity = buildFakeMapEntity();
+        when(mapManager.getMap(0)).thenReturn(mapEntity);
 
         user = new UserEntity(userDatabaseEntity, mapManager);
     }
@@ -88,6 +87,23 @@ public class MovementManagerTest {
     }
 
     private MapEntity buildFakeMapEntity() {
-        return new MapEntity(buildFakeMapDefinition(), new MapInfoDefinition(), new MapDatabaseEntity(), new ArrayList<>());
+        return new MapEntity(buildFakeMapDefinition(), buildMapInfoDefinitionMock(), new MapDatabaseEntity(), new ArrayList<>());
+    }
+
+    private MapInfoDefinition buildMapInfoDefinitionMock() {
+        MapInfoDefinition mapInfoDefinition = mock(MapInfoDefinition.class);
+
+        MapSpawnDefinition mapSpawnDefinition = buildMapSpawnDefinitionMock();
+        when(mapInfoDefinition.getMapSpawnListDefinition()).thenReturn(mapSpawnDefinition);
+
+        return mapInfoDefinition;
+    }
+
+    private MapSpawnDefinition buildMapSpawnDefinitionMock() {
+        MapSpawnDefinition mapSpawnDefinition = mock(MapSpawnDefinition.class);
+
+        when(mapSpawnDefinition.getSpawns()).thenReturn(new ArrayList<>());
+
+        return mapSpawnDefinition;
     }
 }

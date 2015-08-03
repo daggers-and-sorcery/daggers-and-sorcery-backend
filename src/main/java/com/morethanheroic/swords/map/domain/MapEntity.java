@@ -27,6 +27,7 @@ public class MapEntity {
         this.mapDatabaseEntity = mapDatabaseEntity;
 
         ArrayList<SpawnEntity> spawnEntityArrayList = new ArrayList<>();
+        System.out.println(mapInfoDefinition.getMapSpawnListDefinition().getSpawns());
         for (MapSpawnEntryDefinition spawnEntryDefinition : mapInfoDefinition.getMapSpawnListDefinition().getSpawns()) {
             spawnEntityArrayList.add(new SpawnEntity(spawnEntryDefinition));
         }
