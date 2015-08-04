@@ -3,6 +3,7 @@ package com.morethanheroic.swords.movement.view.controller;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.movement.service.MovementManager;
+import com.morethanheroic.swords.movement.service.MovementResponseBuilder;
 import com.morethanheroic.swords.movement.service.PositionResponseBuilder;
 import com.morethanheroic.swords.movement.view.request.MovementRequest;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -25,22 +26,16 @@ public class CharacterMovementController {
     @Autowired
     private PositionResponseBuilder positionResponseBuilder;
 
+    @Autowired
+    private MovementResponseBuilder movementResponseBuilder;
+
     @RequestMapping(value = "/character/move", method = RequestMethod.POST)
     public Response move(UserEntity user, @RequestBody MovementRequest direction) {
         boolean result = movementManager.move(user, direction.getDirection());
 
         //TODO: combat here!
 
-        Response response = new Response();
-
-        response.setData("success", result);
-        response.setData("x", user.getXPosition());
-        response.setData("y", user.getYPosition());
-        response.setData("map", user.getMap().getId());
-
-        user.setPosition(user.getXPosition(), user.getYPosition());
-
-        return response;
+        return movementResponseBuilder.build(user, result);
     }
 
     @RequestMapping(value = "/character/position", method = RequestMethod.GET)
