@@ -8,7 +8,6 @@ import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.common.response.ResponseBuilderService;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntity;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
@@ -21,20 +20,19 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 @Service
-public class CharacterInfoResponseBuilderService implements ResponseBuilderService {
+public class CharacterInfoResponseBuilder {
 
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final AttributeUtil attributeUtil;
 
     @Autowired
-    public CharacterInfoResponseBuilderService(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil) {
+    public CharacterInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.attributeUtil = attributeUtil;
     }
 
-    @Override
     public Response build(UserEntity user) {
         Response response = new Response();
 
@@ -58,7 +56,7 @@ public class CharacterInfoResponseBuilderService implements ResponseBuilderServi
         return attributeData;
     }
 
-    private  ArrayList<HashMap<String, Object>> buildInventoryResponse(InventoryEntity inventory) {
+    private ArrayList<HashMap<String, Object>> buildInventoryResponse(InventoryEntity inventory) {
         ArrayList<HashMap<String, Object>> inventoryData = new ArrayList<>();
 
         for (ItemDatabaseEntity item : inventory.getItemList()) {
@@ -93,7 +91,7 @@ public class CharacterInfoResponseBuilderService implements ResponseBuilderServi
         attributeDataResponse.put("name", attribute.getName());
         attributeDataResponse.put("initialValue", attribute.getInitialValue());
         attributeDataResponse.put("attributeType", attribute.getAttributeType().name());
-        if(attribute.getAttributeType() == AttributeType.GENERAL) {
+        if (attribute.getAttributeType() == AttributeType.GENERAL) {
             attributeDataResponse.put("generalAttributeType", ((GeneralAttribute) attribute).getGeneralAttributeType().name());
         }
 

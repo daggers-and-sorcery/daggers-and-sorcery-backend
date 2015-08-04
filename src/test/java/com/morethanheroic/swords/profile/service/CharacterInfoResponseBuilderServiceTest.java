@@ -26,9 +26,9 @@ public class CharacterInfoResponseBuilderServiceTest {
 
     @Test
     public void testBuild() {
-        CharacterInfoResponseBuilderService characterInfoResponseBuilderService = new CharacterInfoResponseBuilderService(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock());
+        CharacterInfoResponseBuilder characterInfoResponseBuilder = new CharacterInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock());
 
-        Response response = characterInfoResponseBuilderService.build(buildUserEntityMock());
+        Response response = characterInfoResponseBuilder.build(buildUserEntityMock());
 
         assertEquals(response.getDataMap(), buildExpectedResult());
     }

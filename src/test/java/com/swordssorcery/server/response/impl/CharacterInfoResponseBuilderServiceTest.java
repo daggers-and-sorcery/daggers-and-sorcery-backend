@@ -1,6 +1,6 @@
 package com.swordssorcery.server.response.impl;
 
-import com.morethanheroic.swords.profile.service.CharacterInfoResponseBuilderService;
+import com.morethanheroic.swords.profile.service.CharacterInfoResponseBuilder;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.race.model.Race;
@@ -22,7 +22,7 @@ import static org.testng.Assert.assertTrue;
 public class CharacterInfoResponseBuilderServiceTest {
 
     @InjectMocks
-    private CharacterInfoResponseBuilderService characterInfoResponseBuilderService;
+    private CharacterInfoResponseBuilder characterInfoResponseBuilder;
 
     @Mock
     private GlobalAttributeCalculator globalAttributeCalculator;
@@ -42,7 +42,7 @@ public class CharacterInfoResponseBuilderServiceTest {
 
         UserEntity userEntity = new UserEntity(user);
 
-        Response result = characterInfoResponseBuilderService.build(userEntity);
+        Response result = characterInfoResponseBuilder.build(userEntity);
 
         assertEquals(result.getData("username"), "testuser");
         assertEquals(result.getData("race"), Race.ORC);

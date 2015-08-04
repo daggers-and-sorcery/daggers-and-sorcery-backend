@@ -18,7 +18,7 @@ public class MapObjectDatabaseEntity {
     }
 
     public MapObjectDatabaseEntity(int object, int map, int x, int y, MapObjectType type) {
-        this.object = object;
+        this.setObject(object);
         this.mapId = map;
         this.x = x;
         this.y = y;
@@ -51,5 +51,13 @@ public class MapObjectDatabaseEntity {
 
     public int getMap() {
         return mapId;
+    }
+
+    public int getObject() {
+        return object;
+    }
+
+    public void setObject(int object) {
+        this.object = object;
     }
 }

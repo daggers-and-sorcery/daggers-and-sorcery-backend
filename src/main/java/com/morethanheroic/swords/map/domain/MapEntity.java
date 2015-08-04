@@ -77,4 +77,18 @@ public class MapEntity {
     public List<MapObjectDatabaseEntity> getSpawns() {
         return mapObjectMapper.getSpawnsForMap(mapDefinition.getId());
     }
+
+    public List<MapObjectDatabaseEntity> getSpawnsAt(int x, int y) {
+        List<MapObjectDatabaseEntity> spawnAtPointList = new ArrayList<>();
+
+        List<MapObjectDatabaseEntity> spawnList = getSpawns();
+
+        for (MapObjectDatabaseEntity entity : spawnList) {
+            if(entity.getX() == x && entity.getY() == y) {
+                spawnAtPointList.add(entity);
+            }
+        }
+
+        return spawnAtPointList;
+    }
 }

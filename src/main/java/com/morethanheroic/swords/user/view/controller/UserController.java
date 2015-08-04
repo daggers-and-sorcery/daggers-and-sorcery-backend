@@ -13,5 +13,4 @@ public class UserController {
     public Race[] raceList() {
         return Race.values();
     }
-
 }
