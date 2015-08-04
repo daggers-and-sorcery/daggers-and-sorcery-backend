@@ -323,8 +323,12 @@ html, body, .container {
     margin-bottom: 0;
 }
 
-.map-event-holder table tr td {
-    border-top: 1px solid #9E9888
+.map-event-holder table thead tr th {
+    border-bottom: 1px solid #9E9888;
+}
+
+.map-event-holder table tr td, .map-event-holder table tr, .map-event-holder table tbody {
+    border-top: 0;
 }
 
 .map-event-holder td:last-child {

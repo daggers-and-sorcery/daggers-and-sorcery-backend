@@ -32,24 +32,16 @@
                 <div class="map-event-holder">
                     <table class="table" style="width: 100%;">
                         <thead>
-                        <tr>
-                            <td>This</td>
-                            <td style="width: 15%;">that</td>
-                        </tr>
+                            <tr>
+                                <th>Object</th>
+                                <th>Options</th>
+                            </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>This</td>
-                            <td>that</td>
-                        </tr>
-                        <tr>
-                            <td>This</td>
-                            <td>that</td>
-                        </tr>
-                        <tr>
-                            <td>This</td>
-                            <td>that</td>
-                        </tr>
+                        <tbody ng-repeat="object in objects">
+                            <tr>
+                                <td ng-bind="object.monster"></td>
+                                <td style="width: 15%;">Attack</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

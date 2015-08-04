@@ -9,6 +9,7 @@ module.exports = {
     },
     controller: function ($scope, $http, position) {
         $scope.position = position;
+        $scope.objects = position.spawnList;
 
         $scope.move = function(direction) {
             var directionData = {
@@ -19,6 +20,8 @@ module.exports = {
                 if(data.data.success) {
                     $scope.$broadcast('position', data.data);
                 }
+
+                $scope.objects = data.data.spawnList;
                 //TODO: Broadcast the result to the map, show the monsters etc on the new tile
             });
         }
