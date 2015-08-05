@@ -39,8 +39,8 @@
                         </thead>
                         <tbody ng-repeat="object in objects">
                             <tr>
-                                <td ng-bind="object.monster"></td>
-                                <td style="width: 15%;">Attack</td>
+                                <td ng-bind="object.name"></td>
+                                <td style="width: 15%;"><a ng-click="attack(object.id)">Attack</a></td>
                             </tr>
                         </tbody>
                     </table>

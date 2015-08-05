@@ -25,5 +25,9 @@ module.exports = {
                 //TODO: Broadcast the result to the map, show the monsters etc on the new tile
             });
         }
+
+        $scope.attack = function(target) {
+            console.log(target);
+        }
     }
 };

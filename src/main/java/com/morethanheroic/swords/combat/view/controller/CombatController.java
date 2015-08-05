@@ -1,11 +1,9 @@
 package com.morethanheroic.swords.combat.view.controller;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.CombatManager;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,11 +23,11 @@ public class CombatController {
         this.monsterDefinitionManager = monsterDefinitionManager;
     }
 
-    @RequestMapping(value="/map/combat/{monsterId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/map/combat/{monsterId}", method = RequestMethod.GET)
     public Object combat(UserEntity user, @PathVariable int monsterId) {
         user.getMap().getSpawnsAt(user.getXPosition(), user.getYPosition());
 
-        if(user.getMap().hasSpawnAt(user.getXPosition(), user.getYPosition(), monsterId)) {
+        if (user.getMap().hasSpawnAt(user.getXPosition(), user.getYPosition(), monsterId)) {
             //TODO: user response builder
             //TODO: remove the monster if killed
             return combatManager.initiateCombat(user, monsterDefinitionManager.getMonsterDefinition(monsterId));
