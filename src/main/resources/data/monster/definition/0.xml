@@ -5,4 +5,10 @@
                  xsi:schemaLocation="http://www.swordsandsorcery.com/monster ../schema.xsd">
     <monster:id>1</monster:id>
     <monster:name>Laxi's epic monster</monster:name>
+    <monster:health>10</monster:health>
+    <monster:initiation>1</monster:initiation>
+    <monster:level>1</monster:level>
+    <monster:defense>1</monster:defense>
+    <monster:damage>1</monster:damage>
+    <monster:attack>1</monster:attack>
 </monster:monster>

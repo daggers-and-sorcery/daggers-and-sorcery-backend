@@ -11,6 +11,11 @@ public class MonsterDefinition {
     private int id;
     private String name;
     private int health;
+    private int initiation;
+    private int level;
+    private int defense;
+    private int attack;
+    private int damage;
 
     public int getId() {
         return id;
@@ -22,5 +27,25 @@ public class MonsterDefinition {
 
     public int getHealth() {
         return  health;
+    }
+
+    public int getInitiation() {
+        return initiation;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }

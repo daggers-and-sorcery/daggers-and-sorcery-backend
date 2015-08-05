@@ -7,6 +7,12 @@
             <xs:all>
                 <xs:element name="id" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="name" type="xs:string" minOccurs="1"/>
+                <xs:element name="health" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="initiation" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="level" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="defense" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="attack" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="damage" type="xs:unsignedInt" minOccurs="1"/>
             </xs:all>
         </xs:complexType>
     </xs:element>
