@@ -46,7 +46,7 @@ public class PositionResponseBuilder {
         HashMap<String, Object> spawnData = new HashMap<>();
 
         spawnData.put("name", monsterDefinitionManager.getMonsterDefinition(spawn.getObject()).getName());
-        spawnData.put("id", monsterDefinitionManager.getMonsterDefinition(spawn.getObject()).getName());
+        spawnData.put("id", monsterDefinitionManager.getMonsterDefinition(spawn.getObject()).getId());
 
         return spawnData;
     }

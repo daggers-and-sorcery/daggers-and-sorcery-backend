@@ -60,11 +60,15 @@ public class Combat {
         if (monsterInitialisation + random.nextInt(monsterDefinition.getLevel()) >= playerInitiation + random.nextInt(1 /*player's level with it's weapon should be here instead of 1!*/)) {
             //Monster attack first
             monsterAttack();
-            playerAttack();
+            if(userHealth > 0) {
+                playerAttack();
+            }
         } else {
             //Player attack first
             playerAttack();
-            monsterAttack();
+            if(monsterHealth > 0) {
+                monsterAttack();
+            }
         }
     }
 

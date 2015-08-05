@@ -10,5 +10,6 @@ module.exports = require('app.js').config(function ($stateProvider, $urlRouterPr
         .state(require('router/state/registration-state.js'))
         .state(require('router/state/knowledge-state.js'))
         .state(require('router/state/character-state.js'))
-        .state(require('router/state/map-state.js'));
+        .state(require('router/state/map-state.js'))
+        .state(require('router/state/combat-state.js'));
 });

@@ -7,7 +7,7 @@ module.exports = {
             });
         }
     },
-    controller: function ($scope, $http, position) {
+    controller: function ($scope, $http, $state, position) {
         $scope.position = position;
         $scope.objects = position.spawnList;
 
@@ -22,12 +22,15 @@ module.exports = {
                 }
 
                 $scope.objects = data.data.spawnList;
-                //TODO: Broadcast the result to the map, show the monsters etc on the new tile
             });
-        }
+        };
 
         $scope.attack = function(target) {
-            console.log(target);
+            $http.get('/map/combat/'+target).success(function (data, status, headers, config) {
+                if(!data.error) {
+                    $state.go('combat', {'combatMessages': data.combatMessages});
+                }
+            });
         }
     }
 };
