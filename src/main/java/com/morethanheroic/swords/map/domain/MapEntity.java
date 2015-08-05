@@ -91,4 +91,16 @@ public class MapEntity {
 
         return spawnAtPointList;
     }
+
+    public boolean hasSpawnAt(int x, int y, int monsterId) {
+        List<MapObjectDatabaseEntity> spawnList = getSpawns();
+
+        for (MapObjectDatabaseEntity entity : spawnList) {
+            if(entity.getX() == x && entity.getY() == y && entity.getObject() == monsterId && entity.getType() == MapObjectType.MONSTER) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
