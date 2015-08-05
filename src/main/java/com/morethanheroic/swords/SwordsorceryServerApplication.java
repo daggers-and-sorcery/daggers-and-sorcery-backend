@@ -49,6 +49,7 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         ArrayList<String> urlPatterns = new ArrayList<>();
         urlPatterns.add("/user/logout");
         urlPatterns.add("/character/*");
+        urlPatterns.add("/map/*");
 
         registrationBean.setUrlPatterns(urlPatterns);
 

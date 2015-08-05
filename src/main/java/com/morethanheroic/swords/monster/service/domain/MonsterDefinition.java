@@ -10,6 +10,7 @@ public class MonsterDefinition {
 
     private int id;
     private String name;
+    private int health;
 
     public int getId() {
         return id;
@@ -17,5 +18,9 @@ public class MonsterDefinition {
 
     public String getName() {
         return name;
+    }
+
+    public int getHealth() {
+        return  health;
     }
 }

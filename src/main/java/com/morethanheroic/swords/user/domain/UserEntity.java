@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.user.domain;
 
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.service.Skills;
@@ -81,5 +82,13 @@ public class UserEntity {
 
     public int getYPosition() {
         return userDatabaseEntity.getY();
+    }
+
+    public int getHealth() {
+        return 15;
+    }
+
+    public int getMana() {
+        return 0;
     }
 }
