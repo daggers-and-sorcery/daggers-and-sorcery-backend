@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CombatManager {
 
-    private final Combat combat;
+    private final CombatCalculator combatCalculator;
 
     @Autowired
-    public CombatManager(Combat combat) {
-        this.combat = combat;
+    public CombatManager(CombatCalculator combatCalculator) {
+        this.combatCalculator = combatCalculator;
     }
 
     public CombatResult initiateCombat(UserEntity user, MonsterDefinition monster) {
-        return combat.doFight(user, monster);
+        return combatCalculator.doFight(user, monster);
     }
 }

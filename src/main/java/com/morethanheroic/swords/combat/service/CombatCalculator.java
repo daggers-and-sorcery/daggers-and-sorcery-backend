@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.Random;
 
 @Service
-public class Combat {
+public class CombatCalculator {
 
     private final CombatMessageBuilder combatMessageBuilder;
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final Random random = new Random();
 
     @Autowired
-    public Combat(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator) {
+    public CombatCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator) {
         this.combatMessageBuilder = combatMessageBuilder;
         this.globalAttributeCalculator = globalAttributeCalculator;
     }
