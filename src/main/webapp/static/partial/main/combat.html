@@ -1,8 +1,12 @@
 <div class="panel panel-default panel-shadow">
     <div class="panel-heading">Combat</div>
     <div class="panel-body">
-        <ul>
-            <li ng-repeat="message in combatMessages" ng-bind-html="message"></li>
-        </ul>
+        <div class="text-center"><a ui-sref="map">Back to map...</a></div>
+        <div class="media" ng-repeat="message in combatMessages">
+            <div class="media-left">
+                 <img class="icon media-object" src="/icon/blood.svg" alt="...">
+            </div>
+            <div class="media-body" style="vertical-align: middle;" ng-bind-html="message"></div>
+        </div>
     </div>
 </div>

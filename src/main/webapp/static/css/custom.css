@@ -142,10 +142,13 @@ html, body, .container {
 }
 
 .news-icon {
-    width:32px;
-    height:32px;
     float: left;
     margin-right: 5px;
+}
+
+.icon {
+    width:32px;
+    height:32px;
 }
 
 /** Button **/

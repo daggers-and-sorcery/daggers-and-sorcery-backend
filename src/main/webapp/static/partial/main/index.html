@@ -4,8 +4,8 @@
         <div ng-repeat="news in newslist">
             <div class="news-entry">
                 <div class="news-title-holder">
-                    <img class="news-icon" ng-if="news.icon" ng-src="/icon/{{news.icon}}.svg"/>
-                    <img class="news-icon" ng-if="!news.icon" src="/icon/buble.svg"/>
+                    <img class="icon news-icon" ng-if="news.icon" ng-src="/icon/{{news.icon}}.svg"/>
+                    <img class="icon news-icon" ng-if="!news.icon" src="/icon/buble.svg"/>
                     <h5 class="news-title" ng-bind-html="news.title"></h5>
                     <div class="news-subtitle" ng-bind="news.date | date:'dd. MMM. yyyy.'"></div>
                 </div>
