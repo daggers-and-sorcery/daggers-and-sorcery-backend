@@ -47,6 +47,7 @@ public class CombatMessageBuilder {
 
         combatMessage.addData("monster", monster);
         combatMessage.addData("damage", damage);
+        combatMessage.addData("icon", "blood");
         combatMessage.addData("message", DAMAGE_TO_MONSTER_MESSANGE_LIST[random.nextInt(DAMAGE_TO_MONSTER_MESSANGE_LIST.length)]);
 
         return combatMessage;
@@ -57,6 +58,7 @@ public class CombatMessageBuilder {
 
         combatMessage.addData("monster", monster);
         combatMessage.addData("damage", damage);
+        combatMessage.addData("icon", "blood");
         combatMessage.addData("message", DAMAGE_TO_PLAYER_MESSANGE_LIST[random.nextInt(DAMAGE_TO_PLAYER_MESSANGE_LIST.length)]);
 
         return combatMessage;
@@ -66,6 +68,7 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("monster", monster);
+        combatMessage.addData("icon", "shield");
         combatMessage.addData("message", MONSTER_MISS_MESSANGE_LIST[random.nextInt(MONSTER_MISS_MESSANGE_LIST.length)]);
 
         return combatMessage;
@@ -75,6 +78,7 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("monster", monster);
+        combatMessage.addData("icon", "shield");
         combatMessage.addData("message", PLAYER_MISS_MESSANGE_LIST[random.nextInt(PLAYER_MISS_MESSANGE_LIST.length)]);
 
         return combatMessage;
@@ -84,6 +88,7 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("monster", monster);
+        combatMessage.addData("icon", "death");
         combatMessage.addData("message", MONSTER_DIE_MESSANGE_LIST[random.nextInt(MONSTER_DIE_MESSANGE_LIST.length)]);
 
         return combatMessage;
@@ -93,6 +98,7 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("monster", monster);
+        combatMessage.addData("icon", "death");
         combatMessage.addData("message", PLAYER_DIE_MESSANGE_LIST[random.nextInt(PLAYER_DIE_MESSANGE_LIST.length)]);
 
         return combatMessage;

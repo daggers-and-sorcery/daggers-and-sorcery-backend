@@ -10,8 +10,15 @@ module.exports = {
                 message = message.replace("${"+key+"}", '<b>'+value+'</b>');
             });
 
-            finalMessages[key] = $sce.trustAsHtml(message);
+            finalMessages[key] = {
+                'message': $sce.trustAsHtml(message)
+            };
+
+            if(value.messageData.icon != undefined) {
+                finalMessages[key].icon = value.messageData['icon'];
+            }
         });
+            console.log(finalMessages);
 
         $scope.combatMessages = finalMessages;
     }
