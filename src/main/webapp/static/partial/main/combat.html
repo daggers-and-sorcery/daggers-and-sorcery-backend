@@ -4,7 +4,7 @@
         <div class="text-center"><a ui-sref="map">Back to map...</a></div>
         <div class="media" ng-repeat="message in combatMessages">
             <div class="media-left" ng-if="message.icon">
-                 <img class="icon media-object" ng-src="/icon/{{message.icon}}.svg" alt="...">
+                 <svg-image class="icon media-object" src="message.icon" ng-class="message.icon_color"/>
             </div>
             <div class="media-left" ng-if="!message.icon" style="min-width: 42px;"></div>
             <div class="media-body" style="vertical-align: middle;" ng-bind-html="message.message"></div>

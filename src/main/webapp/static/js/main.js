@@ -8,6 +8,7 @@ require('directive/equals-directive.js');
 require('directive/game-map-directive.js');
 require('directive/attribute-list-column-directive.js');
 require('directive/inventory-item-column-directive.js');
+require('directive/svg-image-directive.js');
 
 // Filters
 require('filter/replace-filter.js');

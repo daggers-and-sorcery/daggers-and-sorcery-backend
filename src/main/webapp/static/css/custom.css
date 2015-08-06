@@ -337,3 +337,13 @@ html, body, .container {
 .map-event-holder td:last-child {
     text-align: center;
 }
+
+/** Combat **/
+
+.blue-icon-color {
+    fill:blue;
+}
+
+.red-icon-color {
+    fill:red;
+}

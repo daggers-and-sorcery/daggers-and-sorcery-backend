@@ -15,7 +15,11 @@ module.exports = {
             };
 
             if(value.messageData.icon != undefined) {
-                finalMessages[key].icon = value.messageData['icon'];
+                finalMessages[key].icon = '/icon/'+value.messageData['icon']+'.svg';
+            }
+
+            if(value.messageData.icon_color != undefined) {
+                finalMessages[key].icon_color = value.messageData['icon_color']+'-icon-color';
             }
         });
             console.log(finalMessages);
