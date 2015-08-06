@@ -26,6 +26,12 @@ public class CombatMessageBuilder {
     private final String[] PLAYER_MISS_MESSANGE_LIST = new String[]{
             "You attacked ${monster} but missed."
     };
+    private final String[] MONSTER_DIE_MESSANGE_LIST = new String[]{
+            "You killed ${monster}."
+    };
+    private final String[] PLAYER_DIE_MESSANGE_LIST = new String[]{
+            "${monster} killed you!"
+    };
 
     public CombatMessage buildFightInitialisationMessage(String monster) {
         CombatMessage combatMessage = new CombatMessage();
@@ -70,6 +76,24 @@ public class CombatMessageBuilder {
 
         combatMessage.addData("monster", monster);
         combatMessage.addData("message", PLAYER_MISS_MESSANGE_LIST[random.nextInt(PLAYER_MISS_MESSANGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildMonsterKilledMessage(String monster) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("monster", monster);
+        combatMessage.addData("message", MONSTER_DIE_MESSANGE_LIST[random.nextInt(MONSTER_DIE_MESSANGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildPlayerKilledMessage(String monster) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("monster", monster);
+        combatMessage.addData("message", PLAYER_DIE_MESSANGE_LIST[random.nextInt(PLAYER_DIE_MESSANGE_LIST.length)]);
 
         return combatMessage;
     }

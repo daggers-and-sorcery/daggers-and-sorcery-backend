@@ -81,6 +81,10 @@ public class Combat {
             userHealth -= damage;
 
             result.addMessage(combatMessageBuilder.buildDamageToPlayerMessage(monsterDefinition.getName(), damage));
+
+            if (userHealth <= 0) {
+                result.addMessage(combatMessageBuilder.buildPlayerKilledMessage(monsterDefinition.getName()));
+            }
         } else {
             result.addMessage(combatMessageBuilder.buildMonsterMissMessage(monsterDefinition.getName()));
         }
@@ -95,6 +99,10 @@ public class Combat {
             monsterHealth -= damage;
 
             result.addMessage(combatMessageBuilder.buildDamageToMonsterMessage(monsterDefinition.getName(), damage));
+
+            if(monsterHealth <= 0) {
+                result.addMessage(combatMessageBuilder.buildMonsterKilledMessage(monsterDefinition.getName()));
+            }
         } else {
             result.addMessage(combatMessageBuilder.buildPlayerMissMessage(monsterDefinition.getName()));
             //TODO: missing message
