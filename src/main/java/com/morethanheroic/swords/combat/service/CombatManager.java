@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
 import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
