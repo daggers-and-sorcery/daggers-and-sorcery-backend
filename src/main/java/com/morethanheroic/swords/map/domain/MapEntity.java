@@ -74,6 +74,10 @@ public class MapEntity {
         mapObjectMapper.saveSpawn(position.getX(), position.getY(), mapDefinition.getId(), MapObjectType.MONSTER, id);
     }
 
+    public void removeSpawn(int spawnId) {
+        mapObjectMapper.removeSpawn(spawnId);
+    }
+
     public List<MapObjectDatabaseEntity> getSpawns() {
         return mapObjectMapper.getSpawnsForMap(mapDefinition.getId());
     }
@@ -90,6 +94,18 @@ public class MapEntity {
         }
 
         return spawnAtPointList;
+    }
+
+    public MapObjectDatabaseEntity getSpawnAt(int x, int y, int monsterId) {
+        List<MapObjectDatabaseEntity> spawnList = getSpawns();
+
+        for (MapObjectDatabaseEntity entity : spawnList) {
+            if(entity.getX() == x && entity.getY() == y && entity.getObject() == monsterId && entity.getType() == MapObjectType.MONSTER) {
+                return entity;
+            }
+        }
+
+        return null;
     }
 
     public boolean hasSpawnAt(int x, int y, int monsterId) {

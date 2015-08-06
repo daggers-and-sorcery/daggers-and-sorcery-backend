@@ -1,6 +1,9 @@
 package com.morethanheroic.swords.combat.view.controller;
 
+import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatManager;
+import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +30,17 @@ public class CombatController {
     public Object combat(UserEntity user, @PathVariable int monsterId) {
         user.getMap().getSpawnsAt(user.getXPosition(), user.getYPosition());
 
-        if (user.getMap().hasSpawnAt(user.getXPosition(), user.getYPosition(), monsterId)) {
+        MapObjectDatabaseEntity spawn = user.getMap().getSpawnAt(user.getXPosition(), user.getYPosition(), monsterId);
+
+        if (spawn != null) {
             //TODO: user response builder
-            //TODO: remove the monster if killed
-            return combatManager.initiateCombat(user, monsterDefinitionManager.getMonsterDefinition(monsterId));
+            CombatResult result = combatManager.initiateCombat(user, monsterDefinitionManager.getMonsterDefinition(monsterId));
+
+            if (result.getWinner() == Winner.PLAYER) {
+                user.getMap().removeSpawn(spawn.getId());
+            }
+
+            return result;
         }
 
         HashMap<String, Object> result = new HashMap<>();

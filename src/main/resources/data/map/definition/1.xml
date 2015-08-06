@@ -6,7 +6,7 @@
     <map:spawn>
         <map:timer>10</map:timer>
         <!-- respawn in seconds -->
-        <map:alive>100</map:alive>
+        <map:alive>1000</map:alive>
         <!-- 100 npc can be alive at one time on the map -->
         <map:spawns>
             <map:monster>

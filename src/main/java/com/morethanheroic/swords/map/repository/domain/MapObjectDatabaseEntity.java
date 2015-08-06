@@ -25,6 +25,10 @@ public class MapObjectDatabaseEntity {
         this.type = type;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getX() {
         return x;
     }
