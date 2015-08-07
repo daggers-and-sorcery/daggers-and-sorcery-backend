@@ -3,6 +3,8 @@ package com.morethanheroic.swords.monster.service.domain;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Collections;
+import java.util.List;
 
 @XmlRootElement(name = "monster")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -16,6 +18,7 @@ public class MonsterDefinition {
     private int defense;
     private int attack;
     private int damage;
+    private List<DropDefinition> dropDefinitions;
 
     public int getId() {
         return id;
@@ -47,5 +50,9 @@ public class MonsterDefinition {
 
     public int getDamage() {
         return damage;
+    }
+
+    public List<DropDefinition> getDropDefinitions() {
+        return Collections.unmodifiableList(dropDefinitions);
     }
 }
