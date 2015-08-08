@@ -9,6 +9,7 @@ import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.inventory.service.InventoryEntity;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.race.model.Race;
@@ -26,7 +27,7 @@ public class CharacterInfoResponseBuilderServiceTest {
 
     @Test
     public void testBuild() {
-        CharacterInfoResponseBuilder characterInfoResponseBuilder = new CharacterInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock());
+        CharacterInfoResponseBuilder characterInfoResponseBuilder = new CharacterInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock(), buildInventoryMapperMock());
 
         Response response = characterInfoResponseBuilder.build(buildUserEntityMock());
 
@@ -129,9 +130,7 @@ public class CharacterInfoResponseBuilderServiceTest {
 
     private UserEntity buildUserEntityMock() {
         UserEntity user = mock(UserEntity.class);
-        InventoryEntity inventory = buildInventoryEntityMock();
 
-        when(user.getInventory()).thenReturn(inventory);
         when(user.getRace()).thenReturn(Race.DRACONIC);
         when(user.getRegistrationDate()).thenReturn(new Date(1111111111));
         when(user.getLastLoginDate()).thenReturn(new Date(2222));
@@ -140,9 +139,9 @@ public class CharacterInfoResponseBuilderServiceTest {
         return user;
     }
 
-    private InventoryEntity buildInventoryEntityMock() {
-        InventoryEntity inventory = mock(InventoryEntity.class);
-        when(inventory.getItemList()).thenReturn(new ArrayList<>());
+    private InventoryMapper buildInventoryMapperMock() {
+        InventoryMapper inventory = mock(InventoryMapper.class);
+        when(inventory.getItems(any())).thenReturn(new ArrayList<>());
 
         return inventory;
     }

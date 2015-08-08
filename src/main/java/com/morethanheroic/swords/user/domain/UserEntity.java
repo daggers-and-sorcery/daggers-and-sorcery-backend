@@ -33,10 +33,6 @@ public class UserEntity {
         return userDatabaseEntity.getUsername();
     }
 
-    public InventoryEntity getInventory() {
-        return inventoryEntity;
-    }
-
     public Race getRace() {
         return userDatabaseEntity.getRace();
     }

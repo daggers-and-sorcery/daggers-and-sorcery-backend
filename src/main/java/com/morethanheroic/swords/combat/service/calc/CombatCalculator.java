@@ -7,6 +7,7 @@ import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculator;
+import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
@@ -25,14 +26,16 @@ public class CombatCalculator {
     private final DropCalculator dropCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final MapManager mapManager;
+    private final InventoryMapper inventoryMapper;
 
     @Autowired
-    public CombatCalculator(TurnCalculator turnCalculator, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager) {
+    public CombatCalculator(TurnCalculator turnCalculator, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryMapper inventoryMapper) {
         this.turnCalculator = turnCalculator;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.mapManager = mapManager;
+        this.inventoryMapper = inventoryMapper;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
@@ -64,7 +67,7 @@ public class CombatCalculator {
             for (Drop drop : drops) {
                 result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(drop.getItem()).getName(), drop.getAmount()));
 
-                combat.getUserEntity().getInventory().addItem(drop.getItem(), drop.getAmount());
+                inventoryMapper.addItem(combat.getUserEntity().getId(), drop.getItem(), drop.getAmount());
             }
 
             //Remove spawn

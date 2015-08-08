@@ -9,6 +9,7 @@ import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
+import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.inventory.service.InventoryEntity;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class CharacterInfoResponseBuilder {
@@ -25,12 +27,14 @@ public class CharacterInfoResponseBuilder {
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final AttributeUtil attributeUtil;
+    private final InventoryMapper inventoryMapper;
 
     @Autowired
-    public CharacterInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil) {
+    public CharacterInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryMapper inventoryMapper) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.attributeUtil = attributeUtil;
+        this.inventoryMapper = inventoryMapper;
     }
 
     public Response build(UserEntity user) {
@@ -41,7 +45,7 @@ public class CharacterInfoResponseBuilder {
         response.setData("race", user.getRace());
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
-        response.setData("inventory", buildInventoryResponse(user.getInventory()));
+        response.setData("inventory", buildInventoryResponse(inventoryMapper.getItems(user.getId())));
 
         return response;
     }
@@ -56,10 +60,10 @@ public class CharacterInfoResponseBuilder {
         return attributeData;
     }
 
-    private ArrayList<HashMap<String, Object>> buildInventoryResponse(InventoryEntity inventory) {
+    private ArrayList<HashMap<String, Object>> buildInventoryResponse(List<ItemDatabaseEntity> items) {
         ArrayList<HashMap<String, Object>> inventoryData = new ArrayList<>();
 
-        for (ItemDatabaseEntity item : inventory.getItemList()) {
+        for (ItemDatabaseEntity item : items) {
             HashMap<String, Object> itemData = new HashMap<>();
 
             itemData.put("item", item);
