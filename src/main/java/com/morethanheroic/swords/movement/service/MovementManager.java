@@ -1,19 +1,19 @@
 package com.morethanheroic.swords.movement.service;
 
+import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovementManager {
 
-    private final UserMapper userMapper;
+    private final MapManager mapManager;
 
     @Autowired
-    public MovementManager(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public MovementManager(MapManager mapManager) {
+        this.mapManager = mapManager;
     }
 
     //TODO: TEST!
@@ -61,6 +61,6 @@ public class MovementManager {
     private boolean canWalk(UserEntity user, int x, int y) {
         //TODO: check if out of bounds of the map!
         //TODO: check has enough movement points!
-        return user.getMap().getTileAt(x, y).isWalkable();
+        return mapManager.getMap(user.getMapId()).getTileAt(x, y).isWalkable();
     }
 }

@@ -2,8 +2,6 @@ package com.morethanheroic.swords.user.domain;
 
 import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.inventory.service.InventoryEntity;
-import com.morethanheroic.swords.map.domain.MapEntity;
-import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.service.Skills;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
@@ -15,17 +13,15 @@ public class UserEntity {
 
     private final UserDatabaseEntity userDatabaseEntity;
     private final InventoryEntity inventoryEntity;
-    private final MapManager mapManager;
     private final UserMapper userMapper;
 
     public UserEntity(UserDatabaseEntity userDatabaseEntity) {
-        this(userDatabaseEntity, null, null, null);
+        this(userDatabaseEntity, null, null);
     }
 
-    public UserEntity(UserDatabaseEntity userDatabaseEntity, MapManager mapManager, UserMapper userMapper, InventoryMapper inventoryMapper) {
+    public UserEntity(UserDatabaseEntity userDatabaseEntity, UserMapper userMapper, InventoryMapper inventoryMapper) {
         this.userDatabaseEntity = userDatabaseEntity;
         this.inventoryEntity = new InventoryEntity(userDatabaseEntity, inventoryMapper);
-        this.mapManager = mapManager;
         this.userMapper = userMapper;
     }
 
@@ -57,12 +53,8 @@ public class UserEntity {
         return userDatabaseEntity.getSkills();
     }
 
-    public UserDatabaseEntity getUserDatabaseEntity() {
-        return userDatabaseEntity;
-    }
-
-    public MapEntity getMap() {
-        return mapManager.getMap(userDatabaseEntity.getMap());
+    public int getMapId() {
+        return userDatabaseEntity.getMap();
     }
 
     public void setPosition(int x, int y) {

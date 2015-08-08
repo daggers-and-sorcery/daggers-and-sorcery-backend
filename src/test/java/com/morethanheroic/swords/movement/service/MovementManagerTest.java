@@ -27,7 +27,11 @@ public class MovementManagerTest {
 
     @BeforeMethod
     public void init() {
-        movementManager = new MovementManager(mock(UserMapper.class));
+        MapManager mapManager = mock(MapManager.class);
+        MapEntity mapEntity = buildFakeMapEntity();
+        when(mapManager.getMap(0)).thenReturn(mapEntity);
+
+        movementManager = new MovementManager(mapManager);
         userDatabaseEntity = new UserDatabaseEntity("test", "test");
 
         PositionDatabaseEntity positionDatabaseEntity = new PositionDatabaseEntity();
@@ -38,11 +42,7 @@ public class MovementManagerTest {
         userDatabaseEntity.setY(33);
         userDatabaseEntity.setMap(0);
 
-        MapManager mapManager = mock(MapManager.class);
-        MapEntity mapEntity = buildFakeMapEntity();
-        when(mapManager.getMap(0)).thenReturn(mapEntity);
-
-        user = new UserEntity(userDatabaseEntity, mapManager, mock(UserMapper.class), null);
+        user = new UserEntity(userDatabaseEntity, mock(UserMapper.class), null);
     }
 
     @Test

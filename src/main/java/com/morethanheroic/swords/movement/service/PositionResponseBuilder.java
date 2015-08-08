@@ -2,6 +2,7 @@ package com.morethanheroic.swords.movement.service;
 
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
+import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,12 @@ import java.util.List;
 public class PositionResponseBuilder {
 
     private final MonsterDefinitionManager monsterDefinitionManager;
+    private final MapManager mapManager;
 
     @Autowired
-    public PositionResponseBuilder(MonsterDefinitionManager monsterDefinitionManager) {
+    public PositionResponseBuilder(MonsterDefinitionManager monsterDefinitionManager, MapManager mapManager) {
         this.monsterDefinitionManager = monsterDefinitionManager;
+        this.mapManager = mapManager;
     }
 
     public Response build(UserEntity user) {
@@ -26,7 +29,7 @@ public class PositionResponseBuilder {
 
         response.setData("x", user.getXPosition());
         response.setData("y", user.getYPosition());
-        response.setData("map", user.getMap().getId());
+        response.setData("map", user.getMapId());
         response.setData("spawnList", buildSpawnList(user));
 
         return response;
@@ -35,7 +38,7 @@ public class PositionResponseBuilder {
     public List<HashMap<String, Object>> buildSpawnList(UserEntity user) {
         List<HashMap<String, Object>> userList = new ArrayList<>();
 
-        for (MapObjectDatabaseEntity entity : user.getMap().getSpawnsAt(user.getXPosition(), user.getYPosition())) {
+        for (MapObjectDatabaseEntity entity : mapManager.getMap(user.getMapId()).getSpawnsAt(user.getXPosition(), user.getYPosition())) {
             userList.add(buildSpawnData(entity));
         }
 

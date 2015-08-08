@@ -9,6 +9,7 @@ import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculator;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
+import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,15 @@ public class CombatCalculator {
     private final TurnCalculator turnCalculator;
     private final DropCalculator dropCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
+    private final MapManager mapManager;
 
     @Autowired
-    public CombatCalculator(TurnCalculator turnCalculator, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager) {
+    public CombatCalculator(TurnCalculator turnCalculator, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager) {
         this.turnCalculator = turnCalculator;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
+        this.mapManager = mapManager;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
@@ -65,7 +68,7 @@ public class CombatCalculator {
             }
 
             //Remove spawn
-            combat.getUserEntity().getMap().removeSpawn(spawn.getId());
+            mapManager.getMap(combat.getUserEntity().getMapId()).removeSpawn(spawn.getId());
 
             //Add xp
         }
