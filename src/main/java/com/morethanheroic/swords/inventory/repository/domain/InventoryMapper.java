@@ -15,4 +15,7 @@ public interface InventoryMapper {
 
     @Select("SELECT * FROM inventory WHERE user_id = #{user_id}")
     List<ItemDatabaseEntity> getItems(@Param("user_id") int userId);
+
+    @Select("SELECT * FROM inventory WHERE user_id = #{user_id}, item_id = #{item_id}")
+    ItemDatabaseEntity getItem(@Param("user_id") int userId, @Param("item_id") int itemId);
 }

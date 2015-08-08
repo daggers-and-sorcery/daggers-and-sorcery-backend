@@ -9,8 +9,8 @@ import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
-import com.morethanheroic.swords.inventory.service.InventoryEntity;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -27,7 +27,7 @@ public class CharacterInfoResponseBuilderServiceTest {
 
     @Test
     public void testBuild() {
-        CharacterInfoResponseBuilder characterInfoResponseBuilder = new CharacterInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock(), buildInventoryMapperMock());
+        CharacterInfoResponseBuilder characterInfoResponseBuilder = new CharacterInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock(), buildInventoryManagerMock());
 
         Response response = characterInfoResponseBuilder.build(buildUserEntityMock());
 
@@ -139,10 +139,13 @@ public class CharacterInfoResponseBuilderServiceTest {
         return user;
     }
 
-    private InventoryMapper buildInventoryMapperMock() {
-        InventoryMapper inventory = mock(InventoryMapper.class);
-        when(inventory.getItems(any())).thenReturn(new ArrayList<>());
+    private InventoryManager buildInventoryManagerMock() {
+        InventoryEntity inventoryEntity = mock(InventoryEntity.class);
+        when(inventoryEntity.getItems()).thenReturn(new ArrayList<>());
 
-        return inventory;
+        InventoryManager inventoryManager = mock(InventoryManager.class);
+        when(inventoryManager.getInventory(any())).thenReturn(inventoryEntity);
+
+        return inventoryManager;
     }
 }

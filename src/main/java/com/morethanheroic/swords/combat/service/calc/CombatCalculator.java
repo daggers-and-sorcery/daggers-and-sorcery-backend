@@ -7,7 +7,9 @@ import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculator;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
+import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
@@ -26,16 +28,16 @@ public class CombatCalculator {
     private final DropCalculator dropCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final MapManager mapManager;
-    private final InventoryMapper inventoryMapper;
+    private final InventoryManager inventoryManager;
 
     @Autowired
-    public CombatCalculator(TurnCalculator turnCalculator, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryMapper inventoryMapper) {
+    public CombatCalculator(TurnCalculator turnCalculator, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager) {
         this.turnCalculator = turnCalculator;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.mapManager = mapManager;
-        this.inventoryMapper = inventoryMapper;
+        this.inventoryManager = inventoryManager;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
@@ -64,10 +66,12 @@ public class CombatCalculator {
             //Add drops
             ArrayList<Drop> drops = dropCalculator.calculateDrop(combat.getMonsterDefinition());
 
+            InventoryEntity inventory = inventoryManager.getInventory(combat.getUserEntity());
+
             for (Drop drop : drops) {
                 result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(drop.getItem()).getName(), drop.getAmount()));
 
-                inventoryMapper.addItem(combat.getUserEntity().getId(), drop.getItem(), drop.getAmount());
+                inventory.addItem(drop.getItem(), drop.getAmount());
             }
 
             //Remove spawn

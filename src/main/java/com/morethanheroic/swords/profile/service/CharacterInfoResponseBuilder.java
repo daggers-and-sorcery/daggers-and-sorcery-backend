@@ -9,8 +9,7 @@ import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
-import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
-import com.morethanheroic.swords.inventory.service.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +26,14 @@ public class CharacterInfoResponseBuilder {
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final AttributeUtil attributeUtil;
-    private final InventoryMapper inventoryMapper;
+    private final InventoryManager inventoryManager;
 
     @Autowired
-    public CharacterInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryMapper inventoryMapper) {
+    public CharacterInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.attributeUtil = attributeUtil;
-        this.inventoryMapper = inventoryMapper;
+        this.inventoryManager = inventoryManager;
     }
 
     public Response build(UserEntity user) {
@@ -45,7 +44,7 @@ public class CharacterInfoResponseBuilder {
         response.setData("race", user.getRace());
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
-        response.setData("inventory", buildInventoryResponse(inventoryMapper.getItems(user.getId())));
+        response.setData("inventory", buildInventoryResponse(inventoryManager.getInventory(user).getItems()));
 
         return response;
     }
