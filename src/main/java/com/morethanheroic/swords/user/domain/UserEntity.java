@@ -1,7 +1,5 @@
 package com.morethanheroic.swords.user.domain;
 
-import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
-import com.morethanheroic.swords.inventory.service.InventoryEntity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.service.Skills;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
@@ -12,16 +10,14 @@ import java.util.Date;
 public class UserEntity {
 
     private final UserDatabaseEntity userDatabaseEntity;
-    private final InventoryEntity inventoryEntity;
     private final UserMapper userMapper;
 
     public UserEntity(UserDatabaseEntity userDatabaseEntity) {
-        this(userDatabaseEntity, null, null);
+        this(userDatabaseEntity, null);
     }
 
-    public UserEntity(UserDatabaseEntity userDatabaseEntity, UserMapper userMapper, InventoryMapper inventoryMapper) {
+    public UserEntity(UserDatabaseEntity userDatabaseEntity, UserMapper userMapper) {
         this.userDatabaseEntity = userDatabaseEntity;
-        this.inventoryEntity = new InventoryEntity(userDatabaseEntity, inventoryMapper);
         this.userMapper = userMapper;
     }
 

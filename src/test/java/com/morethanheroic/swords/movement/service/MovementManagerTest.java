@@ -3,8 +3,10 @@ package com.morethanheroic.swords.movement.service;
 import com.morethanheroic.swords.map.domain.MapEntity;
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
-import com.morethanheroic.swords.map.service.domain.*;
-import com.morethanheroic.swords.movement.service.MovementManager;
+import com.morethanheroic.swords.map.service.domain.MapDefinition;
+import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
+import com.morethanheroic.swords.map.service.domain.MapSpawnDefinition;
+import com.morethanheroic.swords.map.service.domain.TileDefinition;
 import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.PositionDatabaseEntity;
@@ -42,7 +44,7 @@ public class MovementManagerTest {
         userDatabaseEntity.setY(33);
         userDatabaseEntity.setMap(0);
 
-        user = new UserEntity(userDatabaseEntity, mock(UserMapper.class), null);
+        user = new UserEntity(userDatabaseEntity, mock(UserMapper.class));
     }
 
     @Test
