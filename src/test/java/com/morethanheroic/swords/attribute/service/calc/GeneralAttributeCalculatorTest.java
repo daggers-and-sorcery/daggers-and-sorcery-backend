@@ -1,4 +1,4 @@
-package com.swordssorcery.server.game.attribute.calc;
+package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.service.calc.GeneralAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;

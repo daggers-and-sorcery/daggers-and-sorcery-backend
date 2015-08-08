@@ -1,4 +1,4 @@
-package com.swordssorcery.server.game.movement;
+package com.morethanheroic.swords.movement.service;
 
 import com.morethanheroic.swords.map.domain.MapEntity;
 import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;

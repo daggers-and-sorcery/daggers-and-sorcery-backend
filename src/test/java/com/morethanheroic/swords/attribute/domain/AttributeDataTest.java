@@ -1,4 +1,4 @@
-package com.swordssorcery.server.game.attribute.data;
+package com.morethanheroic.swords.attribute.domain;
 
 import com.morethanheroic.swords.attribute.model.AttributeData;
 import com.morethanheroic.swords.attribute.model.AttributeModifierData;
