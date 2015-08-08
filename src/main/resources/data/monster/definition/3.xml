@@ -15,7 +15,7 @@
         <monster:drop>
             <monster:item>1</monster:item>
             <monster:amount>10</monster:amount>
-            <monster:chance>100</monster:chance>
+            <monster:chance>70</monster:chance>
         </monster:drop>
         <monster:drop>
             <monster:item>1</monster:item>

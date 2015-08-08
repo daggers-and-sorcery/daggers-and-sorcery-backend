@@ -32,6 +32,9 @@ public class CombatMessageBuilder {
     private final String[] PLAYER_DIE_MESSANGE_LIST = new String[]{
             "${monster} killed you!"
     };
+    private final String[] DROP_MESSANGE_LIST = new String[]{
+            "Found ${amount} ${item} after looting the opponents body."
+    };
 
     public CombatMessage buildFightInitialisationMessage(String monster) {
         CombatMessage combatMessage = new CombatMessage();
@@ -106,6 +109,16 @@ public class CombatMessageBuilder {
         combatMessage.addData("icon", "death");
         combatMessage.addData("icon_color", "red");
         combatMessage.addData("message", PLAYER_DIE_MESSANGE_LIST[random.nextInt(PLAYER_DIE_MESSANGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildDropMessage(String itemName, int amount) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("item", itemName);
+        combatMessage.addData("amount", amount);
+        combatMessage.addData("message", DROP_MESSANGE_LIST[random.nextInt(DROP_MESSANGE_LIST.length)]);
 
         return combatMessage;
     }

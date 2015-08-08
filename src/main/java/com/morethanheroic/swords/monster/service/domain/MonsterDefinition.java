@@ -1,8 +1,6 @@
 package com.morethanheroic.swords.monster.service.domain;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,6 +16,9 @@ public class MonsterDefinition {
     private int defense;
     private int attack;
     private int damage;
+
+    @XmlElementWrapper(name = "droplist")
+    @XmlElement(name = "drop")
     private List<DropDefinition> dropDefinitions;
 
     public int getId() {

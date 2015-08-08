@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc;
+package com.morethanheroic.swords.combat.service.calc.turn;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;

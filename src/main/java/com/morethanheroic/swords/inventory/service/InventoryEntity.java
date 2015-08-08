@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.inventory.service;
 
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
+import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 
 import java.util.ArrayList;
@@ -10,17 +11,20 @@ import java.util.List;
 public class InventoryEntity {
 
     private UserDatabaseEntity userDatabaseEntity;
+    private InventoryMapper inventoryMapper;
 
-    public InventoryEntity(UserDatabaseEntity userDatabaseEntity) {
+    public InventoryEntity(UserDatabaseEntity userDatabaseEntity, InventoryMapper inventoryMapper) {
         this.userDatabaseEntity = userDatabaseEntity;
+        this.inventoryMapper = inventoryMapper;
     }
 
     public void addItem(int itemId, int amount) {
-        if(userDatabaseEntity.getInventory().containsKey(itemId)) {
+        inventoryMapper.addItem(userDatabaseEntity.getId(), itemId, amount);
+        /*if(userDatabaseEntity.getInventory().containsKey(itemId)) {
             userDatabaseEntity.getInventory().get(itemId).increaseAmount(amount);
         } else {
             userDatabaseEntity.getInventory().put(itemId, new ItemDatabaseEntity(itemId, amount));
-        }
+        }*/
     }
 
     public void removeItem(int itemId, int amount) {

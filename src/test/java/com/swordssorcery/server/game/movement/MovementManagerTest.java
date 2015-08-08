@@ -42,7 +42,7 @@ public class MovementManagerTest {
         MapEntity mapEntity = buildFakeMapEntity();
         when(mapManager.getMap(0)).thenReturn(mapEntity);
 
-        user = new UserEntity(userDatabaseEntity, mapManager, mock(UserMapper.class));
+        user = new UserEntity(userDatabaseEntity, mapManager, mock(UserMapper.class), null);
     }
 
     @Test
