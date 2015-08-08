@@ -25,7 +25,7 @@ public class CombatManager {
     }
 
     public CombatResult initiateCombat(UserEntity user, int monsterId) {
-        MapObjectDatabaseEntity spawn = mapManager.getMap(user.getMapId()).getSpawnAt(user.getXPosition(), user.getYPosition(), monsterId);
+        MapObjectDatabaseEntity spawn = mapManager.getMap(user.getMapId()).getSpawnAt(user.getX(), user.getY(), monsterId);
 
         if (spawn != null) {
             return combatCalculator.doFight(user, monsterDefinitionManager.getMonsterDefinition(monsterId), spawn);

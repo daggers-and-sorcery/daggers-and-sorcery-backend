@@ -60,11 +60,11 @@ public class UserEntity {
         userDatabaseEntity.setMap(mapId);
     }
 
-    public int getXPosition() {
+    public int getX() {
         return userDatabaseEntity.getX();
     }
 
-    public int getYPosition() {
+    public int getY() {
         return userDatabaseEntity.getY();
     }
 

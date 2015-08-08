@@ -27,8 +27,8 @@ public class PositionResponseBuilder {
     public Response build(UserEntity user) {
         Response response = new Response();
 
-        response.setData("x", user.getXPosition());
-        response.setData("y", user.getYPosition());
+        response.setData("x", user.getX());
+        response.setData("y", user.getY());
         response.setData("map", user.getMapId());
         response.setData("spawnList", buildSpawnList(user));
 
@@ -38,7 +38,7 @@ public class PositionResponseBuilder {
     public List<HashMap<String, Object>> buildSpawnList(UserEntity user) {
         List<HashMap<String, Object>> userList = new ArrayList<>();
 
-        for (MapObjectDatabaseEntity entity : mapManager.getMap(user.getMapId()).getSpawnsAt(user.getXPosition(), user.getYPosition())) {
+        for (MapObjectDatabaseEntity entity : mapManager.getMap(user.getMapId()).getSpawnsAt(user.getX(), user.getY())) {
             userList.add(buildSpawnData(entity));
         }
 

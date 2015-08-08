@@ -34,11 +34,11 @@ public class MovementManager {
         switch (type) {
             case UP:
             case DOWN:
-                return user.getXPosition();
+                return user.getX();
             case LEFT:
-                return user.getXPosition() - 1;
+                return user.getX() - 1;
             case RIGHT:
-                return user.getXPosition() + 1;
+                return user.getX() + 1;
         }
 
         throw new IllegalArgumentException();
@@ -47,12 +47,12 @@ public class MovementManager {
     private int getTargetYCoordinate(UserEntity user, MovementType type) {
         switch (type) {
             case UP:
-                return user.getYPosition() - 1;
+                return user.getY() - 1;
             case DOWN:
-                return user.getYPosition() + 1;
+                return user.getY() + 1;
             case LEFT:
             case RIGHT:
-                return user.getYPosition();
+                return user.getY();
         }
 
         throw new IllegalArgumentException();
