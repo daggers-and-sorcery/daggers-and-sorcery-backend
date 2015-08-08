@@ -10,7 +10,7 @@
                 <xs:element name="type" minOccurs="1">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:enumeration value="GENERAL"/>
+                            <xs:enumeration value="WEAPON"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>

@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://www.swordsandsorcery.com/item ../schema.xsd">
     <item:id>1</item:id>
     <item:name>Laxi's epic</item:name>
-    <item:type>GENERAL</item:type>
+    <item:type>WEAPON</item:type>
     <item:weight>5</item:weight>
     <item:modifiers>
         <item:modifier>

@@ -10,7 +10,7 @@ public class ItemDefinition {
 
     private int id;
     private String name;
-    private String type;
+    private ItemType type;
     private int weight;
 
     public int getId() {
@@ -21,7 +21,7 @@ public class ItemDefinition {
         return name;
     }
 
-    public String getType() {
+    public ItemType getType() {
         return type;
     }
 
@@ -31,5 +31,15 @@ public class ItemDefinition {
 
     public String toString() {
         return "ItemDefinition -> [id: " + id + " name: " + name + "]";
+    }
+
+    public boolean isEquipment() {
+        switch (type) {
+            case SHIELD:
+            case WEAPON:
+                return true;
+            default:
+                return false;
+        }
     }
 }
