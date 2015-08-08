@@ -2,16 +2,14 @@ package com.morethanheroic.swords.inventory.repository.dao;
 
 public class ItemDatabaseEntity {
 
-    private final int id;
+    private int user_id;
+    private int item_id;
     private int amount;
 
-    public ItemDatabaseEntity(int id, int amount) {
-        this.id = id;
-        this.setAmount(amount);
-    }
+    public int getUserId() {return  user_id; }
 
-    public int getId() {
-        return id;
+    public int getItemId() {
+        return item_id;
     }
 
     public int getAmount() {

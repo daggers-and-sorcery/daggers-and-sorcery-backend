@@ -2,7 +2,6 @@ package com.morethanheroic.swords.user.repository.dao;
 
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.model.AttributeModifierData;
-import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.service.Skills;
 
@@ -25,7 +24,6 @@ public class UserDatabaseEntity {
     //TODO: Transient for now! fix em
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
     private Skills skills = new Skills();
-    private HashMap<Integer, ItemDatabaseEntity> inventory = new HashMap<>();
 
     public UserDatabaseEntity() {
     }
@@ -99,9 +97,6 @@ public class UserDatabaseEntity {
         return skills;
     }
 
-    public HashMap<Integer, ItemDatabaseEntity> getInventory() {
-        return inventory;
-    }
 
     public int getMap() {
         return map;

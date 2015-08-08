@@ -10,6 +10,9 @@ public class DropDefinition {
     private int amount;
     private double chance;
 
+    public DropDefinition() {
+    }
+
     public DropDefinition(int item, int amount, double chance) {
         this.item = item;
         this.amount = amount;

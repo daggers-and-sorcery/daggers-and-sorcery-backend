@@ -63,7 +63,7 @@ public class CharacterInfoResponseBuilder {
             HashMap<String, Object> itemData = new HashMap<>();
 
             itemData.put("item", item);
-            itemData.put("definition", itemDefinitionManager.getItemDefinition(item.getId()));
+            itemData.put("definition", itemDefinitionManager.getItemDefinition(item.getItemId()));
 
             inventoryData.add(itemData);
         }
