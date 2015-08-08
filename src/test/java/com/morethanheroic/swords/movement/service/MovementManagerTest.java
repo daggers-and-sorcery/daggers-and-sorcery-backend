@@ -9,7 +9,6 @@ import com.morethanheroic.swords.map.service.domain.MapSpawnDefinition;
 import com.morethanheroic.swords.map.service.domain.TileDefinition;
 import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import com.morethanheroic.swords.user.repository.dao.PositionDatabaseEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.testng.Assert;
@@ -35,10 +34,6 @@ public class MovementManagerTest {
 
         movementManager = new MovementManager(mapManager);
         userDatabaseEntity = new UserDatabaseEntity("test", "test");
-
-        PositionDatabaseEntity positionDatabaseEntity = new PositionDatabaseEntity();
-        positionDatabaseEntity.setPosition(20, 33);
-        positionDatabaseEntity.setMap(0);
 
         userDatabaseEntity.setX(20);
         userDatabaseEntity.setY(33);

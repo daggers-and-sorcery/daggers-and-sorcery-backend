@@ -2,6 +2,7 @@ package com.morethanheroic.swords.equipment.service;
 
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -9,6 +10,7 @@ public class EquipmentManager {
 
     private final InventoryManager inventoryManager;
 
+    @Autowired
     public EquipmentManager(InventoryManager inventoryManager) {
         this.inventoryManager = inventoryManager;
     }
