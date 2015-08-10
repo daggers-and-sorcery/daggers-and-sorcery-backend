@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = require('app.js').controller('MainController', function ($scope, $rootScope, $state, $http) {
+module.exports = require('js/app.js').controller('MainController', function ($scope, $rootScope, $state, $http) {
     //Get user info at start
     $http.get('/user/info').success(function (data, status, headers, config) {
         $rootScope.loggedIn = data.loggedIn === 'true';

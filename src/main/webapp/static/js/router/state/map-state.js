@@ -4,8 +4,8 @@ module.exports = {
     name: 'map',
     url: '/map/',
     views: {
-        'top': require('view/top/empty-view'),
-        'main': require('view/main/map-view'),
-        'right': require('view/right/menu-view')
+        'top': require('js/view/top/empty-view'),
+        'main': require('js/view/main/map-view'),
+        'right': require('js/view/right/menu-view')
     }
 };

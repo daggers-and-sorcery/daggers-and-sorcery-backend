@@ -1,4 +1,4 @@
-module.exports = require('app.js').constant('ATTRIBUTE_BONUS_MAP', {
+module.exports = require('js/app.js').constant('ATTRIBUTE_BONUS_MAP', {
     'INITIAL': 'Initial value',
     'RACIAL': 'Racial bonus',
     'SKILL': 'Skill bonus',

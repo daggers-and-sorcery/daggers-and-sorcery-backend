@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = require('app.js').filter('capitalize', function () {
+module.exports = require('js/app.js').filter('capitalize', function () {
     return function (input, format) {
         if (!input) {
             return input;

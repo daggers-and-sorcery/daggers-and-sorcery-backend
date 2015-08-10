@@ -7,8 +7,8 @@ module.exports = {
         visibleWhenNotLoggedIn: true
     },
     views: {
-        'top': require('view/top/empty-view'),
-        'main': require('view/main/registration-view'),
-        'right': require('view/right/menu-view')
+        'top': require('js/view/top/empty-view'),
+        'main': require('js/view/main/registration-view'),
+        'right': require('js/view/right/menu-view')
     }
 };

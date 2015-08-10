@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = require('app.js').directive('inventoryListColumn', function () {
+module.exports = require('js/app.js').directive('inventoryListColumn', function () {
     return {
         restrict: 'E',
         scope: {
@@ -33,6 +33,6 @@ module.exports = require('app.js').directive('inventoryListColumn', function () 
                 });
             };
         },
-        templateUrl: '/partial/directive/inventory-item-column.html'
+        template: require('partial/directive/inventory-item-column.html')
     };
 });

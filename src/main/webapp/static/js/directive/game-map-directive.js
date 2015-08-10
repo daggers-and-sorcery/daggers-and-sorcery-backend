@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = require('app.js').directive('gameMap', function ($injector) {
+module.exports = require('js/app.js').directive('gameMap', function ($injector) {
     return {
         template: '<div id="game-map"></div>',
         scope: {

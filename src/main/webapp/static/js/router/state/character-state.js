@@ -4,8 +4,8 @@ module.exports = {
     name: 'character',
     url: '/character/',
     views: {
-        'top': require('view/top/empty-view'),
-        'main': require('view/main/character-view'),
-        'right': require('view/right/menu-view')
+        'top': require('js/view/top/empty-view'),
+        'main': require('js/view/main/character-view'),
+        'right': require('js/view/right/menu-view')
     }
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = require('app.js').directive('attributeListColumn', function () {
+module.exports = require('js/app.js').directive('attributeListColumn', function () {
     return {
         restrict: 'E',
         scope: {
@@ -15,6 +15,6 @@ module.exports = require('app.js').directive('attributeListColumn', function () 
 
             $scope.attributeBonusNameMap = ATTRIBUTE_BONUS_MAP;
         },
-        templateUrl: '/partial/directive/attribute-list-column.html'
+        template: require('partial/directive/attribute-list-column.html')
     };
 });

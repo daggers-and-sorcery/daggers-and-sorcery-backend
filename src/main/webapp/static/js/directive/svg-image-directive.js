@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = require('app.js').directive('svgImage', ['$http', function($http) {
+module.exports = require('js/app.js').directive('svgImage', ['$http', function($http) {
     return {
       restrict: 'E',
       scope: {

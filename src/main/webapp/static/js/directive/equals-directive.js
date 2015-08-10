@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = require('app.js').directive('equals', function () {
+module.exports = require('js/app.js').directive('equals', function () {
     return {
         restrict: 'A', // only activate on element attribute
         require: '?ngModel', // get a hold of NgModelController
