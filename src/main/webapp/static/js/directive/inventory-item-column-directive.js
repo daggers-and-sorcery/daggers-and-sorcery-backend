@@ -33,6 +33,6 @@ module.exports = require('app.js').directive('inventoryListColumn', function () 
                 });
             };
         },
-        templateUrl: '/directive/inventory-item-column.html'
+        templateUrl: '/partial/directive/inventory-item-column.html'
     };
 });

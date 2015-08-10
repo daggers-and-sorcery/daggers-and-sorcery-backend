@@ -15,6 +15,6 @@ module.exports = require('app.js').directive('attributeListColumn', function () 
 
             $scope.attributeBonusNameMap = ATTRIBUTE_BONUS_MAP;
         },
-        templateUrl: '/directive/attribute-list-column.html'
+        templateUrl: '/partial/directive/attribute-list-column.html'
     };
 });
