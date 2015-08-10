@@ -45,6 +45,29 @@ public class EquipmentEntity {
         }
     }
 
+    public void unequipItem(EquipmentSlot slot) {
+        switch (slot) {
+            case WEAPON:
+                int previousWeapon = equipmentMapper.getEquipment(userEntity.getId()).getWeapon();
+
+                if (previousWeapon != 0) {
+                    inventoryEntity.addItem(previousWeapon, 1);
+                }
+                break;
+            case OFFHAND:
+                int previousOffhand = equipmentMapper.getEquipment(userEntity.getId()).getOffhand();
+
+                if (previousOffhand != 0) {
+                    inventoryEntity.addItem(previousOffhand, 1);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+
+        equipmentMapper.equipWeapon(userEntity.getId(), 0);
+    }
+
     public int getEquipmentOnSlot(EquipmentSlot slot) {
         switch (slot) {
             case WEAPON:

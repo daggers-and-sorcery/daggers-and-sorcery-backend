@@ -1,6 +1,8 @@
 package com.morethanheroic.swords.equipment.view.controller;
 
 import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
+import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
@@ -38,5 +40,15 @@ public class EquipmentController {
         }
 
         return equipmentResponseBuilder.build(EquipmentResponseBuilder.UNSUCCESSFULL_REQUEST);
+    }
+
+
+
+    @RequestMapping(value = "/unequip/{slotId}", method = RequestMethod.GET)
+    public Response unequip(UserEntity user, @PathVariable String slotId) {
+        //TODO has enough inventory slots
+        equipmentManager.getEquipment(user).unequipItem(EquipmentSlot.valueOf(slotId));
+
+        return equipmentResponseBuilder.build(EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
     }
 }

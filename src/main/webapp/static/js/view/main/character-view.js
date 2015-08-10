@@ -9,7 +9,7 @@ module.exports = {
             });
         }
     },
-    controller: function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData) {
+    controller: function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData, $rootScope) {
         $scope.attributePopoverUrl = '/partial/popover/attribute.html';
         $scope.user = characterData;
         $scope.attributeBonusNameMap = ATTRIBUTE_BONUS_MAP;
@@ -19,20 +19,20 @@ module.exports = {
                   $scope.user = formatData(response.data);
             });
         });
-            $scope.inventoryPopover = {
-                templateUrl: '/partial/popover/inventory.html',
-            };
 
-            $scope.isEquipment = function(type) {
-            console.log(type);
-                switch(type) {
-                    case 'ONE_HANDED_SWORD':
-                    case 'SHIELD':
-                        return true
+        $scope.inventoryPopover = {
+            templateUrl: '/partial/popover/inventory.html',
+        };
+
+        $scope.unequip = function(slot) {
+            $http.get('/unequip/'+slot).then(function(response) {
+                if(response.data.data.success) {
+                    $rootScope.$broadcast('profile-update-needed');
+                } else {
+                    //TODO: error happened
                 }
-
-                return false;
-            };
+            });
+        };
     }
 };
 
