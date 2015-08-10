@@ -13,6 +13,12 @@ module.exports = {
         $scope.attributePopoverUrl = '/partial/popover/attribute.html';
         $scope.user = characterData;
         $scope.attributeBonusNameMap = ATTRIBUTE_BONUS_MAP;
+
+        $scope.$on('profile-update-needed', function(event, args) {
+            $http.get('/character/info').then(function(response) {
+                  $scope.user = formatData(response.data);
+            });
+        });
     }
 };
 

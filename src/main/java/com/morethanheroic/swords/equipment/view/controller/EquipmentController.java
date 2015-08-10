@@ -32,7 +32,6 @@ public class EquipmentController {
     public Response equip(UserEntity user, @PathVariable int itemId) {
         if (inventoryManager.getInventory(user).hasItem(itemId) && itemDefinitionManager.getItemDefinition(itemId).isEquipment()) {
             equipmentManager.getEquipment(user).equipItem(itemDefinitionManager.getItemDefinition(itemId));
-            inventoryManager.getInventory(user).removeItem(itemId, 1);
 
             return equipmentResponseBuilder.build(EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
         }

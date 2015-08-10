@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<item:item xmlns:item="http://www.swordsandsorcery.com/item" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.swordsandsorcery.com/item ../schema.xsd">
+    <item:id>2</item:id>
+    <item:name>Laxi's epic 2</item:name>
+    <item:type>ONE_HANDED_SWORD</item:type>
+    <item:weight>5</item:weight>
+    <item:modifiers>
+        <item:modifier>
+            <item:target>ATTACK</item:target>
+            <item:value>1</item:value>
+        </item:modifier>
+        <item:modifier>
+            <item:target>DEFENSE</item:target>
+            <item:value>1</item:value>
+        </item:modifier>
+    </item:modifiers>
+</item:item>

@@ -8,7 +8,7 @@ module.exports = require('app.js').directive('inventoryListColumn', function () 
             columnAlign: '@columnAlign',
             inventory: '=source'
         },
-        controller: function ($scope, $http) {
+        controller: function ($scope, $http, $rootScope) {
             $scope.inventoryPopover = {
                 templateUrl: '/partial/popover/inventory.html',
             };
@@ -27,7 +27,7 @@ module.exports = require('app.js').directive('inventoryListColumn', function () 
                 console.log(itemId);
                 $http.get('/equip/'+itemId).then(function(response) {
                     if(response.data.data.success) {
-                        //TODO: equiping succeed, set the equipment in the character page (do it with broadcast)
+                        $rootScope.$broadcast('profile-update-needed');
                     } else {
                         //TODO: error happened
                     }
