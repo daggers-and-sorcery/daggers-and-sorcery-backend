@@ -24,7 +24,6 @@ module.exports = require('app.js').directive('inventoryListColumn', function () 
             };
 
             $scope.equip = function(itemId) {
-                console.log(itemId);
                 $http.get('/equip/'+itemId).then(function(response) {
                     if(response.data.data.success) {
                         $rootScope.$broadcast('profile-update-needed');

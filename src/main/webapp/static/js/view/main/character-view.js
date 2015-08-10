@@ -19,6 +19,20 @@ module.exports = {
                   $scope.user = formatData(response.data);
             });
         });
+            $scope.inventoryPopover = {
+                templateUrl: '/partial/popover/inventory.html',
+            };
+
+            $scope.isEquipment = function(type) {
+            console.log(type);
+                switch(type) {
+                    case 'ONE_HANDED_SWORD':
+                    case 'SHIELD':
+                        return true
+                }
+
+                return false;
+            };
     }
 };
 

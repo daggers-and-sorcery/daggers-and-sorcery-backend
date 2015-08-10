@@ -31,6 +31,7 @@ public class EquipmentController {
     @RequestMapping(value = "/equip/{itemId}", method = RequestMethod.GET)
     public Response equip(UserEntity user, @PathVariable int itemId) {
         if (inventoryManager.getInventory(user).hasItem(itemId) && itemDefinitionManager.getItemDefinition(itemId).isEquipment()) {
+            //TODO: check if user has any needed levles and attribute limits
             equipmentManager.getEquipment(user).equipItem(itemDefinitionManager.getItemDefinition(itemId));
 
             return equipmentResponseBuilder.build(EquipmentResponseBuilder.SUCCESSFULL_REQUEST);

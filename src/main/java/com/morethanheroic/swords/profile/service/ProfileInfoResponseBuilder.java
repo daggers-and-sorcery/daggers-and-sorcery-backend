@@ -8,6 +8,9 @@ import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
+import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
+import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
@@ -21,19 +24,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
-public class CharacterInfoResponseBuilder {
+public class ProfileInfoResponseBuilder {
 
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final AttributeUtil attributeUtil;
     private final InventoryManager inventoryManager;
+    private final EquipmentManager equipmentManager;
 
     @Autowired
-    public CharacterInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager) {
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager, EquipmentManager equipmentManager) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.attributeUtil = attributeUtil;
         this.inventoryManager = inventoryManager;
+        this.equipmentManager = equipmentManager;
     }
 
     public Response build(UserEntity user) {
@@ -45,8 +50,31 @@ public class CharacterInfoResponseBuilder {
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
         response.setData("inventory", buildInventoryResponse(inventoryManager.getInventory(user).getItems()));
+        response.setData("equipment", buildEquipmentResponse(user));
 
         return response;
+    }
+
+    private HashMap<String, HashMap<String, Object>> buildEquipmentResponse(UserEntity userEntity) {
+        HashMap<String, HashMap<String, Object>> equipmentHolder = new HashMap<>();
+
+        EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
+
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            int equipment = equipmentEntity.getEquipmentOnSlot(slot);
+
+            HashMap<String, Object> slotData = new HashMap<>();
+
+            if(equipment == 0) {
+                slotData.put("empty", true);
+            } else {
+                slotData.put("description", itemDefinitionManager.getItemDefinition(equipment));
+            }
+
+            equipmentHolder.put(slot.name(), slotData);
+        }
+
+        return equipmentHolder;
     }
 
     private LinkedList<HashMap<String, Object>> buildAttributeResponse(UserEntity user) {

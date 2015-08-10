@@ -23,13 +23,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
-public class CharacterInfoResponseBuilderServiceTest {
+public class ProfileInfoResponseBuilderServiceTest {
 
     @Test
     public void testBuild() {
-        CharacterInfoResponseBuilder characterInfoResponseBuilder = new CharacterInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock(), buildInventoryManagerMock());
+        ProfileInfoResponseBuilder profileInfoResponseBuilder = new ProfileInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock(), buildInventoryManagerMock(), null);
 
-        Response response = characterInfoResponseBuilder.build(buildUserEntityMock());
+        Response response = profileInfoResponseBuilder.build(buildUserEntityMock());
 
         assertEquals(response.getDataMap(), buildExpectedResult());
     }

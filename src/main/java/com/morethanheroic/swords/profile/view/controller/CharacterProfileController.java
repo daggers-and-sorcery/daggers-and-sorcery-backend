@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.profile.view.controller;
 
-import com.morethanheroic.swords.profile.service.CharacterInfoResponseBuilder;
+import com.morethanheroic.swords.profile.service.ProfileInfoResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.common.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class CharacterProfileController {
 
     @Autowired
-    private CharacterInfoResponseBuilder characterInfoResponseBuilder;
+    private ProfileInfoResponseBuilder profileInfoResponseBuilder;
 
     @RequestMapping(value = "/character/info", method = RequestMethod.GET)
     public Response info(UserEntity user) {
-        return characterInfoResponseBuilder.build(user);
+        return profileInfoResponseBuilder.build(user);
     }
 }

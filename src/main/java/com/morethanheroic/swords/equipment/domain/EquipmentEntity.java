@@ -24,7 +24,7 @@ public class EquipmentEntity {
             case WEAPON:
                 int previousWeapon = equipmentMapper.getEquipment(userEntity.getId()).getWeapon();
 
-                if(previousWeapon != 0) {
+                if (previousWeapon != 0) {
                     inventoryEntity.addItem(previousWeapon, 1);
                 }
 
@@ -34,7 +34,7 @@ public class EquipmentEntity {
             case OFFHAND:
                 int previousOffhand = equipmentMapper.getEquipment(userEntity.getId()).getOffhand();
 
-                if(previousOffhand != 0) {
+                if (previousOffhand != 0) {
                     inventoryEntity.addItem(previousOffhand, 1);
                 }
                 equipmentMapper.equipOffhand(userEntity.getId(), item.getId());
@@ -42,6 +42,26 @@ public class EquipmentEntity {
                 break;
             default:
                 throw new IllegalArgumentException();
+        }
+    }
+
+    public int getEquipmentOnSlot(EquipmentSlot slot) {
+        switch (slot) {
+            case WEAPON:
+                return equipmentMapper.getEquipment(userEntity.getId()).getWeapon();
+            case OFFHAND:
+                return equipmentMapper.getEquipment(userEntity.getId()).getOffhand();
+            case HELM:
+            case GLOVES:
+            case RING:
+            case AMULET:
+            case BOOTS:
+            case BRACER:
+            case CHEST:
+            case LEGS:
+                return 0;
+            default:
+                throw new IllegalArgumentException("Wrong slot: " + slot);
         }
     }
 }
