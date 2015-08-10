@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.equipment.view.controller;
+package com.morethanheroic.swords.equipment.service;
 
 import com.morethanheroic.swords.common.response.Response;
 import org.springframework.stereotype.Service;

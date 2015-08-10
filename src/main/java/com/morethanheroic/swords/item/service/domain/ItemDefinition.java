@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.item.service.domain;
 
+import com.morethanheroic.swords.item.domain.ItemType;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,7 +38,7 @@ public class ItemDefinition {
     public boolean isEquipment() {
         switch (type) {
             case SHIELD:
-            case WEAPON:
+            case ONE_HANDED_SWORD:
                 return true;
             default:
                 return false;

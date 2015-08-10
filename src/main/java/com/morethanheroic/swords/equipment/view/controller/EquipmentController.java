@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.equipment.view.controller;
 
 import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
+import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -31,7 +31,8 @@ public class EquipmentController {
     @RequestMapping(value = "/equip/{itemId}", method = RequestMethod.GET)
     public Response equip(UserEntity user, @PathVariable int itemId) {
         if (inventoryManager.getInventory(user).hasItem(itemId) && itemDefinitionManager.getItemDefinition(itemId).isEquipment()) {
-            equipmentManager.getEquipment(user).equipItem(itemId, itemDefinitionManager.getItemDefinition(itemId).getType());
+            equipmentManager.getEquipment(user).equipItem(itemDefinitionManager.getItemDefinition(itemId));
+            inventoryManager.getInventory(user).removeItem(itemId, 1);
 
             return equipmentResponseBuilder.build(EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
         }

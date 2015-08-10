@@ -17,7 +17,17 @@ public class InventoryEntity {
     }
 
     public boolean hasItem(int itemId) {
-        return inventoryMapper.getItem(userEntity.getId(), itemId) != null;
+        return getItemAmount(itemId) > 0;
+    }
+
+    public int getItemAmount(int itemId) {
+        ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), itemId);
+
+        if (dbEntity != null) {
+            return dbEntity.getAmount();
+        }
+
+        return 0;
     }
 
     public List<ItemDatabaseEntity> getItems() {
@@ -26,5 +36,15 @@ public class InventoryEntity {
 
     public void addItem(int itemId, int itemAmount) {
         inventoryMapper.addItem(userEntity.getId(), itemId, itemAmount);
+    }
+
+    public void removeItem(int itemId, int itemAmount) {
+        int amount = getItemAmount(itemId);
+
+        if (amount - itemAmount > 0) {
+            inventoryMapper.removeItem(userEntity.getId(), itemId, amount - itemAmount);
+        } else {
+            inventoryMapper.deleteItem(userEntity.getId(), itemId);
+        }
     }
 }

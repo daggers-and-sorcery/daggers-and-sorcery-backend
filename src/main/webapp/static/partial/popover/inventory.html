@@ -2,6 +2,8 @@
     <dl class="inventory-popup-definition-list">
         <dt>Name:</dt>
         <dd ng-bind="::item.definition.name"></dd>
+        <dt>Type:</dt>
+        <dd ng-bind="::item.definition.type | capitalize:'first' | replace:'_':' '"></dd>
         <dt>Weight:</dt>
         <dd ng-bind="::item.definition.weight + ' kg'"></dd>
     </dl>
