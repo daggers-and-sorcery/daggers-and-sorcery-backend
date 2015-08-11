@@ -11,10 +11,6 @@ module.exports = function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData, $r
          });
      });
 
-     $scope.inventoryPopover = {
-         templateUrl: '/partial/popover/inventory.html',
-     };
-
      $scope.unequip = function(slot) {
          $http.get('/unequip/'+slot).then(function(response) {
              if(response.data.data.success) {
