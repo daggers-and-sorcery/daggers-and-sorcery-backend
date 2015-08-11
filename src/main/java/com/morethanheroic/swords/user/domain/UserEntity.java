@@ -75,4 +75,8 @@ public class UserEntity {
     public int getMana() {
         return 0;
     }
+
+    public int getMovement() {
+        return 0;
+    }
 }

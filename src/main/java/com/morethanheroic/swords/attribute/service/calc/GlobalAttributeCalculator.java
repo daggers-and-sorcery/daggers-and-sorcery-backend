@@ -1,10 +1,11 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
-import com.morethanheroic.swords.attribute.enums.Attribute;
-import com.morethanheroic.swords.attribute.model.AttributeData;
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.model.AttributeData;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,10 +57,12 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     }
 
     public int calculateActualValue(UserEntity user, Attribute attribute) {
-        if(attribute == CombatAttribute.LIFE) {
+        if (attribute == CombatAttribute.LIFE) {
             return user.getHealth();
         } else if (attribute == CombatAttribute.MANA) {
             return user.getMana();
+        } else  if (attribute == BasicAttribute.MOVEMENT) {
+            return user.getMovement();
         }
 
         return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
@@ -72,14 +75,13 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     public int calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
         int result = 0;
 
-        //Life and Mana
-        if(attribute instanceof CombatAttribute) {
-            result += attribute.getInitialValue();
+        result += attribute.getInitialValue();
+        if (attribute instanceof CombatAttribute) {
             result += combatAttributeCalculator.calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute);
-            result += equipmentAttributeBonusCalculator.calculateEquipmentBonus(userEntity, attribute);
         }
+        result += equipmentAttributeBonusCalculator.calculateEquipmentBonus(userEntity, attribute);
 
-        return  result;
+        return result;
     }
 
     public int calculatePercentageModifiedAttribute(int attributeValue, int percentage) {
