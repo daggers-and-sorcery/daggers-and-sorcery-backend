@@ -8,30 +8,30 @@
     <item:weight>5</item:weight>
     <item:combat-modifiers>
         <item:modifier>
-            <item:target>ATTACK</item:target>
-            <item:value>1</item:value>
+            <item:attribute>ATTACK</item:attribute>
+            <item:amount>1</item:amount>
         </item:modifier>
         <item:modifier>
-            <item:target>DEFENSE</item:target>
-            <item:value>1</item:value>
+            <item:attribute>DEFENSE</item:attribute>
+            <item:amount>1</item:amount>
         </item:modifier>
     </item:combat-modifiers>
     <item:general-modifiers>
         <item:modifier>
-            <item:target>STRENGTH</item:target>
-            <item:value>1</item:value>
+            <item:attribute>STRENGTH</item:attribute>
+            <item:amount>1</item:amount>
         </item:modifier>
     </item:general-modifiers>
     <item:skill-modifiers>
         <item:modifier>
-            <item:target>TWO_HANDED_CRUSHING_WEAPONS</item:target>
-            <item:value>1</item:value>
+            <item:attribute>TWO_HANDED_CRUSHING_WEAPONS</item:attribute>
+            <item:amount>2</item:amount>
         </item:modifier>
     </item:skill-modifiers>
     <item:basic-modifiers>
         <item:modifier>
-            <item:target>MOVEMENT</item:target>
-            <item:value>1</item:value>
+            <item:attribute>MOVEMENT</item:attribute>
+            <item:amount>1</item:amount>
         </item:modifier>
     </item:basic-modifiers>
 </item:item>
