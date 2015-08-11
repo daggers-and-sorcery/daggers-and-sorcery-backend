@@ -1,12 +1,6 @@
 package com.morethanheroic.swords.item.service.domain;
 
-import com.morethanheroic.swords.attribute.domain.BasicAttribute;
-import com.morethanheroic.swords.attribute.domain.CombatAttribute;
-import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.item.domain.ItemType;
-import com.sun.crypto.provider.AESCipher;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
