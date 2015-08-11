@@ -1,11 +1,13 @@
 package com.morethanheroic.swords.profile.service;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.enums.AttributeType;
 import com.morethanheroic.swords.attribute.model.AttributeData;
 import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.attribute.model.GeneralAttributeData;
+import com.morethanheroic.swords.attribute.model.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
@@ -114,6 +116,9 @@ public class ProfileInfoResponseBuilder {
         attributeResponse.put("modifierDataArray", buildAttributeModifiers(attributeData.getModifierDataArray()));
         if (attribute.getAttributeType() == AttributeType.GENERAL) {
             attributeResponse.put("pointsToNextLevel", ((GeneralAttributeData) attributeData).getPointsToNextLevel());
+        } else if (attribute.getAttributeType() == AttributeType.SKILL) {
+            attributeResponse.put("actualXp", ((SkillAttributeData) attributeData).getActualXp());
+            attributeResponse.put("nextLevelXp", ((SkillAttributeData) attributeData).getNextLevelXp());
         }
 
         return attributeResponse;
