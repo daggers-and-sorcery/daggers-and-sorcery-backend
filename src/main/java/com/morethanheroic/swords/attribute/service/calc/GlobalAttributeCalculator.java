@@ -20,6 +20,8 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     private CombatAttributeCalculator combatAttributeCalculator;
     @Autowired
     private DefaultAttributeCalculator defaultAttributeCalculator;
+    @Autowired
+    private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
 
     public AttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
         if (attribute instanceof SkillAttribute) {
@@ -48,6 +50,8 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
             result += attribute.getInitialValue();
         }
 
+        result += equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute);
+
         return result;
     }
 
@@ -72,6 +76,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         if(attribute instanceof CombatAttribute) {
             result += attribute.getInitialValue();
             result += combatAttributeCalculator.calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute);
+            result += equipmentAttributeBonusCalculator.calculateEquipmentBonus(userEntity, attribute);
         }
 
         return  result;

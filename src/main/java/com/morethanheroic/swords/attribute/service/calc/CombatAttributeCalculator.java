@@ -26,7 +26,6 @@ public class CombatAttributeCalculator implements AttributeCalculator {
             throw new IllegalArgumentException("The attribute must be an instance of CombatAttribute.");
         }
 
-
         AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder(attribute);
 
         attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, attribute));
