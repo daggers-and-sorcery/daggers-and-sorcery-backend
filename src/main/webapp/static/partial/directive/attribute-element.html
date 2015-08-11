@@ -1,0 +1,12 @@
+<span ng-bind="attributeValue.maximum > 0 ? attributeValue.actual + ' / ' + attributeValue.maximum : attributeValue.actual" class="badge attribute-badge pull-right" popover-template="attributePopover.templateUrl" popover-trigger="mouseenter" popover-placement="right">{{attributeValue.actual}} / {{attributeValue.maximum}}</span>
+<span ng-bind="attributeName | replace:'_':' ' | capitalize" />
+<div class="row" ng-if="attributeValue.attribute.attributeType === 'GENERAL'">
+    <div class="col-xs-3 attribute-progress-holder">
+        <div class="attribute-progress">{{attributeValue.pointsToNextLevel}} / 10</div>
+    </div>
+    <div class="col-xs-9 attribute-progress-bar-holder">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: {{100 - (10 * (10 - attribute.pointsToNextLevel))}}%;"></div>
+        </div>
+    </div>
+</div>

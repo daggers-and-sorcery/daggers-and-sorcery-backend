@@ -62,7 +62,19 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     }
 
     public int calculateMaximumValue(UserEntity user, Attribute attribute) {
-        return attribute.isUnlimited() ? 0 : attribute.getInitialValue();
+        return attribute.isUnlimited() ? 0 : calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
+    }
+
+    public int calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
+        int result = 0;
+
+        //Life and Mana
+        if(attribute instanceof CombatAttribute) {
+            result += attribute.getInitialValue();
+            result += combatAttributeCalculator.calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute);
+        }
+
+        return  result;
     }
 
     public int calculatePercentageModifiedAttribute(int attributeValue, int percentage) {

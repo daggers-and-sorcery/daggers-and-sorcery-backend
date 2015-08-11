@@ -284,6 +284,12 @@ html, body, .container {
     padding-left:0;
 }
 
+.attribute-popover {
+    margin-left: 10px;
+    padding-left: 0;
+    list-style-type: square;
+}
+
 /** Progress bar **/
 .progress {
   box-shadow: 0px 0px 4px RGBa(0,0,0, 0.55);

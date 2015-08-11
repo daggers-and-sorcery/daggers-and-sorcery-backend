@@ -11,6 +11,7 @@ require('js/controller/main-controller.js');
 require('js/directive/equals-directive.js');
 require('js/directive/game-map-directive.js');
 require('js/directive/attribute-list-column-directive.js');
+require('js/directive/attribute-element-directive.js');
 require('js/directive/inventory-item-column-directive.js');
 require('js/directive/svg-image-directive.js');
 

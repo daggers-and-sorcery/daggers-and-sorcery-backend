@@ -1,12 +1,11 @@
 'use strict';
 
-module.exports = require('js/app.js').directive('attributeListColumn', function () {
+module.exports = require('js/app.js').directive('attributeElement', function () {
     return {
-        restrict: 'E',
+        restrict: 'A',
         scope: {
-            columnAlignId: '=columnAlignId',
-            columnAlign: '=columnAlign',
-            attributes: '=source'
+            attributeValue: '=attributeValue',
+            attributeName: '=attributeName'
         },
         controller: function ($scope, ATTRIBUTE_BONUS_MAP) {
             $scope.attributePopover = {
@@ -15,6 +14,6 @@ module.exports = require('js/app.js').directive('attributeListColumn', function 
 
             $scope.attributeBonusNameMap = ATTRIBUTE_BONUS_MAP;
         },
-        template: require('partial/directive/attribute-list-column.html')
-    };
+        template: require('partial/directive/attribute-element.html')
+    }
 });

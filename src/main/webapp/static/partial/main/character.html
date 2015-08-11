@@ -16,6 +16,7 @@
                 </li>
             </div>
         </div>
+
         <h4 class="attribute-list-name">Equipment</h4>
         <div class="row">
             <div class="col-md-6 attribute-list-column-left">
@@ -43,32 +44,25 @@
                 </ul>
             </div>
         </div>
+
         <h4 class="attribute-list-name">Basic attributes</h4>
         <div class="row">
-            <attribute-list-column column-align="left" column-align-id="0" source="user.attribute.BASIC"></attribute-list-column>
-            <attribute-list-column column-align="center" column-align-id="1" source="user.attribute.BASIC"></attribute-list-column>
-            <attribute-list-column column-align="right" column-align-id="2" source="user.attribute.BASIC"></attribute-list-column>
+            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align" column-align-id="$index" source="user.attribute.BASIC"/>
         </div>
 
         <h4 class="attribute-list-name">Combat attributes</h4>
         <div class="row">
-            <attribute-list-column column-align="left" column-align-id="0" source="user.attribute.COMBAT"></attribute-list-column>
-            <attribute-list-column column-align="center" column-align-id="1" source="user.attribute.COMBAT"></attribute-list-column>
-            <attribute-list-column column-align="right" column-align-id="2" source="user.attribute.COMBAT"></attribute-list-column>
+            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align" column-align-id="$index" source="user.attribute.COMBAT"/>
         </div>
 
         <h4 class="attribute-list-name">General attributes <small>(Physical)</small></h4>
         <div class="row">
-            <attribute-list-column column-align="left" column-align-id="0" source="user.attribute.GENERAL_PHYSICAL"></attribute-list-column>
-            <attribute-list-column column-align="center" column-align-id="1" source="user.attribute.GENERAL_PHYSICAL"></attribute-list-column>
-            <attribute-list-column column-align="right" column-align-id="2" source="user.attribute.GENERAL_PHYSICAL"></attribute-list-column>
+            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align" column-align-id="$index" source="user.attribute.GENERAL_PHYSICAL"/>
         </div>
 
         <h4 class="attribute-list-name">General attributes <small>(Mental)</small></h4>
         <div class="row">
-            <attribute-list-column column-align="left" column-align-id="0" source="user.attribute.GENERAL_MENTAL"></attribute-list-column>
-            <attribute-list-column column-align="center" column-align-id="1" source="user.attribute.GENERAL_MENTAL"></attribute-list-column>
-            <attribute-list-column column-align="right" column-align-id="2" source="user.attribute.GENERAL_MENTAL"></attribute-list-column>
+            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align" column-align-id="$index" source="user.attribute.GENERAL_MENTAL"/>
         </div>
 
         <h4 class="attribute-list-name">Skills</h4>
