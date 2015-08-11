@@ -38,4 +38,10 @@
             <item:amount>1</item:amount>
         </item:modifier>
     </item:basic-modifiers>
+    <item:general-requirements>
+        <item:requirement>
+            <item:attribute>DEXTERITY</item:attribute>
+            <item:amount>100</item:amount>
+        </item:requirement>
+    </item:general-requirements>
 </item:item>
