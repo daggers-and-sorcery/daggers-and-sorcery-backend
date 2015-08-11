@@ -4,8 +4,9 @@ import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.item.domain.ItemType;
+import com.sun.crypto.provider.AESCipher;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
@@ -23,19 +24,19 @@ public class ItemDefinition {
 
     @XmlElementWrapper(name = "basic-modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<BasicAttribute> basicModifiers;
+    private ArrayList<BasicAttributeModifierDefinition> basicModifiers;
 
     @XmlElementWrapper(name = "combat-modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<CombatAttribute> combatModifiers;
+    private ArrayList<CombatAttributeModifierDefinition> combatModifiers;
 
     @XmlElementWrapper(name = "general-modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<GeneralAttribute> generalModifiers;
+    private ArrayList<GeneralAttributeModifierDefinition> generalModifiers;
 
     @XmlElementWrapper(name = "skill-modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<SkillAttribute> skillModifiers;
+    private ArrayList<SkillAttributeModifierDefinition> skillModifiers;
 
     public int getId() {
         return id;
@@ -67,29 +68,53 @@ public class ItemDefinition {
         }
     }
 
-    public List<BasicAttribute> getBasicModifiers() {
-        return Collections.unmodifiableList(basicModifiers);
+    public List<BasicAttributeModifierDefinition> getBasicModifiers() {
+        if (basicModifiers != null) {
+            return Collections.unmodifiableList(basicModifiers);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
-    public List<CombatAttribute> getCombatModifiers() {
-        return Collections.unmodifiableList(combatModifiers);
+    public List<CombatAttributeModifierDefinition> getCombatModifiers() {
+        if (combatModifiers != null) {
+            return Collections.unmodifiableList(combatModifiers);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
-    public List<GeneralAttribute> getGeneralModifiers() {
-        return Collections.unmodifiableList(generalModifiers);
+    public List<GeneralAttributeModifierDefinition> getGeneralModifiers() {
+        if (generalModifiers != null) {
+            return Collections.unmodifiableList(generalModifiers);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
-    public List<SkillAttribute> getSkillModifiers() {
-        return Collections.unmodifiableList(skillModifiers);
+    public List<SkillAttributeModifierDefinition> getSkillModifiers() {
+        if (skillModifiers != null) {
+            return Collections.unmodifiableList(skillModifiers);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
-    public List<Attribute> getAllModifiers() {
-        List<Attribute> list = new ArrayList<>();
+    public List<AttributeModifierDefinition> getAllModifiers() {
+        List<AttributeModifierDefinition> list = new ArrayList<>();
 
-        list.addAll(basicModifiers);
-        list.addAll(combatModifiers);
-        list.addAll(generalModifiers);
-        list.addAll(skillModifiers);
+        if (basicModifiers != null) {
+            list.addAll(basicModifiers);
+        }
+        if (combatModifiers != null) {
+            list.addAll(combatModifiers);
+        }
+        if (generalModifiers != null) {
+            list.addAll(generalModifiers);
+        }
+        if (skillModifiers != null) {
+            list.addAll(skillModifiers);
+        }
 
         return Collections.unmodifiableList(list);
     }

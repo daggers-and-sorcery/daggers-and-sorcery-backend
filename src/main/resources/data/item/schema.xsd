@@ -16,7 +16,7 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element name="weight" type="xs:unsignedInt"/>
-                <xs:element name="combat-modifiers">
+                <xs:element name="combat-modifiers" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="modifier" maxOccurs="unbounded">
@@ -38,7 +38,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="general-modifiers">
+                <xs:element name="general-modifiers" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="modifier" maxOccurs="unbounded">
@@ -60,7 +60,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="skill-modifiers">
+                <xs:element name="skill-modifiers" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="modifier" maxOccurs="unbounded">
@@ -82,7 +82,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="basic-modifiers">
+                <xs:element name="basic-modifiers" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="modifier" maxOccurs="unbounded">

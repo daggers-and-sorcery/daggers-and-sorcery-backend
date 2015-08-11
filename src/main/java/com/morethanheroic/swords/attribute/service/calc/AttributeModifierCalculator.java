@@ -1,13 +1,13 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
-import com.morethanheroic.swords.attribute.enums.Attribute;
-import com.morethanheroic.swords.attribute.model.AttributeModifierData;
-import com.morethanheroic.swords.attribute.model.PercentageAttributeModifierData;
-import com.morethanheroic.swords.attribute.enums.AttributeModifierType;
-import com.morethanheroic.swords.attribute.enums.AttributeModifierValueType;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.enums.AttributeModifierType;
+import com.morethanheroic.swords.attribute.enums.AttributeModifierValueType;
+import com.morethanheroic.swords.attribute.model.AttributeModifierData;
+import com.morethanheroic.swords.attribute.model.PercentageAttributeModifierData;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,8 @@ public class AttributeModifierCalculator {
     private GeneralAttributeCalculator generalAttributeCalculator;
     @Autowired
     private CombatAttributeCalculator combatAttributeCalculato;
+    @Autowired
+    private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
 
     public AttributeModifierData[] calculateModifierData(UserEntity user, Attribute attribute) {
         ArrayList<AttributeModifierData> attributeModifierDataList = new ArrayList<>();
@@ -39,6 +41,8 @@ public class AttributeModifierCalculator {
         } else {
             attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
         }
+
+        attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.EQUIPMENT, AttributeModifierValueType.VALUE, equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute)));
 
         int racialModifierPercentage = user.getRace().getRacialModifier(attribute);
         if (racialModifierPercentage != Race.NO_RACIAL_MODIFIER) {

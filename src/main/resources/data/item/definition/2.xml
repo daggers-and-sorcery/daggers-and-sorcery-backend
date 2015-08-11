@@ -6,14 +6,4 @@
     <item:name>Laxi's epic 2</item:name>
     <item:type>ONE_HANDED_SWORD</item:type>
     <item:weight>5</item:weight>
-    <item:modifiers>
-        <item:modifier>
-            <item:target>ATTACK</item:target>
-            <item:value>1</item:value>
-        </item:modifier>
-        <item:modifier>
-            <item:target>DEFENSE</item:target>
-            <item:value>1</item:value>
-        </item:modifier>
-    </item:modifiers>
 </item:item>
