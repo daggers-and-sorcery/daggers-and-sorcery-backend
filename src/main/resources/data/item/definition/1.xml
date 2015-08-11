@@ -6,7 +6,7 @@
     <item:name>Laxi's epic</item:name>
     <item:type>ONE_HANDED_SWORD</item:type>
     <item:weight>5</item:weight>
-    <item:modifiers>
+    <item:combat-modifiers>
         <item:modifier>
             <item:target>ATTACK</item:target>
             <item:value>1</item:value>
@@ -15,5 +15,23 @@
             <item:target>DEFENSE</item:target>
             <item:value>1</item:value>
         </item:modifier>
-    </item:modifiers>
+    </item:combat-modifiers>
+    <item:general-modifiers>
+        <item:modifier>
+            <item:target>STRENGTH</item:target>
+            <item:value>1</item:value>
+        </item:modifier>
+    </item:general-modifiers>
+    <item:skill-modifiers>
+        <item:modifier>
+            <item:target>TWO_HANDED_CRUSHING_WEAPONS</item:target>
+            <item:value>1</item:value>
+        </item:modifier>
+    </item:skill-modifiers>
+    <item:basic-modifiers>
+        <item:modifier>
+            <item:target>MOVEMENT</item:target>
+            <item:value>1</item:value>
+        </item:modifier>
+    </item:basic-modifiers>
 </item:item>
