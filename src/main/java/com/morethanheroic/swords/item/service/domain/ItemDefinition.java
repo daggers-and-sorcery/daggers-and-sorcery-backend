@@ -102,38 +102,6 @@ public class ItemDefinition {
         }
     }
 
-    public List<SkillAttributeRequirementDefinition> getSkillRequirements() {
-        if (skillModifiers != null) {
-            return Collections.unmodifiableList(skillRequirements);
-        } else {
-            return new ArrayList<>();
-        }
-    }
-
-    public List<BasicAttributeRequirementDefinition> getBasicRequirements() {
-        if (basicModifiers != null) {
-            return Collections.unmodifiableList(basicRequirements);
-        } else {
-            return new ArrayList<>();
-        }
-    }
-
-    public List<CombatAttributeRequirementDefinition> getCombatRequirements() {
-        if (combatModifiers != null) {
-            return Collections.unmodifiableList(combatRequirements);
-        } else {
-            return new ArrayList<>();
-        }
-    }
-
-    public List<GeneralAttributeRequirementDefinition> getGeneralRequirements() {
-        if (generalModifiers != null) {
-            return Collections.unmodifiableList(generalRequirements);
-        } else {
-            return new ArrayList<>();
-        }
-    }
-
     public List<SkillAttributeModifierDefinition> getSkillModifiers() {
         if (skillModifiers != null) {
             return Collections.unmodifiableList(skillModifiers);
@@ -156,6 +124,57 @@ public class ItemDefinition {
         }
         if (skillModifiers != null) {
             list.addAll(skillModifiers);
+        }
+
+        return Collections.unmodifiableList(list);
+    }
+
+    public List<SkillAttributeRequirementDefinition> getSkillRequirements() {
+        if (skillRequirements != null) {
+            return Collections.unmodifiableList(skillRequirements);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<BasicAttributeRequirementDefinition> getBasicRequirements() {
+        if (basicRequirements != null) {
+            return Collections.unmodifiableList(basicRequirements);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<CombatAttributeRequirementDefinition> getCombatRequirements() {
+        if (combatRequirements != null) {
+            return Collections.unmodifiableList(combatRequirements);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<GeneralAttributeRequirementDefinition> getGeneralRequirements() {
+        if (generalRequirements != null) {
+            return Collections.unmodifiableList(generalRequirements);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<AttributeRequirementDefinition> getAllRequirements() {
+        List<AttributeRequirementDefinition> list = new ArrayList<>();
+
+        if (basicRequirements != null) {
+            list.addAll(basicRequirements);
+        }
+        if (combatRequirements != null) {
+            list.addAll(combatRequirements);
+        }
+        if (generalRequirements != null) {
+            list.addAll(generalRequirements);
+        }
+        if (skillRequirements != null) {
+            list.addAll(skillRequirements);
         }
 
         return Collections.unmodifiableList(list);
