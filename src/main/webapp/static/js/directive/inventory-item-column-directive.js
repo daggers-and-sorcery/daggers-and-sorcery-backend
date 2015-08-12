@@ -28,7 +28,7 @@ module.exports = require('js/app.js').directive('inventoryListColumn', function 
                     if(response.data.data.success) {
                         $rootScope.$broadcast('profile-update-needed');
                     } else {
-                        //TODO: error happened
+                        $rootScope.$broadcast('error', {message: 'You can\'t equip that item!'});
                     }
                 });
             };

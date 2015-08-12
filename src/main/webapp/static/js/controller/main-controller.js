@@ -1,11 +1,25 @@
 'use strict';
 
-module.exports = require('js/app.js').controller('MainController', function ($scope, $rootScope, $state, $http) {
+module.exports = require('js/app.js').controller('MainController', function ($scope, $rootScope, $state, $http, $timeout) {
     //Get user info at start
     $http.get('/user/info').success(function (data, status, headers, config) {
         $rootScope.loggedIn = data.loggedIn === 'true';
         $state.go('home');
     });
+
+    $rootScope.$on('error', function (event, args) {
+        $scope.errorText = args.message;
+        $scope.errorVisible = true;
+
+        $scope.timeout = $timeout(function() {
+            $scope.errorVisible = false;
+        }, 5000);
+    });
+
+    $scope.closeError = function() {
+        $scope.errorVisible = false;
+        $timeout.cancel($scope.timeout);
+    }
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         //Logout the user

@@ -353,3 +353,14 @@ html, body, .container {
 .red-icon-color {
     fill:red;
 }
+
+/** Error **/
+.global-error {
+    position: fixed;
+    z-index: 999;
+    left: 50%;
+    margin-left: -300px;
+    width: 600px;
+    box-shadow: 2px 2px 1px RGBa(0,0,0, 0.035);
+    top: 50px;
+}
