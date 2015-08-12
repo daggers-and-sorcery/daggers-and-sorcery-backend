@@ -41,7 +41,7 @@
     <item:general-requirements>
         <item:requirement>
             <item:attribute>DEXTERITY</item:attribute>
-            <item:amount>10</item:amount>
+            <item:amount>100</item:amount>
         </item:requirement>
     </item:general-requirements>
 </item:item>

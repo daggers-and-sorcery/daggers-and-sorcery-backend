@@ -3,6 +3,7 @@ package com.morethanheroic.swords.equipment.domain;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.item.service.domain.AttributeRequirementDefinition;
 import com.morethanheroic.swords.item.service.domain.ItemDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -14,52 +15,50 @@ public class EquipmentEntity {
     private final EquipmentMapper equipmentMapper;
     private final EquipmentSlotMapper equipmentSlotMapper;
     private final GlobalAttributeCalculator globalAttributeCalculator;
+    private final ItemDefinitionManager itemDefinitionManager;
 
-    public EquipmentEntity(UserEntity userEntity, InventoryEntity inventoryEntity, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator) {
+    public EquipmentEntity(UserEntity userEntity, InventoryEntity inventoryEntity, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager) {
         this.userEntity = userEntity;
         this.inventoryEntity = inventoryEntity;
         this.equipmentMapper = equipmentMapper;
         this.equipmentSlotMapper = equipmentSlotMapper;
+        this.itemDefinitionManager = itemDefinitionManager;
         this.globalAttributeCalculator = globalAttributeCalculator;
     }
 
     public boolean equipItem(ItemDefinition item) {
         EquipmentSlot equipmentSlot  = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
+        int previousEquipment = getEquipmentOnSlot(equipmentSlot);
 
-        int previousEquipment = unequipItem(equipmentSlot);
+        unequipItem(equipmentSlot);
 
-        switch (equipmentSlot) {
+        if(canEquip(item)) {
+            equipWithoutCheck(item);
+            inventoryEntity.removeItem(item.getId(), 1);
+
+            return true;
+        } else {
+            //Reequip the item we had before if not met the requirements for the new item after removing this (the previous)
+            if(previousEquipment != 0) {
+                equipWithoutCheck(itemDefinitionManager.getItemDefinition(previousEquipment));
+                inventoryEntity.removeItem(previousEquipment, 1);
+            }
+        }
+
+        return false;
+    }
+
+    private void equipWithoutCheck(ItemDefinition item) {
+        switch (equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType())) {
             case WEAPON:
-                if(canEquip(item)) {
-                    equipmentMapper.equipWeapon(userEntity.getId(), item.getId());
-                    inventoryEntity.removeItem(item.getId(), 1);
-
-                    return true;
-                } else {
-                    //Reequip the item we had before
-                    if(previousEquipment != 0) {
-                        equipmentMapper.equipWeapon(userEntity.getId(), previousEquipment);
-                    }
-                }
+                equipmentMapper.equipWeapon(userEntity.getId(), item.getId());
                 break;
             case OFFHAND:
-                if(canEquip(item)) {
-                    equipmentMapper.equipOffhand(userEntity.getId(), item.getId());
-                    inventoryEntity.removeItem(item.getId(), 1);
-
-                    return true;
-                } else {
-                    //Reequip the item we had before
-                    if(previousEquipment != 0) {
-                        equipmentMapper.equipWeapon(userEntity.getId(), previousEquipment);
-                    }
-                }
+                equipmentMapper.equipOffhand(userEntity.getId(), item.getId());
                 break;
             default:
                 throw new IllegalArgumentException();
         }
-
-        return false;
     }
 
     public int unequipItem(EquipmentSlot slot) {
