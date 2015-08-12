@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class EquipmentResponseBuilder {
 
     public static final boolean SUCCESSFULL_REQUEST = true;
-    public static final boolean UNSUCCESSFULL_REQUEST = true;
+    public static final boolean UNSUCCESSFULL_REQUEST = false;
 
     public Response build(boolean result) {
         Response response = new Response();
