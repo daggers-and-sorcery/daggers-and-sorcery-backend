@@ -32,6 +32,22 @@ public class ItemDefinition {
     @XmlElement(name = "modifier")
     private ArrayList<SkillAttributeModifierDefinition> skillModifiers;
 
+    @XmlElementWrapper(name = "basic-requirements")
+    @XmlElement(name = "requirement")
+    private ArrayList<BasicAttributeRequirementDefinition> basicRequirements;
+
+    @XmlElementWrapper(name = "combat-requirements")
+    @XmlElement(name = "requirement")
+    private ArrayList<CombatAttributeRequirementDefinition> combatRequirements;
+
+    @XmlElementWrapper(name = "general-requirements")
+    @XmlElement(name = "requirement")
+    private ArrayList<GeneralAttributeRequirementDefinition> generalRequirements;
+
+    @XmlElementWrapper(name = "skill-requirements")
+    @XmlElement(name = "requirement")
+    private ArrayList<SkillAttributeRequirementDefinition> skillRequirements;
+
     public int getId() {
         return id;
     }
@@ -81,6 +97,38 @@ public class ItemDefinition {
     public List<GeneralAttributeModifierDefinition> getGeneralModifiers() {
         if (generalModifiers != null) {
             return Collections.unmodifiableList(generalModifiers);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<SkillAttributeRequirementDefinition> getSkillRequirements() {
+        if (skillModifiers != null) {
+            return Collections.unmodifiableList(skillRequirements);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<BasicAttributeRequirementDefinition> getBasicRequirements() {
+        if (basicModifiers != null) {
+            return Collections.unmodifiableList(basicRequirements);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<CombatAttributeRequirementDefinition> getCombatRequirements() {
+        if (combatModifiers != null) {
+            return Collections.unmodifiableList(combatRequirements);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<GeneralAttributeRequirementDefinition> getGeneralRequirements() {
+        if (generalModifiers != null) {
+            return Collections.unmodifiableList(generalRequirements);
         } else {
             return new ArrayList<>();
         }
