@@ -1,5 +1,6 @@
 package com.morethanheroic.swords;
 
+import com.morethanheroic.swords.common.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.common.resolver.UserEntityHandlerMethodArgumentResolver;
 import com.morethanheroic.swords.common.session.filter.SessionLoginFilter;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -17,6 +18,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import javax.sql.DataSource;
@@ -54,6 +56,16 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         registrationBean.setUrlPatterns(urlPatterns);
 
         return registrationBean;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(getRegenerationInterceptor());
+    }
+
+    @Bean
+    public RegenerationInterceptor getRegenerationInterceptor() {
+        return new RegenerationInterceptor();
     }
 
     @Override

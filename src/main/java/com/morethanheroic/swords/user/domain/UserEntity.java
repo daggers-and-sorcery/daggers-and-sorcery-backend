@@ -69,14 +69,27 @@ public class UserEntity {
     }
 
     public int getHealth() {
-        return 15;
+        return userDatabaseEntity.getHealth();
     }
 
     public int getMana() {
-        return 0;
+        return userDatabaseEntity.getMana();
     }
 
     public int getMovement() {
-        return 0;
+        return userDatabaseEntity.getMovement();
+    }
+
+    public Date getLastRegenerationDate() {
+        return userDatabaseEntity.getLastRegenerationDate();
+    }
+
+    public void regenerate(int health, int mana, int movement, Date date) {
+        userDatabaseEntity.setLastRegenerationDate(date);
+        userDatabaseEntity.setMana(mana);
+        userDatabaseEntity.setHealth(health);
+        userDatabaseEntity.setMovement(movement);
+
+        userMapper.updateRegeneration(userDatabaseEntity.getId(), health, mana, movement, date);
     }
 }

@@ -17,9 +17,13 @@ public class UserDatabaseEntity {
     private Race race;
     private Date registrationDate = new Date();
     private Date lastLoginDate = new Date();
+    private Date lastRegenerationDate = new Date();
     private int map;
     private int x;
     private int y;
+    private int health;
+    private int mana;
+    private int movement;
 
     //TODO: Transient for now! fix em
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
@@ -120,5 +124,37 @@ public class UserDatabaseEntity {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public Date getLastRegenerationDate() {
+        return lastRegenerationDate;
+    }
+
+    public void setLastRegenerationDate(Date lastRegenerationDate) {
+        this.lastRegenerationDate = lastRegenerationDate;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
+    public int getMovement() {
+        return movement;
+    }
+
+    public void setMovement(int movement) {
+        this.movement = movement;
     }
 }

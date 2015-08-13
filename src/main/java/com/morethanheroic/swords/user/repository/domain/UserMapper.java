@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
+
 public interface UserMapper {
 
     @Select("SELECT * FROM user WHERE username = #{param1} AND password = #{param2}")
@@ -19,6 +21,9 @@ public interface UserMapper {
 
     @Update("UPDATE user SET x = #{x}, y = #{y} WHERE id = #{userId}")
     void updatePosition(@Param("userId") int userId, @Param("x") int x,  @Param("y") int y);
+
+    @Update("UPDATE user SET lastRegenerationDate = #{date}, health = #{health}, mana = #{mana}, movement = #{movement} WHERE id = #{userId}")
+    void updateRegeneration(@Param("userId") int userId, @Param("health") int health, @Param("mana") int mana, @Param("movement") int movement, @Param("date") Date date);
 
     @Insert("INSERT INTO user SET username = #{username}, email = #{email}, password = #{password}, race = #{race}")
     void insert(UserDatabaseEntity userDatabaseEntity);

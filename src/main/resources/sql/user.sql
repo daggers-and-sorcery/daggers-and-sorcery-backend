@@ -11,8 +11,9 @@ CREATE TABLE `user` (
   `x` smallint(6) DEFAULT NULL,
   `y` smallint(6) DEFAULT NULL,
   `map` int(11) DEFAULT NULL,
+  `health` int(10) unsigned NOT NULL,
+  `mana` int(10) unsigned NOT NULL,
+  `movement` int(10) unsigned NOT NULL,
+  `lastRegenerationDate` datetime NOT NULL DEFAULT '1970-00-00 00:00:00',
   PRIMARY KEY (`id`,`email`,`username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
-
-insert into `user`(`id`,`email`,`username`,`password`,`race`,`registration_date`,`last_login_date`,`x`,`y`,`map`) values (2,'asdasd2@asd','asdasd2','5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8','HUMAN','2015-07-28 12:14:53','2015-08-03 15:53:28',null,null,null);
