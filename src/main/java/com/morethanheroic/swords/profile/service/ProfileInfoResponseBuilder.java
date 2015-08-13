@@ -119,6 +119,7 @@ public class ProfileInfoResponseBuilder {
         } else if (attribute.getAttributeType() == AttributeType.SKILL) {
             attributeResponse.put("actualXp", ((SkillAttributeData) attributeData).getActualXp());
             attributeResponse.put("nextLevelXp", ((SkillAttributeData) attributeData).getNextLevelXp());
+            attributeResponse.put("xpBetweenLevels", ((SkillAttributeData) attributeData).getXpBetweenLevels());
         }
 
         return attributeResponse;

@@ -16,21 +16,29 @@ public class SkillEntity {
     }
 
     public void addSkillXp(SkillAttribute attribute, long value) {
-        switch(attribute) {
+        switch (attribute) {
             case TWO_HANDED_CRUSHING_WEAPONS:
                 skillMapper.addTwoHandedCrushingWeaponsXp(user.getId(), value);
                 break;
             default:
-                throw new IllegalArgumentException("Unknown attribute: "+attribute);
+                throw new IllegalArgumentException("Unknown attribute: " + attribute);
         }
     }
 
     public int getSkillXp(SkillAttribute attribute) {
         SkillDatabaseEntity skills = skillMapper.getSkills(user.getId());
 
-        switch(attribute) {
+        switch (attribute) {
             case TWO_HANDED_CRUSHING_WEAPONS:
                 return skills.getTwoHandedCrushingWeaponsXp();
+            case ONE_HANDED_CRUSHING_WEAPONS:
+            case TWO_HANDED_AXES:
+            case ONE_HANDED_AXES:
+            case HERBLORE:
+            case WOODCUTTING:
+            case ALCHEMY:
+                //TODO: implement these
+                return 0;
             default:
                 throw new IllegalArgumentException("Unknown attribute: " + attribute);
         }
@@ -45,7 +53,7 @@ public class SkillEntity {
     }
 
     public long getSkillXpBetweenNextLevel(SkillAttribute attribute) {
-        return getSkillXpFromLevel(getSkillLevel(attribute)+1) - getSkillXpFromLevel(getSkillLevel(attribute));
+        return getSkillXpFromLevel(getSkillLevel(attribute) + 1) - getSkillXpFromLevel(getSkillLevel(attribute));
     }
 
     public long getSkillXpFromLevel(int level) {
@@ -57,7 +65,7 @@ public class SkillEntity {
     }
 
     public int getSkillLevelFromXp(long xp) {
-        if( xp < 32) {
+        if (xp < 32) {
             return 1;
         }
 
