@@ -90,8 +90,6 @@ public class UserEntity {
         userDatabaseEntity.setHealth(health);
         userDatabaseEntity.setMovement(movement);
 
-        System.out.println("UODATIONG!");
-        System.out.println(userDatabaseEntity.getId()+" "+health+" "+mana+" "+movement+" "+date);
         userMapper.updateRegeneration(userDatabaseEntity.getId(), health, mana, movement, date);
     }
 }

@@ -27,12 +27,8 @@ public class RegenerationManager {
 
     public void regenerate(UserEntity user) {
         long pastDuration = (new Date()).getTime() - user.getLastRegenerationDate().getTime();
-        System.out.println(pastDuration);
-        System.out.println(TimeUnit.MINUTES.toMillis(REGENERATION_INTERVAL));
         int passedMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(pastDuration);
         int durationToCalculate = (int) Math.floor(passedMinutes / REGENERATION_INTERVAL);
-
-        System.out.println("PASSED TURNS: "+durationToCalculate);
 
         if (durationToCalculate > 0) {
             user.regenerate(
@@ -45,11 +41,8 @@ public class RegenerationManager {
     }
 
     private int calculateNewMovement(UserEntity user, int duration) {
-        System.out.println("durr: "+duration);
         int newMovement = user.getMovement() + MOVEMENT_REGENERATION_UNIT * duration;
         int maxMovement = globalAttributeCalculator.calculateMaximumValue(user, BasicAttribute.MOVEMENT);
-
-        System.out.println("NEw: "+newMovement+" max: "+maxMovement);
 
         if (newMovement > maxMovement) {
             return maxMovement;
