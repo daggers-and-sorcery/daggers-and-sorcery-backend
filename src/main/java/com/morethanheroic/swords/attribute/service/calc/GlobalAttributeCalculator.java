@@ -6,6 +6,7 @@ import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.model.AttributeData;
+import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     private DefaultAttributeCalculator defaultAttributeCalculator;
     @Autowired
     private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
+    @Autowired
+    private SkillManager skillManager;
 
     public AttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
         if (attribute instanceof SkillAttribute) {
@@ -40,7 +43,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         int result = 0;
 
         if (attribute instanceof SkillAttribute) {
-            result += user.getSkills().getSkillLevel((SkillAttribute) attribute);
+            result += skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute);
         } else if (attribute instanceof GeneralAttribute) {
             result += attribute.getInitialValue();
             result += generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute);

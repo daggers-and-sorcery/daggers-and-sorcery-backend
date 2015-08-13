@@ -4,6 +4,8 @@ import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.model.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.skill.repository.domain.SkillMapper;
+import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
 
     @Autowired
     private AttributeModifierCalculator attributeModifierCalculator;
+
+    @Autowired
+    private SkillManager skillManager;
 
     @Override
     public GeneralAttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
@@ -42,7 +47,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
 
         for (SkillAttribute skill : SkillAttribute.values()) {
             if(skill.getIncrementedAttribute() == attribute) {
-                result += user.getSkills().getSkillLevel(skill) - STARTING_SKILL_LEVEL;
+                result += skillManager.getSkills(user).getSkillLevel(skill) - STARTING_SKILL_LEVEL;
             }
         }
 
@@ -54,7 +59,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
 
         for (SkillAttribute skill : SkillAttribute.values()) {
             if(skill.getIncrementedAttribute() == attribute) {
-                result += user.getSkills().getSkillLevel(skill) - STARTING_SKILL_LEVEL;
+                result += skillManager.getSkills(user).getSkillLevel(skill) - STARTING_SKILL_LEVEL;
             }
         }
 

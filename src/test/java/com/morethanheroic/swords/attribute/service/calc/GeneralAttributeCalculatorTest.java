@@ -1,14 +1,10 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
-import com.morethanheroic.swords.attribute.service.calc.GeneralAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.model.GeneralAttributeData;
-import com.morethanheroic.swords.attribute.service.calc.AttributeModifierCalculator;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.model.GeneralAttributeData;
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -38,7 +34,7 @@ public class GeneralAttributeCalculatorTest {
     public void testCalculateAttributeValue() {
         UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
-        user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
+        //user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
         UserEntity userEntity = new UserEntity(user);
 
@@ -58,7 +54,7 @@ public class GeneralAttributeCalculatorTest {
     public void testCalculatePointsToAttributeLevel() {
         UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
-        user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
+        //user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
         UserEntity userEntity = new UserEntity(user);
 
@@ -69,7 +65,7 @@ public class GeneralAttributeCalculatorTest {
     public void testCalculatePointsBonusBySkills() {
         UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
-        user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 100000);
+        //user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 100000);
 
         UserEntity userEntity = new UserEntity(user);
 

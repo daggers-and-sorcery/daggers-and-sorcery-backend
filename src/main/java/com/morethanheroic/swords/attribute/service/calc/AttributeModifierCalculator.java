@@ -9,6 +9,8 @@ import com.morethanheroic.swords.attribute.enums.AttributeModifierValueType;
 import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.attribute.model.PercentageAttributeModifierData;
 import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +28,14 @@ public class AttributeModifierCalculator {
     private CombatAttributeCalculator combatAttributeCalculato;
     @Autowired
     private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
+    @Autowired
+    private SkillManager skillManager;
 
     public AttributeModifierData[] calculateModifierData(UserEntity user, Attribute attribute) {
         ArrayList<AttributeModifierData> attributeModifierDataList = new ArrayList<>();
 
         if (attribute instanceof SkillAttribute) {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, user.getSkills().getSkillLevel((SkillAttribute) attribute)));
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute)));
         } else if (attribute instanceof GeneralAttribute) {
             attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.SKILL, AttributeModifierValueType.VALUE, generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute)));
             attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));

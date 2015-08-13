@@ -3,7 +3,6 @@ package com.morethanheroic.swords.user.repository.dao;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.skill.service.Skills;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -27,7 +26,6 @@ public class UserDatabaseEntity {
 
     //TODO: Transient for now! fix em
     private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
-    private Skills skills = new Skills();
 
     public UserDatabaseEntity() {
     }
@@ -96,11 +94,6 @@ public class UserDatabaseEntity {
     public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
     }
-
-    public Skills getSkills() {
-        return skills;
-    }
-
 
     public int getMap() {
         return map;

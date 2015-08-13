@@ -4,6 +4,7 @@ import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.model.AttributeData;
 import com.morethanheroic.swords.attribute.model.SkillAttributeData;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class SkillAttributeCalculator implements AttributeCalculator {
 
     @Autowired
     private AttributeModifierCalculator attributeModifierCalculator;
+
+    @Autowired
+    private SkillManager skillManager;
 
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
@@ -30,9 +34,9 @@ public class SkillAttributeCalculator implements AttributeCalculator {
         attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, localAttribute));
         attributeDataBuilder.setMaximum(globalAttributeCalculator.calculateMaximumValue(user, localAttribute));
         attributeDataBuilder.setAttributeModifierDataArray(attributeModifierCalculator.calculateModifierData(user, localAttribute));
-        attributeDataBuilder.setActualXp(user.getSkills().getSkillXp(localAttribute));
-        attributeDataBuilder.setNextLevelXp(user.getSkills().getSkillXpToNextLevel(localAttribute));
-        attributeDataBuilder.setXpBetweenLevels(user.getSkills().getSkillXpBetweenNextLevel(localAttribute));
+        attributeDataBuilder.setActualXp(skillManager.getSkills(user).getSkillXp(localAttribute));
+        attributeDataBuilder.setNextLevelXp(skillManager.getSkills(user).getSkillXpToNextLevel(localAttribute));
+        attributeDataBuilder.setXpBetweenLevels(skillManager.getSkills(user).getSkillXpBetweenNextLevel(localAttribute));
 
         return attributeDataBuilder.build();
     }

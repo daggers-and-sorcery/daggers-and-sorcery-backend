@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.user.domain;
 
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.skill.service.Skills;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
@@ -39,10 +38,6 @@ public class UserEntity {
 
     public Date getLastLoginDate() {
         return userDatabaseEntity.getLastLoginDate();
-    }
-
-    public Skills getSkills() {
-        return userDatabaseEntity.getSkills();
     }
 
     public int getMapId() {
