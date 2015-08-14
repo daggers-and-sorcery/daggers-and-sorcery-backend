@@ -6,9 +6,9 @@ import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
-import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculator;
+import com.morethanheroic.swords.combat.service.calc.turn.SimpleTurnCalculator;
+import com.morethanheroic.swords.combat.service.calc.turn.ZeroTurnCalculator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
@@ -24,20 +24,22 @@ import java.util.ArrayList;
 public class CombatCalculator {
 
     private final CombatMessageBuilder combatMessageBuilder;
-    private final TurnCalculator turnCalculator;
     private final DropCalculator dropCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final MapManager mapManager;
     private final InventoryManager inventoryManager;
+    private final SimpleTurnCalculator simpleTurnCalculator;
+    private final ZeroTurnCalculator zeroTurnCalculator;
 
     @Autowired
-    public CombatCalculator(TurnCalculator turnCalculator, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager) {
-        this.turnCalculator = turnCalculator;
+    public CombatCalculator(CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SimpleTurnCalculator simpleTurnCalculator, ZeroTurnCalculator zeroTurnCalculator) {
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.mapManager = mapManager;
         this.inventoryManager = inventoryManager;
+        this.simpleTurnCalculator = simpleTurnCalculator;
+        this.zeroTurnCalculator = zeroTurnCalculator;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
@@ -57,8 +59,18 @@ public class CombatCalculator {
 
     private void calculateFight(CombatResult result, Combat combat) {
         while (combat.getPlayerHealth() > 0 && combat.getMonsterHealth() > 0) {
-            turnCalculator.takeTurn(result, combat);
+            takeTurn(result, combat);
         }
+    }
+
+    public void takeTurn(CombatResult result, Combat combat) {
+        if (combat.getTurn() == 0) {
+            zeroTurnCalculator.takeTurn(result, combat);
+        } else {
+            simpleTurnCalculator.takeTurn(result, combat);
+        }
+
+        combat.increaseTurn();
     }
 
     private void endFight(CombatResult result, Combat combat, MapObjectDatabaseEntity spawn) {
