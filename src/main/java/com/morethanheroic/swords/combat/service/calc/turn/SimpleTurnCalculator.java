@@ -46,5 +46,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
                 monsterAttackCalculator.calculateMonsterAttack(result, combat);
             }
         }
+
+        combat.increaseTurn();
     }
 }

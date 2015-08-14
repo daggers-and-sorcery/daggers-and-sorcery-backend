@@ -10,5 +10,7 @@ public class ZeroTurnCalculator implements TurnCalculator {
     @Override
     public void takeTurn(CombatResult result, Combat combat) {
         //TODO zero turn initial stuff
+
+        combat.increaseTurn();
     }
 }
