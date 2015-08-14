@@ -24,6 +24,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @SpringBootApplication
 @Configuration
@@ -106,5 +107,10 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
         return sessionFactory.getObject();
+    }
+
+    @Bean
+    private Random getRandom() {
+        return new Random();
     }
 }

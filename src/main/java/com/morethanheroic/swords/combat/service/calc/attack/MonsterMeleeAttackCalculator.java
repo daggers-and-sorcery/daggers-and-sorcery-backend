@@ -11,22 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MonsterAttackCalculator {
+public class MonsterMeleeAttackCalculator implements AttackCalculator {
 
     private final CombatMessageBuilder combatMessageBuilder;
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final RandomUtil randomUtil;
 
     @Autowired
-    public MonsterAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator, RandomUtil randomUtil) {
+    public MonsterMeleeAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator, RandomUtil randomUtil) {
         this.combatMessageBuilder = combatMessageBuilder;
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.randomUtil = randomUtil;
     }
 
-    public void calculateMonsterAttack(CombatResult result, Combat combat) {
-        //Only if meele!
-        //TODO: ranging!
+    public void calculateAttack(CombatResult result, Combat combat) {
         if (randomUtil.calculateWithRandomResult(combat.getMonsterDefinition().getAttack()) > globalAttributeCalculator.calculateActualValue(combat.getUserEntity(), CombatAttribute.DEFENSE)) {
             int damage = randomUtil.calculateWithRandomResult(combat.getMonsterDefinition().getDamage());
 
