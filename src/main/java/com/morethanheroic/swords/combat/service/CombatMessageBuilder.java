@@ -51,6 +51,9 @@ public class CombatMessageBuilder {
     private final String[] NEW_TURN_LIST = new String[]{
             "New turn starts: ${turn}!"
     };
+    private final String[] REWARD_XP_LIST = new String[]{
+            "After the fight got ${amount} xp on ${skill}!"
+    };
 
     public CombatMessage buildFightInitialisationMessage(String monster) {
         CombatMessage combatMessage = new CombatMessage();
@@ -189,6 +192,16 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("turn", turn);
+        combatMessage.addData("message", NEW_TURN_LIST[random.nextInt(NEW_TURN_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildXpRewardMessage(String skillName, int amount) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("skill", skillName);
+        combatMessage.addData("amount", amount);
         combatMessage.addData("message", NEW_TURN_LIST[random.nextInt(NEW_TURN_LIST.length)]);
 
         return combatMessage;

@@ -1,10 +1,17 @@
 package com.morethanheroic.swords.combat.domain;
 
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class CombatResult {
 
     private LinkedList<CombatMessage> combatMessages = new LinkedList<>();
+
+    private EnumMap<SkillAttribute, Integer> rewardXp = new EnumMap<>(SkillAttribute.class);
 
     private Winner winner;
 
@@ -22,5 +29,17 @@ public class CombatResult {
 
     public void setWinner(Winner winner) {
         this.winner = winner;
+    }
+
+    public void addRewardXp(SkillAttribute skill, int amount) {
+        if (rewardXp.containsKey(skill)) {
+            rewardXp.put(skill, rewardXp.get(skill) + amount);
+        } else {
+            rewardXp.put(skill, amount);
+        }
+    }
+
+    public Map<SkillAttribute, Integer> getRewardXpMap() {
+        return Collections.unmodifiableMap(rewardXp);
     }
 }

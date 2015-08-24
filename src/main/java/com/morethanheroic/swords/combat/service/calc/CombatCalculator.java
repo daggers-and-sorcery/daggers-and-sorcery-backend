@@ -1,25 +1,27 @@
 package com.morethanheroic.swords.combat.service.calc;
 
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
-import com.morethanheroic.swords.combat.service.calc.turn.SimpleTurnCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculatorFactory;
-import com.morethanheroic.swords.combat.service.calc.turn.ZeroTurnCalculator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Service
 public class CombatCalculator {
@@ -30,15 +32,17 @@ public class CombatCalculator {
     private final MapManager mapManager;
     private final InventoryManager inventoryManager;
     private final TurnCalculatorFactory turnCalculatorFactory;
+    private final SkillManager skillManager;
 
     @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager) {
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.mapManager = mapManager;
         this.inventoryManager = inventoryManager;
+        this.skillManager = skillManager;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
@@ -58,7 +62,7 @@ public class CombatCalculator {
 
     private void calculateFight(CombatResult result, Combat combat) {
         while (combat.getPlayerHealth() > 0 && combat.getMonsterHealth() > 0) {
-            turnCalculatorFactory.getTurnCalculator(combat.getTurn()).takeTurn(result,combat);
+            turnCalculatorFactory.getTurnCalculator(combat.getTurn()).takeTurn(result, combat);
         }
     }
 
@@ -79,6 +83,15 @@ public class CombatCalculator {
             mapManager.getMap(combat.getUserEntity().getMapId()).removeSpawn(spawn.getId());
 
             //Add xp
+            SkillEntity skillEntity = skillManager.getSkills(combat.getUserEntity());
+
+            Map<SkillAttribute, Integer> rewardXpMap = result.getRewardXpMap();
+
+            for (Map.Entry<SkillAttribute, Integer> rewardEntity : rewardXpMap.entrySet()) {
+                result.addMessage(combatMessageBuilder.buildXpRewardMessage(rewardEntity.getKey().getName(), rewardEntity.getValue()));
+
+                skillEntity.addSkillXp(rewardEntity.getKey(), rewardEntity.getValue());
+            }
         }
     }
 }

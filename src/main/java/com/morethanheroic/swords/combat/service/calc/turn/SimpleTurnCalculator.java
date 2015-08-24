@@ -38,7 +38,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
     @Override
     public void takeTurn(CombatResult result, Combat combat) {
         result.addMessage(combatMessageBuilder.buildNewTurnMessage(combat.getTurn()));
-        
+
         if (initialisationCalculator.calculateInitialisation(combat) == CombatEntity.MONSTER) {
             //Monster attack first
             attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
