@@ -8,10 +8,25 @@ public class EquipmentSlotMapper {
 
     public EquipmentSlot getEquipmentSlotFromItemType(ItemType itemType) {
         switch (itemType) {
-            case ONE_HANDED_SWORD:
+            case TWO_HANDED_CRUSHING_WEAPONS:
+            case ONE_HANDED_CRUSHING_WEAPONS:
+            case TWO_HANDED_AXES:
+            case ONE_HANDED_AXES:
+            case THROWING_WEAPONS:
+            case LONGSWORDS:
+            case SHORTSWORDS:
+            case POLEARMS:
+            case DAGGERS:
+            case LONGBOWS:
+            case SHORTBOWS:
+            case CROSSBOWS:
                 return EquipmentSlot.WEAPON;
             case SHIELD:
                 return EquipmentSlot.OFFHAND;
+            case LIGHT_ARMOR:
+            case HEAVY_ARMOR:
+            case ROBE_ARMOR:
+                return EquipmentSlot.CHEST;
             default:
                 throw new IllegalArgumentException();
         }

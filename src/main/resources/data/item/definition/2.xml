@@ -4,6 +4,6 @@
            xsi:schemaLocation="http://www.swordsandsorcery.com/item ../schema.xsd">
     <item:id>2</item:id>
     <item:name>Laxi's epic 2</item:name>
-    <item:type>ONE_HANDED_SWORD</item:type>
+    <item:type>ONE_HANDED_AXES</item:type>
     <item:weight>5</item:weight>
 </item:item>

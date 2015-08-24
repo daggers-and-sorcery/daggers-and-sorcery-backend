@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.item.service.domain;
 
+import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.item.domain.ItemType;
 
 import javax.xml.bind.annotation.*;
@@ -70,8 +71,22 @@ public class ItemDefinition {
 
     public boolean isEquipment() {
         switch (type) {
+            case TWO_HANDED_CRUSHING_WEAPONS:
+            case ONE_HANDED_CRUSHING_WEAPONS:
+            case TWO_HANDED_AXES:
+            case ONE_HANDED_AXES:
+            case THROWING_WEAPONS:
+            case LONGSWORDS:
+            case SHORTSWORDS:
+            case POLEARMS:
+            case DAGGERS:
+            case LONGBOWS:
+            case SHORTBOWS:
+            case CROSSBOWS:
             case SHIELD:
-            case ONE_HANDED_SWORD:
+            case LIGHT_ARMOR:
+            case HEAVY_ARMOR:
+            case ROBE_ARMOR:
                 return true;
             default:
                 return false;

@@ -110,7 +110,7 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     }
 
     @Bean
-    private Random getRandom() {
+    public Random getRandom() {
         return new Random();
     }
 }

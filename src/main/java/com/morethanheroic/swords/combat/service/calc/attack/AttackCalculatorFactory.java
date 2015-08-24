@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
+import com.morethanheroic.swords.combat.service.calc.CombatEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,12 @@ public class AttackCalculatorFactory {
         this.playerRangedAttackCalculator = playerRangedAttackCalculator;
     }
 
-    public AttackCalculator getAttackCalculator(AttackingUnit attackingUnit, AttackType attackType) {
-        if(attackingUnit == AttackingUnit.MONSTER && attackType == AttackType.MELEE) {
+    public AttackCalculator getAttackCalculator(CombatEntity combatEntity, AttackType attackType) {
+        if(combatEntity == CombatEntity.MONSTER && attackType == AttackType.MELEE) {
             return monsterMeleeAttackCalculator;
-        } else if (attackingUnit == AttackingUnit.MONSTER && attackType == AttackType.RANGED) {
+        } else if (combatEntity == CombatEntity.MONSTER && attackType == AttackType.RANGED) {
             return monsterRangedAttackCalculator;
-        } else if (attackingUnit == AttackingUnit.HUMAN && attackType == AttackType.MELEE) {
+        } else if (combatEntity == CombatEntity.HUMAN && attackType == AttackType.MELEE) {
             return playerMeleeAttackCalculator;
         } else {
             return playerRangedAttackCalculator;
