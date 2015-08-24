@@ -15,6 +15,8 @@ public class MonsterDefinition {
     private int level;
     private int defense;
     private int attack;
+    private int ranged_attack;
+    private int ranged_damage;
     private int damage;
 
     @XmlElementWrapper(name = "droplist")
@@ -51,6 +53,14 @@ public class MonsterDefinition {
 
     public int getDamage() {
         return damage;
+    }
+
+    public int getRangedAttack() {
+        return ranged_attack;
+    }
+
+    public int getRangedDamage() {
+        return ranged_damage;
     }
 
     public List<DropDefinition> getDropDefinitions() {
