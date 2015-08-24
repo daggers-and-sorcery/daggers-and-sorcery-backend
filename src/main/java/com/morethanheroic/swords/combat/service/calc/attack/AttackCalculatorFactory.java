@@ -19,12 +19,12 @@ public class AttackCalculatorFactory {
         this.playerRangedAttackCalculator = playerRangedAttackCalculator;
     }
 
-    public AttackCalculator getAttackCalculator(AttackingUnit attackingUnit, AttackingType attackingType) {
-        if(attackingUnit == AttackingUnit.MONSTER && attackingType == AttackingType.MELEE) {
+    public AttackCalculator getAttackCalculator(AttackingUnit attackingUnit, AttackType attackType) {
+        if(attackingUnit == AttackingUnit.MONSTER && attackType == AttackType.MELEE) {
             return monsterMeleeAttackCalculator;
-        } else if (attackingUnit == AttackingUnit.MONSTER && attackingType == AttackingType.RANGED) {
+        } else if (attackingUnit == AttackingUnit.MONSTER && attackType == AttackType.RANGED) {
             return monsterRangedAttackCalculator;
-        } else if (attackingUnit == AttackingUnit.HUMAN && attackingType == AttackingType.MELEE) {
+        } else if (attackingUnit == AttackingUnit.HUMAN && attackType == AttackType.MELEE) {
             return playerMeleeAttackCalculator;
         } else {
             return playerRangedAttackCalculator;

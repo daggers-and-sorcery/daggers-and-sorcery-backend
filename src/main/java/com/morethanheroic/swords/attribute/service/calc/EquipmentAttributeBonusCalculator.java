@@ -30,10 +30,10 @@ public class EquipmentAttributeBonusCalculator {
         EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
 
         for(EquipmentSlot slot : EquipmentSlot.values()) {
-            int item = equipmentEntity.getEquipmentOnSlot(slot);
+            int item = equipmentEntity.getEquipmentIdOnSlot(slot);
 
             if(item != 0) {
-                ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(equipmentEntity.getEquipmentOnSlot(slot));
+                ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(equipmentEntity.getEquipmentIdOnSlot(slot));
 
                 for (AttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
                     if (modifierDefinition.getAttribute() == attribute) {
@@ -52,7 +52,7 @@ public class EquipmentAttributeBonusCalculator {
         EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
 
         for(EquipmentSlot slot : EquipmentSlot.values()) {
-            ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(equipmentEntity.getEquipmentOnSlot(slot));
+            ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(equipmentEntity.getEquipmentIdOnSlot(slot));
 
             for(AttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
                 attributeBonuses.addEquipmentBonus(modifierDefinition.getAttribute(), modifierDefinition.getAmount());

@@ -28,7 +28,7 @@ public class EquipmentEntity {
 
     public boolean equipItem(ItemDefinition item) {
         EquipmentSlot equipmentSlot  = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
-        int previousEquipment = getEquipmentOnSlot(equipmentSlot);
+        int previousEquipment = getEquipmentIdOnSlot(equipmentSlot);
 
         unequipItem(equipmentSlot);
 
@@ -96,7 +96,11 @@ public class EquipmentEntity {
         return true;
     }
 
-    public int getEquipmentOnSlot(EquipmentSlot slot) {
+    public ItemDefinition getEquipmentDefinitionOnSlot(EquipmentSlot slot) {
+        return itemDefinitionManager.getItemDefinition(getEquipmentIdOnSlot(slot));
+    }
+
+    public int getEquipmentIdOnSlot(EquipmentSlot slot) {
         switch (slot) {
             case WEAPON:
                 return equipmentMapper.getEquipment(userEntity.getId()).getWeapon();

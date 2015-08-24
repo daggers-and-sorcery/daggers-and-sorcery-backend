@@ -15,7 +15,6 @@
                             <xs:enumeration value="TWO_HANDED_AXES"/>
                             <xs:enumeration value="ONE_HANDED_AXES"/>
                             <xs:enumeration value="THROWING_WEAPONS"/>
-                            <xs:enumeration value="FISTFIGHT"/>
                             <xs:enumeration value="LONGSWORDS"/>
                             <xs:enumeration value="SHORTSWORDS"/>
                             <xs:enumeration value="POLEARMS"/>
@@ -26,8 +25,7 @@
                             <xs:enumeration value="LIGHT_ARMOR"/>
                             <xs:enumeration value="HEAVY_ARMOR"/>
                             <xs:enumeration value="ROBE_ARMOR"/>
-                            <xs:enumeration value="ARMORLESS_DEFENSE"/>
-                            <xs:enumeration value="SHIELD_DEFENSE"/>
+                            <xs:enumeration value="SHIELD"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>

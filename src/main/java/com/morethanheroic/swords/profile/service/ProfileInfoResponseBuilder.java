@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.profile.service;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.enums.AttributeType;
 import com.morethanheroic.swords.attribute.model.AttributeData;
@@ -64,7 +63,7 @@ public class ProfileInfoResponseBuilder {
         EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
-            int equipment = equipmentEntity.getEquipmentOnSlot(slot);
+            int equipment = equipmentEntity.getEquipmentIdOnSlot(slot);
 
             HashMap<String, Object> slotData = new HashMap<>();
 
