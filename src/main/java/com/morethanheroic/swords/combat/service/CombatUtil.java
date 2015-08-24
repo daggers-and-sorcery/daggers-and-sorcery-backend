@@ -1,12 +1,15 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.item.domain.ItemType;
+import com.morethanheroic.swords.item.service.domain.ItemDefinition;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.skill.service.calc.SkillTypeCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +19,7 @@ public class CombatUtil {
     private final SkillTypeCalculator skillTypeCalculator;
     private final EquipmentManager equipmentManager;
 
+    @Autowired
     public CombatUtil(SkillManager skillManager, SkillTypeCalculator skillTypeCalculator, EquipmentManager equipmentManager) {
         this.skillManager = skillManager;
         this.skillTypeCalculator = skillTypeCalculator;
@@ -23,26 +27,62 @@ public class CombatUtil {
     }
 
     public int getUserWeaponSkillLevel(UserEntity user) {
+        SkillAttribute skill = getUserWeaponSkillType(user);
+
+        if(skill == null) {
+            return skillManager.getSkills(user).getSkillLevel(SkillAttribute.FISTFIGHT);
+        }
+
         return skillManager.getSkills(user).getSkillLevel(getUserWeaponSkillType(user));
     }
 
     public int getUserArmorSkillLevel(UserEntity user) {
+        SkillAttribute skill = getUserArmorSkillType(user);
+
+        if(skill == null) {
+            return skillManager.getSkills(user).getSkillLevel(SkillAttribute.ARMORLESS_DEFENSE);
+        }
+
         return skillManager.getSkills(user).getSkillLevel(getUserArmorSkillType(user));
     }
 
     public SkillAttribute getUserArmorSkillType(UserEntity user) {
-        return skillTypeCalculator.getSkillFromItemType(getUserArmorType(user));
+        ItemType itemType = getUserArmorType(user);
+
+        if(itemType == null) {
+            return null;
+        }
+
+        return skillTypeCalculator.getSkillFromItemType(itemType);
     }
 
     public SkillAttribute getUserWeaponSkillType(UserEntity user) {
-        return skillTypeCalculator.getSkillFromItemType(getUserWeaponType(user));
+        ItemType itemType = getUserWeaponType(user);
+
+        if(itemType == null) {
+            return null;
+        }
+
+        return skillTypeCalculator.getSkillFromItemType(itemType);
     }
 
-    private ItemType getUserWeaponType(UserEntity user) {
-        return equipmentManager.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON).getType();
+    public ItemType getUserWeaponType(UserEntity user) {
+        ItemDefinition itemDefinition = equipmentManager.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
+
+        if(itemDefinition == null) {
+            return null;
+        }
+
+        return itemDefinition.getType();
     }
 
-    private ItemType getUserArmorType(UserEntity user) {
-        return equipmentManager.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.CHEST).getType();
+    public ItemType getUserArmorType(UserEntity user) {
+        ItemDefinition itemDefinition = equipmentManager.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.CHEST);
+
+        if(itemDefinition == null) {
+            return null;
+        }
+
+        return itemDefinition.getType();
     }
 }

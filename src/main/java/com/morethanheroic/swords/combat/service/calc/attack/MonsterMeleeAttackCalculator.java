@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
@@ -8,6 +9,7 @@ import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatUtil;
 import com.morethanheroic.swords.combat.service.calc.RandomUtil;
+import com.morethanheroic.swords.item.domain.ItemType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,10 @@ public class MonsterMeleeAttackCalculator implements AttackCalculator {
     }
 
     private void addDefenseXp(CombatResult result, Combat combat, int amount) {
-        result.addRewardXp(combatUtil.getUserArmorSkillType(combat.getUserEntity()), amount);
+        if(combatUtil.getUserArmorType(combat.getUserEntity()) != null) {
+            result.addRewardXp(combatUtil.getUserArmorSkillType(combat.getUserEntity()), amount);
+        } else {
+            result.addRewardXp(SkillAttribute.ARMORLESS_DEFENSE, amount);
+        }
     }
 }

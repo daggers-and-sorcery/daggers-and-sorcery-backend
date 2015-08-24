@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
@@ -58,6 +59,10 @@ public class MonsterRangedAttackCalculator implements AttackCalculator {
     }
 
     private void addDefenseXp(CombatResult result, Combat combat, int amount) {
-        result.addRewardXp(combatUtil.getUserArmorSkillType(combat.getUserEntity()), amount);
+        if(combatUtil.getUserArmorType(combat.getUserEntity()) != null) {
+            result.addRewardXp(combatUtil.getUserArmorSkillType(combat.getUserEntity()), amount);
+        } else {
+            result.addRewardXp(SkillAttribute.ARMORLESS_DEFENSE, amount);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
@@ -51,6 +52,10 @@ public class PlayerMeleeAttackCalculator implements AttackCalculator {
     }
 
     private void addAttackXp(CombatResult result, Combat combat, int amount) {
-        result.addRewardXp(combatUtil.getUserWeaponSkillType(combat.getUserEntity()), amount);
+        if (combatUtil.getUserWeaponType(combat.getUserEntity()) != null) {
+            result.addRewardXp(combatUtil.getUserWeaponSkillType(combat.getUserEntity()), amount);
+        } else {
+            result.addRewardXp(SkillAttribute.FISTFIGHT, amount);
+        }
     }
 }
