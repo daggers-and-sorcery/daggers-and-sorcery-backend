@@ -1,3 +1,28 @@
-<div ng-show="$root.loggedIn" class="navbar-button-holder">
-    <span class="btn btn-default" ui-sref="logout">Logout</span>
+<div ng-show="$root.user.loggedIn" class="navbar-button-holder" style="width: 600px;">
+    <div class="row">
+        <div class="col-md-3 col-sm-3 col-lg-3">
+            <span><svg-image src="'/icon/heart.svg'" class="progress-icon"/></span>
+            <span class="progress-info">{{$root.user.life}} / {{$root.user.max_life}}</span>
+            <div class="progress">
+                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: {{$root.user.life / ($root.user.max_life / 100)}}%"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-lg-3">
+            <span><svg-image src="'/icon/magic.svg'" class="progress-icon"/></span>
+            <span class="progress-info">{{$root.user.mana}} / {{$root.user.max_mana}}</span>
+            <div class="progress">
+                <div class="progress-bar progress-bar-info" role="progressbar" style="width: {{$root.user.mana / ($root.user.max_mana / 100)}}%"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-lg-3">
+            <span><svg-image src="'/icon/steps.svg'" class="progress-icon"/></span>
+            <span class="progress-info">{{$root.user.movement}} / {{$root.user.max_movement}}</span>
+            <div class="progress">
+                <div class="progress-bar progress-bar-warning" role="progressbar" style="width: {{$root.user.movement / ($root.user.max_movement / 100)}}%"></div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-lg-3" style="text-align:right;">
+            <span class="btn btn-default" ui-sref="logout">Logout</span>
+        </div>
+    </div>
 </div>

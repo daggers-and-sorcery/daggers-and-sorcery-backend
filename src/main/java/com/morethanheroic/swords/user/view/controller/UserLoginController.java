@@ -1,5 +1,10 @@
 package com.morethanheroic.swords.user.view.controller;
 
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
+import com.morethanheroic.swords.attribute.domain.CombatAttribute;
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import com.morethanheroic.swords.common.session.SessionAttributeType;
@@ -15,11 +20,16 @@ import java.util.HashMap;
 @RestController
 public class UserLoginController {
 
-    @Autowired
-    private UserMapper userRepository;
+    private final UserMapper userRepository;
+    private final ShaPasswordEncoder shaPasswordEncoder;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
-    private ShaPasswordEncoder shaPasswordEncoder;
+    private UserLoginController(UserMapper userMapper, ShaPasswordEncoder shaPasswordEncoder, GlobalAttributeCalculator globalAttributeCalculator) {
+        this.userRepository = userMapper;
+        this.shaPasswordEncoder = shaPasswordEncoder;
+        this.globalAttributeCalculator = globalAttributeCalculator;
+    }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public HashMap<String, String> login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
@@ -42,10 +52,20 @@ public class UserLoginController {
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
-    public HashMap<String, String> info(HttpSession session) {
-        HashMap<String, String> response = new HashMap<>();
+    public Response info(UserEntity user, HttpSession session) {
+        Response response = new Response();
 
-        response.put("loggedIn", String.valueOf(session.getAttribute(SessionAttributeType.USER_ID) != null));
+        if(user != null) {
+            response.setData("loggedIn", true);
+            response.setData("life", globalAttributeCalculator.calculateActualValue(user, CombatAttribute.LIFE));
+            response.setData("max_life", globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.LIFE));
+            response.setData("mana", globalAttributeCalculator.calculateActualValue(user, CombatAttribute.MANA));
+            response.setData("max_mana", globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.MANA));
+            response.setData("movement", globalAttributeCalculator.calculateActualValue(user, BasicAttribute.MOVEMENT));
+            response.setData("max_movement", globalAttributeCalculator.calculateMaximumValue(user, BasicAttribute.MOVEMENT));
+        } else {
+            response.setData("loggedIn", false);
+        }
 
         return response;
     }

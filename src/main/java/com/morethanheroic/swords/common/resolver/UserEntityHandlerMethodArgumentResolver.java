@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.common.resolver;
 
-import com.morethanheroic.swords.user.service.UserManager;
-import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.common.session.SessionAttributeType;
+import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.service.UserManager;
 import org.apache.catalina.session.StandardSessionFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
@@ -23,6 +23,10 @@ public class UserEntityHandlerMethodArgumentResolver implements HandlerMethodArg
 
     @Override
     public UserEntity resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        if (((StandardSessionFacade) webRequest.getSessionMutex()).getAttribute(SessionAttributeType.USER_ID) == null) {
+            return null;
+        }
+
         return userManager.getUser((int) ((StandardSessionFacade) webRequest.getSessionMutex()).getAttribute(SessionAttributeType.USER_ID));
     }
 }

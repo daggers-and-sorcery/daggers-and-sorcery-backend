@@ -1,9 +1,13 @@
 'use strict';
 
 module.exports = require('js/app.js').controller('MainController', function ($scope, $rootScope, $state, $http, $timeout) {
+    $rootScope.user = {
+        loggedIn: false
+    }
+
     //Get user info at start
     $http.get('/user/info').success(function (data, status, headers, config) {
-        $rootScope.loggedIn = data.loggedIn === 'true';
+        $rootScope.user = data.data;
         $state.go('home');
     });
 
@@ -25,20 +29,20 @@ module.exports = require('js/app.js').controller('MainController', function ($sc
         //Logout the user
         if (toState.name === 'logout') {
             $http.get('/user/logout').success(function (data, status, headers, config) {
-                $rootScope.loggedIn = false;
+                $rootScope.user.loggedIn = false;
                 $state.go('index');
             });
             event.preventDefault();
         }
 
         //Always redirect to index if not logged in
-        if (!(toState.hasOwnProperty('data') && toState.data.hasOwnProperty('visibleWhenNotLoggedIn') && toState.data.visibleWhenNotLoggedIn) && !$rootScope.loggedIn && toState.name !== 'index') {
+        if (!(toState.hasOwnProperty('data') && toState.data.hasOwnProperty('visibleWhenNotLoggedIn') && toState.data.visibleWhenNotLoggedIn) && !$rootScope.user.loggedIn && toState.name !== 'index') {
             event.preventDefault();
             $state.go('index');
         }
 
         //If logged in redirect index to home
-        if (toState.name === 'index' && $rootScope.loggedIn) {
+        if (toState.name === 'index' && $rootScope.user.loggedIn) {
             event.preventDefault();
             $state.go('home');
         }

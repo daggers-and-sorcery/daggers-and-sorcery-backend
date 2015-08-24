@@ -13,8 +13,10 @@ module.exports = {
 
                 $http.post('/user/login', $.param($scope.user), requestConfig).success(function (data, status, headers, config) {
                     if (data.success === 'true') {
-                        $rootScope.loggedIn = true;
-                        $state.go('home');
+                        $http.get('/user/info').success(function (data, status, headers, config) {
+                            $rootScope.user = data.data;
+                            $state.go('home');
+                        });
                     } else {
                         $scope.error = data.error;
                     }
