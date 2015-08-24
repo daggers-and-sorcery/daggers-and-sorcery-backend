@@ -45,7 +45,7 @@ public class MonsterMeleeAttackCalculator implements AttackCalculator {
     private void dealDamage(CombatResult result, Combat combat) {
         int damage = randomUtil.calculateWithRandomResult(combat.getMonsterDefinition().getDamage());
 
-        addDefenseXp(result, combat, damage * 3);
+        addDefenseXp(result, combat, damage * 2);
 
         combat.decreasePlayerHealth(damage);
 
@@ -53,7 +53,7 @@ public class MonsterMeleeAttackCalculator implements AttackCalculator {
     }
 
     private void dealMiss(CombatResult result, Combat combat) {
-        addDefenseXp(result, combat, combatUtil.getUserArmorSkillLevel(combat.getUserEntity()) * 3);
+        addDefenseXp(result, combat, combatUtil.getUserArmorSkillLevel(combat.getUserEntity()));
 
         result.addMessage(combatMessageBuilder.buildMonsterMissMessage(combat.getMonsterDefinition().getName()));
     }

@@ -45,7 +45,7 @@ public class PlayerRangedAttackCalculator implements AttackCalculator {
     private void dealDamage(CombatResult result, Combat combat) {
         int damage = randomUtil.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserEntity(), CombatAttribute.RANGED_DAMAGE));
 
-        addAttackXp(result, combat, damage * 3);
+        addAttackXp(result, combat, damage * 2);
 
         combat.decreaseMonsterHealth(damage);
 

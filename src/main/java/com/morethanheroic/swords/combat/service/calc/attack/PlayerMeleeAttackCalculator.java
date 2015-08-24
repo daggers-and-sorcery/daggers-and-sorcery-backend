@@ -44,7 +44,7 @@ public class PlayerMeleeAttackCalculator implements AttackCalculator {
     private void dealDamage(CombatResult result, Combat combat) {
         int damage = randomUtil.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserEntity(), CombatAttribute.DAMAGE));
 
-        addAttackXp(result, combat, damage * 3);
+        addAttackXp(result, combat, damage * 2);
 
         combat.decreaseMonsterHealth(damage);
 

@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.combat.domain.CombatMessage;
+import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -200,9 +201,9 @@ public class CombatMessageBuilder {
     public CombatMessage buildXpRewardMessage(String skillName, int amount) {
         CombatMessage combatMessage = new CombatMessage();
 
-        combatMessage.addData("skill", skillName);
+        combatMessage.addData("skill", WordUtils.capitalize(skillName.replace("_", " ").toLowerCase()));
         combatMessage.addData("amount", amount);
-        combatMessage.addData("message", NEW_TURN_LIST[random.nextInt(NEW_TURN_LIST.length)]);
+        combatMessage.addData("message", REWARD_XP_LIST[random.nextInt(REWARD_XP_LIST.length)]);
 
         return combatMessage;
     }
