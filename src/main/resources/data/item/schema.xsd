@@ -10,8 +10,24 @@
                 <xs:element name="type" minOccurs="1">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:enumeration value="ONE_HANDED_SWORD"/>
-                            <xs:enumeration value="SHIELD"/>
+                            <xs:enumeration value="TWO_HANDED_CRUSHING_WEAPONS"/>
+                            <xs:enumeration value="ONE_HANDED_CRUSHING_WEAPONS"/>
+                            <xs:enumeration value="TWO_HANDED_AXES"/>
+                            <xs:enumeration value="ONE_HANDED_AXES"/>
+                            <xs:enumeration value="THROWING_WEAPONS"/>
+                            <xs:enumeration value="FISTFIGHT"/>
+                            <xs:enumeration value="LONGSWORDS"/>
+                            <xs:enumeration value="SHORTSWORDS"/>
+                            <xs:enumeration value="POLEARMS"/>
+                            <xs:enumeration value="DAGGERS"/>
+                            <xs:enumeration value="LONGBOWS"/>
+                            <xs:enumeration value="SHORTBOWS"/>
+                            <xs:enumeration value="CROSSBOWS"/>
+                            <xs:enumeration value="LIGHT_ARMOR"/>
+                            <xs:enumeration value="HEAVY_ARMOR"/>
+                            <xs:enumeration value="ROBE_ARMOR"/>
+                            <xs:enumeration value="ARMORLESS_DEFENSE"/>
+                            <xs:enumeration value="SHIELD_DEFENSE"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
