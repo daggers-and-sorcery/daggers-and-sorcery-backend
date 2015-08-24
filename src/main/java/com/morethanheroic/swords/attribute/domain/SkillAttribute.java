@@ -18,9 +18,9 @@ public enum SkillAttribute implements Attribute {
     LONGBOWS(GeneralAttribute.DEXTERITY),
     SHORTBOWS(GeneralAttribute.DEXTERITY),
     CROSSBOWS(GeneralAttribute.DEXTERITY),
-    LIGHT_ARMOR(GeneralAttribute.ENDURANCE),
-    HEAVY_ARMOR(GeneralAttribute.ENDURANCE),
-    ROBE_ARMOR(GeneralAttribute.ENDURANCE),
+    LIGHT_ARMOR(GeneralAttribute.DEXTERITY),
+    HEAVY_ARMOR(GeneralAttribute.STRENGTH),
+    ROBE_ARMOR(GeneralAttribute.INTELLIGENCE),
     ARMORLESS_DEFENSE(GeneralAttribute.ENDURANCE),
     SHIELD_DEFENSE(GeneralAttribute.STRENGTH);
 
