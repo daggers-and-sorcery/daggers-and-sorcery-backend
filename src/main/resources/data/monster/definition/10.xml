@@ -11,6 +11,8 @@
     <monster:defense>1</monster:defense>
     <monster:damage>1</monster:damage>
     <monster:attack>1</monster:attack>
+    <monster:aiming>1</monster:aiming>
+    <monster:ranged-damage>1</monster:ranged-damage>
     <monster:droplist>
         <monster:drop>
             <monster:item>1</monster:item>

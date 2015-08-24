@@ -26,7 +26,7 @@ public class MonsterRangedAttackCalculator implements AttackCalculator {
 
     @Override
     public void calculateAttack(CombatResult result, Combat combat) {
-        if (randomUtil.calculateWithRandomResult(combat.getMonsterDefinition().getRangedAttack()) > globalAttributeCalculator.calculateActualValue(combat.getUserEntity(), CombatAttribute.DEFENSE)) {
+        if (randomUtil.calculateWithRandomResult(combat.getMonsterDefinition().getAiming()) > globalAttributeCalculator.calculateActualValue(combat.getUserEntity(), CombatAttribute.DEFENSE)) {
             int damage = randomUtil.calculateWithRandomResult(combat.getMonsterDefinition().getRangedDamage());
 
             combat.decreasePlayerHealth(damage);

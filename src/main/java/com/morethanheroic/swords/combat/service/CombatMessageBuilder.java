@@ -17,6 +17,10 @@ public class CombatMessageBuilder {
             "You hit ${monster} causing ${damage} points of damage.",
             "You hit the ${monster} with a sudden attack causing ${damage} damage"
     };
+    private final String[] RANGED_DAMAGE_TO_MONSTER_MESSANGE_LIST = new String[]{
+            "You shot ${monster} causing ${damage} points of damage.",
+            "You shot the ${monster} with a sudden attack causing ${damage} damage"
+    };
     private final String[] DAMAGE_TO_PLAYER_MESSANGE_LIST = new String[]{
             "${monster} attacked you and successfully dealt ${damage} points of damage."
     };
@@ -30,6 +34,9 @@ public class CombatMessageBuilder {
             "${monster} shot at you but missed."
     };
     private final String[] PLAYER_MISS_MESSANGE_LIST = new String[]{
+            "You attacked ${monster} but missed."
+    };
+    private final String[] PLAYER_RANGED_MISS_MESSANGE_LIST = new String[]{
             "You attacked ${monster} but missed."
     };
     private final String[] MONSTER_DIE_MESSANGE_LIST = new String[]{
@@ -59,6 +66,18 @@ public class CombatMessageBuilder {
         combatMessage.addData("icon", "blood");
         combatMessage.addData("icon_color", "blue");
         combatMessage.addData("message", DAMAGE_TO_MONSTER_MESSANGE_LIST[random.nextInt(DAMAGE_TO_MONSTER_MESSANGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildRangedDamageToMonsterMessage(String monster, int damage) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("monster", monster);
+        combatMessage.addData("damage", damage);
+        combatMessage.addData("icon", "blood");
+        combatMessage.addData("icon_color", "blue");
+        combatMessage.addData("message", RANGED_DAMAGE_TO_MONSTER_MESSANGE_LIST[random.nextInt(RANGED_DAMAGE_TO_MONSTER_MESSANGE_LIST.length)]);
 
         return combatMessage;
     }
@@ -116,6 +135,17 @@ public class CombatMessageBuilder {
         combatMessage.addData("icon", "shield");
         combatMessage.addData("icon_color", "blue");
         combatMessage.addData("message", PLAYER_MISS_MESSANGE_LIST[random.nextInt(PLAYER_MISS_MESSANGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildPlayerRangedMissMessage(String monster) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("monster", monster);
+        combatMessage.addData("icon", "shield");
+        combatMessage.addData("icon_color", "blue");
+        combatMessage.addData("message", PLAYER_RANGED_MISS_MESSANGE_LIST[random.nextInt(PLAYER_RANGED_MISS_MESSANGE_LIST.length)]);
 
         return combatMessage;
     }

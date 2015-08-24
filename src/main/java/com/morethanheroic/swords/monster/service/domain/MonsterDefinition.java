@@ -15,8 +15,9 @@ public class MonsterDefinition {
     private int level;
     private int defense;
     private int attack;
-    private int ranged_attack;
-    private int ranged_damage;
+    private int aiming;
+    @XmlElement(name = "ranged-damage")
+    private int rangedDamage;
     private int damage;
 
     @XmlElementWrapper(name = "droplist")
@@ -32,7 +33,7 @@ public class MonsterDefinition {
     }
 
     public int getHealth() {
-        return  health;
+        return health;
     }
 
     public int getInitiation() {
@@ -55,12 +56,12 @@ public class MonsterDefinition {
         return damage;
     }
 
-    public int getRangedAttack() {
-        return ranged_attack;
+    public int getAiming() {
+        return aiming;
     }
 
     public int getRangedDamage() {
-        return ranged_damage;
+        return rangedDamage;
     }
 
     public List<DropDefinition> getDropDefinitions() {
