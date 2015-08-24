@@ -15,6 +15,14 @@
                 <xs:element name="damage" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="aiming" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="ranged-damage" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="attack-type" minOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="MELEE"/>
+                            <xs:enumeration value="RANGED"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
                 <xs:element name="droplist" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>

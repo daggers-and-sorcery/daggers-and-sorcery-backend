@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.monster.service.domain;
 
+import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
+
 import javax.xml.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +21,8 @@ public class MonsterDefinition {
     @XmlElement(name = "ranged-damage")
     private int rangedDamage;
     private int damage;
+    @XmlElement(name = "attack-type")
+    private AttackType attackType;
 
     @XmlElementWrapper(name = "droplist")
     @XmlElement(name = "drop")
@@ -62,6 +66,10 @@ public class MonsterDefinition {
 
     public int getRangedDamage() {
         return rangedDamage;
+    }
+
+    public AttackType getAttackType() {
+        return attackType;
     }
 
     public List<DropDefinition> getDropDefinitions() {

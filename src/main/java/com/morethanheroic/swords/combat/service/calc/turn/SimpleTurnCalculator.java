@@ -37,7 +37,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
         //TODO: messages
         if (initialisationCalculator.calculateInitialisation(combat) == CombatEntity.MONSTER) {
             //Monster attack first
-            attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, AttackType.MELEE).calculateAttack(result, combat);
+            attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
             if (combat.getPlayerHealth() > 0) {
                 attackCalculatorFactory.getAttackCalculator(CombatEntity.HUMAN, calculateUserAttackType(combat.getUserEntity())).calculateAttack(result, combat);
             }
@@ -45,7 +45,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
             //Player attack first
             attackCalculatorFactory.getAttackCalculator(CombatEntity.HUMAN, calculateUserAttackType(combat.getUserEntity())).calculateAttack(result, combat);
             if (combat.getMonsterHealth() > 0) {
-                attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, AttackType.MELEE).calculateAttack(result, combat);
+                attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
             }
         }
 
