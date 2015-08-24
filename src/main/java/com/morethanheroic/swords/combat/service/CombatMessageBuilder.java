@@ -48,6 +48,9 @@ public class CombatMessageBuilder {
     private final String[] DROP_MESSANGE_LIST = new String[]{
             "Found ${amount} ${item} after looting the opponents body."
     };
+    private final String[] NEW_TURN_LIST = new String[]{
+            "New turn starts: ${turn}!"
+    };
 
     public CombatMessage buildFightInitialisationMessage(String monster) {
         CombatMessage combatMessage = new CombatMessage();
@@ -178,6 +181,15 @@ public class CombatMessageBuilder {
         combatMessage.addData("item", itemName);
         combatMessage.addData("amount", amount);
         combatMessage.addData("message", DROP_MESSANGE_LIST[random.nextInt(DROP_MESSANGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildNewTurnMessage(int turn) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("turn", turn);
+        combatMessage.addData("message", NEW_TURN_LIST[random.nextInt(NEW_TURN_LIST.length)]);
 
         return combatMessage;
     }

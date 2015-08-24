@@ -4,6 +4,7 @@ import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntity;
 import com.morethanheroic.swords.combat.service.calc.attack.*;
@@ -23,18 +24,21 @@ public class SimpleTurnCalculator implements TurnCalculator {
     private final AttackTypeCalculator attackTypeCalculator;
     private final EquipmentManager equipmentManager;
     private final InitialisationCalculator initialisationCalculator;
+    private final CombatMessageBuilder combatMessageBuilder;
 
     @Autowired
-    public SimpleTurnCalculator(AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculator attackTypeCalculator, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator) {
+    public SimpleTurnCalculator(AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculator attackTypeCalculator, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder) {
         this.attackCalculatorFactory = attackCalculatorFactory;
         this.attackTypeCalculator = attackTypeCalculator;
         this.equipmentManager = equipmentManager;
         this.initialisationCalculator = initialisationCalculator;
+        this.combatMessageBuilder = combatMessageBuilder;
     }
 
     @Override
     public void takeTurn(CombatResult result, Combat combat) {
-        //TODO: messages
+        result.addMessage(combatMessageBuilder.buildNewTurnMessage(combat.getTurn()));
+        
         if (initialisationCalculator.calculateInitialisation(combat) == CombatEntity.MONSTER) {
             //Monster attack first
             attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
