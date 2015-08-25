@@ -20,5 +20,8 @@ CREATE TABLE `skills` (
   `robeArmorXp` bigint(20) unsigned NOT NULL,
   `armorlessDefenseXp` bigint(20) unsigned NOT NULL,
   `shieldDefenseXp` bigint(20) unsigned NOT NULL,
+  `staffsXp` bigint(20) unsigned NOT NULL,
+  `wandsXp` bigint(20) unsigned NOT NULL,
+  `spectresXp` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`userId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

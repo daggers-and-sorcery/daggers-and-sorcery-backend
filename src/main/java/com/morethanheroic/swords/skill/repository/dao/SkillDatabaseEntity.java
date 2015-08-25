@@ -20,6 +20,9 @@ public class SkillDatabaseEntity {
     private int robeArmorXp;
     private int armorlessDefenseXp;
     private int shieldDefenseXp;
+    private int staffsXp;
+    private int wandsXp;
+    private int spectresXp;
 
     public int getTwoHandedCrushingWeaponsXp() {
         return twoHandedCrushingWeaponsXp;
@@ -163,5 +166,29 @@ public class SkillDatabaseEntity {
 
     public void setShieldDefenseXp(int shieldDefenseXp) {
         this.shieldDefenseXp = shieldDefenseXp;
+    }
+
+    public int getStaffsXp() {
+        return staffsXp;
+    }
+
+    public void setStaffsXp(int staffsXp) {
+        this.staffsXp = staffsXp;
+    }
+
+    public int getWandsXp() {
+        return wandsXp;
+    }
+
+    public void setWandsXp(int wandsXp) {
+        this.wandsXp = wandsXp;
+    }
+
+    public int getSpectresXp() {
+        return spectresXp;
+    }
+
+    public void setSpectresXp(int spectresXp) {
+        this.spectresXp = spectresXp;
     }
 }

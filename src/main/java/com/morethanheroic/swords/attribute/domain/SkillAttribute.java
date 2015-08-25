@@ -22,7 +22,10 @@ public enum SkillAttribute implements Attribute {
     HEAVY_ARMOR(GeneralAttribute.STRENGTH),
     ROBE_ARMOR(GeneralAttribute.INTELLIGENCE),
     ARMORLESS_DEFENSE(GeneralAttribute.ENDURANCE),
-    SHIELD_DEFENSE(GeneralAttribute.STRENGTH);
+    SHIELD_DEFENSE(GeneralAttribute.STRENGTH),
+    STAFF(GeneralAttribute.INTELLIGENCE),
+    WAND(GeneralAttribute.WILLPOWER),
+    SPECTRE(GeneralAttribute.WISDOM);
 
     private final GeneralAttribute incrementedAttribute;
 

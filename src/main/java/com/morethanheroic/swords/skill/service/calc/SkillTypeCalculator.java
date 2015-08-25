@@ -41,6 +41,12 @@ public class SkillTypeCalculator {
                 return SkillAttribute.ROBE_ARMOR;
             case SHIELD:
                 return SkillAttribute.SHIELD_DEFENSE;
+            case STAFF:
+                return SkillAttribute.STAFF;
+            case WAND:
+                return SkillAttribute.WAND;
+            case SPECTRE:
+                return SkillAttribute.SPECTRE;
             default:
                 throw new IllegalArgumentException("No skill found for item type: " + itemType);
         }

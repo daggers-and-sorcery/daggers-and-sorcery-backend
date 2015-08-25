@@ -26,6 +26,9 @@
                             <xs:enumeration value="HEAVY_ARMOR"/>
                             <xs:enumeration value="ROBE_ARMOR"/>
                             <xs:enumeration value="SHIELD"/>
+                            <xs:enumeration value="STAFF"/>
+                            <xs:enumeration value="WAND"/>
+                            <xs:enumeration value="SPECTRE"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>

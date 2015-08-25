@@ -63,4 +63,13 @@ public interface SkillMapper {
 
     @Update("UPDATE skills SET shieldDefenseXp = shieldDefenseXp + #{value} WHERE userId = #{userId}")
     void addShieldDefenseXp(@Param("userId")int userId, @Param("value")long value);
+
+    @Update("UPDATE skills SET staffsXp = staffsXp + #{value} WHERE userId = #{userId}")
+    void addStaffsXp(@Param("userId")int userId, @Param("value")long value);
+
+    @Update("UPDATE skills SET wandsXp = wandsXp + #{value} WHERE userId = #{userId}")
+    void addWandsXp(@Param("userId")int userId, @Param("value")long value);
+
+    @Update("UPDATE skills SET spectresXp = spectresXp + #{value} WHERE userId = #{userId}")
+    void addSpectresXp(@Param("userId")int userId, @Param("value")long value);
 }

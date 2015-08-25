@@ -16,5 +16,8 @@ public enum ItemType {
     LIGHT_ARMOR,
     HEAVY_ARMOR,
     ROBE_ARMOR,
-    SHIELD
+    SHIELD,
+    STAFF,
+    WAND,
+    SPECTRE
 }
