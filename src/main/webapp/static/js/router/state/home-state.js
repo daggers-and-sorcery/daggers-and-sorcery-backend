@@ -3,9 +3,11 @@
 module.exports = {
     name: 'home',
     url: '/home/',
-    views: {
-        'top': require('js/view/top/empty-view.js'),
-        'main': require('js/view/main/index-view.js'),
-        'right': require('js/view/right/menu-view.js')
-    }
+    templateUrl: "/partial/main/index.html",
+    resolve: {
+        newslist: function ($http) {
+            return $http({method: 'GET', url: '/news/last'});
+        }
+    },
+    controller: require('js/controller/index-controller.js')
 };

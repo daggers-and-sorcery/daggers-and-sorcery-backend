@@ -47,4 +47,27 @@ module.exports = require('js/app.js').controller('MainController', function ($sc
             $state.go('home');
         }
     })
+
+    //MERGED FROM RIGHT MENU
+    $scope.user = {};
+    $scope.error = '';
+
+    $scope.submit = function () {
+        var requestConfig = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        };
+
+        $http.post('/user/login', $.param($scope.user), requestConfig).success(function (data, status, headers, config) {
+            if (data.success === 'true') {
+                $http.get('/user/info').success(function (data, status, headers, config) {
+                    $rootScope.user = data.data;
+                    $state.go('home');
+                });
+            } else {
+                $scope.error = data.error;
+            }
+        });
+    };
 });

@@ -6,9 +6,5 @@ module.exports = {
     data: {
         visibleWhenNotLoggedIn: true
     },
-    views: {
-        'top': require('js/view/top/empty-view'),
-        'main': require('js/view/main/knowledge-view'),
-        'right': require('js/view/right/menu-view')
-    }
+    templateUrl: '/partial/main/knowledge.html'
 };

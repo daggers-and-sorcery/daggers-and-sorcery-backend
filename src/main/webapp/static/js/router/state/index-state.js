@@ -6,9 +6,11 @@ module.exports = {
     data: {
         visibleWhenNotLoggedIn: true
     },
-    views: {
-        'top': require('js/view/top/empty-view'),
-        'main': require('js/view/main/index-view'),
-        'right': require('js/view/right/menu-view')
-    }
+    templateUrl: "/partial/main/index.html",
+    resolve: {
+        newslist: function ($http) {
+            return $http({method: 'GET', url: '/news/last'});
+        }
+    },
+    controller: require('js/controller/index-controller.js')
 };

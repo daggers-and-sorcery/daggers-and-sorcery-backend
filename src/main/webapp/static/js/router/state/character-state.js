@@ -3,9 +3,13 @@
 module.exports = {
     name: 'character',
     url: '/character/',
-    views: {
-        'top': require('js/view/top/empty-view'),
-        'main': require('js/view/main/character-view'),
-        'right': require('js/view/right/menu-view')
-    }
+    templateUrl: '/partial/main/character.html',
+    resolve: {
+        characterData: function ($http, characterDataFormatter) {
+            return $http.get('/character/info').then(function(response) {
+                return characterDataFormatter.format(response.data);
+            });
+        }
+    },
+    controller: require('js/controller/character-controller.js')
 };
