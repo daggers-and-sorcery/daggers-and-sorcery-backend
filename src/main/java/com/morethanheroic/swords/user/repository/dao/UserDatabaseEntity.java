@@ -14,9 +14,9 @@ public class UserDatabaseEntity {
     private String username;
     private String password;
     private Race race;
-    private Date registrationDate = new Date();
-    private Date lastLoginDate = new Date();
-    private Date lastRegenerationDate = new Date();
+    private Date registration_date;
+    private Date last_login_date;
+    private Date lastRegenerationDate;
     private int map;
     private int x;
     private int y;
@@ -80,19 +80,19 @@ public class UserDatabaseEntity {
     }
 
     public Date getRegistrationDate() {
-        return registrationDate;
+        return registration_date;
     }
 
     public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
+        this.registration_date = registrationDate;
     }
 
     public Date getLastLoginDate() {
-        return lastLoginDate;
+        return last_login_date;
     }
 
     public void setLastLoginDate(Date lastLoginDate) {
-        this.lastLoginDate = lastLoginDate;
+        this.last_login_date = lastLoginDate;
     }
 
     public int getMap() {

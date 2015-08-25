@@ -25,6 +25,6 @@ public interface UserMapper {
     @Update("UPDATE user SET lastRegenerationDate = #{date}, health = #{health}, mana = #{mana}, movement = #{movement} WHERE id = #{userId}")
     void updateRegeneration(@Param("userId") int userId, @Param("health") int health, @Param("mana") int mana, @Param("movement") int movement, @Param("date") Date date);
 
-    @Insert("INSERT INTO user SET username = #{username}, email = #{email}, password = #{password}, race = #{race}")
+    @Insert("INSERT INTO user SET username = #{username}, email = #{email}, password = #{password}, race = #{race}, x = #{x}, y = #{y}, map = #{map}, health = #{health}, mana = #{mana}, movement = #{movement}, registration_date = #{registration_date}, last_login_date = #{last_login_date}")
     void insert(UserDatabaseEntity userDatabaseEntity);
 }

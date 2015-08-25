@@ -19,6 +19,6 @@ public @interface UniqueInDb {
 
     Class<? extends Payload>[] payload() default {};
 
-    Class<?> model();
+    String model();
     String field();
 }

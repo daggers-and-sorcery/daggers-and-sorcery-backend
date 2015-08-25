@@ -86,8 +86,7 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         registry.addResourceHandler("/**").addResourceLocations("/static/");
     }
 
-    @Bean
-    public DataSource getDataSource() {
+    private DataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/swords");

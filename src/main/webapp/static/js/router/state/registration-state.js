@@ -35,7 +35,8 @@ module.exports = {
         };
         $scope.submit = function (valid) {
             if (valid) {
-                dataToSend = $scope.user;
+                var dataToSend = $scope.user;
+
                 dataToSend.race = $scope.race[$scope.visibleRace].name;
 
                 $http.post('/user/register', dataToSend).success(function (data, status, headers, config) {

@@ -13,11 +13,11 @@ public class RegistrationRequest {
 
     @NotNull(message = "Email is required.")
     @Email(message = "Email must be a valid email.")
-    @UniqueInDb(field = "email", model = UserDatabaseEntity.class, message = "An user with this email already exists.")
+    @UniqueInDb(field = "email", model = "user", message = "An user with this email already exists.")
     private String email;
     @NotNull(message = "Username is required.")
     @Size(min = 6, max = 16, message = "Username must be between 6 and 16 characters.")
-    @UniqueInDb(field = "username", model = UserDatabaseEntity.class, message = "An user with this username already exists.")
+    @UniqueInDb(field = "username", model = "user", message = "An user with this username already exists.")
     private String username;
     @NotNull(message = "Password is required.")
     @Size(min = 6, max = 16, message = "Password must be between 6 and 16 characters.")
