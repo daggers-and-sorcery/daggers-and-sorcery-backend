@@ -14,7 +14,7 @@
                     <input type="email" class="form-control" name="email" id="email" placeholder="Email" ng-model="user.email" ng-required="true">
                     <div ng-show="registration_form.email.$touched || registration_form.$submitted" ng-messages="registration_form.email.$error" ng-messages-multiple="true" role="alert">
                         <div class="help-block" ng-message="required">The email is required.</div>
-                        <div class="help-block" ng-message="valid">The email must be a valid email address.</div>
+                        <div class="help-block" ng-message="email">The email must be a valid email address.</div>
                     </div>
                     <span ng-show="registration_form.email.$touched || registration_form.$submitted" ng-class="registration_form.email.$invalid && (registration_form.email.$touched || registration_form.$submitted) ? 'glyphicon-warning-sign' : 'glyphicon-ok'" class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 </div>

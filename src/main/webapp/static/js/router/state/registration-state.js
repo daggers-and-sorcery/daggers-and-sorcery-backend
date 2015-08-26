@@ -11,7 +11,7 @@ module.exports = {
             return $http({method: 'GET', url: '/user/race/list'});
         }
     },
-    templateUrl: '/partial/main/register.html',
+    template: require('partial/main/register.html'),
     controller: function ($scope, $http, racelist) {
         $scope.user = {};
         $scope.visibleRace = 0;

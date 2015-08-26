@@ -387,3 +387,8 @@ html, body, .container {
     box-shadow: 2px 2px 1px RGBa(0,0,0, 0.035);
     top: 50px;
 }
+
+/** Button **/
+button {
+    outline: none !important;
+}
