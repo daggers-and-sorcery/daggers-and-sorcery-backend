@@ -25,6 +25,11 @@ RegistrationPage.prototype = Object.create({}, {
                 return this.registrationForm.element(by.model('user.username'));
             }
         },
+        usernameErrorMessages: {
+            get: function () {
+                return this.registrationForm.all(by.css('div[ng-messages="registration_form.username.$error"] > div'));
+            }
+        },
         firstPasswordInput: {
             get: function () {
                 return this.registrationForm.element(by.model('user.passwordFirst'));
