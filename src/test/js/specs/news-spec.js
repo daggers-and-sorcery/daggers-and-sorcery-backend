@@ -1,4 +1,4 @@
-var NewsPage = require('../pages/news2-page.js');
+var NewsPage = require('../pages/news-page.js');
 
 describe('news page tests', function() {
     var page;
