@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface NewsMapper {
 
-    @Select(value = "SELECT * FROM news ORDER BY date LIMIT 10")
+    @Select(value = "SELECT * FROM news ORDER BY date DESC LIMIT 10")
     List<NewsDatabaseEntity> findLastTen();
 }
