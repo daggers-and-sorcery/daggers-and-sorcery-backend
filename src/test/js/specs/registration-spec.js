@@ -15,4 +15,13 @@ describe('registration page tests', function() {
 
         expect(page.registrationForm.getAttribute('class')).toMatch('ng-valid');
     });
+
+    it('test registration with all invalid data', function() {
+        page.emailInput.sendKeys('bademail');
+
+        page.submit.click();
+
+        expect(page.emailErrorMessages.count()).toEqual(1);
+        expect(page.emailErrorMessages.get(0).getText()).toEqual("The email must be a valid email address.");
+    });
 });

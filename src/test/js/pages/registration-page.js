@@ -1,7 +1,7 @@
 var RegistrationPage = function () {
     browser.get('/');
 
-    element(by.linkText('Create an account')).click();
+    element(by.buttonText('Create an account')).click();
 };
 
 RegistrationPage.prototype = Object.create({}, {
@@ -13,6 +13,11 @@ RegistrationPage.prototype = Object.create({}, {
         emailInput: {
             get: function () {
                 return this.registrationForm.element(by.model('user.email'));
+            }
+        },
+        emailErrorMessages: {
+            get: function () {
+                return this.registrationForm.all(by.css('div[ng-messages="registration_form.email.$error"] > div'));
             }
         },
         usernameInput: {
@@ -28,6 +33,11 @@ RegistrationPage.prototype = Object.create({}, {
         secondPasswordInput: {
             get: function () {
                 return this.registrationForm.element(by.model('user.passwordSecond'));
+            }
+        },
+        submit: {
+            get: function () {
+                return this.registrationForm.element(by.buttonText('Register'));
             }
         }
     }
