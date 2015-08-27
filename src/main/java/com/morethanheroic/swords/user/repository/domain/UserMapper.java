@@ -1,10 +1,7 @@
 package com.morethanheroic.swords.user.repository.domain;
 
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
 
@@ -25,6 +22,7 @@ public interface UserMapper {
     @Update("UPDATE user SET lastRegenerationDate = #{date}, health = #{health}, mana = #{mana}, movement = #{movement} WHERE id = #{userId}")
     void updateRegeneration(@Param("userId") int userId, @Param("health") int health, @Param("mana") int mana, @Param("movement") int movement, @Param("date") Date date);
 
+    @Options(useGeneratedKeys=true, keyProperty = "id", keyColumn = "id")
     @Insert("INSERT INTO user SET username = #{username}, email = #{email}, password = #{password}, race = #{race}, x = #{x}, y = #{y}, map = #{map}, health = #{health}, mana = #{mana}, movement = #{movement}, registration_date = #{registration_date}, last_login_date = #{last_login_date}")
     void insert(UserDatabaseEntity userDatabaseEntity);
 }

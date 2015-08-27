@@ -76,7 +76,7 @@ public class UserDatabaseEntity {
     }
 
     public String toString() {
-        return "[id: " + id + " name: " + username + "]";
+        return "[id: " + getId() + " name: " + username + "]";
     }
 
     public Date getRegistrationDate() {
@@ -149,5 +149,9 @@ public class UserDatabaseEntity {
 
     public void setMovement(int movement) {
         this.movement = movement;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

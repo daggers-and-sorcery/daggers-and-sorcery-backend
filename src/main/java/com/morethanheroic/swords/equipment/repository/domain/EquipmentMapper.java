@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.equipment.repository.domain;
 
 import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -15,4 +16,7 @@ public interface EquipmentMapper {
 
     @Update("UPDATE equipment SET offhand = #{itemId} WHERE userId = #{userId}")
     void equipOffhand(@Param("userId") int userId, @Param("itemId") int itemId);
+
+    @Insert("INSERT INTO equipment SET userId = #{userId}")
+    void insert(@Param("userId") int userId);
 }

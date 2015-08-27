@@ -1,11 +1,15 @@
 package com.morethanheroic.swords.skill.repository.domain;
 
 import com.morethanheroic.swords.skill.repository.dao.SkillDatabaseEntity;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 public interface SkillMapper {
+
+    @Insert("INSERT INTO skills SET userId = #{userId}")
+    void insert(@Param("userId") int userId);
 
     @Select("SELECT * FROM skills WHERE userId = #{userId}")
     SkillDatabaseEntity getSkills(@Param("userId") int userId);
