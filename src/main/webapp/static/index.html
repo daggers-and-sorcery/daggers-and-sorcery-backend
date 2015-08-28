@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-3 col-lg-3" style="text-align:right;">
-                                            <span class="btn btn-default" ui-sref="logout">Logout</span>
+                                            <button class="btn btn-default" ui-sref="logout">Logout</button>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-md-9 col-lg-9 content-middle" ui-view></div>
                     <div class="col-md-3 col-lg-3 content-right">
-                        <div ng-show="$root.user.loggedIn" class="panel panel-default panel-shadow right-panel">
+                        <div ng-show="$root.user.loggedIn" class="panel panel-default panel-shadow right-panel menu-panel">
                             <div class="panel-heading">Menu</div>
                             <div class="panel-body">
                                 <a ui-sref="character" class="btn btn-default right-menu-button">Character</a>

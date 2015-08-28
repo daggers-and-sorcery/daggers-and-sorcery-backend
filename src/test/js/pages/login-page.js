@@ -28,6 +28,19 @@ LoginPage.prototype = Object.create({}, {
                 return this.loginPanel.element(by.css('div.alert'));
             }
         },
+        login: {
+            value: function () {
+                this.usernameInput.sendKeys("dbuser");
+                this.passwordInput.sendKeys("topsecret");
+
+                this.submitButton.click();
+            }
+        },
+        logout: {
+            value: function () {
+                element(by.buttonText('Logout')).click();
+            }
+        }
     }
 );
 

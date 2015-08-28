@@ -1,4 +1,5 @@
 var LoginPage = require('../pages/login-page.js');
+var MenuPage = require('../pages/menu-page.js');
 
 describe('login page tests', function() {
     var page;
@@ -14,5 +15,15 @@ describe('login page tests', function() {
         page.submitButton.click();
 
         expect(page.errorAlert.isDisplayed()).toBeTruthy();
+    });
+
+    it('test good login', function() {
+        page.login("dbuser", "topsecret");
+
+        var menu = new MenuPage();
+
+        expect(menu.menuPanel.isDisplayed()).toBeTruthy();
+
+        page.logout();
     });
 });
