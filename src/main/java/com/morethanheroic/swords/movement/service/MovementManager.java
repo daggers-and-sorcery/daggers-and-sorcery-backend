@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.movement.service;
 
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -10,10 +12,12 @@ import org.springframework.stereotype.Service;
 public class MovementManager {
 
     private final MapManager mapManager;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
-    public MovementManager(MapManager mapManager) {
+    public MovementManager(MapManager mapManager, GlobalAttributeCalculator globalAttributeCalculator) {
         this.mapManager = mapManager;
+        this.globalAttributeCalculator = globalAttributeCalculator;
     }
 
     //TODO: TEST!
@@ -23,6 +27,7 @@ public class MovementManager {
 
         if (canWalk(user, targetX, targetY)) {
             user.setPosition(targetX, targetY);
+            user.setMovement(user.getMovement() - 1);
 
             return true;
         }
@@ -59,8 +64,14 @@ public class MovementManager {
     }
 
     private boolean canWalk(UserEntity user, int x, int y) {
-        //TODO: check if out of bounds of the map!
-        //TODO: check has enough movement points!
+        if (x < 0 || y < 0) {
+            return false;
+        }
+
+        if (globalAttributeCalculator.calculateActualValue(user, BasicAttribute.MOVEMENT) <= 0) {
+            return false;
+        }
+
         return mapManager.getMap(user.getMapId()).getTileAt(x, y).isWalkable();
     }
 }

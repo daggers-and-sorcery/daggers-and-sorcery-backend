@@ -75,6 +75,12 @@ public class UserEntity {
         return userDatabaseEntity.getMovement();
     }
 
+    public void setMovement(int value) {
+        userDatabaseEntity.setMovement(value);
+
+        userMapper.updateMovement(userDatabaseEntity.getId(), value);
+    }
+
     public Date getLastRegenerationDate() {
         return userDatabaseEntity.getLastRegenerationDate();
     }

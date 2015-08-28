@@ -32,7 +32,7 @@ public class MovementManagerTest {
         MapEntity mapEntity = buildFakeMapEntity();
         when(mapManager.getMap(0)).thenReturn(mapEntity);
 
-        movementManager = new MovementManager(mapManager);
+        movementManager = new MovementManager(mapManager, null);
         userDatabaseEntity = new UserDatabaseEntity("test", "test");
 
         userDatabaseEntity.setX(20);

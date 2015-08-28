@@ -15,6 +15,9 @@ import java.util.Date;
 @Service
 public class UserManager {
 
+    private static final int STARTING_POSITION_X = 6;
+    private static final int STARTING_POSITION_Y = 9;
+
     private final UserMapper userMapper;
     private final SkillMapper skillMapper;
     private final EquipmentMapper equipmentMapper;
@@ -50,8 +53,8 @@ public class UserManager {
 
         user.setEmail(email);
         user.setRace(race);
-        user.setX(0);
-        user.setY(0);
+        user.setX(STARTING_POSITION_X);
+        user.setY(STARTING_POSITION_Y);
         user.setMap(1);
         user.setMovement(30);
         user.setHealth(15);
