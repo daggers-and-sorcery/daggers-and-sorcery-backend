@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.sql.DataSource;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -23,17 +24,14 @@ public class UniqueInDbValidator implements ConstraintValidator<UniqueInDb, Stri
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext cxt) {
-        try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement("SELECT * FROM " + uniqueInDb.model() + " WHERE " + uniqueInDb.field() + " = ?");
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement("SELECT * FROM " + uniqueInDb.model() + " WHERE " + uniqueInDb.field() + " = ?")) {
+
             statement.setString(1, value);
 
             statement.execute();
 
-            boolean result = !statement.getResultSet().first();
-
-            statement.close();
-
-            return result;
+            return !statement.getResultSet().first();
         } catch (SQLException e) {
             e.printStackTrace();
         }
