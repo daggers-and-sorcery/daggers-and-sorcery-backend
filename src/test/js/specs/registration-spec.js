@@ -107,4 +107,27 @@ describe('registration page tests', function() {
         expect(page.secondPasswordErrorMessages.count()).toEqual(1);
         expect(page.secondPasswordErrorMessages.get(0).getText()).toEqual("The password is required.");
     });
+
+    it('test if race changing works', function() {
+        expect(page.raceName.getText()).toEqual("Human");
+        expect(page.specialHumanModifierDisplay.isDisplayed()).toBeTruthy();
+
+        page.changeRaceLeft.click();
+        expect(page.raceName.getText()).toEqual("Draconic");
+        expect(page.racialModifierById(0).getText()).toBe("30% - Willpower");
+        expect(page.racialModifierById(1).getText()).toBe("10% - Endurance");
+        expect(page.racialModifierById(2).getText()).toBe("-30% - Dexterity");
+        expect(page.racialModifierById(3).getText()).toBe("-20% - Swiftness");
+        expect(page.racialModifierById(4).getText()).toBe("-10% - Perception");
+
+        page.changeRaceRight.click();
+        page.changeRaceRight.click();
+        expect(page.raceName.getText()).toEqual("Orc");
+        expect(page.racialModifierById(0).getText()).toBe("20% - Strength");
+        expect(page.racialModifierById(1).getText()).toBe("10% - Endurance");
+        expect(page.racialModifierById(2).getText()).toBe("10% - Vitality");
+        expect(page.racialModifierById(3).getText()).toBe("-30% - Intelligence");
+        expect(page.racialModifierById(4).getText()).toBe("-10% - Wisdom");
+        expect(page.racialModifierById(5).getText()).toBe("-10% - Willpower");
+    });
 });

@@ -228,6 +228,14 @@ html, body, .container {
     font-weight: 700;
 }
 
+.race-info-header {
+    margin-bottom: 5px;
+}
+
+.race-info-text {
+    padding-left: 30px;
+}
+
 /** Form **/
 .help-block {
     margin-bottom: 0;

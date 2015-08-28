@@ -74,7 +74,32 @@ RegistrationPage.prototype = Object.create({}, {
             value: function (id) {
                  return this.failAlertHolder.all(by.repeater('error in errorList')).get(id);
             }
-        }
+        },
+        raceName: {
+            get: function () {
+                 return this.registrationPanel.element(by.css('.race-name-holder > span'));
+            }
+        },
+        changeRaceLeft: {
+            get: function () {
+                 return this.registrationPanel.element(by.css('a.race-paging-btn[ng-click="decreaseRace()"]'));
+            }
+        },
+        changeRaceRight: {
+            get: function () {
+                 return this.registrationPanel.element(by.css('a.race-paging-btn[ng-click="increaseRace()"]'));
+            }
+        },
+        racialModifierById: {
+            value: function (id) {
+                 return this.registrationPanel.all(by.repeater('(attribute, value) in race[visibleRace].racialAttributeModifiers')).get(id);
+            }
+        },
+        specialHumanModifierDisplay: {
+            get: function () {
+                 return this.registrationPanel.element(by.css('span[ng-if="raceAttributeModifierCount(visibleRace) == 0"]'));
+            }
+        },
     }
 );
 
