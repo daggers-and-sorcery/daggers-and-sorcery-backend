@@ -96,7 +96,6 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         dataSource.setUrl("jdbc:mysql://localhost:3306/swords");
         dataSource.setUsername("root");
         dataSource.setPassword("");
-        dataSource.setDefaultAutoCommit(false);
 
         return dataSource;
     }

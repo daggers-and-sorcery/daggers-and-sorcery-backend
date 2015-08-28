@@ -30,7 +30,6 @@ public class UserManager {
         return new UserEntity(userMapper.findById(id), userMapper);
     }
 
-    @Transactional
     public void saveNewUser(String username, String password, String email, Race race) {
             UserDatabaseEntity user = createNewUserEntity(username, password, email, race);
 
@@ -39,6 +38,7 @@ public class UserManager {
             equipmentMapper.insert(user.getId());
     }
 
+    @Transactional
     private UserDatabaseEntity createNewUserEntity(String username, String password, String email, Race race) {
         UserDatabaseEntity user = new UserDatabaseEntity(username, password);
 

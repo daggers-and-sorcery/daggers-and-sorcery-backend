@@ -5,7 +5,8 @@ TRUNCATE TABLE swords.inventory;
 TRUNCATE TABLE swords.map_entity;
 TRUNCATE TABLE swords.map_object;
 TRUNCATE TABLE swords.news;
-TRUNCATE TABLE swords.user;
+TRUNCATE TABLE swords.users;
+TRUNCATE TABLE swords.skills;
 
 INSERT INTO news
 SET id = 1, date = '1977-01-16 21:21:40', title = 'This is some test title', message = 'Lorem ipsum dolor sit ameth....', icon = 'bubble';

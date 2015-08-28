@@ -29,7 +29,11 @@ public class UniqueInDbValidator implements ConstraintValidator<UniqueInDb, Stri
 
             statement.execute();
 
-            return !statement.getResultSet().first();
+            boolean result = !statement.getResultSet().first();
+
+            statement.close();
+
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -39,7 +39,7 @@ public class UserRegistrationController {
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<Object> register(@Valid @RequestBody RegistrationRequest registrationRequest, BindingResult result) {
-        if (!registrationRequest.getPasswordFirst().equals(registrationRequest.getPasswordSecond())) {
+        /*if (!registrationRequest.getPasswordFirst().equals(registrationRequest.getPasswordSecond())) {
             result.addError(new ObjectError(String.valueOf(UserDatabaseEntity.class), "The two passwords must be equals."));
         }
 
@@ -62,6 +62,7 @@ public class UserRegistrationController {
             //TODO: add user email validation
 
             return new ResponseEntity<>("{}", HttpStatus.OK);
-        }
+        }*/
+        return null;
     }
 }
