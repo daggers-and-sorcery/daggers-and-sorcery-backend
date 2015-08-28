@@ -33,8 +33,13 @@ describe('registration page tests', function() {
         page.submit.click();
 
         expect(page.failAlertHolder.isDisplayed()).toBeTruthy();
+        expect(page.failAlertById(0).getText()).toBe("An user with this email already exists.");
+
+        page.emailInput.clear();
+        page.emailInput.sendKeys('notadded@example.com');
+        page.submit.click();
+
         expect(page.failAlertById(0).getText()).toBe("An user with this username already exists.");
-        expect(page.failAlertById(1).getText()).toBe("An user with this email already exists.");
     });
 
     it('test registration with email invalid data', function() {

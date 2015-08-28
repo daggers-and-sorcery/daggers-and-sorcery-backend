@@ -6,18 +6,21 @@ import com.morethanheroic.swords.common.validator.annotation.StringEnumeration;
 import com.morethanheroic.swords.common.validator.annotation.UniqueInDb;
 import org.hibernate.validator.constraints.Email;
 
+import javax.validation.GroupSequence;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 
+@GroupSequence({RegistrationRequest.class, RegistrationRequest.OrderFirst.class, RegistrationRequest.OrderSecond.class})
 public class RegistrationRequest {
 
     @NotNull(message = "Email is required.")
     @Email(message = "Email must be a valid email.")
-    @UniqueInDb(field = "email", model = "users", message = "An user with this email already exists.")
+    @UniqueInDb(field = "email", model = "users", message = "An user with this email already exists.", groups = OrderFirst.class)
     private String email;
     @NotNull(message = "Username is required.")
     @Size(min = 6, max = 16, message = "Username must be between 6 and 16 characters.")
-    @UniqueInDb(field = "username", model = "users", message = "An user with this username already exists.")
+    @UniqueInDb(field = "username", model = "users", message = "An user with this username already exists.", groups = OrderSecond.class)
     private String username;
     @NotNull(message = "Password is required.")
     @Size(min = 6, max = 16, message = "Password must be between 6 and 16 characters.")
@@ -66,5 +69,10 @@ public class RegistrationRequest {
 
     public void setRace(String race) {
         this.race = race;
+    }
+
+    public interface OrderFirst {
+    }
+    public interface OrderSecond {
     }
 }
