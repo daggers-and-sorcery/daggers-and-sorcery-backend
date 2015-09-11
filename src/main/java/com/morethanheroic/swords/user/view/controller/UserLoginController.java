@@ -4,6 +4,7 @@ import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
@@ -23,12 +24,14 @@ public class UserLoginController {
     private final UserMapper userRepository;
     private final ShaPasswordEncoder shaPasswordEncoder;
     private final GlobalAttributeCalculator globalAttributeCalculator;
+    private final ResponseFactory responseFactory;
 
     @Autowired
-    private UserLoginController(UserMapper userMapper, ShaPasswordEncoder shaPasswordEncoder, GlobalAttributeCalculator globalAttributeCalculator) {
+    private UserLoginController(UserMapper userMapper, ShaPasswordEncoder shaPasswordEncoder, GlobalAttributeCalculator globalAttributeCalculator, ResponseFactory responseFactory) {
         this.userRepository = userMapper;
         this.shaPasswordEncoder = shaPasswordEncoder;
         this.globalAttributeCalculator = globalAttributeCalculator;
+        this.responseFactory = responseFactory;
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
@@ -52,8 +55,8 @@ public class UserLoginController {
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
-    public Response info(UserEntity user, HttpSession session) {
-        Response response = new Response();
+    public Response info(UserEntity user) {
+        Response response = responseFactory.newResponse(user);
 
         if(user != null) {
             response.setData("loggedIn", true);

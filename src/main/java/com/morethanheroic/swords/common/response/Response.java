@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.common.response;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashMap;
 
@@ -11,7 +12,16 @@ import java.util.HashMap;
 )
 public class Response {
 
-    private HashMap<String, Object> data = new HashMap<>();
+    @JsonProperty("charinfo")
+    private final CharacterData characterData;
+
+    @JsonProperty("data")
+    private final HashMap<String, Object> data;
+
+    Response(CharacterData characterData) {
+        this.characterData = characterData;
+        this.data = new HashMap<>();
+    }
 
     public void setData(String name, Object value) {
         data.put(name, value);

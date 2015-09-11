@@ -10,6 +10,7 @@ import com.morethanheroic.swords.attribute.model.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
@@ -33,18 +34,20 @@ public class ProfileInfoResponseBuilder {
     private final AttributeUtil attributeUtil;
     private final InventoryManager inventoryManager;
     private final EquipmentManager equipmentManager;
+    private final ResponseFactory responseFactory;
 
     @Autowired
-    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager, EquipmentManager equipmentManager) {
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager, EquipmentManager equipmentManager, ResponseFactory responseFactory) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.attributeUtil = attributeUtil;
         this.inventoryManager = inventoryManager;
         this.equipmentManager = equipmentManager;
+        this.responseFactory = responseFactory;
     }
 
     public Response build(UserEntity user) {
-        Response response = new Response();
+        Response response = responseFactory.newResponse(user);
 
         response.setData("attribute", buildAttributeResponse(user));
         response.setData("username", user.getUsername());

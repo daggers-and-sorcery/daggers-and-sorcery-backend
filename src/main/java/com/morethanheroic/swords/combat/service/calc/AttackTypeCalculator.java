@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 public class AttackTypeCalculator {
 
     public AttackType calculateAttackType(ItemDefinition item) {
+        if(item == null) {
+            return AttackType.MELEE;
+        }
+
         switch (item.getType()) {
             case TWO_HANDED_CRUSHING_WEAPONS:
             case ONE_HANDED_CRUSHING_WEAPONS:

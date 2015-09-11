@@ -34,11 +34,11 @@ public class EquipmentController {
     public Response equip(UserEntity user, @PathVariable int itemId) {
         if (inventoryManager.getInventory(user).hasItem(itemId) && itemDefinitionManager.getItemDefinition(itemId).isEquipment()) {
             if(equipmentManager.getEquipment(user).equipItem(itemDefinitionManager.getItemDefinition(itemId))) {
-                return equipmentResponseBuilder.build(EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
+                return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }
         }
 
-        return equipmentResponseBuilder.build(EquipmentResponseBuilder.UNSUCCESSFULL_REQUEST);
+        return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.UNSUCCESSFULL_REQUEST);
     }
 
 
@@ -48,6 +48,6 @@ public class EquipmentController {
         //TODO has enough inventory slots
         equipmentManager.getEquipment(user).unequipItem(EquipmentSlot.valueOf(slotId));
 
-        return equipmentResponseBuilder.build(EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
+        return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
     }
 }

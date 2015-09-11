@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.movement.service;
 
 import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
@@ -17,15 +18,17 @@ public class PositionResponseBuilder {
 
     private final MonsterDefinitionManager monsterDefinitionManager;
     private final MapManager mapManager;
+    private final ResponseFactory responseFactory;
 
     @Autowired
-    public PositionResponseBuilder(MonsterDefinitionManager monsterDefinitionManager, MapManager mapManager) {
+    public PositionResponseBuilder(MonsterDefinitionManager monsterDefinitionManager, MapManager mapManager, ResponseFactory responseFactory) {
         this.monsterDefinitionManager = monsterDefinitionManager;
         this.mapManager = mapManager;
+        this.responseFactory = responseFactory;
     }
 
     public Response build(UserEntity user) {
-        Response response = new Response();
+        Response response = responseFactory.newResponse(user);
 
         response.setData("x", user.getX());
         response.setData("y", user.getY());
