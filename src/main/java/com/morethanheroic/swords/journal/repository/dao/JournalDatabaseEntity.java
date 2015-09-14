@@ -5,7 +5,7 @@ import com.morethanheroic.swords.journal.model.JournalType;
 public class JournalDatabaseEntity {
 
     private int user_id;
-    private JournalType type;
+    private JournalType journal_type;
     private int journal_id;
 
     public int getUserId() {
@@ -13,7 +13,7 @@ public class JournalDatabaseEntity {
     }
 
     public JournalType getType() {
-        return type;
+        return journal_type;
     }
 
     public int getJournalId() {
