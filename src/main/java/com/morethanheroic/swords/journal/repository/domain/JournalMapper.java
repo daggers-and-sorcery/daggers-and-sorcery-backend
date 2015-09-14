@@ -15,4 +15,7 @@ public interface JournalMapper {
 
     @Select("SELECT * FROM journal WHERE user_id = #{user_id} AND journal_type = #{type}")
     List<JournalDatabaseEntity> getJournalEntryListByType(@Param("user_id")int userId, @Param("type") JournalType type);
+
+    @Select("SELECT * FROM journal WHERE user_id = #{user_id} AND journal_type = #{type} AND journal_id = #{journal_id}")
+    JournalDatabaseEntity getJournal(@Param("user_id")int userId, @Param("type") JournalType type,@Param("journal_id") int journalId);
 }

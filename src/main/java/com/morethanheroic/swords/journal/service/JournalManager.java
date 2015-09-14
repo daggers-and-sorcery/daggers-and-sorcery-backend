@@ -26,4 +26,8 @@ public class JournalManager {
     public List<JournalDatabaseEntity> getJournalEntryListByType(UserEntity userEntity, JournalType journalType) {
         return journalMapper.getJournalEntryListByType(userEntity.getId(), journalType);
     }
+
+    public boolean hasJournal(UserEntity userEntity, JournalType journalType, int journalEntryId) {
+        return journalMapper.getJournal(userEntity.getId(), journalType, journalEntryId) != null;
+    }
 }
