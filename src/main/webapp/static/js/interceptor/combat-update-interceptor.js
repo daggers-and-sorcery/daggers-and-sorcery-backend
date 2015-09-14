@@ -3,7 +3,7 @@
 module.exports = require('js/app.js').factory('combatUpdate', function($rootScope) {
      var myInterceptor = {
           response: function(response) {
-              if(response.data.charinfo !== undefined) {
+              if(response.data.charinfo !== undefined && response.data.charinfo !== null) {
                 console.log(response.data.charinfo);
                 console.log($rootScope.user);
 

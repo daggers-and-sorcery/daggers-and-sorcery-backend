@@ -7,7 +7,7 @@ CREATE TABLE `skills` (
   `twoHandedAxesXp` bigint(20) unsigned NOT NULL DEFAULT '0',
   `oneHandedAxesXp` bigint(20) unsigned NOT NULL DEFAULT '0',
   `throwingWeaponsXp` bigint(20) unsigned NOT NULL DEFAULT '0',
-  ` fistfightXp` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `fistfightXp` bigint(20) unsigned NOT NULL DEFAULT '0',
   `longswordsXp` bigint(20) unsigned NOT NULL DEFAULT '0',
   `shortswordsXp` bigint(20) unsigned NOT NULL DEFAULT '0',
   `polearmsXp` bigint(20) unsigned NOT NULL DEFAULT '0',
