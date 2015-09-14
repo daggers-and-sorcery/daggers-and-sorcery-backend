@@ -4,21 +4,22 @@ import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.repository.domain.JournalMapper;
+import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 import java.util.List;
 
 public class InventoryEntity {
 
-    private final JournalMapper journalMapper;
+    private final JournalManager journalManager;
 
     private UserEntity userEntity;
     private InventoryMapper inventoryMapper;
 
-    public InventoryEntity(UserEntity userEntity, InventoryMapper inventoryMapper, JournalMapper journalMapper) {
+    public InventoryEntity(UserEntity userEntity, InventoryMapper inventoryMapper, JournalManager journalManager) {
         this.userEntity = userEntity;
         this.inventoryMapper = inventoryMapper;
-        this.journalMapper = journalMapper;
+        this.journalManager = journalManager;
     }
 
     public boolean hasItem(int itemId) {
@@ -40,7 +41,7 @@ public class InventoryEntity {
     }
 
     public void addItem(int itemId, int itemAmount) {
-        journalMapper.createJournal(userEntity.getId(), JournalType.ITEM, itemId);
+        journalManager.createJournalEntry(userEntity, JournalType.ITEM, itemId);
 
         inventoryMapper.addItem(userEntity.getId(), itemId, itemAmount);
     }

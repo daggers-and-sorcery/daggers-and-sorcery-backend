@@ -13,6 +13,7 @@ import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.repository.domain.JournalMapper;
+import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
@@ -35,10 +36,10 @@ public class CombatCalculator {
     private final InventoryManager inventoryManager;
     private final TurnCalculatorFactory turnCalculatorFactory;
     private final SkillManager skillManager;
-    private final JournalMapper journalMapper;
+    private final JournalManager journalManager;
 
     @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalMapper journalMapper) {
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
@@ -46,7 +47,7 @@ public class CombatCalculator {
         this.mapManager = mapManager;
         this.inventoryManager = inventoryManager;
         this.skillManager = skillManager;
-        this.journalMapper = journalMapper;
+        this.journalManager = journalManager;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
@@ -61,7 +62,7 @@ public class CombatCalculator {
     }
 
     private void startFight(CombatResult result, Combat combat) {
-        journalMapper.createJournal(combat.getUserEntity().getId(), JournalType.MONSTER, combat.getMonsterDefinition().getId());
+        journalManager.createJournalEntry(combat.getUserEntity(), JournalType.MONSTER, combat.getMonsterDefinition().getId());
 
         result.addMessage(combatMessageBuilder.buildFightInitialisationMessage(combat.getMonsterDefinition().getName()));
     }
