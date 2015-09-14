@@ -100,6 +100,12 @@ body {
     border-bottom: 1px solid #aaa;
 }
 
+.panel-heading .panel-heading-button-group {
+    margin-top: -3px;
+    margin-right: -7px;
+    float: right;
+}
+
 /** Sticky footer **/
 .page-wrap {
     min-height: 100%;
