@@ -22,3 +22,7 @@ require('js/filter/capitalize-filter.js');
 
 // Constants
 require('js/constant/attribute-bonus-map-constant.js');
+
+// Interceptors
+require('js/interceptor/combat-update-interceptor.js');
+require('js/interceptor/combat-update-interceptor-config.js');
