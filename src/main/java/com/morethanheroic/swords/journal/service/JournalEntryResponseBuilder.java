@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.journal.service;
 
+import com.morethanheroic.swords.attribute.view.response.AttributeModifierResponseEntry;
+import com.morethanheroic.swords.attribute.view.response.AttributeRequirementResponseEntry;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
@@ -8,10 +10,12 @@ import com.morethanheroic.swords.item.service.domain.AttributeRequirementDefinit
 import com.morethanheroic.swords.item.service.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
+import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Service
@@ -37,7 +41,7 @@ public class JournalEntryResponseBuilder {
                 break;
             case MONSTER:
                 //TODO: same builder as in items for monsters too
-                response.setData("journal_entry", monsterDefinitionManager.getMonsterDefinition(journalId));
+                response.setData("journal_entry", buildMonsterEntry(monsterDefinitionManager.getMonsterDefinition(journalId)));
                 break;
             default:
                 throw new IllegalArgumentException("Invalid journal type!");
@@ -62,19 +66,36 @@ public class JournalEntryResponseBuilder {
         result.put("weight", itemDefinition.getWeight());
         result.put("equipment", itemDefinition.isEquipment());
 
-        HashMap<String, Integer> modifiers = new HashMap<>();
+        ArrayList<AttributeModifierResponseEntry> modifiers = new ArrayList<>();
         result.put("modifiers", modifiers);
 
         for (AttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
-            modifiers.put(modifierDefinition.getAttribute().getName(), modifierDefinition.getAmount());
+            modifiers.add(new AttributeModifierResponseEntry(modifierDefinition.getAttribute(), modifierDefinition.getAmount()));
         }
 
-        HashMap<String, Integer> requirements = new HashMap<>();
+        ArrayList<AttributeRequirementResponseEntry> requirements = new ArrayList<>();
         result.put("requirements", requirements);
 
         for (AttributeRequirementDefinition requirementDefinition : itemDefinition.getAllRequirements()) {
-            requirements.put(requirementDefinition.getAttribute().getName(), requirementDefinition.getAmount());
+            requirements.add(new AttributeRequirementResponseEntry(requirementDefinition.getAttribute(), requirementDefinition.getAmount()));
         }
+
+        return result;
+    }
+
+    private HashMap<String, Object> buildMonsterEntry(MonsterDefinition monsterDefinition) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("name", monsterDefinition.getName());
+        result.put("level", monsterDefinition.getLevel());
+        result.put("attack", monsterDefinition.getAttack());
+        result.put("defense", monsterDefinition.getDefense());
+        result.put("initiation", monsterDefinition.getInitiation());
+        result.put("health", monsterDefinition.getHealth());
+        result.put("aiming", monsterDefinition.getAiming());
+        result.put("rangedDamage", monsterDefinition.getRangedDamage());
+        result.put("damage", monsterDefinition.getDamage());
+        result.put("attackType", monsterDefinition.getAttackType());
 
         return result;
     }

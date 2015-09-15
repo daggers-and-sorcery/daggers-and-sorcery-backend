@@ -419,3 +419,7 @@ button {
     background-color: rgba(0,0,0,0.2);
     cursor: pointer;
 }
+
+.journal-header {
+    margin: 0 0 10px;
+}

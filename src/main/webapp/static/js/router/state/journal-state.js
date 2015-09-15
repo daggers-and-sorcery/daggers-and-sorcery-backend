@@ -2,11 +2,16 @@
 
 module.exports = {
     name: 'journal',
-    url: '/journal/',
+    url: '/journal/:type',
     templateUrl: "/partial/main/journal.html",
+    params: {
+        type: {
+            value: 'item'
+        }
+    },
     resolve: {
-        journalInfo: function ($http) {
-            return $http({method: 'GET', url: '/journal/list/item'});
+        journalInfo: function ($http, $stateParams) {
+            return $http({method: 'GET', url: '/journal/list/'+$stateParams.type});
         }
     },
     controller: require('js/controller/journal-controller.js')

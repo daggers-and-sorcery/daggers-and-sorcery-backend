@@ -1,0 +1,16 @@
+package com.morethanheroic.swords.attribute.view.response;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.morethanheroic.swords.attribute.enums.Attribute;
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public class AttributeModifierResponseEntry {
+
+    private final Attribute attribute;
+    private final int value;
+
+    public AttributeModifierResponseEntry(Attribute attribute, int value) {
+        this.attribute = attribute;
+        this.value = value;
+    }
+}

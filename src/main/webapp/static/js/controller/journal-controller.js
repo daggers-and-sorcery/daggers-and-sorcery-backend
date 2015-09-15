@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function ($scope, $http, journalInfo) {
-    $scope.type = 'item';
+module.exports = function ($scope, $http, $stateParams, journalInfo) {
+    $scope.type = $stateParams.type;
     $scope.list = journalInfo.data.data.journal_info;
 
     $scope.changeType = function (newType) {

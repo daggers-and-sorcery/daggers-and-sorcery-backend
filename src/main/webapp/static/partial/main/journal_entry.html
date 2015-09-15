@@ -1,12 +1,59 @@
 <div class="panel panel-default panel-shadow">
     <div class="panel-heading">Journal entry
+        <div class="panel-heading-button-group">
+            <button ui-sref="journal(type)" class="btn btn-default">Back</button>
+        </div>
     </div>
     <div class="panel-body">
-        <h4 class="text-center" style="margin: 0;" ng-bind="entry.name"></h4>
-
-        <div class="row" ng-show="type === 'item'">
+        <h4 class="text-center journal-header" ng-bind="entry.name"></h4>
+        <div class="row" ng-if="type === 'item'">
             <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
-                ITEM
+                <dl class="inventory-popup-definition-list">
+                    <dt>Name:</dt>
+                    <dd ng-bind="::entry.name"></dd>
+                    <dt>Type:</dt>
+                    <dd ng-bind="::entry.type | capitalize:'first' | replace:'_':' '"></dd>
+                    <dt>Weight:</dt>
+                    <dd ng-bind="::entry.weight + ' kg'"></dd>
+                    <dt>Equipment:</dt>
+                    <dd ng-bind="::entry.equipment"></dd>
+                </dl>
+            </div>
+            <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                <dl class="inventory-popup-definition-list">
+                    <dt ng-if="entry.requirements.length > 0">Requirements:</dt>
+                    <dd ng-repeat="requirement in entry.requirements" ng-bind="::requirement.value + ' - ' + (requirement.attribute | capitalize:'first' | replace:'_':' ')"></dd>
+                    <dt ng-if="entry.modifiers.length > 0">Modifiers:</dt>
+                    <dd ng-repeat="modifier in entry.modifiers" ng-bind="::modifier.value + ' - ' + (modifier.attribute | capitalize:'first' | replace:'_':' ')"></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="row" ng-if="type === 'monster'">
+            <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                <dl class="inventory-popup-definition-list">
+                    <dt>Level:</dt>
+                    <dd ng-bind="::entry.level"></dd>
+                    <dt>Attack type:</dt>
+                    <dd ng-bind="::entry.attackType | capitalize:'first' | replace:'_':' '"></dd>
+                    <dt>Attack:</dt>
+                    <dd ng-bind="::entry.attack"></dd>
+                    <dt>Defense:</dt>
+                    <dd ng-bind="::entry.defense"></dd>
+                </dl>
+            </div>
+            <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                <dl class="inventory-popup-definition-list">
+                    <dt>Initiation:</dt>
+                    <dd ng-bind="::entry.initiation"></dd>
+                    <dt>Aiming:</dt>
+                    <dd ng-bind="::entry.aiming"></dd>
+                    <dt>Health:</dt>
+                    <dd ng-bind="::entry.health"></dd>
+                    <dt>Damage:</dt>
+                    <dd ng-bind="::entry.damage"></dd>
+                    <dt>Ranged damage:</dt>
+                    <dd ng-bind="::entry.rangedDamage"></dd>
+                </dl>
             </div>
         </div>
     </div>
