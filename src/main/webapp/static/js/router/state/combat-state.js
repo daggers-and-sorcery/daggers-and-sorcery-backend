@@ -29,7 +29,6 @@ module.exports = {
                 finalMessages[key].icon_color = value.messageData['icon_color']+'-icon-color';
             }
         });
-            console.log(finalMessages);
 
         $scope.combatMessages = finalMessages;
     }
