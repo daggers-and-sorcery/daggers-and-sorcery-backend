@@ -7,5 +7,39 @@
     </div>
     <div class="panel-body">
         <h4 class="text-center" style="margin: 0;">Items</h4>
+        <div class="row">
+            <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                <table class="journal-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="text-center">Info</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="entry in list" ng-if="$index % 2 === 0">
+                        <td>{{entry.entryName}}</td>
+                        <td class="text-center" style="width: 50px;">
+                            <a ui-sref="journal_entry({type: type, id: entry.entryId})"><span class="glyphicon glyphicon-eye-open journal-item-watch"></span></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                <table class="journal-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="text-center">Info</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="entry in list" ng-if="$index % 2 === 1">
+                        <td>{{entry.journalId}}</td>
+                        <td class="text-center" style="width: 50px;">
+                            <span class="glyphicon glyphicon-eye-open journal-item-watch"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

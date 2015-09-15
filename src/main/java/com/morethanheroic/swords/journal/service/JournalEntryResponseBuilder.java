@@ -33,6 +33,8 @@ public class JournalEntryResponseBuilder {
             case MONSTER:
                 response.setData("journal_entry", monsterDefinitionManager.getMonsterDefinition(journalId));
                 break;
+            default:
+                throw new IllegalArgumentException("Invalid journal type!");
         }
 
         return response;
