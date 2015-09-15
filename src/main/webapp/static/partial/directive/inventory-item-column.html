@@ -3,7 +3,7 @@
         <li class="list-group-item attribute-list-item" ng-repeat="item in inventory" ng-if="$index % 3 === columnAlignId">
             <span class="badge attribute-badge pull-left" ng-bind="item.item.amount"></span>
             <span style="padding-left: 5px;" ng-bind="item.definition.name"></span>
-            <span class="pull-right inventory-item-watch" ng-click="equip(item.definition.id)" style="width: 26px;height: 26px;margin-top: -3.5px;cursor: pointer;" ng-if="isEquipment(item.definition.type)"><img style="margin-top: -8px;" src="/icon/equip.svg"></span>
+            <span class="pull-right inventory-item-watch" ng-click="equip(item.definition.id)" style="width: 26px;height: 26px;margin-top: -3.5px;cursor: pointer;" ng-if="item.definition.equipment"><img style="margin-top: -8px;" src="/icon/equip.svg"></span>
             <span class="glyphicon glyphicon-eye-open pull-right inventory-item-watch" popover-template="inventoryPopover.templateUrl" popover-trigger="mouseenter" popover-placement="right"></span>
         </li>
     </ul>

@@ -10,17 +10,7 @@ module.exports = require('js/app.js').directive('inventoryListColumn', function 
         },
         controller: function ($scope, $http, $rootScope) {
             $scope.inventoryPopover = {
-                templateUrl: '/partial/popover/inventory.html',
-            };
-
-            $scope.isEquipment = function(type) {
-                switch(type) {
-                    case 'ONE_HANDED_SWORD':
-                    case 'SHIELD':
-                        return true
-                }
-
-                return false;
+                templateUrl: '/partial/popover/inventory.html'
             };
 
             $scope.equip = function(itemId) {

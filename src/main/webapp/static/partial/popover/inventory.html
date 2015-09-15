@@ -6,9 +6,9 @@
         <dd ng-bind="::item.definition.type | capitalize:'first' | replace:'_':' '"></dd>
         <dt>Weight:</dt>
         <dd ng-bind="::item.definition.weight + ' kg'"></dd>
-        <dt ng-if="item.definition.allRequirements.length > 0">Requirements:</dt>
-        <dd ng-repeat="requirement in item.definition.allRequirements" ng-bind="::requirement.amount + ' - ' + (requirement.attribute | capitalize:'first' | replace:'_':' ')">ss</dd>
-        <dt ng-if="item.definition.allModifiers.length > 0">Modifiers:</dt>
-        <dd ng-repeat="modifier in item.definition.allModifiers" ng-bind="::modifier.amount + ' - ' + (modifier.attribute | capitalize:'first' | replace:'_':' ')">ss</dd>
+        <dt ng-if="item.definition.requirements.length > 0">Requirements:</dt>
+        <dd ng-repeat="requirement in item.definition.requirements" ng-bind="::requirement.value + ' - ' + (requirement.attribute | capitalize:'first' | replace:'_':' ')"></dd>
+        <dt ng-if="item.definition.modifiers.length > 0">Modifiers:</dt>
+        <dd ng-repeat="modifier in item.definition.modifiers" ng-bind="::modifier.value + ' - ' + (modifier.attribute | capitalize:'first' | replace:'_':' ')"></dd>
     </dl>
 </div>

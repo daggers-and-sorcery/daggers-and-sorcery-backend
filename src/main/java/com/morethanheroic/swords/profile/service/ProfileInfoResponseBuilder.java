@@ -17,6 +17,7 @@ import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.item.service.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,15 +36,17 @@ public class ProfileInfoResponseBuilder {
     private final InventoryManager inventoryManager;
     private final EquipmentManager equipmentManager;
     private final ResponseFactory responseFactory;
+    private final ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder;
 
     @Autowired
-    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager, EquipmentManager equipmentManager, ResponseFactory responseFactory) {
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.attributeUtil = attributeUtil;
         this.inventoryManager = inventoryManager;
         this.equipmentManager = equipmentManager;
         this.responseFactory = responseFactory;
+        this.profileItemEntryResponseBuilder = profileItemEntryResponseBuilder;
     }
 
     public Response build(UserEntity user) {
@@ -99,7 +102,7 @@ public class ProfileInfoResponseBuilder {
             HashMap<String, Object> itemData = new HashMap<>();
 
             itemData.put("item", item);
-            itemData.put("definition", itemDefinitionManager.getItemDefinition(item.getItemId()));
+            itemData.put("definition", profileItemEntryResponseBuilder.buildItemEntry(itemDefinitionManager.getItemDefinition(item.getItemId())));
 
             inventoryData.add(itemData);
         }
