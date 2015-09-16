@@ -28,10 +28,7 @@
                     </select>
                 </td>
                 <td>
-                    <select class="form-control" ng-model="newSetting.use">
-                        <option value="10">Mana potion</option>
-                        <option value="23">Health potion</option>
-                    </select>
+                    <select class="form-control" ng-model="newSetting.use"  ng-options="item.name for item in usableItems track by item.id" ng-value="item.id"></select>
                 </td>
                 <td>
                     <select class="form-control" ng-model="newSetting.trigger">
@@ -45,8 +42,8 @@
                     <input class="form-control" ng-model="newSetting.target" type="{{targetType}}" value="10"/>
                 </td>
                 <td>
-                    <button class="btn btn-default" ng-click="save()">S</button>
-                    <button class="btn btn-default" ng-click="clear()">X</button>
+                    <button class="btn btn-default" ng-click="saveNew()">S</button>
+                    <button class="btn btn-default" ng-click="clearNew()">X</button>
                 </td>
             </tr>
         </table>

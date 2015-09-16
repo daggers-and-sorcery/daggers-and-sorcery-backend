@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($scope) {
+module.exports = function ($scope, $http) {
     $scope.settings = [
         {
             id: 111,
@@ -26,18 +26,26 @@ module.exports = function ($scope) {
         console.log("save: " + id);
     };
 
-    $scope.save = function () {
+    $scope.saveNew = function () {
         console.log("saved: ");
         console.log($scope.newSetting)
     };
 
-    $scope.clear = function () {
+    $scope.clearNew = function () {
         $scope.newSetting = {};
 
         $scope.newSetting.type = "item";
 
-        //TODO: get the items usable
         //TODO: set the first item ad default
+
+        $scope.usableItems = [];
+        $http.get('/combat/settings/usable/item').then(function(response) {
+            $scope.usableItems = response.data.data.itemList;
+
+            if($scope.usableItems.length > 0) {
+                $scope.newSetting.use = $scope.usableItems[0].id;
+            }
+        });
 
         $scope.newSetting.trigger = "turn";
 
@@ -48,5 +56,5 @@ module.exports = function ($scope) {
     };
 
     //Initialise
-    $scope.clear();
+    $scope.clearNew();
 };
