@@ -13,5 +13,6 @@ module.exports = require('js/app.js').config(function ($stateProvider, $urlRoute
         .state(require('js/router/state/map-state.js'))
         .state(require('js/router/state/journal-state.js'))
         .state(require('js/router/state/journal-entry-state.js'))
+        .state(require('js/router/state/settings-state.js'))
         .state(require('js/router/state/combat-state.js'));
 });

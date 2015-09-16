@@ -1,0 +1,54 @@
+<div class="panel panel-default panel-shadow">
+    <div class="panel-heading">Settings</div>
+    <div class="panel-body">
+        <h4 class="text-center">Combat settings</h4>
+        <table class="table">
+            <tr>
+                <th>Type</th>
+                <th>Use</th>
+                <th>Trigger</th>
+                <th>Target</th>
+                <th>Edit</th>
+            </tr>
+            <tr ng-repeat="setting in settings">
+                <td>{{setting.type}}</td>
+                <td>{{setting.use}}</td>
+                <td>{{setting.trigger}}</td>
+                <td>{{setting.target}}</td>
+                <td>
+                    <button class="btn btn-default" ng-click="save(setting.id)">S</button>
+                    <button class="btn btn-default" ng-click="remove(setting.id)">X</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select class="form-control" ng-model="newSetting.type">
+                        <option value="item" selected="selected">Item</option>
+                        <option value="monster">Spell</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" ng-model="newSetting.use">
+                        <option value="10">Mana potion</option>
+                        <option value="23">Health potion</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" ng-model="newSetting.trigger">
+                        <option value="turn">n-th turn</option>
+                        <option value="health">Health under n-%</option>
+                        <option value="mana">Mana under n-%</option>
+                        <option value="monster">Specific monster</option>
+                    </select>
+                </td>
+                <td>
+                    <input class="form-control" ng-model="newSetting.target" type="{{targetType}}" value="10"/>
+                </td>
+                <td>
+                    <button class="btn btn-default" ng-click="save()">S</button>
+                    <button class="btn btn-default" ng-click="clear()">X</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
