@@ -22,13 +22,13 @@
             </tr>
             <tr>
                 <td>
-                    <select class="form-control" ng-model="newSetting.type">
+                    <select ng-change="refreshUse()" class="form-control" ng-model="newSetting.type">
                         <option value="item" selected="selected">Item</option>
-                        <option value="monster">Spell</option>
+                        <option value="spell">Spell</option>
                     </select>
                 </td>
                 <td>
-                    <select class="form-control" ng-model="newSetting.use"  ng-options="item.name for item in usableItems track by item.id" ng-value="item.id"></select>
+                    <select class="form-control" ng-model="newSetting.use"  ng-options="usable.name for usable in usables track by item.id" ng-value="usable.id"></select>
                 </td>
                 <td>
                     <select class="form-control" ng-model="newSetting.trigger">

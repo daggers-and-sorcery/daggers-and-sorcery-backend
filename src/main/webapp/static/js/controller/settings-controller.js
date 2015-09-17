@@ -36,14 +36,7 @@ module.exports = function ($scope, $http) {
 
         $scope.newSetting.type = "item";
 
-        $scope.usableItems = [];
-        $http.get('/combat/settings/usable/item').then(function(response) {
-            $scope.usableItems = response.data.data.itemList;
-
-            if($scope.usableItems.length > 0) {
-                $scope.newSetting.use = $scope.usableItems[0];
-            }
-        });
+        $scope.refreshUse();
 
         $scope.newSetting.trigger = "turn";
 
@@ -51,6 +44,29 @@ module.exports = function ($scope, $http) {
         $scope.newSetting.target = 10;
 
         console.log("cleared: " + $scope.newSetting)
+    };
+
+    $scope.refreshUse = function() {
+        console.log($scope.newSetting.type);
+        if($scope.newSetting.type == "spell") {
+            $scope.usables = [];
+            $http.get('/combat/settings/usable/spell').then(function(response) {
+                $scope.usables = response.data.data.spellList;
+
+                if($scope.usables.length > 0) {
+                    $scope.newSetting.use = $scope.usables[0];
+                }
+            });
+        } else {
+            $scope.usables = [];
+            $http.get('/combat/settings/usable/item').then(function(response) {
+                $scope.usables = response.data.data.itemList;
+
+                if($scope.usables.length > 0) {
+                    $scope.newSetting.use = $scope.usables[0];
+                }
+            });
+        }
     };
 
     //Initialise
