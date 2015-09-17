@@ -36,14 +36,12 @@ module.exports = function ($scope, $http) {
 
         $scope.newSetting.type = "item";
 
-        //TODO: set the first item ad default
-
         $scope.usableItems = [];
         $http.get('/combat/settings/usable/item').then(function(response) {
             $scope.usableItems = response.data.data.itemList;
 
             if($scope.usableItems.length > 0) {
-                $scope.newSetting.use = $scope.usableItems[0].id;
+                $scope.newSetting.use = $scope.usableItems[0];
             }
         });
 
