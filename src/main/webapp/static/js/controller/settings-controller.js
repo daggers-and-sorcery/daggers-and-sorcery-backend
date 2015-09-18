@@ -40,8 +40,8 @@ module.exports = function ($scope, $http) {
 
         $scope.newSetting.trigger = "turn";
 
-        $scope.targetType = "number";
-        $scope.newSetting.target = 10;
+        //$scope.targetType = "number";
+        $scope.refreshTarget();
 
         console.log("cleared: " + $scope.newSetting)
     };
@@ -66,6 +66,23 @@ module.exports = function ($scope, $http) {
                     $scope.newSetting.use = $scope.usables[0];
                 }
             });
+        }
+    };
+
+    $scope.refreshTarget = function() {
+        if ($scope.newSetting.trigger === 'monster') {
+            $scope.showMonsterSelector = true;
+
+            $http.get('/combat/settings/specific_monsters').then(function(response) {
+                $scope.monsterList = response.data.data.monsterList;
+
+                if($scope.monsterList.length > 0) {
+                    $scope.newSetting.targetMonster = $scope.monsterList[0];
+                }
+            });
+        } else {
+            $scope.showMonsterSelector = false;
+            $scope.newSetting.target = 1;
         }
     };
 

@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combatsettings.view.controller;
 
 import com.morethanheroic.swords.combatsettings.model.SettingType;
+import com.morethanheroic.swords.combatsettings.service.SpecificMonstersResponseBuilder;
 import com.morethanheroic.swords.combatsettings.service.UsableItemsResponseBuilder;
 import com.morethanheroic.swords.combatsettings.service.UsableSpellsResponseBuilder;
 import com.morethanheroic.swords.common.response.Response;
@@ -18,12 +19,14 @@ public class CombatSettingsController {
 
     private final UsableItemsResponseBuilder usableItemsResponseBuilder;
     private final UsableSpellsResponseBuilder usableSpellsResponseBuilder;
+    private final SpecificMonstersResponseBuilder specificMonstersResponseBuilder;
     private final JournalManager journalManager;
 
     @Autowired
-    public CombatSettingsController(UsableItemsResponseBuilder usableItemsResponseBuilder, UsableSpellsResponseBuilder usableSpellsResponseBuilder, JournalManager journalManager) {
+    public CombatSettingsController(UsableItemsResponseBuilder usableItemsResponseBuilder, UsableSpellsResponseBuilder usableSpellsResponseBuilder, SpecificMonstersResponseBuilder specificMonstersResponseBuilder, JournalManager journalManager) {
         this.usableItemsResponseBuilder = usableItemsResponseBuilder;
         this.usableSpellsResponseBuilder = usableSpellsResponseBuilder;
+        this.specificMonstersResponseBuilder = specificMonstersResponseBuilder;
         this.journalManager = journalManager;
     }
 
@@ -48,5 +51,10 @@ public class CombatSettingsController {
         } else {
             throw new IllegalArgumentException("Setting type is not handled!");
         }
+    }
+
+    @RequestMapping(value = "/combat/settings/specific_monsters", method = RequestMethod.GET)
+    public Response specificMonster(UserEntity userEntity) {
+        return specificMonstersResponseBuilder.build(userEntity, journalManager.getJournalEntryListByType(userEntity,JournalType.MONSTER));
     }
 }

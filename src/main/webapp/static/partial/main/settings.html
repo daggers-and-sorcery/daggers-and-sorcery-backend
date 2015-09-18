@@ -31,7 +31,7 @@
                     <select class="form-control" ng-model="newSetting.use"  ng-options="usable.name for usable in usables track by item.id" ng-value="usable.id"></select>
                 </td>
                 <td>
-                    <select class="form-control" ng-model="newSetting.trigger">
+                    <select ng-change="refreshTarget()" class="form-control" ng-model="newSetting.trigger">
                         <option value="turn">n-th turn</option>
                         <option value="health">Health under n-%</option>
                         <option value="mana">Mana under n-%</option>
@@ -39,7 +39,8 @@
                     </select>
                 </td>
                 <td>
-                    <input class="form-control" ng-model="newSetting.target" type="{{targetType}}" value="10"/>
+                    <input ng-show="!showMonsterSelector" class="form-control" ng-model="newSetting.target" type="{{targetType}}" value="10"/>
+                    <select ng-show="showMonsterSelector" class="form-control" ng-model="newSetting.targetMonster"  ng-options="monster.name for monster in monsterList track by monster.id" ng-value="monster.id"></select>
                 </td>
                 <td>
                     <button class="btn btn-default" ng-click="saveNew()">S</button>
