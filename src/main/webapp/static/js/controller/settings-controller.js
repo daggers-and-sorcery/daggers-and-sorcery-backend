@@ -27,8 +27,25 @@ module.exports = function ($scope, $http) {
     };
 
     $scope.saveNew = function () {
-        console.log("saved: ");
-        console.log($scope.newSetting)
+        var dataToSend = $scope.newSetting;
+
+        if(dataToSend.trigger === 'monster') {
+            dataToSend.target = dataToSend.targetMonster.id;
+        }
+
+        delete dataToSend.targetMonster;
+
+        dataToSend.use = dataToSend.use.id;
+        dataToSend.type = dataToSend.type.toUpperCase();
+        dataToSend.trigger = dataToSend.trigger.toUpperCase();
+
+        console.log(dataToSend);
+
+        $http.post('/combat/settings/insert', JSON.stringify(dataToSend)).success(function (data, status, headers, config) {
+            console.log("saved");
+        });
+
+        $scope.clearNew();
     };
 
     $scope.clearNew = function () {

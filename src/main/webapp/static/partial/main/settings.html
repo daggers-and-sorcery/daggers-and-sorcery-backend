@@ -15,8 +15,7 @@
                 <td>{{setting.use}}</td>
                 <td>{{setting.trigger}}</td>
                 <td>{{setting.target}}</td>
-                <td>
-                    <button class="btn btn-default" ng-click="save(setting.id)">S</button>
+                <td class="text-center">
                     <button class="btn btn-default" ng-click="remove(setting.id)">X</button>
                 </td>
             </tr>
@@ -42,7 +41,7 @@
                     <input ng-show="!showMonsterSelector" class="form-control" ng-model="newSetting.target" type="{{targetType}}" value="10"/>
                     <select ng-show="showMonsterSelector" class="form-control" ng-model="newSetting.targetMonster"  ng-options="monster.name for monster in monsterList track by monster.id" ng-value="monster.id"></select>
                 </td>
-                <td>
+                <td class="text-center">
                     <button class="btn btn-default" ng-click="saveNew()">S</button>
                     <button class="btn btn-default" ng-click="clearNew()">X</button>
                 </td>
