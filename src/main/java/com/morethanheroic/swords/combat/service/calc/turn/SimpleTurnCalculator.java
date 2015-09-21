@@ -62,6 +62,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
         combat.increaseTurn();
     }
 
+    //TODO: move combat settings out of here!
     private void handleCombatSettings(CombatResult result, Combat combat) {
         List<CombatSettingsEntity> combatSettingsEntityList = combatSettingsFacade.getAllCombatSettings(combat.getUserEntity());
 
