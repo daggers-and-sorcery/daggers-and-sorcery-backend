@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: swords
 Target Host: localhost
 Target Database: swords
-Date: 2015.09.21. 7:07:42
+Date: 2015.09.21. 7:37:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -17,7 +17,7 @@ CREATE TABLE `combat_settings` (
   `user_id` int(10) unsigned NOT NULL,
   `type` varchar(255) NOT NULL,
   `settings_id` mediumint(8) unsigned NOT NULL,
-  `trigger` smallint(5) unsigned NOT NULL,
+  `trigger_type` varchar(16) NOT NULL,
   `target` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

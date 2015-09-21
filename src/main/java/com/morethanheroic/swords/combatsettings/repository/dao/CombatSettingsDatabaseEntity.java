@@ -9,14 +9,14 @@ public class CombatSettingsDatabaseEntity {
     private int user_id;
     private SettingType type;
     private int settings_id;
-    private TriggerType trigger;
+    private TriggerType trigger_type;
     private int target;
 
     public CombatSettingsDatabaseEntity(int userId, SettingType type, int settingsId, TriggerType trigger, int target) {
         this.user_id = userId;
         this.type = type;
         this.settings_id = settingsId;
-        this.trigger = trigger;
+        this.trigger_type = trigger;
         this.target = target;
     }
 
@@ -37,7 +37,7 @@ public class CombatSettingsDatabaseEntity {
     }
 
     public TriggerType getTrigger() {
-        return trigger;
+        return trigger_type;
     }
 
     public int getTarget() {

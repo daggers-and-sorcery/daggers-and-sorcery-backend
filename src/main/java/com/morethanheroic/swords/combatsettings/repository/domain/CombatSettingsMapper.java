@@ -14,6 +14,6 @@ public interface CombatSettingsMapper {
     @Delete("DELETE FROM combat_settings WHERE id = #{id}")
     void remove(@Param("id") int id);
 
-    @Insert("INSERT INTO combat_settings SET user_id = #{user_id}, type = #{type}, settings_id = #{settingsId}, trigger = #{trigger}, target = #{target}")
+    @Insert("INSERT INTO combat_settings SET user_id = #{user_id}, type = #{type}, settings_id = #{settingsId}, trigger_type = #{trigger}, target = #{target}")
     void save(CombatSettingsDatabaseEntity combatSettingsDatabaseEntity);
 }
