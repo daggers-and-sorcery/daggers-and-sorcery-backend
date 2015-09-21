@@ -1,29 +1,14 @@
 'use strict';
 
 module.exports = function ($scope, $http) {
-    $scope.settings = [
-        {
-            id: 111,
-            type: "Item",
-            use: "Health Potion",
-            trigger: "Turn",
-            target: "3"
-        },
-        {
-            id: 12,
-            type: "Spell",
-            use: "Fireball",
-            trigger: "Turn",
-            target: "2"
-        }
-    ];
+    $scope.settings = [];
 
     $scope.remove = function (id) {
         console.log("remove: " + id);
-    };
 
-    $scope.save = function (id) {
-        console.log("save: " + id);
+        $http.post('/combat/settings/remove', JSON.stringify({id: id})).success(function (data, status, headers, config) {
+            $scope.refreshSettingList();
+        });
     };
 
     $scope.saveNew = function () {
@@ -39,13 +24,17 @@ module.exports = function ($scope, $http) {
         dataToSend.type = dataToSend.type.toUpperCase();
         dataToSend.trigger = dataToSend.trigger.toUpperCase();
 
-        console.log(dataToSend);
-
         $http.post('/combat/settings/insert', JSON.stringify(dataToSend)).success(function (data, status, headers, config) {
-            console.log("saved");
+            $scope.refreshSettingList();
         });
 
         $scope.clearNew();
+    };
+
+    $scope.refreshSettingList = function() {
+        $http.get('/combat/settings/list').success(function (data, status, headers, config) {
+            $scope.settings = data.data.settings;
+        });
     };
 
     $scope.clearNew = function () {
@@ -105,4 +94,5 @@ module.exports = function ($scope, $http) {
 
     //Initialise
     $scope.clearNew();
+    $scope.refreshSettingList();
 };

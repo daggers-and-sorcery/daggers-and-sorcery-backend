@@ -3,7 +3,7 @@ package com.morethanheroic.swords.combatsettings.view.request;
 import com.morethanheroic.swords.combatsettings.model.SettingType;
 import com.morethanheroic.swords.combatsettings.model.TriggerType;
 
-public class CombatSettingsRequest {
+public class InsertCombatSettingRequest {
 
     private SettingType type;
     private TriggerType trigger;

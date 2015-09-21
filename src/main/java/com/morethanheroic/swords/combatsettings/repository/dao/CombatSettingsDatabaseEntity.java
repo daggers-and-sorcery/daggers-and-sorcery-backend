@@ -12,6 +12,9 @@ public class CombatSettingsDatabaseEntity {
     private TriggerType trigger_type;
     private int target;
 
+    public CombatSettingsDatabaseEntity() {
+    }
+
     public CombatSettingsDatabaseEntity(int userId, SettingType type, int settingsId, TriggerType trigger, int target) {
         this.user_id = userId;
         this.type = type;
