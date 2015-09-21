@@ -4,8 +4,6 @@ module.exports = function ($scope, $http) {
     $scope.settings = [];
 
     $scope.remove = function (id) {
-        console.log("remove: " + id);
-
         $http.post('/combat/settings/remove', JSON.stringify({id: id})).success(function (data, status, headers, config) {
             $scope.refreshSettingList();
         });
@@ -48,12 +46,9 @@ module.exports = function ($scope, $http) {
 
         //$scope.targetType = "number";
         $scope.refreshTarget();
-
-        console.log("cleared: " + $scope.newSetting)
     };
 
     $scope.refreshUse = function() {
-        console.log($scope.newSetting.type);
         if($scope.newSetting.type == "spell") {
             $scope.usables = [];
             $http.get('/combat/settings/usable/spell').then(function(response) {
