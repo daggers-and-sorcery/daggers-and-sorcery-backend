@@ -26,9 +26,6 @@ public class MapManager {
     private MapLoader mapLoader;
 
     @Autowired
-    private MapDatabaseManager mapDatabaseManager;
-
-    @Autowired
     private MapObjectMapper mapObjectMapper;
 
     private HashMap<Integer, MapEntity> mapEntityHashMap = new HashMap<>();
@@ -47,7 +44,7 @@ public class MapManager {
     }
 
     public MapEntity buildMapEntity(MapDefinition mapDefinition) {
-        return new MapEntity(mapDefinition, mapInfoDefinitionManager.getMapInfoDefinition(mapDefinition.getId()), mapDatabaseManager.getMapDatabaseEntity(mapDefinition.getId()), mapObjectMapper);
+        return new MapEntity(mapDefinition, mapInfoDefinitionManager.getMapInfoDefinition(mapDefinition.getId()), mapObjectMapper);
     }
 
     public List<MapEntity> getMapList() {

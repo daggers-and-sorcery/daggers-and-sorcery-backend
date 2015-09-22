@@ -14,8 +14,8 @@ public interface MapObjectMapper {
     @Select("SELECT * FROM map_object WHERE map_id = #{mapId}")
     List<MapObjectDatabaseEntity> getSpawnsForMap(int mapId);
 
-    @Insert("INSERT INTO map_object SET x = #{x}, y = #{y}, map_id = #{mapId}, type = #{type}, object = #{object}")
-    void saveSpawn(@Param("x") int x, @Param("y") int y, @Param("mapId") int mapId, @Param("type") MapObjectType type, @Param("object") int object);
+    @Insert("INSERT INTO map_object SET x = #{x}, y = #{y}, map_id = #{mapId}, object_type = #{objectType}, object = #{object}")
+    void saveSpawn(@Param("x") int x, @Param("y") int y, @Param("mapId") int mapId, @Param("objectType") MapObjectType type, @Param("object") int object);
 
     @Delete("DELETE FROM map_object WHERE id = #{id}")
     void removeSpawn(@Param("id") int id);

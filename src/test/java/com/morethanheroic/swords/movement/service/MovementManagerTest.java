@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.movement.service;
 
 import com.morethanheroic.swords.map.domain.MapEntity;
-import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.map.service.domain.MapDefinition;
 import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
@@ -87,7 +86,7 @@ public class MovementManagerTest {
     }
 
     private MapEntity buildFakeMapEntity() {
-        return new MapEntity(buildFakeMapDefinition(), buildMapInfoDefinitionMock(), new MapDatabaseEntity(), null);
+        return new MapEntity(buildFakeMapDefinition(), buildMapInfoDefinitionMock(), null);
     }
 
     private MapInfoDefinition buildMapInfoDefinitionMock() {

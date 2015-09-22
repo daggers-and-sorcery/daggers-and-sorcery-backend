@@ -1,0 +1,56 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20150922-1">
+        <createTable tableName="users">
+            <column name="id" type="int unsigned" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="email" type="varchar(254)">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="username" type="varchar(16)">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="password" type="varchar(64)">
+                <constraints nullable="false" />
+            </column>
+            <column name="race" type="varchar(16)">
+                <constraints nullable="false" />
+            </column>
+            <column name="registration_date" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_login_date" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="x" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="y" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="map" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="health" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="mana" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="movement" type="int">
+                <constraints nullable="false" />
+            </column>
+            <!-- Rewrite everywhere from lastRegenerationDate -->
+            <column name="last_regeneration_date" type="datetime" defaultValue="1970-00-00 00:00:00">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <modifySql>
+            <append value="ENGINE=INNODB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

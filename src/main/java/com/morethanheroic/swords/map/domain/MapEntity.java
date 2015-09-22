@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.map.domain;
 
 import com.morethanheroic.swords.map.repository.dao.MapObjectMapper;
-import com.morethanheroic.swords.map.repository.domain.MapDatabaseEntity;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.repository.domain.MapObjectType;
 import com.morethanheroic.swords.map.service.domain.MapDefinition;
@@ -17,15 +16,13 @@ public class MapEntity {
 
     private final MapDefinition mapDefinition;
     private final MapInfoDefinition mapInfoDefinition;
-    private final MapDatabaseEntity mapDatabaseEntity;
     private final List<SpawnEntity> spawnEntityArrayList;
     private final Random random = new Random();
     private final MapObjectMapper mapObjectMapper;
 
-    public MapEntity(MapDefinition mapDefinition, MapInfoDefinition mapInfoDefinition, MapDatabaseEntity mapDatabaseEntity, MapObjectMapper mapObjectMapper) {
+    public MapEntity(MapDefinition mapDefinition, MapInfoDefinition mapInfoDefinition, MapObjectMapper mapObjectMapper) {
         this.mapDefinition = mapDefinition;
         this.mapInfoDefinition = mapInfoDefinition;
-        this.mapDatabaseEntity = mapDatabaseEntity;
         this.mapObjectMapper = mapObjectMapper;
 
         ArrayList<SpawnEntity> spawnEntityArrayList = new ArrayList<>();

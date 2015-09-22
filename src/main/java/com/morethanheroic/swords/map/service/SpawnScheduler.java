@@ -23,7 +23,7 @@ public class SpawnScheduler {
         List<MapEntity> maps = mapManager.getMapList();
 
         for (MapEntity map : maps) {
-            executor.scheduleAtFixedRate(new SpawnTask(map), 0, map.getSpawnTime(), TimeUnit.SECONDS);
+            executor.scheduleAtFixedRate(new SpawnTask(map), map.getSpawnTime(), map.getSpawnTime(), TimeUnit.SECONDS);
         }
     }
 }

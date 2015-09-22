@@ -12,7 +12,7 @@ public class MapObjectDatabaseEntity {
 
     private int y;
 
-    private MapObjectType type;
+    private MapObjectType object_type;
 
     public MapObjectDatabaseEntity() {
     }
@@ -22,7 +22,7 @@ public class MapObjectDatabaseEntity {
         this.mapId = map;
         this.x = x;
         this.y = y;
-        this.type = type;
+        this.object_type = type;
     }
 
     public int getId() {
@@ -46,11 +46,11 @@ public class MapObjectDatabaseEntity {
     }
 
     public MapObjectType getType() {
-        return type;
+        return object_type;
     }
 
     public void setType(MapObjectType type) {
-        this.type = type;
+        this.object_type = type;
     }
 
     public int getMap() {
