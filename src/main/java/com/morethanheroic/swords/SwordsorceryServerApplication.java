@@ -3,6 +3,7 @@ package com.morethanheroic.swords;
 import com.morethanheroic.swords.common.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.common.resolver.UserEntityHandlerMethodArgumentResolver;
 import com.morethanheroic.swords.common.session.filter.SessionLoginFilter;
+import liquibase.integration.spring.SpringLiquibase;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
