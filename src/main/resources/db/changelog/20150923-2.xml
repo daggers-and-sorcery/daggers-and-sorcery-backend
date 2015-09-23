@@ -1,0 +1,47 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20150923-2">
+        <createTable tableName="equipment">
+            <!-- Rename userId to user_id -->
+            <column name="user_id" type="int unsigned">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="weapon" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="offhand" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="helm" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="gloves" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="ring" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="amulet" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="boots" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="bracers" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="chest" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="legs" type="smallint unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <modifySql>
+            <append value="ENGINE=INNODB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

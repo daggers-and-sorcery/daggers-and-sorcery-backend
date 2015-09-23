@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20150923-1">
+        <createTable tableName="combat_settings">
+            <column name="id" type="int unsigned" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="user_id" type="int unsigned">
+                <constraints nullable="false" />
+            </column>
+            <column name="settings_type" type="varchar(16)">
+                <constraints nullable="false" />
+            </column>
+            <column name="settings_id" type="int unsigned">
+                <constraints nullable="false" />
+            </column>
+            <column name="trigger_type" type="varchar(16)">
+                <constraints nullable="false" />
+            </column>
+            <column name="target" type="tinyint">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <modifySql>
+            <append value="ENGINE=INNODB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>
