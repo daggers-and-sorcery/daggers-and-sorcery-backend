@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.morethanheroic.swords'
+version = '0.0.1'
+
+description = """"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'mysql', name: 'mysql-connector-java', version:'5.1.34'
+    compile group: 'org.mybatis', name: 'mybatis-spring', version:'1.2.3'
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version:'2.1'
+    compile group: 'org.mybatis', name: 'mybatis', version:'3.3.0'
+    compile group: 'org.springframework.data', name: 'spring-data-jdbc-core', version:'1.1.0.RELEASE'
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:'1.2.3.RELEASE') {
+        exclude(module: 'commons-logging')
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.2.3.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-core', version:'4.0.1.RELEASE'
+    compile group: 'org.apache.commons', name: 'commons-math3', version:'3.5'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.4'
+    compile group: 'org.liquibase', name: 'liquibase-core', version:'3.3.2'
+    
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.2.3.RELEASE') {
+        exclude(module: 'commons-logging')
+    }
+    testCompile group: 'org.testng', name: 'testng', version:'6.9.4'
+}
