@@ -44,7 +44,6 @@
             <column name="movement" type="int">
                 <constraints nullable="false" />
             </column>
-            <!-- Rewrite everywhere from lastRegenerationDate -->
             <column name="last_regeneration_date" type="datetime" defaultValue="1970-00-00 00:00:00">
                 <constraints nullable="false" />
             </column>

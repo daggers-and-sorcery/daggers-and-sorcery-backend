@@ -6,7 +6,7 @@ public class NewsDatabaseEntity {
 
     private int id;
 
-    private Date date = new Date();
+    private Date release_date = new Date();
 
     private String title = "";
 
@@ -19,7 +19,7 @@ public class NewsDatabaseEntity {
     }
 
     public Date getDate() {
-        return date;
+        return release_date;
     }
 
     public String getTitle() {
@@ -39,7 +39,7 @@ public class NewsDatabaseEntity {
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.release_date = date;
     }
 
     public void setTitle(String title) {

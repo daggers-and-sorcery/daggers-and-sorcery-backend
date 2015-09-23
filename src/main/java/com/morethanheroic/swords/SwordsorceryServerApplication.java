@@ -110,6 +110,7 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(getMybatisDataSource());
+        sessionFactory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
 
         return sessionFactory.getObject();
     }

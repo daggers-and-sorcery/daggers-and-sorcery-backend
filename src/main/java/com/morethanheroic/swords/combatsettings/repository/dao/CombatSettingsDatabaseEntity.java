@@ -6,20 +6,20 @@ import com.morethanheroic.swords.combatsettings.model.TriggerType;
 public class CombatSettingsDatabaseEntity {
 
     private int id;
-    private int user_id;
-    private SettingType settings_type;
-    private int settings_id;
-    private TriggerType trigger_type;
+    private int userId;
+    private SettingType settingsType;
+    private int settingsId;
+    private TriggerType triggerType;
     private int target;
 
     public CombatSettingsDatabaseEntity() {
     }
 
     public CombatSettingsDatabaseEntity(int userId, SettingType settings_type, int settingsId, TriggerType trigger, int target) {
-        this.user_id = userId;
-        this.settings_type = settings_type;
-        this.settings_id = settingsId;
-        this.trigger_type = trigger;
+        this.userId = userId;
+        this.settingsType = settings_type;
+        this.settingsId = settingsId;
+        this.triggerType = trigger;
         this.target = target;
     }
 
@@ -28,19 +28,19 @@ public class CombatSettingsDatabaseEntity {
     }
 
     public int getUserId() {
-        return user_id;
+        return userId;
     }
 
     public SettingType getType() {
-        return settings_type;
+        return settingsType;
     }
 
     public int getSettingsId() {
-        return settings_id;
+        return settingsId;
     }
 
     public TriggerType getTrigger() {
-        return trigger_type;
+        return triggerType;
     }
 
     public int getTarget() {

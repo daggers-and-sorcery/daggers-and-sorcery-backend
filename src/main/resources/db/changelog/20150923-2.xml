@@ -5,7 +5,6 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
     <changeSet author="laxika" id="20150923-2">
         <createTable tableName="equipment">
-            <!-- Rename userId to user_id -->
             <column name="user_id" type="int unsigned">
                 <constraints primaryKey="true" nullable="false" />
             </column>

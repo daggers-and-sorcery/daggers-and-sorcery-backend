@@ -8,7 +8,6 @@
             <column name="id" type="smallint unsigned" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <!-- Change date to release date (date is reversed)  -->
             <column name="release_date" type="date">
                 <constraints nullable="false" />
             </column>

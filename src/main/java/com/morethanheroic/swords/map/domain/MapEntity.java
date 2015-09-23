@@ -82,6 +82,7 @@ public class MapEntity {
     public List<MapObjectDatabaseEntity> getSpawnsAt(int x, int y) {
         List<MapObjectDatabaseEntity> spawnAtPointList = new ArrayList<>();
 
+        //TODO: fix this bullshit! It's always query every spawn on the map, not only whats on the x/y coordinate!
         List<MapObjectDatabaseEntity> spawnList = getSpawns();
 
         for (MapObjectDatabaseEntity entity : spawnList) {
@@ -94,6 +95,7 @@ public class MapEntity {
     }
 
     public MapObjectDatabaseEntity getSpawnAt(int x, int y, int monsterId) {
+        //TODO: fix this bullshit! It's always query every spawn on the map, not only whats on the x/y coordinate!
         List<MapObjectDatabaseEntity> spawnList = getSpawns();
 
         for (MapObjectDatabaseEntity entity : spawnList) {
