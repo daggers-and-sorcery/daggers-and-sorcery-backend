@@ -30,31 +30,31 @@ public class PlayerRangedAttackCalculator implements AttackCalculator {
 
     @Override
     public void calculateAttack(CombatResult result, Combat combat) {
-        if (randomUtil.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserEntity(), CombatAttribute.AIMING)) > combat.getMonsterDefinition().getDefense()) {
+        if (randomUtil.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.AIMING)) > combat.getMonsterCombatEntity().getMonsterDefinition().getDefense()) {
             dealDamage(result, combat);
 
-            if (combat.getMonsterHealth() <= 0) {
-                result.addMessage(combatMessageBuilder.buildMonsterKilledMessage(combat.getMonsterDefinition().getName()));
+            if (combat.getMonsterCombatEntity().getActualHealth() <= 0) {
+                result.addMessage(combatMessageBuilder.buildMonsterKilledMessage(combat.getMonsterCombatEntity().getMonsterDefinition().getName()));
                 result.setWinner(Winner.PLAYER);
             }
         } else {
-            result.addMessage(combatMessageBuilder.buildPlayerRangedMissMessage(combat.getMonsterDefinition().getName()));
+            result.addMessage(combatMessageBuilder.buildPlayerRangedMissMessage(combat.getMonsterCombatEntity().getMonsterDefinition().getName()));
         }
     }
 
     private void dealDamage(CombatResult result, Combat combat) {
-        int damage = randomUtil.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserEntity(), CombatAttribute.RANGED_DAMAGE));
+        int damage = randomUtil.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.RANGED_DAMAGE));
 
         addAttackXp(result, combat, damage * 2);
 
-        combat.decreaseMonsterHealth(damage);
+        combat.getMonsterCombatEntity().decreaseActualHealth(damage);
 
-        result.addMessage(combatMessageBuilder.buildRangedDamageToMonsterMessage(combat.getMonsterDefinition().getName(), damage));
+        result.addMessage(combatMessageBuilder.buildRangedDamageToMonsterMessage(combat.getMonsterCombatEntity().getMonsterDefinition().getName(), damage));
     }
 
     private void addAttackXp(CombatResult result, Combat combat, int amount) {
-        if (combatUtil.getUserWeaponType(combat.getUserEntity()) != null) {
-            result.addRewardXp(combatUtil.getUserWeaponSkillType(combat.getUserEntity()), amount);
+        if (combatUtil.getUserWeaponType(combat.getUserCombatEntity().getUserEntity()) != null) {
+            result.addRewardXp(combatUtil.getUserWeaponSkillType(combat.getUserCombatEntity().getUserEntity()), amount);
         } else {
             result.addRewardXp(SkillAttribute.FISTFIGHT, amount);
         }

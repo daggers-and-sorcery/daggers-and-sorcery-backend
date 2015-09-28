@@ -17,55 +17,19 @@ public class Combat {
         this.monsterCombatEntity = new MonsterCombatEntity(monsterDefinition);
     }
 
-    public UserEntity getUserEntity() {
-        return userCombatEntity.getUserEntity();
-    }
-
-    public MonsterDefinition getMonsterDefinition() {
-        return monsterCombatEntity.getMonsterDefinition();
-    }
-
     public int getTurn() {
         return turn;
-    }
-
-    public void setTurn(int turn) {
-        this.turn = turn;
     }
 
     public void increaseTurn() {
         this.turn++;
     }
 
-    public int getPlayerHealth() {
-        return userCombatEntity.getActualHealth();
+    public UserCombatEntity getUserCombatEntity() {
+        return userCombatEntity;
     }
 
-    public void setPlayerHealth(int playerHealth) {
-        this.userCombatEntity.setActualHealth(playerHealth);
-    }
-
-    public void increasePlayerHealth(int amount) {
-        userCombatEntity.increaseActualHealth(amount);
-    }
-
-    public void decreasePlayerHealth(int amount) {
-        userCombatEntity.decreaseActualHealth(amount);
-    }
-
-    public int getMonsterHealth() {
-        return monsterCombatEntity.getActualHealth();
-    }
-
-    public void setMonsterHealth(int monsterHealth) {
-        monsterCombatEntity.setActualHealth(monsterHealth);
-    }
-
-    public void increaseMonsterHealth(int amount) {
-        monsterCombatEntity.increaseActualHealth(amount);
-    }
-
-    public void decreaseMonsterHealth(int amount) {
-        monsterCombatEntity.decreaseActualHealth(amount);
+    public MonsterCombatEntity getMonsterCombatEntity() {
+        return monsterCombatEntity;
     }
 }

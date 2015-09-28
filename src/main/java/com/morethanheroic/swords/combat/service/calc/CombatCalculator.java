@@ -62,13 +62,13 @@ public class CombatCalculator {
     }
 
     private void startFight(CombatResult result, Combat combat) {
-        journalManager.createJournalEntry(combat.getUserEntity(), JournalType.MONSTER, combat.getMonsterDefinition().getId());
+        journalManager.createJournalEntry(combat.getUserCombatEntity().getUserEntity(), JournalType.MONSTER, combat.getMonsterCombatEntity().getMonsterDefinition().getId());
 
-        result.addMessage(combatMessageBuilder.buildFightInitialisationMessage(combat.getMonsterDefinition().getName()));
+        result.addMessage(combatMessageBuilder.buildFightInitialisationMessage(combat.getMonsterCombatEntity().getMonsterDefinition().getName()));
     }
 
     private void calculateFight(CombatResult result, Combat combat) {
-        while (combat.getPlayerHealth() > 0 && combat.getMonsterHealth() > 0) {
+        while (combat.getUserCombatEntity().getActualHealth() > 0 && combat.getMonsterCombatEntity().getActualHealth() > 0) {
             turnCalculatorFactory.getTurnCalculator(combat.getTurn()).takeTurn(result, combat);
         }
     }
@@ -76,9 +76,9 @@ public class CombatCalculator {
     private void endFight(CombatResult result, Combat combat, MapObjectDatabaseEntity spawn) {
         if (result.getWinner() == Winner.PLAYER) {
             //Add drops
-            ArrayList<Drop> drops = dropCalculator.calculateDrop(combat.getMonsterDefinition());
+            ArrayList<Drop> drops = dropCalculator.calculateDrop(combat.getMonsterCombatEntity().getMonsterDefinition());
 
-            InventoryEntity inventory = inventoryManager.getInventory(combat.getUserEntity());
+            InventoryEntity inventory = inventoryManager.getInventory(combat.getUserCombatEntity().getUserEntity());
 
             for (Drop drop : drops) {
                 result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(drop.getItem()).getName(), drop.getAmount()));
@@ -87,10 +87,10 @@ public class CombatCalculator {
             }
 
             //Remove spawn
-            mapManager.getMap(combat.getUserEntity().getMapId()).removeSpawn(spawn.getId());
+            mapManager.getMap(combat.getUserCombatEntity().getUserEntity().getMapId()).removeSpawn(spawn.getId());
 
             //Add xp
-            SkillEntity skillEntity = skillManager.getSkills(combat.getUserEntity());
+            SkillEntity skillEntity = skillManager.getSkills(combat.getUserCombatEntity().getUserEntity());
 
             Map<SkillAttribute, Integer> rewardXpMap = result.getRewardXpMap();
 

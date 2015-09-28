@@ -47,15 +47,15 @@ public class SimpleTurnCalculator implements TurnCalculator {
 
         if (initialisationCalculator.calculateInitialisation(combat) == CombatEntity.MONSTER) {
             //Monster attack first
-            attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
-            if (combat.getPlayerHealth() > 0) {
-                attackCalculatorFactory.getAttackCalculator(CombatEntity.HUMAN, calculateUserAttackType(combat.getUserEntity())).calculateAttack(result, combat);
+            attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterCombatEntity().getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
+            if (combat.getUserCombatEntity().getActualHealth() > 0) {
+                attackCalculatorFactory.getAttackCalculator(CombatEntity.HUMAN, calculateUserAttackType(combat.getUserCombatEntity().getUserEntity())).calculateAttack(result, combat);
             }
         } else {
             //Player attack first
-            attackCalculatorFactory.getAttackCalculator(CombatEntity.HUMAN, calculateUserAttackType(combat.getUserEntity())).calculateAttack(result, combat);
-            if (combat.getMonsterHealth() > 0) {
-                attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
+            attackCalculatorFactory.getAttackCalculator(CombatEntity.HUMAN, calculateUserAttackType(combat.getUserCombatEntity().getUserEntity())).calculateAttack(result, combat);
+            if (combat.getMonsterCombatEntity().getActualHealth() > 0) {
+                attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterCombatEntity().getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
             }
         }
 
@@ -64,12 +64,12 @@ public class SimpleTurnCalculator implements TurnCalculator {
 
     //TODO: move combat settings out of here!
     private void handleCombatSettings(CombatResult result, Combat combat) {
-        List<CombatSettingsEntity> combatSettingsEntityList = combatSettingsFacade.getAllCombatSettings(combat.getUserEntity());
+        List<CombatSettingsEntity> combatSettingsEntityList = combatSettingsFacade.getAllCombatSettings(combat.getUserCombatEntity().getUserEntity());
 
         for (CombatSettingsEntity combatSettingsEntity : combatSettingsEntityList) {
             switch (combatSettingsEntity.getTrigger()) {
                 case MONSTER:
-                    if (combat.getMonsterDefinition().getId() == combatSettingsEntity.getTarget()) {
+                    if (combat.getMonsterCombatEntity().getMonsterDefinition().getId() == combatSettingsEntity.getTarget()) {
                         executeCombatSettings(combatSettingsEntity);
                     }
                     break;
@@ -79,12 +79,12 @@ public class SimpleTurnCalculator implements TurnCalculator {
                     }
                     break;
                 case MANA:
-                    if (combat.getUserEntity().getMana() < combatSettingsEntity.getTarget()) {
+                    if (combat.getUserCombatEntity().getUserEntity().getMana() < combatSettingsEntity.getTarget()) {
                         executeCombatSettings(combatSettingsEntity);
                     }
                     break;
                 case HEALTH:
-                    if (combat.getUserEntity().getHealth() < combatSettingsEntity.getTarget()) {
+                    if (combat.getUserCombatEntity().getUserEntity().getHealth() < combatSettingsEntity.getTarget()) {
                         executeCombatSettings(combatSettingsEntity);
                     }
                     break;

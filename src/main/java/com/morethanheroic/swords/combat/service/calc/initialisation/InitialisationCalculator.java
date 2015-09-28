@@ -18,8 +18,8 @@ public class InitialisationCalculator {
     }
 
     public CombatEntity calculateInitialisation(Combat combat) {
-        int monsterInitialisation = monsterInitialisationCalculator.calculateInitialisation(combat.getMonsterDefinition());
-        int playerInitiation = humanInitialisationCalculator.calculateInitialisation(combat.getUserEntity());
+        int monsterInitialisation = monsterInitialisationCalculator.calculateInitialisation(combat.getMonsterCombatEntity().getMonsterDefinition());
+        int playerInitiation = humanInitialisationCalculator.calculateInitialisation(combat.getUserCombatEntity().getUserEntity());
 
         return monsterInitialisation >= playerInitiation ? CombatEntity.MONSTER : CombatEntity.HUMAN;
     }
