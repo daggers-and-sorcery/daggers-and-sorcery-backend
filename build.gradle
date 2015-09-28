@@ -14,9 +14,9 @@ repositories {
 
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter'
+    compile group: 'org.springframework.security', name: 'spring-security-core'
     
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     

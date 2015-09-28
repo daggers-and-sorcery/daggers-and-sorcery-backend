@@ -1,31 +1,28 @@
 package com.morethanheroic.swords.combat.domain;
 
+import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
+import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 public class Combat {
 
-    private final UserEntity userEntity;
-    private final MonsterDefinition monsterDefinition;
+    private final UserCombatEntity userCombatEntity;
+    private final MonsterCombatEntity monsterCombatEntity;
 
     private int turn = 0;
-    private int playerHealth;
-    private int monsterHealth;
 
     public Combat(UserEntity userEntity, MonsterDefinition monsterDefinition) {
-        this.userEntity = userEntity;
-        this.monsterDefinition = monsterDefinition;
-
-        this.setPlayerHealth(userEntity.getHealth());
-        this.setMonsterHealth(monsterDefinition.getHealth());
+        this.userCombatEntity = new UserCombatEntity(userEntity);
+        this.monsterCombatEntity = new MonsterCombatEntity(monsterDefinition);
     }
 
     public UserEntity getUserEntity() {
-        return userEntity;
+        return userCombatEntity.getUserEntity();
     }
 
     public MonsterDefinition getMonsterDefinition() {
-        return monsterDefinition;
+        return monsterCombatEntity.getMonsterDefinition();
     }
 
     public int getTurn() {
@@ -41,34 +38,34 @@ public class Combat {
     }
 
     public int getPlayerHealth() {
-        return playerHealth;
+        return userCombatEntity.getActualHealth();
     }
 
     public void setPlayerHealth(int playerHealth) {
-        this.playerHealth = playerHealth;
+        this.userCombatEntity.setActualHealth(playerHealth);
     }
 
     public void increasePlayerHealth(int amount) {
-        this.playerHealth += amount;
+        userCombatEntity.increaseActualHealth(amount);
     }
 
     public void decreasePlayerHealth(int amount) {
-        this.playerHealth -= amount;
+        userCombatEntity.decreaseActualHealth(amount);
     }
 
     public int getMonsterHealth() {
-        return monsterHealth;
+        return monsterCombatEntity.getActualHealth();
     }
 
     public void setMonsterHealth(int monsterHealth) {
-        this.monsterHealth = monsterHealth;
+        monsterCombatEntity.setActualHealth(monsterHealth);
     }
 
     public void increaseMonsterHealth(int amount) {
-        this.monsterHealth += amount;
+        monsterCombatEntity.increaseActualHealth(amount);
     }
 
     public void decreaseMonsterHealth(int amount) {
-        this.monsterHealth -= amount;
+        monsterCombatEntity.decreaseActualHealth(amount);
     }
 }
