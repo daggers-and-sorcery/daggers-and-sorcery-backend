@@ -15,6 +15,7 @@ public class ItemDefinition {
     private int id;
     private String name;
     private ItemType type;
+    private boolean consumable;
     private int weight;
 
     @XmlElementWrapper(name = "basic-modifiers")
@@ -193,5 +194,13 @@ public class ItemDefinition {
         }
 
         return Collections.unmodifiableList(list);
+    }
+
+    public boolean isConsumable() {
+        return consumable;
+    }
+
+    public void setConsumable(boolean consumable) {
+        this.consumable = consumable;
     }
 }
