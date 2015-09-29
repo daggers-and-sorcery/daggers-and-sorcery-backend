@@ -2,6 +2,7 @@ package com.morethanheroic.swords.item.service;
 
 import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
 import com.morethanheroic.swords.item.service.domain.ItemDefinition;
+import com.morethanheroic.swords.item.service.domain.RawItemDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,10 @@ public class ItemDefinitionManager {
 
     @PostConstruct
     public void init() throws Exception {
-        List<ItemDefinition> itemDefinitionList = xmlDefinitionLoader.loadDefinitions(ItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd");
+        List<RawItemDefinition> rawItemDefinitionList = xmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd");
 
-        for (ItemDefinition itemDefinition : itemDefinitionList) {
-            itemDefinitionMap.put(itemDefinition.getId(), itemDefinition);
+        for (RawItemDefinition rawItemDefinition : rawItemDefinitionList) {
+            itemDefinitionMap.put(rawItemDefinition.getId(), new ItemDefinition(rawItemDefinition));
         }
     }
 
