@@ -3,13 +3,11 @@ package com.morethanheroic.swords.combatsettings.view.controller;
 import com.morethanheroic.swords.combatsettings.model.SettingType;
 import com.morethanheroic.swords.combatsettings.repository.dao.CombatSettingsDatabaseEntity;
 import com.morethanheroic.swords.combatsettings.repository.domain.CombatSettingsMapper;
-import com.morethanheroic.swords.combatsettings.service.SettingsListResponseBuilder;
-import com.morethanheroic.swords.combatsettings.service.SpecificMonstersResponseBuilder;
-import com.morethanheroic.swords.combatsettings.service.UsableItemsResponseBuilder;
-import com.morethanheroic.swords.combatsettings.service.UsableSpellsResponseBuilder;
+import com.morethanheroic.swords.combatsettings.service.*;
 import com.morethanheroic.swords.combatsettings.view.request.InsertCombatSettingRequest;
 import com.morethanheroic.swords.combatsettings.view.request.RemoveCombatSettingRequest;
 import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -24,15 +22,19 @@ public class CombatSettingsController {
     private final UsableSpellsResponseBuilder usableSpellsResponseBuilder;
     private final SpecificMonstersResponseBuilder specificMonstersResponseBuilder;
     private final SettingsListResponseBuilder settingsListResponseBuilder;
+    private final ItemDefinitionManager itemDefinitionManager;
+    private final InsertSettingsResponseBuilder insertSettingsResponseBuilder;
     private final JournalManager journalManager;
 
     @Autowired
-    public CombatSettingsController(CombatSettingsMapper combatSettingsMapper, SettingsListResponseBuilder settingsListResponseBuilder, UsableItemsResponseBuilder usableItemsResponseBuilder, UsableSpellsResponseBuilder usableSpellsResponseBuilder, SpecificMonstersResponseBuilder specificMonstersResponseBuilder, JournalManager journalManager) {
+    public CombatSettingsController(CombatSettingsMapper combatSettingsMapper, SettingsListResponseBuilder settingsListResponseBuilder, UsableItemsResponseBuilder usableItemsResponseBuilder, UsableSpellsResponseBuilder usableSpellsResponseBuilder, SpecificMonstersResponseBuilder specificMonstersResponseBuilder, ItemDefinitionManager itemDefinitionManager, InsertSettingsResponseBuilder insertSettingsResponseBuilder, JournalManager journalManager) {
         this.combatSettingsMapper = combatSettingsMapper;
         this.usableItemsResponseBuilder = usableItemsResponseBuilder;
         this.usableSpellsResponseBuilder = usableSpellsResponseBuilder;
         this.specificMonstersResponseBuilder = specificMonstersResponseBuilder;
         this.settingsListResponseBuilder = settingsListResponseBuilder;
+        this.insertSettingsResponseBuilder = insertSettingsResponseBuilder;
+        this.itemDefinitionManager = itemDefinitionManager;
         this.journalManager = journalManager;
     }
 
@@ -51,8 +53,14 @@ public class CombatSettingsController {
     }
 
     @RequestMapping(value = "/combat/settings/insert", method = RequestMethod.POST)
-    public void insertSettings(UserEntity userEntity, @RequestBody InsertCombatSettingRequest insertCombatSettingRequest) {
+    public Response insertSettings(UserEntity userEntity, @RequestBody InsertCombatSettingRequest insertCombatSettingRequest) {
+        if(insertCombatSettingRequest.getType() == SettingType.ITEM && !itemDefinitionManager.getItemDefinition(insertCombatSettingRequest.getUse()).isUsable()) {
+            return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-usable item selected!");
+        }
+
         combatSettingsMapper.save(new CombatSettingsDatabaseEntity(userEntity.getId(), insertCombatSettingRequest.getType(), insertCombatSettingRequest.getUse(), insertCombatSettingRequest.getTrigger(), insertCombatSettingRequest.getTarget()));
+
+        return insertSettingsResponseBuilder.build(userEntity, "Settings successfully saved!");
     }
 
     @RequestMapping(value = "/combat/settings/usable/{type}", method = RequestMethod.GET)

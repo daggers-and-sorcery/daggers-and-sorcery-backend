@@ -31,12 +31,15 @@ public class UsableItemsResponseBuilder {
         ArrayList<HashMap<String, Object>> itemsResult = new ArrayList<>();
         for(JournalDatabaseEntity journalEntry : journalItems) {
             ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(journalEntry.getJournalId());
-            HashMap<String, Object> itemData = new HashMap<>();
 
-            itemData.put("id", itemDefinition.getId());
-            itemData.put("name", itemDefinition.getName());
+            if(itemDefinition.isUsable()) {
+                HashMap<String, Object> itemData = new HashMap<>();
 
-            itemsResult.add(itemData);
+                itemData.put("id", itemDefinition.getId());
+                itemData.put("name", itemDefinition.getName());
+
+                itemsResult.add(itemData);
+            }
         }
 
         response.setData("itemList", itemsResult);
