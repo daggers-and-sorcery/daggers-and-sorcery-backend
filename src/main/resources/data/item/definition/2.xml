@@ -5,6 +5,5 @@
     <item:id>2</item:id>
     <item:name>Laxi's epic 2</item:name>
     <item:type>ONE_HANDED_AXES</item:type>
-    <item:consumable>false</item:consumable>
     <item:weight>5</item:weight>
 </item:item>

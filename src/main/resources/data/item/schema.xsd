@@ -32,7 +32,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="consumable" type="xs:boolean" minOccurs="1"/>
+                <xs:element name="usable" type="xs:boolean" default="false" minOccurs="0"/>
                 <xs:element name="weight" type="xs:unsignedInt"/>
                 <xs:element name="combat-modifiers" minOccurs="0">
                     <xs:complexType>
