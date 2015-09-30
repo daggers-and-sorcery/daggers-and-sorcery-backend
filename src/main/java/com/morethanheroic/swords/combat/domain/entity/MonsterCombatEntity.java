@@ -19,9 +19,4 @@ public class MonsterCombatEntity extends CombatEntity {
     public MonsterDefinition getMonsterDefinition() {
         return monsterDefinition;
     }
-
-    @Override
-    public void terminate() {
-        //Do nothing at the moment...
-    }
 }

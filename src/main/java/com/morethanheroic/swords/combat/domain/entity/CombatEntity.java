@@ -7,8 +7,6 @@ public abstract class CombatEntity {
     private int maximumMana;
     private int actualMana;
 
-    public abstract void terminate();
-
     public void increaseActualHealth(int amount) {
         if (actualHealth + amount > maximumHealth) {
             actualHealth = maximumHealth;

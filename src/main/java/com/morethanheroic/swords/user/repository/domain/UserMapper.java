@@ -22,6 +22,9 @@ public interface UserMapper {
     @Update("UPDATE users SET movement = #{movement} WHERE id = #{userId}")
     void updateMovement(@Param("userId") int userId, @Param("movement") int movement);
 
+    @Update("UPDATE users SET health = #{health}, mana = #{mana}, movement = #{movement} WHERE id = #{userId}")
+    void updateBasicCombatStats(@Param("userId") int userId, @Param("health") int health, @Param("mana") int mana, @Param("movement") int movement);
+
     @Update("UPDATE users SET last_regeneration_date = #{date}, health = #{health}, mana = #{mana}, movement = #{movement} WHERE id = #{userId}")
     void updateRegeneration(@Param("userId") int userId, @Param("health") int health, @Param("mana") int mana, @Param("movement") int movement, @Param("date") Date date);
 

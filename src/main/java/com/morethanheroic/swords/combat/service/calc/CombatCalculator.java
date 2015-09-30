@@ -20,6 +20,7 @@ import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +38,10 @@ public class CombatCalculator {
     private final TurnCalculatorFactory turnCalculatorFactory;
     private final SkillManager skillManager;
     private final JournalManager journalManager;
+    private final UserManager userManager;
 
     @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager) {
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserManager userManager) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
@@ -48,6 +50,7 @@ public class CombatCalculator {
         this.inventoryManager = inventoryManager;
         this.skillManager = skillManager;
         this.journalManager = journalManager;
+        this.userManager = userManager;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
@@ -99,6 +102,8 @@ public class CombatCalculator {
 
                 skillEntity.addSkillXp(rewardEntity.getKey(), rewardEntity.getValue());
             }
+
+            userManager.saveUser(combat.getUserCombatEntity().getUserEntity());
         }
     }
 }

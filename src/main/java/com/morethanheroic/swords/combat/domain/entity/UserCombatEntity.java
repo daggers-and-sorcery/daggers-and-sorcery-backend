@@ -21,10 +21,4 @@ public class UserCombatEntity extends CombatEntity {
     public UserEntity getUserEntity() {
         return userEntity;
     }
-
-    @Override
-    public void terminate() {
-        //TODO: save user data
-        System.out.println("New health: " + getActualHealth());
-    }
 }
