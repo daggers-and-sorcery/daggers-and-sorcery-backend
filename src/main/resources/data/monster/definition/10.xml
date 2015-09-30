@@ -6,6 +6,7 @@
     <monster:id>10</monster:id>
     <monster:name>Test monster 2</monster:name>
     <monster:health>10</monster:health>
+    <monster:mana>10</monster:mana>
     <monster:initiation>1</monster:initiation>
     <monster:level>1</monster:level>
     <monster:defense>1</monster:defense>

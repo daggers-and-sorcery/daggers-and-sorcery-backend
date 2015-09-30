@@ -12,9 +12,8 @@ public class MonsterCombatEntity extends CombatEntity {
         this.setMaximumHealth(monsterDefinition.getHealth());
         this.setActualHealth(monsterDefinition.getHealth());
 
-        //TODO: Define mana on monsters too
-        this.setMaximumMana(0);
-        this.setActualMana(0);
+        this.setMaximumMana(monsterDefinition.getMana());
+        this.setActualMana(monsterDefinition.getMana());
     }
 
     public MonsterDefinition getMonsterDefinition() {
@@ -23,6 +22,6 @@ public class MonsterCombatEntity extends CombatEntity {
 
     @Override
     public void terminate() {
-        //atm nothing
+        //Do nothing at the moment...
     }
 }

@@ -13,6 +13,7 @@ public class MonsterDefinition {
     private int id;
     private String name;
     private int health;
+    private int mana;
     private int initiation;
     private int level;
     private int defense;
@@ -74,5 +75,9 @@ public class MonsterDefinition {
 
     public List<DropDefinition> getDropDefinitions() {
         return Collections.unmodifiableList(dropDefinitions);
+    }
+
+    public int getMana() {
+        return mana;
     }
 }

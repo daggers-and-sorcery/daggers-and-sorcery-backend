@@ -6,6 +6,7 @@
     <monster:id>1</monster:id>
     <monster:name>Laxi's epic monster</monster:name>
     <monster:health>10</monster:health>
+    <monster:mana>10</monster:mana>
     <monster:initiation>1</monster:initiation>
     <monster:level>1</monster:level>
     <monster:defense>1</monster:defense>
