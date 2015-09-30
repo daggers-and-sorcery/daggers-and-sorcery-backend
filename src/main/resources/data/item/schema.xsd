@@ -33,6 +33,35 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element name="usable" type="xs:boolean" default="false" minOccurs="0"/>
+                <xs:element name="use-effect-list" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="effect" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="settings-list" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="effect-setting" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="setting-name" type="xs:string" minOccurs="1"
+                                                                            maxOccurs="1"/>
+                                                                <xs:element name="setting-value" type="xs:string" minOccurs="1"
+                                                                            maxOccurs="1"/>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="target" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="weight" type="xs:unsignedInt"/>
                 <xs:element name="combat-modifiers" minOccurs="0">
                     <xs:complexType>

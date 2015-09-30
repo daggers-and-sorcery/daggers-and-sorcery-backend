@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.item.service.domain;
 
+import com.morethanheroic.swords.effect.domain.Effect;
 import com.morethanheroic.swords.item.domain.ItemType;
 
 import javax.xml.bind.annotation.*;
@@ -16,6 +17,10 @@ public class RawItemDefinition {
     private ItemType type;
     private boolean usable;
     private int weight;
+
+    @XmlElementWrapper(name = "use-effect-list")
+    @XmlElement(name = "effect")
+    private ArrayList<Effect> effectList;
 
     @XmlElementWrapper(name = "basic-modifiers")
     @XmlElement(name = "modifier")
@@ -122,5 +127,9 @@ public class RawItemDefinition {
         }
 
         return Collections.unmodifiableList(list);
+    }
+
+    public ArrayList<Effect> getEffectList() {
+        return effectList;
     }
 }

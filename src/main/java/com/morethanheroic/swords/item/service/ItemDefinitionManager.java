@@ -23,6 +23,11 @@ public class ItemDefinitionManager {
         List<RawItemDefinition> rawItemDefinitionList = xmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd");
 
         for (RawItemDefinition rawItemDefinition : rawItemDefinitionList) {
+            if(rawItemDefinition.getEffectList() != null) {
+                System.out.println("EFFECT: "+rawItemDefinition.getEffectList().get(0).getTarget());
+                System.out.println("EFFECT: "+rawItemDefinition.getEffectList().get(0).getEffectSettings().size());
+            }
+
             itemDefinitionMap.put(rawItemDefinition.getId(), new ItemDefinition(rawItemDefinition));
         }
     }
