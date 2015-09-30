@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.item.service.domain;
 
-import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.item.domain.ItemType;
 
 import javax.xml.bind.annotation.*;

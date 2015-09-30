@@ -22,6 +22,15 @@ module.exports = require('js/app.js').directive('inventoryListColumn', function 
                     }
                 });
             };
+
+            $scope.use = function(item) {
+                console.log("using item:"+item);
+                $http.get('/item/use/'+item).then(function(response) {
+                    if(response.data.data.success) {
+                        $rootScope.$broadcast('profile-update-needed');
+                    }
+                });
+            };
         },
         template: require('partial/directive/inventory-item-column.html')
     };

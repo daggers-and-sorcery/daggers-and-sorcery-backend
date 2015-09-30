@@ -20,6 +20,7 @@ public class ItemEntryResponseBuilder {
         result.put("type", itemDefinition.getType().name());
         result.put("weight", itemDefinition.getWeight());
         result.put("equipment", itemDefinition.isEquipment());
+        result.put("usable", itemDefinition.isUsable());
 
         ArrayList<AttributeModifierResponseEntry> modifiers = new ArrayList<>();
         result.put("modifiers", modifiers);

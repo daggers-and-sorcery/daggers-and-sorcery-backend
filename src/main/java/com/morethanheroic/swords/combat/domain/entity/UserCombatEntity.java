@@ -9,12 +9,13 @@ public class UserCombatEntity extends CombatEntity {
     public UserCombatEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
 
-        //TODO: use calculated max values
-        this.setMaximumMana(userEntity.getMana());
-        this.setActualMana(userEntity.getMana());
-
-        this.setMaximumHealth(userEntity.getHealth());
+        //TODO: use real (calculated) max value here
         this.setActualHealth(userEntity.getHealth());
+        this.setMaximumHealth(30);
+
+        //TODO: use real (calculated) max value here
+        this.setActualMana(userEntity.getMana());
+        this.setMaximumMana(30);
     }
 
     public UserEntity getUserEntity() {
@@ -24,5 +25,6 @@ public class UserCombatEntity extends CombatEntity {
     @Override
     public void terminate() {
         //TODO: save user data
+        System.out.println("New health: " + getActualHealth());
     }
 }

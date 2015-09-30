@@ -19,5 +19,5 @@ module.exports = function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData, $r
                  //TODO: error happened
              }
          });
-     }
+     };
  };

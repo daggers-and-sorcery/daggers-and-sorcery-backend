@@ -5,6 +5,7 @@
     <item:id>1</item:id>
     <item:name>Laxi's epic</item:name>
     <item:type>ONE_HANDED_AXES</item:type>
+    <item:usable>true</item:usable>
     <item:weight>5</item:weight>
     <item:combat-modifiers>
         <item:modifier>

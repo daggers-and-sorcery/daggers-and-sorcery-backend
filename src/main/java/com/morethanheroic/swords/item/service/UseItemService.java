@@ -22,5 +22,7 @@ public class UseItemService {
 
         //TODO: dont apply heal effect but rather get the effect of the item
         combatEffectApplierService.applyEffect(userCombatEntity, new HealCombatEffect(10));
+
+        userCombatEntity.terminate();
     }
 }
