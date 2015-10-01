@@ -32,13 +32,14 @@ public class SimpleTurnCalculator implements TurnCalculator {
     private final UseItemService useItemService;
 
     @Autowired
-    public SimpleTurnCalculator(AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculator attackTypeCalculator, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder, CombatSettingsFacade combatSettingsFacade) {
+    public SimpleTurnCalculator(AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculator attackTypeCalculator, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder, CombatSettingsFacade combatSettingsFacade, UseItemService useItemService) {
         this.attackCalculatorFactory = attackCalculatorFactory;
         this.attackTypeCalculator = attackTypeCalculator;
         this.equipmentManager = equipmentManager;
         this.initialisationCalculator = initialisationCalculator;
         this.combatMessageBuilder = combatMessageBuilder;
         this.combatSettingsFacade = combatSettingsFacade;
+        this.useItemService = useItemService;
     }
 
     @Override
@@ -72,22 +73,22 @@ public class SimpleTurnCalculator implements TurnCalculator {
             switch (combatSettingsEntity.getTrigger()) {
                 case MONSTER:
                     if (combat.getMonsterCombatEntity().getMonsterDefinition().getId() == combatSettingsEntity.getTarget()) {
-                        executeCombatSettings(combatSettingsEntity);
+                        executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
                     }
                     break;
                 case TURN:
                     if (combat.getTurn() == combatSettingsEntity.getTarget()) {
-                        executeCombatSettings(combatSettingsEntity);
+                        executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
                     }
                     break;
                 case MANA:
                     if (combat.getUserCombatEntity().getUserEntity().getMana() < combatSettingsEntity.getTarget()) {
-                        executeCombatSettings(combatSettingsEntity);
+                        executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
                     }
                     break;
                 case HEALTH:
                     if (combat.getUserCombatEntity().getUserEntity().getHealth() < combatSettingsEntity.getTarget()) {
-                        executeCombatSettings(combatSettingsEntity);
+                        executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
                     }
                     break;
                 default:
@@ -96,11 +97,9 @@ public class SimpleTurnCalculator implements TurnCalculator {
         }
     }
 
-    private void executeCombatSettings(CombatSettingsEntity combatSettingsEntity) {
-        System.out.println("Using combat settings: " + combatSettingsEntity);
-
+    private void executeCombatSettings(UserEntity userEntity, CombatSettingsEntity combatSettingsEntity) {
         if (combatSettingsEntity.getType() == SettingType.ITEM) {
-            //TODO: use item
+            useItemService.useItem(userEntity, combatSettingsEntity.getSettingsId());
         } else {
             //TODO: if spell is a non attack spell use it here
         }
