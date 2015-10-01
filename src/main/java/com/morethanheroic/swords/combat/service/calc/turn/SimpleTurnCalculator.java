@@ -8,45 +8,38 @@ import com.morethanheroic.swords.combat.service.calc.CombatEntity;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculatorFactory;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
-import com.morethanheroic.swords.combatsettings.model.SettingType;
-import com.morethanheroic.swords.combatsettings.service.CombatSettingsFacade;
-import com.morethanheroic.swords.combatsettings.service.domain.CombatSettingsEntity;
+import com.morethanheroic.swords.combatsettings.service.executor.CombatSettingsExecutor;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
-import com.morethanheroic.swords.item.service.UseItemService;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class SimpleTurnCalculator implements TurnCalculator {
 
+    private CombatSettingsExecutor combatSettingsExecutor;
     private final AttackCalculatorFactory attackCalculatorFactory;
     private final AttackTypeCalculator attackTypeCalculator;
     private final EquipmentManager equipmentManager;
     private final InitialisationCalculator initialisationCalculator;
     private final CombatMessageBuilder combatMessageBuilder;
-    private final CombatSettingsFacade combatSettingsFacade;
-    private final UseItemService useItemService;
 
     @Autowired
-    public SimpleTurnCalculator(AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculator attackTypeCalculator, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder, CombatSettingsFacade combatSettingsFacade, UseItemService useItemService) {
+    public SimpleTurnCalculator(CombatSettingsExecutor combatSettingsExecutor, AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculator attackTypeCalculator, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder) {
+        this.combatSettingsExecutor = combatSettingsExecutor;
         this.attackCalculatorFactory = attackCalculatorFactory;
         this.attackTypeCalculator = attackTypeCalculator;
         this.equipmentManager = equipmentManager;
         this.initialisationCalculator = initialisationCalculator;
         this.combatMessageBuilder = combatMessageBuilder;
-        this.combatSettingsFacade = combatSettingsFacade;
-        this.useItemService = useItemService;
     }
 
     @Override
     public void takeTurn(CombatResult result, Combat combat) {
         result.addMessage(combatMessageBuilder.buildNewTurnMessage(combat.getTurn()));
 
-        handleCombatSettings(result, combat);
+        combatSettingsExecutor.executeCombatSettings(result, combat);
 
         if (initialisationCalculator.calculateInitialisation(combat) == CombatEntity.MONSTER) {
             //Monster attack first
@@ -63,46 +56,6 @@ public class SimpleTurnCalculator implements TurnCalculator {
         }
 
         combat.increaseTurn();
-    }
-
-    //TODO: move combat settings out of here!
-    private void handleCombatSettings(CombatResult result, Combat combat) {
-        List<CombatSettingsEntity> combatSettingsEntityList = combatSettingsFacade.getAllCombatSettings(combat.getUserCombatEntity().getUserEntity());
-
-        for (CombatSettingsEntity combatSettingsEntity : combatSettingsEntityList) {
-            switch (combatSettingsEntity.getTrigger()) {
-                case MONSTER:
-                    if (combat.getMonsterCombatEntity().getMonsterDefinition().getId() == combatSettingsEntity.getTarget()) {
-                        executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
-                    }
-                    break;
-                case TURN:
-                    if (combat.getTurn() == combatSettingsEntity.getTarget()) {
-                        executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
-                    }
-                    break;
-                case MANA:
-                    if (combat.getUserCombatEntity().getUserEntity().getMana() < combatSettingsEntity.getTarget()) {
-                        executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
-                    }
-                    break;
-                case HEALTH:
-                    if (combat.getUserCombatEntity().getUserEntity().getHealth() < combatSettingsEntity.getTarget()) {
-                        executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
-                    }
-                    break;
-                default:
-                    throw new IllegalArgumentException("Illegal combat settings type!");
-            }
-        }
-    }
-
-    private void executeCombatSettings(UserEntity userEntity, CombatSettingsEntity combatSettingsEntity) {
-        if (combatSettingsEntity.getType() == SettingType.ITEM) {
-            useItemService.useItem(userEntity, combatSettingsEntity.getSettingsId());
-        } else {
-            //TODO: if spell is a non attack spell use it here
-        }
     }
 
     private AttackType calculateUserAttackType(UserEntity userEntity) {
