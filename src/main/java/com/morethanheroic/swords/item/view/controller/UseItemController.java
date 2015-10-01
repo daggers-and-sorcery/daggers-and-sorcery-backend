@@ -26,10 +26,11 @@ public class UseItemController {
     @Transactional
     @RequestMapping(value = "/item/use/{itemId}", method = RequestMethod.GET)
     public void useItem(UserEntity userEntity, @PathVariable int itemId) {
-        InventoryEntity inventoryEntity = inventoryManager.getInventory(userEntity);
 
-        if (inventoryEntity.hasItem(itemId)) {
+        if (useItemService.canUseItem(userEntity, itemId)) {
             useItemService.useItem(userEntity, itemId);
+        } else {
+            //TODO: return error message
         }
     }
 }

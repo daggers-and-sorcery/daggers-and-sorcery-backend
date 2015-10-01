@@ -13,6 +13,7 @@ import com.morethanheroic.swords.combatsettings.service.CombatSettingsFacade;
 import com.morethanheroic.swords.combatsettings.service.domain.CombatSettingsEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
+import com.morethanheroic.swords.item.service.UseItemService;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
     private final InitialisationCalculator initialisationCalculator;
     private final CombatMessageBuilder combatMessageBuilder;
     private final CombatSettingsFacade combatSettingsFacade;
+    private final UseItemService useItemService;
 
     @Autowired
     public SimpleTurnCalculator(AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculator attackTypeCalculator, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder, CombatSettingsFacade combatSettingsFacade) {
