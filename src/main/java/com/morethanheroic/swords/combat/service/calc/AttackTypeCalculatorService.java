@@ -5,7 +5,7 @@ import com.morethanheroic.swords.item.service.domain.ItemDefinition;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AttackTypeCalculator {
+public class AttackTypeCalculatorService {
 
     public AttackType calculateAttackType(ItemDefinition item) {
         if(item == null) {

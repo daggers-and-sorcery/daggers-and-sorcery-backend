@@ -3,7 +3,7 @@ package com.morethanheroic.swords.combat.service.calc.turn;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
-import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
+import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculatorService;
 import com.morethanheroic.swords.combat.service.calc.CombatEntity;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculatorFactory;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
@@ -20,16 +20,16 @@ public class SimpleTurnCalculator implements TurnCalculator {
 
     private CombatSettingsExecutor combatSettingsExecutor;
     private final AttackCalculatorFactory attackCalculatorFactory;
-    private final AttackTypeCalculator attackTypeCalculator;
+    private final AttackTypeCalculatorService attackTypeCalculatorService;
     private final EquipmentManager equipmentManager;
     private final InitialisationCalculator initialisationCalculator;
     private final CombatMessageBuilder combatMessageBuilder;
 
     @Autowired
-    public SimpleTurnCalculator(CombatSettingsExecutor combatSettingsExecutor, AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculator attackTypeCalculator, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder) {
+    public SimpleTurnCalculator(CombatSettingsExecutor combatSettingsExecutor, AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculatorService attackTypeCalculatorService, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder) {
         this.combatSettingsExecutor = combatSettingsExecutor;
         this.attackCalculatorFactory = attackCalculatorFactory;
-        this.attackTypeCalculator = attackTypeCalculator;
+        this.attackTypeCalculatorService = attackTypeCalculatorService;
         this.equipmentManager = equipmentManager;
         this.initialisationCalculator = initialisationCalculator;
         this.combatMessageBuilder = combatMessageBuilder;
@@ -59,6 +59,6 @@ public class SimpleTurnCalculator implements TurnCalculator {
     }
 
     private AttackType calculateUserAttackType(UserEntity userEntity) {
-        return attackTypeCalculator.calculateAttackType(equipmentManager.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON));
+        return attackTypeCalculatorService.calculateAttackType(equipmentManager.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON));
     }
 }
