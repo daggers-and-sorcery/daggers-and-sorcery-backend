@@ -2,6 +2,7 @@ package com.morethanheroic.swords.inventory.repository.domain;
 
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 

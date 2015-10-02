@@ -12,9 +12,8 @@ import java.util.List;
 public class InventoryEntity {
 
     private final JournalManager journalManager;
-
-    private UserEntity userEntity;
-    private InventoryMapper inventoryMapper;
+    private final UserEntity userEntity;
+    private final InventoryMapper inventoryMapper;
 
     public InventoryEntity(UserEntity userEntity, InventoryMapper inventoryMapper, JournalManager journalManager) {
         this.userEntity = userEntity;

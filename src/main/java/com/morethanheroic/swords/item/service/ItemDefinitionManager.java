@@ -13,10 +13,14 @@ import java.util.List;
 @Service
 public class ItemDefinitionManager {
 
-    @Autowired
-    private XMLDefinitionLoader xmlDefinitionLoader;
-
     private HashMap<Integer, ItemDefinition> itemDefinitionMap = new HashMap<>();
+
+    private final XMLDefinitionLoader xmlDefinitionLoader;
+
+    @Autowired
+    public ItemDefinitionManager(XMLDefinitionLoader xmlDefinitionLoader) {
+        this.xmlDefinitionLoader = xmlDefinitionLoader;
+    }
 
     @PostConstruct
     public void init() throws Exception {
