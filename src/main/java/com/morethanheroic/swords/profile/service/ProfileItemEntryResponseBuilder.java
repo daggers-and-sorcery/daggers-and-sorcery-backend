@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.profile.service;
 
 import com.morethanheroic.swords.item.service.ItemEntryResponseBuilder;
-import com.morethanheroic.swords.item.service.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

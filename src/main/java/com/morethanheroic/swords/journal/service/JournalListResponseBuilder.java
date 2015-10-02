@@ -3,7 +3,7 @@ package com.morethanheroic.swords.journal.service;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
-import com.morethanheroic.swords.item.service.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.journal.view.response.JournalListResponseEntry;

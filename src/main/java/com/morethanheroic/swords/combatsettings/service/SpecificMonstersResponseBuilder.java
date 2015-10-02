@@ -2,7 +2,6 @@ package com.morethanheroic.swords.combatsettings.service;
 
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
-import com.morethanheroic.swords.item.service.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
 import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;

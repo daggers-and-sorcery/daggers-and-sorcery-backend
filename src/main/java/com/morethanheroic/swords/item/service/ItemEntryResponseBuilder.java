@@ -4,7 +4,7 @@ import com.morethanheroic.swords.attribute.view.response.AttributeModifierRespon
 import com.morethanheroic.swords.attribute.view.response.AttributeRequirementResponseEntry;
 import com.morethanheroic.swords.item.service.domain.AttributeModifierDefinition;
 import com.morethanheroic.swords.item.service.domain.AttributeRequirementDefinition;
-import com.morethanheroic.swords.item.service.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

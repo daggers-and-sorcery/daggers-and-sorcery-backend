@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.combat.service.calc;
 
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
-import com.morethanheroic.swords.item.service.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import org.springframework.stereotype.Service;
 
 @Service

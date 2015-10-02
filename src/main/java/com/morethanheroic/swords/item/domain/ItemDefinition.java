@@ -1,6 +1,7 @@
-package com.morethanheroic.swords.item.service.domain;
+package com.morethanheroic.swords.item.domain;
 
 import com.morethanheroic.swords.item.domain.ItemType;
+import com.morethanheroic.swords.item.service.domain.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

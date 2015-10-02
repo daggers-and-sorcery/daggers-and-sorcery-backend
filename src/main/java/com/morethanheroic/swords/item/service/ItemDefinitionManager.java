@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.item.service;
 
 import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
-import com.morethanheroic.swords.item.service.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.domain.RawItemDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
