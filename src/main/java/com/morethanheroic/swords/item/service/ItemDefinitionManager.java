@@ -29,7 +29,7 @@ public class ItemDefinitionManager {
         for (RawItemDefinition rawItemDefinition : rawItemDefinitionList) {
             if(rawItemDefinition.getEffectList() != null) {
                 System.out.println("EFFECT: "+rawItemDefinition.getEffectList().get(0).getTarget());
-                System.out.println("EFFECT: "+rawItemDefinition.getEffectList().get(0).getEffectSettings().size());
+                System.out.println("EFFECT: "+rawItemDefinition.getEffectList().get(0).getEffectSettings().get(0).getName());
             }
 
             itemDefinitionMap.put(rawItemDefinition.getId(), new ItemDefinition(rawItemDefinition));
