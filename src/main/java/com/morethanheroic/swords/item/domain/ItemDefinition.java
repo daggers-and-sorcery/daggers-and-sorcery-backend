@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.item.domain;
 
+import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.domain.*;
 
@@ -14,6 +15,7 @@ public class ItemDefinition {
     private ItemType type;
     private boolean usable;
     private int weight;
+    private List<CombatEffect> combatEffects;
 
     private List<BasicAttributeModifierDefinition> basicModifiers = Collections.unmodifiableList(new ArrayList<>());
     private List<CombatAttributeModifierDefinition> combatModifiers = Collections.unmodifiableList(new ArrayList<>());
@@ -27,7 +29,7 @@ public class ItemDefinition {
     private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.unmodifiableList(new ArrayList<>());
     private List<AttributeRequirementDefinition> allRequiremensList = new ArrayList<>();
 
-    public ItemDefinition(RawItemDefinition rawItemDefinition) {
+    public ItemDefinition(RawItemDefinition rawItemDefinition, List<CombatEffect> combatEffects) {
         this.id = rawItemDefinition.getId();
         this.name = rawItemDefinition.getName();
         this.type = rawItemDefinition.getType();
@@ -85,6 +87,8 @@ public class ItemDefinition {
         }
 
         allRequiremensList = Collections.unmodifiableList(allRequiremensList);
+
+        this.combatEffects = combatEffects;
     }
 
     public String toString() {
@@ -173,5 +177,9 @@ public class ItemDefinition {
 
     public List<AttributeRequirementDefinition> getAllRequirements() {
         return allRequiremensList;
+    }
+
+    public List<CombatEffect> getCombatEffects() {
+        return combatEffects;
     }
 }

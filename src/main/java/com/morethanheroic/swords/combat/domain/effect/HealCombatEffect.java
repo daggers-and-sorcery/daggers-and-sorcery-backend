@@ -2,13 +2,16 @@ package com.morethanheroic.swords.combat.domain.effect;
 
 import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
+import com.morethanheroic.swords.effect.domain.EffectSettingHolder;
 
 public class HealCombatEffect extends CombatEffect {
 
     private final int amount;
 
-    public HealCombatEffect(int amount) {
-        this.amount = amount;
+    public HealCombatEffect(EffectSettingHolder effectSettingHolder) {
+        super(effectSettingHolder);
+
+        amount = Integer.parseInt(this.getEffectSetting("amount").getValue());
     }
 
     @Override

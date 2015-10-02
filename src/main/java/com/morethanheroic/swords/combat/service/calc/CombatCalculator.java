@@ -20,6 +20,7 @@ import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import com.morethanheroic.swords.user.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,9 +40,10 @@ public class CombatCalculator {
     private final SkillManager skillManager;
     private final JournalManager journalManager;
     private final UserManager userManager;
+    private final UserMapper userMapper;
 
     @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserManager userManager) {
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserManager userManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
@@ -51,6 +53,7 @@ public class CombatCalculator {
         this.skillManager = skillManager;
         this.journalManager = journalManager;
         this.userManager = userManager;
+        this.userMapper = userMapper;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
@@ -103,7 +106,7 @@ public class CombatCalculator {
                 skillEntity.addSkillXp(rewardEntity.getKey(), rewardEntity.getValue());
             }
 
-            userManager.saveUser(combat.getUserCombatEntity().getUserEntity());
+            userMapper.updateBasicCombatStats(combat.getUserCombatEntity().getUserEntity().getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getUserEntity().getMovement() - 1);
         }
     }
 }

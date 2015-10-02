@@ -4,6 +4,7 @@ import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combatsettings.model.SettingType;
 import com.morethanheroic.swords.combatsettings.service.domain.CombatSettingsEntity;
+import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.item.service.UseItemService;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.slf4j.Logger;
@@ -14,9 +15,11 @@ public abstract class CombatSettingsAction {
     private static final Logger logger = LoggerFactory.getLogger(CombatSettingsAction.class);
 
     private final UseItemService useItemService;
+    private final ItemDefinitionManager itemDefinitionManager;
 
-    public CombatSettingsAction(UseItemService useItemService) {
+    public CombatSettingsAction(UseItemService useItemService, ItemDefinitionManager itemDefinitionManager) {
         this.useItemService = useItemService;
+        this.itemDefinitionManager = itemDefinitionManager;
     }
 
     public abstract void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity);
@@ -26,7 +29,7 @@ public abstract class CombatSettingsAction {
         logger.debug("Running combat settings: " + combatSettingsEntity);
 
         if (combatSettingsEntity.getType() == SettingType.ITEM) {
-            useItemService.useItem(userEntity, combatSettingsEntity.getSettingsId());
+            useItemService.useItem(userEntity, itemDefinitionManager.getItemDefinition(combatSettingsEntity.getSettingsId()));
         } else {
             //TODO: if spell is a non attack spell use it here
         }

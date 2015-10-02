@@ -4,12 +4,13 @@ import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combatsettings.service.domain.CombatSettingsEntity;
 import com.morethanheroic.swords.combatsettings.service.executor.CombatSettingsAction;
+import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.item.service.UseItemService;
 
 public class HealthCombatSettings extends CombatSettingsAction {
 
-    public HealthCombatSettings(UseItemService useItemService) {
-        super(useItemService);
+    public HealthCombatSettings(UseItemService useItemService, ItemDefinitionManager itemDefinitionManager) {
+        super(useItemService, itemDefinitionManager);
     }
 
     @Override

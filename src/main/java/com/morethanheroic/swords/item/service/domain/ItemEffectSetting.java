@@ -1,13 +1,13 @@
 package com.morethanheroic.swords.item.service.domain;
 
-import com.morethanheroic.swords.effect.domain.EffectSetting;
+import com.morethanheroic.swords.effect.service.domain.RawEffectSetting;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ItemEffectSetting extends EffectSetting{
+public class ItemEffectSetting extends RawEffectSetting {
 
     @XmlElement(name = "setting-name")
     private String name;

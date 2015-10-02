@@ -33,10 +33,6 @@ public class UserManager {
         return new UserEntity(userMapper.findById(id), userMapper);
     }
 
-    public void saveUser(UserEntity userEntity) {
-        userMapper.updateBasicCombatStats(userEntity.getId(), userEntity.getHealth(), userEntity.getMana(), userEntity.getMovement());
-    }
-
     public void saveNewUser(String username, String password, String email, Race race) {
             UserDatabaseEntity user = createNewUserEntity(username, password, email, race);
 

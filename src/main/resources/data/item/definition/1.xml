@@ -7,14 +7,10 @@
     <item:type>ONE_HANDED_AXES</item:type>
     <item:usable>true</item:usable>
     <item:use-effect-list>
-        <item:effect target="com.xyz.HealEffect">
+        <item:effect target="com.morethanheroic.swords.combat.domain.effect.HealCombatEffect">
             <item:settings-list>
                 <item:effect-setting>
                     <item:setting-name>amount</item:setting-name>
-                    <item:setting-value>10</item:setting-value>
-                </item:effect-setting>
-                <item:effect-setting>
-                    <item:setting-name>xyz</item:setting-name>
                     <item:setting-value>10</item:setting-value>
                 </item:effect-setting>
             </item:settings-list>
