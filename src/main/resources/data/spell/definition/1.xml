@@ -6,4 +6,5 @@
     <spell:id>1</spell:id>
     <spell:name>Epic spell</spell:name>
     <spell:type>DIVINE</spell:type>
+    <spell:combat-spell>true</spell:combat-spell>
 </spell:spell>
