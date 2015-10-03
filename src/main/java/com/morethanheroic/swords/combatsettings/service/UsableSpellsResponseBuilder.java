@@ -36,12 +36,15 @@ public class UsableSpellsResponseBuilder {
 
         for(SpellDatabaseEntity spell : spells) {
             SpellDefinition spellDefinition = spellDefinitionManager.getSpellDefinition(spell.getSpellId());
-            HashMap<String, Object> spellInfo = new HashMap<>();
 
-            spellInfo.put("id", spellDefinition.getId());
-            spellInfo.put("name", spellDefinition.getName());
+            if(spellDefinition.isCombatSpell()) {
+                HashMap<String, Object> spellInfo = new HashMap<>();
 
-            spelllist.add(spellInfo);
+                spellInfo.put("id", spellDefinition.getId());
+                spellInfo.put("name", spellDefinition.getName());
+
+                spelllist.add(spellInfo);
+            }
         }
 
         response.setData("spellList", spelllist);

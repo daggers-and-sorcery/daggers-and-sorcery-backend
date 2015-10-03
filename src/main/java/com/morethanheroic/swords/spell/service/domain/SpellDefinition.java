@@ -13,6 +13,7 @@ public class SpellDefinition {
     private final SpellType type;
     private final boolean combatSpell;
     private List<CombatEffect> combatEffects;
+    private List<SpellCost> spellCosts = Collections.unmodifiableList(new ArrayList<>());
     private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.unmodifiableList(new ArrayList<>());
 
     public SpellDefinition(RawSpellDefinition rawSpellDefinition, List<CombatEffect> combatEffects) {
@@ -24,6 +25,10 @@ public class SpellDefinition {
 
         if (rawSpellDefinition.getSkillRequirements() != null) {
             skillRequirements = Collections.unmodifiableList(rawSpellDefinition.getSkillRequirements());
+        }
+
+        if (rawSpellDefinition.getCostList() != null) {
+            spellCosts = Collections.unmodifiableList(rawSpellDefinition.getCostList());
         }
     }
 
@@ -49,5 +54,9 @@ public class SpellDefinition {
 
     public List<SkillAttributeRequirementDefinition> getSkillRequirements() {
         return skillRequirements;
+    }
+
+    public List<SpellCost> getSpellCosts() {
+        return spellCosts;
     }
 }

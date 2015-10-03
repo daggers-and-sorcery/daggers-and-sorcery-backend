@@ -10,6 +10,7 @@ import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
+import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,10 @@ public class CombatSettingsController {
     private final ItemDefinitionManager itemDefinitionManager;
     private final InsertSettingsResponseBuilder insertSettingsResponseBuilder;
     private final JournalManager journalManager;
+    private final SpellDefinitionManager spellDefinitionManager;
 
     @Autowired
-    public CombatSettingsController(CombatSettingsMapper combatSettingsMapper, SettingsListResponseBuilder settingsListResponseBuilder, UsableItemsResponseBuilder usableItemsResponseBuilder, UsableSpellsResponseBuilder usableSpellsResponseBuilder, SpecificMonstersResponseBuilder specificMonstersResponseBuilder, ItemDefinitionManager itemDefinitionManager, InsertSettingsResponseBuilder insertSettingsResponseBuilder, JournalManager journalManager) {
+    public CombatSettingsController(CombatSettingsMapper combatSettingsMapper, SettingsListResponseBuilder settingsListResponseBuilder, UsableItemsResponseBuilder usableItemsResponseBuilder, UsableSpellsResponseBuilder usableSpellsResponseBuilder, SpecificMonstersResponseBuilder specificMonstersResponseBuilder, ItemDefinitionManager itemDefinitionManager, InsertSettingsResponseBuilder insertSettingsResponseBuilder, JournalManager journalManager, SpellDefinitionManager spellDefinitionManager) {
         this.combatSettingsMapper = combatSettingsMapper;
         this.usableItemsResponseBuilder = usableItemsResponseBuilder;
         this.usableSpellsResponseBuilder = usableSpellsResponseBuilder;
@@ -36,6 +38,7 @@ public class CombatSettingsController {
         this.insertSettingsResponseBuilder = insertSettingsResponseBuilder;
         this.itemDefinitionManager = itemDefinitionManager;
         this.journalManager = journalManager;
+        this.spellDefinitionManager = spellDefinitionManager;
     }
 
     @RequestMapping(value = "/combat/settings/remove", method = RequestMethod.POST)
@@ -56,6 +59,10 @@ public class CombatSettingsController {
     public Response insertSettings(UserEntity userEntity, @RequestBody InsertCombatSettingRequest insertCombatSettingRequest) {
         if(insertCombatSettingRequest.getType() == SettingType.ITEM && !itemDefinitionManager.getItemDefinition(insertCombatSettingRequest.getUse()).isUsable()) {
             return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-usable item selected!");
+        }
+
+        if(insertCombatSettingRequest.getType() == SettingType.SPELL && !spellDefinitionManager.getSpellDefinition(insertCombatSettingRequest.getUse()).isCombatSpell()) {
+            return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-combat spell selected!");
         }
 
         combatSettingsMapper.save(new CombatSettingsDatabaseEntity(userEntity.getId(), insertCombatSettingRequest.getType(), insertCombatSettingRequest.getUse(), insertCombatSettingRequest.getTrigger(), insertCombatSettingRequest.getTarget()));

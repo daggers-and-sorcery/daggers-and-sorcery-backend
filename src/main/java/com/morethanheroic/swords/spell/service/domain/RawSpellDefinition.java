@@ -1,7 +1,5 @@
 package com.morethanheroic.swords.spell.service.domain;
 
-import com.morethanheroic.swords.item.service.domain.*;
-
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
@@ -19,6 +17,10 @@ public class RawSpellDefinition {
     @XmlElementWrapper(name = "effect-list")
     @XmlElement(name = "effect")
     private ArrayList<SpellEffect> effectList;
+
+    @XmlElementWrapper(name = "cost-list")
+    @XmlElement(name = "cost")
+    private ArrayList<SpellCost> costList;
 
     @XmlElementWrapper(name = "skill-requirements")
     @XmlElement(name = "requirement")
@@ -46,5 +48,9 @@ public class RawSpellDefinition {
 
     public ArrayList<SkillAttributeRequirementDefinition> getSkillRequirements() {
         return skillRequirements;
+    }
+
+    public ArrayList<SpellCost> getCostList() {
+        return costList;
     }
 }

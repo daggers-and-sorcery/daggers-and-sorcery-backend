@@ -25,6 +25,10 @@ public class InventoryEntity {
         return getItemAmount(itemId) > 0;
     }
 
+    public boolean hasItemAmount(int itemId, int amount) {
+        return getItemAmount(itemId) > amount;
+    }
+
     public int getItemAmount(int itemId) {
         ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), itemId);
 
