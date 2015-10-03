@@ -64,7 +64,7 @@
                                 <span ng-if="attributeValue.maximum == 0" class="badge attribute-badge pull-right" popover-template="attributePopoverUrl" popover-trigger="mouseenter" popover-placement="right">{{attributeValue.actual}}</span>
                             </div>
                             <div class="col-md-7" style="padding-left:0;">
-                                <span style="position: absolute;font-size: 10px;width: 100%;text-align: center;padding-right: 20px;top: 4px;">{{attributeValue.actualXp}}/{{attributeValue.nextLevelXp}}</span>
+                                <span style="position: absolute;font-size: 10px;width: 100%;text-align: center;padding-right: 20px;top: 3px;">{{attributeValue.actualXp}}/{{attributeValue.nextLevelXp}}</span>
                                 <div class="progress" style="margin-top:5px;margin-bottom:0; height: 10px;">
                                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{100 - (attributeValue.nextLevelXp - attributeValue.actualXp) / (attributeValue.xpBetweenLevels / 100)}}%; background-color: #B75555;"></div>
                                 </div>
@@ -80,6 +80,13 @@
             <inventory-list-column column-align="left" column-align-id="0" source="user.inventory"></inventory-list-column>
             <inventory-list-column column-align="center" column-align-id="1" source="user.inventory"></inventory-list-column>
             <inventory-list-column column-align="right" column-align-id="2" source="user.inventory"></inventory-list-column>
+        </div>
+
+        <h4 class="attribute-list-name">Spell</h4>
+        <div class="row">
+            <spell-list-column column-align="left" column-align-id="0" source="user.spell"></spell-list-column>
+            <spell-list-column column-align="center" column-align-id="1" source="user.spell"></spell-list-column>
+            <spell-list-column column-align="right" column-align-id="2" source="user.spell"></spell-list-column>
         </div>
 
         <h4 class="attribute-list-name">Other</h4>

@@ -18,6 +18,10 @@ import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.item.service.ItemEntryResponseBuilder;
+import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
+import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
+import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
+import com.morethanheroic.swords.spell.service.domain.SpellDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,9 +41,11 @@ public class ProfileInfoResponseBuilder {
     private final EquipmentManager equipmentManager;
     private final ResponseFactory responseFactory;
     private final ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder;
+    private final SpellDefinitionManager spellDefinitionManager;
+    private final SpellMapper spellMapper;
 
     @Autowired
-    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder) {
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder, SpellDefinitionManager spellDefinitionManager, SpellMapper spellMapper) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.attributeUtil = attributeUtil;
@@ -47,6 +53,8 @@ public class ProfileInfoResponseBuilder {
         this.equipmentManager = equipmentManager;
         this.responseFactory = responseFactory;
         this.profileItemEntryResponseBuilder = profileItemEntryResponseBuilder;
+        this.spellDefinitionManager = spellDefinitionManager;
+        this.spellMapper = spellMapper;
     }
 
     public Response build(UserEntity user) {
@@ -59,6 +67,7 @@ public class ProfileInfoResponseBuilder {
         response.setData("lastLoginDate", user.getLastLoginDate());
         response.setData("inventory", buildInventoryResponse(inventoryManager.getInventory(user).getItems()));
         response.setData("equipment", buildEquipmentResponse(user));
+        response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));
 
         return response;
     }
@@ -131,7 +140,6 @@ public class ProfileInfoResponseBuilder {
     }
 
     private HashMap<String, Object> buildAttributeInfo(Attribute attribute) {
-        //Can be cached!
         HashMap<String, Object> attributeDataResponse = new HashMap<>();
 
         attributeDataResponse.put("name", attribute.getName());
@@ -158,5 +166,24 @@ public class ProfileInfoResponseBuilder {
         }
 
         return bonusList;
+    }
+
+    private LinkedList<HashMap<String, Object>> buildSpellResponse(List<SpellDatabaseEntity> spells) {
+        LinkedList<HashMap<String, Object>> spellList = new LinkedList<>();
+
+        for(SpellDatabaseEntity spell : spells) {
+            SpellDefinition spellDefinition = spellDefinitionManager.getSpellDefinition(spell.getSpellId());
+
+            HashMap<String, Object> spellData = new HashMap<>();
+
+            spellData.put("id", spellDefinition.getId());
+            spellData.put("name", spellDefinition.getName());
+            spellData.put("combatSpell", spellDefinition.isCombatSpell());
+            spellData.put("castingCost", spellDefinition.getSpellCosts());
+
+            spellList.add(spellData);
+        }
+
+        return spellList;
     }
 }

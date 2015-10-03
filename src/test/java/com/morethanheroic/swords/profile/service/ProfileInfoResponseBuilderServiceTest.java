@@ -27,7 +27,7 @@ public class ProfileInfoResponseBuilderServiceTest {
 
     @Test
     public void testBuild() {
-        ProfileInfoResponseBuilder profileInfoResponseBuilder = new ProfileInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock(), buildInventoryManagerMock(), null, null, null);
+        ProfileInfoResponseBuilder profileInfoResponseBuilder = new ProfileInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock(), buildInventoryManagerMock(), null, null, null, null, null);
 
         Response response = profileInfoResponseBuilder.build(buildUserEntityMock());
 
