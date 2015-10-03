@@ -6,17 +6,19 @@ import com.morethanheroic.swords.combatsettings.service.domain.CombatSettingsEnt
 import com.morethanheroic.swords.combatsettings.service.executor.CombatSettingsAction;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.item.service.UseItemService;
+import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
+import com.morethanheroic.swords.spell.service.domain.UseSpellService;
 
 public class TurnCombatSettings extends CombatSettingsAction {
 
-    public TurnCombatSettings(UseItemService useItemService, ItemDefinitionManager itemDefinitionManager) {
-        super(useItemService, itemDefinitionManager);
+    public TurnCombatSettings(UseItemService useItemService, ItemDefinitionManager itemDefinitionManager, UseSpellService useSpellService, SpellDefinitionManager spellDefinitionManager) {
+        super(useItemService, itemDefinitionManager, useSpellService, spellDefinitionManager);
     }
 
     @Override
     public void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity) {
         if (combat.getTurn() == combatSettingsEntity.getTarget()) {
-            executeCombatSettings(combat.getUserCombatEntity().getUserEntity(), combatSettingsEntity);
+            executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity);
         }
     }
 }

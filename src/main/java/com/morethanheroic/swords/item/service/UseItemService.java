@@ -1,13 +1,12 @@
 package com.morethanheroic.swords.item.service;
 
-import com.morethanheroic.swords.combat.domain.effect.HealCombatEffect;
+import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
-import com.morethanheroic.swords.user.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +14,12 @@ import org.springframework.stereotype.Service;
 public class UseItemService {
 
     private final CombatEffectApplierService combatEffectApplierService;
-    private final UserManager userManager;
     private final InventoryManager inventoryManager;
     private final UserMapper userMapper;
 
     @Autowired
-    public UseItemService(CombatEffectApplierService combatEffectApplierService, UserManager userManager, InventoryManager inventoryManager, UserMapper userMapper) {
+    public UseItemService(CombatEffectApplierService combatEffectApplierService, InventoryManager inventoryManager, UserMapper userMapper) {
         this.combatEffectApplierService = combatEffectApplierService;
-        this.userManager = userManager;
         this.inventoryManager = inventoryManager;
         this.userMapper = userMapper;
     }
@@ -31,10 +28,20 @@ public class UseItemService {
         return inventoryManager.getInventory(userEntity).hasItem(item.getId());
     }
 
+    public void useItem(UserCombatEntity combatEntity, ItemDefinition item) {
+        if (canUseItem(combatEntity.getUserEntity(), item)) {
+            applyItem(combatEntity, item);
+        }
+    }
+
     public void useItem(UserEntity userEntity, ItemDefinition item) {
         if (canUseItem(userEntity, item)) {
             applyItem(userEntity, item);
         }
+    }
+
+    private void applyItem(CombatEntity userCombatEntity, ItemDefinition item) {
+        combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects());
     }
 
     private void applyItem(UserEntity userEntity, ItemDefinition item) {
