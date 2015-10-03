@@ -16,6 +16,7 @@ public class RawItemDefinition {
     private ItemType type;
     private boolean usable;
     private int weight;
+    private boolean equipment;
 
     @XmlElementWrapper(name = "use-effect-list")
     @XmlElement(name = "effect")
@@ -130,5 +131,9 @@ public class RawItemDefinition {
 
     public ArrayList<ItemEffect> getEffectList() {
         return effectList;
+    }
+
+    public boolean isEquipment() {
+        return equipment;
     }
 }

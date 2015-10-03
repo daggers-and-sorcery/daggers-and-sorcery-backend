@@ -16,6 +16,7 @@ public class ItemDefinition {
     private boolean usable;
     private int weight;
     private List<CombatEffect> combatEffects;
+    private boolean equipment;
 
     private List<BasicAttributeModifierDefinition> basicModifiers = Collections.unmodifiableList(new ArrayList<>());
     private List<CombatAttributeModifierDefinition> combatModifiers = Collections.unmodifiableList(new ArrayList<>());
@@ -89,6 +90,7 @@ public class ItemDefinition {
         allRequiremensList = Collections.unmodifiableList(allRequiremensList);
 
         this.combatEffects = combatEffects;
+        this.equipment = rawItemDefinition.isEquipment();
     }
 
     public String toString() {
@@ -116,27 +118,7 @@ public class ItemDefinition {
     }
 
     public boolean isEquipment() {
-        switch (type) {
-            case TWO_HANDED_CRUSHING_WEAPONS:
-            case ONE_HANDED_CRUSHING_WEAPONS:
-            case TWO_HANDED_AXES:
-            case ONE_HANDED_AXES:
-            case THROWING_WEAPONS:
-            case LONGSWORDS:
-            case SHORTSWORDS:
-            case POLEARMS:
-            case DAGGERS:
-            case LONGBOWS:
-            case SHORTBOWS:
-            case CROSSBOWS:
-            case SHIELD:
-            case LIGHT_ARMOR:
-            case HEAVY_ARMOR:
-            case ROBE_ARMOR:
-                return true;
-            default:
-                return false;
-        }
+        return equipment;
     }
 
     public List<BasicAttributeModifierDefinition> getBasicModifiers() {

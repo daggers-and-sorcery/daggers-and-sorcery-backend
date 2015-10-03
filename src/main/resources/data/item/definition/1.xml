@@ -6,6 +6,7 @@
     <item:name>Laxi's epic</item:name>
     <item:type>ONE_HANDED_AXES</item:type>
     <item:usable>true</item:usable>
+    <item:equipment>true</item:equipment>
     <item:use-effect-list>
         <item:effect target="com.morethanheroic.swords.combat.domain.effect.HealCombatEffect">
             <item:settings-list>
