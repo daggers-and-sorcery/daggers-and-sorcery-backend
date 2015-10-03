@@ -1,8 +1,9 @@
 package com.morethanheroic.swords.spell.service.domain;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.morethanheroic.swords.item.service.domain.*;
+
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
 
 @XmlRootElement(name = "spell")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -11,6 +12,17 @@ public class RawSpellDefinition {
     private int id;
     private String name;
     private SpellType type;
+
+    @XmlElement(name = "combat-spell")
+    private boolean combatSpell;
+
+    @XmlElementWrapper(name = "effect-list")
+    @XmlElement(name = "effect")
+    private ArrayList<SpellEffect> effectList;
+
+    @XmlElementWrapper(name = "skill-requirements")
+    @XmlElement(name = "requirement")
+    private ArrayList<SkillAttributeRequirementDefinition> skillRequirements;
 
     public int getId() {
         return id;
@@ -22,5 +34,17 @@ public class RawSpellDefinition {
 
     public SpellType getType() {
         return type;
+    }
+
+    public boolean isCombatSpell() {
+        return combatSpell;
+    }
+
+    public ArrayList<SpellEffect> getEffectList() {
+        return effectList;
+    }
+
+    public ArrayList<SkillAttributeRequirementDefinition> getSkillRequirements() {
+        return skillRequirements;
     }
 }
