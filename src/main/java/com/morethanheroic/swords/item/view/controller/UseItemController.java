@@ -29,13 +29,12 @@ public class UseItemController {
     @Transactional
     @RequestMapping(value = "/item/use/{itemId}", method = RequestMethod.GET)
     public Response useItem(UserEntity userEntity, @PathVariable int itemId) {
-
         if (useItemService.canUseItem(userEntity, itemDefinitionManager.getItemDefinition(itemId))) {
             useItemService.useItem(userEntity, itemDefinitionManager.getItemDefinition(itemId));
 
             return useItemResponseBuilder.build(userEntity, true);
-        } else {
-            return useItemResponseBuilder.build(userEntity, false);
         }
+
+        return useItemResponseBuilder.build(userEntity, false);
     }
 }
