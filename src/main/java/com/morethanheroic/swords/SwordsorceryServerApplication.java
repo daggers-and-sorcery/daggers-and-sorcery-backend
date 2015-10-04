@@ -96,7 +96,7 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
         //Production
-        if (System.getenv("DATABASE_URL") != null) {
+        if (System.getenv("CLEARDB_DATABASE_URL") != null) {
             URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
 
             String username = dbUri.getUserInfo().split(":")[0];
