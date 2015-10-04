@@ -2,6 +2,7 @@ package com.morethanheroic.swords.definition.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
@@ -9,6 +10,7 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
@@ -50,6 +52,6 @@ public class XMLDefinitionLoader {
     }
 
     private Schema buildSchema(String schemaPath) throws IOException, SAXException {
-        return schemaFactory.newSchema(applicationContext.getResource(schemaPath).getFile());
+        return schemaFactory.newSchema(new StreamSource(applicationContext.getResource(schemaPath).getInputStream()));
     }
 }
