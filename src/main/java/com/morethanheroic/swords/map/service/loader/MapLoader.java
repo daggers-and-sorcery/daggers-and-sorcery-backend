@@ -6,10 +6,11 @@ import com.morethanheroic.swords.map.service.domain.MapDefinition;
 import com.morethanheroic.swords.map.service.loader.domain.RawMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,23 +29,23 @@ public class MapLoader {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public boolean isMapExists(int id) {
-        return applicationContext.getResource("classpath:map/" + id + ".json").exists();
-    }
-
     public List<MapDefinition> loadMapDefinitions() throws IOException {
-        File[] maps = applicationContext.getResource("classpath:map").getFile().listFiles();
-
         ArrayList<MapDefinition> mapDefinitions = new ArrayList<>();
 
-        for (File map : maps) {
-            mapDefinitions.add(loadMapDefinition(map));
+        for (int i = 1; i < 100; i++) {
+            Resource resource = applicationContext.getResource("classpath:map/" + i + ".json");
+
+            if (!resource.exists()) {
+                return mapDefinitions;
+            }
+
+            mapDefinitions.add(loadMapDefinition(resource.getInputStream(), i));
         }
 
-        return mapDefinitions;
+        throw new IllegalStateException("Should be here! There is more items to read than the actual maxvalue!");
     }
 
-    public MapDefinition loadMapDefinition(File map) throws IOException {
-        return mapConverter.convertRawMapToDefinition(Integer.valueOf(map.getName().replace(".json","")),objectMapper.readValue(map, RawMap.class));
+    public MapDefinition loadMapDefinition(InputStream map, int id) throws IOException {
+        return mapConverter.convertRawMapToDefinition(id, objectMapper.readValue(map, RawMap.class));
     }
 }

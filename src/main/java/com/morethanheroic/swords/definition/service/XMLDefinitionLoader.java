@@ -13,7 +13,6 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,33 +26,23 @@ public class XMLDefinitionLoader {
     private ApplicationContext applicationContext;
 
     public List loadDefinitions(Class clazz, String resourcePath, String schemaPath) throws JAXBException, IOException, SAXException {
-        return unmarshallTargetFiles(buildUnmarshaller(clazz, schemaPath), resourcePath/*getTargetFiles(resourcePath)*/);
+        return unmarshallTargetFiles(buildUnmarshaller(clazz, schemaPath), resourcePath);
     }
 
-    private ArrayList unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath /*, File[] files*/) throws JAXBException, IOException {
+    private ArrayList unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath) throws JAXBException, IOException {
         ArrayList list = new ArrayList<>();
 
         for (int i = 1; i < 100; i++) {
             Resource resource = applicationContext.getResource(resourcePath + i + ".xml");
 
-            if(!resource.exists()) {
+            if (!resource.exists()) {
                 return list;
             }
 
             list.add(unmarshaller.unmarshal(applicationContext.getResource(resourcePath + i + ".xml").getInputStream()));
         }
 
-
         throw new IllegalStateException("Should be here! There is more items to read than the actual maxvalue!");
-        /*for (File file : files) {
-            list.add(unmarshaller.unmarshal(file));
-        }*/
-
-        //return list;
-    }
-
-    private File[] getTargetFiles(String resourcePath) throws IOException {
-        return applicationContext.getResource(resourcePath).getFile().listFiles();
     }
 
     private Unmarshaller buildUnmarshaller(Class clazz, String schemaPath) throws IOException, SAXException, JAXBException {
