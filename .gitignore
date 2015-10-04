@@ -106,7 +106,7 @@ build/Release
 node_modules
 
 ### Webpack ###
-bundle.js
+#bundle.js -- Build locally until we find a way to build on heroku
 bundle.js.map
 
 # Created by https://www.gitignore.io/api/gradle
