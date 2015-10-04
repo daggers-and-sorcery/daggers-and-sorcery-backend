@@ -1,1 +1,1 @@
-web: ./build/install/swords-server/bin/swords-server $JAVA_OPTS -Dserver.port=$PORT
+web: /app/build/install/swords-server/bin/swords-server $JAVA_OPTS -Dserver.port=$PORT
