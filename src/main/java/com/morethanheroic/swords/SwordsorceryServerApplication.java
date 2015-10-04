@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
