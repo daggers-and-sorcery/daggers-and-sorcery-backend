@@ -110,10 +110,6 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
             String password = dbUri.getUserInfo().split(":")[1];
             String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
 
-            System.out.println(username);
-            System.out.println(password);
-            System.out.println(dbUrl);
-
             dataSource.setUrl(dbUrl);
             dataSource.setUsername(username);
             dataSource.setPassword(password);
