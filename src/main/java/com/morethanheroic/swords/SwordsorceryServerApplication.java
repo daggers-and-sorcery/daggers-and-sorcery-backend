@@ -32,6 +32,7 @@ import java.util.Random;
 @SpringBootApplication
 @EnableWebMvc
 @EnableTransactionManagement
+@Lazy
 @MapperScan("com.morethanheroic.swords")
 public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapter {
 
