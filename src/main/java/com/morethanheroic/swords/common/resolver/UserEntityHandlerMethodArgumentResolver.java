@@ -3,13 +3,15 @@ package com.morethanheroic.swords.common.resolver;
 import com.morethanheroic.swords.common.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserManager;
-import org.apache.catalina.session.StandardSessionFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class UserEntityHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -23,10 +25,12 @@ public class UserEntityHandlerMethodArgumentResolver implements HandlerMethodArg
 
     @Override
     public UserEntity resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        if (((StandardSessionFacade) webRequest.getSessionMutex()).getAttribute(SessionAttributeType.USER_ID) == null) {
+        HttpSession session = ((HttpServletRequest) webRequest.getNativeRequest()).getSession();
+
+        if (session.getAttribute(SessionAttributeType.USER_ID) == null) {
             return null;
         }
 
-        return userManager.getUser((int) ((StandardSessionFacade) webRequest.getSessionMutex()).getAttribute(SessionAttributeType.USER_ID));
+        return userManager.getUser((int) session.getAttribute(SessionAttributeType.USER_ID));
     }
 }

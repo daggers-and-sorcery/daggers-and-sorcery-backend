@@ -11,15 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -38,7 +38,7 @@ import java.util.Random;
 @ComponentScan(lazyInit = true)
 @EnableWebMvc
 @EnableTransactionManagement
-@Lazy
+@EnableRedisHttpSession
 @MapperScan("com.morethanheroic.swords")
 public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapter {
 
@@ -139,5 +139,23 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     @Bean
     public Random getRandom() {
         return new Random();
+    }
+
+    @Bean
+    public JedisConnectionFactory redisConnectionFactory() throws URISyntaxException {
+        JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
+
+        if (System.getenv("REDISCLOUD_URL") != null) {
+            URI redisURI = new URI(System.getenv("REDISCLOUD_URL"));
+
+            redisConnectionFactory.setHostName(redisURI.getHost());
+            redisConnectionFactory.setPort(redisURI.getPort());
+            redisConnectionFactory.setPassword(redisURI.getUserInfo().split(":", 2)[1]);
+        } else {
+            redisConnectionFactory.setHostName("127.0.0.1");
+            redisConnectionFactory.setPort(6379);
+        }
+
+        return redisConnectionFactory;
     }
 }

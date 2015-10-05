@@ -15,11 +15,13 @@ repositories {
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-redis'
     compile (group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
     compile group: 'org.springframework.security', name: 'spring-security-core'
-    
+    compile group: 'org.springframework.session', name: 'spring-session', version: '1.0.2.RELEASE'
+
     testCompile (group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
         exclude(module: 'commons-logging')
     }
