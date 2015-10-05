@@ -4,30 +4,14 @@
          xsi:schemaLocation="http://www.swordsandsorcery.com/map ../schema.xsd">
     <map:id>1</map:id>
     <map:spawn>
-        <map:timer>10</map:timer>
+        <map:timer>5</map:timer>
         <!-- respawn in seconds -->
         <map:alive>1000</map:alive>
         <!-- 100 npc can be alive at one time on the map -->
         <map:spawns>
             <map:monster>
-                <map:id>10</map:id>
+                <map:id>1</map:id>
                 <map:chance>3</map:chance>
-                <map:spots>
-                    <map:spot x="111" y="222"/>
-                    <map:spot x="113" y="222"/>
-                    <map:spot x="114" y="222"/>
-                    <map:spot x="115" y="222"/>
-                </map:spots>
-            </map:monster>
-            <map:monster>
-                <map:id>3</map:id>
-                <map:chance>3</map:chance>
-                <map:spots>
-                    <map:spot x="111" y="222"/>
-                    <map:spot x="113" y="222"/>
-                    <map:spot x="114" y="222"/>
-                    <map:spot x="115" y="222"/>
-                </map:spots>
             </map:monster>
         </map:spawns>
     </map:spawn>

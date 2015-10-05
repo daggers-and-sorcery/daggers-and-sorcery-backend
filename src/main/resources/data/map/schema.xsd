@@ -19,7 +19,7 @@
                                                 <xs:all>
                                                     <xs:element name="id" type="xs:unsignedInt" minOccurs="1"/>
                                                     <xs:element name="chance" type="xs:unsignedInt"/>
-                                                    <xs:element name="spots">
+                                                    <xs:element name="spots" minOccurs="0">
                                                         <xs:complexType>
                                                             <xs:sequence>
                                                                 <xs:element name="spot" minOccurs="1"
