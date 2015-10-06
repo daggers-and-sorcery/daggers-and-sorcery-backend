@@ -8,7 +8,7 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatUtil;
-import com.morethanheroic.swords.combat.service.calc.RandomUtil;
+import com.morethanheroic.swords.combat.service.calc.RandomCombatCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +18,18 @@ public class PlayerMeleeAttackCalculator implements AttackCalculator {
     private final CombatMessageBuilder combatMessageBuilder;
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final CombatUtil combatUtil;
-    private final RandomUtil randomUtil;
+    private final RandomCombatCalculator randomCombatCalculator;
 
     @Autowired
-    public PlayerMeleeAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator, CombatUtil combatUtil, RandomUtil randomUtil) {
+    public PlayerMeleeAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator, CombatUtil combatUtil, RandomCombatCalculator randomCombatCalculator) {
         this.combatMessageBuilder = combatMessageBuilder;
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.combatUtil = combatUtil;
-        this.randomUtil = randomUtil;
+        this.randomCombatCalculator = randomCombatCalculator;
     }
 
     public void calculateAttack(CombatResult result, Combat combat) {
-        if (randomUtil.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.ATTACK)) > combat.getMonsterCombatEntity().getMonsterDefinition().getDefense()) {
+        if (randomCombatCalculator.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.ATTACK)) > combat.getMonsterCombatEntity().getMonsterDefinition().getDefense()) {
             dealDamage(result, combat);
 
             if (combat.getMonsterCombatEntity().getActualHealth() <= 0) {
@@ -42,7 +42,7 @@ public class PlayerMeleeAttackCalculator implements AttackCalculator {
     }
 
     private void dealDamage(CombatResult result, Combat combat) {
-        int damage = randomUtil.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.DAMAGE));
+        int damage = randomCombatCalculator.calculateWithRandomResult(globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.DAMAGE));
 
         addAttackXp(result, combat, damage * 2);
 

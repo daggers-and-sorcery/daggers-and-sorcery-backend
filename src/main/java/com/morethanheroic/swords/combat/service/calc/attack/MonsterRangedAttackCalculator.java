@@ -8,7 +8,7 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatUtil;
-import com.morethanheroic.swords.combat.service.calc.RandomUtil;
+import com.morethanheroic.swords.combat.service.calc.RandomCombatCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +18,19 @@ public class MonsterRangedAttackCalculator implements AttackCalculator {
     private final CombatMessageBuilder combatMessageBuilder;
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final CombatUtil combatUtil;
-    private final RandomUtil randomUtil;
+    private final RandomCombatCalculator randomCombatCalculator;
 
     @Autowired
-    public MonsterRangedAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator,CombatUtil combatUtil, RandomUtil randomUtil) {
+    public MonsterRangedAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator,CombatUtil combatUtil, RandomCombatCalculator randomCombatCalculator) {
         this.combatMessageBuilder = combatMessageBuilder;
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.combatUtil = combatUtil;
-        this.randomUtil = randomUtil;
+        this.randomCombatCalculator = randomCombatCalculator;
     }
 
     @Override
     public void calculateAttack(CombatResult result, Combat combat) {
-        if (randomUtil.calculateWithRandomResult(combat.getMonsterCombatEntity().getMonsterDefinition().getAiming()) > globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.DEFENSE)) {
+        if (randomCombatCalculator.calculateWithRandomResult(combat.getMonsterCombatEntity().getMonsterDefinition().getAiming()) > globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.DEFENSE)) {
             dealDamage(result, combat);
 
             if (combat.getUserCombatEntity().getActualHealth() <= 0) {
@@ -43,7 +43,7 @@ public class MonsterRangedAttackCalculator implements AttackCalculator {
     }
 
     private void dealDamage(CombatResult result, Combat combat) {
-        int damage = randomUtil.calculateWithRandomResult(combat.getMonsterCombatEntity().getMonsterDefinition().getRangedDamage());
+        int damage = randomCombatCalculator.calculateWithRandomResult(combat.getMonsterCombatEntity().getMonsterDefinition().getRangedDamage());
 
         addDefenseXp(result, combat, damage * 2);
 

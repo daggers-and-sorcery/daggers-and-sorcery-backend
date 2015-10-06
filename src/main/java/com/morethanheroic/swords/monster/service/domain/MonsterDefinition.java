@@ -74,6 +74,10 @@ public class MonsterDefinition {
     }
 
     public List<DropDefinition> getDropDefinitions() {
+        if(dropDefinitions == null) {
+            return Collections.EMPTY_LIST;
+        }
+
         return Collections.unmodifiableList(dropDefinitions);
     }
 

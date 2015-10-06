@@ -11,7 +11,7 @@
     <monster:level>1</monster:level>
     <monster:defense>3</monster:defense>
     <monster:damage>2</monster:damage>
-    <monster:attack>4</monster:attack>
+    <monster:attack>40</monster:attack>
     <monster:aiming>0</monster:aiming>
     <monster:ranged-damage>0</monster:ranged-damage>
     <monster:attack-type>MELEE</monster:attack-type>
