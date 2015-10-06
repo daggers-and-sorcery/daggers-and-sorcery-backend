@@ -79,24 +79,16 @@ public class MapEntity {
         return mapObjectMapper.getSpawnsForMap(mapDefinition.getId());
     }
 
+    public List<MapObjectDatabaseEntity> getSpawnsOnCoordinate(int x, int y) {
+        return mapObjectMapper.getSpawnsForMapOnCoordinate(x, y, mapDefinition.getId());
+    }
+
     public List<MapObjectDatabaseEntity> getSpawnsAt(int x, int y) {
-        List<MapObjectDatabaseEntity> spawnAtPointList = new ArrayList<>();
-
-        //TODO: fix this bullshit! It's always query every spawn on the map, not only whats on the x/y coordinate!
-        List<MapObjectDatabaseEntity> spawnList = getSpawns();
-
-        for (MapObjectDatabaseEntity entity : spawnList) {
-            if(entity.getX() == x && entity.getY() == y) {
-                spawnAtPointList.add(entity);
-            }
-        }
-
-        return spawnAtPointList;
+        return getSpawnsOnCoordinate(x, y);
     }
 
     public MapObjectDatabaseEntity getSpawnAt(int x, int y, int monsterId) {
-        //TODO: fix this bullshit! It's always query every spawn on the map, not only whats on the x/y coordinate!
-        List<MapObjectDatabaseEntity> spawnList = getSpawns();
+        List<MapObjectDatabaseEntity> spawnList = getSpawnsOnCoordinate(x, y);
 
         for (MapObjectDatabaseEntity entity : spawnList) {
             if(entity.getX() == x && entity.getY() == y && entity.getObject() == monsterId && entity.getType() == MapObjectType.MONSTER) {
@@ -105,17 +97,5 @@ public class MapEntity {
         }
 
         return null;
-    }
-
-    public boolean hasSpawnAt(int x, int y, int monsterId) {
-        List<MapObjectDatabaseEntity> spawnList = getSpawns();
-
-        for (MapObjectDatabaseEntity entity : spawnList) {
-            if(entity.getX() == x && entity.getY() == y && entity.getObject() == monsterId && entity.getType() == MapObjectType.MONSTER) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
