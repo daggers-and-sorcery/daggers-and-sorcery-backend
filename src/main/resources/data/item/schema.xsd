@@ -30,6 +30,14 @@
                             <xs:enumeration value="STAFF"/>
                             <xs:enumeration value="WAND"/>
                             <xs:enumeration value="SPECTRE"/>
+                            <xs:enumeration value="COIN"/>
+                            <xs:enumeration value="NUT"/>
+                            <xs:enumeration value="ORE"/>
+                            <xs:enumeration value="BAR"/>
+                            <xs:enumeration value="ARROW"/>
+                            <xs:enumeration value="MATERIAL"/>
+                            <xs:enumeration value="TOOL"/>
+                            <xs:enumeration value="RECIPE"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
@@ -63,7 +71,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="weight" type="xs:unsignedInt"/>
+                <xs:element name="weight" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="combat-modifiers" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>

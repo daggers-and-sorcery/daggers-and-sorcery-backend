@@ -19,5 +19,13 @@ public enum ItemType {
     SHIELD,
     STAFF,
     WAND,
-    SPECTRE
+    SPECTRE,
+    COIN,
+    NUT,
+    ORE,
+    BAR,
+    ARROW,
+    MATERIAL,
+    TOOL,
+    RECIPE
 }
