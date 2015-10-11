@@ -7,12 +7,22 @@
     <monster:name>Goblin Scavenger</monster:name>
     <monster:health>8</monster:health>
     <monster:mana>0</monster:mana>
-    <monster:initiation>28</monster:initiation>
+    <monster:initiation>
+        <monster:value>28</monster:value>
+    </monster:initiation>
     <monster:level>3</monster:level>
     <monster:defense>22</monster:defense>
-    <monster:damage>0</monster:damage>
-    <monster:attack>0</monster:attack>
-    <monster:aiming>28</monster:aiming>
-    <monster:ranged-damage>4</monster:ranged-damage>
+    <monster:damage>
+        <monster:value>0</monster:value>
+    </monster:damage>
+    <monster:attack>
+        <monster:value>0</monster:value>
+    </monster:attack>
+    <monster:aiming>
+        <monster:value>28</monster:value>
+    </monster:aiming>
+    <monster:ranged-damage>
+        <monster:value>4</monster:value>
+    </monster:ranged-damage>
     <monster:attack-type>RANGED</monster:attack-type>
 </monster:monster>

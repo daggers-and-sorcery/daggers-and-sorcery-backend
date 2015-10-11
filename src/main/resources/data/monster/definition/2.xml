@@ -7,12 +7,22 @@
     <monster:name>Goblin Guard</monster:name>
     <monster:health>12</monster:health>
     <monster:mana>0</monster:mana>
-    <monster:initiation>22</monster:initiation>
+    <monster:initiation>
+        <monster:value>22</monster:value>
+    </monster:initiation>
     <monster:level>2</monster:level>
     <monster:defense>28</monster:defense>
-    <monster:damage>2</monster:damage>
-    <monster:attack>24</monster:attack>
-    <monster:aiming>0</monster:aiming>
-    <monster:ranged-damage>0</monster:ranged-damage>
+    <monster:damage>
+        <monster:value>2</monster:value>
+    </monster:damage>
+    <monster:attack>
+        <monster:value>24</monster:value>
+    </monster:attack>
+    <monster:aiming>
+        <monster:value>0</monster:value>
+    </monster:aiming>
+    <monster:ranged-damage>
+        <monster:value>0</monster:value>
+    </monster:ranged-damage>
     <monster:attack-type>MELEE</monster:attack-type>
 </monster:monster>

@@ -9,13 +9,73 @@
                 <xs:element name="name" type="xs:string" minOccurs="1"/>
                 <xs:element name="health" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="mana" type="xs:unsignedInt" minOccurs="1"/>
-                <xs:element name="initiation" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="level" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="defense" type="xs:unsignedInt" minOccurs="1"/>
-                <xs:element name="attack" type="xs:unsignedInt" minOccurs="1"/>
-                <xs:element name="damage" type="xs:unsignedInt" minOccurs="1"/>
-                <xs:element name="aiming" type="xs:unsignedInt" minOccurs="1"/>
-                <xs:element name="ranged-damage" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="initiation" minOccurs="1">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="value" type="xs:unsignedInt" minOccurs="1"/>
+                            <xs:element name="d2" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d4" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d6" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d8" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d10" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d20" type="xs:unsignedInt" minOccurs="0"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="attack" minOccurs="1">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="value" type="xs:unsignedInt" minOccurs="1"/>
+                            <xs:element name="d2" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d4" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d6" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d8" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d10" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d20" type="xs:unsignedInt" minOccurs="0"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="damage" minOccurs="1">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="value" type="xs:unsignedInt" minOccurs="1"/>
+                            <xs:element name="d2" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d4" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d6" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d8" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d10" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d20" type="xs:unsignedInt" minOccurs="0"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="aiming" minOccurs="1">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="value" type="xs:unsignedInt" minOccurs="1"/>
+                            <xs:element name="d2" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d4" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d6" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d8" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d10" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d20" type="xs:unsignedInt" minOccurs="0"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ranged-damage" minOccurs="1">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="value" type="xs:unsignedInt" minOccurs="1"/>
+                            <xs:element name="d2" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d4" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d6" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d8" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d10" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d20" type="xs:unsignedInt" minOccurs="0"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="attack-type" minOccurs="1">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">

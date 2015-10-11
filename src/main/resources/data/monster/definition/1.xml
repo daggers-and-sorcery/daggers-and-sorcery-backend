@@ -7,13 +7,26 @@
     <monster:name>Goblin Piker</monster:name>
     <monster:health>8</monster:health>
     <monster:mana>0</monster:mana>
-    <monster:initiation>18</monster:initiation>
+    <monster:initiation>
+        <monster:value>18</monster:value>
+        <monster:d10>1</monster:d10>
+    </monster:initiation>
     <monster:level>1</monster:level>
     <monster:defense>26</monster:defense>
-    <monster:damage>1</monster:damage>
-    <monster:attack>20</monster:attack>
-    <monster:aiming>0</monster:aiming>
-    <monster:ranged-damage>0</monster:ranged-damage>
+    <monster:damage>
+        <monster:value>3</monster:value>
+        <monster:d4>1</monster:d4>
+    </monster:damage>
+    <monster:attack>
+        <monster:value>20</monster:value>
+        <monster:d10>1</monster:d10>
+    </monster:attack>
+    <monster:aiming>
+        <monster:value>0</monster:value>
+    </monster:aiming>
+    <monster:ranged-damage>
+        <monster:value>0</monster:value>
+    </monster:ranged-damage>
     <monster:attack-type>MELEE</monster:attack-type>
     <monster:droplist>
         <monster:drop>

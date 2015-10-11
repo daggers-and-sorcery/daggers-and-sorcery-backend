@@ -14,14 +14,14 @@ public class MonsterDefinition {
     private String name;
     private int health;
     private int mana;
-    private int initiation;
+    private RawDiceAttribute initiation;
     private int level;
-    private int defense;
-    private int attack;
-    private int aiming;
+    private RawDiceAttribute defense;
+    private RawDiceAttribute attack;
+    private RawDiceAttribute aiming;
     @XmlElement(name = "ranged-damage")
-    private int rangedDamage;
-    private int damage;
+    private RawDiceAttribute rangedDamage;
+    private RawDiceAttribute damage;
     @XmlElement(name = "attack-type")
     private AttackType attackType;
 
@@ -42,7 +42,7 @@ public class MonsterDefinition {
     }
 
     public int getInitiation() {
-        return initiation;
+        return initiation.getValue();
     }
 
     public int getLevel() {
@@ -50,23 +50,23 @@ public class MonsterDefinition {
     }
 
     public int getDefense() {
-        return defense;
+        return defense.getValue();
     }
 
     public int getAttack() {
-        return attack;
+        return attack.getValue();
     }
 
     public int getDamage() {
-        return damage;
+        return damage.getValue();
     }
 
     public int getAiming() {
-        return aiming;
+        return aiming.getValue();
     }
 
     public int getRangedDamage() {
-        return rangedDamage;
+        return rangedDamage.getValue();
     }
 
     public AttackType getAttackType() {

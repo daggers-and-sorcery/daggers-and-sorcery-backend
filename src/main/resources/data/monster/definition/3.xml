@@ -7,13 +7,23 @@
     <monster:name>Goblin Shaman</monster:name>
     <monster:health>10</monster:health>
     <monster:mana>0</monster:mana>
-    <monster:initiation>26</monster:initiation>
+    <monster:initiation>
+        <monster:value>26</monster:value>
+    </monster:initiation>
     <monster:level>4</monster:level>
     <monster:defense>24</monster:defense>
-    <monster:damage>2</monster:damage>
-    <monster:attack>28</monster:attack>
-    <monster:aiming>0</monster:aiming>
-    <monster:ranged-damage>0</monster:ranged-damage>
+    <monster:damage>
+        <monster:value>2</monster:value>
+    </monster:damage>
+    <monster:attack>
+        <monster:value>28</monster:value>
+    </monster:attack>
+    <monster:aiming>
+        <monster:value>0</monster:value>
+    </monster:aiming>
+    <monster:ranged-damage>
+        <monster:value>0</monster:value>
+    </monster:ranged-damage>
     <!-- Todo: add matic attack type! -->
     <monster:attack-type>RANGED</monster:attack-type>
 </monster:monster>
