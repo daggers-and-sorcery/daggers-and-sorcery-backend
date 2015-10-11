@@ -7,8 +7,8 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.journal.view.response.JournalListResponseEntry;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
-import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +22,14 @@ public class JournalListResponseBuilder {
     private final JournalManager journalManager;
     private final ResponseFactory responseFactory;
     private final ItemDefinitionManager itemDefinitionManager;
-    private final MonsterDefinitionManager monsterDefinitionManager;
+    private final MonsterDefinitionCache monsterDefinitionCache;
 
     @Autowired
-    public JournalListResponseBuilder(JournalManager journalManager, ResponseFactory responseFactory, ItemDefinitionManager itemDefinitionManager, MonsterDefinitionManager monsterDefinitionManager) {
+    public JournalListResponseBuilder(JournalManager journalManager, ResponseFactory responseFactory, ItemDefinitionManager itemDefinitionManager, MonsterDefinitionCache monsterDefinitionCache) {
         this.journalManager = journalManager;
         this.responseFactory = responseFactory;
         this.itemDefinitionManager = itemDefinitionManager;
-        this.monsterDefinitionManager = monsterDefinitionManager;
+        this.monsterDefinitionCache = monsterDefinitionCache;
     }
 
     public Response build(UserEntity userEntity, JournalType journalType) {
@@ -63,7 +63,7 @@ public class JournalListResponseBuilder {
     }
 
     private JournalListResponseEntry convertMonsterEntity(JournalDatabaseEntity entity) {
-        MonsterDefinition monsterDefinition = monsterDefinitionManager.getMonsterDefinition(entity.getJournalId());
+        MonsterDefinition monsterDefinition = monsterDefinitionCache.getMonsterDefinition(entity.getJournalId());
 
         return new JournalListResponseEntry(monsterDefinition.getId(), monsterDefinition.getName());
     }

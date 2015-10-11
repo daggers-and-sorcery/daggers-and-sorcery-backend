@@ -3,8 +3,8 @@ package com.morethanheroic.swords.combatsettings.service;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
-import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ import java.util.List;
 public class SpecificMonstersResponseBuilder {
 
     private final ResponseFactory responseFactory;
-    private final MonsterDefinitionManager monsterDefinitionManager;
+    private final MonsterDefinitionCache monsterDefinitionCache;
 
     @Autowired
-    public SpecificMonstersResponseBuilder(ResponseFactory responseFactory, MonsterDefinitionManager monsterDefinitionManager) {
+    public SpecificMonstersResponseBuilder(ResponseFactory responseFactory, MonsterDefinitionCache monsterDefinitionCache) {
         this.responseFactory = responseFactory;
-        this.monsterDefinitionManager = monsterDefinitionManager;
+        this.monsterDefinitionCache = monsterDefinitionCache;
     }
 
     public Response build(UserEntity userEntity, List<JournalDatabaseEntity> journalMonsters) {
@@ -30,7 +30,7 @@ public class SpecificMonstersResponseBuilder {
 
         ArrayList<HashMap<String, Object>> monstersResult = new ArrayList<>();
         for(JournalDatabaseEntity journalEntry : journalMonsters) {
-            MonsterDefinition monsterDefinition = monsterDefinitionManager.getMonsterDefinition(journalEntry.getJournalId());
+            MonsterDefinition monsterDefinition = monsterDefinitionCache.getMonsterDefinition(journalEntry.getJournalId());
             HashMap<String, Object> monsterData = new HashMap<>();
 
             monsterData.put("id", monsterDefinition.getId());

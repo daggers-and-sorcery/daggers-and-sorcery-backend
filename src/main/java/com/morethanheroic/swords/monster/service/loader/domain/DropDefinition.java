@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.monster.service.domain;
+package com.morethanheroic.swords.monster.service.loader.domain;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

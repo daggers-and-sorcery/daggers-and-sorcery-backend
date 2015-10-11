@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.service.calc.initialisation;
 
-import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

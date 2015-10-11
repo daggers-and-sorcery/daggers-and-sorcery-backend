@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.monster.service.domain;
+package com.morethanheroic.swords.monster.service.loader.domain;
 
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 @XmlRootElement(name = "monster")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MonsterDefinition {
+public class RawMonsterDefinition {
 
     private int id;
     private String name;
@@ -16,7 +16,7 @@ public class MonsterDefinition {
     private int mana;
     private RawDiceAttribute initiation;
     private int level;
-    private RawDiceAttribute defense;
+    private int defense;
     private RawDiceAttribute attack;
     private RawDiceAttribute aiming;
     @XmlElement(name = "ranged-damage")
@@ -41,8 +41,8 @@ public class MonsterDefinition {
         return health;
     }
 
-    public int getInitiation() {
-        return initiation.getValue();
+    public RawDiceAttribute getInitiation() {
+        return initiation;
     }
 
     public int getLevel() {
@@ -50,23 +50,23 @@ public class MonsterDefinition {
     }
 
     public int getDefense() {
-        return defense.getValue();
+        return defense;
     }
 
-    public int getAttack() {
-        return attack.getValue();
+    public RawDiceAttribute getAttack() {
+        return attack;
     }
 
-    public int getDamage() {
-        return damage.getValue();
+    public RawDiceAttribute getDamage() {
+        return damage;
     }
 
-    public int getAiming() {
-        return aiming.getValue();
+    public RawDiceAttribute getAiming() {
+        return aiming;
     }
 
-    public int getRangedDamage() {
-        return rangedDamage.getValue();
+    public RawDiceAttribute getRangedDamage() {
+        return rangedDamage;
     }
 
     public AttackType getAttackType() {

@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.domain;
 
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
-import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 public class Combat {

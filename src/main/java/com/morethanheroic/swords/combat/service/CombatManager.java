@@ -5,7 +5,7 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
+import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 public class CombatManager {
 
     private final CombatCalculator combatCalculator;
-    private final MonsterDefinitionManager monsterDefinitionManager;
+    private final MonsterDefinitionCache monsterDefinitionCache;
     private final MapManager mapManager;
 
     @Autowired
-    public CombatManager(CombatCalculator combatCalculator, MonsterDefinitionManager monsterDefinitionManager, MapManager mapManager) {
+    public CombatManager(CombatCalculator combatCalculator, MonsterDefinitionCache monsterDefinitionCache, MapManager mapManager) {
         this.combatCalculator = combatCalculator;
-        this.monsterDefinitionManager = monsterDefinitionManager;
+        this.monsterDefinitionCache = monsterDefinitionCache;
         this.mapManager = mapManager;
     }
 
@@ -28,7 +28,7 @@ public class CombatManager {
         MapObjectDatabaseEntity spawn = mapManager.getMap(user.getMapId()).getSpawnAt(user.getX(), user.getY(), monsterId);
 
         if (spawn != null) {
-            return combatCalculator.doFight(user, monsterDefinitionManager.getMonsterDefinition(monsterId), spawn);
+            return combatCalculator.doFight(user, monsterDefinitionCache.getMonsterDefinition(monsterId), spawn);
         } else {
             //TODO: do this better, with real error handling on user side
             CombatResult combatResult = new CombatResult();

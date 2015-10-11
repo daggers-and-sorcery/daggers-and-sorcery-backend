@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.domain.entity;
 
-import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 
 public class MonsterCombatEntity extends CombatEntity {
 

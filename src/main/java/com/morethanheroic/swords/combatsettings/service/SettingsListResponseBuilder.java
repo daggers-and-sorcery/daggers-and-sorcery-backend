@@ -6,7 +6,7 @@ import com.morethanheroic.swords.combatsettings.repository.dao.CombatSettingsDat
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
+import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,14 @@ import java.util.List;
 public class SettingsListResponseBuilder {
 
     private final ResponseFactory responseFactory;
-    private final MonsterDefinitionManager monsterDefinitionManager;
+    private final MonsterDefinitionCache monsterDefinitionCache;
     private final ItemDefinitionManager itemDefinitionManager;
     private final SpellDefinitionManager spellDefinitionManager;
 
     @Autowired
-    public SettingsListResponseBuilder(ResponseFactory responseFactory, MonsterDefinitionManager monsterDefinitionManager, ItemDefinitionManager itemDefinitionManager, SpellDefinitionManager spellDefinitionManager) {
+    public SettingsListResponseBuilder(ResponseFactory responseFactory, MonsterDefinitionCache monsterDefinitionCache, ItemDefinitionManager itemDefinitionManager, SpellDefinitionManager spellDefinitionManager) {
         this.responseFactory = responseFactory;
-        this.monsterDefinitionManager = monsterDefinitionManager;
+        this.monsterDefinitionCache = monsterDefinitionCache;
         this.itemDefinitionManager = itemDefinitionManager;
         this.spellDefinitionManager = spellDefinitionManager;
     }
@@ -49,7 +49,7 @@ public class SettingsListResponseBuilder {
 
             TriggerType trigger = combatSettingsDatabaseEntity.getTrigger();
             if (trigger == TriggerType.MONSTER) {
-                settingsData.put("target", monsterDefinitionManager.getMonsterDefinition(combatSettingsDatabaseEntity.getTarget()).getName());
+                settingsData.put("target", monsterDefinitionCache.getMonsterDefinition(combatSettingsDatabaseEntity.getTarget()).getName());
             } else {
                 settingsData.put("target", combatSettingsDatabaseEntity.getTarget());
             }

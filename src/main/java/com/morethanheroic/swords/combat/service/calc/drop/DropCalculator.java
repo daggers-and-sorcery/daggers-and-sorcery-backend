@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.combat.service.calc.drop;
 
 import com.morethanheroic.swords.combat.domain.Drop;
-import com.morethanheroic.swords.monster.service.domain.DropDefinition;
-import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.service.loader.domain.DropDefinition;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -5,8 +5,8 @@ import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.item.service.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.journal.model.JournalType;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionManager;
-import com.morethanheroic.swords.monster.service.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +18,14 @@ public class JournalEntryResponseBuilder {
 
     private final ResponseFactory responseFactory;
     private final ItemDefinitionManager itemDefinitionManager;
-    private final MonsterDefinitionManager monsterDefinitionManager;
+    private final MonsterDefinitionCache monsterDefinitionCache;
     private final ItemEntryResponseBuilder itemEntryResponseBuilder;
 
     @Autowired
-    public JournalEntryResponseBuilder(ResponseFactory responseFactory, ItemDefinitionManager itemDefinitionManager, MonsterDefinitionManager monsterDefinitionManager, ItemEntryResponseBuilder itemEntryResponseBuilder) {
+    public JournalEntryResponseBuilder(ResponseFactory responseFactory, ItemDefinitionManager itemDefinitionManager, MonsterDefinitionCache monsterDefinitionCache, ItemEntryResponseBuilder itemEntryResponseBuilder) {
         this.responseFactory = responseFactory;
         this.itemDefinitionManager = itemDefinitionManager;
-        this.monsterDefinitionManager = monsterDefinitionManager;
+        this.monsterDefinitionCache = monsterDefinitionCache;
         this.itemEntryResponseBuilder = itemEntryResponseBuilder;
     }
 
@@ -38,7 +38,7 @@ public class JournalEntryResponseBuilder {
                 break;
             case MONSTER:
                 //TODO: same builder as in items for monsters too
-                response.setData("journal_entry", buildMonsterEntry(monsterDefinitionManager.getMonsterDefinition(journalId)));
+                response.setData("journal_entry", buildMonsterEntry(monsterDefinitionCache.getMonsterDefinition(journalId)));
                 break;
             default:
                 throw new IllegalArgumentException("Invalid journal type!");
