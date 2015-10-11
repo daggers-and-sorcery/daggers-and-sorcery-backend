@@ -3,17 +3,16 @@
 <monster:monster xmlns:monster="http://www.swordsandsorcery.com/monster"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://www.swordsandsorcery.com/monster ../schema.xsd">
-    <monster:id>3</monster:id>
-    <monster:name>Goblin Shaman</monster:name>
-    <monster:health>10</monster:health>
+    <monster:id>2</monster:id>
+    <monster:name>Goblin Guard</monster:name>
+    <monster:health>12</monster:health>
     <monster:mana>0</monster:mana>
-    <monster:initiation>26</monster:initiation>
-    <monster:level>4</monster:level>
-    <monster:defense>24</monster:defense>
+    <monster:initiation>22</monster:initiation>
+    <monster:level>2</monster:level>
+    <monster:defense>28</monster:defense>
     <monster:damage>2</monster:damage>
-    <monster:attack>28</monster:attack>
+    <monster:attack>24</monster:attack>
     <monster:aiming>0</monster:aiming>
     <monster:ranged-damage>0</monster:ranged-damage>
-    <!-- Todo: add matic attack type! -->
-    <monster:attack-type>RANGED</monster:attack-type>
+    <monster:attack-type>MELEE</monster:attack-type>
 </monster:monster>

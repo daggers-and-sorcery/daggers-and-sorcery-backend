@@ -5,13 +5,13 @@
                  xsi:schemaLocation="http://www.swordsandsorcery.com/monster ../schema.xsd">
     <monster:id>1</monster:id>
     <monster:name>Goblin Piker</monster:name>
-    <monster:health>10</monster:health>
-    <monster:mana>10</monster:mana>
-    <monster:initiation>4</monster:initiation>
+    <monster:health>8</monster:health>
+    <monster:mana>0</monster:mana>
+    <monster:initiation>18</monster:initiation>
     <monster:level>1</monster:level>
-    <monster:defense>3</monster:defense>
-    <monster:damage>2</monster:damage>
-    <monster:attack>40</monster:attack>
+    <monster:defense>26</monster:defense>
+    <monster:damage>1</monster:damage>
+    <monster:attack>20</monster:attack>
     <monster:aiming>0</monster:aiming>
     <monster:ranged-damage>0</monster:ranged-damage>
     <monster:attack-type>MELEE</monster:attack-type>

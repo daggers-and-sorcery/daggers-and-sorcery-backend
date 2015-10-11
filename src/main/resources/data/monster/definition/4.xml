@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monster:monster xmlns:monster="http://www.swordsandsorcery.com/monster"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.swordsandsorcery.com/monster ../schema.xsd">
+    <monster:id>4</monster:id>
+    <monster:name>Goblin Scavenger</monster:name>
+    <monster:health>8</monster:health>
+    <monster:mana>0</monster:mana>
+    <monster:initiation>28</monster:initiation>
+    <monster:level>3</monster:level>
+    <monster:defense>22</monster:defense>
+    <monster:damage>0</monster:damage>
+    <monster:attack>0</monster:attack>
+    <monster:aiming>28</monster:aiming>
+    <monster:ranged-damage>4</monster:ranged-damage>
+    <monster:attack-type>RANGED</monster:attack-type>
+</monster:monster>
