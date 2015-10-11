@@ -1,10 +1,8 @@
 package com.morethanheroic.swords.item.domain;
 
 import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.domain.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,17 +16,17 @@ public class ItemDefinition {
     private List<CombatEffect> combatEffects;
     private boolean equipment;
 
-    private List<BasicAttributeModifierDefinition> basicModifiers = Collections.unmodifiableList(new ArrayList<>());
-    private List<CombatAttributeModifierDefinition> combatModifiers = Collections.unmodifiableList(new ArrayList<>());
-    private List<GeneralAttributeModifierDefinition> generalModifiers = Collections.unmodifiableList(new ArrayList<>());
-    private List<SkillAttributeModifierDefinition> skillModifiers = Collections.unmodifiableList(new ArrayList<>());
-    private List<AttributeModifierDefinition> allModifiersList = new ArrayList<>();
+    private List<BasicAttributeModifierDefinition> basicModifiers = Collections.<BasicAttributeModifierDefinition>emptyList();
+    private List<CombatAttributeModifierDefinition> combatModifiers = Collections.<CombatAttributeModifierDefinition>emptyList();
+    private List<GeneralAttributeModifierDefinition> generalModifiers = Collections.<GeneralAttributeModifierDefinition>emptyList();
+    private List<SkillAttributeModifierDefinition> skillModifiers = Collections.<SkillAttributeModifierDefinition>emptyList();
+    private List<AttributeModifierDefinition> allModifiersList = Collections.<AttributeModifierDefinition>emptyList();
 
-    private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.unmodifiableList(new ArrayList<>());
-    private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.unmodifiableList(new ArrayList<>());
-    private List<GeneralAttributeRequirementDefinition> generalRequirements = Collections.unmodifiableList(new ArrayList<>());
-    private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.unmodifiableList(new ArrayList<>());
-    private List<AttributeRequirementDefinition> allRequiremensList = new ArrayList<>();
+    private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.<BasicAttributeRequirementDefinition>emptyList();
+    private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.<CombatAttributeRequirementDefinition>emptyList();
+    private List<GeneralAttributeRequirementDefinition> generalRequirements = Collections.<GeneralAttributeRequirementDefinition>emptyList();
+    private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.<SkillAttributeRequirementDefinition>emptyList();
+    private List<AttributeRequirementDefinition> allRequiremensList = Collections.<AttributeRequirementDefinition>emptyList();
 
     public ItemDefinition(RawItemDefinition rawItemDefinition, List<CombatEffect> combatEffects) {
         this.id = rawItemDefinition.getId();
