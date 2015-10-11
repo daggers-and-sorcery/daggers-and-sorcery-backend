@@ -27,7 +27,7 @@ public class RawMonsterDefinition {
 
     @XmlElementWrapper(name = "droplist")
     @XmlElement(name = "drop")
-    private List<DropDefinition> dropDefinitions;
+    private List<RawDropDefinition> rawDropDefinitions;
 
     public int getId() {
         return id;
@@ -73,12 +73,12 @@ public class RawMonsterDefinition {
         return attackType;
     }
 
-    public List<DropDefinition> getDropDefinitions() {
-        if(dropDefinitions == null) {
+    public List<RawDropDefinition> getDropDefinitions() {
+        if(rawDropDefinitions == null) {
             return Collections.EMPTY_LIST;
         }
 
-        return Collections.unmodifiableList(dropDefinitions);
+        return Collections.unmodifiableList(rawDropDefinitions);
     }
 
     public int getMana() {

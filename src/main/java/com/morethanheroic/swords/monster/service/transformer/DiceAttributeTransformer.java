@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.monster.service;
+package com.morethanheroic.swords.monster.service.transformer;
 
 import com.morethanheroic.swords.combat.domain.DiceAttribute;
 import com.morethanheroic.swords.monster.service.loader.domain.RawDiceAttribute;

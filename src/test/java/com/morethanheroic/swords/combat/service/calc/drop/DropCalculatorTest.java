@@ -1,15 +1,5 @@
 package com.morethanheroic.swords.combat.service.calc.drop;
 
-import com.morethanheroic.swords.combat.domain.Drop;
-import com.morethanheroic.swords.monster.service.loader.domain.DropDefinition;
-import com.morethanheroic.swords.monster.domain.MonsterDefinition;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 public class DropCalculatorTest {
 
     /*@Test

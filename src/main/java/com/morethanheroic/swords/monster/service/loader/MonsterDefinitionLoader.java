@@ -2,7 +2,7 @@ package com.morethanheroic.swords.monster.service.loader;
 
 import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionTransformer;
+import com.morethanheroic.swords.monster.service.transformer.MonsterDefinitionTransformer;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

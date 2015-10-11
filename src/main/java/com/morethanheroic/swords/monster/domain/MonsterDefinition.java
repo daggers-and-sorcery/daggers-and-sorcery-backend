@@ -2,9 +2,7 @@ package com.morethanheroic.swords.monster.domain;
 
 import com.morethanheroic.swords.combat.domain.DiceAttribute;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
-import com.morethanheroic.swords.monster.service.loader.domain.DropDefinition;
 
-import java.util.Collections;
 import java.util.List;
 
 public class MonsterDefinition {
@@ -21,8 +19,6 @@ public class MonsterDefinition {
     private DiceAttribute rangedDamage;
     private DiceAttribute damage;
     private AttackType attackType;
-
-    /* TODO: use a transformer for this too!!! */
     private List<DropDefinition> dropDefinitions;
 
     private MonsterDefinition() {
@@ -77,10 +73,10 @@ public class MonsterDefinition {
     }
 
     public List<DropDefinition> getDropDefinitions() {
-        return Collections.emptyList();
+        return dropDefinitions;
     }
 
-    public static class  MonsterDefinitionBuilder {
+    public static class MonsterDefinitionBuilder {
 
         private MonsterDefinition monsterDefinition;
 
@@ -134,6 +130,10 @@ public class MonsterDefinition {
 
         public void setAttackType(AttackType attackType) {
             monsterDefinition.attackType = attackType;
+        }
+
+        public void setDropDefinitions(List<DropDefinition> dropDefinitions) {
+            monsterDefinition.dropDefinitions = dropDefinitions;
         }
 
         public MonsterDefinition build() {
