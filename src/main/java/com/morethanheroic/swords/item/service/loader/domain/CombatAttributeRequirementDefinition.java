@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.item.service.domain;
+package com.morethanheroic.swords.item.service.loader.domain;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 

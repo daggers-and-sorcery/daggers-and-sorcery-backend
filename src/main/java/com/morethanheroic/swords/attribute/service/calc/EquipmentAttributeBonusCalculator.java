@@ -6,7 +6,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
-import com.morethanheroic.swords.item.service.domain.AttributeModifierDefinition;
+import com.morethanheroic.swords.item.service.loader.domain.RawAttributeModifierDefinition;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class EquipmentAttributeBonusCalculator {
             if(item != 0) {
                 ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(equipmentEntity.getEquipmentIdOnSlot(slot));
 
-                for (AttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
+                for (RawAttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
                     if (modifierDefinition.getAttribute() == attribute) {
                         result += modifierDefinition.getAmount();
                     }
@@ -56,7 +56,7 @@ public class EquipmentAttributeBonusCalculator {
         for(EquipmentSlot slot : EquipmentSlot.values()) {
             ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(equipmentEntity.getEquipmentIdOnSlot(slot));
 
-            for(AttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
+            for(RawAttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
                 attributeBonuses.addEquipmentBonus(modifierDefinition.getAttribute(), modifierDefinition.getAmount());
             }
         }

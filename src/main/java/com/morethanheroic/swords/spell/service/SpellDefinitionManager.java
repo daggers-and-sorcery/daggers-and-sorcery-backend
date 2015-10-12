@@ -3,7 +3,6 @@ package com.morethanheroic.swords.spell.service;
 import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
 import com.morethanheroic.swords.effect.service.EffectDefinitionBuilder;
-import com.morethanheroic.swords.item.service.domain.ItemEffect;
 import com.morethanheroic.swords.spell.service.domain.RawSpellDefinition;
 import com.morethanheroic.swords.spell.service.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.domain.SpellEffect;

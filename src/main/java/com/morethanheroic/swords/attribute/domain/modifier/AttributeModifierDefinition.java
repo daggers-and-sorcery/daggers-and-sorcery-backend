@@ -1,14 +1,10 @@
-package com.morethanheroic.swords.item.service.domain;
+package com.morethanheroic.swords.attribute.domain.modifier;
 
 import com.morethanheroic.swords.attribute.enums.Attribute;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-
-@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AttributeModifierDefinition {
 
-    private int amount;
+    protected int amount;
 
     public int getAmount() {
         return amount;

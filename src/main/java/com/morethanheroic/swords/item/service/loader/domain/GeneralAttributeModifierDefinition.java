@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.item.service.domain;
+package com.morethanheroic.swords.item.service.loader.domain;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 
@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GeneralAttributeRequirementDefinition extends AttributeRequirementDefinition {
+public class GeneralAttributeModifierDefinition extends RawAttributeModifierDefinition {
 
     private GeneralAttribute attribute;
 

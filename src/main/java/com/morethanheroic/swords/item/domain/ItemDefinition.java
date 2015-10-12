@@ -1,8 +1,9 @@
 package com.morethanheroic.swords.item.domain;
 
 import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.item.service.domain.*;
+import com.morethanheroic.swords.item.service.loader.domain.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,11 +17,11 @@ public class ItemDefinition {
     private List<CombatEffect> combatEffects;
     private boolean equipment;
 
-    private List<BasicAttributeModifierDefinition> basicModifiers = Collections.<BasicAttributeModifierDefinition>emptyList();
+    private List<RawBasicAttributeModifierDefinition> basicModifiers = Collections.<RawBasicAttributeModifierDefinition>emptyList();
     private List<CombatAttributeModifierDefinition> combatModifiers = Collections.<CombatAttributeModifierDefinition>emptyList();
     private List<GeneralAttributeModifierDefinition> generalModifiers = Collections.<GeneralAttributeModifierDefinition>emptyList();
     private List<SkillAttributeModifierDefinition> skillModifiers = Collections.<SkillAttributeModifierDefinition>emptyList();
-    private List<AttributeModifierDefinition> allModifiersList = Collections.<AttributeModifierDefinition>emptyList();
+    private List<RawAttributeModifierDefinition> allModifiersList = Collections.<RawAttributeModifierDefinition>emptyList();
 
     private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.<BasicAttributeRequirementDefinition>emptyList();
     private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.<CombatAttributeRequirementDefinition>emptyList();
@@ -28,7 +29,7 @@ public class ItemDefinition {
     private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.<SkillAttributeRequirementDefinition>emptyList();
     private List<AttributeRequirementDefinition> allRequiremensList = Collections.<AttributeRequirementDefinition>emptyList();
 
-    public ItemDefinition(RawItemDefinition rawItemDefinition, List<CombatEffect> combatEffects) {
+    /*public ItemDefinition(RawItemDefinition rawItemDefinition, List<CombatEffect> combatEffects) {
         this.id = rawItemDefinition.getId();
         this.name = rawItemDefinition.getName();
         this.type = rawItemDefinition.getType();
@@ -89,7 +90,7 @@ public class ItemDefinition {
 
         this.combatEffects = combatEffects;
         this.equipment = rawItemDefinition.isEquipment();
-    }
+    }*/
 
     public String toString() {
         return "ItemDefinition -> [id: " + id + " name: " + name + "]";
@@ -119,7 +120,7 @@ public class ItemDefinition {
         return equipment;
     }
 
-    public List<BasicAttributeModifierDefinition> getBasicModifiers() {
+    public List<RawBasicAttributeModifierDefinition> getBasicModifiers() {
         return basicModifiers;
     }
 
@@ -135,7 +136,7 @@ public class ItemDefinition {
         return skillModifiers;
     }
 
-    public List<AttributeModifierDefinition> getAllModifiers() {
+    public List<RawAttributeModifierDefinition> getAllModifiers() {
         return allModifiersList;
     }
 
@@ -161,5 +162,85 @@ public class ItemDefinition {
 
     public List<CombatEffect> getCombatEffects() {
         return combatEffects;
+    }
+
+    public static class ItemDefinitionBuilder {
+
+        private final ItemDefinition itemDefinition = new ItemDefinition();
+
+        public void setId(int id) {
+            itemDefinition.id = id;
+        }
+
+        public void setName(String name) {
+            itemDefinition.name = name;
+        }
+
+        public void setType(ItemType type) {
+            itemDefinition.type = type;
+        }
+
+        public void setUsable(boolean usable) {
+            itemDefinition.usable = usable;
+        }
+
+        public void setWeight(int weight) {
+            itemDefinition.weight = weight;
+        }
+
+        public void setCombatEffects(List<CombatEffect> combatEffects) {
+            itemDefinition.combatEffects = combatEffects;
+        }
+
+        public void setEquipment(boolean equipment) {
+            itemDefinition.equipment = equipment;
+        }
+
+        public void setBasicModifiers(List<RawBasicAttributeModifierDefinition> basicModifiers) {
+            itemDefinition.basicModifiers = basicModifiers;
+        }
+
+        public void setCombatModifiers(List<CombatAttributeModifierDefinition> combatModifiers) {
+            itemDefinition.combatModifiers = combatModifiers;
+        }
+
+        public void setGeneralModifiers(List<GeneralAttributeModifierDefinition> generalModifiers) {
+            itemDefinition.generalModifiers = generalModifiers;
+        }
+
+        public void setSkillModifiers(List<SkillAttributeModifierDefinition> skillModifiers) {
+            itemDefinition.skillModifiers = skillModifiers;
+        }
+
+        public void setBasicRequirements(List<BasicAttributeRequirementDefinition> basicRequirements) {
+            itemDefinition.basicRequirements = basicRequirements;
+        }
+
+        public void setCombatRequirements(List<CombatAttributeRequirementDefinition> combatRequirements) {
+            itemDefinition.combatRequirements = combatRequirements;
+        }
+
+        public void setGeneralRequirements(List<GeneralAttributeRequirementDefinition> generalRequirements) {
+            itemDefinition.generalRequirements = generalRequirements;
+        }
+
+        public void setSkillRequirements(List<SkillAttributeRequirementDefinition> skillRequirements) {
+            itemDefinition.skillRequirements = skillRequirements;
+        }
+
+        public ItemDefinition build() {
+            buildAllModifiersList();
+
+            return itemDefinition;
+        }
+
+        private void buildAllModifiersList() {
+            itemDefinition.allModifiersList = new ArrayList<>();
+
+            itemDefinition.allModifiersList.addAll(itemDefinition.basicModifiers);
+            itemDefinition.allModifiersList.addAll(itemDefinition.combatModifiers);
+            itemDefinition.allModifiersList.addAll(itemDefinition.generalModifiers);
+            itemDefinition.allModifiersList.addAll(itemDefinition.skillModifiers);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.item.service.domain;
+package com.morethanheroic.swords.item.service.loader.domain;
 
 import com.morethanheroic.swords.item.domain.ItemType;
 
@@ -24,7 +24,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "basic-modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<BasicAttributeModifierDefinition> basicModifiers;
+    private ArrayList<RawBasicAttributeModifierDefinition> basicModifiers;
 
     @XmlElementWrapper(name = "combat-modifiers")
     @XmlElement(name = "modifier")
@@ -78,7 +78,7 @@ public class RawItemDefinition {
         return "RawItemDefinition -> [id: " + id + " name: " + name + "]";
     }
 
-    public List<BasicAttributeModifierDefinition> getBasicModifiers() {
+    public List<RawBasicAttributeModifierDefinition> getBasicModifiers() {
         return basicModifiers;
     }
 
@@ -108,25 +108,6 @@ public class RawItemDefinition {
 
     public List<GeneralAttributeRequirementDefinition> getGeneralRequirements() {
         return generalRequirements;
-    }
-
-    public List<AttributeRequirementDefinition> getAllRequirements() {
-        List<AttributeRequirementDefinition> list = new ArrayList<>();
-
-        if (basicRequirements != null) {
-            list.addAll(basicRequirements);
-        }
-        if (combatRequirements != null) {
-            list.addAll(combatRequirements);
-        }
-        if (generalRequirements != null) {
-            list.addAll(generalRequirements);
-        }
-        if (skillRequirements != null) {
-            list.addAll(skillRequirements);
-        }
-
-        return Collections.unmodifiableList(list);
     }
 
     public ArrayList<ItemEffect> getEffectList() {
