@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GeneralAttributeModifierDefinition extends RawAttributeModifierDefinition {
+public class RawGeneralAttributeModifierDefinition extends RawAttributeModifierDefinition {
 
     private GeneralAttribute attribute;
 

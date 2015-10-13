@@ -4,7 +4,6 @@ import com.morethanheroic.swords.item.domain.ItemType;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @XmlRootElement(name = "item")
@@ -32,7 +31,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "general-modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<GeneralAttributeModifierDefinition> generalModifiers;
+    private ArrayList<RawGeneralAttributeModifierDefinition> generalModifiers;
 
     @XmlElementWrapper(name = "skill-modifiers")
     @XmlElement(name = "modifier")
@@ -86,7 +85,7 @@ public class RawItemDefinition {
         return combatModifiers;
     }
 
-    public List<GeneralAttributeModifierDefinition> getGeneralModifiers() {
+    public List<RawGeneralAttributeModifierDefinition> getGeneralModifiers() {
         return generalModifiers;
     }
 

@@ -1,9 +1,11 @@
-package com.morethanheroic.swords.attribute.service;
+package com.morethanheroic.swords.attribute.service.modifier.transformer;
 
 import com.morethanheroic.swords.attribute.domain.modifier.BasicAttributeModifierDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawBasicAttributeModifierDefinition;
+import org.springframework.stereotype.Service;
 
-public class AttributeModifierTransformer {
+@Service
+public class BasicAttributeModifierDefinitionTransformer {
 
     public BasicAttributeModifierDefinition transform(RawBasicAttributeModifierDefinition rawBasicAttributeModifierDefinition) {
         BasicAttributeModifierDefinition.BasicAttributeModifierDefinitionBuilder basicAttributeModifierDefinitionBuilder = new BasicAttributeModifierDefinition.BasicAttributeModifierDefinitionBuilder();

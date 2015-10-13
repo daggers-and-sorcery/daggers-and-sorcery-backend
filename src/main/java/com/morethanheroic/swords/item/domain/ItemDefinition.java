@@ -19,7 +19,7 @@ public class ItemDefinition {
 
     private List<RawBasicAttributeModifierDefinition> basicModifiers = Collections.<RawBasicAttributeModifierDefinition>emptyList();
     private List<CombatAttributeModifierDefinition> combatModifiers = Collections.<CombatAttributeModifierDefinition>emptyList();
-    private List<GeneralAttributeModifierDefinition> generalModifiers = Collections.<GeneralAttributeModifierDefinition>emptyList();
+    private List<RawGeneralAttributeModifierDefinition> generalModifiers = Collections.<RawGeneralAttributeModifierDefinition>emptyList();
     private List<SkillAttributeModifierDefinition> skillModifiers = Collections.<SkillAttributeModifierDefinition>emptyList();
     private List<RawAttributeModifierDefinition> allModifiersList = Collections.<RawAttributeModifierDefinition>emptyList();
 
@@ -128,7 +128,7 @@ public class ItemDefinition {
         return combatModifiers;
     }
 
-    public List<GeneralAttributeModifierDefinition> getGeneralModifiers() {
+    public List<RawGeneralAttributeModifierDefinition> getGeneralModifiers() {
         return generalModifiers;
     }
 
@@ -204,7 +204,7 @@ public class ItemDefinition {
             itemDefinition.combatModifiers = combatModifiers;
         }
 
-        public void setGeneralModifiers(List<GeneralAttributeModifierDefinition> generalModifiers) {
+        public void setGeneralModifiers(List<RawGeneralAttributeModifierDefinition> generalModifiers) {
             itemDefinition.generalModifiers = generalModifiers;
         }
 
