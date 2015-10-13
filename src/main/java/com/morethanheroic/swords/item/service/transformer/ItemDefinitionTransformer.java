@@ -1,25 +1,30 @@
 package com.morethanheroic.swords.item.service.transformer;
 
+import com.morethanheroic.swords.attribute.domain.modifier.*;
+import com.morethanheroic.swords.attribute.service.modifier.transformer.AttributeModifierDefinitionTransformerFacade;
 import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.effect.service.EffectDefinitionBuilder;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.loader.domain.ItemEffect;
-import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
+import com.morethanheroic.swords.item.service.loader.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemDefinitionTransformer {
 
     private final EffectDefinitionBuilder effectDefinitionBuilder;
+    private final AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade;
 
     @Autowired
-    public ItemDefinitionTransformer(EffectDefinitionBuilder effectDefinitionBuilder) {
+    public ItemDefinitionTransformer(EffectDefinitionBuilder effectDefinitionBuilder, AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade) {
         this.effectDefinitionBuilder = effectDefinitionBuilder;
+        this.attributeModifierDefinitionTransformerFacade = attributeModifierDefinitionTransformerFacade;
     }
 
     public ItemDefinition transform(RawItemDefinition rawItemDefinition) throws Exception {
@@ -34,10 +39,10 @@ public class ItemDefinitionTransformer {
 
         itemDefinitionBuilder.setCombatEffects(buildEffects(rawItemDefinition.getEffectList()));
 
-        itemDefinitionBuilder.setBasicModifiers(rawItemDefinition.getBasicModifiers());
-        itemDefinitionBuilder.setCombatModifiers(rawItemDefinition.getCombatModifiers());
-        itemDefinitionBuilder.setGeneralModifiers(rawItemDefinition.getGeneralModifiers());
-        itemDefinitionBuilder.setSkillModifiers(rawItemDefinition.getSkillModifiers());
+        itemDefinitionBuilder.setBasicModifiers(transformBasicModifier(rawItemDefinition.getBasicModifiers()));
+        itemDefinitionBuilder.setCombatModifiers(transformCombatModifier(rawItemDefinition.getCombatModifiers()));
+        itemDefinitionBuilder.setGeneralModifiers(transformGeneralModifier(rawItemDefinition.getGeneralModifiers()));
+        itemDefinitionBuilder.setSkillModifiers(transformSkillModifier(rawItemDefinition.getSkillModifiers()));
 
         itemDefinitionBuilder.setBasicRequirements(rawItemDefinition.getBasicRequirements());
         itemDefinitionBuilder.setCombatRequirements(rawItemDefinition.getCombatRequirements());
@@ -45,6 +50,38 @@ public class ItemDefinitionTransformer {
         itemDefinitionBuilder.setSkillRequirements(rawItemDefinition.getSkillRequirements());
 
         return itemDefinitionBuilder.build();
+    }
+
+    private List<BasicAttributeModifierDefinition> transformBasicModifier(List<RawBasicAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
+        if(rawAttributeModifierDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
+        return rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList());
+    }
+
+    private List<CombatAttributeModifierDefinition> transformCombatModifier(List<RawCombatAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
+        if(rawAttributeModifierDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
+        return rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList());
+    }
+
+    private List<GeneralAttributeModifierDefinition> transformGeneralModifier(List<RawGeneralAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
+        if(rawAttributeModifierDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
+        return rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList());
+    }
+
+    private List<SkillAttributeModifierDefinition> transformSkillModifier(List<RawSkillAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
+        if(rawAttributeModifierDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
+        return rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList());
     }
 
     private List<CombatEffect> buildEffects(List<ItemEffect> rawEffectList) throws Exception {

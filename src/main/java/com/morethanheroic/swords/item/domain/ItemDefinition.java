@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.item.domain;
 
+import com.morethanheroic.swords.attribute.domain.modifier.*;
 import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.item.service.loader.domain.*;
 
@@ -17,11 +18,11 @@ public class ItemDefinition {
     private List<CombatEffect> combatEffects;
     private boolean equipment;
 
-    private List<RawBasicAttributeModifierDefinition> basicModifiers = Collections.<RawBasicAttributeModifierDefinition>emptyList();
-    private List<RawCombatAttributeModifierDefinition> combatModifiers = Collections.<RawCombatAttributeModifierDefinition>emptyList();
-    private List<RawGeneralAttributeModifierDefinition> generalModifiers = Collections.<RawGeneralAttributeModifierDefinition>emptyList();
-    private List<RawSkillAttributeModifierDefinition> skillModifiers = Collections.<RawSkillAttributeModifierDefinition>emptyList();
-    private List<RawAttributeModifierDefinition> allModifiersList = Collections.<RawAttributeModifierDefinition>emptyList();
+    private List<BasicAttributeModifierDefinition> basicModifiers = Collections.<BasicAttributeModifierDefinition>emptyList();
+    private List<CombatAttributeModifierDefinition> combatModifiers = Collections.<CombatAttributeModifierDefinition>emptyList();
+    private List<GeneralAttributeModifierDefinition> generalModifiers = Collections.<GeneralAttributeModifierDefinition>emptyList();
+    private List<SkillAttributeModifierDefinition> skillModifiers = Collections.<SkillAttributeModifierDefinition>emptyList();
+    private List<AttributeModifierDefinition> allModifiersList = Collections.<AttributeModifierDefinition>emptyList();
 
     private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.<BasicAttributeRequirementDefinition>emptyList();
     private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.<CombatAttributeRequirementDefinition>emptyList();
@@ -120,23 +121,23 @@ public class ItemDefinition {
         return equipment;
     }
 
-    public List<RawBasicAttributeModifierDefinition> getBasicModifiers() {
+    public List<BasicAttributeModifierDefinition> getBasicModifiers() {
         return basicModifiers;
     }
 
-    public List<RawCombatAttributeModifierDefinition> getCombatModifiers() {
+    public List<CombatAttributeModifierDefinition> getCombatModifiers() {
         return combatModifiers;
     }
 
-    public List<RawGeneralAttributeModifierDefinition> getGeneralModifiers() {
+    public List<GeneralAttributeModifierDefinition> getGeneralModifiers() {
         return generalModifiers;
     }
 
-    public List<RawSkillAttributeModifierDefinition> getSkillModifiers() {
+    public List<SkillAttributeModifierDefinition> getSkillModifiers() {
         return skillModifiers;
     }
 
-    public List<RawAttributeModifierDefinition> getAllModifiers() {
+    public List<AttributeModifierDefinition> getAllModifiers() {
         return allModifiersList;
     }
 
@@ -196,19 +197,19 @@ public class ItemDefinition {
             itemDefinition.equipment = equipment;
         }
 
-        public void setBasicModifiers(List<RawBasicAttributeModifierDefinition> basicModifiers) {
+        public void setBasicModifiers(List<BasicAttributeModifierDefinition> basicModifiers) {
             itemDefinition.basicModifiers = basicModifiers;
         }
 
-        public void setCombatModifiers(List<RawCombatAttributeModifierDefinition> combatModifiers) {
+        public void setCombatModifiers(List<CombatAttributeModifierDefinition> combatModifiers) {
             itemDefinition.combatModifiers = combatModifiers;
         }
 
-        public void setGeneralModifiers(List<RawGeneralAttributeModifierDefinition> generalModifiers) {
+        public void setGeneralModifiers(List<GeneralAttributeModifierDefinition> generalModifiers) {
             itemDefinition.generalModifiers = generalModifiers;
         }
 
-        public void setSkillModifiers(List<RawSkillAttributeModifierDefinition> skillModifiers) {
+        public void setSkillModifiers(List<SkillAttributeModifierDefinition> skillModifiers) {
             itemDefinition.skillModifiers = skillModifiers;
         }
 

@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
+import com.morethanheroic.swords.attribute.domain.modifier.AttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.service.calc.domain.EquipmentBonusHolder;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
@@ -37,7 +38,7 @@ public class EquipmentAttributeBonusCalculator {
             if(item != 0) {
                 ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(equipmentEntity.getEquipmentIdOnSlot(slot));
 
-                for (RawAttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
+                for (AttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
                     if (modifierDefinition.getAttribute() == attribute) {
                         result += modifierDefinition.getAmount();
                     }
@@ -56,7 +57,7 @@ public class EquipmentAttributeBonusCalculator {
         for(EquipmentSlot slot : EquipmentSlot.values()) {
             ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(equipmentEntity.getEquipmentIdOnSlot(slot));
 
-            for(RawAttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
+            for(AttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
                 attributeBonuses.addEquipmentBonus(modifierDefinition.getAttribute(), modifierDefinition.getAmount());
             }
         }
