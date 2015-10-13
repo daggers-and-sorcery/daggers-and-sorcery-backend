@@ -1,9 +1,13 @@
-package com.morethanheroic.swords.attribute.service.modifier.transformer;
+package com.morethanheroic.swords.attribute.service.modifier;
 
 import com.morethanheroic.swords.attribute.domain.modifier.BasicAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.GeneralAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.SkillAttributeModifierDefinition;
+import com.morethanheroic.swords.attribute.service.modifier.transformer.BasicAttributeModifierDefinitionTransformer;
+import com.morethanheroic.swords.attribute.service.modifier.transformer.CombatAttributeModifierDefinitionTransformer;
+import com.morethanheroic.swords.attribute.service.modifier.transformer.GeneralAttributeModifierDefinitionTransformer;
+import com.morethanheroic.swords.attribute.service.modifier.transformer.SkillAttributeModifierDefinitionTransformer;
 import com.morethanheroic.swords.item.service.loader.domain.RawBasicAttributeModifierDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawCombatAttributeModifierDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawGeneralAttributeModifierDefinition;

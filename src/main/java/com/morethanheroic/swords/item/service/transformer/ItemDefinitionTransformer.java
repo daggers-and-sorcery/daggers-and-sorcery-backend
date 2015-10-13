@@ -4,7 +4,7 @@ import com.morethanheroic.swords.attribute.domain.modifier.BasicAttributeModifie
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.GeneralAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.SkillAttributeModifierDefinition;
-import com.morethanheroic.swords.attribute.service.modifier.transformer.AttributeModifierDefinitionTransformerFacade;
+import com.morethanheroic.swords.attribute.service.modifier.AttributeModifierDefinitionTransformerFacade;
 import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.effect.service.EffectDefinitionBuilder;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -66,7 +66,7 @@ public class ItemDefinitionTransformer {
             return Collections.emptyList();
         }
 
-        return rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList());
+        return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
     }
 
     private List<CombatAttributeModifierDefinition> transformCombatModifier(List<RawCombatAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
@@ -74,7 +74,7 @@ public class ItemDefinitionTransformer {
             return Collections.emptyList();
         }
 
-        return rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList());
+        return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
     }
 
     private List<GeneralAttributeModifierDefinition> transformGeneralModifier(List<RawGeneralAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
@@ -82,7 +82,7 @@ public class ItemDefinitionTransformer {
             return Collections.emptyList();
         }
 
-        return rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList());
+        return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
     }
 
     private List<SkillAttributeModifierDefinition> transformSkillModifier(List<RawSkillAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
@@ -90,7 +90,7 @@ public class ItemDefinitionTransformer {
             return Collections.emptyList();
         }
 
-        return rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList());
+        return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
     }
 
     private List<CombatEffect> buildEffects(List<ItemEffect> rawEffectList) throws Exception {
@@ -102,6 +102,6 @@ public class ItemDefinitionTransformer {
             }
         }
 
-        return effects;
+        return Collections.unmodifiableList(effects);
     }
 }
