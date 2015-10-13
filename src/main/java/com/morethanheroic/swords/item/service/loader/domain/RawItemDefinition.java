@@ -39,7 +39,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "basic-requirements")
     @XmlElement(name = "requirement")
-    private ArrayList<BasicAttributeRequirementDefinition> basicRequirements;
+    private ArrayList<RawBasicAttributeRequirementDefinition> basicRequirements;
 
     @XmlElementWrapper(name = "combat-requirements")
     @XmlElement(name = "requirement")
@@ -97,7 +97,7 @@ public class RawItemDefinition {
         return skillRequirements;
     }
 
-    public List<BasicAttributeRequirementDefinition> getBasicRequirements() {
+    public List<RawBasicAttributeRequirementDefinition> getBasicRequirements() {
         return basicRequirements;
     }
 

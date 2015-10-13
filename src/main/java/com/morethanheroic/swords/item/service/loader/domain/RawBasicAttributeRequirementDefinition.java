@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BasicAttributeRequirementDefinition extends AttributeRequirementDefinition {
+public class RawBasicAttributeRequirementDefinition extends RawAttributeRequirementDefinition {
 
     private BasicAttribute attribute;
 

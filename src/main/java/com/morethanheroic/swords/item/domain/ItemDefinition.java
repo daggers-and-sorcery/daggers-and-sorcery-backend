@@ -24,11 +24,11 @@ public class ItemDefinition {
     private List<SkillAttributeModifierDefinition> skillModifiers = Collections.<SkillAttributeModifierDefinition>emptyList();
     private List<AttributeModifierDefinition> allModifiersList = Collections.<AttributeModifierDefinition>emptyList();
 
-    private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.<BasicAttributeRequirementDefinition>emptyList();
+    private List<RawBasicAttributeRequirementDefinition> basicRequirements = Collections.<RawBasicAttributeRequirementDefinition>emptyList();
     private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.<CombatAttributeRequirementDefinition>emptyList();
     private List<GeneralAttributeRequirementDefinition> generalRequirements = Collections.<GeneralAttributeRequirementDefinition>emptyList();
     private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.<SkillAttributeRequirementDefinition>emptyList();
-    private List<AttributeRequirementDefinition> allRequiremensList = Collections.<AttributeRequirementDefinition>emptyList();
+    private List<RawAttributeRequirementDefinition> allRequiremensList = Collections.<RawAttributeRequirementDefinition>emptyList();
 
     /*public ItemDefinition(RawItemDefinition rawItemDefinition, List<CombatEffect> combatEffects) {
         this.id = rawItemDefinition.getId();
@@ -145,7 +145,7 @@ public class ItemDefinition {
         return skillRequirements;
     }
 
-    public List<BasicAttributeRequirementDefinition> getBasicRequirements() {
+    public List<RawBasicAttributeRequirementDefinition> getBasicRequirements() {
         return basicRequirements;
     }
 
@@ -157,7 +157,7 @@ public class ItemDefinition {
         return generalRequirements;
     }
 
-    public List<AttributeRequirementDefinition> getAllRequirements() {
+    public List<RawAttributeRequirementDefinition> getAllRequirements() {
         return allRequiremensList;
     }
 
@@ -213,7 +213,7 @@ public class ItemDefinition {
             itemDefinition.skillModifiers = skillModifiers;
         }
 
-        public void setBasicRequirements(List<BasicAttributeRequirementDefinition> basicRequirements) {
+        public void setBasicRequirements(List<RawBasicAttributeRequirementDefinition> basicRequirements) {
             itemDefinition.basicRequirements = basicRequirements;
         }
 
