@@ -18,9 +18,9 @@ public class ItemDefinition {
     private boolean equipment;
 
     private List<RawBasicAttributeModifierDefinition> basicModifiers = Collections.<RawBasicAttributeModifierDefinition>emptyList();
-    private List<CombatAttributeModifierDefinition> combatModifiers = Collections.<CombatAttributeModifierDefinition>emptyList();
+    private List<RawCombatAttributeModifierDefinition> combatModifiers = Collections.<RawCombatAttributeModifierDefinition>emptyList();
     private List<RawGeneralAttributeModifierDefinition> generalModifiers = Collections.<RawGeneralAttributeModifierDefinition>emptyList();
-    private List<SkillAttributeModifierDefinition> skillModifiers = Collections.<SkillAttributeModifierDefinition>emptyList();
+    private List<RawSkillAttributeModifierDefinition> skillModifiers = Collections.<RawSkillAttributeModifierDefinition>emptyList();
     private List<RawAttributeModifierDefinition> allModifiersList = Collections.<RawAttributeModifierDefinition>emptyList();
 
     private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.<BasicAttributeRequirementDefinition>emptyList();
@@ -124,7 +124,7 @@ public class ItemDefinition {
         return basicModifiers;
     }
 
-    public List<CombatAttributeModifierDefinition> getCombatModifiers() {
+    public List<RawCombatAttributeModifierDefinition> getCombatModifiers() {
         return combatModifiers;
     }
 
@@ -132,7 +132,7 @@ public class ItemDefinition {
         return generalModifiers;
     }
 
-    public List<SkillAttributeModifierDefinition> getSkillModifiers() {
+    public List<RawSkillAttributeModifierDefinition> getSkillModifiers() {
         return skillModifiers;
     }
 
@@ -200,7 +200,7 @@ public class ItemDefinition {
             itemDefinition.basicModifiers = basicModifiers;
         }
 
-        public void setCombatModifiers(List<CombatAttributeModifierDefinition> combatModifiers) {
+        public void setCombatModifiers(List<RawCombatAttributeModifierDefinition> combatModifiers) {
             itemDefinition.combatModifiers = combatModifiers;
         }
 
@@ -208,7 +208,7 @@ public class ItemDefinition {
             itemDefinition.generalModifiers = generalModifiers;
         }
 
-        public void setSkillModifiers(List<SkillAttributeModifierDefinition> skillModifiers) {
+        public void setSkillModifiers(List<RawSkillAttributeModifierDefinition> skillModifiers) {
             itemDefinition.skillModifiers = skillModifiers;
         }
 

@@ -27,7 +27,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "combat-modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<CombatAttributeModifierDefinition> combatModifiers;
+    private ArrayList<RawCombatAttributeModifierDefinition> combatModifiers;
 
     @XmlElementWrapper(name = "general-modifiers")
     @XmlElement(name = "modifier")
@@ -35,7 +35,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "skill-modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<SkillAttributeModifierDefinition> skillModifiers;
+    private ArrayList<RawSkillAttributeModifierDefinition> skillModifiers;
 
     @XmlElementWrapper(name = "basic-requirements")
     @XmlElement(name = "requirement")
@@ -81,7 +81,7 @@ public class RawItemDefinition {
         return basicModifiers;
     }
 
-    public List<CombatAttributeModifierDefinition> getCombatModifiers() {
+    public List<RawCombatAttributeModifierDefinition> getCombatModifiers() {
         return combatModifiers;
     }
 
@@ -89,7 +89,7 @@ public class RawItemDefinition {
         return generalModifiers;
     }
 
-    public List<SkillAttributeModifierDefinition> getSkillModifiers() {
+    public List<RawSkillAttributeModifierDefinition> getSkillModifiers() {
         return skillModifiers;
     }
 
