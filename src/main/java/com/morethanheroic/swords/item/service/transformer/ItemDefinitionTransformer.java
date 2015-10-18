@@ -1,14 +1,9 @@
 package com.morethanheroic.swords.item.service.transformer;
 
-import com.morethanheroic.swords.attribute.domain.modifier.BasicAttributeModifierDefinition;
-import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
-import com.morethanheroic.swords.attribute.domain.modifier.GeneralAttributeModifierDefinition;
-import com.morethanheroic.swords.attribute.domain.modifier.SkillAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.requirement.BasicAttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.domain.requirement.CombatAttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.domain.requirement.GeneralAttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.domain.requirement.SkillAttributeRequirementDefinition;
-import com.morethanheroic.swords.attribute.service.modifier.AttributeModifierDefinitionTransformerFacade;
 import com.morethanheroic.swords.attribute.service.requirement.AttributeRequirementDefinitionTransformerFacade;
 import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.effect.service.EffectDefinitionBuilder;
@@ -26,13 +21,13 @@ import java.util.stream.Collectors;
 public class ItemDefinitionTransformer {
 
     private final EffectDefinitionBuilder effectDefinitionBuilder;
-    private final AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade;
+    private final ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
     private final AttributeRequirementDefinitionTransformerFacade attributeRequirementDefinitionTransformerFacade;
 
     @Autowired
-    public ItemDefinitionTransformer(EffectDefinitionBuilder effectDefinitionBuilder, AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade, AttributeRequirementDefinitionTransformerFacade attributeRequirementDefinitionTransformerFacade) {
+    public ItemDefinitionTransformer(EffectDefinitionBuilder effectDefinitionBuilder, ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer, AttributeRequirementDefinitionTransformerFacade attributeRequirementDefinitionTransformerFacade) {
         this.effectDefinitionBuilder = effectDefinitionBuilder;
-        this.attributeModifierDefinitionTransformerFacade = attributeModifierDefinitionTransformerFacade;
+        this.itemDefinitionModifierListTransformer = itemDefinitionModifierListTransformer;
         this.attributeRequirementDefinitionTransformerFacade = attributeRequirementDefinitionTransformerFacade;
     }
 
@@ -55,10 +50,10 @@ public class ItemDefinitionTransformer {
     }
 
     private void buildModifiers(ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder, RawItemDefinition rawItemDefinition) {
-        itemDefinitionBuilder.setBasicModifiers(transformBasicModifier(rawItemDefinition.getBasicModifiers()));
-        itemDefinitionBuilder.setCombatModifiers(transformCombatModifier(rawItemDefinition.getCombatModifiers()));
-        itemDefinitionBuilder.setGeneralModifiers(transformGeneralModifier(rawItemDefinition.getGeneralModifiers()));
-        itemDefinitionBuilder.setSkillModifiers(transformSkillModifier(rawItemDefinition.getSkillModifiers()));
+        itemDefinitionBuilder.setBasicModifiers(itemDefinitionModifierListTransformer.transformBasicModifier(rawItemDefinition.getBasicModifiers()));
+        itemDefinitionBuilder.setCombatModifiers(itemDefinitionModifierListTransformer.transformCombatModifier(rawItemDefinition.getCombatModifiers()));
+        itemDefinitionBuilder.setGeneralModifiers(itemDefinitionModifierListTransformer.transformGeneralModifier(rawItemDefinition.getGeneralModifiers()));
+        itemDefinitionBuilder.setSkillModifiers(itemDefinitionModifierListTransformer.transformSkillModifier(rawItemDefinition.getSkillModifiers()));
     }
 
     private void buildRequirements(ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder, RawItemDefinition rawItemDefinition) {
@@ -66,38 +61,6 @@ public class ItemDefinitionTransformer {
         itemDefinitionBuilder.setCombatRequirements(transformCombatRequirement(rawItemDefinition.getCombatRequirements()));
         itemDefinitionBuilder.setGeneralRequirements(transformGeneralRequirement(rawItemDefinition.getGeneralRequirements()));
         itemDefinitionBuilder.setSkillRequirements(transformSkillRequirement(rawItemDefinition.getSkillRequirements()));
-    }
-
-    private List<BasicAttributeModifierDefinition> transformBasicModifier(List<RawBasicAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
-        if (rawAttributeModifierDefinitionList == null) {
-            return Collections.emptyList();
-        }
-
-        return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
-    }
-
-    private List<CombatAttributeModifierDefinition> transformCombatModifier(List<RawCombatAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
-        if (rawAttributeModifierDefinitionList == null) {
-            return Collections.emptyList();
-        }
-
-        return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
-    }
-
-    private List<GeneralAttributeModifierDefinition> transformGeneralModifier(List<RawGeneralAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
-        if (rawAttributeModifierDefinitionList == null) {
-            return Collections.emptyList();
-        }
-
-        return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
-    }
-
-    private List<SkillAttributeModifierDefinition> transformSkillModifier(List<RawSkillAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
-        if (rawAttributeModifierDefinitionList == null) {
-            return Collections.emptyList();
-        }
-
-        return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
     }
 
     private List<GeneralAttributeRequirementDefinition> transformGeneralRequirement(List<RawGeneralAttributeRequirementDefinition> rawGeneralAttributeRequirementDefinitionList) {
