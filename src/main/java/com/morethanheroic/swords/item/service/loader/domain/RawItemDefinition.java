@@ -43,7 +43,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "combat-requirements")
     @XmlElement(name = "requirement")
-    private ArrayList<CombatAttributeRequirementDefinition> combatRequirements;
+    private ArrayList<RawCombatAttributeRequirementDefinition> combatRequirements;
 
     @XmlElementWrapper(name = "general-requirements")
     @XmlElement(name = "requirement")
@@ -51,7 +51,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "skill-requirements")
     @XmlElement(name = "requirement")
-    private ArrayList<SkillAttributeRequirementDefinition> skillRequirements;
+    private ArrayList<RawSkillAttributeRequirementDefinition> skillRequirements;
 
     public int getId() {
         return id;
@@ -93,7 +93,7 @@ public class RawItemDefinition {
         return skillModifiers;
     }
 
-    public List<SkillAttributeRequirementDefinition> getSkillRequirements() {
+    public List<RawSkillAttributeRequirementDefinition> getSkillRequirements() {
         return skillRequirements;
     }
 
@@ -101,7 +101,7 @@ public class RawItemDefinition {
         return basicRequirements;
     }
 
-    public List<CombatAttributeRequirementDefinition> getCombatRequirements() {
+    public List<RawCombatAttributeRequirementDefinition> getCombatRequirements() {
         return combatRequirements;
     }
 

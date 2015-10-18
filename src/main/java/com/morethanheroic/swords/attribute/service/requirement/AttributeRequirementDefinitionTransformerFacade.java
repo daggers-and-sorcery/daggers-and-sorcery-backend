@@ -1,8 +1,14 @@
 package com.morethanheroic.swords.attribute.service.requirement;
 
 import com.morethanheroic.swords.attribute.domain.requirement.BasicAttributeRequirementDefinition;
+import com.morethanheroic.swords.attribute.domain.requirement.CombatAttributeRequirementDefinition;
+import com.morethanheroic.swords.attribute.domain.requirement.SkillAttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.service.requirement.transformer.BasicAttributeRequirementDefinitionTransformer;
+import com.morethanheroic.swords.attribute.service.requirement.transformer.CombatAttributeRequirementDefinitionTransformer;
+import com.morethanheroic.swords.attribute.service.requirement.transformer.SkillAttributeRequirementDefinitionTransformer;
 import com.morethanheroic.swords.item.service.loader.domain.RawBasicAttributeRequirementDefinition;
+import com.morethanheroic.swords.item.service.loader.domain.RawCombatAttributeRequirementDefinition;
+import com.morethanheroic.swords.item.service.loader.domain.RawSkillAttributeRequirementDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +16,8 @@ import org.springframework.stereotype.Service;
 public class AttributeRequirementDefinitionTransformerFacade {
 
     private BasicAttributeRequirementDefinitionTransformer basicAttributeRequirementDefinitionTransformer;
+    private CombatAttributeRequirementDefinitionTransformer combatAttributeRequirementDefinitionTransformer;
+    private SkillAttributeRequirementDefinitionTransformer skillAttributeRequirementDefinitionTransformer;
 
     @Autowired
     public AttributeRequirementDefinitionTransformerFacade(BasicAttributeRequirementDefinitionTransformer basicAttributeRequirementDefinitionTransformer) {
@@ -18,5 +26,13 @@ public class AttributeRequirementDefinitionTransformerFacade {
 
     public BasicAttributeRequirementDefinition transform(RawBasicAttributeRequirementDefinition rawBasicAttributeRequirementDefinition) {
         return basicAttributeRequirementDefinitionTransformer.transform(rawBasicAttributeRequirementDefinition);
+    }
+
+    public CombatAttributeRequirementDefinition transform(RawCombatAttributeRequirementDefinition rawCombatAttributeRequirementDefinition) {
+        return combatAttributeRequirementDefinitionTransformer.transform(rawCombatAttributeRequirementDefinition);
+    }
+
+    public SkillAttributeRequirementDefinition transform(RawSkillAttributeRequirementDefinition rawSkillAttributeRequirementDefinition) {
+        return skillAttributeRequirementDefinitionTransformer.transform(rawSkillAttributeRequirementDefinition);
     }
 }

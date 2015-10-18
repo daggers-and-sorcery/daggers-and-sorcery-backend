@@ -25,9 +25,9 @@ public class ItemDefinition {
     private List<AttributeModifierDefinition> allModifiersList = Collections.<AttributeModifierDefinition>emptyList();
 
     private List<RawBasicAttributeRequirementDefinition> basicRequirements = Collections.<RawBasicAttributeRequirementDefinition>emptyList();
-    private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.<CombatAttributeRequirementDefinition>emptyList();
+    private List<RawCombatAttributeRequirementDefinition> combatRequirements = Collections.<RawCombatAttributeRequirementDefinition>emptyList();
     private List<GeneralAttributeRequirementDefinition> generalRequirements = Collections.<GeneralAttributeRequirementDefinition>emptyList();
-    private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.<SkillAttributeRequirementDefinition>emptyList();
+    private List<RawSkillAttributeRequirementDefinition> skillRequirements = Collections.<RawSkillAttributeRequirementDefinition>emptyList();
     private List<RawAttributeRequirementDefinition> allRequiremensList = Collections.<RawAttributeRequirementDefinition>emptyList();
 
     /*public ItemDefinition(RawItemDefinition rawItemDefinition, List<CombatEffect> combatEffects) {
@@ -141,7 +141,7 @@ public class ItemDefinition {
         return allModifiersList;
     }
 
-    public List<SkillAttributeRequirementDefinition> getSkillRequirements() {
+    public List<RawSkillAttributeRequirementDefinition> getSkillRequirements() {
         return skillRequirements;
     }
 
@@ -149,7 +149,7 @@ public class ItemDefinition {
         return basicRequirements;
     }
 
-    public List<CombatAttributeRequirementDefinition> getCombatRequirements() {
+    public List<RawCombatAttributeRequirementDefinition> getCombatRequirements() {
         return combatRequirements;
     }
 
@@ -217,7 +217,7 @@ public class ItemDefinition {
             itemDefinition.basicRequirements = basicRequirements;
         }
 
-        public void setCombatRequirements(List<CombatAttributeRequirementDefinition> combatRequirements) {
+        public void setCombatRequirements(List<RawCombatAttributeRequirementDefinition> combatRequirements) {
             itemDefinition.combatRequirements = combatRequirements;
         }
 
@@ -225,7 +225,7 @@ public class ItemDefinition {
             itemDefinition.generalRequirements = generalRequirements;
         }
 
-        public void setSkillRequirements(List<SkillAttributeRequirementDefinition> skillRequirements) {
+        public void setSkillRequirements(List<RawSkillAttributeRequirementDefinition> skillRequirements) {
             itemDefinition.skillRequirements = skillRequirements;
         }
 
