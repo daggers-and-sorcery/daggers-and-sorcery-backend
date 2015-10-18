@@ -12,6 +12,11 @@ public class CombatAttributeModifierDefinitionTransformer {
 
         combatAttributeModifierDefinitionBuilder.setAmount(rawCombatAttributeModifierDefinition.getAmount());
         combatAttributeModifierDefinitionBuilder.setAttribute(rawCombatAttributeModifierDefinition.getAttribute());
+        combatAttributeModifierDefinitionBuilder.setD2(rawCombatAttributeModifierDefinition.getD2());
+        combatAttributeModifierDefinitionBuilder.setD4(rawCombatAttributeModifierDefinition.getD4());
+        combatAttributeModifierDefinitionBuilder.setD6(rawCombatAttributeModifierDefinition.getD6());
+        combatAttributeModifierDefinitionBuilder.setD8(rawCombatAttributeModifierDefinition.getD8());
+        combatAttributeModifierDefinitionBuilder.setD10(rawCombatAttributeModifierDefinition.getD10());
 
         return combatAttributeModifierDefinitionBuilder.build();
     }

@@ -82,13 +82,24 @@
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
                                                     <xs:enumeration value="ATTACK"/>
+                                                    <xs:enumeration value="AIMING"/>
                                                     <xs:enumeration value="DEFENSE"/>
+                                                    <xs:enumeration value="SPELL_RESISTANCE"/>
+                                                    <xs:enumeration value="DAMAGE"/>
+                                                    <xs:enumeration value="RANGED_DAMAGE"/>
                                                     <xs:enumeration value="INITIATION"/>
                                                     <xs:enumeration value="LIFE"/>
+                                                    <xs:enumeration value="MANA"/>
                                                 </xs:restriction>
                                             </xs:simpleType>
                                         </xs:element>
                                         <xs:element name="amount" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+                                        <xs:element name="d2" type="xs:unsignedInt" minOccurs="0"/>
+                                        <xs:element name="d4" type="xs:unsignedInt" minOccurs="0"/>
+                                        <xs:element name="d6" type="xs:unsignedInt" minOccurs="0"/>
+                                        <xs:element name="d8" type="xs:unsignedInt" minOccurs="0"/>
+                                        <xs:element name="d10" type="xs:unsignedInt" minOccurs="0"/>
+                                        <xs:element name="d20" type="xs:unsignedInt" minOccurs="0"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
