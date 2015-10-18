@@ -1,16 +1,13 @@
 package com.morethanheroic.swords.item.service;
 
-import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
-import com.morethanheroic.swords.effect.service.EffectDefinitionBuilder;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.domain.ItemEffect;
-import com.morethanheroic.swords.item.service.domain.RawItemDefinition;
+import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
+import com.morethanheroic.swords.item.service.transformer.ItemDefinitionTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,12 +17,12 @@ public class ItemDefinitionManager {
     private HashMap<Integer, ItemDefinition> itemDefinitionMap = new HashMap<>();
 
     private final XMLDefinitionLoader xmlDefinitionLoader;
-    private final EffectDefinitionBuilder effectDefinitionBuilder;
+    private final ItemDefinitionTransformer itemDefinitionTransformer;
 
     @Autowired
-    public ItemDefinitionManager(XMLDefinitionLoader xmlDefinitionLoader,EffectDefinitionBuilder effectDefinitionBuilder) {
+    public ItemDefinitionManager(XMLDefinitionLoader xmlDefinitionLoader, ItemDefinitionTransformer itemDefinitionTransformer) {
         this.xmlDefinitionLoader = xmlDefinitionLoader;
-        this.effectDefinitionBuilder = effectDefinitionBuilder;
+        this.itemDefinitionTransformer = itemDefinitionTransformer;
     }
 
     @PostConstruct
@@ -33,15 +30,7 @@ public class ItemDefinitionManager {
         List<RawItemDefinition> rawItemDefinitionList = xmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd");
 
         for (RawItemDefinition rawItemDefinition : rawItemDefinitionList) {
-            ArrayList<CombatEffect> effects = new ArrayList<>();
-
-            if(rawItemDefinition.getEffectList() != null) {
-                for (ItemEffect effect : rawItemDefinition.getEffectList()) {
-                    effects.add(effectDefinitionBuilder.build(effect));
-                }
-            }
-
-            itemDefinitionMap.put(rawItemDefinition.getId(), new ItemDefinition(rawItemDefinition, effects));
+            itemDefinitionMap.put(rawItemDefinition.getId(), itemDefinitionTransformer.transform(rawItemDefinition));
         }
     }
 

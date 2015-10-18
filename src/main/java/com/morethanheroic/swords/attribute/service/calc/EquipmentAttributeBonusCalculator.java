@@ -1,12 +1,13 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
+import com.morethanheroic.swords.attribute.domain.modifier.AttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.service.calc.domain.EquipmentBonusHolder;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
-import com.morethanheroic.swords.item.service.domain.AttributeModifierDefinition;
+import com.morethanheroic.swords.item.service.loader.domain.RawAttributeModifierDefinition;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

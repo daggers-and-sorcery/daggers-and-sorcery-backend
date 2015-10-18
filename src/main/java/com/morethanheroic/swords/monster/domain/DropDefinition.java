@@ -9,6 +9,18 @@ public class DropDefinition {
     private DropDefinition() {
     }
 
+    public int getItem() {
+        return item;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public double getChance() {
+        return chance;
+    }
+
     public static class  DropDefinitionBuilder {
 
         private final DropDefinition dropDefinition;

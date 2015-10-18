@@ -78,11 +78,7 @@ public class MonsterDefinition {
 
     public static class MonsterDefinitionBuilder {
 
-        private MonsterDefinition monsterDefinition;
-
-        public MonsterDefinitionBuilder() {
-            this.monsterDefinition = new MonsterDefinition();
-        }
+        private final MonsterDefinition monsterDefinition = new MonsterDefinition();
 
         public void setId(int id) {
             monsterDefinition.id = id;

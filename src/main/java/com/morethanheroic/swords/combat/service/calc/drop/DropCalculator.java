@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.combat.service.calc.drop;
 
 import com.morethanheroic.swords.combat.domain.Drop;
-import com.morethanheroic.swords.monster.service.loader.domain.RawDropDefinition;
+import com.morethanheroic.swords.monster.domain.DropDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class DropCalculator {
     public ArrayList<Drop> calculateDrop(MonsterDefinition monster) {
         ArrayList<Drop> result = new ArrayList<>();
 
-        for (RawDropDefinition drop : monster.getDropDefinitions()) {
+        for (DropDefinition drop : monster.getDropDefinitions()) {
             if (100 * random.nextDouble() < drop.getChance()) {
                 result.add(new Drop(drop.getItem(), drop.getAmount()));
             }
