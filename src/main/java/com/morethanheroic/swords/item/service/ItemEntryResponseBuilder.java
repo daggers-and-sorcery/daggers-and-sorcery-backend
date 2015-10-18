@@ -1,10 +1,10 @@
 package com.morethanheroic.swords.item.service;
 
 import com.morethanheroic.swords.attribute.domain.modifier.AttributeModifierDefinition;
+import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.view.response.AttributeModifierResponseEntry;
 import com.morethanheroic.swords.attribute.view.response.AttributeRequirementResponseEntry;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.loader.domain.RawAttributeRequirementDefinition;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class ItemEntryResponseBuilder {
         ArrayList<AttributeRequirementResponseEntry> requirements = new ArrayList<>();
         result.put("requirements", requirements);
 
-        for (RawAttributeRequirementDefinition requirementDefinition : itemDefinition.getAllRequirements()) {
+        for (AttributeRequirementDefinition requirementDefinition : itemDefinition.getAllRequirements()) {
             requirements.add(new AttributeRequirementResponseEntry(requirementDefinition.getAttribute(), requirementDefinition.getAmount()));
         }
 

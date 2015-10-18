@@ -4,7 +4,12 @@ import com.morethanheroic.swords.attribute.domain.modifier.BasicAttributeModifie
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.GeneralAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.SkillAttributeModifierDefinition;
+import com.morethanheroic.swords.attribute.domain.requirement.BasicAttributeRequirementDefinition;
+import com.morethanheroic.swords.attribute.domain.requirement.CombatAttributeRequirementDefinition;
+import com.morethanheroic.swords.attribute.domain.requirement.GeneralAttributeRequirementDefinition;
+import com.morethanheroic.swords.attribute.domain.requirement.SkillAttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.service.modifier.AttributeModifierDefinitionTransformerFacade;
+import com.morethanheroic.swords.attribute.service.requirement.AttributeRequirementDefinitionTransformerFacade;
 import com.morethanheroic.swords.combat.domain.CombatEffect;
 import com.morethanheroic.swords.effect.service.EffectDefinitionBuilder;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -22,11 +27,13 @@ public class ItemDefinitionTransformer {
 
     private final EffectDefinitionBuilder effectDefinitionBuilder;
     private final AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade;
+    private final AttributeRequirementDefinitionTransformerFacade attributeRequirementDefinitionTransformerFacade;
 
     @Autowired
-    public ItemDefinitionTransformer(EffectDefinitionBuilder effectDefinitionBuilder, AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade) {
+    public ItemDefinitionTransformer(EffectDefinitionBuilder effectDefinitionBuilder, AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade, AttributeRequirementDefinitionTransformerFacade attributeRequirementDefinitionTransformerFacade) {
         this.effectDefinitionBuilder = effectDefinitionBuilder;
         this.attributeModifierDefinitionTransformerFacade = attributeModifierDefinitionTransformerFacade;
+        this.attributeRequirementDefinitionTransformerFacade = attributeRequirementDefinitionTransformerFacade;
     }
 
     public ItemDefinition transform(RawItemDefinition rawItemDefinition) throws Exception {
@@ -55,10 +62,10 @@ public class ItemDefinitionTransformer {
     }
 
     private void buildRequirements(ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder, RawItemDefinition rawItemDefinition) {
-        itemDefinitionBuilder.setBasicRequirements(rawItemDefinition.getBasicRequirements());
-        itemDefinitionBuilder.setCombatRequirements(rawItemDefinition.getCombatRequirements());
-        itemDefinitionBuilder.setGeneralRequirements(rawItemDefinition.getGeneralRequirements());
-        itemDefinitionBuilder.setSkillRequirements(rawItemDefinition.getSkillRequirements());
+        itemDefinitionBuilder.setBasicRequirements(transformBasicRequirement(rawItemDefinition.getBasicRequirements()));
+        itemDefinitionBuilder.setCombatRequirements(transformCombatRequirement(rawItemDefinition.getCombatRequirements()));
+        itemDefinitionBuilder.setGeneralRequirements(transformGeneralRequirement(rawItemDefinition.getGeneralRequirements()));
+        itemDefinitionBuilder.setSkillRequirements(transformSkillRequirement(rawItemDefinition.getSkillRequirements()));
     }
 
     private List<BasicAttributeModifierDefinition> transformBasicModifier(List<RawBasicAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
@@ -91,6 +98,38 @@ public class ItemDefinitionTransformer {
         }
 
         return Collections.unmodifiableList(rawAttributeModifierDefinitionList.stream().map(attributeModifierDefinitionTransformerFacade::transform).collect(Collectors.toList()));
+    }
+
+    private List<GeneralAttributeRequirementDefinition> transformGeneralRequirement(List<RawGeneralAttributeRequirementDefinition> rawGeneralAttributeRequirementDefinitionList) {
+        if (rawGeneralAttributeRequirementDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
+        return Collections.unmodifiableList(rawGeneralAttributeRequirementDefinitionList.stream().map(attributeRequirementDefinitionTransformerFacade::transform).collect(Collectors.toList()));
+    }
+
+    private List<SkillAttributeRequirementDefinition> transformSkillRequirement(List<RawSkillAttributeRequirementDefinition> rawSkillAttributeRequirementDefinitionList) {
+        if (rawSkillAttributeRequirementDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
+        return Collections.unmodifiableList(rawSkillAttributeRequirementDefinitionList.stream().map(attributeRequirementDefinitionTransformerFacade::transform).collect(Collectors.toList()));
+    }
+
+    private List<CombatAttributeRequirementDefinition> transformCombatRequirement(List<RawCombatAttributeRequirementDefinition> rawCombatAttributeRequirementDefinitionList) {
+        if (rawCombatAttributeRequirementDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
+        return Collections.unmodifiableList(rawCombatAttributeRequirementDefinitionList.stream().map(attributeRequirementDefinitionTransformerFacade::transform).collect(Collectors.toList()));
+    }
+
+    private List<BasicAttributeRequirementDefinition> transformBasicRequirement(List<RawBasicAttributeRequirementDefinition> rawBasicAttributeRequirementDefinitionList) {
+        if (rawBasicAttributeRequirementDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
+        return Collections.unmodifiableList(rawBasicAttributeRequirementDefinitionList.stream().map(attributeRequirementDefinitionTransformerFacade::transform).collect(Collectors.toList()));
     }
 
     private List<CombatEffect> buildEffects(List<ItemEffect> rawEffectList) throws Exception {

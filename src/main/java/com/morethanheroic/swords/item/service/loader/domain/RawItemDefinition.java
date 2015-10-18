@@ -47,7 +47,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "general-requirements")
     @XmlElement(name = "requirement")
-    private ArrayList<GeneralAttributeRequirementDefinition> generalRequirements;
+    private ArrayList<RawGeneralAttributeRequirementDefinition> generalRequirements;
 
     @XmlElementWrapper(name = "skill-requirements")
     @XmlElement(name = "requirement")
@@ -105,7 +105,7 @@ public class RawItemDefinition {
         return combatRequirements;
     }
 
-    public List<GeneralAttributeRequirementDefinition> getGeneralRequirements() {
+    public List<RawGeneralAttributeRequirementDefinition> getGeneralRequirements() {
         return generalRequirements;
     }
 

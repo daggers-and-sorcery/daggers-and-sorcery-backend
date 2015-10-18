@@ -12,18 +12,18 @@ public class CombatAttributeRequirementDefinition extends AttributeRequirementDe
 
     public static class CombatAttributeRequirementDefinitionBuilder {
 
-        private final CombatAttributeRequirementDefinition basicAttributeRequirementDefinition = new CombatAttributeRequirementDefinition();
+        private final CombatAttributeRequirementDefinition combatAttributeRequirementDefinition = new CombatAttributeRequirementDefinition();
 
         public void setAttribute(CombatAttribute attribute) {
-            basicAttributeRequirementDefinition.attribute = attribute;
+            combatAttributeRequirementDefinition.attribute = attribute;
         }
 
         public void setAmount(int amount) {
-            basicAttributeRequirementDefinition.amount = amount;
+            combatAttributeRequirementDefinition.amount = amount;
         }
 
         public CombatAttributeRequirementDefinition build() {
-            return basicAttributeRequirementDefinition;
+            return combatAttributeRequirementDefinition;
         }
     }
 }

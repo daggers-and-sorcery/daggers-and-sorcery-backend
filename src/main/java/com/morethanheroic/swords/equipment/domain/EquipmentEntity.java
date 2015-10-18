@@ -1,11 +1,11 @@
 package com.morethanheroic.swords.equipment.domain;
 
+import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
-import com.morethanheroic.swords.item.service.loader.domain.RawAttributeRequirementDefinition;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 public class EquipmentEntity {
@@ -87,7 +87,7 @@ public class EquipmentEntity {
     }
 
     public boolean canEquip(ItemDefinition item) {
-        for(RawAttributeRequirementDefinition requirement : item.getAllRequirements()) {
+        for(AttributeRequirementDefinition requirement : item.getAllRequirements()) {
             if(globalAttributeCalculator.calculateActualValue(userEntity, requirement.getAttribute()) < requirement.getAmount()) {
                 return false;
             }
