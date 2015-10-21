@@ -67,7 +67,7 @@ public class ItemEntryResponseBuilder {
             result += " + " + attributeModifierValue.getD8() + "d8";
         }
         if (attributeModifierValue.getD10() > 0) {
-            result += " + " + attributeModifierValue.getD2() + "d10";
+            result += " + " + attributeModifierValue.getD10() + "d10";
         }
 
         return result;
