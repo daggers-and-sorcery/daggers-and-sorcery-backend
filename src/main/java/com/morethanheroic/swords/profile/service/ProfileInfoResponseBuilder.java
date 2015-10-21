@@ -88,7 +88,7 @@ public class ProfileInfoResponseBuilder {
             if (equipment == 0) {
                 slotData.put("empty", true);
             } else {
-                slotData.put("description", itemDefinitionManager.getItemDefinition(equipment));
+                slotData.put("description", profileItemEntryResponseBuilder.buildItemEntry(itemDefinitionManager.getItemDefinition(equipment)));
             }
 
             equipmentHolder.put(slot.name(), slotData);
