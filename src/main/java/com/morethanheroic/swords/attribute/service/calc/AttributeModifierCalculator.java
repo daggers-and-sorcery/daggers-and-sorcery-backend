@@ -8,6 +8,7 @@ import com.morethanheroic.swords.attribute.enums.AttributeModifierType;
 import com.morethanheroic.swords.attribute.enums.AttributeModifierValueType;
 import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.attribute.model.PercentageAttributeModifierData;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeModifierValue;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.SkillManager;
@@ -35,22 +36,22 @@ public class AttributeModifierCalculator {
         ArrayList<AttributeModifierData> attributeModifierDataList = new ArrayList<>();
 
         if (attribute instanceof SkillAttribute) {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute)));
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, new AttributeModifierValue(skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute))));
         } else if (attribute instanceof GeneralAttribute) {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.SKILL, AttributeModifierValueType.VALUE, generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute)));
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.SKILL, AttributeModifierValueType.VALUE, new AttributeModifierValue(generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute))));
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
         } else if (attribute instanceof CombatAttribute) {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierValueType.VALUE, combatAttributeCalculato.calculateAllBonusByGeneralAttributes(user, (CombatAttribute) attribute)));
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierValueType.VALUE, new AttributeModifierValue(combatAttributeCalculato.calculateAllBonusByGeneralAttributes(user, (CombatAttribute) attribute))));
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
         } else {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, attribute.getInitialValue()));
+            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
         }
 
-        attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.EQUIPMENT, AttributeModifierValueType.VALUE, equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute)));
+        attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.EQUIPMENT, AttributeModifierValueType.VALUE, new AttributeModifierValue(equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute))));
 
         int racialModifierPercentage = user.getRace().getRacialModifier(attribute);
         if (racialModifierPercentage != Race.NO_RACIAL_MODIFIER) {
-            int racialModifierValue = globalAttributeCalculator.calculatePercentageModifiedAttribute(globalAttributeCalculator.calculateActualBeforePercentageMultiplication(user, attribute), racialModifierPercentage) - globalAttributeCalculator.calculateActualBeforePercentageMultiplication(user, attribute);
+            int racialModifierValue = globalAttributeCalculator.calculatePercentageModifiedAttribute(globalAttributeCalculator.calculateActualBeforePercentageMultiplication(user, attribute), racialModifierPercentage).getValue() - globalAttributeCalculator.calculateActualBeforePercentageMultiplication(user, attribute).getValue();
 
             attributeModifierDataList.add(new PercentageAttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, racialModifierValue, racialModifierPercentage));
         }

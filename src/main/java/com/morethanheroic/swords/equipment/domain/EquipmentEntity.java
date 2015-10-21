@@ -88,7 +88,7 @@ public class EquipmentEntity {
 
     public boolean canEquip(ItemDefinition item) {
         for(AttributeRequirementDefinition requirement : item.getAllRequirements()) {
-            if(globalAttributeCalculator.calculateActualValue(userEntity, requirement.getAttribute()) < requirement.getAmount()) {
+            if(globalAttributeCalculator.calculateActualValue(userEntity, requirement.getAttribute()).getValue() < requirement.getAmount()) {
                 return false;
             }
         }
