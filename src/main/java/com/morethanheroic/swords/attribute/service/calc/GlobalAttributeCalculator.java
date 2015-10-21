@@ -15,22 +15,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class GlobalAttributeCalculator implements AttributeCalculator {
 
-    private final SkillAttributeCalculator skillAttributeCalculator;
-    private final GeneralAttributeCalculator generalAttributeCalculator;
-    private final CombatAttributeCalculator combatAttributeCalculator;
-    private final DefaultAttributeCalculator defaultAttributeCalculator;
-    private final EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
-    private final SkillManager skillManager;
+    @Autowired
+    private SkillAttributeCalculator skillAttributeCalculator;
 
     @Autowired
-    public GlobalAttributeCalculator(SkillAttributeCalculator skillAttributeCalculator, GeneralAttributeCalculator generalAttributeCalculator, CombatAttributeCalculator combatAttributeCalculator, DefaultAttributeCalculator defaultAttributeCalculator, EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator, SkillManager skillManager) {
-        this.skillAttributeCalculator = skillAttributeCalculator;
-        this.generalAttributeCalculator = generalAttributeCalculator;
-        this.combatAttributeCalculator = combatAttributeCalculator;
-        this.defaultAttributeCalculator = defaultAttributeCalculator;
-        this.equipmentAttributeBonusCalculator = equipmentAttributeBonusCalculator;
-        this.skillManager = skillManager;
-    }
+    private GeneralAttributeCalculator generalAttributeCalculator;
+
+    @Autowired
+    private CombatAttributeCalculator combatAttributeCalculator;
+
+    @Autowired
+    private DefaultAttributeCalculator defaultAttributeCalculator;
+
+    @Autowired
+    private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
+
+    @Autowired
+    private SkillManager skillManager;
 
     public AttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
         if (attribute instanceof SkillAttribute) {

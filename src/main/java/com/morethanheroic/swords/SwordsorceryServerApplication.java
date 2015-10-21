@@ -16,6 +16,7 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Random;
 
 @Configuration
+@Lazy
 @EnableAutoConfiguration
 @ComponentScan(lazyInit = true)
 @EnableWebMvc
