@@ -5,6 +5,7 @@ import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
