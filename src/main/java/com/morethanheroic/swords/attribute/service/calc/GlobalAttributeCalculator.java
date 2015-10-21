@@ -6,6 +6,7 @@ import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.enums.Attribute;
 import com.morethanheroic.swords.attribute.model.AttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,19 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
 
     @Autowired
     private SkillAttributeCalculator skillAttributeCalculator;
+
     @Autowired
     private GeneralAttributeCalculator generalAttributeCalculator;
+
     @Autowired
     private CombatAttributeCalculator combatAttributeCalculator;
+
     @Autowired
     private DefaultAttributeCalculator defaultAttributeCalculator;
+
     @Autowired
     private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
+
     @Autowired
     private SkillManager skillManager;
 
@@ -39,55 +45,58 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         return defaultAttributeCalculator.calculateAttributeValue(user, attribute);
     }
 
-    public int calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
-        int result = 0;
+    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
+        AttributeCalculationResult result = new AttributeCalculationResult();
 
         if (attribute instanceof SkillAttribute) {
-            result += skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute);
+            result.increaseValue(skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute));
         } else if (attribute instanceof GeneralAttribute) {
-            result += attribute.getInitialValue();
-            result += generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute);
+            result.increaseValue(attribute.getInitialValue());
+            result.increaseValue(generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute));
         } else if (attribute instanceof CombatAttribute) {
-            result += attribute.getInitialValue();
-            result += combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, (CombatAttribute) attribute);
+            result.increaseValue(attribute.getInitialValue());
+            result.increaseValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, (CombatAttribute) attribute));
         } else {
-            result += attribute.getInitialValue();
+            result.increaseValue(attribute.getInitialValue());
         }
 
-        result += equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute);
+        result.addCalculationResult(equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute));
 
         return result;
     }
 
-    public int calculateActualValue(UserEntity user, Attribute attribute) {
+    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
         if (attribute == CombatAttribute.LIFE) {
-            return user.getHealth();
+            return new AttributeCalculationResult(user.getHealth());
         } else if (attribute == CombatAttribute.MANA) {
-            return user.getMana();
+            return new AttributeCalculationResult(user.getMana());
         } else  if (attribute == BasicAttribute.MOVEMENT) {
-            return user.getMovement();
+            return new AttributeCalculationResult(user.getMovement());
         }
 
         return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
     }
 
     public int calculateMaximumValue(UserEntity user, Attribute attribute) {
-        return attribute.isUnlimited() ? 0 : calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
+        return attribute.isUnlimited() ? 0 : calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute)).getValue();
     }
 
-    public int calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
-        int result = 0;
+    public AttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
+        AttributeCalculationResult result = new AttributeCalculationResult();
 
-        result += attribute.getInitialValue();
+        result.increaseValue(attribute.getInitialValue());
         if (attribute instanceof CombatAttribute) {
-            result += combatAttributeCalculator.calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute);
+            result.increaseValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute));
         }
-        result += equipmentAttributeBonusCalculator.calculateEquipmentBonus(userEntity, attribute);
+        result.addCalculationResult(equipmentAttributeBonusCalculator.calculateEquipmentBonus(userEntity, attribute));
 
         return result;
     }
 
-    public int calculatePercentageModifiedAttribute(int attributeValue, int percentage) {
-        return (int) (attributeValue * ((double) percentage / 100 + 1));
+    public AttributeCalculationResult calculatePercentageModifiedAttribute(AttributeCalculationResult attributeValue, int percentage) {
+
+        attributeValue.setValue((int) (attributeValue.getValue() * ((double) percentage / 100 + 1)));
+
+        return attributeValue;
     }
 }

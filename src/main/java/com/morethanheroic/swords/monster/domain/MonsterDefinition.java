@@ -44,28 +44,28 @@ public class MonsterDefinition {
         return level;
     }
 
-    public int getInitiation() {
-        return initiation.getValue();
+    public DiceAttribute getInitiation() {
+        return initiation;
     }
 
     public int getDefense() {
         return defense;
     }
 
-    public int getAttack() {
-        return attack.getValue();
+    public DiceAttribute getAttack() {
+        return attack;
     }
 
-    public int getAiming() {
-        return aiming.getValue();
+    public DiceAttribute getAiming() {
+        return aiming;
     }
 
-    public int getRangedDamage() {
-        return rangedDamage.getValue();
+    public DiceAttribute getRangedDamage() {
+        return rangedDamage;
     }
 
-    public int getDamage() {
-        return damage.getValue();
+    public DiceAttribute getDamage() {
+        return damage;
     }
 
     public AttackType getAttackType() {

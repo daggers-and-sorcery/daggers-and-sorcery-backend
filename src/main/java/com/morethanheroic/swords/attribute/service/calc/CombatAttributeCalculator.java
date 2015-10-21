@@ -38,7 +38,7 @@ public class CombatAttributeCalculator implements AttributeCalculator {
     public int calculateAllBonusByGeneralAttributes(UserEntity user, CombatAttribute attribute) {
         int result = 0;
 
-        for(GeneralAttribute target : attribute.getBonusAttributes()) {
+        for (GeneralAttribute target : attribute.getBonusAttributes()) {
             result += calculateBonusByGeneralAttribute(user, target, attribute.getBonusPercentage());
         }
 
@@ -46,6 +46,6 @@ public class CombatAttributeCalculator implements AttributeCalculator {
     }
 
     public int calculateBonusByGeneralAttribute(UserEntity user, GeneralAttribute attribute, double bonusPercentage) {
-        return (int) Math.floor(globalAttributeCalculator.calculateActualValue(user, attribute)* bonusPercentage);
+        return (int) Math.floor(globalAttributeCalculator.calculateActualValue(user, attribute).getValue() * bonusPercentage);
     }
 }

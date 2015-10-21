@@ -12,7 +12,7 @@
         <monster:d10>1</monster:d10>
     </monster:initiation>
     <monster:level>1</monster:level>
-    <monster:defense>26</monster:defense>
+    <monster:defense>0</monster:defense>
     <monster:damage>
         <monster:value>3</monster:value>
         <monster:d4>1</monster:d4>

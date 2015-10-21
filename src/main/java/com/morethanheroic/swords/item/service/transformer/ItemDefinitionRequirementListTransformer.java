@@ -9,6 +9,7 @@ import com.morethanheroic.swords.item.service.loader.domain.RawBasicAttributeReq
 import com.morethanheroic.swords.item.service.loader.domain.RawCombatAttributeRequirementDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawGeneralAttributeRequirementDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawSkillAttributeRequirementDefinition;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -18,11 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class ItemDefinitionRequirementListTransformer {
 
-    private final AttributeRequirementDefinitionTransformerFacade attributeRequirementDefinitionTransformerFacade;
-
-    public ItemDefinitionRequirementListTransformer(AttributeRequirementDefinitionTransformerFacade attributeRequirementDefinitionTransformerFacade) {
-        this.attributeRequirementDefinitionTransformerFacade = attributeRequirementDefinitionTransformerFacade;
-    }
+    @Autowired
+    private AttributeRequirementDefinitionTransformerFacade attributeRequirementDefinitionTransformerFacade;
 
     public List<GeneralAttributeRequirementDefinition> transformGeneralRequirement(List<RawGeneralAttributeRequirementDefinition> rawGeneralAttributeRequirementDefinitionList) {
         if (rawGeneralAttributeRequirementDefinitionList == null) {
