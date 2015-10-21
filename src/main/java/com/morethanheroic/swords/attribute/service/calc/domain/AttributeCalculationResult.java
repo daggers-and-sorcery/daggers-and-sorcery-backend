@@ -9,6 +9,13 @@ public class AttributeCalculationResult {
     private int d8 = 0;
     private int d10 = 0;
 
+    public AttributeCalculationResult() {
+    }
+
+    public AttributeCalculationResult(int value) {
+        this.value = value;
+    }
+
     public int getValue() {
         return value;
     }
@@ -79,5 +86,14 @@ public class AttributeCalculationResult {
 
     public void increaseD10(int amount) {
         this.d10 += amount;
+    }
+
+    public void addCalculationResult(AttributeCalculationResult attributeCalculationResult) {
+        this.value += attributeCalculationResult.value;
+        this.d2 += attributeCalculationResult.d2;
+        this.d4 += attributeCalculationResult.d4;
+        this.d6 += attributeCalculationResult.d6;
+        this.d8 += attributeCalculationResult.d8;
+        this.d10 += attributeCalculationResult.d10;
     }
 }

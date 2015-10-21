@@ -1,15 +1,16 @@
 package com.morethanheroic.swords.attribute.model;
 
 import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 
 public class AttributeData {
 
-    private final int actual;
+    private final AttributeCalculationResult actual;
     private final int maximum;
     private final AttributeModifierData[] modifierDataArray;
     private final Attribute attribute;
 
-    public AttributeData(Attribute attribute, int actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
+    public AttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
         this.attribute = attribute;
         this.actual = actual;
         this.maximum = maximum;
@@ -20,7 +21,7 @@ public class AttributeData {
         return maximum;
     }
 
-    public int getActual() {
+    public AttributeCalculationResult getActual() {
         return actual;
     }
 
@@ -36,7 +37,7 @@ public class AttributeData {
 
         protected Attribute attribute;
         protected int maximum;
-        protected int actual;
+        protected AttributeCalculationResult actual;
         protected AttributeModifierData[] attributeModifierArray;
 
         public AttributeDataBuilder(Attribute attribute) {
@@ -47,7 +48,7 @@ public class AttributeData {
             this.maximum = maximum;
         }
 
-        public void setActual(int actual) {
+        public void setActual(AttributeCalculationResult actual) {
             this.actual = actual;
         }
 
