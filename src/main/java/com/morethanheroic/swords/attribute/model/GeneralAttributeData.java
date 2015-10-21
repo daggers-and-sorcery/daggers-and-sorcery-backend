@@ -2,12 +2,13 @@ package com.morethanheroic.swords.attribute.model;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 
 public class GeneralAttributeData extends AttributeData {
 
     private final int pointsToNextLevel;
 
-    protected GeneralAttributeData(Attribute attribute, int actual, int maximum, AttributeModifierData[] attributeModifierDataArray, int pointsToNextLevel) {
+    protected GeneralAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierData[] attributeModifierDataArray, int pointsToNextLevel) {
         super(attribute, actual, maximum, attributeModifierDataArray);
 
         this.pointsToNextLevel = pointsToNextLevel;

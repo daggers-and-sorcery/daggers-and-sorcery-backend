@@ -26,6 +26,7 @@ public class ItemDefinitionManager {
     }
 
     @PostConstruct
+    @SuppressWarnings("unchecked")
     public void init() throws Exception {
         List<RawItemDefinition> rawItemDefinitionList = xmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd");
 

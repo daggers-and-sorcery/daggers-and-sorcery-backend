@@ -29,6 +29,7 @@ public class SpellDefinitionManager {
     }
 
     @PostConstruct
+    @SuppressWarnings("unchecked")
     public void init() throws Exception {
         List<RawSpellDefinition> rawSpellDefinitionList = xmlDefinitionLoader.loadDefinitions(RawSpellDefinition.class, "classpath:data/spell/definition/", "classpath:data/spell/schema.xsd");
 
