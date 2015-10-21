@@ -9,6 +9,8 @@ import com.morethanheroic.swords.attribute.model.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.model.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeModifierValue;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfileInfoResponseBuilder {
@@ -82,7 +85,7 @@ public class ProfileInfoResponseBuilder {
 
             HashMap<String, Object> slotData = new HashMap<>();
 
-            if(equipment == 0) {
+            if (equipment == 0) {
                 slotData.put("empty", true);
             } else {
                 slotData.put("description", itemDefinitionManager.getItemDefinition(equipment));
@@ -95,13 +98,7 @@ public class ProfileInfoResponseBuilder {
     }
 
     private LinkedList<HashMap<String, Object>> buildAttributeResponse(UserEntity user) {
-        LinkedList<HashMap<String, Object>> attributeData = new LinkedList<>();
-
-        for (Attribute attribute : attributeUtil.getAllAttributes()) {
-            attributeData.add(buildAttributeResponse(user, attribute));
-        }
-
-        return attributeData;
+        return attributeUtil.getAllAttributes().stream().map(attribute -> buildAttributeResponse(user, attribute)).collect(Collectors.toCollection(LinkedList::new));
     }
 
     private ArrayList<HashMap<String, Object>> buildInventoryResponse(List<ItemDatabaseEntity> items) {
@@ -124,10 +121,14 @@ public class ProfileInfoResponseBuilder {
 
         HashMap<String, Object> attributeResponse = new HashMap<>();
 
-        attributeResponse.put("actual", attributeData.getActual());
+        if (attribute.getAttributeType() == AttributeType.COMBAT) {
+            attributeResponse.put("actual", formatCombatAttributeModifier(attributeData.getActual()));
+        } else {
+            attributeResponse.put("actual", attributeData.getActual().getValue());
+        }
         attributeResponse.put("maximum", attributeData.getMaximum());
         attributeResponse.put("attribute", buildAttributeInfo(attribute));
-        attributeResponse.put("modifierDataArray", buildAttributeModifiers(attributeData.getModifierDataArray()));
+        attributeResponse.put("modifierDataArray", buildAttributeModifiers(attribute, attributeData.getModifierDataArray()));
         if (attribute.getAttributeType() == AttributeType.GENERAL) {
             attributeResponse.put("pointsToNextLevel", ((GeneralAttributeData) attributeData).getPointsToNextLevel());
         } else if (attribute.getAttributeType() == AttributeType.SKILL) {
@@ -137,6 +138,28 @@ public class ProfileInfoResponseBuilder {
         }
 
         return attributeResponse;
+    }
+
+    private String formatCombatAttributeModifier(AttributeCalculationResult attributeModifierValue) {
+        String result = String.valueOf(attributeModifierValue.getValue());
+
+        if (attributeModifierValue.getD2() > 0) {
+            result += " + " + attributeModifierValue.getD2() + "d2";
+        }
+        if (attributeModifierValue.getD4() > 0) {
+            result += " + " + attributeModifierValue.getD4() + "d4";
+        }
+        if (attributeModifierValue.getD6() > 0) {
+            result += " + " + attributeModifierValue.getD6() + "d6";
+        }
+        if (attributeModifierValue.getD8() > 0) {
+            result += " + " + attributeModifierValue.getD8() + "d8";
+        }
+        if (attributeModifierValue.getD10() > 0) {
+            result += " + " + attributeModifierValue.getD2() + "d10";
+        }
+
+        return result;
     }
 
     private HashMap<String, Object> buildAttributeInfo(Attribute attribute) {
@@ -152,7 +175,7 @@ public class ProfileInfoResponseBuilder {
         return attributeDataResponse;
     }
 
-    private LinkedList<HashMap<String, Object>> buildAttributeModifiers(AttributeModifierData[] attributeModifierDatas) {
+    private LinkedList<HashMap<String, Object>> buildAttributeModifiers(Attribute attribute, AttributeModifierData[] attributeModifierDatas) {
         LinkedList<HashMap<String, Object>> bonusList = new LinkedList<>();
 
         for (AttributeModifierData attributeModifierData : attributeModifierDatas) {
@@ -160,7 +183,11 @@ public class ProfileInfoResponseBuilder {
 
             attributeModifierResponse.put("attributeModifierType", attributeModifierData.getAttributeModifierType().name());
             attributeModifierResponse.put("attributeModifierValueType", attributeModifierData.getAttributeModifierValueType().name());
-            attributeModifierResponse.put("attributeModifierValue", attributeModifierData.getAttributeModifierValue());
+            if (attribute.getAttributeType() == AttributeType.COMBAT) {
+                attributeModifierResponse.put("attributeModifierValue", formatCombatAttributeModifier(attributeModifierData.getAttributeModifierValue()));
+            } else {
+                attributeModifierResponse.put("attributeModifierValue", attributeModifierData.getAttributeModifierValue().getValue());
+            }
 
             bonusList.add(attributeModifierResponse);
         }
@@ -168,10 +195,32 @@ public class ProfileInfoResponseBuilder {
         return bonusList;
     }
 
+    private String formatCombatAttributeModifier(AttributeModifierValue attributeModifierValue) {
+        String result = String.valueOf(attributeModifierValue.getValue());
+
+        if (attributeModifierValue.getD2() > 0) {
+            result += " + " + attributeModifierValue.getD2() + "d2";
+        }
+        if (attributeModifierValue.getD4() > 0) {
+            result += " + " + attributeModifierValue.getD4() + "d4";
+        }
+        if (attributeModifierValue.getD6() > 0) {
+            result += " + " + attributeModifierValue.getD6() + "d6";
+        }
+        if (attributeModifierValue.getD8() > 0) {
+            result += " + " + attributeModifierValue.getD8() + "d8";
+        }
+        if (attributeModifierValue.getD10() > 0) {
+            result += " + " + attributeModifierValue.getD2() + "d10";
+        }
+
+        return result;
+    }
+
     private LinkedList<HashMap<String, Object>> buildSpellResponse(List<SpellDatabaseEntity> spells) {
         LinkedList<HashMap<String, Object>> spellList = new LinkedList<>();
 
-        for(SpellDatabaseEntity spell : spells) {
+        for (SpellDatabaseEntity spell : spells) {
             SpellDefinition spellDefinition = spellDefinitionManager.getSpellDefinition(spell.getSpellId());
 
             HashMap<String, Object> spellData = new HashMap<>();
