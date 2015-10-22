@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
-import com.morethanheroic.swords.attribute.service.calc.EquipmentAttributeBonusCalculator;
+import com.morethanheroic.swords.attribute.service.equipment.EquipmentAttributeBonusCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.user.domain.UserEntity;

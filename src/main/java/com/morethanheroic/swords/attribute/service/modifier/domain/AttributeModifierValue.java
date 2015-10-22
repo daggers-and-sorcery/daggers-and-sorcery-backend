@@ -2,6 +2,9 @@ package com.morethanheroic.swords.attribute.service.modifier.domain;
 
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 
+/**
+ * Contains the amount of modification provided by an {@link com.morethanheroic.swords.attribute.domain.type.AttributeModifierType}.
+ */
 public class AttributeModifierValue {
 
     private int value = 0;

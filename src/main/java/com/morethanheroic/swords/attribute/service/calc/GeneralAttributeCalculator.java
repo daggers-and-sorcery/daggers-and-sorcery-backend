@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GeneralAttributeCalculator implements AttributeCalculator {
+public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAttribute> {
 
     private static int STARTING_SKILL_LEVEL = 1;
 
@@ -25,18 +25,12 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
     private SkillManager skillManager;
 
     @Override
-    public GeneralAttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
-        if (!(attribute instanceof GeneralAttribute)) {
-            throw new IllegalArgumentException("The attribute must be an instance of GeneralAttribute.");
-        }
+    public GeneralAttributeData calculateAttributeValue(UserEntity user, GeneralAttribute attribute) {
+        GeneralAttributeData.GeneralAttributeDataBuilder attributeDataBuilder = new GeneralAttributeData.GeneralAttributeDataBuilder(attribute);
 
-        GeneralAttribute localAttribute = (GeneralAttribute) attribute;
-
-        GeneralAttributeData.GeneralAttributeDataBuilder attributeDataBuilder = new GeneralAttributeData.GeneralAttributeDataBuilder(localAttribute);
-
-        attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, localAttribute));
-        attributeDataBuilder.setMaximum(globalAttributeCalculator.calculateMaximumValue(user, localAttribute));
-        attributeDataBuilder.setAttributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, localAttribute));
+        attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, attribute));
+        attributeDataBuilder.setMaximum(globalAttributeCalculator.calculateMaximumValue(user, attribute));
+        attributeDataBuilder.setAttributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute));
         attributeDataBuilder.setPointsToNextLevel(calculatePointsToAttributeLevel(user, attribute));
 
         return attributeDataBuilder.build();

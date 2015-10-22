@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.attribute.service.calc;
+package com.morethanheroic.swords.attribute.service.equipment;
 
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.Attribute;
@@ -17,14 +17,11 @@ public class EquipmentAttributeBonusCalculator {
 
     private static final int EMPTY_EQUIPMENT_SLOT = 0;
 
-    private final EquipmentManager equipmentManager;
-    private final ItemDefinitionManager itemDefinitionManager;
+    @Autowired
+    private EquipmentManager equipmentManager;
 
     @Autowired
-    public EquipmentAttributeBonusCalculator(EquipmentManager equipmentManager, ItemDefinitionManager itemDefinitionManager) {
-        this.equipmentManager = equipmentManager;
-        this.itemDefinitionManager = itemDefinitionManager;
-    }
+    private ItemDefinitionManager itemDefinitionManager;
 
     public AttributeCalculationResult calculateEquipmentBonus(UserEntity userEntity, Attribute attribute) {
         AttributeCalculationResult result = new AttributeCalculationResult();
