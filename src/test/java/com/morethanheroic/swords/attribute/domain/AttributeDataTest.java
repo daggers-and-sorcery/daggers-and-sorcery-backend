@@ -1,10 +1,9 @@
 package com.morethanheroic.swords.attribute.domain;
 
-import com.morethanheroic.swords.attribute.model.AttributeData;
-import com.morethanheroic.swords.attribute.model.AttributeModifierData;
-import com.morethanheroic.swords.attribute.enums.AttributeModifierType;
-import com.morethanheroic.swords.attribute.enums.AttributeModifierValueType;
-import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
+import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
+import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeModifierValue;
 import org.testng.annotations.Test;

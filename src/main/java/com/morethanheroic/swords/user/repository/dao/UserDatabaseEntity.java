@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.user.repository.dao;
 
-import com.morethanheroic.swords.attribute.enums.Attribute;
-import com.morethanheroic.swords.attribute.model.AttributeModifierData;
+import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
 import com.morethanheroic.swords.race.model.Race;
 
 import java.util.Date;

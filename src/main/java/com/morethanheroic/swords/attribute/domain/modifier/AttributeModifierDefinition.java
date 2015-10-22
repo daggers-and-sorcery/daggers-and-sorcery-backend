@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.attribute.domain.modifier;
 
-import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.domain.Attribute;
 
 public abstract class AttributeModifierDefinition {
 

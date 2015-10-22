@@ -1,7 +1,7 @@
-package com.morethanheroic.swords.attribute.model;
+package com.morethanheroic.swords.attribute.service.calc.domain;
 
-import com.morethanheroic.swords.attribute.enums.Attribute;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
 
 public class AttributeData {
 

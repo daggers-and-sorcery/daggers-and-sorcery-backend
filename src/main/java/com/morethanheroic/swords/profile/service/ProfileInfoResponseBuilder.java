@@ -1,12 +1,12 @@
 package com.morethanheroic.swords.profile.service;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.enums.Attribute;
-import com.morethanheroic.swords.attribute.enums.AttributeType;
-import com.morethanheroic.swords.attribute.model.AttributeData;
-import com.morethanheroic.swords.attribute.model.AttributeModifierData;
-import com.morethanheroic.swords.attribute.model.GeneralAttributeData;
-import com.morethanheroic.swords.attribute.model.SkillAttributeData;
+import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.domain.type.AttributeType;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
+import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
@@ -19,7 +19,6 @@ import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
-import com.morethanheroic.swords.item.service.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;

@@ -1,4 +1,6 @@
-package com.morethanheroic.swords.attribute.enums;
+package com.morethanheroic.swords.attribute.domain;
+
+import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 
 public interface Attribute {
 
