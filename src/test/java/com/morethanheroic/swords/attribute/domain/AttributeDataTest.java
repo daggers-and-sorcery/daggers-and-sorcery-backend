@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.attribute.domain;
 
+import com.beust.jcommander.internal.Lists;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
@@ -17,14 +18,14 @@ public class AttributeDataTest {
         AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder(GeneralAttribute.STRENGTH);
         attributeDataBuilder.setActual(new AttributeCalculationResult(10));
         attributeDataBuilder.setMaximum(11);
-        attributeDataBuilder.setAttributeModifierDataArray(new AttributeModifierEntry[]{
+        attributeDataBuilder.setAttributeModifierData(Lists.newArrayList(
                 new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierValueType.PERCENTAGE, new AttributeModifierValue(10))
-        });
+        ));
 
         AttributeData attributeData = attributeDataBuilder.build();
 
         assertEquals(attributeData.getActual(), 10);
         assertEquals(attributeData.getMaximum(), 11);
-        assertEquals(attributeData.getModifierDataArray().length, 1);
+        assertEquals(attributeData.getModifierDataArray().size(), 1);
     }
 }

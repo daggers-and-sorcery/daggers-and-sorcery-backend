@@ -174,7 +174,7 @@ public class ProfileInfoResponseBuilder {
         return attributeDataResponse;
     }
 
-    private LinkedList<HashMap<String, Object>> buildAttributeModifiers(Attribute attribute, AttributeModifierEntry[] attributeModifierEntries) {
+    private LinkedList<HashMap<String, Object>> buildAttributeModifiers(Attribute attribute, List<AttributeModifierEntry> attributeModifierEntries) {
         LinkedList<HashMap<String, Object>> bonusList = new LinkedList<>();
 
         for (AttributeModifierEntry attributeModifierEntry : attributeModifierEntries) {

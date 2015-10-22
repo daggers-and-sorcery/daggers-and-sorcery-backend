@@ -3,14 +3,16 @@ package com.morethanheroic.swords.attribute.service.calc.domain;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 
+import java.util.List;
+
 public class AttributeData {
 
     private final AttributeCalculationResult actual;
     private final int maximum;
-    private final AttributeModifierEntry[] modifierDataArray;
+    private final List<AttributeModifierEntry> modifierDataArray;
     private final Attribute attribute;
 
-    public AttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierEntry[] attributeModifierEntryArray) {
+    public AttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, List<AttributeModifierEntry> attributeModifierEntryArray) {
         this.attribute = attribute;
         this.actual = actual;
         this.maximum = maximum;
@@ -25,7 +27,7 @@ public class AttributeData {
         return actual;
     }
 
-    public AttributeModifierEntry[] getModifierDataArray() {
+    public List<AttributeModifierEntry> getModifierDataArray() {
         return modifierDataArray;
     }
 
@@ -38,7 +40,7 @@ public class AttributeData {
         protected Attribute attribute;
         protected int maximum;
         protected AttributeCalculationResult actual;
-        protected AttributeModifierEntry[] attributeModifierArray;
+        protected List<AttributeModifierEntry> attributeModifierArray;
 
         public AttributeDataBuilder(Attribute attribute) {
             this.attribute = attribute;
@@ -52,7 +54,7 @@ public class AttributeData {
             this.actual = actual;
         }
 
-        public void setAttributeModifierDataArray(AttributeModifierEntry[] attributeModifierArray) {
+        public void setAttributeModifierData(List<AttributeModifierEntry> attributeModifierArray) {
             this.attributeModifierArray = attributeModifierArray;
         }
 

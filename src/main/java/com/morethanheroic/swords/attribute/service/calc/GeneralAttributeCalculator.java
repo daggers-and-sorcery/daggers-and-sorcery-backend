@@ -36,7 +36,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator {
 
         attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, localAttribute));
         attributeDataBuilder.setMaximum(globalAttributeCalculator.calculateMaximumValue(user, localAttribute));
-        attributeDataBuilder.setAttributeModifierDataArray(globalAttributeModifierCalculator.calculateModifierData(user, localAttribute));
+        attributeDataBuilder.setAttributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, localAttribute));
         attributeDataBuilder.setPointsToNextLevel(calculatePointsToAttributeLevel(user, attribute));
 
         return attributeDataBuilder.build();

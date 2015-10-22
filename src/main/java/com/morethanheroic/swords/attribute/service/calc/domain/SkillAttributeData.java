@@ -4,13 +4,15 @@ import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 
+import java.util.List;
+
 public class SkillAttributeData extends AttributeData {
 
     private final long actualXp;
     private final long nextLevelXp;
     private final long xpBetweenLevels;
 
-    private SkillAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierEntry[] attributeModifierEntryArray, long actualXp, long nextLevelXp, long xpBetweenLevels) {
+    private SkillAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, List<AttributeModifierEntry> attributeModifierEntryArray, long actualXp, long nextLevelXp, long xpBetweenLevels) {
         super(attribute, actual, maximum, attributeModifierEntryArray);
 
         this.actualXp = actualXp;

@@ -31,7 +31,7 @@ public class CombatAttributeCalculator implements AttributeCalculator {
 
         attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, attribute));
         attributeDataBuilder.setMaximum(globalAttributeCalculator.calculateMaximumValue(user, attribute));
-        attributeDataBuilder.setAttributeModifierDataArray(globalAttributeModifierCalculator.calculateModifierData(user, attribute));
+        attributeDataBuilder.setAttributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute));
 
         return attributeDataBuilder.build();
     }

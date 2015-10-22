@@ -34,7 +34,7 @@ public class SkillAttributeCalculator implements AttributeCalculator {
 
         attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, localAttribute));
         attributeDataBuilder.setMaximum(globalAttributeCalculator.calculateMaximumValue(user, localAttribute));
-        attributeDataBuilder.setAttributeModifierDataArray(globalAttributeModifierCalculator.calculateModifierData(user, localAttribute));
+        attributeDataBuilder.setAttributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, localAttribute));
         attributeDataBuilder.setActualXp(skillManager.getSkills(user).getSkillXp(localAttribute));
         attributeDataBuilder.setNextLevelXp(skillManager.getSkills(user).getSkillXpToNextLevel(localAttribute));
         attributeDataBuilder.setXpBetweenLevels(skillManager.getSkills(user).getSkillXpBetweenNextLevel(localAttribute));

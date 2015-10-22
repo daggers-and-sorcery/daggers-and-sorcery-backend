@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.profile.service;
 
+import com.beust.jcommander.internal.Lists;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
@@ -111,7 +112,7 @@ public class ProfileInfoResponseBuilderServiceTest {
     private GlobalAttributeCalculator buildGlobalAttributeCalculatorMock() {
         GlobalAttributeCalculator globalAttributeCalculator = mock(GlobalAttributeCalculator.class);
 
-        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, new AttributeCalculationResult(10), 20, new AttributeModifierEntry[]{new AttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(10))});
+        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, new AttributeCalculationResult(10), 20, Lists.newArrayList(new AttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(10))));
 
         when(globalAttributeCalculator.calculateAttributeValue(any(), any())).thenReturn(attributeData);
 
