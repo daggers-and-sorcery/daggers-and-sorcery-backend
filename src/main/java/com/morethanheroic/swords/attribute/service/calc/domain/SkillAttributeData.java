@@ -2,7 +2,7 @@ package com.morethanheroic.swords.attribute.service.calc.domain;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 
 public class SkillAttributeData extends AttributeData {
 
@@ -10,8 +10,8 @@ public class SkillAttributeData extends AttributeData {
     private final long nextLevelXp;
     private final long xpBetweenLevels;
 
-    private SkillAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierData[] attributeModifierDataArray, long actualXp, long nextLevelXp, long xpBetweenLevels) {
-        super(attribute, actual, maximum, attributeModifierDataArray);
+    private SkillAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierEntry[] attributeModifierEntryArray, long actualXp, long nextLevelXp, long xpBetweenLevels) {
+        super(attribute, actual, maximum, attributeModifierEntryArray);
 
         this.actualXp = actualXp;
         this.nextLevelXp = nextLevelXp;

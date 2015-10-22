@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.user.repository.dao;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.race.model.Race;
 
 import java.util.Date;
@@ -25,7 +25,7 @@ public class UserDatabaseEntity {
     private int movement;
 
     //TODO: Transient for now! fix em
-    private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
+    private HashMap<Attribute, AttributeModifierEntry> attributeModifierMap = new HashMap<>();
 
     public UserDatabaseEntity() {
     }
@@ -67,11 +67,11 @@ public class UserDatabaseEntity {
         this.race = race;
     }
 
-    public void setAttributeModifier(Attribute attribute, AttributeModifierData attributeModifierData) {
-        attributeModifierMap.put(attribute, attributeModifierData);
+    public void setAttributeModifier(Attribute attribute, AttributeModifierEntry attributeModifierEntry) {
+        attributeModifierMap.put(attribute, attributeModifierEntry);
     }
 
-    public AttributeModifierData getAttributeModifier(Attribute attribute) {
+    public AttributeModifierEntry getAttributeModifier(Attribute attribute) {
         return attributeModifierMap.get(attribute);
     }
 

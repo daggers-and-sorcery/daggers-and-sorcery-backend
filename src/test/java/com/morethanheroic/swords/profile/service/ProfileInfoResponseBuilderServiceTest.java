@@ -5,7 +5,7 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
@@ -111,7 +111,7 @@ public class ProfileInfoResponseBuilderServiceTest {
     private GlobalAttributeCalculator buildGlobalAttributeCalculatorMock() {
         GlobalAttributeCalculator globalAttributeCalculator = mock(GlobalAttributeCalculator.class);
 
-        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, new AttributeCalculationResult(10), 20, new AttributeModifierData[]{new AttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(10))});
+        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, new AttributeCalculationResult(10), 20, new AttributeModifierEntry[]{new AttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(10))});
 
         when(globalAttributeCalculator.calculateAttributeValue(any(), any())).thenReturn(attributeData);
 

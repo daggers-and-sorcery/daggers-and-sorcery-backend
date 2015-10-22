@@ -6,8 +6,8 @@ import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
-import com.morethanheroic.swords.attribute.service.modifier.domain.PercentageAttributeModifierData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
+import com.morethanheroic.swords.attribute.service.modifier.domain.PercentageAttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeModifierValue;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.service.SkillManager;
@@ -22,39 +22,43 @@ public class AttributeModifierCalculator {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+
     @Autowired
     private GeneralAttributeCalculator generalAttributeCalculator;
+
     @Autowired
-    private CombatAttributeCalculator combatAttributeCalculato;
+    private CombatAttributeCalculator combatAttributeCalculator;
+
     @Autowired
     private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
+
     @Autowired
     private SkillManager skillManager;
 
-    public AttributeModifierData[] calculateModifierData(UserEntity user, Attribute attribute) {
-        ArrayList<AttributeModifierData> attributeModifierDataList = new ArrayList<>();
+    public AttributeModifierEntry[] calculateModifierData(UserEntity user, Attribute attribute) {
+        ArrayList<AttributeModifierEntry> attributeModifierEntryList = new ArrayList<>();
 
         if (attribute instanceof SkillAttribute) {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, new AttributeModifierValue(skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute))));
+            attributeModifierEntryList.add(new AttributeModifierEntry(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, new AttributeModifierValue(skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute))));
         } else if (attribute instanceof GeneralAttribute) {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.SKILL, AttributeModifierValueType.VALUE, new AttributeModifierValue(generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute))));
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
+            attributeModifierEntryList.add(new AttributeModifierEntry(AttributeModifierType.SKILL, AttributeModifierValueType.VALUE, new AttributeModifierValue(generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute))));
+            attributeModifierEntryList.add(new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
         } else if (attribute instanceof CombatAttribute) {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierValueType.VALUE, new AttributeModifierValue(combatAttributeCalculato.calculateAllBonusByGeneralAttributes(user, (CombatAttribute) attribute))));
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
+            attributeModifierEntryList.add(new AttributeModifierEntry(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierValueType.VALUE, new AttributeModifierValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, (CombatAttribute) attribute))));
+            attributeModifierEntryList.add(new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
         } else {
-            attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
+            attributeModifierEntryList.add(new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue())));
         }
 
-        attributeModifierDataList.add(new AttributeModifierData(AttributeModifierType.EQUIPMENT, AttributeModifierValueType.VALUE, new AttributeModifierValue(equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute))));
+        attributeModifierEntryList.add(new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierValueType.VALUE, new AttributeModifierValue(equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute))));
 
         int racialModifierPercentage = user.getRace().getRacialModifier(attribute);
         if (racialModifierPercentage != Race.NO_RACIAL_MODIFIER) {
             int racialModifierValue = globalAttributeCalculator.calculatePercentageModifiedAttribute(globalAttributeCalculator.calculateActualBeforePercentageMultiplication(user, attribute), racialModifierPercentage).getValue() - globalAttributeCalculator.calculateActualBeforePercentageMultiplication(user, attribute).getValue();
 
-            attributeModifierDataList.add(new PercentageAttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, new AttributeModifierValue(racialModifierValue), racialModifierPercentage));
+            attributeModifierEntryList.add(new PercentageAttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, new AttributeModifierValue(racialModifierValue), racialModifierPercentage));
         }
 
-        return attributeModifierDataList.toArray(new AttributeModifierData[attributeModifierDataList.size()]);
+        return attributeModifierEntryList.toArray(new AttributeModifierEntry[attributeModifierEntryList.size()]);
     }
 }

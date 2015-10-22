@@ -1,20 +1,20 @@
 package com.morethanheroic.swords.attribute.service.calc.domain;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 
 public class AttributeData {
 
     private final AttributeCalculationResult actual;
     private final int maximum;
-    private final AttributeModifierData[] modifierDataArray;
+    private final AttributeModifierEntry[] modifierDataArray;
     private final Attribute attribute;
 
-    public AttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
+    public AttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierEntry[] attributeModifierEntryArray) {
         this.attribute = attribute;
         this.actual = actual;
         this.maximum = maximum;
-        this.modifierDataArray = attributeModifierDataArray;
+        this.modifierDataArray = attributeModifierEntryArray;
     }
 
     public int getMaximum() {
@@ -25,7 +25,7 @@ public class AttributeData {
         return actual;
     }
 
-    public AttributeModifierData[] getModifierDataArray() {
+    public AttributeModifierEntry[] getModifierDataArray() {
         return modifierDataArray;
     }
 
@@ -38,7 +38,7 @@ public class AttributeData {
         protected Attribute attribute;
         protected int maximum;
         protected AttributeCalculationResult actual;
-        protected AttributeModifierData[] attributeModifierArray;
+        protected AttributeModifierEntry[] attributeModifierArray;
 
         public AttributeDataBuilder(Attribute attribute) {
             this.attribute = attribute;
@@ -52,7 +52,7 @@ public class AttributeData {
             this.actual = actual;
         }
 
-        public void setAttributeModifierDataArray(AttributeModifierData[] attributeModifierArray) {
+        public void setAttributeModifierDataArray(AttributeModifierEntry[] attributeModifierArray) {
             this.attributeModifierArray = attributeModifierArray;
         }
 

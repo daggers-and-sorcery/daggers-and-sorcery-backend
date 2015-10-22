@@ -4,7 +4,7 @@ import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
@@ -174,18 +174,18 @@ public class ProfileInfoResponseBuilder {
         return attributeDataResponse;
     }
 
-    private LinkedList<HashMap<String, Object>> buildAttributeModifiers(Attribute attribute, AttributeModifierData[] attributeModifierDatas) {
+    private LinkedList<HashMap<String, Object>> buildAttributeModifiers(Attribute attribute, AttributeModifierEntry[] attributeModifierEntries) {
         LinkedList<HashMap<String, Object>> bonusList = new LinkedList<>();
 
-        for (AttributeModifierData attributeModifierData : attributeModifierDatas) {
+        for (AttributeModifierEntry attributeModifierEntry : attributeModifierEntries) {
             HashMap<String, Object> attributeModifierResponse = new HashMap<>();
 
-            attributeModifierResponse.put("attributeModifierType", attributeModifierData.getAttributeModifierType().name());
-            attributeModifierResponse.put("attributeModifierValueType", attributeModifierData.getAttributeModifierValueType().name());
+            attributeModifierResponse.put("attributeModifierType", attributeModifierEntry.getAttributeModifierType().name());
+            attributeModifierResponse.put("attributeModifierValueType", attributeModifierEntry.getAttributeModifierValueType().name());
             if (attribute.getAttributeType() == AttributeType.COMBAT) {
-                attributeModifierResponse.put("attributeModifierValue", formatCombatAttributeModifier(attributeModifierData.getAttributeModifierValue()));
+                attributeModifierResponse.put("attributeModifierValue", formatCombatAttributeModifier(attributeModifierEntry.getAttributeModifierValue()));
             } else {
-                attributeModifierResponse.put("attributeModifierValue", attributeModifierData.getAttributeModifierValue().getValue());
+                attributeModifierResponse.put("attributeModifierValue", attributeModifierEntry.getAttributeModifierValue().getValue());
             }
 
             bonusList.add(attributeModifierResponse);

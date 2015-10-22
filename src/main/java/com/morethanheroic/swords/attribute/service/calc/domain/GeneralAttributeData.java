@@ -2,14 +2,14 @@ package com.morethanheroic.swords.attribute.service.calc.domain;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 
 public class GeneralAttributeData extends AttributeData {
 
     private final int pointsToNextLevel;
 
-    protected GeneralAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierData[] attributeModifierDataArray, int pointsToNextLevel) {
-        super(attribute, actual, maximum, attributeModifierDataArray);
+    protected GeneralAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, AttributeModifierEntry[] attributeModifierEntryArray, int pointsToNextLevel) {
+        super(attribute, actual, maximum, attributeModifierEntryArray);
 
         this.pointsToNextLevel = pointsToNextLevel;
     }
