@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.journal.service;
 
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeModifierValue;
 import com.morethanheroic.swords.combat.domain.DiceAttribute;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;

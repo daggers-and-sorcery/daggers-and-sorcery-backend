@@ -1,4 +1,6 @@
-package com.morethanheroic.swords.attribute.service.calc.domain;
+package com.morethanheroic.swords.attribute.service.modifier.domain;
+
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 
 public class AttributeModifierValue {
 

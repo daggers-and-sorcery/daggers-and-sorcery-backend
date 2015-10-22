@@ -5,7 +5,7 @@ import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModi
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeModifierValue;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;

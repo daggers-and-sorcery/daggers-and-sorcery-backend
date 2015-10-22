@@ -10,7 +10,7 @@ import com.morethanheroic.swords.attribute.service.calc.domain.SkillAttributeDat
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeModifierValue;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;

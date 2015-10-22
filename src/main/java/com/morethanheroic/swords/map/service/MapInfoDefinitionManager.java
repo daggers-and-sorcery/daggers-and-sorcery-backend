@@ -18,6 +18,7 @@ public class MapInfoDefinitionManager {
     private HashMap<Integer, MapInfoDefinition> mapInfoDefinitionMap = new HashMap<>();
 
     @PostConstruct
+    @SuppressWarnings("unchecked")
     public void init() throws Exception {
         List<MapInfoDefinition> mapInfoDefinitionList = xmlDefinitionLoader.loadDefinitions(MapInfoDefinition.class, "classpath:data/map/definition/", "classpath:data/map/schema.xsd");
 

@@ -2,6 +2,7 @@ package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
+import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
@@ -28,7 +29,7 @@ public class GeneralAttributeCalculatorTest {
     private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Mock
-    private AttributeModifierCalculator attributeModifierCalculator;
+    private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
 
     @Test
     public void testCalculateAttributeValue() {

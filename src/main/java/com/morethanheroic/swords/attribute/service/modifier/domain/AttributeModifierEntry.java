@@ -2,7 +2,6 @@ package com.morethanheroic.swords.attribute.service.modifier.domain;
 
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeModifierValue;
 
 /**
  * Contains the data for one modifier type. (Eg.: all bonuses to this attribute gained from equipments or skills or buffs etc.
