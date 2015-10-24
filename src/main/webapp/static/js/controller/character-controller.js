@@ -4,7 +4,7 @@ module.exports = function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData, $r
     $scope.attributePopoverUrl = '/partial/popover/attribute.html';
     $scope.user = characterData;
     $scope.attributeBonusNameMap = ATTRIBUTE_BONUS_MAP;
-    $scope.scavengingSlider = 10;
+    $scope.scavengingSlider = 0;
 
     $scope.$on('profile-update-needed', function (event, args) {
         $http.get('/character/info').then(function (response) {

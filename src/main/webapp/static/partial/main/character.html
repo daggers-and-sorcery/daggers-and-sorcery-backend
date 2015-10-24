@@ -91,11 +91,28 @@
 
         <h4>Scavenging</h4>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-12">
                 <ul class="list-group attribute-list-group">
                     <li class="list-group-item attribute-list-item">
-                        Scavenging points: <span>0/50</span><br>
-                        <rzslider rz-slider-model="scavengingSlider" rz-slider-ceil="50"></rzslider>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                Scavenging points: <span>0/50</span><br>
+                                <div class="row scavenging-converter">
+                                    <div class="col-xs-9" style="padding-right: 0;">
+                                        <rzslider rz-slider-model="scavengingSlider" rz-slider-ceil="50"></rzslider>
+                                    </div>
+                                    <div class="col-xs-3" style="padding-right: 0;">
+                                        <span style="padding: 10px; border: 1px solid rgba(1,1,1,0.2);" ng-bind="scavengingSlider"></span>
+                                        <span class="pull-right inventory-item-watch" ng-click="convertScavengingPoints()" style="width: 26px;height: 26px;cursor: pointer;">
+                                            <img style="margin-top: -8px;width:14px;height:14px;" src="/icon/convert.svg">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                Convert movement points to scavenging points here.
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
