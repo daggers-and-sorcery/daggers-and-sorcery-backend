@@ -1,3 +1,22 @@
+// NPM Modules
+var $ = require('jquery');
+window.jQuery = $;
+window.$ = $;
+
+require('angular');
+
+require('angular-messages');
+
+require('angular-ui-router');
+
+require('angular-ui-bootstrap');
+
+require('angularjs-slider');
+require('angularjs-slider/dist/rzslider.min.css');
+
+require('bootstrap');
+require('bootstrap/dist/css/bootstrap.min.css');
+
 // Router
 require('js/router/router.js');
 
@@ -27,3 +46,6 @@ require('js/constant/attribute-bonus-map-constant.js');
 // Interceptors
 require('js/interceptor/combat-update-interceptor.js');
 require('js/interceptor/combat-update-interceptor-config.js');
+
+// CSS
+require('css/custom.css');
