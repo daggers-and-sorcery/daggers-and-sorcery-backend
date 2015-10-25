@@ -20,7 +20,7 @@ public class UserDatabaseEntity {
     private int health;
     private int mana;
     private int movement;
-    private int scaveningPoint;
+    private int scavengingPoint;
 
     public UserDatabaseEntity() {
     }
@@ -143,6 +143,6 @@ public class UserDatabaseEntity {
     }
 
     public int getScaveningPoint() {
-        return scaveningPoint;
+        return scavengingPoint;
     }
 }

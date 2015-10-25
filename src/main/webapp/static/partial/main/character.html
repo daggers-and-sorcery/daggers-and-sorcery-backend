@@ -96,11 +96,11 @@
                     <li class="list-group-item attribute-list-item">
                         <div class="row">
                             <div class="col-xs-6" style="border-right: 1px solid rgba(1,1,1,0.4);">
-                                Scavenging points: <span>0/50</span><br>
+                                Scavenging points: <span>{{user.scavengingPoints}}/50</span><br>
                                 <span>Costs: {{calculateNeededMovementPoints(scavengingSlider)}} movement points</span><br>
                                 <div class="row scavenging-converter">
                                     <div class="col-xs-9" style="padding-right: 0;">
-                                        <rzslider rz-slider-model="scavengingSlider" rz-slider-ceil="50" rz-slider-step="5"></rzslider>
+                                        <rzslider rz-slider-model="scavengingSlider" rz-slider-ceil="calculateMaxScavengingPointsToConvert()" rz-slider-step="5"></rzslider>
                                     </div>
                                     <div class="col-xs-3">
                                         <span style="padding: 10px; border: 1px solid rgba(1,1,1,0.2);" ng-bind="scavengingSlider"></span>

@@ -5,6 +5,25 @@ module.exports = function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData, $r
     $scope.user = characterData;
     $scope.attributeBonusNameMap = ATTRIBUTE_BONUS_MAP;
     $scope.scavengingSlider = 0;
+    $scope.maxScavengingPointsToConvert = Math.floor((50 - $scope.user.scavengingPoints) / 5) * 5;
+
+    $scope.calculateMaxScavengingPointsToConvert = function() {
+        var pountsUntilMax = Math.floor((50 - $scope.user.scavengingPoints) / 5) * 5;
+
+        if(pountsUntilMax / 5 > $rootScope.user.movement) {
+            pountsUntilMax = $rootScope.user.movement * 5;
+        }
+
+        return pountsUntilMax;
+    };
+
+    $scope.convertScavengingPoints = function() {
+        if($scope.scavengingSlider == 0) {
+            return;
+        }
+
+        console.log("Converting scavenging points!");
+    };
 
     $scope.$on('profile-update-needed', function (event, args) {
         $http.get('/character/info').then(function (response) {
