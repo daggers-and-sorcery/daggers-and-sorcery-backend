@@ -29,6 +29,10 @@ public class RawMonsterDefinition {
     @XmlElement(name = "drop")
     private List<RawDropDefinition> rawDropDefinitions;
 
+    @XmlElementWrapper(name = "scavengelist")
+    @XmlElement(name = "scavenge")
+    private List<RawScavengeDefinition> rawScavengeDefinitions;
+
     public int getId() {
         return id;
     }
@@ -79,6 +83,14 @@ public class RawMonsterDefinition {
         }
 
         return Collections.unmodifiableList(rawDropDefinitions);
+    }
+
+    public List<RawScavengeDefinition> getScavengeDefinitions() {
+        if(rawScavengeDefinitions == null) {
+            return Collections.EMPTY_LIST;
+        }
+
+        return Collections.unmodifiableList(rawScavengeDefinitions);
     }
 
     public int getMana() {
