@@ -99,6 +99,21 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="scavengelist" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="drop" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:all>
+                                        <xs:element name="item" type="xs:unsignedInt" minOccurs="1"/>
+                                        <xs:element name="amount" type="xs:unsignedInt" minOccurs="1"/>
+                                        <xs:element name="chance" type="xs:double" minOccurs="1"/>
+                                    </xs:all>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:all>
         </xs:complexType>
     </xs:element>

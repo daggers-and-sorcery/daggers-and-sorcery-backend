@@ -22,13 +22,28 @@ module.exports = function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData, $r
             return;
         }
 
-        console.log("Converting scavenging points!");
+        var requestConfig = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+
+        var requestData = {
+            pointsToConvert: $scope.scavengingSlider / 5
+        };
+
+        $http.post('/skill/scavenging/convert', $.param(requestData), requestConfig).success(function (data, status, headers, config) {
+            $rootScope.$broadcast('profile-update-needed');
+        });
+        //console.log("Converting scavenging points!");
     };
 
     $scope.$on('profile-update-needed', function (event, args) {
         $http.get('/character/info').then(function (response) {
             $scope.user = characterDataFormatter.format(response.data);
         });
+
+        $scope.scavengingSlider = 0;
     });
 
     $scope.calculateNeededMovementPoints = function (scavengingSlider) {
