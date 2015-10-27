@@ -1,7 +1,5 @@
 # Created by https://www.gitignore.io
 
-#Restart herokss
-
 ### Java ###
 *.class
 
@@ -108,8 +106,7 @@ build/Release
 node_modules
 
 ### Webpack ###
-#bundle.js -- Build locally until we find a way to build on heroku
-bundle.js.map
+src/main/webapp/static/bundle
 
 # Created by https://www.gitignore.io/api/gradle
 
