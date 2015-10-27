@@ -20,6 +20,7 @@ public class MonsterDefinition {
     private DiceAttribute damage;
     private AttackType attackType;
     private List<DropDefinition> dropDefinitions;
+    private List<ScavengeDefinition> scavengeDefinitions;
 
     private MonsterDefinition() {
     }
@@ -76,6 +77,10 @@ public class MonsterDefinition {
         return dropDefinitions;
     }
 
+    public List<ScavengeDefinition> getScavengeDefinitions() {
+        return scavengeDefinitions;
+    }
+
     public static class MonsterDefinitionBuilder {
 
         private final MonsterDefinition monsterDefinition = new MonsterDefinition();
@@ -130,6 +135,11 @@ public class MonsterDefinition {
 
         public void setDropDefinitions(List<DropDefinition> dropDefinitions) {
             monsterDefinition.dropDefinitions = dropDefinitions;
+        }
+
+
+        public void setScavengeDefinitions(List<ScavengeDefinition> scavengeDefinitions) {
+            monsterDefinition.scavengeDefinitions = scavengeDefinitions;
         }
 
         public MonsterDefinition build() {

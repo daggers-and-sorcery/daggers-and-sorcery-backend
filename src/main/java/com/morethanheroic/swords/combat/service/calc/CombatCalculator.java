@@ -1,12 +1,10 @@
 package com.morethanheroic.swords.combat.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.combat.domain.Combat;
-import com.morethanheroic.swords.combat.domain.CombatResult;
-import com.morethanheroic.swords.combat.domain.Drop;
-import com.morethanheroic.swords.combat.domain.Winner;
+import com.morethanheroic.swords.combat.domain.*;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
+import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengeCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculatorFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
@@ -32,26 +30,26 @@ public class CombatCalculator {
 
     private final CombatMessageBuilder combatMessageBuilder;
     private final DropCalculator dropCalculator;
+    private final ScavengeCalculator scavengeCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final MapManager mapManager;
     private final InventoryManager inventoryManager;
     private final TurnCalculatorFactory turnCalculatorFactory;
     private final SkillManager skillManager;
     private final JournalManager journalManager;
-    private final UserManager userManager;
     private final UserMapper userMapper;
 
     @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserManager userManager, UserMapper userMapper) {
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ScavengeCalculator scavengeCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
+        this.scavengeCalculator = scavengeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.mapManager = mapManager;
         this.inventoryManager = inventoryManager;
         this.skillManager = skillManager;
         this.journalManager = journalManager;
-        this.userManager = userManager;
         this.userMapper = userMapper;
     }
 
@@ -89,6 +87,15 @@ public class CombatCalculator {
                 result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(drop.getItem()).getName(), drop.getAmount()));
 
                 inventory.addItem(drop.getItem(), drop.getAmount());
+            }
+
+            //Add scavenge
+            ArrayList<Scavenge> scavengedItems = scavengeCalculator.calculateScavenge(combat.getMonsterCombatEntity().getMonsterDefinition());
+
+            for (Scavenge scavenge : scavengedItems) {
+                result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(scavenge.getItem()).getName(), scavenge.getAmount()));
+
+                inventory.addItem(scavenge.getItem(), scavenge.getAmount());
             }
 
             //Remove spawn

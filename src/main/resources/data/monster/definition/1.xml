@@ -95,4 +95,11 @@
             <monster:chance>0.5</monster:chance>
         </monster:drop>
     </monster:droplist>
+    <monster:scavengelist>
+        <monster:drop>
+            <monster:item>13</monster:item>
+            <monster:amount>1</monster:amount>
+            <monster:chance>0.5</monster:chance>
+        </monster:drop>
+    </monster:scavengelist>
 </monster:monster>
