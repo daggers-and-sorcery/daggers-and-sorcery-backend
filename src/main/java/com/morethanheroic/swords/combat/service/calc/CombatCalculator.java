@@ -37,11 +37,10 @@ public class CombatCalculator {
     private final TurnCalculatorFactory turnCalculatorFactory;
     private final SkillManager skillManager;
     private final JournalManager journalManager;
-    private final UserManager userManager;
     private final UserMapper userMapper;
 
     @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ScavengeCalculator scavengeCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserManager userManager, UserMapper userMapper) {
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ScavengeCalculator scavengeCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
@@ -51,7 +50,6 @@ public class CombatCalculator {
         this.inventoryManager = inventoryManager;
         this.skillManager = skillManager;
         this.journalManager = journalManager;
-        this.userManager = userManager;
         this.userMapper = userMapper;
     }
 
