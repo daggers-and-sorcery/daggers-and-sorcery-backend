@@ -3,6 +3,7 @@ package com.morethanheroic.swords.combat.service.calc;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.*;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.ScavengeMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengeCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculatorFactory;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class CombatCalculator {
 
     private final CombatMessageBuilder combatMessageBuilder;
+    private final ScavengeMessageBuilder scavengeMessageBuilder;
     private final DropCalculator dropCalculator;
     private final ScavengeCalculator scavengeCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
@@ -41,9 +43,10 @@ public class CombatCalculator {
     private final UserMapper userMapper;
 
     @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ScavengeCalculator scavengeCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserManager userManager, UserMapper userMapper) {
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, ScavengeMessageBuilder scavengeMessageBuilder, DropCalculator dropCalculator, ScavengeCalculator scavengeCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserManager userManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
+        this.scavengeMessageBuilder = scavengeMessageBuilder;
         this.dropCalculator = dropCalculator;
         this.scavengeCalculator = scavengeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
@@ -95,7 +98,7 @@ public class CombatCalculator {
             ArrayList<Scavenge> scavengedItems = scavengeCalculator.calculateScavenge(combat.getMonsterCombatEntity().getMonsterDefinition());
 
             for (Scavenge scavenge : scavengedItems) {
-                result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(scavenge.getItem()).getName(), scavenge.getAmount()));
+                result.addMessage(scavengeMessageBuilder.buildScavengeMessage(itemDefinitionManager.getItemDefinition(scavenge.getItem()).getName(), scavenge.getAmount()));
 
                 inventory.addItem(scavenge.getItem(), scavenge.getAmount());
             }
