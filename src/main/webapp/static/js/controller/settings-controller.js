@@ -32,6 +32,13 @@ module.exports = function ($scope, $http) {
     $scope.refreshSettingList = function() {
         $http.get('/combat/settings/list').success(function (data, status, headers, config) {
             $scope.settings = data.data.settings;
+            $scope.otherSettings = data.data.otherSettings;
+        });
+    };
+
+    $scope.saveOtherSettings = function() {
+        $http.post('/combat/settings/other/save', JSON.stringify($scope.otherSettings)).success(function (data, status, headers, config) {
+            console.log("Sent stuff for saving");
         });
     };
 

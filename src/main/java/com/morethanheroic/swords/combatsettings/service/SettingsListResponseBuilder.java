@@ -3,6 +3,7 @@ package com.morethanheroic.swords.combatsettings.service;
 import com.morethanheroic.swords.combatsettings.model.SettingType;
 import com.morethanheroic.swords.combatsettings.model.TriggerType;
 import com.morethanheroic.swords.combatsettings.repository.dao.CombatSettingsDatabaseEntity;
+import com.morethanheroic.swords.combatsettings.repository.dao.Settings;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
@@ -32,9 +33,16 @@ public class SettingsListResponseBuilder {
         this.spellDefinitionManager = spellDefinitionManager;
     }
 
-    public Response build(UserEntity userEntity, List<CombatSettingsDatabaseEntity> combatSettingList) {
+    public Response build(UserEntity userEntity, List<CombatSettingsDatabaseEntity> combatSettingList, Settings setting) {
         Response response = responseFactory.newResponse(userEntity);
 
+        response.setData("settings", buildCombatSettings(combatSettingList));
+        response.setData("otherSettings", buildOtherSettings(setting));
+
+        return response;
+    }
+
+    private ArrayList<HashMap<String, Object>> buildCombatSettings(List<CombatSettingsDatabaseEntity> combatSettingList) {
         ArrayList<HashMap<String, Object>> settingsResult = new ArrayList<>();
         for (CombatSettingsDatabaseEntity combatSettingsDatabaseEntity : combatSettingList) {
             HashMap<String, Object> settingsData = new HashMap<>();
@@ -59,8 +67,14 @@ public class SettingsListResponseBuilder {
             settingsResult.add(settingsData);
         }
 
-        response.setData("settings", settingsResult);
+        return settingsResult;
+    }
 
-        return response;
+    private HashMap<String, Object> buildOtherSettings(Settings setting) {
+        HashMap<String, Object> otherSettings = new HashMap<>();
+
+        otherSettings.put("scavengingEnabled", setting.isScavengingEnabled());
+
+        return otherSettings;
     }
 }
