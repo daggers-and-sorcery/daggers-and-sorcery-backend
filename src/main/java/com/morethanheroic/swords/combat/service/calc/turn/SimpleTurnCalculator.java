@@ -40,6 +40,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
         this.combatMessageBuilder = combatMessageBuilder;
     }
 
+    //TODO: We should do something better than this if-else hell!
     @Override
     public void takeTurn(CombatResult result, Combat combat) {
         result.addMessage(combatMessageBuilder.buildNewTurnMessage(combat.getTurn()));
