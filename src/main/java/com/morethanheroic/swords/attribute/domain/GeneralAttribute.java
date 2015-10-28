@@ -1,8 +1,7 @@
 package com.morethanheroic.swords.attribute.domain;
 
-import com.morethanheroic.swords.attribute.enums.Attribute;
-import com.morethanheroic.swords.attribute.enums.AttributeType;
-import com.morethanheroic.swords.attribute.enums.GeneralAttributeType;
+import com.morethanheroic.swords.attribute.domain.type.AttributeType;
+import com.morethanheroic.swords.attribute.domain.type.GeneralAttributeType;
 
 public enum GeneralAttribute implements Attribute {
 

@@ -85,6 +85,14 @@ public class UserEntity {
         return userDatabaseEntity.getLastRegenerationDate();
     }
 
+    public int getScavengingPoint() {
+        return userDatabaseEntity.getScaveningPoint();
+    }
+
+    public void setScavengingPoint(int value) {
+        userMapper.updateScavengingPoint(userDatabaseEntity.getId(), value);
+    }
+
     public void regenerate(int health, int mana, int movement, Date date) {
         userDatabaseEntity.setLastRegenerationDate(date);
         userDatabaseEntity.setMana(mana);

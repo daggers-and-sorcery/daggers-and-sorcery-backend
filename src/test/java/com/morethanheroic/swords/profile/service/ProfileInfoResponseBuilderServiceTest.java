@@ -1,13 +1,16 @@
 package com.morethanheroic.swords.profile.service;
 
+import com.beust.jcommander.internal.Lists;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.enums.Attribute;
-import com.morethanheroic.swords.attribute.enums.AttributeModifierType;
-import com.morethanheroic.swords.attribute.enums.AttributeModifierValueType;
-import com.morethanheroic.swords.attribute.model.AttributeData;
-import com.morethanheroic.swords.attribute.model.AttributeModifierData;
+import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
+import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
@@ -109,7 +112,7 @@ public class ProfileInfoResponseBuilderServiceTest {
     private GlobalAttributeCalculator buildGlobalAttributeCalculatorMock() {
         GlobalAttributeCalculator globalAttributeCalculator = mock(GlobalAttributeCalculator.class);
 
-        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, 10, 20, new AttributeModifierData[]{new AttributeModifierData(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, 10)});
+        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, new AttributeCalculationResult(10), 20, Lists.newArrayList(new AttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(10))));
 
         when(globalAttributeCalculator.calculateAttributeValue(any(), any())).thenReturn(attributeData);
 

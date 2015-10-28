@@ -89,6 +89,36 @@
             <spell-list-column column-align="right" column-align-id="2" source="user.spell"></spell-list-column>
         </div>
 
+        <h4>Scavenging</h4>
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="list-group attribute-list-group">
+                    <li class="list-group-item attribute-list-item">
+                        <div class="row">
+                            <div class="col-xs-6" style="border-right: 1px solid rgba(1,1,1,0.4);">
+                                Scavenging points: <span>{{user.scavengingPoints}}/50</span><br>
+                                <span>Costs: {{calculateNeededMovementPoints(scavengingSlider)}} movement points</span><br>
+                                <div class="row scavenging-converter">
+                                    <div class="col-xs-9" style="padding-right: 0;">
+                                        <rzslider rz-slider-model="scavengingSlider" rz-slider-ceil="calculateMaxScavengingPointsToConvert()" rz-slider-step="5"></rzslider>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <span style="padding: 10px; border: 1px solid rgba(1,1,1,0.2);" ng-bind="scavengingSlider"></span>
+                                        <span class="pull-right inventory-item-watch" ng-click="convertScavengingPoints()" style="width: 26px;height: 26px;cursor: pointer;">
+                                            <img style="margin-top: -8px;width:14px;height:14px;" src="/icon/convert.svg">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                Convert movement points to scavenging points here.
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
         <h4 class="attribute-list-name">Other</h4>
         <div class="row">
             <div class="col-md-4 attribute-list-column-left">

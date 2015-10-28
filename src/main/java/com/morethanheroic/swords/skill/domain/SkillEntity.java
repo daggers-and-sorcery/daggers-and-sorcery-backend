@@ -73,10 +73,13 @@ public class SkillEntity {
                 break;
             case STAFF:
                 skillMapper.addStaffsXp(user.getId(),value);
+                break;
             case WAND:
                 skillMapper.addWandsXp(user.getId(), value);
+                break;
             case SPECTRE:
                 skillMapper.addSpectresXp(user.getId(), value);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown attribute: " + attribute);
         }

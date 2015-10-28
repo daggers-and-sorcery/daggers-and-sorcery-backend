@@ -5,5 +5,13 @@
     <item:id>9</item:id>
     <item:name>Bronze Axe</item:name>
     <item:type>ONE_HANDED_AXES</item:type>
+    <item:equipment>true</item:equipment>
+    <item:combat-modifiers>
+        <item:modifier>
+            <item:attribute>ATTACK</item:attribute>
+            <item:amount>5</item:amount>
+            <item:d6>3</item:d6>
+        </item:modifier>
+    </item:combat-modifiers>
     <item:weight>120</item:weight>
 </item:item>

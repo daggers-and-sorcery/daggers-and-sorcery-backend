@@ -9,6 +9,7 @@ import com.morethanheroic.swords.item.service.loader.domain.RawBasicAttributeMod
 import com.morethanheroic.swords.item.service.loader.domain.RawCombatAttributeModifierDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawGeneralAttributeModifierDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawSkillAttributeModifierDefinition;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -18,11 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class ItemDefinitionModifierListTransformer {
 
-    private final AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade;
-
-    public ItemDefinitionModifierListTransformer(AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade) {
-        this.attributeModifierDefinitionTransformerFacade = attributeModifierDefinitionTransformerFacade;
-    }
+    @Autowired
+    private AttributeModifierDefinitionTransformerFacade attributeModifierDefinitionTransformerFacade;
 
     public List<BasicAttributeModifierDefinition> transformBasicModifier(List<RawBasicAttributeModifierDefinition> rawAttributeModifierDefinitionList) {
         if (rawAttributeModifierDefinitionList == null) {

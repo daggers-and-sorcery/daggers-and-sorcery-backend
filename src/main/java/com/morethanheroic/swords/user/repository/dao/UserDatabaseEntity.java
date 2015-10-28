@@ -1,11 +1,8 @@
 package com.morethanheroic.swords.user.repository.dao;
 
-import com.morethanheroic.swords.attribute.enums.Attribute;
-import com.morethanheroic.swords.attribute.model.AttributeModifierData;
 import com.morethanheroic.swords.race.model.Race;
 
 import java.util.Date;
-import java.util.HashMap;
 
 public class UserDatabaseEntity {
 
@@ -14,8 +11,8 @@ public class UserDatabaseEntity {
     private String username;
     private String password;
     private Race race;
-    private Date registration_date;
-    private Date last_login_date;
+    private Date registrationDate;
+    private Date lastLoginDate;
     private Date lastRegenerationDate;
     private int map;
     private int x;
@@ -23,9 +20,7 @@ public class UserDatabaseEntity {
     private int health;
     private int mana;
     private int movement;
-
-    //TODO: Transient for now! fix em
-    private HashMap<Attribute, AttributeModifierData> attributeModifierMap = new HashMap<>();
+    private int scavengingPoint;
 
     public UserDatabaseEntity() {
     }
@@ -67,32 +62,24 @@ public class UserDatabaseEntity {
         this.race = race;
     }
 
-    public void setAttributeModifier(Attribute attribute, AttributeModifierData attributeModifierData) {
-        attributeModifierMap.put(attribute, attributeModifierData);
-    }
-
-    public AttributeModifierData getAttributeModifier(Attribute attribute) {
-        return attributeModifierMap.get(attribute);
-    }
-
     public String toString() {
         return "[id: " + getId() + " name: " + username + "]";
     }
 
     public Date getRegistrationDate() {
-        return registration_date;
+        return registrationDate;
     }
 
     public void setRegistrationDate(Date registrationDate) {
-        this.registration_date = registrationDate;
+        this.registrationDate = registrationDate;
     }
 
     public Date getLastLoginDate() {
-        return last_login_date;
+        return lastLoginDate;
     }
 
     public void setLastLoginDate(Date lastLoginDate) {
-        this.last_login_date = lastLoginDate;
+        this.lastLoginDate = lastLoginDate;
     }
 
     public int getMap() {
@@ -153,5 +140,9 @@ public class UserDatabaseEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getScaveningPoint() {
+        return scavengingPoint;
     }
 }

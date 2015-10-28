@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.attribute.view.response;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.domain.Attribute;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class AttributeRequirementResponseEntry {

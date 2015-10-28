@@ -153,7 +153,7 @@ html, body, .container {
 
 /** News **/
 .news-title {
-    font-size: 16 px;
+    font-size: 16px;
     font-weight: 700;
     margin: 0;
 }
@@ -422,4 +422,25 @@ button {
 
 .journal-header {
     margin: 0 0 10px;
+}
+
+/** Scavenging converter **/
+.scavenging-converter .rz-bubble {
+    display: none;
+}
+
+.scavenging-converter rzslider {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.scavenging-converter rzslider span.rz-pointer {
+    width: 16px;
+    height: 16px;
+    top: -7px;
+}
+
+.scavenging-converter rzslider span.rz-pointer:after {
+    top: 4px;
+    left: 4px;
 }

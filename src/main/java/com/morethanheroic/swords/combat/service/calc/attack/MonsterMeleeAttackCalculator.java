@@ -2,6 +2,7 @@ package com.morethanheroic.swords.combat.service.calc.attack;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.service.DiceUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
@@ -18,18 +19,18 @@ public class MonsterMeleeAttackCalculator implements AttackCalculator {
     private final CombatMessageBuilder combatMessageBuilder;
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final CombatUtil combatUtil;
-    private final RandomCombatCalculator randomCombatCalculator;
+    private final DiceUtil diceUtil;
 
     @Autowired
-    public MonsterMeleeAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator, CombatUtil combatUtil, RandomCombatCalculator randomCombatCalculator) {
+    public MonsterMeleeAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator, CombatUtil combatUtil, DiceUtil diceUtil) {
         this.combatMessageBuilder = combatMessageBuilder;
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.combatUtil = combatUtil;
-        this.randomCombatCalculator = randomCombatCalculator;
+        this.diceUtil = diceUtil;
     }
 
     public void calculateAttack(CombatResult result, Combat combat) {
-        if (randomCombatCalculator.calculateWithRandomResult(combat.getMonsterCombatEntity().getMonsterDefinition().getAttack()) > globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.DEFENSE)) {
+        if (diceUtil.rollValueFromDiceAttribute(combat.getMonsterCombatEntity().getMonsterDefinition().getAttack()) > globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.DEFENSE).getValue()) {
             dealDamage(result, combat);
 
             if (combat.getUserCombatEntity().getActualHealth() <= 0) {
@@ -42,7 +43,7 @@ public class MonsterMeleeAttackCalculator implements AttackCalculator {
     }
 
     private void dealDamage(CombatResult result, Combat combat) {
-        int damage = randomCombatCalculator.calculateWithRandomResult(combat.getMonsterCombatEntity().getMonsterDefinition().getDamage());
+        int damage = diceUtil.rollValueFromDiceAttribute(combat.getMonsterCombatEntity().getMonsterDefinition().getDamage());
 
         addDefenseXp(result, combat, damage * 2);
 

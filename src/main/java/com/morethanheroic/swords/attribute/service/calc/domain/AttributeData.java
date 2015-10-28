@@ -1,30 +1,33 @@
-package com.morethanheroic.swords.attribute.model;
+package com.morethanheroic.swords.attribute.service.calc.domain;
 
-import com.morethanheroic.swords.attribute.enums.Attribute;
+import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
+
+import java.util.List;
 
 public class AttributeData {
 
-    private final int actual;
+    private final AttributeCalculationResult actual;
     private final int maximum;
-    private final AttributeModifierData[] modifierDataArray;
+    private final List<AttributeModifierEntry> modifierDataArray;
     private final Attribute attribute;
 
-    public AttributeData(Attribute attribute, int actual, int maximum, AttributeModifierData[] attributeModifierDataArray) {
+    public AttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, List<AttributeModifierEntry> attributeModifierEntryArray) {
         this.attribute = attribute;
         this.actual = actual;
         this.maximum = maximum;
-        this.modifierDataArray = attributeModifierDataArray;
+        this.modifierDataArray = attributeModifierEntryArray;
     }
 
     public int getMaximum() {
         return maximum;
     }
 
-    public int getActual() {
+    public AttributeCalculationResult getActual() {
         return actual;
     }
 
-    public AttributeModifierData[] getModifierDataArray() {
+    public List<AttributeModifierEntry> getModifierDataArray() {
         return modifierDataArray;
     }
 
@@ -36,8 +39,8 @@ public class AttributeData {
 
         protected Attribute attribute;
         protected int maximum;
-        protected int actual;
-        protected AttributeModifierData[] attributeModifierArray;
+        protected AttributeCalculationResult actual;
+        protected List<AttributeModifierEntry> attributeModifierArray;
 
         public AttributeDataBuilder(Attribute attribute) {
             this.attribute = attribute;
@@ -47,11 +50,11 @@ public class AttributeData {
             this.maximum = maximum;
         }
 
-        public void setActual(int actual) {
+        public void setActual(AttributeCalculationResult actual) {
             this.actual = actual;
         }
 
-        public void setAttributeModifierDataArray(AttributeModifierData[] attributeModifierArray) {
+        public void setAttributeModifierData(List<AttributeModifierEntry> attributeModifierArray) {
             this.attributeModifierArray = attributeModifierArray;
         }
 

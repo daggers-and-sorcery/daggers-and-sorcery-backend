@@ -27,9 +27,9 @@ public class ResponseFactory {
         }
 
         return new CharacterData(
-                globalAttributeCalculator.calculateActualValue(user, BasicAttribute.MOVEMENT),
-                globalAttributeCalculator.calculateActualValue(user, CombatAttribute.LIFE),
-                globalAttributeCalculator.calculateActualValue(user, CombatAttribute.MANA)
+                globalAttributeCalculator.calculateActualValue(user, BasicAttribute.MOVEMENT).getValue(),
+                globalAttributeCalculator.calculateActualValue(user, CombatAttribute.LIFE).getValue(),
+                globalAttributeCalculator.calculateActualValue(user, CombatAttribute.MANA).getValue()
         );
     }
 }

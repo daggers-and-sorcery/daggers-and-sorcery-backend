@@ -3,7 +3,7 @@
 module.exports = {
     name: 'character',
     url: '/character/',
-    templateUrl: '/partial/main/character.html',
+    template: require('partial/main/character.html'),
     resolve: {
         characterData: function ($http, characterDataFormatter) {
             return $http.get('/character/info').then(function(response) {

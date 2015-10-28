@@ -68,7 +68,7 @@ public class MovementManager {
             return false;
         }
 
-        if (globalAttributeCalculator.calculateActualValue(user, BasicAttribute.MOVEMENT) <= 0) {
+        if (globalAttributeCalculator.calculateActualValue(user, BasicAttribute.MOVEMENT).getValue() <= 0) {
             return false;
         }
 
