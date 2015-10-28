@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.item.service;
 
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
@@ -16,6 +17,9 @@ public class UseItemService {
     private final CombatEffectApplierService combatEffectApplierService;
     private final InventoryManager inventoryManager;
     private final UserMapper userMapper;
+
+    @Autowired
+    private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
     public UseItemService(CombatEffectApplierService combatEffectApplierService, InventoryManager inventoryManager, UserMapper userMapper) {
@@ -45,7 +49,7 @@ public class UseItemService {
     }
 
     private void applyItem(UserEntity userEntity, ItemDefinition item) {
-        UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity);
+        UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
 
         combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects());
 

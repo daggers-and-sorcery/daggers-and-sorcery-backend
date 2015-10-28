@@ -7,6 +7,8 @@ import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculatorService
 import com.morethanheroic.swords.combat.service.calc.CombatEntity;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculatorFactory;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
+import com.morethanheroic.swords.combat.service.calc.attack.GeneralMeeleAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.attack.GeneralRangedAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
 import com.morethanheroic.swords.combatsettings.service.executor.CombatSettingsExecutor;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
@@ -26,6 +28,12 @@ public class SimpleTurnCalculator implements TurnCalculator {
     private final CombatMessageBuilder combatMessageBuilder;
 
     @Autowired
+    private GeneralMeeleAttackCalculator generalMeeleAttackCalculator;
+
+    @Autowired
+    private GeneralRangedAttackCalculator generalRangedAttackCalculator;
+
+    @Autowired
     public SimpleTurnCalculator(CombatSettingsExecutor combatSettingsExecutor, AttackCalculatorFactory attackCalculatorFactory, AttackTypeCalculatorService attackTypeCalculatorService, EquipmentManager equipmentManager, InitialisationCalculator initialisationCalculator, CombatMessageBuilder combatMessageBuilder) {
         this.combatSettingsExecutor = combatSettingsExecutor;
         this.attackCalculatorFactory = attackCalculatorFactory;
@@ -42,16 +50,32 @@ public class SimpleTurnCalculator implements TurnCalculator {
         combatSettingsExecutor.executeCombatSettings(result, combat);
 
         if (initialisationCalculator.calculateInitialisation(combat) == CombatEntity.MONSTER) {
-            //Monster attack first
-            attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterCombatEntity().getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
+            if(combat.getMonsterCombatEntity().getMonsterDefinition().getAttackType() == AttackType.MELEE) {
+                generalMeeleAttackCalculator.calculateAttack(combat.getMonsterCombatEntity(), combat.getUserCombatEntity(), result);
+            } else {
+                generalRangedAttackCalculator.calculateAttack(combat.getMonsterCombatEntity(), combat.getUserCombatEntity(), result);
+            }
+
             if (combat.getUserCombatEntity().getActualHealth() > 0) {
-                attackCalculatorFactory.getAttackCalculator(CombatEntity.HUMAN, calculateUserAttackType(combat.getUserCombatEntity().getUserEntity())).calculateAttack(result, combat);
+                if(calculateUserAttackType(combat.getUserCombatEntity().getUserEntity()) == AttackType.MELEE) {
+                    generalMeeleAttackCalculator.calculateAttack(combat.getUserCombatEntity(), combat.getMonsterCombatEntity(), result);
+                } else {
+                    generalRangedAttackCalculator.calculateAttack(combat.getUserCombatEntity(), combat.getMonsterCombatEntity(), result);
+                }
             }
         } else {
-            //Player attack first
-            attackCalculatorFactory.getAttackCalculator(CombatEntity.HUMAN, calculateUserAttackType(combat.getUserCombatEntity().getUserEntity())).calculateAttack(result, combat);
+            if(calculateUserAttackType(combat.getUserCombatEntity().getUserEntity()) == AttackType.MELEE) {
+                generalMeeleAttackCalculator.calculateAttack(combat.getUserCombatEntity(), combat.getMonsterCombatEntity(), result);
+            } else {
+                generalRangedAttackCalculator.calculateAttack(combat.getUserCombatEntity(), combat.getMonsterCombatEntity(), result);
+            }
+
             if (combat.getMonsterCombatEntity().getActualHealth() > 0) {
-                attackCalculatorFactory.getAttackCalculator(CombatEntity.MONSTER, combat.getMonsterCombatEntity().getMonsterDefinition().getAttackType()).calculateAttack(result, combat);
+                if(combat.getMonsterCombatEntity().getMonsterDefinition().getAttackType() == AttackType.MELEE) {
+                    generalMeeleAttackCalculator.calculateAttack(combat.getMonsterCombatEntity(), combat.getUserCombatEntity(), result);
+                } else {
+                    generalRangedAttackCalculator.calculateAttack(combat.getMonsterCombatEntity(), combat.getUserCombatEntity(), result);
+                }
             }
         }
 

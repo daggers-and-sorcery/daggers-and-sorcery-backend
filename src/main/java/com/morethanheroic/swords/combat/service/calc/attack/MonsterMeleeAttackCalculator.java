@@ -9,25 +9,23 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatUtil;
-import com.morethanheroic.swords.combat.service.calc.RandomCombatCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MonsterMeleeAttackCalculator implements AttackCalculator {
 
-    private final CombatMessageBuilder combatMessageBuilder;
-    private final GlobalAttributeCalculator globalAttributeCalculator;
-    private final CombatUtil combatUtil;
-    private final DiceUtil diceUtil;
+    @Autowired
+    private CombatMessageBuilder combatMessageBuilder;
 
     @Autowired
-    public MonsterMeleeAttackCalculator(CombatMessageBuilder combatMessageBuilder, GlobalAttributeCalculator globalAttributeCalculator, CombatUtil combatUtil, DiceUtil diceUtil) {
-        this.combatMessageBuilder = combatMessageBuilder;
-        this.globalAttributeCalculator = globalAttributeCalculator;
-        this.combatUtil = combatUtil;
-        this.diceUtil = diceUtil;
-    }
+    private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private CombatUtil combatUtil;
+
+    @Autowired
+    private DiceUtil diceUtil;
 
     public void calculateAttack(CombatResult result, Combat combat) {
         if (diceUtil.rollValueFromDiceAttribute(combat.getMonsterCombatEntity().getMonsterDefinition().getAttack()) > globalAttributeCalculator.calculateActualValue(combat.getUserCombatEntity().getUserEntity(), CombatAttribute.DEFENSE).getValue()) {
@@ -59,7 +57,7 @@ public class MonsterMeleeAttackCalculator implements AttackCalculator {
     }
 
     private void addDefenseXp(CombatResult result, Combat combat, int amount) {
-        if(combatUtil.getUserArmorType(combat.getUserCombatEntity().getUserEntity()) != null) {
+        if (combatUtil.getUserArmorType(combat.getUserCombatEntity().getUserEntity()) != null) {
             result.addRewardXp(combatUtil.getUserArmorSkillType(combat.getUserCombatEntity().getUserEntity()), amount);
         } else {
             result.addRewardXp(SkillAttribute.ARMORLESS_DEFENSE, amount);

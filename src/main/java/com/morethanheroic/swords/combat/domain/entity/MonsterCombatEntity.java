@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.domain.entity;
 
+import com.morethanheroic.swords.combat.domain.DiceAttribute;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 
 public class MonsterCombatEntity extends CombatEntity {
@@ -18,5 +19,39 @@ public class MonsterCombatEntity extends CombatEntity {
 
     public MonsterDefinition getMonsterDefinition() {
         return monsterDefinition;
+    }
+
+    @Override
+    public DiceAttribute getAttack() {
+        return monsterDefinition.getAttack();
+    }
+
+    @Override
+    public DiceAttribute getDefense() {
+        DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
+
+        diceAttributeBuilder.setValue(monsterDefinition.getDefense());
+
+        return diceAttributeBuilder.build();
+    }
+
+    @Override
+    public DiceAttribute getDamage() {
+        return monsterDefinition.getDamage();
+    }
+
+    @Override
+    public DiceAttribute getRangedDamage() {
+        return monsterDefinition.getRangedDamage();
+    }
+
+    @Override
+    public DiceAttribute getAiming() {
+        return monsterDefinition.getAiming();
+    }
+
+    @Override
+    public String getName() {
+        return monsterDefinition.getName();
     }
 }
