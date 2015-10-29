@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GeneralRangedAttackCalculator {
+public class MeleeAttackCalculator implements AttackCalculator {
 
     @Autowired
     private DiceUtil diceUtil;
@@ -25,7 +25,7 @@ public class GeneralRangedAttackCalculator {
     private CombatUtil combatUtil;
 
     public void calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        if (diceUtil.rollValueFromDiceAttribute(attacker.getAiming()) > opponent.getDefense().getValue()) {
+        if (diceUtil.rollValueFromDiceAttribute(attacker.getAttack()) > opponent.getDefense().getValue()) {
             dealDamage(attacker, opponent, result);
 
             if (opponent.getActualHealth() <= 0) {
@@ -36,19 +36,29 @@ public class GeneralRangedAttackCalculator {
         }
     }
 
+    private void handleDeath(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
+        if (attacker instanceof MonsterCombatEntity) {
+            result.addMessage(combatMessageBuilder.buildPlayerKilledMessage(attacker.getName()));
+            result.setWinner(Winner.MONSTER);
+        } else {
+            result.addMessage(combatMessageBuilder.buildMonsterKilledMessage(opponent.getName()));
+            result.setWinner(Winner.PLAYER);
+        }
+    }
+
     private void dealDamage(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        int damage = diceUtil.rollValueFromDiceAttribute(attacker.getRangedDamage());
+        int damage = diceUtil.rollValueFromDiceAttribute(attacker.getDamage());
 
         opponent.decreaseActualHealth(damage);
 
         if (attacker instanceof MonsterCombatEntity) {
             addDefenseXp(result, (UserCombatEntity) opponent, damage * 2);
 
-            result.addMessage(combatMessageBuilder.buildRangedDamageToPlayerMessage(attacker.getName(), damage));
+            result.addMessage(combatMessageBuilder.buildDamageToPlayerMessage(attacker.getName(), damage));
         } else {
             addAttackXp(result, (UserCombatEntity) attacker, damage * 2);
 
-            result.addMessage(combatMessageBuilder.buildRangedDamageToMonsterMessage(opponent.getName(), damage));
+            result.addMessage(combatMessageBuilder.buildDamageToMonsterMessage(opponent.getName(), damage));
         }
     }
 
@@ -68,23 +78,13 @@ public class GeneralRangedAttackCalculator {
         }
     }
 
-    private void handleDeath(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        if (attacker instanceof MonsterCombatEntity) {
-            result.addMessage(combatMessageBuilder.buildPlayerKilledMessage(attacker.getName()));
-            result.setWinner(Winner.MONSTER);
-        } else {
-            result.addMessage(combatMessageBuilder.buildMonsterKilledMessage(opponent.getName()));
-            result.setWinner(Winner.PLAYER);
-        }
-    }
-
     private void dealMiss(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
         if (attacker instanceof MonsterCombatEntity) {
             addDefenseXp(result, (UserCombatEntity) opponent, combatUtil.getUserArmorSkillLevel(((UserCombatEntity) opponent).getUserEntity()));
 
-            result.addMessage(combatMessageBuilder.buildMonsterRangedMissMessage(attacker.getName()));
+            result.addMessage(combatMessageBuilder.buildMonsterMissMessage(attacker.getName()));
         } else {
-            result.addMessage(combatMessageBuilder.buildPlayerRangedMissMessage(opponent.getName()));
+            result.addMessage(combatMessageBuilder.buildPlayerMissMessage(opponent.getName()));
         }
     }
 }
