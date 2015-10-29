@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.combat.domain.entity;
 
+import com.morethanheroic.swords.combat.domain.DiceAttribute;
+
 public abstract class CombatEntity {
 
     private int maximumHealth;
@@ -70,4 +72,16 @@ public abstract class CombatEntity {
     public void setActualMana(int actualMana) {
         this.actualMana = actualMana;
     }
+
+    public abstract DiceAttribute getAttack();
+
+    public abstract DiceAttribute getDefense();
+
+    public abstract DiceAttribute getDamage();
+
+    public abstract DiceAttribute getRangedDamage();
+
+    public abstract DiceAttribute getAiming();
+
+    public abstract String getName();
 }

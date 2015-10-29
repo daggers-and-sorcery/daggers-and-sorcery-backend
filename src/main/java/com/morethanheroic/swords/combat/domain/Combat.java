@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.domain;
 
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -12,8 +13,8 @@ public class Combat {
 
     private int turn = 0;
 
-    public Combat(UserEntity userEntity, MonsterDefinition monsterDefinition) {
-        this.userCombatEntity = new UserCombatEntity(userEntity);
+    public Combat(UserEntity userEntity, MonsterDefinition monsterDefinition, GlobalAttributeCalculator globalAttributeCalculator) {
+        this.userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
         this.monsterCombatEntity = new MonsterCombatEntity(monsterDefinition);
     }
 

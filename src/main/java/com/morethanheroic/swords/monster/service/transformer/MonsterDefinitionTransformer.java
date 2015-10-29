@@ -2,8 +2,10 @@ package com.morethanheroic.swords.monster.service.transformer;
 
 import com.morethanheroic.swords.monster.domain.DropDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.domain.ScavengeDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawDropDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
+import com.morethanheroic.swords.monster.service.loader.domain.RawScavengeDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,9 @@ public class MonsterDefinitionTransformer {
 
     private final DiceAttributeTransformer diceAttributeTransformer;
     private final DropDefinitionTransformer dropDefinitionTransformer;
+
+    @Autowired
+    private ScavengeDefinitionTransformer scavengeDefinitionTransformer;
 
     @Autowired
     public MonsterDefinitionTransformer(DiceAttributeTransformer diceAttributeTransformer, DropDefinitionTransformer dropDefinitionTransformer) {
@@ -41,11 +46,16 @@ public class MonsterDefinitionTransformer {
         monsterDefinitionBuilder.setLevel(rawMonsterDefinition.getLevel());
 
         monsterDefinitionBuilder.setDropDefinitions(transformDropDefinitions(rawMonsterDefinition.getDropDefinitions()));
+        monsterDefinitionBuilder.setScavengeDefinitions(transformScavengingDefinitions(rawMonsterDefinition.getScavengeDefinitions()));
 
         return monsterDefinitionBuilder.build();
     }
 
     private List<DropDefinition> transformDropDefinitions(List<RawDropDefinition> rawDropDefinitions) {
         return rawDropDefinitions.stream().map(dropDefinitionTransformer::transform).collect(Collectors.toList());
+    }
+
+    private List<ScavengeDefinition> transformScavengingDefinitions(List<RawScavengeDefinition> rawDropDefinitions) {
+        return rawDropDefinitions.stream().map(scavengeDefinitionTransformer::transform).collect(Collectors.toList());
     }
 }

@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
-import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 
 public interface AttackCalculator {
 
-    void calculateAttack(CombatResult result, Combat combat);
+    void calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatResult result);
 }

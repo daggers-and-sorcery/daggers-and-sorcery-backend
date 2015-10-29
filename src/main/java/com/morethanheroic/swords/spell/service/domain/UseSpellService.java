@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.spell.service.domain;
 
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
@@ -18,6 +19,9 @@ public class UseSpellService {
     private final CombatEffectApplierService combatEffectApplierService;
     private final InventoryManager inventoryManager;
     private final UserMapper userMapper;
+
+    @Autowired
+    private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
     public UseSpellService(CombatEffectApplierService combatEffectApplierService, InventoryManager inventoryManager, UserMapper userMapper) {
@@ -79,7 +83,7 @@ public class UseSpellService {
     }
 
     private void applySpell(UserEntity userEntity, SpellDefinition spell) {
-        UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity);
+        UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
 
         combatEffectApplierService.applyEffects(userCombatEntity, spell.getCombatEffects());
 
