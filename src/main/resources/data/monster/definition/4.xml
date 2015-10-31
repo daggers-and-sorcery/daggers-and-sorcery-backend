@@ -8,7 +8,7 @@
     <monster:health>8</monster:health>
     <monster:mana>0</monster:mana>
     <monster:initiation>
-        <monster:value>28</monster:value>
+        <monster:value>22</monster:value>
     </monster:initiation>
     <monster:level>3</monster:level>
     <monster:defense>22</monster:defense>
@@ -19,10 +19,10 @@
         <monster:value>0</monster:value>
     </monster:attack>
     <monster:aiming>
-        <monster:value>28</monster:value>
+        <monster:value>0</monster:value>
     </monster:aiming>
     <monster:ranged-damage>
-        <monster:value>4</monster:value>
+        <monster:value>0</monster:value>
     </monster:ranged-damage>
     <monster:attack-type>RANGED</monster:attack-type>
 </monster:monster>

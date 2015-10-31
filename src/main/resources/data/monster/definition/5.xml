@@ -3,20 +3,21 @@
 <monster:monster xmlns:monster="http://www.swordsandsorcery.com/monster"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://www.swordsandsorcery.com/monster ../schema.xsd">
-    <monster:id>2</monster:id>
+    <monster:id>5</monster:id>
     <monster:name>Goblin Chieftain</monster:name>
     <monster:health>18</monster:health>
     <monster:mana>0</monster:mana>
     <monster:initiation>
-        <monster:value>28</monster:value>
+        <monster:value>22</monster:value>
     </monster:initiation>
     <monster:level>5</monster:level>
-    <monster:defense>30</monster:defense>
+    <monster:defense>26</monster:defense>
     <monster:damage>
-        <monster:value>4</monster:value>
+        <monster:value>2</monster:value>
+        <monster:d6>1</monster:d6>
     </monster:damage>
     <monster:attack>
-        <monster:value>28</monster:value>
+        <monster:value>23</monster:value>
     </monster:attack>
     <monster:aiming>
         <monster:value>0</monster:value>

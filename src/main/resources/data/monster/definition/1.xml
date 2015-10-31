@@ -12,9 +12,9 @@
         <monster:d10>1</monster:d10>
     </monster:initiation>
     <monster:level>1</monster:level>
-    <monster:defense>0</monster:defense>
+    <monster:defense>22</monster:defense>
     <monster:damage>
-        <monster:value>3</monster:value>
+        <monster:value>0</monster:value>
         <monster:d4>1</monster:d4>
     </monster:damage>
     <monster:attack>
@@ -95,11 +95,4 @@
             <monster:chance>0.5</monster:chance>
         </monster:drop>
     </monster:droplist>
-    <monster:scavengelist>
-        <monster:drop>
-            <monster:item>13</monster:item>
-            <monster:amount>1</monster:amount>
-            <monster:chance>0.5</monster:chance>
-        </monster:drop>
-    </monster:scavengelist>
 </monster:monster>

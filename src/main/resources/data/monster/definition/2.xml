@@ -8,15 +8,17 @@
     <monster:health>12</monster:health>
     <monster:mana>0</monster:mana>
     <monster:initiation>
-        <monster:value>22</monster:value>
+        <monster:value>20</monster:value>
     </monster:initiation>
     <monster:level>2</monster:level>
-    <monster:defense>28</monster:defense>
+    <monster:defense>23</monster:defense>
     <monster:damage>
-        <monster:value>2</monster:value>
+        <monster:value>1</monster:value>
+        <monster:d4>1</monster:d4>
     </monster:damage>
     <monster:attack>
-        <monster:value>24</monster:value>
+        <monster:value>21</monster:value>
+        <monster:d10>1</monster:d10>
     </monster:attack>
     <monster:aiming>
         <monster:value>0</monster:value>

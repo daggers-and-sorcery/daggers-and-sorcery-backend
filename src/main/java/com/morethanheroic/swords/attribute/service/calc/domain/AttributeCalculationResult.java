@@ -1,7 +1,10 @@
 package com.morethanheroic.swords.attribute.service.calc.domain;
 
+import com.morethanheroic.swords.attribute.domain.Attribute;
+
 public class AttributeCalculationResult {
 
+    private Attribute attribute;
     private int value = 0;
     private int d2 = 0;
     private int d4 = 0;
@@ -9,11 +12,13 @@ public class AttributeCalculationResult {
     private int d8 = 0;
     private int d10 = 0;
 
-    public AttributeCalculationResult() {
+    public AttributeCalculationResult(Attribute attribute) {
+        this(0, attribute);
     }
 
-    public AttributeCalculationResult(int value) {
+    public AttributeCalculationResult(int value, Attribute attribute) {
         this.value = value;
+        this.attribute = attribute;
     }
 
     public int getValue() {
@@ -95,5 +100,9 @@ public class AttributeCalculationResult {
         this.d6 += attributeCalculationResult.d6;
         this.d8 += attributeCalculationResult.d8;
         this.d10 += attributeCalculationResult.d10;
+    }
+
+    public Attribute getAttribute() {
+        return attribute;
     }
 }
