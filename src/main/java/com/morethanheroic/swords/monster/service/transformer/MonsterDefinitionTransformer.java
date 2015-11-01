@@ -2,7 +2,7 @@ package com.morethanheroic.swords.monster.service.transformer;
 
 import com.morethanheroic.swords.monster.domain.DropDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
-import com.morethanheroic.swords.monster.domain.ScavengeDefinition;
+import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawDropDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawScavengeDefinition;
@@ -55,7 +55,7 @@ public class MonsterDefinitionTransformer {
         return rawDropDefinitions.stream().map(dropDefinitionTransformer::transform).collect(Collectors.toList());
     }
 
-    private List<ScavengeDefinition> transformScavengingDefinitions(List<RawScavengeDefinition> rawDropDefinitions) {
+    private List<ScavengingDefinition> transformScavengingDefinitions(List<RawScavengeDefinition> rawDropDefinitions) {
         return rawDropDefinitions.stream().map(scavengeDefinitionTransformer::transform).collect(Collectors.toList());
     }
 }

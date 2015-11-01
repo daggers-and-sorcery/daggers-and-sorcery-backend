@@ -4,7 +4,7 @@ import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.ScavengingEntity;
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
-import com.morethanheroic.swords.monster.domain.ScavengeDefinition;
+import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,9 @@ public class ScavengingCalculator {
 
         int scavengingLevel = skillManager.getSkills(user).getSkillLevel(SkillAttribute.SCAVENGING);
 
-        for (ScavengeDefinition scavenge : monster.getScavengeDefinitions()) {
-            if (100 * random.nextDouble() < calculateScavengingChance(scavenge.getChance(), monster.getLevel(), scavengingLevel)) {
-                result.add(new ScavengingEntity(scavenge.getItem(), scavenge.getAmount()));
+        for (ScavengingDefinition scavengingDefinition : monster.getScavengingDefinitions()) {
+            if (100 * random.nextDouble() < calculateScavengingChance(scavengingDefinition.getChance(), monster.getLevel(), scavengingLevel)) {
+                result.add(new ScavengingEntity(scavengingDefinition.getItem(), scavengingDefinition.getAmount()));
             }
         }
 
