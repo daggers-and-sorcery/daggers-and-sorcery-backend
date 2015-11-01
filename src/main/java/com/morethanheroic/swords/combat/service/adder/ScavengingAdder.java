@@ -1,19 +1,22 @@
 package com.morethanheroic.swords.combat.service.adder;
 
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.CombatResult;
-import com.morethanheroic.swords.combat.domain.Scavenge;
+import com.morethanheroic.swords.combat.domain.ScavengingEntity;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengingCalculator;
+import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
 import com.morethanheroic.swords.combatsettings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ScavengingAdder {
@@ -33,20 +36,47 @@ public class ScavengingAdder {
     @Autowired
     private InventoryManager inventoryManager;
 
-    public void addScavengingDropsToUserFromMonsterDefinition(CombatResult result, UserEntity user, MonsterDefinition monster) {
-        if (settingsMapper.getSettings(user.getId()).isScavengingEnabled() && user.getScavengingPoint() > 0) {
-            user.setScavengingPoint(user.getScavengingPoint() - 1);
+    @Autowired
+    private SkillManager skillManager;
 
-            InventoryEntity inventory = inventoryManager.getInventory(user);
+    public void addScavengingResultsToUserFromMonsterDefinition(CombatResult result, UserEntity user, MonsterDefinition monster) {
+        if (shouldScavenge(user)) {
+            ScavengingResult scavengingResult =  scavengingCalculator.calculateScavenge(user, monster);
 
-            //Add scavenge
-            ArrayList<Scavenge> scavengedItems = scavengingCalculator.calculateScavenge(monster);
+            awardScavengingDrops(result, user, scavengingResult.getScavengingResultList());
+            awardScavengingXp(user, monster, scavengingResult.isSuccessfullScavenge());
 
-            for (Scavenge scavenge : scavengedItems) {
-                result.addMessage(combatMessageBuilder.buildScavengeMessage(itemDefinitionManager.getItemDefinition(scavenge.getItem()).getName(), scavenge.getAmount()));
-
-                inventory.addItem(scavenge.getItem(), scavenge.getAmount());
-            }
+            decreaseUserScavengingPoints(user);
         }
+    }
+
+    public boolean shouldScavenge(UserEntity user) {
+        return settingsMapper.getSettings(user.getId()).isScavengingEnabled() && user.getScavengingPoint() > 0;
+    }
+
+    private void awardScavengingDrops(CombatResult combatResult, UserEntity user, List<ScavengingEntity> scavengingResultList) {
+        InventoryEntity inventory = inventoryManager.getInventory(user);
+
+        for (ScavengingEntity scavengingEntity : scavengingResultList) {
+            combatResult.addMessage(combatMessageBuilder.buildScavengeMessage(itemDefinitionManager.getItemDefinition(scavengingEntity.getItem()).getName(), scavengingEntity.getAmount()));
+
+            inventory.addItem(scavengingEntity.getItem(), scavengingEntity.getAmount());
+        }
+    }
+
+    private void awardScavengingXp(UserEntity user, MonsterDefinition monster, boolean successfulScavenging) {
+        skillManager.getSkills(user).addSkillXp(SkillAttribute.SCAVENGING, calculateScavengingXp(monster, successfulScavenging));
+    }
+
+    private int calculateScavengingXp(MonsterDefinition monster, boolean successfulScavenging) {
+        if (successfulScavenging) {
+            return monster.getLevel() * 5;
+        } else {
+            return monster.getLevel();
+        }
+    }
+
+    private void decreaseUserScavengingPoints(UserEntity user) {
+        user.setScavengingPoint(user.getScavengingPoint() - 1);
     }
 }

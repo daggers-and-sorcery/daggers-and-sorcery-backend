@@ -1,11 +1,11 @@
 package com.morethanheroic.swords.combat.domain;
 
-public class Scavenge {
+public class ScavengingEntity {
 
     private final int item;
     private final int amount;
 
-    public Scavenge(int item, int amount) {
+    public ScavengingEntity(int item, int amount) {
         this.item = item;
         this.amount = amount;
     }

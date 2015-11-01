@@ -78,7 +78,7 @@ public class CombatCalculator {
             MonsterDefinition monster = combat.getMonsterCombatEntity().getMonsterDefinition();
 
             dropAdder.addDropsToUserFromMonsterDefinition(result, user, monster);
-            scavengingAdder.addScavengingDropsToUserFromMonsterDefinition(result, user, monster);
+            scavengingAdder.addScavengingResultsToUserFromMonsterDefinition(result, user, monster);
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
 

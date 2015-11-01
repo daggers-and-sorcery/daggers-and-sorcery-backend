@@ -1,9 +1,12 @@
 package com.morethanheroic.swords.combat.service.calc.scavenge;
 
-import com.morethanheroic.swords.combat.domain.Drop;
-import com.morethanheroic.swords.combat.domain.Scavenge;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.combat.domain.ScavengingEntity;
+import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengeDefinition;
+import com.morethanheroic.swords.skill.service.SkillManager;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +19,31 @@ public class ScavengingCalculator {
     @Autowired
     private Random random;
 
-    public ArrayList<Scavenge> calculateScavenge(MonsterDefinition monster) {
-        ArrayList<Scavenge> result = new ArrayList<>();
+    @Autowired
+    private SkillManager skillManager;
+
+    public ScavengingResult calculateScavenge(UserEntity user, MonsterDefinition monster) {
+        ArrayList<ScavengingEntity> result = new ArrayList<>();
+
+        int scavengingLevel = skillManager.getSkills(user).getSkillLevel(SkillAttribute.SCAVENGING);
 
         for (ScavengeDefinition scavenge : monster.getScavengeDefinitions()) {
-            if (100 * random.nextDouble() < scavenge.getChance()) {
-                result.add(new Scavenge(scavenge.getItem(), scavenge.getAmount()));
+            if (100 * random.nextDouble() < calculateScavengingChance(scavenge.getChance(), monster.getLevel(), scavengingLevel)) {
+                result.add(new ScavengingEntity(scavenge.getItem(), scavenge.getAmount()));
             }
         }
 
-        return result;
+        return new ScavengingResult(result);
+    }
+
+    /**
+     * Loot chance is calculated with this formula: drop_chance - (abs(monster_level - scavenging_level) / 10)
+     *
+     * For example a lvl 10 monster has 3% chance to drop an item while scavenging, and the characters scavenging level is 5:
+     * 3 - (abs(10 - 5) / 10) = 2.5
+     * The chance for the item to drop is 2.5%.
+     */
+    private double calculateScavengingChance(double dropChance, int monsterLevel, int scavengingLevel) {
+        return dropChance - (Math.abs(monsterLevel - scavengingLevel) / 10);
     }
 }
