@@ -38,6 +38,7 @@
                             <xs:enumeration value="MATERIAL"/>
                             <xs:enumeration value="TOOL"/>
                             <xs:enumeration value="RECIPE"/>
+                            <xs:enumeration value="FRUIT"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
