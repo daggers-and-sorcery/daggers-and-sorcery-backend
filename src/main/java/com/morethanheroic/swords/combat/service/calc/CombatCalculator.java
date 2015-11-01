@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.*;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
@@ -43,6 +44,9 @@ public class CombatCalculator {
     private SettingsMapper settingsMapper;
 
     @Autowired
+    private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
     public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ScavengeCalculator scavengeCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
@@ -58,7 +62,7 @@ public class CombatCalculator {
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
         CombatResult result = new CombatResult();
-        Combat combat = new Combat(userEntity, monsterDefinition);
+        Combat combat = new Combat(userEntity, monsterDefinition, globalAttributeCalculator);
 
         startFight(result, combat);
         calculateFight(result, combat);

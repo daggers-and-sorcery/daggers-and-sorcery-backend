@@ -21,11 +21,11 @@ public class ScavengeDefinition {
         return chance;
     }
 
-    public static class  scavengeDefinitionBuilder {
+    public static class ScavengeDefinitionBuilder {
 
         private final ScavengeDefinition scavengeDefinition;
 
-        public scavengeDefinitionBuilder() {
+        public ScavengeDefinitionBuilder() {
             scavengeDefinition = new ScavengeDefinition();
         }
 
