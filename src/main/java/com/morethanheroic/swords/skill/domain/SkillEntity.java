@@ -80,6 +80,9 @@ public class SkillEntity {
             case SPECTRE:
                 skillMapper.addSpectresXp(user.getId(), value);
                 break;
+            case SCAVENGING:
+                skillMapper.addScavengingXp(user.getId(), value);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown attribute: " + attribute);
         }
@@ -130,6 +133,8 @@ public class SkillEntity {
             case WAND:
                 return skills.getWandsXp();
             case SPECTRE:
+                return skills.getSpectresXp();
+            case SCAVENGING:
                 return skills.getSpectresXp();
             default:
                 throw new IllegalArgumentException("Unknown attribute: " + attribute);

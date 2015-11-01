@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.user.service;
 
+import com.morethanheroic.swords.combatsettings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.repository.domain.SkillMapper;
@@ -18,27 +19,29 @@ public class UserManager {
     private static final int STARTING_POSITION_X = 6;
     private static final int STARTING_POSITION_Y = 9;
 
-    private final UserMapper userMapper;
-    private final SkillMapper skillMapper;
-    private final EquipmentMapper equipmentMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
-    public UserManager(UserMapper userMapper, SkillMapper skillMapper, EquipmentMapper equipmentMapper) {
-        this.userMapper = userMapper;
-        this.skillMapper = skillMapper;
-        this.equipmentMapper = equipmentMapper;
-    }
+    private SkillMapper skillMapper;
+
+    @Autowired
+    private EquipmentMapper equipmentMapper;
+
+    @Autowired
+    private SettingsMapper settingsMapper;
 
     public UserEntity getUser(int id) {
         return new UserEntity(userMapper.findById(id), userMapper);
     }
 
     public void saveNewUser(String username, String password, String email, Race race) {
-            UserDatabaseEntity user = createNewUserEntity(username, password, email, race);
+        UserDatabaseEntity user = createNewUserEntity(username, password, email, race);
 
-            userMapper.insert(user);
-            skillMapper.insert(user.getId());
-            equipmentMapper.insert(user.getId());
+        userMapper.insert(user);
+        skillMapper.insert(user.getId());
+        equipmentMapper.insert(user.getId());
+        settingsMapper.insert(user.getId());
     }
 
     @Transactional

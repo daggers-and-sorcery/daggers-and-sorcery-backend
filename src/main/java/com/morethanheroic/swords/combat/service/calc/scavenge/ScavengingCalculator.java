@@ -4,15 +4,17 @@ import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.domain.Scavenge;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengeDefinition;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 @Service
-public class ScavengeCalculator {
+public class ScavengingCalculator {
 
-    private final Random random = new Random();
+    @Autowired
+    private Random random;
 
     public ArrayList<Scavenge> calculateScavenge(MonsterDefinition monster) {
         ArrayList<Scavenge> result = new ArrayList<>();

@@ -3,9 +3,11 @@ package com.morethanheroic.swords.combatsettings.view.controller;
 import com.morethanheroic.swords.combatsettings.model.SettingType;
 import com.morethanheroic.swords.combatsettings.repository.dao.CombatSettingsDatabaseEntity;
 import com.morethanheroic.swords.combatsettings.repository.domain.CombatSettingsMapper;
+import com.morethanheroic.swords.combatsettings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.combatsettings.service.*;
 import com.morethanheroic.swords.combatsettings.view.request.InsertCombatSettingRequest;
 import com.morethanheroic.swords.combatsettings.view.request.RemoveCombatSettingRequest;
+import com.morethanheroic.swords.combatsettings.view.request.SaveOtherSettingsRequest;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.journal.model.JournalType;
@@ -15,6 +17,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+//TODO: Refactor this, move the controllers into separate files
 @RestController
 public class CombatSettingsController {
 
@@ -27,6 +30,12 @@ public class CombatSettingsController {
     private final InsertSettingsResponseBuilder insertSettingsResponseBuilder;
     private final JournalManager journalManager;
     private final SpellDefinitionManager spellDefinitionManager;
+
+    @Autowired
+    private SaveOtherSettingsResponseBuilder saveOtherSettingsResponseBuilder;
+
+    @Autowired
+    private SettingsMapper settingsMapper;
 
     @Autowired
     public CombatSettingsController(CombatSettingsMapper combatSettingsMapper, SettingsListResponseBuilder settingsListResponseBuilder, UsableItemsResponseBuilder usableItemsResponseBuilder, UsableSpellsResponseBuilder usableSpellsResponseBuilder, SpecificMonstersResponseBuilder specificMonstersResponseBuilder, ItemDefinitionManager itemDefinitionManager, InsertSettingsResponseBuilder insertSettingsResponseBuilder, JournalManager journalManager, SpellDefinitionManager spellDefinitionManager) {
@@ -52,7 +61,7 @@ public class CombatSettingsController {
 
     @RequestMapping(value = "/combat/settings/list", method = RequestMethod.GET)
     public Response getSettings(UserEntity userEntity) {
-        return settingsListResponseBuilder.build(userEntity, combatSettingsMapper.getAll(userEntity.getId()));
+        return settingsListResponseBuilder.build(userEntity, combatSettingsMapper.getAll(userEntity.getId()), settingsMapper.getSettings(userEntity.getId()));
     }
 
     @RequestMapping(value = "/combat/settings/insert", method = RequestMethod.POST)
@@ -84,5 +93,12 @@ public class CombatSettingsController {
     @RequestMapping(value = "/combat/settings/specific_monsters", method = RequestMethod.GET)
     public Response specificMonster(UserEntity userEntity) {
         return specificMonstersResponseBuilder.build(userEntity, journalManager.getJournalEntryListByType(userEntity, JournalType.MONSTER));
+    }
+
+    @RequestMapping(value = "/combat/settings/other/save", method = RequestMethod.POST)
+    public Response saveOtherSettings(UserEntity userEntity, @RequestBody SaveOtherSettingsRequest saveOtherSettingsRequest) {
+        settingsMapper.saveScavengingEnabled(userEntity.getId(), saveOtherSettingsRequest.isScavengingEnabled());
+
+        return saveOtherSettingsResponseBuilder.build(userEntity, "Settings successfully saved!");
     }
 }
