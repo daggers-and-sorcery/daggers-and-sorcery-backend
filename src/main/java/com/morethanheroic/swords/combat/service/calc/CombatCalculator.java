@@ -38,16 +38,12 @@ public class CombatCalculator {
     private final SkillManager skillManager;
     private final JournalManager journalManager;
     private final UserMapper userMapper;
-    private final SettingsMapper settingsMapper;
-
-    private  CombatResult result;
-    private  Combat combat;
-    private  MapObjectDatabaseEntity spawn;
-    private  InventoryEntity inventory;
-
 
     @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ScavengeCalculator scavengeCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserMapper userMapper, SettingsMapper settingsMapper) {
+    private SettingsMapper settingsMapper;
+
+    @Autowired
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, DropCalculator dropCalculator, ScavengeCalculator scavengeCalculator, ItemDefinitionManager itemDefinitionManager, MapManager mapManager, InventoryManager inventoryManager, SkillManager skillManager, JournalManager journalManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
         this.dropCalculator = dropCalculator;
@@ -58,40 +54,56 @@ public class CombatCalculator {
         this.skillManager = skillManager;
         this.journalManager = journalManager;
         this.userMapper = userMapper;
-        this.settingsMapper = settingsMapper;
     }
 
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
-        this.result = new CombatResult();
-        this.combat = new Combat(userEntity, monsterDefinition);
-        this.spawn = spawn;
+        CombatResult result = new CombatResult();
+        Combat combat = new Combat(userEntity, monsterDefinition);
 
-        startFight();
-        calculateFight();
-        endFight();
+        startFight(result, combat);
+        calculateFight(result, combat);
+        endFight(result, combat, spawn);
 
         return result;
     }
 
-    private void startFight() {
+    private void startFight(CombatResult result, Combat combat) {
         journalManager.createJournalEntry(combat.getUserCombatEntity().getUserEntity(), JournalType.MONSTER, combat.getMonsterCombatEntity().getMonsterDefinition().getId());
 
         result.addMessage(combatMessageBuilder.buildFightInitialisationMessage(combat.getMonsterCombatEntity().getMonsterDefinition().getName()));
     }
 
-    private void calculateFight() {
+    private void calculateFight(CombatResult result, Combat combat) {
         while (combat.getUserCombatEntity().getActualHealth() > 0 && combat.getMonsterCombatEntity().getActualHealth() > 0) {
             turnCalculatorFactory.getTurnCalculator(combat.getTurn()).takeTurn(result, combat);
         }
     }
 
-    private void endFight() {
+    private void endFight(CombatResult result, Combat combat, MapObjectDatabaseEntity spawn) {
         if (result.getWinner() == Winner.PLAYER) {
+            //Add drops
+            ArrayList<Drop> drops = dropCalculator.calculateDrop(combat.getMonsterCombatEntity().getMonsterDefinition());
 
-            inventory = inventoryManager.getInventory(combat.getUserCombatEntity().getUserEntity());
+            InventoryEntity inventory = inventoryManager.getInventory(combat.getUserCombatEntity().getUserEntity());
 
-            handleDropsAfterCombat();
-            scavengingAfterCombat();
+            for (Drop drop : drops) {
+                result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(drop.getItem()).getName(), drop.getAmount()));
+
+                inventory.addItem(drop.getItem(), drop.getAmount());
+            }
+
+            if(settingsMapper.getSettings(combat.getUserCombatEntity().getUserEntity().getId()).isScavengingEnabled() && combat.getUserCombatEntity().getUserEntity().getScavengingPoint() > 0 ){
+                combat.getUserCombatEntity().getUserEntity().setScavengingPoint(combat.getUserCombatEntity().getUserEntity().getScavengingPoint() - 1);
+
+                //Add scavenge
+                ArrayList<Scavenge> scavengedItems = scavengeCalculator.calculateScavenge(combat.getMonsterCombatEntity().getMonsterDefinition());
+
+                for (Scavenge scavenge : scavengedItems) {
+                    result.addMessage(combatMessageBuilder.buildScavengeMessage(itemDefinitionManager.getItemDefinition(scavenge.getItem()).getName(), scavenge.getAmount()));
+
+                    inventory.addItem(scavenge.getItem(), scavenge.getAmount());
+                }
+            }
 
             //Remove spawn
             mapManager.getMap(combat.getUserCombatEntity().getUserEntity().getMapId()).removeSpawn(spawn.getId());
@@ -108,33 +120,6 @@ public class CombatCalculator {
             }
 
             userMapper.updateBasicCombatStats(combat.getUserCombatEntity().getUserEntity().getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getUserEntity().getMovement() - 1);
-        }
-    }
-
-    private void handleDropsAfterCombat(){
-        //Add drops
-        ArrayList<Drop> drops = dropCalculator.calculateDrop(combat.getMonsterCombatEntity().getMonsterDefinition());
-
-        for (Drop drop : drops) {
-            result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(drop.getItem()).getName(), drop.getAmount()));
-            inventory.addItem(drop.getItem(), drop.getAmount());
-        }
-    }
-
-    private void scavengingAfterCombat(){
-        if(settingsMapper.getSettings(combat.getUserCombatEntity().getUserEntity().getId()).isScavengingEnabled() && combat.getUserCombatEntity().getUserEntity().getScavengingPoint() > 0 ){
-            combat.getUserCombatEntity().getUserEntity().setScavengingPoint(combat.getUserCombatEntity().getUserEntity().getScavengingPoint() - 1);
-
-            //Add scavenge
-            ArrayList<Scavenge> scavengedItems = scavengeCalculator.calculateScavenge(combat.getMonsterCombatEntity().getMonsterDefinition());
-
-            for (Scavenge scavenge : scavengedItems) {
-                result.addMessage(combatMessageBuilder.buildScavengeMessage(itemDefinitionManager.getItemDefinition(scavenge.getItem()).getName(), scavenge.getAmount()));
-
-                inventory.addItem(scavenge.getItem(), scavenge.getAmount());
-            }
-
-
         }
     }
 }
