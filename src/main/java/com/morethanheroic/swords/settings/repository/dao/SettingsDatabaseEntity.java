@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.settings.repository.dao;
 
-public class Settings {
+public class SettingsDatabaseEntity {
 
     private int userId;
     private boolean scavengingEnabled;

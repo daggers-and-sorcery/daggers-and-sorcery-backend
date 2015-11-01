@@ -3,7 +3,7 @@ package com.morethanheroic.swords.settings.service;
 import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.model.TriggerType;
 import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseEntity;
-import com.morethanheroic.swords.settings.repository.dao.Settings;
+import com.morethanheroic.swords.settings.repository.dao.SettingsDatabaseEntity;
 import com.morethanheroic.swords.common.response.Response;
 import com.morethanheroic.swords.common.response.ResponseFactory;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
@@ -33,7 +33,7 @@ public class SettingsListResponseBuilder {
         this.spellDefinitionManager = spellDefinitionManager;
     }
 
-    public Response build(UserEntity userEntity, List<CombatSettingsDatabaseEntity> combatSettingList, Settings setting) {
+    public Response build(UserEntity userEntity, List<CombatSettingsDatabaseEntity> combatSettingList, SettingsDatabaseEntity setting) {
         Response response = responseFactory.newResponse(userEntity);
 
         response.setData("settings", buildCombatSettings(combatSettingList));
@@ -70,7 +70,7 @@ public class SettingsListResponseBuilder {
         return settingsResult;
     }
 
-    private HashMap<String, Object> buildOtherSettings(Settings setting) {
+    private HashMap<String, Object> buildOtherSettings(SettingsDatabaseEntity setting) {
         HashMap<String, Object> otherSettings = new HashMap<>();
 
         otherSettings.put("scavengingEnabled", setting.isScavengingEnabled());

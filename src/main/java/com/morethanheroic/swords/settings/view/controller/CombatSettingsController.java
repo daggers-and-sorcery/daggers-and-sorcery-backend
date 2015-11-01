@@ -21,63 +21,23 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CombatSettingsController {
 
-    private final CombatSettingsMapper combatSettingsMapper;
-    private final UsableItemsResponseBuilder usableItemsResponseBuilder;
-    private final UsableSpellsResponseBuilder usableSpellsResponseBuilder;
-    private final SpecificMonstersResponseBuilder specificMonstersResponseBuilder;
-    private final SettingsListResponseBuilder settingsListResponseBuilder;
-    private final ItemDefinitionManager itemDefinitionManager;
-    private final InsertSettingsResponseBuilder insertSettingsResponseBuilder;
-    private final JournalManager journalManager;
-    private final SpellDefinitionManager spellDefinitionManager;
+    @Autowired
+    private UsableItemsResponseBuilder usableItemsResponseBuilder;
+
+    @Autowired
+    private UsableSpellsResponseBuilder usableSpellsResponseBuilder;
+
+    @Autowired
+    private SpecificMonstersResponseBuilder specificMonstersResponseBuilder;
+
+    @Autowired
+    private JournalManager journalManager;
 
     @Autowired
     private SaveOtherSettingsResponseBuilder saveOtherSettingsResponseBuilder;
 
     @Autowired
     private SettingsMapper settingsMapper;
-
-    @Autowired
-    public CombatSettingsController(CombatSettingsMapper combatSettingsMapper, SettingsListResponseBuilder settingsListResponseBuilder, UsableItemsResponseBuilder usableItemsResponseBuilder, UsableSpellsResponseBuilder usableSpellsResponseBuilder, SpecificMonstersResponseBuilder specificMonstersResponseBuilder, ItemDefinitionManager itemDefinitionManager, InsertSettingsResponseBuilder insertSettingsResponseBuilder, JournalManager journalManager, SpellDefinitionManager spellDefinitionManager) {
-        this.combatSettingsMapper = combatSettingsMapper;
-        this.usableItemsResponseBuilder = usableItemsResponseBuilder;
-        this.usableSpellsResponseBuilder = usableSpellsResponseBuilder;
-        this.specificMonstersResponseBuilder = specificMonstersResponseBuilder;
-        this.settingsListResponseBuilder = settingsListResponseBuilder;
-        this.insertSettingsResponseBuilder = insertSettingsResponseBuilder;
-        this.itemDefinitionManager = itemDefinitionManager;
-        this.journalManager = journalManager;
-        this.spellDefinitionManager = spellDefinitionManager;
-    }
-
-    @RequestMapping(value = "/combat/settings/remove", method = RequestMethod.POST)
-    public void removeSettings(UserEntity userEntity, @RequestBody RemoveCombatSettingRequest removeCombatSettingRequest) {
-        CombatSettingsDatabaseEntity settingsToRemove = combatSettingsMapper.get(removeCombatSettingRequest.getId());
-
-        if(settingsToRemove != null && settingsToRemove.getUserId() == userEntity.getId()) {
-            combatSettingsMapper.remove(settingsToRemove.getId());
-        }
-    }
-
-    @RequestMapping(value = "/combat/settings/list", method = RequestMethod.GET)
-    public Response getSettings(UserEntity userEntity) {
-        return settingsListResponseBuilder.build(userEntity, combatSettingsMapper.getAll(userEntity.getId()), settingsMapper.getSettings(userEntity.getId()));
-    }
-
-    @RequestMapping(value = "/combat/settings/insert", method = RequestMethod.POST)
-    public Response insertSettings(UserEntity userEntity, @RequestBody InsertCombatSettingRequest insertCombatSettingRequest) {
-        if(insertCombatSettingRequest.getType() == SettingType.ITEM && !itemDefinitionManager.getItemDefinition(insertCombatSettingRequest.getUse()).isUsable()) {
-            return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-usable item selected!");
-        }
-
-        if(insertCombatSettingRequest.getType() == SettingType.SPELL && !spellDefinitionManager.getSpellDefinition(insertCombatSettingRequest.getUse()).isCombatSpell()) {
-            return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-combat spell selected!");
-        }
-
-        combatSettingsMapper.save(new CombatSettingsDatabaseEntity(userEntity.getId(), insertCombatSettingRequest.getType(), insertCombatSettingRequest.getUse(), insertCombatSettingRequest.getTrigger(), insertCombatSettingRequest.getTarget()));
-
-        return insertSettingsResponseBuilder.build(userEntity, "Settings successfully saved!");
-    }
 
     @RequestMapping(value = "/combat/settings/usable/{type}", method = RequestMethod.GET)
     public Response usableItems(UserEntity userEntity, @PathVariable SettingType type) {

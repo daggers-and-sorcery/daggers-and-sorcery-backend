@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.settings.repository.domain;
 
-import com.morethanheroic.swords.settings.repository.dao.Settings;
+import com.morethanheroic.swords.settings.repository.dao.SettingsDatabaseEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -15,5 +15,5 @@ public interface SettingsMapper {
     void saveScavengingEnabled(@Param("user_id") int userId, @Param("scavenging_enabled") boolean scavengingEnabled);
 
     @Select("SELECT * FROM settings WHERE user_id = #{user_id}")
-    Settings getSettings(@Param("user_id") int userId);
+    SettingsDatabaseEntity getSettings(@Param("user_id") int userId);
 }
