@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.user.service;
 
-import com.morethanheroic.swords.combatsettings.repository.domain.SettingsMapper;
+import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.skill.repository.domain.SkillMapper;

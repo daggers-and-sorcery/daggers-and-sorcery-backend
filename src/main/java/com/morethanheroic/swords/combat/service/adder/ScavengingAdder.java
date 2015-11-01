@@ -6,7 +6,7 @@ import com.morethanheroic.swords.combat.domain.ScavengingEntity;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengingCalculator;
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
-import com.morethanheroic.swords.combatsettings.repository.domain.SettingsMapper;
+import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
