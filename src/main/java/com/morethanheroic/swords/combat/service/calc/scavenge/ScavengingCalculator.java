@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 @Service
-public class ScavengeCalculator {
+public class ScavengingCalculator {
 
     @Autowired
     private Random random;
