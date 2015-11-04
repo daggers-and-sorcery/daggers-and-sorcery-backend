@@ -27,5 +27,6 @@ public enum ItemType {
     ARROW,
     MATERIAL,
     TOOL,
-    RECIPE
+    RECIPE,
+    FOOD
 }
