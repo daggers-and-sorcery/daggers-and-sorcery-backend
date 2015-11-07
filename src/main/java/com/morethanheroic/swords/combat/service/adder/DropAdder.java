@@ -26,16 +26,13 @@ public class DropAdder {
     @Autowired
     private CombatMessageBuilder combatMessageBuilder;
 
-    @Autowired
-    private ItemDefinitionManager itemDefinitionManager;
-
     public void addDropsToUserFromMonsterDefinition(CombatResult result, UserEntity user, MonsterDefinition monster) {
         ArrayList<Drop> drops = dropCalculator.calculateDrop(monster);
 
         InventoryEntity inventory = inventoryManager.getInventory(user);
 
         for (Drop drop : drops) {
-            result.addMessage(combatMessageBuilder.buildDropMessage(itemDefinitionManager.getItemDefinition(drop.getItem()).getName(), drop.getAmount()));
+            result.addMessage(combatMessageBuilder.buildDropMessage(drop.getItem().getName(), drop.getAmount()));
 
             inventory.addItem(drop.getItem(), drop.getAmount());
         }

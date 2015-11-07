@@ -1,15 +1,17 @@
 package com.morethanheroic.swords.monster.domain;
 
+import com.morethanheroic.swords.item.domain.ItemDefinition;
+
 public class DropDefinition {
 
-    private int item;
+    private ItemDefinition item;
     private DropAmountDefinition amount;
     private double chance;
 
     private DropDefinition() {
     }
 
-    public int getItem() {
+    public ItemDefinition getItem() {
         return item;
     }
 
@@ -29,7 +31,7 @@ public class DropDefinition {
             dropDefinition = new DropDefinition();
         }
 
-        public void setItem(int item) {
+        public void setItem(ItemDefinition item) {
             dropDefinition.item = item;
         }
 
