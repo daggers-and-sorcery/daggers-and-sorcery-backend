@@ -1,0 +1,19 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20151028-1">
+        <createTable tableName="settings">
+            <column name="user_id" type="int unsigned">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="scavenging_enabled" type="tinyint(1) unsigned" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <modifySql>
+            <append value="ENGINE=INNODB DEFAULT CHARSET=utf8"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

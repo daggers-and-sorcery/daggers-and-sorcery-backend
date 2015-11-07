@@ -24,7 +24,8 @@ public enum SkillAttribute implements Attribute {
     SHIELD_DEFENSE(GeneralAttribute.STRENGTH),
     STAFF(GeneralAttribute.INTELLIGENCE),
     WAND(GeneralAttribute.WILLPOWER),
-    SPECTRE(GeneralAttribute.WISDOM);
+    SPECTRE(GeneralAttribute.WISDOM),
+    SCAVENGING(GeneralAttribute.PERCEPTION);
 
     private final GeneralAttribute incrementedAttribute;
 

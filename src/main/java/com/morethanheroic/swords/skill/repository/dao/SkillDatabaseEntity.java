@@ -23,6 +23,7 @@ public class SkillDatabaseEntity {
     private int staffsXp;
     private int wandsXp;
     private int spectresXp;
+    private int scavengingXp;
 
     public int getTwoHandedCrushingWeaponsXp() {
         return twoHandedCrushingWeaponsXp;
@@ -184,11 +185,15 @@ public class SkillDatabaseEntity {
         this.wandsXp = wandsXp;
     }
 
-    public int getSpectresXp() {
-        return spectresXp;
-    }
+    public int getSpectresXp() { return spectresXp; }
 
     public void setSpectresXp(int spectresXp) {
         this.spectresXp = spectresXp;
+    }
+
+    public int getScavengingXp() { return scavengingXp; }
+
+    public void setScavengingXp(int scavengingXp) {
+        this.scavengingXp = scavengingXp;
     }
 }

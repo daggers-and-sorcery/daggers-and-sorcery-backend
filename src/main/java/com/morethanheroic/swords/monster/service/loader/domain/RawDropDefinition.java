@@ -7,14 +7,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class RawDropDefinition {
 
     private int item;
-    private int amount;
+    private RawDropAmountDefinition amount;
     private double chance;
 
     public int getItem() {
         return item;
     }
 
-    public int getAmount() {
+    public RawDropAmountDefinition getAmount() {
         return amount;
     }
 

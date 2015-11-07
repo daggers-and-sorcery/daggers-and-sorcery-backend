@@ -2,8 +2,8 @@ package com.morethanheroic.swords.inventory.domain;
 
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
-import com.morethanheroic.swords.journal.repository.domain.JournalMapper;
 import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
@@ -43,17 +43,25 @@ public class InventoryEntity {
         return inventoryMapper.getItems(userEntity.getId());
     }
 
-    public void addItem(int itemId, int itemAmount) {
-        journalManager.createJournalEntry(userEntity, JournalType.ITEM, itemId);
-
-        inventoryMapper.addItem(userEntity.getId(), itemId, itemAmount);
+    public void addItem(ItemDefinition item, int amount) {
+        addItem(item.getId(), amount);
     }
 
-    public void removeItem(int itemId, int itemAmount) {
-        int amount = getItemAmount(itemId);
+    public void addItem(int itemId, int amount) {
+        journalManager.createJournalEntry(userEntity, JournalType.ITEM, itemId);
 
-        if (amount - itemAmount > 0) {
-            inventoryMapper.removeItem(userEntity.getId(), itemId, amount - itemAmount);
+        inventoryMapper.addItem(userEntity.getId(), itemId, amount);
+    }
+
+    public void removeItem(ItemDefinition item, int amount) {
+        removeItem(item.getId(), amount);
+    }
+
+    public void removeItem(int itemId, int amount) {
+        int amountBeforeRemove = getItemAmount(itemId);
+
+        if (amountBeforeRemove - amount > 0) {
+            inventoryMapper.removeItem(userEntity.getId(), itemId, amountBeforeRemove - amount);
         } else {
             inventoryMapper.deleteItem(userEntity.getId(), itemId);
         }
