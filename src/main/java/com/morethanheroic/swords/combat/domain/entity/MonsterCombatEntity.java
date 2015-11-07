@@ -62,7 +62,11 @@ public class MonsterCombatEntity extends CombatEntity {
 
     @Override
     public DiceAttribute getSpellResistance() {
-        return monsterDefinition.getSpellResistance();
+        DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
+
+        diceAttributeBuilder.setValue(monsterDefinition.getSpellResistance());
+
+        return diceAttributeBuilder.build();
     }
 
     @Override
