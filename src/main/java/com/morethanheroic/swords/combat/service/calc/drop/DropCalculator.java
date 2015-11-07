@@ -21,7 +21,6 @@ public class DropCalculator {
 
         for (DropDefinition drop : monster.getDropDefinitions()) {
             if (100 * random.nextDouble() < drop.getChance()) {
-                System.out.println("Adding drop:"+drop.getAmount());
                 result.add(new Drop(drop.getItem(), calculateDropAmount(drop.getAmount())));
             }
         }
