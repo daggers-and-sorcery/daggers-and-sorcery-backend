@@ -30,6 +30,7 @@
         <monster:drop>
             <monster:item>1</monster:item>
             <monster:amount>
+                <monster:min>3</monster:min>
                 <monster:max>10</monster:max>
             </monster:amount>
             <monster:chance>25</monster:chance>
@@ -186,6 +187,7 @@
         <monster:drop>
             <monster:item>25</monster:item>
             <monster:amount>
+                <monster:min>2</monster:min>
                 <monster:max>8</monster:max>
             </monster:amount>
             <monster:chance>6</monster:chance>
