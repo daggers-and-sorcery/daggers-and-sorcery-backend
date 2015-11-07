@@ -1,16 +1,18 @@
 package com.morethanheroic.swords.combat.domain;
 
+import com.morethanheroic.swords.item.domain.ItemDefinition;
+
 public class Drop {
 
-    private final int item;
+    private final ItemDefinition item;
     private final int amount;
 
-    public Drop(int item, int amount) {
+    public Drop(ItemDefinition item, int amount) {
         this.item = item;
         this.amount = amount;
     }
 
-    public int getItem() {
+    public ItemDefinition getItem() {
         return item;
     }
 

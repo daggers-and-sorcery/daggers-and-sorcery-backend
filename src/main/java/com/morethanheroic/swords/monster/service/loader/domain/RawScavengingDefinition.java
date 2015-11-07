@@ -4,17 +4,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RawScavengeDefinition {
+public class RawScavengingDefinition {
 
     private int item;
-    private int amount;
+    private RawScavengingAmountDefinition amount;
     private double chance;
 
     public int getItem() {
         return item;
     }
 
-    public int getAmount() {
+    public RawScavengingAmountDefinition getAmount() {
         return amount;
     }
 
