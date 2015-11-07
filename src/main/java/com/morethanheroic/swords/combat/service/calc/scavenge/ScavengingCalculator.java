@@ -3,7 +3,9 @@ package com.morethanheroic.swords.combat.service.calc.scavenge;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.ScavengingEntity;
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
+import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.domain.ScavengingAmountDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -29,7 +31,7 @@ public class ScavengingCalculator {
 
         for (ScavengingDefinition scavengingDefinition : monster.getScavengingDefinitions()) {
             if (100 * random.nextDouble() < calculateScavengingChance(scavengingDefinition.getChance(), monster.getLevel(), scavengingLevel)) {
-                result.add(new ScavengingEntity(scavengingDefinition.getItem(), scavengingDefinition.getAmount().getMaximumAmount()));
+                result.add(new ScavengingEntity(scavengingDefinition.getItem(), calculateScavengingAmount(scavengingDefinition.getAmount())));
             }
         }
 
@@ -45,5 +47,13 @@ public class ScavengingCalculator {
      */
     private double calculateScavengingChance(double dropChance, int monsterLevel, int scavengingLevel) {
         return dropChance - (Math.abs(monsterLevel - scavengingLevel) / 10);
+    }
+
+    private int calculateScavengingAmount(ScavengingAmountDefinition scavengingAmountDefinition) {
+        if(scavengingAmountDefinition.getMinimumAmount() == scavengingAmountDefinition.getMaximumAmount()) {
+            return scavengingAmountDefinition.getMinimumAmount();
+        }
+
+        return random.nextInt(scavengingAmountDefinition.getMaximumAmount() - scavengingAmountDefinition.getMinimumAmount()) + scavengingAmountDefinition.getMinimumAmount();
     }
 }

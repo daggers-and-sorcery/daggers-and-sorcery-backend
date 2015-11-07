@@ -16,6 +16,11 @@ public class ScavengingAmountDefinition {
         return maximumAmount;
     }
 
+    @Override
+    public String toString() {
+        return "ScavengingAmountDefinition -> minimumAmount: " + minimumAmount + " maximumAmount: " + maximumAmount;
+    }
+
     public static class ScavengingAmountDefinitionBuilder {
 
         private final ScavengingAmountDefinition scavengingAmountDefinition = new ScavengingAmountDefinition();

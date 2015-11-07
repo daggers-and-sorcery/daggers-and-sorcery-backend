@@ -16,6 +16,11 @@ public class DropAmountDefinition {
         return maximumAmount;
     }
 
+    @Override
+    public String toString() {
+        return "DropAmountDefinition -> minimumAmount: " + minimumAmount + " maximumAmount: " + maximumAmount;
+    }
+
     public static class DropAmountDefinitionBuilder {
 
         private final DropAmountDefinition dropAmountDefinition = new DropAmountDefinition();
