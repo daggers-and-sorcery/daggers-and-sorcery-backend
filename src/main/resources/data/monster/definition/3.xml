@@ -24,6 +24,12 @@
     <monster:ranged-damage>
         <monster:value>0</monster:value>
     </monster:ranged-damage>
-    <!-- Todo: add matic attack type! -->
-    <monster:attack-type>RANGED</monster:attack-type>
+    <monster:magic-attack>
+        <monster:value>24</monster:value>
+    </monster:magic-attack>
+    <monster:magic-damage>
+        <monster:value>2</monster:value>
+    </monster:magic-damage>
+    <monster:spell-resistance>0</monster:spell-resistance>
+    <monster:attack-type>MAGIC</monster:attack-type>
 </monster:monster>

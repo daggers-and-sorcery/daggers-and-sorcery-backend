@@ -51,6 +51,21 @@ public class MonsterCombatEntity extends CombatEntity {
     }
 
     @Override
+    public DiceAttribute getMagicAttack() {
+        return monsterDefinition.getMagicAttack();
+    }
+
+    @Override
+    public DiceAttribute getMagicDamage() {
+        return monsterDefinition.getRangedDamage();
+    }
+
+    @Override
+    public DiceAttribute getSpellResistance() {
+        return monsterDefinition.getSpellResistance();
+    }
+
+    @Override
     public String getName() {
         return monsterDefinition.getName();
     }
