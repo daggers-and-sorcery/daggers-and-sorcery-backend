@@ -5,7 +5,7 @@ import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawDropDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
-import com.morethanheroic.swords.monster.service.loader.domain.RawScavengeDefinition;
+import com.morethanheroic.swords.monster.service.loader.domain.RawScavengingDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class MonsterDefinitionTransformer {
     private final DropDefinitionTransformer dropDefinitionTransformer;
 
     @Autowired
-    private ScavengeDefinitionTransformer scavengeDefinitionTransformer;
+    private ScavengingDefinitionTransformer scavengingDefinitionTransformer;
 
     @Autowired
     public MonsterDefinitionTransformer(DiceAttributeTransformer diceAttributeTransformer, DropDefinitionTransformer dropDefinitionTransformer) {
@@ -55,7 +55,7 @@ public class MonsterDefinitionTransformer {
         return rawDropDefinitions.stream().map(dropDefinitionTransformer::transform).collect(Collectors.toList());
     }
 
-    private List<ScavengingDefinition> transformScavengingDefinitions(List<RawScavengeDefinition> rawDropDefinitions) {
-        return rawDropDefinitions.stream().map(scavengeDefinitionTransformer::transform).collect(Collectors.toList());
+    private List<ScavengingDefinition> transformScavengingDefinitions(List<RawScavengingDefinition> rawDropDefinitions) {
+        return rawDropDefinitions.stream().map(scavengingDefinitionTransformer::transform).collect(Collectors.toList());
     }
 }

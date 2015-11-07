@@ -3,7 +3,7 @@ package com.morethanheroic.swords.monster.domain;
 public class DropDefinition {
 
     private int item;
-    private int amount;
+    private DropAmountDefinition amount;
     private double chance;
 
     private DropDefinition() {
@@ -13,7 +13,7 @@ public class DropDefinition {
         return item;
     }
 
-    public int getAmount() {
+    public DropAmountDefinition getAmount() {
         return amount;
     }
 
@@ -33,7 +33,7 @@ public class DropDefinition {
             dropDefinition.item = item;
         }
 
-        public void setAmount(int amount) {
+        public void setAmount(DropAmountDefinition amount) {
             dropDefinition.amount = amount;
         }
 

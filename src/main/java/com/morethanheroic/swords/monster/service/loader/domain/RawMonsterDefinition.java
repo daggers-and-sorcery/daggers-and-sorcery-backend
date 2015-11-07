@@ -31,7 +31,7 @@ public class RawMonsterDefinition {
 
     @XmlElementWrapper(name = "scavengelist")
     @XmlElement(name = "scavenge")
-    private List<RawScavengeDefinition> rawScavengeDefinitions;
+    private List<RawScavengingDefinition> rawScavengingDefinitions;
 
     public int getId() {
         return id;
@@ -85,12 +85,12 @@ public class RawMonsterDefinition {
         return Collections.unmodifiableList(rawDropDefinitions);
     }
 
-    public List<RawScavengeDefinition> getScavengeDefinitions() {
-        if(rawScavengeDefinitions == null) {
+    public List<RawScavengingDefinition> getScavengeDefinitions() {
+        if(rawScavengingDefinitions == null) {
             return Collections.EMPTY_LIST;
         }
 
-        return Collections.unmodifiableList(rawScavengeDefinitions);
+        return Collections.unmodifiableList(rawScavengingDefinitions);
     }
 
     public int getMana() {

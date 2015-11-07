@@ -5,7 +5,7 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 public class ScavengingDefinition {
 
     private ItemDefinition item;
-    private int amount;
+    private ScavengingAmountDefinition amount;
     private double chance;
 
     private ScavengingDefinition() {
@@ -15,7 +15,7 @@ public class ScavengingDefinition {
         return item;
     }
 
-    public int getAmount() {
+    public ScavengingAmountDefinition getAmount() {
         return amount;
     }
 
@@ -35,7 +35,7 @@ public class ScavengingDefinition {
             scavengingDefinition.item = item;
         }
 
-        public void setAmount(int amount) {
+        public void setAmount(ScavengingAmountDefinition amount) {
             scavengingDefinition.amount = amount;
         }
 

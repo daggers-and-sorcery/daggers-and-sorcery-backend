@@ -29,7 +29,7 @@ public class ScavengingCalculator {
 
         for (ScavengingDefinition scavengingDefinition : monster.getScavengingDefinitions()) {
             if (100 * random.nextDouble() < calculateScavengingChance(scavengingDefinition.getChance(), monster.getLevel(), scavengingLevel)) {
-                result.add(new ScavengingEntity(scavengingDefinition.getItem(), scavengingDefinition.getAmount()));
+                result.add(new ScavengingEntity(scavengingDefinition.getItem(), scavengingDefinition.getAmount().getMaximumAmount()));
             }
         }
 
