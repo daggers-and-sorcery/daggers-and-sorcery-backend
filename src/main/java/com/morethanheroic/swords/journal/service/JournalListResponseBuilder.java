@@ -2,12 +2,12 @@ package com.morethanheroic.swords.journal.service;
 
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.journal.view.response.JournalListResponseEntry;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

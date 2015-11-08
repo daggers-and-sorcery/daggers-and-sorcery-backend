@@ -5,7 +5,7 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.service.UseItemService;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
 import com.morethanheroic.swords.spell.service.domain.UseSpellService;

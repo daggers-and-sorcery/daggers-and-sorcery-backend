@@ -18,7 +18,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;

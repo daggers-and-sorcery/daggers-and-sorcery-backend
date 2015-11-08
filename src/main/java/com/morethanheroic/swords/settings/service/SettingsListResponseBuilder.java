@@ -6,8 +6,8 @@ import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseE
 import com.morethanheroic.swords.settings.repository.dao.SettingsDatabaseEntity;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

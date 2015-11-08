@@ -1,10 +1,10 @@
 package com.morethanheroic.swords.journal.service;
 
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
-import com.morethanheroic.swords.item.service.ItemEntryResponseBuilder;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.response.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.journal.model.JournalType;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
-import com.morethanheroic.swords.monster.service.MonsterEntryResponseBuilder;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.service.response.MonsterEntryResponseBuilder;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;

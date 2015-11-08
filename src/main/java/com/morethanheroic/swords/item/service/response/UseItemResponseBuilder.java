@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.item.service;
+package com.morethanheroic.swords.item.service.response;
 
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;

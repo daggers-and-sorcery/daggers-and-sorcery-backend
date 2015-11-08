@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.settings.view.controller;
 
 import com.morethanheroic.swords.response.domain.Response;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseEntity;
 import com.morethanheroic.swords.settings.repository.domain.CombatSettingsMapper;

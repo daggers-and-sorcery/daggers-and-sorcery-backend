@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.item.view.controller;
 
 import com.morethanheroic.swords.response.domain.Response;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
-import com.morethanheroic.swords.item.service.UseItemResponseBuilder;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.response.UseItemResponseBuilder;
 import com.morethanheroic.swords.item.service.UseItemService;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

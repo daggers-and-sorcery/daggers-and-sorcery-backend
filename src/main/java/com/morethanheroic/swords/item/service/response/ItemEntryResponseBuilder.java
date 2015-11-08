@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.item.service;
+package com.morethanheroic.swords.item.service.response;
 
 import com.morethanheroic.swords.attribute.domain.modifier.AttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;

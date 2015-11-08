@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.item.service;
+package com.morethanheroic.swords.item.service.cache;
 
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.ItemDefinitionLoader;

@@ -14,7 +14,7 @@ import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModi
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.testng.annotations.Test;

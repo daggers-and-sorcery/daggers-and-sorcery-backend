@@ -3,7 +3,7 @@ package com.morethanheroic.swords.settings.service;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

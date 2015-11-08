@@ -5,7 +5,7 @@ import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculato
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 public class EquipmentEntity {

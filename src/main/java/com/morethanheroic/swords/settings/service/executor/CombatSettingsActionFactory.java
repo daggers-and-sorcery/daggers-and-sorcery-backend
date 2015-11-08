@@ -5,7 +5,7 @@ import com.morethanheroic.swords.settings.service.executor.action.HealthCombatSe
 import com.morethanheroic.swords.settings.service.executor.action.ManaCombatSettings;
 import com.morethanheroic.swords.settings.service.executor.action.MonsterCombatSettings;
 import com.morethanheroic.swords.settings.service.executor.action.TurnCombatSettings;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.service.UseItemService;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
 import com.morethanheroic.swords.spell.service.domain.UseSpellService;

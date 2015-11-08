@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.monster.service;
+package com.morethanheroic.swords.monster.service.cache;
 
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.service.loader.MonsterDefinitionLoader;

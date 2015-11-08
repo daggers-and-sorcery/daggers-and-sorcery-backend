@@ -5,7 +5,7 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

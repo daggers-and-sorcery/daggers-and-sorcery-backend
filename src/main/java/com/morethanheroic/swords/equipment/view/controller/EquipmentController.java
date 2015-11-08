@@ -5,7 +5,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.item.service.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
