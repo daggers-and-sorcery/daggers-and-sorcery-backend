@@ -17,7 +17,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
-import com.morethanheroic.swords.inventory.service.InventoryManager;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
@@ -39,7 +39,7 @@ public class ProfileInfoResponseBuilder {
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemDefinitionManager itemDefinitionManager;
     private final AttributeUtil attributeUtil;
-    private final InventoryManager inventoryManager;
+    private final InventoryFacade inventoryFacade;
     private final EquipmentManager equipmentManager;
     private final ResponseFactory responseFactory;
     private final ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder;
@@ -47,11 +47,11 @@ public class ProfileInfoResponseBuilder {
     private final SpellMapper spellMapper;
 
     @Autowired
-    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryManager inventoryManager, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder, SpellDefinitionManager spellDefinitionManager, SpellMapper spellMapper) {
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder, SpellDefinitionManager spellDefinitionManager, SpellMapper spellMapper) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionManager = itemDefinitionManager;
         this.attributeUtil = attributeUtil;
-        this.inventoryManager = inventoryManager;
+        this.inventoryFacade = inventoryFacade;
         this.equipmentManager = equipmentManager;
         this.responseFactory = responseFactory;
         this.profileItemEntryResponseBuilder = profileItemEntryResponseBuilder;
@@ -68,7 +68,7 @@ public class ProfileInfoResponseBuilder {
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
         response.setData("scavengingPoints", user.getScavengingPoint());
-        response.setData("inventory", buildInventoryResponse(inventoryManager.getInventory(user).getItems()));
+        response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems()));
         response.setData("equipment", buildEquipmentResponse(user));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));
 

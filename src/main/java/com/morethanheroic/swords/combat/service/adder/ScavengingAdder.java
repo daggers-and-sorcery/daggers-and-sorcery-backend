@@ -8,7 +8,7 @@ import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengingCalculat
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryManager;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -30,7 +30,7 @@ public class ScavengingAdder {
     private CombatMessageBuilder combatMessageBuilder;
 
     @Autowired
-    private InventoryManager inventoryManager;
+    private InventoryFacade inventoryFacade;
 
     @Autowired
     private SkillManager skillManager;
@@ -51,7 +51,7 @@ public class ScavengingAdder {
     }
 
     private void awardScavengingDrops(CombatResult combatResult, UserEntity user, List<ScavengingEntity> scavengingResultList) {
-        InventoryEntity inventory = inventoryManager.getInventory(user);
+        InventoryEntity inventory = inventoryFacade.getInventory(user);
 
         for (ScavengingEntity scavengingEntity : scavengingResultList) {
             combatResult.addMessage(combatMessageBuilder.buildScavengeMessage(scavengingEntity.getItem().getName(), scavengingEntity.getAmount()));

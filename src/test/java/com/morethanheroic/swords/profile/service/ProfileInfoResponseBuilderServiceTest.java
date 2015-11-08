@@ -13,7 +13,7 @@ import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculat
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryManager;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -142,13 +142,13 @@ public class ProfileInfoResponseBuilderServiceTest {
         return user;
     }
 
-    private InventoryManager buildInventoryManagerMock() {
+    private InventoryFacade buildInventoryManagerMock() {
         InventoryEntity inventoryEntity = mock(InventoryEntity.class);
         when(inventoryEntity.getItems()).thenReturn(new ArrayList<>());
 
-        InventoryManager inventoryManager = mock(InventoryManager.class);
-        when(inventoryManager.getInventory(any())).thenReturn(inventoryEntity);
+        InventoryFacade inventoryFacade = mock(InventoryFacade.class);
+        when(inventoryFacade.getInventory(any())).thenReturn(inventoryEntity);
 
-        return inventoryManager;
+        return inventoryFacade;
     }
 }

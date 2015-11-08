@@ -4,7 +4,7 @@ import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
-import com.morethanheroic.swords.inventory.service.InventoryManager;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class EquipmentController {
 
     private final EquipmentManager equipmentManager;
-    private final InventoryManager inventoryManager;
+    private final InventoryFacade inventoryFacade;
     private final ItemDefinitionManager itemDefinitionManager;
     private final EquipmentResponseBuilder equipmentResponseBuilder;
 
     @Autowired
-    public EquipmentController(InventoryManager inventoryManager, ItemDefinitionManager itemDefinitionManager, EquipmentManager equipmentManager, EquipmentResponseBuilder equipmentResponseBuilder) {
-        this.inventoryManager = inventoryManager;
+    public EquipmentController(InventoryFacade inventoryFacade, ItemDefinitionManager itemDefinitionManager, EquipmentManager equipmentManager, EquipmentResponseBuilder equipmentResponseBuilder) {
+        this.inventoryFacade = inventoryFacade;
         this.itemDefinitionManager = itemDefinitionManager;
         this.equipmentManager = equipmentManager;
         this.equipmentResponseBuilder = equipmentResponseBuilder;
@@ -33,7 +33,7 @@ public class EquipmentController {
 
     @RequestMapping(value = "/equip/{itemId}", method = RequestMethod.GET)
     public Response equip(UserEntity user, @PathVariable int itemId) {
-        if (inventoryManager.getInventory(user).hasItem(itemId) && itemDefinitionManager.getItemDefinition(itemId).isEquipment()) {
+        if (inventoryFacade.getInventory(user).hasItem(itemId) && itemDefinitionManager.getItemDefinition(itemId).isEquipment()) {
             if(equipmentManager.getEquipment(user).equipItem(itemDefinitionManager.getItemDefinition(itemId))) {
                 return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }

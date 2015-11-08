@@ -5,11 +5,9 @@ import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryManager;
-import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
-import com.morethanheroic.swords.user.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,21 +15,21 @@ import org.springframework.stereotype.Service;
 public class UseSpellService {
 
     private final CombatEffectApplierService combatEffectApplierService;
-    private final InventoryManager inventoryManager;
+    private final InventoryFacade inventoryFacade;
     private final UserMapper userMapper;
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
-    public UseSpellService(CombatEffectApplierService combatEffectApplierService, InventoryManager inventoryManager, UserMapper userMapper) {
+    public UseSpellService(CombatEffectApplierService combatEffectApplierService, InventoryFacade inventoryFacade, UserMapper userMapper) {
         this.combatEffectApplierService = combatEffectApplierService;
-        this.inventoryManager = inventoryManager;
+        this.inventoryFacade = inventoryFacade;
         this.userMapper = userMapper;
     }
 
     public boolean canUseSpell(UserEntity userEntity, SpellDefinition spell) {
-        InventoryEntity inventoryEntity = inventoryManager.getInventory(userEntity);
+        InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
 
         for (SpellCost spellCost : spell.getSpellCosts()) {
             if (spellCost.getType() == CostType.ITEM) {
@@ -49,7 +47,7 @@ public class UseSpellService {
     }
 
     public boolean canUseSpell(UserCombatEntity combatEntity, SpellDefinition spell) {
-        InventoryEntity inventoryEntity = inventoryManager.getInventory(combatEntity.getUserEntity());
+        InventoryEntity inventoryEntity = inventoryFacade.getInventory(combatEntity.getUserEntity());
 
         for (SpellCost spellCost : spell.getSpellCosts()) {
             if (spellCost.getType() == CostType.ITEM) {
