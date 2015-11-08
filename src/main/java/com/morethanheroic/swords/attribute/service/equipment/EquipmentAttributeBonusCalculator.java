@@ -1,13 +1,18 @@
 package com.morethanheroic.swords.attribute.service.equipment;
 
+import com.morethanheroic.swords.attribute.domain.CombatAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +26,13 @@ public class EquipmentAttributeBonusCalculator {
     private EquipmentManager equipmentManager;
 
     @Autowired
+    private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
     private ItemDefinitionManager itemDefinitionManager;
 
     public AttributeCalculationResult calculateEquipmentBonus(UserEntity userEntity, Attribute attribute) {
-        AttributeCalculationResult result = new AttributeCalculationResult();
+        AttributeCalculationResult result = new AttributeCalculationResult(attribute);
 
         EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
 
@@ -32,15 +40,27 @@ public class EquipmentAttributeBonusCalculator {
             int item = equipmentEntity.getEquipmentIdOnSlot(slot);
 
             if(item != EMPTY_EQUIPMENT_SLOT) {
-                calculateItemModifiers(result, attribute, itemDefinitionManager.getItemDefinition(item));
+                calculateItemModifiers(result, itemDefinitionManager.getItemDefinition(item));
             }
         }
+
+        calculateNoWeaponFistfightModifiers(result, equipmentEntity, userEntity);
 
         return result;
     }
 
-    private void calculateItemModifiers(AttributeCalculationResult result, Attribute attribute, ItemDefinition itemDefinition) {
-        itemDefinition.getAllModifiers().stream().filter(modifierDefinition -> modifierDefinition.getAttribute() == attribute).forEach(modifierDefinition -> {
+    private void calculateNoWeaponFistfightModifiers(AttributeCalculationResult result, EquipmentEntity equipmentEntity, UserEntity userEntity) {
+        if (equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.WEAPON) == EMPTY_EQUIPMENT_SLOT) {
+            if(result.getAttribute() == CombatAttribute.ATTACK) {
+                result.increaseD4(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 3));
+            } else if (result.getAttribute() == CombatAttribute.DAMAGE) {
+                result.increaseD2(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 3));
+            }
+        }
+    }
+
+    private void calculateItemModifiers(AttributeCalculationResult result, ItemDefinition itemDefinition) {
+        itemDefinition.getAllModifiers().stream().filter(modifierDefinition -> modifierDefinition.getAttribute() == result.getAttribute()).forEach(modifierDefinition -> {
             result.increaseValue(modifierDefinition.getAmount());
 
             if (modifierDefinition instanceof CombatAttributeModifierDefinition) {

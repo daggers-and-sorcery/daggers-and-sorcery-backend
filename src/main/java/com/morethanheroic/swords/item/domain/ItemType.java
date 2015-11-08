@@ -27,5 +27,11 @@ public enum ItemType {
     ARROW,
     MATERIAL,
     TOOL,
-    RECIPE
+    RECIPE,
+    FOOD,
+    SCROLL,
+    AMULET,
+    GLOVES,
+    BOOTS,
+    HELM
 }

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,7 @@ import java.util.Random;
 
 @Configuration
 @Lazy
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 @ComponentScan(lazyInit = true)
 @EnableWebMvc
 @EnableTransactionManagement
