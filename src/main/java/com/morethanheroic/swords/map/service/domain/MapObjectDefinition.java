@@ -24,7 +24,7 @@ public class MapObjectDefinition {
         return name;
     }
 
-    public String getType() {
+    public MapObjectType getType() {
         return type;
     }
 
