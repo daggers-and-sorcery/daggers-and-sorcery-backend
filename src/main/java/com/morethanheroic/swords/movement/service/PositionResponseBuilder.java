@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.movement.service;
 
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.common.response.ResponseFactory;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;

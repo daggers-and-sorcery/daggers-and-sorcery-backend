@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.common.response;
+package com.morethanheroic.swords.response.domain;
 
 public class CharacterData {
 

@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.equipment.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;

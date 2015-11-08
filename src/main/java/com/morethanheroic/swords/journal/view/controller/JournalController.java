@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalEntryResponseBuilder;
 import com.morethanheroic.swords.journal.service.JournalListResponseBuilder;

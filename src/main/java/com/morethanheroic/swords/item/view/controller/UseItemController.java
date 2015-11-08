@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.item.service.UseItemResponseBuilder;
 import com.morethanheroic.swords.item.service.UseItemService;

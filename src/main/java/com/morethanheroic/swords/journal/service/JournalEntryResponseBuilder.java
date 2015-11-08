@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.journal.service;
 
 import com.morethanheroic.swords.combat.domain.DiceAttribute;
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.common.response.ResponseFactory;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
 import com.morethanheroic.swords.item.service.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.journal.model.JournalType;

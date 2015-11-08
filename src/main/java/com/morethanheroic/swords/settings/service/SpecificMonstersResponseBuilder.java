@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.settings.service;
 
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.common.response.ResponseFactory;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;

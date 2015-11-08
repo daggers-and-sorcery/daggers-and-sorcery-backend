@@ -11,7 +11,7 @@ import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
-import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryManager;
 import com.morethanheroic.swords.item.service.ItemDefinitionManager;
