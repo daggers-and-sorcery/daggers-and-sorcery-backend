@@ -16,7 +16,7 @@ public class AttributeDataTest {
     @Test
     public void testAttributeDataBuilder() {
         AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder(GeneralAttribute.STRENGTH);
-        attributeDataBuilder.setActual(new AttributeCalculationResult(10));
+        attributeDataBuilder.setActual(new AttributeCalculationResult(10, GeneralAttribute.STRENGTH));
         attributeDataBuilder.setMaximum(11);
         attributeDataBuilder.setAttributeModifierData(Lists.newArrayList(
                 new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierValueType.PERCENTAGE, new AttributeModifierValue(10))

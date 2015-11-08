@@ -11,12 +11,12 @@
         <monster:value>26</monster:value>
     </monster:initiation>
     <monster:level>4</monster:level>
-    <monster:defense>24</monster:defense>
+    <monster:defense>23</monster:defense>
     <monster:damage>
-        <monster:value>2</monster:value>
+        <monster:value>0</monster:value>
     </monster:damage>
     <monster:attack>
-        <monster:value>28</monster:value>
+        <monster:value>0</monster:value>
     </monster:attack>
     <monster:aiming>
         <monster:value>0</monster:value>
@@ -25,11 +25,144 @@
         <monster:value>0</monster:value>
     </monster:ranged-damage>
     <monster:magic-attack>
-        <monster:value>24</monster:value>
+        <monster:value>20</monster:value>
+        <monster:d8>1</monster:d8>
     </monster:magic-attack>
     <monster:magic-damage>
         <monster:value>2</monster:value>
     </monster:magic-damage>
     <monster:spell-resistance>0</monster:spell-resistance>
     <monster:attack-type>MAGIC</monster:attack-type>
+    <monster:droplist>
+        <monster:drop>
+            <monster:item>1</monster:item>
+            <monster:amount>
+                <monster:min>2</monster:min>
+                <monster:max>5</monster:max>
+            </monster:amount>
+            <monster:chance>35</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>3</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>8</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>4</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>8</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>25</monster:item>
+            <monster:amount>
+                <monster:max>5</monster:max>
+            </monster:amount>
+            <monster:chance>5</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>5</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>5</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>17</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>4</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>16</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>4</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>32</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>3</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>33</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>1.5</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>34</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>1.5</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>35</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>0.3</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>36</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>0.05</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>37</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>0.01</monster:chance>
+        </monster:drop>
+    </monster:droplist>
+    <monster:scavengelist>
+        <monster:drop>
+            <monster:item>25</monster:item>
+            <monster:amount>
+                <monster:min>2</monster:min>
+                <monster:max>8</monster:max>
+            </monster:amount>
+            <monster:chance>8</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>33</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>3</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>34</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>3</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>35</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>0.5</monster:chance>
+        </monster:drop>
+        <monster:drop>
+            <monster:item>36</monster:item>
+            <monster:amount>
+                <monster:max>1</monster:max>
+            </monster:amount>
+            <monster:chance>0.2</monster:chance>
+        </monster:drop>
+    </monster:scavengelist>
 </monster:monster>

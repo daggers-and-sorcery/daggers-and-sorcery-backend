@@ -52,7 +52,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     }
 
     public AttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
-        AttributeCalculationResult result = new AttributeCalculationResult();
+        AttributeCalculationResult result = new AttributeCalculationResult(attribute);
 
         if (attribute instanceof SkillAttribute) {
             result.increaseValue(skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute));
@@ -73,11 +73,11 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
 
     public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
         if (attribute == CombatAttribute.LIFE) {
-            return new AttributeCalculationResult(user.getHealth());
+            return new AttributeCalculationResult(user.getHealth(), attribute);
         } else if (attribute == CombatAttribute.MANA) {
-            return new AttributeCalculationResult(user.getMana());
+            return new AttributeCalculationResult(user.getMana(), attribute);
         } else if (attribute == BasicAttribute.MOVEMENT) {
-            return new AttributeCalculationResult(user.getMovement());
+            return new AttributeCalculationResult(user.getMovement(), attribute);
         }
 
         return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
@@ -88,7 +88,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     }
 
     public AttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
-        AttributeCalculationResult result = new AttributeCalculationResult();
+        AttributeCalculationResult result = new AttributeCalculationResult(attribute);
 
         result.increaseValue(attribute.getInitialValue());
         if (attribute instanceof CombatAttribute) {

@@ -38,6 +38,13 @@
                             <xs:enumeration value="MATERIAL"/>
                             <xs:enumeration value="TOOL"/>
                             <xs:enumeration value="RECIPE"/>
+                            <xs:enumeration value="FRUIT"/>
+                            <xs:enumeration value="FOOD"/>
+                            <xs:enumeration value="SCROLL"/>
+                            <xs:enumeration value="AMULET"/>
+                            <xs:enumeration value="GLOVES"/>
+                            <xs:enumeration value="BOOTS"/>
+                            <xs:enumeration value="HELM"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
@@ -54,9 +61,11 @@
                                                     <xs:element name="effect-setting" maxOccurs="unbounded">
                                                         <xs:complexType>
                                                             <xs:all>
-                                                                <xs:element name="setting-name" type="xs:string" minOccurs="1"
+                                                                <xs:element name="setting-name" type="xs:string"
+                                                                            minOccurs="1"
                                                                             maxOccurs="1"/>
-                                                                <xs:element name="setting-value" type="xs:string" minOccurs="1"
+                                                                <xs:element name="setting-value" type="xs:string"
+                                                                            minOccurs="1"
                                                                             maxOccurs="1"/>
                                                             </xs:all>
                                                         </xs:complexType>
