@@ -83,5 +83,11 @@ public abstract class CombatEntity {
 
     public abstract DiceAttribute getAiming();
 
+    public abstract DiceAttribute getMagicAttack();
+
+    public abstract DiceAttribute getMagicDamage();
+
+    public abstract DiceAttribute getSpellResistance();
+
     public abstract String getName();
 }

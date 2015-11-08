@@ -35,8 +35,11 @@ public class MonsterDefinitionTransformer {
         monsterDefinitionBuilder.setAttack(diceAttributeTransformer.transform(rawMonsterDefinition.getAttack()));
         monsterDefinitionBuilder.setDamage(diceAttributeTransformer.transform(rawMonsterDefinition.getDamage()));
         monsterDefinitionBuilder.setInitiation(diceAttributeTransformer.transform(rawMonsterDefinition.getInitiation()));
+        monsterDefinitionBuilder.setMagicAttack(diceAttributeTransformer.transform(rawMonsterDefinition.getMagicAttack()));
+        monsterDefinitionBuilder.setMagicDamage(diceAttributeTransformer.transform(rawMonsterDefinition.getMagicDamage()));
 
         monsterDefinitionBuilder.setDefense(rawMonsterDefinition.getDefense());
+        monsterDefinitionBuilder.setSpellResistance(rawMonsterDefinition.getSpellResistance());
 
         monsterDefinitionBuilder.setId(rawMonsterDefinition.getId());
         monsterDefinitionBuilder.setName(rawMonsterDefinition.getName());

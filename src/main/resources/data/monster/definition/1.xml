@@ -27,6 +27,13 @@
     <monster:ranged-damage>
         <monster:value>0</monster:value>
     </monster:ranged-damage>
+    <monster:magic-attack>
+        <monster:value>0</monster:value>
+    </monster:magic-attack>
+    <monster:magic-damage>
+        <monster:value>0</monster:value>
+    </monster:magic-damage>
+    <monster:spell-resistance>0</monster:spell-resistance>
     <monster:attack-type>MELEE</monster:attack-type>
     <monster:droplist>
         <monster:drop>

@@ -54,6 +54,21 @@ public class UserCombatEntity extends CombatEntity {
     }
 
     @Override
+    public DiceAttribute getMagicAttack() {
+        return attributeCalculationToDiceAttribute(globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.MAGIC_ATTACK));
+    }
+
+    @Override
+    public DiceAttribute getMagicDamage() {
+        return attributeCalculationToDiceAttribute(globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.MAGIC_DAMAGE));
+    }
+
+    @Override
+    public DiceAttribute getSpellResistance() {
+        return attributeCalculationToDiceAttribute(globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.SPELL_RESISTANCE));
+    }
+
+    @Override
     public String getName() {
         return userEntity.getUsername();
     }

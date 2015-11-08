@@ -5,10 +5,10 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AttackTypeCalculatorService {
+public class AttackTypeCalculator {
 
     public AttackType calculateAttackType(ItemDefinition item) {
-        if(item == null) {
+        if (item == null) {
             return AttackType.MELEE;
         }
 
@@ -27,6 +27,10 @@ public class AttackTypeCalculatorService {
             case SHORTBOWS:
             case CROSSBOWS:
                 return AttackType.RANGED;
+            case WAND:
+            case STAFF:
+            case SPECTRE:
+                return AttackType.MAGIC;
             default:
                 throw new IllegalArgumentException("No attack type found for type: " + item.getType() + " on item: " + item.getId());
         }

@@ -3,7 +3,7 @@ package com.morethanheroic.swords.combat.service.calc.turn;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
-import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculatorService;
+import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntity;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
@@ -25,7 +25,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
     private CombatSettingsExecutor combatSettingsExecutor;
 
     @Autowired
-    private AttackTypeCalculatorService attackTypeCalculatorService;
+    private AttackTypeCalculator attackTypeCalculator;
 
     @Autowired
     private EquipmentManager equipmentManager;
@@ -92,6 +92,6 @@ public class SimpleTurnCalculator implements TurnCalculator {
     }
 
     private AttackType calculateUserAttackType(UserEntity userEntity) {
-        return attackTypeCalculatorService.calculateAttackType(equipmentManager.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON));
+        return attackTypeCalculator.calculateAttackType(equipmentManager.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON));
     }
 }

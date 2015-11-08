@@ -13,10 +13,11 @@
     <monster:level>3</monster:level>
     <monster:defense>22</monster:defense>
     <monster:damage>
-        <monster:value>0</monster:value>
+        <monster:value>2</monster:value>
     </monster:damage>
     <monster:attack>
-        <monster:value>0</monster:value>
+        <monster:value>21</monster:value>
+        <monster:d6>1</monster:d6>
     </monster:attack>
     <monster:aiming>
         <monster:value>0</monster:value>
@@ -24,6 +25,13 @@
     <monster:ranged-damage>
         <monster:value>0</monster:value>
     </monster:ranged-damage>
+    <monster:magic-attack>
+        <monster:value>0</monster:value>
+    </monster:magic-attack>
+    <monster:magic-damage>
+        <monster:value>0</monster:value>
+    </monster:magic-damage>
+    <monster:spell-resistance>0</monster:spell-resistance>
     <monster:attack-type>RANGED</monster:attack-type>
     <monster:droplist>
         <monster:drop>
