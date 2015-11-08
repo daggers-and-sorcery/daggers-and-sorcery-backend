@@ -16,14 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class MonsterDefinitionLoader {
 
+    @Autowired
     private XMLDefinitionLoader xmlDefinitionLoader;
-    private MonsterDefinitionTransformer monsterDefinitionTransformer;
 
     @Autowired
-    public MonsterDefinitionLoader(XMLDefinitionLoader xmlDefinitionLoader, MonsterDefinitionTransformer monsterDefinitionTransformer) {
-        this.xmlDefinitionLoader = xmlDefinitionLoader;
-        this.monsterDefinitionTransformer = monsterDefinitionTransformer;
-    }
+    private MonsterDefinitionTransformer monsterDefinitionTransformer;
 
     public List<MonsterDefinition> loadMonsterDefinitions() throws JAXBException, IOException, SAXException {
         return loadRawMonsterDefinitions().stream().map(monsterDefinitionTransformer::transform).collect(Collectors.toList());

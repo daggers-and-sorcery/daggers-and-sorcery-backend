@@ -12,19 +12,16 @@ import java.util.List;
 @Service
 public class MonsterDefinitionCache {
 
-    private final MonsterDefinitionLoader monsterDefinitionLoader;
-    private final HashMap<Integer, MonsterDefinition> monsterDefinitionMap = new HashMap<>();
-
     @Autowired
-    public MonsterDefinitionCache(MonsterDefinitionLoader monsterDefinitionLoader) {
-        this.monsterDefinitionLoader = monsterDefinitionLoader;
-    }
+    private MonsterDefinitionLoader monsterDefinitionLoader;
+
+    private final HashMap<Integer, MonsterDefinition> monsterDefinitionMap = new HashMap<>();
 
     @PostConstruct
     public void init() throws Exception {
         List<MonsterDefinition> monsterDefinitionList = monsterDefinitionLoader.loadMonsterDefinitions();
 
-        for(MonsterDefinition monsterDefinition : monsterDefinitionList) {
+        for (MonsterDefinition monsterDefinition : monsterDefinitionList) {
             monsterDefinitionMap.put(monsterDefinition.getId(), monsterDefinition);
         }
     }

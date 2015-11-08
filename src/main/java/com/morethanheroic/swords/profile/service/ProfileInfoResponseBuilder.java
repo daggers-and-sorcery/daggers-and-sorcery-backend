@@ -18,7 +18,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.item.service.ItemDefinitionCache;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 public class ProfileInfoResponseBuilder {
 
     private final GlobalAttributeCalculator globalAttributeCalculator;
-    private final ItemDefinitionManager itemDefinitionManager;
+    private final ItemDefinitionCache itemDefinitionCache;
     private final AttributeUtil attributeUtil;
     private final InventoryFacade inventoryFacade;
     private final EquipmentManager equipmentManager;
@@ -47,9 +47,9 @@ public class ProfileInfoResponseBuilder {
     private final SpellMapper spellMapper;
 
     @Autowired
-    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder, SpellDefinitionManager spellDefinitionManager, SpellMapper spellMapper) {
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder, SpellDefinitionManager spellDefinitionManager, SpellMapper spellMapper) {
         this.globalAttributeCalculator = globalAttributeCalculator;
-        this.itemDefinitionManager = itemDefinitionManager;
+        this.itemDefinitionCache = itemDefinitionCache;
         this.attributeUtil = attributeUtil;
         this.inventoryFacade = inventoryFacade;
         this.equipmentManager = equipmentManager;
@@ -88,7 +88,7 @@ public class ProfileInfoResponseBuilder {
             if (equipment == 0) {
                 slotData.put("empty", true);
             } else {
-                slotData.put("description", profileItemEntryResponseBuilder.buildItemEntry(itemDefinitionManager.getItemDefinition(equipment)));
+                slotData.put("description", profileItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment)));
             }
 
             equipmentHolder.put(slot.name(), slotData);
@@ -108,7 +108,7 @@ public class ProfileInfoResponseBuilder {
             HashMap<String, Object> itemData = new HashMap<>();
 
             itemData.put("item", item);
-            itemData.put("definition", profileItemEntryResponseBuilder.buildItemEntry(itemDefinitionManager.getItemDefinition(item.getItemId())));
+            itemData.put("definition", profileItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId())));
 
             inventoryData.add(itemData);
         }

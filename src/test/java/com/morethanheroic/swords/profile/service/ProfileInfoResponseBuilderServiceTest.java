@@ -14,7 +14,7 @@ import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModi
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.item.service.ItemDefinitionCache;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.testng.annotations.Test;
@@ -30,7 +30,7 @@ public class ProfileInfoResponseBuilderServiceTest {
 
     @Test
     public void testBuild() {
-        ProfileInfoResponseBuilder profileInfoResponseBuilder = new ProfileInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionManager.class), buildAttributeUtilMock(), buildInventoryManagerMock(), null, null, null, null, null);
+        ProfileInfoResponseBuilder profileInfoResponseBuilder = new ProfileInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionCache.class), buildAttributeUtilMock(), buildInventoryManagerMock(), null, null, null, null, null);
 
         Response response = profileInfoResponseBuilder.build(buildUserEntityMock());
 

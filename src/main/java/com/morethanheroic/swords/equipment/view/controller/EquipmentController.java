@@ -5,7 +5,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.item.service.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -20,21 +20,21 @@ public class EquipmentController {
 
     private final EquipmentManager equipmentManager;
     private final InventoryFacade inventoryFacade;
-    private final ItemDefinitionManager itemDefinitionManager;
+    private final ItemDefinitionCache itemDefinitionCache;
     private final EquipmentResponseBuilder equipmentResponseBuilder;
 
     @Autowired
-    public EquipmentController(InventoryFacade inventoryFacade, ItemDefinitionManager itemDefinitionManager, EquipmentManager equipmentManager, EquipmentResponseBuilder equipmentResponseBuilder) {
+    public EquipmentController(InventoryFacade inventoryFacade, ItemDefinitionCache itemDefinitionCache, EquipmentManager equipmentManager, EquipmentResponseBuilder equipmentResponseBuilder) {
         this.inventoryFacade = inventoryFacade;
-        this.itemDefinitionManager = itemDefinitionManager;
+        this.itemDefinitionCache = itemDefinitionCache;
         this.equipmentManager = equipmentManager;
         this.equipmentResponseBuilder = equipmentResponseBuilder;
     }
 
     @RequestMapping(value = "/equip/{itemId}", method = RequestMethod.GET)
     public Response equip(UserEntity user, @PathVariable int itemId) {
-        if (inventoryFacade.getInventory(user).hasItem(itemId) && itemDefinitionManager.getItemDefinition(itemId).isEquipment()) {
-            if(equipmentManager.getEquipment(user).equipItem(itemDefinitionManager.getItemDefinition(itemId))) {
+        if (inventoryFacade.getInventory(user).hasItem(itemId) && itemDefinitionCache.getItemDefinition(itemId).isEquipment()) {
+            if(equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getItemDefinition(itemId))) {
                 return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }
         }

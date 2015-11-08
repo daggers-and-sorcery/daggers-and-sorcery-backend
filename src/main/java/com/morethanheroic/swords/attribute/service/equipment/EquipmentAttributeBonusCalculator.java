@@ -7,7 +7,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.item.service.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class EquipmentAttributeBonusCalculator {
     private EquipmentManager equipmentManager;
 
     @Autowired
-    private ItemDefinitionManager itemDefinitionManager;
+    private ItemDefinitionCache itemDefinitionCache;
 
     public AttributeCalculationResult calculateEquipmentBonus(UserEntity userEntity, Attribute attribute) {
         AttributeCalculationResult result = new AttributeCalculationResult();
@@ -32,7 +32,7 @@ public class EquipmentAttributeBonusCalculator {
             int item = equipmentEntity.getEquipmentIdOnSlot(slot);
 
             if(item != EMPTY_EQUIPMENT_SLOT) {
-                calculateItemModifiers(result, attribute, itemDefinitionManager.getItemDefinition(item));
+                calculateItemModifiers(result, attribute, itemDefinitionCache.getItemDefinition(item));
             }
         }
 

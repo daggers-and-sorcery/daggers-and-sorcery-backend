@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.service;
 
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.item.service.ItemDefinitionCache;
 import com.morethanheroic.swords.item.service.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
@@ -18,7 +18,7 @@ public class JournalEntryResponseBuilder {
     private ResponseFactory responseFactory;
 
     @Autowired
-    private ItemDefinitionManager itemDefinitionManager;
+    private ItemDefinitionCache itemDefinitionCache;
 
     @Autowired
     private MonsterDefinitionCache monsterDefinitionCache;
@@ -34,7 +34,7 @@ public class JournalEntryResponseBuilder {
 
         switch (journalType) {
             case ITEM:
-                response.setData("journal_entry", itemEntryResponseBuilder.buildItemEntry(itemDefinitionManager.getItemDefinition(journalId)));
+                response.setData("journal_entry", itemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(journalId)));
                 break;
             case MONSTER:
                 response.setData("journal_entry", monsterEntryResponseBuilder.buildMonsterEntry(monsterDefinitionCache.getMonsterDefinition(journalId)));

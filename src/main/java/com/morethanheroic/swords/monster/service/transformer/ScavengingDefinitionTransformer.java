@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.monster.service.transformer;
 
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.item.service.ItemDefinitionCache;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawScavengingDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class ScavengingDefinitionTransformer {
 
     @Autowired
-    private ItemDefinitionManager itemDefinitionManager;
+    private ItemDefinitionCache itemDefinitionCache;
 
     @Autowired
     private ScavengingAmountDefinitionTransformer scavengingAmountDefinitionTransformer;
@@ -19,7 +19,7 @@ public class ScavengingDefinitionTransformer {
         ScavengingDefinition.ScavengeDefinitionBuilder scavengeDefinitionBuilder = new ScavengingDefinition.ScavengeDefinitionBuilder();
 
         scavengeDefinitionBuilder.setAmount(scavengingAmountDefinitionTransformer.transform(rawScavengingDefinition.getAmount()));
-        scavengeDefinitionBuilder.setItem(itemDefinitionManager.getItemDefinition(rawScavengingDefinition.getItem()));
+        scavengeDefinitionBuilder.setItem(itemDefinitionCache.getItemDefinition(rawScavengingDefinition.getItem()));
         scavengeDefinitionBuilder.setChance(rawScavengingDefinition.getChance());
 
         return scavengeDefinitionBuilder.build();
