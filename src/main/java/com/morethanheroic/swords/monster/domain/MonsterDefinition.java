@@ -13,11 +13,14 @@ public class MonsterDefinition {
     private int mana;
     private int level;
     private int defense;
+    private int spellResistance;
     private DiceAttribute initiation;
     private DiceAttribute attack;
     private DiceAttribute aiming;
     private DiceAttribute rangedDamage;
     private DiceAttribute damage;
+    private DiceAttribute magicAttack;
+    private DiceAttribute magicDamage;
     private AttackType attackType;
     private List<DropDefinition> dropDefinitions;
     private List<ScavengingDefinition> scavengingDefinitions;
@@ -81,6 +84,18 @@ public class MonsterDefinition {
         return scavengingDefinitions;
     }
 
+    public DiceAttribute getMagicDamage() {
+        return magicDamage;
+    }
+
+    public DiceAttribute getMagicAttack() {
+        return magicAttack;
+    }
+
+    public int getSpellResistance() {
+        return spellResistance;
+    }
+
     public static class MonsterDefinitionBuilder {
 
         private final MonsterDefinition monsterDefinition = new MonsterDefinition();
@@ -129,6 +144,18 @@ public class MonsterDefinition {
             monsterDefinition.damage = damage;
         }
 
+        public void setMagicAttack(DiceAttribute attack) {
+            monsterDefinition.magicAttack = attack;
+        }
+
+        public void setMagicDamage(DiceAttribute damage) {
+            monsterDefinition.magicDamage = damage;
+        }
+
+        public void setSpellResistance(int spellResistance) {
+            monsterDefinition.spellResistance = spellResistance;
+        }
+
         public void setAttackType(AttackType attackType) {
             monsterDefinition.attackType = attackType;
         }
@@ -136,7 +163,6 @@ public class MonsterDefinition {
         public void setDropDefinitions(List<DropDefinition> dropDefinitions) {
             monsterDefinition.dropDefinitions = dropDefinitions;
         }
-
 
         public void setScavengeDefinitions(List<ScavengingDefinition> scavengingDefinitions) {
             monsterDefinition.scavengingDefinitions = scavengingDefinitions;

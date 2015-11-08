@@ -28,6 +28,9 @@ public class CombatMessageBuilder {
     private final String[] RANGED_DAMAGE_TO_PLAYER_MESSANGE_LIST = new String[]{
             "${monster} shot you and successfully dealt ${damage} points of damage."
     };
+    private final String[] MAGIC_DAMAGE_TO_PLAYER_MESSANGE_LIST = new String[]{
+            "${monster} shot you with a magic missile and successfully dealt ${damage} points of damage."
+    };
     private final String[] MONSTER_MISS_MESSANGE_LIST = new String[]{
             "${monster} attacked you but missed."
     };
@@ -112,6 +115,18 @@ public class CombatMessageBuilder {
         combatMessage.addData("icon", "blood");
         combatMessage.addData("icon_color", "red");
         combatMessage.addData("message", RANGED_DAMAGE_TO_PLAYER_MESSANGE_LIST[random.nextInt(RANGED_DAMAGE_TO_PLAYER_MESSANGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildMagicDamageToPlayerMessage(String monster, int damage) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("monster", monster);
+        combatMessage.addData("damage", damage);
+        combatMessage.addData("icon", "blood");
+        combatMessage.addData("icon_color", "red");
+        combatMessage.addData("message", MAGIC_DAMAGE_TO_PLAYER_MESSANGE_LIST[random.nextInt(MAGIC_DAMAGE_TO_PLAYER_MESSANGE_LIST.length)]);
 
         return combatMessage;
     }

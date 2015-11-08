@@ -11,6 +11,7 @@
                 <xs:element name="mana" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="level" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="defense" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="spell-resistance" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="initiation" minOccurs="1">
                     <xs:complexType>
                         <xs:all>
@@ -76,11 +77,38 @@
                         </xs:all>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="magic-damage" minOccurs="1">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="value" type="xs:unsignedInt" minOccurs="1"/>
+                            <xs:element name="d2" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d4" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d6" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d8" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d10" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d20" type="xs:unsignedInt" minOccurs="0"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="magic-attack" minOccurs="1">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="value" type="xs:unsignedInt" minOccurs="1"/>
+                            <xs:element name="d2" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d4" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d6" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d8" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d10" type="xs:unsignedInt" minOccurs="0"/>
+                            <xs:element name="d20" type="xs:unsignedInt" minOccurs="0"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="attack-type" minOccurs="1">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:enumeration value="MELEE"/>
                             <xs:enumeration value="RANGED"/>
+                            <xs:enumeration value="MAGIC"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>

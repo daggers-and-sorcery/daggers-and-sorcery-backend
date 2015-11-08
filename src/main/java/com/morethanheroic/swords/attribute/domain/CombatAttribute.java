@@ -12,9 +12,11 @@ public enum CombatAttribute implements Attribute {
     LIFE(15, false, new GeneralAttribute[]{GeneralAttribute.VITALITY, GeneralAttribute.ENDURANCE}, 0.5),
     INITIATION(10, true, new GeneralAttribute[]{GeneralAttribute.SWIFTNESS, GeneralAttribute.PERCEPTION}, 0.5),
     ATTACK(10, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY, GeneralAttribute.SWIFTNESS}, 0.5),
+    MAGIC_ATTACK(10, true, new GeneralAttribute[]{GeneralAttribute.INTELLIGENCE, GeneralAttribute.WILLPOWER}, 0.5),
+    MAGIC_DAMAGE(10,true,new GeneralAttribute[]{GeneralAttribute.WILLPOWER},0.5),
     AIMING(10, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY, GeneralAttribute.PERCEPTION}, 0.5),
     DEFENSE(10, true, new GeneralAttribute[]{GeneralAttribute.ENDURANCE, GeneralAttribute.DEXTERITY}, 0.5),
-    SPELL_RESISTANCE(10, true, new GeneralAttribute[]{GeneralAttribute.WILLPOWER, GeneralAttribute.INTELLIGENCE}, 0.5),
+    SPELL_RESISTANCE(10, true, new GeneralAttribute[]{GeneralAttribute.WILLPOWER, GeneralAttribute.WISDOM}, 0.5),
     DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.STRENGTH}, 0.25),
     RANGED_DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY}, 0.25);
 

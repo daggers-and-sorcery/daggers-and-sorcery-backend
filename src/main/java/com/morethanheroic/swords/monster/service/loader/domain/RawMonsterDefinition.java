@@ -17,10 +17,16 @@ public class RawMonsterDefinition {
     private RawDiceAttribute initiation;
     private int level;
     private int defense;
+    @XmlElement(name = "spell-resistance")
+    private int spellResistance;
     private RawDiceAttribute attack;
     private RawDiceAttribute aiming;
     @XmlElement(name = "ranged-damage")
     private RawDiceAttribute rangedDamage;
+    @XmlElement(name = "magic-damage")
+    private RawDiceAttribute magicDamage;
+    @XmlElement(name = "magic-attack")
+    private RawDiceAttribute magicAttack;
     private RawDiceAttribute damage;
     @XmlElement(name = "attack-type")
     private AttackType attackType;
@@ -95,5 +101,17 @@ public class RawMonsterDefinition {
 
     public int getMana() {
         return mana;
+    }
+
+    public int getSpellResistance() {
+        return spellResistance;
+    }
+
+    public RawDiceAttribute getMagicDamage() {
+        return magicDamage;
+    }
+
+    public RawDiceAttribute getMagicAttack() {
+        return magicAttack;
     }
 }
