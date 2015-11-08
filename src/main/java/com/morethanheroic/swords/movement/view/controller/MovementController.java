@@ -27,8 +27,6 @@ public class MovementController {
     public Response move(UserEntity user, @RequestBody MovementRequest direction) {
         boolean result = movementManager.move(user, direction.getDirection());
 
-        //TODO: combat here!
-
         return movementResponseBuilder.build(user, result);
     }
 }
