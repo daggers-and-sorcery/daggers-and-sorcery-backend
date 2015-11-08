@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.settings.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.settings.repository.domain.CombatSettingsMapper;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.settings.service.SettingsListResponseBuilder;

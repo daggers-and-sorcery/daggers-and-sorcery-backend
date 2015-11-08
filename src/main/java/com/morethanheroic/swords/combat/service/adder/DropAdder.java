@@ -5,8 +5,7 @@ import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryManager;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class DropAdder {
     private DropCalculator dropCalculator;
 
     @Autowired
-    private InventoryManager inventoryManager;
+    private InventoryFacade inventoryFacade;
 
     @Autowired
     private CombatMessageBuilder combatMessageBuilder;
@@ -29,7 +28,7 @@ public class DropAdder {
     public void addDropsToUserFromMonsterDefinition(CombatResult result, UserEntity user, MonsterDefinition monster) {
         ArrayList<Drop> drops = dropCalculator.calculateDrop(monster);
 
-        InventoryEntity inventory = inventoryManager.getInventory(user);
+        InventoryEntity inventory = inventoryFacade.getInventory(user);
 
         for (Drop drop : drops) {
             result.addMessage(combatMessageBuilder.buildDropMessage(drop.getItem().getName(), drop.getAmount()));

@@ -11,9 +11,8 @@ public class MapObjectDefinition {
     @XmlElement
     private String name;
 
-    //TODO: change to enum when we decide the types
     @XmlElement
-    private String type;
+    private MapObjectType type;
 
     @XmlAttribute
     private int x;
@@ -25,7 +24,7 @@ public class MapObjectDefinition {
         return name;
     }
 
-    public String getType() {
+    public MapObjectType getType() {
         return type;
     }
 

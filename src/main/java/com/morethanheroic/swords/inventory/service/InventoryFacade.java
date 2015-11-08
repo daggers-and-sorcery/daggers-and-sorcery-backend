@@ -9,16 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InventoryManager {
-
-    private final InventoryMapper inventoryMapper;
-    private final JournalManager journalManager;
+public class InventoryFacade {
 
     @Autowired
-    public InventoryManager(InventoryMapper inventoryMapper, JournalManager journalManager) {
-        this.inventoryMapper = inventoryMapper;
-        this.journalManager = journalManager;
-    }
+    private InventoryMapper inventoryMapper;
+
+    @Autowired
+    private JournalManager journalManager;
 
     public InventoryEntity getInventory(UserEntity userEntity) {
         return new InventoryEntity(userEntity, inventoryMapper, journalManager);

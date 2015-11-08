@@ -3,8 +3,8 @@ package com.morethanheroic.swords.user.view.controller;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.common.response.ResponseFactory;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.HashMap;
 
 @RestController

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegenerationManager {
+public class RegenerationFacade {
 
     @Autowired
     private HealthRegenerationCalculator healthRegenerationCalculator;

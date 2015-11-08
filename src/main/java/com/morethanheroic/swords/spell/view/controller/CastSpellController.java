@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.CastSpellResponseBuilder;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;

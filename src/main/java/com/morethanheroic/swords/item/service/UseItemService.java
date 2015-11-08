@@ -4,7 +4,7 @@ import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculato
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
-import com.morethanheroic.swords.inventory.service.InventoryManager;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
@@ -15,21 +15,21 @@ import org.springframework.stereotype.Service;
 public class UseItemService {
 
     private final CombatEffectApplierService combatEffectApplierService;
-    private final InventoryManager inventoryManager;
+    private final InventoryFacade inventoryFacade;
     private final UserMapper userMapper;
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
-    public UseItemService(CombatEffectApplierService combatEffectApplierService, InventoryManager inventoryManager, UserMapper userMapper) {
+    public UseItemService(CombatEffectApplierService combatEffectApplierService, InventoryFacade inventoryFacade, UserMapper userMapper) {
         this.combatEffectApplierService = combatEffectApplierService;
-        this.inventoryManager = inventoryManager;
+        this.inventoryFacade = inventoryFacade;
         this.userMapper = userMapper;
     }
 
     public boolean canUseItem(UserEntity userEntity, ItemDefinition item) {
-        return inventoryManager.getInventory(userEntity).hasItem(item.getId());
+        return inventoryFacade.getInventory(userEntity).hasItem(item.getId());
     }
 
     public void useItem(UserCombatEntity combatEntity, ItemDefinition item) {

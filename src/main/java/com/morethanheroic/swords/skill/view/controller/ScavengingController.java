@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.common.response.ResponseFactory;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

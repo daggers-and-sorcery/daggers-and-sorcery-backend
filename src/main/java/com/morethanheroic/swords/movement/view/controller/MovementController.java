@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.movement.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.movement.service.MovementManager;
 import com.morethanheroic.swords.movement.service.MovementResponseBuilder;
 import com.morethanheroic.swords.movement.view.request.MovementRequest;
@@ -26,8 +26,6 @@ public class MovementController {
     @RequestMapping(value = "/character/move", method = RequestMethod.POST)
     public Response move(UserEntity user, @RequestBody MovementRequest direction) {
         boolean result = movementManager.move(user, direction.getDirection());
-
-        //TODO: combat here!
 
         return movementResponseBuilder.build(user, result);
     }

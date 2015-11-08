@@ -1,8 +1,9 @@
-package com.morethanheroic.swords.common.response;
+package com.morethanheroic.swords.response.service;
 
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.response.domain.*;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

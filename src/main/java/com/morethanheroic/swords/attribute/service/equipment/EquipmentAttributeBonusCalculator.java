@@ -1,18 +1,16 @@
 package com.morethanheroic.swords.attribute.service.equipment;
 
+import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
-import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
-import com.morethanheroic.swords.skill.domain.SkillEntity;
-import com.morethanheroic.swords.skill.service.SkillManager;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +24,10 @@ public class EquipmentAttributeBonusCalculator {
     private EquipmentManager equipmentManager;
 
     @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
+    private ItemDefinitionCache itemDefinitionCache;
 
     @Autowired
-    private ItemDefinitionManager itemDefinitionManager;
+    private GlobalAttributeCalculator globalAttributeCalculator;
 
     public AttributeCalculationResult calculateEquipmentBonus(UserEntity userEntity, Attribute attribute) {
         AttributeCalculationResult result = new AttributeCalculationResult(attribute);
@@ -40,7 +38,7 @@ public class EquipmentAttributeBonusCalculator {
             int item = equipmentEntity.getEquipmentIdOnSlot(slot);
 
             if(item != EMPTY_EQUIPMENT_SLOT) {
-                calculateItemModifiers(result, itemDefinitionManager.getItemDefinition(item));
+                calculateItemModifiers(result, itemDefinitionCache.getItemDefinition(item));
             }
         }
 

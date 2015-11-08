@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.settings.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseEntity;
 import com.morethanheroic.swords.settings.repository.domain.CombatSettingsMapper;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InsertCombatSettingController {
 
     @Autowired
-    private ItemDefinitionManager itemDefinitionManager;
+    private ItemDefinitionCache itemDefinitionCache;
 
     @Autowired
     private InsertSettingsResponseBuilder insertSettingsResponseBuilder;
@@ -32,7 +32,7 @@ public class InsertCombatSettingController {
 
     @RequestMapping(value = "/combat/settings/insert", method = RequestMethod.POST)
     public Response insertSetting(UserEntity userEntity, @RequestBody InsertCombatSettingRequest insertCombatSettingRequest) {
-        if(insertCombatSettingRequest.getType() == SettingType.ITEM && !itemDefinitionManager.getItemDefinition(insertCombatSettingRequest.getUse()).isUsable()) {
+        if(insertCombatSettingRequest.getType() == SettingType.ITEM && !itemDefinitionCache.getItemDefinition(insertCombatSettingRequest.getUse()).isUsable()) {
             return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-usable item selected!");
         }
 

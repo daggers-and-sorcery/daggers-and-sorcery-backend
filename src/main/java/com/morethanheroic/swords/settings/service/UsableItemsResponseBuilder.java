@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.settings.service;
 
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.common.response.ResponseFactory;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseFactory;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -17,12 +17,12 @@ import java.util.List;
 public class UsableItemsResponseBuilder {
 
     private final ResponseFactory responseFactory;
-    private final ItemDefinitionManager itemDefinitionManager;
+    private final ItemDefinitionCache itemDefinitionCache;
 
     @Autowired
-    public UsableItemsResponseBuilder(ResponseFactory responseFactory, ItemDefinitionManager itemDefinitionManager) {
+    public UsableItemsResponseBuilder(ResponseFactory responseFactory, ItemDefinitionCache itemDefinitionCache) {
         this.responseFactory = responseFactory;
-        this.itemDefinitionManager = itemDefinitionManager;
+        this.itemDefinitionCache = itemDefinitionCache;
     }
 
     public Response build(UserEntity userEntity, List<JournalDatabaseEntity> journalItems) {
@@ -30,7 +30,7 @@ public class UsableItemsResponseBuilder {
 
         ArrayList<HashMap<String, Object>> itemsResult = new ArrayList<>();
         for(JournalDatabaseEntity journalEntry : journalItems) {
-            ItemDefinition itemDefinition = itemDefinitionManager.getItemDefinition(journalEntry.getJournalId());
+            ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(journalEntry.getJournalId());
 
             if(itemDefinition.isUsable()) {
                 HashMap<String, Object> itemData = new HashMap<>();

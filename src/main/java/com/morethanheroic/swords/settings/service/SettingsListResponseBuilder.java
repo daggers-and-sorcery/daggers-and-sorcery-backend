@@ -4,10 +4,10 @@ import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.model.TriggerType;
 import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseEntity;
 import com.morethanheroic.swords.settings.repository.dao.SettingsDatabaseEntity;
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.common.response.ResponseFactory;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
-import com.morethanheroic.swords.monster.service.MonsterDefinitionCache;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseFactory;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ public class SettingsListResponseBuilder {
 
     private final ResponseFactory responseFactory;
     private final MonsterDefinitionCache monsterDefinitionCache;
-    private final ItemDefinitionManager itemDefinitionManager;
+    private final ItemDefinitionCache itemDefinitionCache;
     private final SpellDefinitionManager spellDefinitionManager;
 
     @Autowired
-    public SettingsListResponseBuilder(ResponseFactory responseFactory, MonsterDefinitionCache monsterDefinitionCache, ItemDefinitionManager itemDefinitionManager, SpellDefinitionManager spellDefinitionManager) {
+    public SettingsListResponseBuilder(ResponseFactory responseFactory, MonsterDefinitionCache monsterDefinitionCache, ItemDefinitionCache itemDefinitionCache, SpellDefinitionManager spellDefinitionManager) {
         this.responseFactory = responseFactory;
         this.monsterDefinitionCache = monsterDefinitionCache;
-        this.itemDefinitionManager = itemDefinitionManager;
+        this.itemDefinitionCache = itemDefinitionCache;
         this.spellDefinitionManager = spellDefinitionManager;
     }
 
@@ -49,7 +49,7 @@ public class SettingsListResponseBuilder {
 
             SettingType type = combatSettingsDatabaseEntity.getType();
             if (type == SettingType.ITEM) {
-                settingsData.put("use", itemDefinitionManager.getItemDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
+                settingsData.put("use", itemDefinitionCache.getItemDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
             } else {
                 settingsData.put("use", spellDefinitionManager.getSpellDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
             }

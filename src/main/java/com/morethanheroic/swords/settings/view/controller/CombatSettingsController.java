@@ -1,18 +1,12 @@
 package com.morethanheroic.swords.settings.view.controller;
 
 import com.morethanheroic.swords.settings.model.SettingType;
-import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseEntity;
-import com.morethanheroic.swords.settings.repository.domain.CombatSettingsMapper;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.settings.service.*;
-import com.morethanheroic.swords.settings.view.request.InsertCombatSettingRequest;
-import com.morethanheroic.swords.settings.view.request.RemoveCombatSettingRequest;
 import com.morethanheroic.swords.settings.view.request.SaveOtherSettingsRequest;
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
-import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

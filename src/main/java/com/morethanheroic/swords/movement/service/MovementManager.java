@@ -11,16 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class MovementManager {
 
-    private final MapManager mapManager;
-    private final GlobalAttributeCalculator globalAttributeCalculator;
+    @Autowired
+    private MapManager mapManager;
 
     @Autowired
-    public MovementManager(MapManager mapManager, GlobalAttributeCalculator globalAttributeCalculator) {
-        this.mapManager = mapManager;
-        this.globalAttributeCalculator = globalAttributeCalculator;
-    }
+    private GlobalAttributeCalculator globalAttributeCalculator;
 
-    //TODO: TEST!
     public boolean move(UserEntity user, MovementType type) {
         int targetX = getTargetXCoordinate(user, type);
         int targetY = getTargetYCoordinate(user, type);

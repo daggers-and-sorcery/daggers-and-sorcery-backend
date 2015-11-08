@@ -1,12 +1,11 @@
 package com.morethanheroic.swords.equipment.view.controller;
 
-import com.morethanheroic.swords.common.response.Response;
-import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
-import com.morethanheroic.swords.inventory.service.InventoryManager;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -20,22 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class EquipmentController {
 
     private final EquipmentManager equipmentManager;
-    private final InventoryManager inventoryManager;
-    private final ItemDefinitionManager itemDefinitionManager;
+    private final InventoryFacade inventoryFacade;
+    private final ItemDefinitionCache itemDefinitionCache;
     private final EquipmentResponseBuilder equipmentResponseBuilder;
 
     @Autowired
-    public EquipmentController(InventoryManager inventoryManager, ItemDefinitionManager itemDefinitionManager, EquipmentManager equipmentManager, EquipmentResponseBuilder equipmentResponseBuilder) {
-        this.inventoryManager = inventoryManager;
-        this.itemDefinitionManager = itemDefinitionManager;
+    public EquipmentController(InventoryFacade inventoryFacade, ItemDefinitionCache itemDefinitionCache, EquipmentManager equipmentManager, EquipmentResponseBuilder equipmentResponseBuilder) {
+        this.inventoryFacade = inventoryFacade;
+        this.itemDefinitionCache = itemDefinitionCache;
         this.equipmentManager = equipmentManager;
         this.equipmentResponseBuilder = equipmentResponseBuilder;
     }
 
     @RequestMapping(value = "/equip/{itemId}", method = RequestMethod.GET)
     public Response equip(UserEntity user, @PathVariable int itemId) {
-        if (inventoryManager.getInventory(user).hasItem(itemId) && itemDefinitionManager.getItemDefinition(itemId).isEquipment()) {
-            if(equipmentManager.getEquipment(user).equipItem(itemDefinitionManager.getItemDefinition(itemId))) {
+        if (inventoryFacade.getInventory(user).hasItem(itemId) && itemDefinitionCache.getItemDefinition(itemId).isEquipment()) {
+            if(equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getItemDefinition(itemId))) {
                 return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }
         }

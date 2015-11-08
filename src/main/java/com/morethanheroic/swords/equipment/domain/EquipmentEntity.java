@@ -5,7 +5,7 @@ import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculato
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.ItemDefinitionManager;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 public class EquipmentEntity {
@@ -15,14 +15,14 @@ public class EquipmentEntity {
     private final EquipmentMapper equipmentMapper;
     private final EquipmentSlotMapper equipmentSlotMapper;
     private final GlobalAttributeCalculator globalAttributeCalculator;
-    private final ItemDefinitionManager itemDefinitionManager;
+    private final ItemDefinitionCache itemDefinitionCache;
 
-    public EquipmentEntity(UserEntity userEntity, InventoryEntity inventoryEntity, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionManager itemDefinitionManager) {
+    public EquipmentEntity(UserEntity userEntity, InventoryEntity inventoryEntity, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache) {
         this.userEntity = userEntity;
         this.inventoryEntity = inventoryEntity;
         this.equipmentMapper = equipmentMapper;
         this.equipmentSlotMapper = equipmentSlotMapper;
-        this.itemDefinitionManager = itemDefinitionManager;
+        this.itemDefinitionCache = itemDefinitionCache;
         this.globalAttributeCalculator = globalAttributeCalculator;
     }
 
@@ -40,7 +40,7 @@ public class EquipmentEntity {
         } else {
             //Reequip the item we had before if not met the requirements for the new item after removing this (the previous)
             if(previousEquipment != 0) {
-                equipWithoutCheck(itemDefinitionManager.getItemDefinition(previousEquipment));
+                equipWithoutCheck(itemDefinitionCache.getItemDefinition(previousEquipment));
                 inventoryEntity.removeItem(previousEquipment, 1);
             }
         }
@@ -97,7 +97,7 @@ public class EquipmentEntity {
     }
 
     public ItemDefinition getEquipmentDefinitionOnSlot(EquipmentSlot slot) {
-        return itemDefinitionManager.getItemDefinition(getEquipmentIdOnSlot(slot));
+        return itemDefinitionCache.getItemDefinition(getEquipmentIdOnSlot(slot));
     }
 
     public int getEquipmentIdOnSlot(EquipmentSlot slot) {
