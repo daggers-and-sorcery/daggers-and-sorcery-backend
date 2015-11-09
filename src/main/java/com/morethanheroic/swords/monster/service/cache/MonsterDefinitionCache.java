@@ -21,8 +21,6 @@ public class MonsterDefinitionCache {
     public void init() throws Exception {
         List<MonsterDefinition> monsterDefinitionList = monsterDefinitionLoader.loadMonsterDefinitions();
 
-        System.out.println("MONSTERCOUNT: " + monsterDefinitionList.size());
-
         for (MonsterDefinition monsterDefinition : monsterDefinitionList) {
             monsterDefinitionMap.put(monsterDefinition.getId(), monsterDefinition);
         }
