@@ -19,6 +19,7 @@ import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.testng.annotations.Test;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 import static org.mockito.Matchers.any;
@@ -32,7 +33,7 @@ public class ProfileInfoResponseBuilderServiceTest {
     public void testBuild() {
         ProfileInfoResponseBuilder profileInfoResponseBuilder = new ProfileInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionCache.class), buildAttributeUtilMock(), buildInventoryManagerMock(), null, null, null, null, null);
 
-        Response response = profileInfoResponseBuilder.build(buildUserEntityMock());
+        Response response = profileInfoResponseBuilder.build(buildUserEntityMock(), mock(HttpSession.class));
 
         assertEquals(response.getDataMap(), buildExpectedResult());
     }
