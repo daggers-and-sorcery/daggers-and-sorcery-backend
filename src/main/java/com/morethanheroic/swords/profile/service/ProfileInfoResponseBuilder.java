@@ -11,6 +11,7 @@ import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
+import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculatorService;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
@@ -27,6 +28,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -42,24 +44,30 @@ public class ProfileInfoResponseBuilder {
     private final InventoryFacade inventoryFacade;
     private final EquipmentManager equipmentManager;
     private final ResponseFactory responseFactory;
-    private final ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder;
+    private final ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder;
     private final SpellDefinitionManager spellDefinitionManager;
     private final SpellMapper spellMapper;
 
     @Autowired
-    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileItemEntryResponseBuilder profileItemEntryResponseBuilder, SpellDefinitionManager spellDefinitionManager, SpellMapper spellMapper) {
+    private UnidentifiedItemIdCalculatorService unidentifiedItemIdCalculatorService;
+
+    @Autowired
+    private ProfileUnidentifiedItemEntryResponseBuilder profileUnidentifiedItemEntryResponseBuilder;
+
+    @Autowired
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionManager spellDefinitionManager, SpellMapper spellMapper) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionCache = itemDefinitionCache;
         this.attributeUtil = attributeUtil;
         this.inventoryFacade = inventoryFacade;
         this.equipmentManager = equipmentManager;
         this.responseFactory = responseFactory;
-        this.profileItemEntryResponseBuilder = profileItemEntryResponseBuilder;
+        this.profileIdentifiedItemEntryResponseBuilder = profileIdentifiedItemEntryResponseBuilder;
         this.spellDefinitionManager = spellDefinitionManager;
         this.spellMapper = spellMapper;
     }
 
-    public Response build(UserEntity user) {
+    public Response build(UserEntity user, HttpSession session) {
         Response response = responseFactory.newResponse(user);
 
         response.setData("attribute", buildAttributeResponse(user));
@@ -68,7 +76,7 @@ public class ProfileInfoResponseBuilder {
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
         response.setData("scavengingPoints", user.getScavengingPoint());
-        response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems()));
+        response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), session));
         response.setData("equipment", buildEquipmentResponse(user));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));
 
@@ -88,7 +96,7 @@ public class ProfileInfoResponseBuilder {
             if (equipment == 0) {
                 slotData.put("empty", true);
             } else {
-                slotData.put("description", profileItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment)));
+                slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment)));
             }
 
             equipmentHolder.put(slot.name(), slotData);
@@ -101,14 +109,19 @@ public class ProfileInfoResponseBuilder {
         return attributeUtil.getAllAttributes().stream().map(attribute -> buildAttributeResponse(user, attribute)).collect(Collectors.toCollection(LinkedList::new));
     }
 
-    private ArrayList<HashMap<String, Object>> buildInventoryResponse(List<ItemDatabaseEntity> items) {
+    private ArrayList<HashMap<String, Object>> buildInventoryResponse(List<ItemDatabaseEntity> items, HttpSession session) {
         ArrayList<HashMap<String, Object>> inventoryData = new ArrayList<>();
 
         for (ItemDatabaseEntity item : items) {
             HashMap<String, Object> itemData = new HashMap<>();
 
-            itemData.put("item", item);
-            itemData.put("definition", profileItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId())));
+            if(item.isIdentified()) {
+                itemData.put("item", item);
+                itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId())));
+            } else {
+                itemData.put("item", "Unidentified item");
+                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId()), unidentifiedItemIdCalculatorService.getUnidentifiedItemId(session,item.getItemId())));
+            }
 
             inventoryData.add(itemData);
         }
