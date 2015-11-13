@@ -44,13 +44,23 @@ public class InventoryEntity {
     }
 
     public void addItem(ItemDefinition item, int amount) {
-        addItem(item.getId(), amount);
+        addItem(item.getId(), amount, true);
+    }
+
+    public void addItem(ItemDefinition item, int amount, boolean identified) {
+        addItem(item.getId(), amount, identified);
     }
 
     public void addItem(int itemId, int amount) {
-        journalManager.createJournalEntry(userEntity, JournalType.ITEM, itemId);
+        addItem(itemId, amount, true);
+    }
 
-        inventoryMapper.addItem(userEntity.getId(), itemId, amount);
+    public void addItem(int itemId, int amount, boolean identified) {
+        if(identified) {
+            journalManager.createJournalEntry(userEntity, JournalType.ITEM, itemId);
+        }
+
+        inventoryMapper.addItem(userEntity.getId(), itemId, amount, identified);
     }
 
     public void removeItem(ItemDefinition item, int amount) {
