@@ -11,7 +11,7 @@ import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
-import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculatorService;
+import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
@@ -29,10 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,7 +46,7 @@ public class ProfileInfoResponseBuilder {
     private final SpellMapper spellMapper;
 
     @Autowired
-    private UnidentifiedItemIdCalculatorService unidentifiedItemIdCalculatorService;
+    private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
 
     @Autowired
     private ProfileUnidentifiedItemEntryResponseBuilder profileUnidentifiedItemEntryResponseBuilder;
@@ -115,18 +112,27 @@ public class ProfileInfoResponseBuilder {
         for (ItemDatabaseEntity item : items) {
             HashMap<String, Object> itemData = new HashMap<>();
 
+            itemData.put("item", convertItemDatabaseEntityToSendableObject(item));
+
             if(item.isIdentified()) {
-                itemData.put("item", item);
                 itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId())));
             } else {
-                itemData.put("item", "Unidentified item");
-                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId()), unidentifiedItemIdCalculatorService.getUnidentifiedItemId(session,item.getItemId())));
+                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, item.getItemId())));
             }
 
             inventoryData.add(itemData);
         }
 
         return inventoryData;
+    }
+
+    private Map<String, Object> convertItemDatabaseEntityToSendableObject(ItemDatabaseEntity itemDatabaseEntity) {
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("itemId", itemDatabaseEntity.getItemId());
+        result.put("amount", itemDatabaseEntity.getAmount());
+
+        return result;
     }
 
     private HashMap<String, Object> buildAttributeResponse(UserEntity user, Attribute attribute) {

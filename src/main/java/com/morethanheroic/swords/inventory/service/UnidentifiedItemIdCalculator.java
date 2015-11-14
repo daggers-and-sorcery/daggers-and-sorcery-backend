@@ -6,14 +6,20 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
-public class UnidentifiedItemIdCalculatorService {
+public class UnidentifiedItemIdCalculator {
 
     @Autowired
     private Random random;
 
+    public boolean isUnidentifiedItem(int itemId) {
+        return itemId > Short.MAX_VALUE;
+    }
+
+    //TODO: Move HttpSession out of this! It's a sevrvice, shouldn't know about sessions and shit like that!
     @SuppressWarnings("unchecked")
     public int getUnidentifiedItemId(HttpSession session, int itemId) {
         HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP);
@@ -29,6 +35,23 @@ public class UnidentifiedItemIdCalculatorService {
         }
 
         return unidentifiedItemMap.get(itemId);
+    }
+
+    @SuppressWarnings("unchecked")
+    public int getRealItemId(HttpSession session, int unidentifiedId) {
+        HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP);
+
+        if(unidentifiedItemMap != null) {
+            for(Map.Entry<Integer, Integer> entry : unidentifiedItemMap.entrySet()) {
+                Integer unidentifiedMapEntryId = entry.getValue();
+
+                if(unidentifiedMapEntryId == unidentifiedId) {
+                    return  entry.getKey();
+                }
+            }
+        }
+
+        return unidentifiedId;
     }
 
     private int getValidKey(HashMap<Integer, Integer> map) {
