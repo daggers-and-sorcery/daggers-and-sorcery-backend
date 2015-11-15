@@ -41,12 +41,10 @@ public class EquipmentController {
     public Response equip(UserEntity user, HttpSession session, @PathVariable int itemId) {
         if (unidentifiedItemIdCalculator.isUnidentifiedItem(itemId)) {
             itemId = unidentifiedItemIdCalculator.getRealItemId(session, itemId);
-
-            System.out.println(itemId);
         }
 
         if (inventoryFacade.getInventory(user).hasItem(itemId) && itemDefinitionCache.getItemDefinition(itemId).isEquipment()) {
-            if (equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getItemDefinition(itemId))) {
+            if (equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getItemDefinition(itemId), unidentifiedItemIdCalculator.isUnidentifiedItem(itemId))) {
                 return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }
         }

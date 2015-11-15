@@ -2,6 +2,7 @@ package com.morethanheroic.swords.equipment.domain;
 
 import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -26,21 +27,22 @@ public class EquipmentEntity {
         this.globalAttributeCalculator = globalAttributeCalculator;
     }
 
-    public boolean equipItem(ItemDefinition item) {
+    public boolean equipItem(ItemDefinition item, boolean identified) {
         EquipmentSlot equipmentSlot  = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
         int previousEquipment = getEquipmentIdOnSlot(equipmentSlot);
 
+        //Unequip the previous equipment first because the calculation should be good without it
         unequipItem(equipmentSlot);
 
         if(canEquip(item)) {
-            equipWithoutCheck(item);
+            equipWithoutCheck(item, identified);
             inventoryEntity.removeItem(item.getId(), 1);
 
             return true;
         } else {
             //Reequip the item we had before if not met the requirements for the new item after removing this (the previous)
             if(previousEquipment != 0) {
-                equipWithoutCheck(itemDefinitionCache.getItemDefinition(previousEquipment));
+                equipWithoutCheck(itemDefinitionCache.getItemDefinition(previousEquipment), identified);
                 inventoryEntity.removeItem(previousEquipment, 1);
             }
         }
@@ -48,13 +50,13 @@ public class EquipmentEntity {
         return false;
     }
 
-    private void equipWithoutCheck(ItemDefinition item) {
+    private void equipWithoutCheck(ItemDefinition item, boolean identified) {
         switch (equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType())) {
             case WEAPON:
-                equipmentMapper.equipWeapon(userEntity.getId(), item.getId());
+                equipmentMapper.equipWeapon(userEntity.getId(), item.getId(), identified);
                 break;
             case OFFHAND:
-                equipmentMapper.equipOffhand(userEntity.getId(), item.getId());
+                equipmentMapper.equipOffhand(userEntity.getId(), item.getId(), identified);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -62,22 +64,24 @@ public class EquipmentEntity {
     }
 
     public int unequipItem(EquipmentSlot slot) {
+        EquipmentDatabaseEntity equipment = equipmentMapper.getEquipment(userEntity.getId());
+
         switch (slot) {
             case WEAPON:
-                int previousWeapon = equipmentMapper.getEquipment(userEntity.getId()).getWeapon();
+                int previousWeapon = equipment.getWeapon();
 
                 if (previousWeapon != 0) {
-                    inventoryEntity.addItem(previousWeapon, 1);
-                    equipmentMapper.equipWeapon(userEntity.getId(), 0);
+                    inventoryEntity.addItem(previousWeapon, 1, equipment.isWeaponIdentified());
+                    equipmentMapper.equipWeapon(userEntity.getId(), 0, true);
                 }
 
                 return previousWeapon;
             case OFFHAND:
-                int previousOffhand = equipmentMapper.getEquipment(userEntity.getId()).getOffhand();
+                int previousOffhand = equipment.getOffhand();
 
                 if (previousOffhand != 0) {
-                    inventoryEntity.addItem(previousOffhand, 1);
-                    equipmentMapper.equipOffhand(userEntity.getId(), 0);
+                    inventoryEntity.addItem(previousOffhand, 1, equipment.isOffhandIdentified());
+                    equipmentMapper.equipOffhand(userEntity.getId(), 0, true);
                 }
 
                 return previousOffhand;
