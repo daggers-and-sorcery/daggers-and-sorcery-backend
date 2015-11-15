@@ -74,13 +74,13 @@ public class ProfileInfoResponseBuilder {
         response.setData("lastLoginDate", user.getLastLoginDate());
         response.setData("scavengingPoints", user.getScavengingPoint());
         response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), session));
-        response.setData("equipment", buildEquipmentResponse(user));
+        response.setData("equipment", buildEquipmentResponse(user, session));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));
 
         return response;
     }
 
-    private HashMap<String, HashMap<String, Object>> buildEquipmentResponse(UserEntity userEntity) {
+    private HashMap<String, HashMap<String, Object>> buildEquipmentResponse(UserEntity userEntity, HttpSession session) {
         HashMap<String, HashMap<String, Object>> equipmentHolder = new HashMap<>();
 
         EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
@@ -93,7 +93,11 @@ public class ProfileInfoResponseBuilder {
             if (equipment == 0) {
                 slotData.put("empty", true);
             } else {
-                slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment)));
+                if (equipmentEntity.isEquipmentIdentifiedOnSlot(slot)) {
+                    slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment)));
+                } else {
+                    slotData.put("description", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, equipment)));
+                }
             }
 
             equipmentHolder.put(slot.name(), slotData);
@@ -114,7 +118,7 @@ public class ProfileInfoResponseBuilder {
 
             itemData.put("item", convertItemDatabaseEntityToSendableObject(item));
 
-            if(item.isIdentified()) {
+            if (item.isIdentified()) {
                 itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId())));
             } else {
                 itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, item.getItemId())));

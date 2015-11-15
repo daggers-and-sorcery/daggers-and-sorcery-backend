@@ -107,14 +107,48 @@ public class EquipmentEntity {
             case OFFHAND:
                 return equipmentMapper.getEquipment(userEntity.getId()).getOffhand();
             case HELM:
+                return equipmentMapper.getEquipment(userEntity.getId()).getHelm();
             case GLOVES:
+                return equipmentMapper.getEquipment(userEntity.getId()).getGloves();
             case RING:
+                return equipmentMapper.getEquipment(userEntity.getId()).getRing();
             case AMULET:
+                return equipmentMapper.getEquipment(userEntity.getId()).getAmulet();
             case BOOTS:
+                return equipmentMapper.getEquipment(userEntity.getId()).getBoots();
             case BRACER:
+                return equipmentMapper.getEquipment(userEntity.getId()).getBracer();
             case CHEST:
+                return equipmentMapper.getEquipment(userEntity.getId()).getChest();
             case LEGS:
-                return 0;
+                return equipmentMapper.getEquipment(userEntity.getId()).getLegs();
+            default:
+                throw new IllegalArgumentException("Wrong slot: " + slot);
+        }
+    }
+
+    public boolean isEquipmentIdentifiedOnSlot(EquipmentSlot slot) {
+        switch (slot) {
+            case WEAPON:
+                return equipmentMapper.getEquipment(userEntity.getId()).isWeaponIdentified();
+            case OFFHAND:
+                return equipmentMapper.getEquipment(userEntity.getId()).isOffhandIdentified();
+            case HELM:
+                return equipmentMapper.getEquipment(userEntity.getId()).isHelmIdentified();
+            case GLOVES:
+                return equipmentMapper.getEquipment(userEntity.getId()).isGlovesIdentified();
+            case RING:
+                return equipmentMapper.getEquipment(userEntity.getId()).isRingIdentified();
+            case AMULET:
+                return equipmentMapper.getEquipment(userEntity.getId()).isAmuletIdentified();
+            case BOOTS:
+                return equipmentMapper.getEquipment(userEntity.getId()).isBootsIdentified();
+            case BRACER:
+                return equipmentMapper.getEquipment(userEntity.getId()).isBracerIdentified();
+            case CHEST:
+                return equipmentMapper.getEquipment(userEntity.getId()).isChestIdentified();
+            case LEGS:
+                return equipmentMapper.getEquipment(userEntity.getId()).isLegsIdentified();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
         }
