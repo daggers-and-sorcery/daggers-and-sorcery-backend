@@ -9,6 +9,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 
 import java.util.List;
 
+//TODO: instead of true or false use an enum like IdentificationType.IDENTIFIED
 public class InventoryEntity {
 
     private final JournalManager journalManager;
@@ -22,25 +23,33 @@ public class InventoryEntity {
     }
 
     public boolean hasItem(int itemId) {
-        return getItemAmount(itemId) > 0;
+        return hasItem(itemId, true);
+    }
+
+    public boolean hasItem(int itemId, boolean identified) {
+        return getItemAmount(itemId, identified) > 0;
     }
 
     public boolean hasItemAmount(int itemId, int amount) {
-        return getItemAmount(itemId) > amount;
+        return hasItemAmount(itemId, amount, true);
+    }
+
+    public boolean hasItemAmount(int itemId, int amount, boolean identified) {
+        return getItemAmount(itemId, identified) > amount;
     }
 
     public int getItemAmount(int itemId) {
-        ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), itemId);
+        return getItemAmount(itemId, true);
+    }
+
+    public int getItemAmount(int itemId, boolean identified) {
+        ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), itemId, identified);
 
         if (dbEntity != null) {
             return dbEntity.getAmount();
         }
 
         return 0;
-    }
-
-    public List<ItemDatabaseEntity> getItems() {
-        return inventoryMapper.getItems(userEntity.getId());
     }
 
     public void addItem(ItemDefinition item, int amount) {
@@ -56,7 +65,7 @@ public class InventoryEntity {
     }
 
     public void addItem(int itemId, int amount, boolean identified) {
-        if(identified) {
+        if (identified) {
             journalManager.createJournalEntry(userEntity, JournalType.ITEM, itemId);
         }
 
@@ -64,16 +73,28 @@ public class InventoryEntity {
     }
 
     public void removeItem(ItemDefinition item, int amount) {
-        removeItem(item.getId(), amount);
+        removeItem(item.getId(), amount, true);
+    }
+
+    public void removeItem(ItemDefinition item, int amount, boolean identified) {
+        removeItem(item.getId(), amount, identified);
     }
 
     public void removeItem(int itemId, int amount) {
-        int amountBeforeRemove = getItemAmount(itemId);
+        removeItem(itemId, amount, true);
+    }
+
+    public void removeItem(int itemId, int amount, boolean identified) {
+        int amountBeforeRemove = getItemAmount(itemId, identified);
 
         if (amountBeforeRemove - amount > 0) {
-            inventoryMapper.removeItem(userEntity.getId(), itemId, amountBeforeRemove - amount);
+            inventoryMapper.removeItem(userEntity.getId(), itemId, amountBeforeRemove - amount, identified);
         } else {
-            inventoryMapper.deleteItem(userEntity.getId(), itemId);
+            inventoryMapper.deleteItem(userEntity.getId(), itemId, identified);
         }
+    }
+
+    public List<ItemDatabaseEntity> getItems() {
+        return inventoryMapper.getItems(userEntity.getId());
     }
 }

@@ -15,11 +15,15 @@ public class UnidentifiedItemIdCalculator {
     @Autowired
     private Random random;
 
+    public boolean isIdentifiedItem(int itemId) {
+        return !isUnidentifiedItem(itemId);
+    }
+
     public boolean isUnidentifiedItem(int itemId) {
         return itemId > Short.MAX_VALUE;
     }
 
-    //TODO: Move HttpSession out of this! It's a sevrvice, shouldn't know about sessions and shit like that!
+    //TODO: Move HttpSession out of this! It's a service, shouldn't know about sessions and shit like that!
     @SuppressWarnings("unchecked")
     public int getUnidentifiedItemId(HttpSession session, int itemId) {
         HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP);
@@ -30,7 +34,7 @@ public class UnidentifiedItemIdCalculator {
             session.setAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP, unidentifiedItemMap);
         }
 
-        if(!unidentifiedItemMap.containsKey(itemId)) {
+        if (!unidentifiedItemMap.containsKey(itemId)) {
             unidentifiedItemMap.put(itemId, getValidKey(unidentifiedItemMap));
         }
 
@@ -41,12 +45,12 @@ public class UnidentifiedItemIdCalculator {
     public int getRealItemId(HttpSession session, int unidentifiedId) {
         HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP);
 
-        if(unidentifiedItemMap != null) {
-            for(Map.Entry<Integer, Integer> entry : unidentifiedItemMap.entrySet()) {
+        if (unidentifiedItemMap != null) {
+            for (Map.Entry<Integer, Integer> entry : unidentifiedItemMap.entrySet()) {
                 Integer unidentifiedMapEntryId = entry.getValue();
 
-                if(unidentifiedMapEntryId == unidentifiedId) {
-                    return  entry.getKey();
+                if (unidentifiedMapEntryId == unidentifiedId) {
+                    return entry.getKey();
                 }
             }
         }

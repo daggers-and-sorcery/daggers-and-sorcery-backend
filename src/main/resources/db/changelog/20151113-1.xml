@@ -6,8 +6,10 @@
     <changeSet author="laxika" id="20151113-1">
         <addColumn tableName="inventory">
             <column name="identified" type="tinyint(1) unsigned" defaultValue="1">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </addColumn>
+        <dropPrimaryKey tableName="inventory"/>
+        <addPrimaryKey columnNames="user_id, item_id, identified" tableName="inventory"/>
     </changeSet>
 </databaseChangeLog>

@@ -33,7 +33,7 @@ public class UseSpellService {
 
         for (SpellCost spellCost : spell.getSpellCosts()) {
             if (spellCost.getType() == CostType.ITEM) {
-                if (!inventoryEntity.hasItemAmount(spellCost.getId(), spellCost.getAmount())) {
+                if (!inventoryEntity.hasItemAmount(spellCost.getId(), spellCost.getAmount(), true)) {
                     return false;
                 }
             } else if (spellCost.getType() == CostType.MANA) {
@@ -51,7 +51,7 @@ public class UseSpellService {
 
         for (SpellCost spellCost : spell.getSpellCosts()) {
             if (spellCost.getType() == CostType.ITEM) {
-                if (!inventoryEntity.hasItemAmount(spellCost.getId(), spellCost.getAmount())) {
+                if (!inventoryEntity.hasItemAmount(spellCost.getId(), spellCost.getAmount(), true)) {
                     return false;
                 }
             } else if (spellCost.getType() == CostType.MANA) {

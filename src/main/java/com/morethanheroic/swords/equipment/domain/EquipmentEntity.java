@@ -28,22 +28,22 @@ public class EquipmentEntity {
     }
 
     public boolean equipItem(ItemDefinition item, boolean identified) {
-        EquipmentSlot equipmentSlot  = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
+        EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
         int previousEquipment = getEquipmentIdOnSlot(equipmentSlot);
 
         //Unequip the previous equipment first because the calculation should be good without it
         unequipItem(equipmentSlot);
 
-        if(canEquip(item)) {
+        if (canEquip(item)) {
             equipWithoutCheck(item, identified);
-            inventoryEntity.removeItem(item.getId(), 1);
+            inventoryEntity.removeItem(item.getId(), 1, identified);
 
             return true;
         } else {
             //Reequip the item we had before if not met the requirements for the new item after removing this (the previous)
-            if(previousEquipment != 0) {
+            if (previousEquipment != 0) {
                 equipWithoutCheck(itemDefinitionCache.getItemDefinition(previousEquipment), identified);
-                inventoryEntity.removeItem(previousEquipment, 1);
+                inventoryEntity.removeItem(previousEquipment, 1, identified);
             }
         }
 
@@ -91,8 +91,8 @@ public class EquipmentEntity {
     }
 
     public boolean canEquip(ItemDefinition item) {
-        for(AttributeRequirementDefinition requirement : item.getAllRequirements()) {
-            if(globalAttributeCalculator.calculateActualValue(userEntity, requirement.getAttribute()).getValue() < requirement.getAmount()) {
+        for (AttributeRequirementDefinition requirement : item.getAllRequirements()) {
+            if (globalAttributeCalculator.calculateActualValue(userEntity, requirement.getAttribute()).getValue() < requirement.getAmount()) {
                 return false;
             }
         }

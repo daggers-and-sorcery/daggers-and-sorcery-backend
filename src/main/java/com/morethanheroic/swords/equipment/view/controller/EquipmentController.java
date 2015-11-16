@@ -1,12 +1,12 @@
 package com.morethanheroic.swords.equipment.view.controller;
 
-import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
-import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -39,12 +39,14 @@ public class EquipmentController {
 
     @RequestMapping(value = "/equip/{itemId}", method = RequestMethod.GET)
     public Response equip(UserEntity user, HttpSession session, @PathVariable int itemId) {
-        if (unidentifiedItemIdCalculator.isUnidentifiedItem(itemId)) {
+        boolean identifiedItem = unidentifiedItemIdCalculator.isIdentifiedItem(itemId);
+
+        if (!identifiedItem) {
             itemId = unidentifiedItemIdCalculator.getRealItemId(session, itemId);
         }
 
-        if (inventoryFacade.getInventory(user).hasItem(itemId) && itemDefinitionCache.getItemDefinition(itemId).isEquipment()) {
-            if (equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getItemDefinition(itemId), unidentifiedItemIdCalculator.isUnidentifiedItem(itemId))) {
+        if (inventoryFacade.getInventory(user).hasItem(itemId, identifiedItem) && itemDefinitionCache.getItemDefinition(itemId).isEquipment()) {
+            if (equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getItemDefinition(itemId), identifiedItem)) {
                 return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }
         }
