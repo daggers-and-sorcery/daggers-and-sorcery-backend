@@ -22,7 +22,7 @@ public class SpellDefinitionLoader {
     @Autowired
     private SpellDefinitionTransformer spellDefinitionTransformer;
 
-    public List<SpellDefinition> loadSpellDefinitions() throws Exception {
+    public List<SpellDefinition> loadSpellDefinitions() throws JAXBException, IOException, SAXException {
         return loadRawSpellDefinitions().stream().map(spellDefinitionTransformer::transform).collect(Collectors.toList());
     }
 

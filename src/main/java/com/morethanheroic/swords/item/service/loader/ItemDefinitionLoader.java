@@ -10,8 +10,8 @@ import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemDefinitionLoader {
@@ -22,15 +22,8 @@ public class ItemDefinitionLoader {
     @Autowired
     private ItemDefinitionTransformer itemDefinitionTransformer;
 
-    public List<ItemDefinition> loadItemDefinitions() throws Exception {
-        List<RawItemDefinition> rawItemDefinitions = loadRawItemDefinitions();
-        List<ItemDefinition> result = new ArrayList<>();
-
-        for (RawItemDefinition rawItemDefinition : rawItemDefinitions) {
-            result.add(itemDefinitionTransformer.transform(rawItemDefinition));
-        }
-
-        return result;
+    public List<ItemDefinition> loadItemDefinitions() throws JAXBException, IOException, SAXException {
+        return loadRawItemDefinitions().stream().map(itemDefinitionTransformer::transform).collect(Collectors.toList());
     }
 
     @SuppressWarnings("unchecked")
