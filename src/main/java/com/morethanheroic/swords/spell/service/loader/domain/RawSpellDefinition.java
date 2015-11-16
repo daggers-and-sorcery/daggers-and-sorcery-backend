@@ -1,4 +1,6 @@
-package com.morethanheroic.swords.spell.service.domain;
+package com.morethanheroic.swords.spell.service.loader.domain;
+
+import com.morethanheroic.swords.spell.domain.SpellType;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
@@ -13,6 +15,9 @@ public class RawSpellDefinition {
 
     @XmlElement(name = "combat-spell")
     private boolean combatSpell;
+
+    @XmlElement(name = "open-page")
+    private boolean openPage;
 
     @XmlElementWrapper(name = "effect-list")
     @XmlElement(name = "effect")
@@ -52,5 +57,9 @@ public class RawSpellDefinition {
 
     public ArrayList<SpellCost> getCostList() {
         return costList;
+    }
+
+    public boolean isOpenPage() {
+        return openPage;
     }
 }

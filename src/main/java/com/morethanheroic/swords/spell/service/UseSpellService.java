@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.spell.service.domain;
+package com.morethanheroic.swords.spell.service;
 
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -6,6 +6,9 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.spell.domain.CostType;
+import com.morethanheroic.swords.spell.domain.SpellDefinition;
+import com.morethanheroic.swords.spell.service.loader.domain.SpellCost;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.spell.service.domain;
+package com.morethanheroic.swords.spell.service.loader.domain;
 
 import com.morethanheroic.swords.effect.service.domain.RawEffect;
 

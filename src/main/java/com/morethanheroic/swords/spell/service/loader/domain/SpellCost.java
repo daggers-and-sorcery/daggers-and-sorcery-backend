@@ -1,4 +1,6 @@
-package com.morethanheroic.swords.spell.service.domain;
+package com.morethanheroic.swords.spell.service.loader.domain;
+
+import com.morethanheroic.swords.spell.domain.CostType;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 @Service
-public class EffectDefinitionBuilder {
+public class CombatEffectTransformer {
 
     public CombatEffect build(RawEffect rawEffect) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         HashMap<String, EffectSetting> settings = new HashMap<>();

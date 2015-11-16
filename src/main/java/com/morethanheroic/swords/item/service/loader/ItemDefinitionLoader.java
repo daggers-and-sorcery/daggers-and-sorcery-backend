@@ -26,7 +26,7 @@ public class ItemDefinitionLoader {
         List<RawItemDefinition> rawItemDefinitions = loadRawItemDefinitions();
         List<ItemDefinition> result = new ArrayList<>();
 
-        for (RawItemDefinition rawItemDefinition: rawItemDefinitions) {
+        for (RawItemDefinition rawItemDefinition : rawItemDefinitions) {
             result.add(itemDefinitionTransformer.transform(rawItemDefinition));
         }
 

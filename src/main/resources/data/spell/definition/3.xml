@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<spell:spell xmlns:spell="http://www.swordsandsorcery.com/spell"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.swordsandsorcery.com/spell ../schema.xsd">
+    <spell:id>3</spell:id>
+    <spell:name>Lesser identification</spell:name>
+    <spell:type>ALTERATION</spell:type>
+    <spell:combat-spell>false</spell:combat-spell>
+    <spell:open-page>true</spell:open-page>
+</spell:spell>

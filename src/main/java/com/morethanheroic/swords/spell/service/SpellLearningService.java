@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.spell.service;
 
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
-import com.morethanheroic.swords.spell.service.domain.SpellDefinition;
+import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

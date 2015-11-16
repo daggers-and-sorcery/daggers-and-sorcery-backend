@@ -6,13 +6,13 @@ import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
 import com.morethanheroic.swords.settings.service.executor.CombatSettingsAction;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.service.UseItemService;
-import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
-import com.morethanheroic.swords.spell.service.domain.UseSpellService;
+import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
+import com.morethanheroic.swords.spell.service.UseSpellService;
 
 public class HealthCombatSettings extends CombatSettingsAction {
 
-    public HealthCombatSettings(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionManager spellDefinitionManager) {
-        super(useItemService, itemDefinitionCache, useSpellService, spellDefinitionManager);
+    public HealthCombatSettings(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache) {
+        super(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache);
     }
 
     @Override

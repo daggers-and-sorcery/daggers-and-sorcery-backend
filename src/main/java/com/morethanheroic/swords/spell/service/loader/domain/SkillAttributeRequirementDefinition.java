@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.spell.service.domain;
+package com.morethanheroic.swords.spell.service.loader.domain;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.item.service.loader.domain.RawAttributeRequirementDefinition;
