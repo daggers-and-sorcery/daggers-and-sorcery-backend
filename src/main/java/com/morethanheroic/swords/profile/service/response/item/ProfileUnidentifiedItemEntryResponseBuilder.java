@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.profile.service;
+package com.morethanheroic.swords.profile.service.response.item;
 
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.response.UnidentifiedItemEntryResponseBuilder;

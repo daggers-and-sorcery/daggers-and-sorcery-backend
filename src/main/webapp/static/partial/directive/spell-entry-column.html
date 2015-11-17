@@ -2,7 +2,8 @@
     <ul class="list-group attribute-list-group">
         <li class="list-group-item attribute-list-item" ng-repeat="spell in spellist" ng-if="$index % 3 === columnAlignId">
             <span ng-bind="spell.name"></span>
-            <span class="pull-right inventory-item-watch" ng-click="cast(spell.id)" style="width: 26px;height: 26px;margin-top: -3.5px;cursor: pointer;" ng-if="!spell.combatSpell"><img style="margin-top: -8px;width: 14px;height: 14px;" src="/icon/use.svg"></span>
+            <span class="pull-right inventory-item-watch" ng-click="cast(spell.id)" style="width: 26px;height: 26px;margin-top: -3.5px;cursor: pointer;" ng-if="!spell.combatSpell && !spell.openPage"><img style="margin-top: -8px;width: 14px;height: 14px;" src="/icon/use.svg"></span>
+            <span class="pull-right inventory-item-watch" ng-click="openPage(spell.id)" style="width: 26px;height: 26px;margin-top: -3.5px;cursor: pointer;" ng-if="spell.openPage"><img style="margin-top: -8px;width: 14px;height: 14px;" src="/icon/book.svg"></span>
             <span class="glyphicon glyphicon-eye-open pull-right inventory-item-watch" popover-template="spellPopover.templateUrl" popover-trigger="mouseenter" popover-placement="right"></span>
         </li>
     </ul>

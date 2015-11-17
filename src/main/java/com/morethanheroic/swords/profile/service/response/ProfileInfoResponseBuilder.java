@@ -1,29 +1,31 @@
-package com.morethanheroic.swords.profile.service;
+package com.morethanheroic.swords.profile.service.response;
 
-import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
-import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
-import com.morethanheroic.swords.attribute.service.calc.domain.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.SkillAttributeData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
-import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
-import com.morethanheroic.swords.response.domain.Response;
-import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
+import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifiedItemEntryResponseBuilder;
+import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseFactory;
+import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
-import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -252,6 +254,7 @@ public class ProfileInfoResponseBuilder {
             spellData.put("name", spellDefinition.getName());
             spellData.put("combatSpell", spellDefinition.isCombatSpell());
             spellData.put("castingCost", spellDefinition.getSpellCosts());
+            spellData.put("openPage", spellDefinition.isOpenPage());
 
             spellList.add(spellData);
         }
