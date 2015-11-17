@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SkillAttributeRequirementDefinition extends RawAttributeRequirementDefinition {
+public class RawSkillAttributeRequirementDefinition extends RawAttributeRequirementDefinition {
 
     private SkillAttribute attribute;
 

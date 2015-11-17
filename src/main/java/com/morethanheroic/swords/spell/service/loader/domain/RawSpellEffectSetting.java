@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SpellEffectSetting extends RawEffectSetting {
+public class RawSpellEffectSetting extends RawEffectSetting {
 
     @XmlElement(name = "setting-name")
     private String name;

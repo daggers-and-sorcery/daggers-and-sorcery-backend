@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SpellCost {
+public class RawSpellCost {
 
     @XmlElement(name = "cost-id")
     private int id;

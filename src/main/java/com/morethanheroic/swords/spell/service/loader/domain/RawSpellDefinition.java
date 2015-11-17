@@ -21,15 +21,15 @@ public class RawSpellDefinition {
 
     @XmlElementWrapper(name = "effect-list")
     @XmlElement(name = "effect")
-    private ArrayList<SpellEffect> effectList;
+    private ArrayList<RawSpellEffect> effectList;
 
     @XmlElementWrapper(name = "cost-list")
     @XmlElement(name = "cost")
-    private ArrayList<SpellCost> costList;
+    private ArrayList<RawSpellCost> costList;
 
     @XmlElementWrapper(name = "skill-requirements")
     @XmlElement(name = "requirement")
-    private ArrayList<SkillAttributeRequirementDefinition> skillRequirements;
+    private ArrayList<RawSkillAttributeRequirementDefinition> skillRequirements;
 
     public int getId() {
         return id;
@@ -47,15 +47,15 @@ public class RawSpellDefinition {
         return combatSpell;
     }
 
-    public ArrayList<SpellEffect> getEffectList() {
+    public ArrayList<RawSpellEffect> getEffectList() {
         return effectList;
     }
 
-    public ArrayList<SkillAttributeRequirementDefinition> getSkillRequirements() {
+    public ArrayList<RawSkillAttributeRequirementDefinition> getSkillRequirements() {
         return skillRequirements;
     }
 
-    public ArrayList<SpellCost> getCostList() {
+    public ArrayList<RawSpellCost> getCostList() {
         return costList;
     }
 

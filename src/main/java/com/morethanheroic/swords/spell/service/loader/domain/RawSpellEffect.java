@@ -6,20 +6,20 @@ import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SpellEffect extends RawEffect {
+public class RawSpellEffect extends RawEffect {
 
     @XmlAttribute
     private String target;
 
     @XmlElementWrapper(name = "settings-list")
     @XmlElement(name = "effect-setting")
-    private ArrayList<SpellEffectSetting> effectSettings;
+    private ArrayList<RawSpellEffectSetting> effectSettings;
 
     public String getTarget() {
         return target;
     }
 
-    public ArrayList<SpellEffectSetting> getEffectSettings() {
+    public ArrayList<RawSpellEffectSetting> getEffectSettings() {
         return effectSettings;
     }
 }

@@ -7,8 +7,8 @@ import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.spell.domain.CostType;
+import com.morethanheroic.swords.spell.domain.SpellCost;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
-import com.morethanheroic.swords.spell.service.loader.domain.SpellCost;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +34,13 @@ public class UseSpellService {
     public boolean canUseSpell(UserEntity userEntity, SpellDefinition spell) {
         InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
 
-        for (SpellCost spellCost : spell.getSpellCosts()) {
-            if (spellCost.getType() == CostType.ITEM) {
-                if (!inventoryEntity.hasItemAmount(spellCost.getId(), spellCost.getAmount(), true)) {
+        for (SpellCost rawSpellCost : spell.getSpellCosts()) {
+            if (rawSpellCost.getType() == CostType.ITEM) {
+                if (!inventoryEntity.hasItemAmount(rawSpellCost.getId(), rawSpellCost.getAmount(), true)) {
                     return false;
                 }
-            } else if (spellCost.getType() == CostType.MANA) {
-                if (userEntity.getMana() < spellCost.getAmount()) {
+            } else if (rawSpellCost.getType() == CostType.MANA) {
+                if (userEntity.getMana() < rawSpellCost.getAmount()) {
                     return false;
                 }
             }
@@ -52,13 +52,13 @@ public class UseSpellService {
     public boolean canUseSpell(UserCombatEntity combatEntity, SpellDefinition spell) {
         InventoryEntity inventoryEntity = inventoryFacade.getInventory(combatEntity.getUserEntity());
 
-        for (SpellCost spellCost : spell.getSpellCosts()) {
-            if (spellCost.getType() == CostType.ITEM) {
-                if (!inventoryEntity.hasItemAmount(spellCost.getId(), spellCost.getAmount(), true)) {
+        for (SpellCost rawSpellCost : spell.getSpellCosts()) {
+            if (rawSpellCost.getType() == CostType.ITEM) {
+                if (!inventoryEntity.hasItemAmount(rawSpellCost.getId(), rawSpellCost.getAmount(), true)) {
                     return false;
                 }
-            } else if (spellCost.getType() == CostType.MANA) {
-                if (combatEntity.getActualMana() < spellCost.getAmount()) {
+            } else if (rawSpellCost.getType() == CostType.MANA) {
+                if (combatEntity.getActualMana() < rawSpellCost.getAmount()) {
                     return false;
                 }
             }

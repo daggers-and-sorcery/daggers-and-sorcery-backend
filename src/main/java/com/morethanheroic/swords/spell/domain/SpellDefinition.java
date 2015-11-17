@@ -1,8 +1,6 @@
 package com.morethanheroic.swords.spell.domain;
 
 import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.spell.service.loader.domain.SkillAttributeRequirementDefinition;
-import com.morethanheroic.swords.spell.service.loader.domain.SpellCost;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +14,7 @@ public class SpellDefinition {
     private boolean combatSpell;
     private boolean openPage = false;
     private List<CombatEffect> combatEffects;
-    private List<SpellCost> spellCosts = Collections.unmodifiableList(new ArrayList<>());
+    private List<SpellCost> rawSpellCosts = Collections.unmodifiableList(new ArrayList<>());
     private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.unmodifiableList(new ArrayList<>());
 
     public int getId() {
@@ -44,7 +42,7 @@ public class SpellDefinition {
     }
 
     public List<SpellCost> getSpellCosts() {
-        return spellCosts;
+        return rawSpellCosts;
     }
 
     public boolean isOpenPage() {
@@ -79,8 +77,8 @@ public class SpellDefinition {
             spellDefinition.combatEffects = combatEffects;
         }
 
-        public void setSpellCosts(List<SpellCost> spellCosts) {
-            spellDefinition.spellCosts = spellCosts;
+        public void setSpellCosts(List<SpellCost> rawSpellCosts) {
+            spellDefinition.rawSpellCosts = rawSpellCosts;
         }
 
         public void setSkillRequirements(List<SkillAttributeRequirementDefinition> skillRequirements) {
