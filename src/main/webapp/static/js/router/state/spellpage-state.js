@@ -6,6 +6,13 @@ module.exports = {
     params: {
         'spell': null
     },
+    resolve: {
+        pagedata: function ($http, $stateParams) {
+            return $http({method: 'GET', url: '/spell/page/' + $stateParams.spell}).then(function (response) {
+                return response.data.data;
+            });
+        }
+    },
     template: function ($stateParams) {
         switch (parseInt($stateParams.spell)) {
             case 3:

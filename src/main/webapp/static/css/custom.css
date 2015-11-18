@@ -12,7 +12,7 @@
 .container {
     font-family: 'Open Sans', sans-serif;
     background-color: #2A3134;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 0;
 }
 
@@ -22,16 +22,20 @@ body {
 
 @media (min-width: 992px) {
     .content-middle {
-        padding-right: 0px;
+        padding-right: 0;
     }
 
     .content-right {
-        padding-left: 0px;
+        padding-left: 0;
     }
 
     .content-right .right-panel {
         margin-left: 0;
     }
+}
+
+.full-width-table {
+    width: 100%;
 }
 
 /** Navbar **/
@@ -41,8 +45,8 @@ body {
 }
 
 .navbar-collapse {
-    color:white;
-    padding:0;
+    color: white;
+    padding: 0;
 }
 
 .navbar-button-holder {
@@ -57,8 +61,8 @@ body {
 }
 
 .navbar-button-holder .progress {
-     margin-top: 13px;
-     margin-bottom:0;
+    margin-top: 13px;
+    margin-bottom: 0;
 }
 
 .navbar-button-holder .progress-info {
@@ -86,12 +90,12 @@ body {
 }
 
 .panel-shadow {
-    border: 1px solid rgba(0,0,0,0.2);
-    box-shadow: 3px 3px 1px rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.2);
 }
 
 .panel-default > .panel-heading {
-    background-color: rgba(0,1,1,0.1);
+    background-color: rgba(0, 1, 1, 0.1);
     font-weight: 700;
     font-size: 17px;
 }
@@ -112,7 +116,7 @@ body {
     /* equal to footer height */
     margin-bottom: -50px;
     background-color: #2A3134;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     padding-top: 0;
 }
 
@@ -128,8 +132,8 @@ body {
 
 .site-footer {
     padding: 0 15px;
-    border-left: 1px solid rgba(0,0,0,0.2);
-    border-right: 1px solid rgba(0,0,0,0.2);
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
     height: 50px;
 }
 
@@ -176,25 +180,25 @@ html, body, .container {
 }
 
 .icon {
-    width:32px;
-    height:32px;
+    width: 32px;
+    height: 32px;
 }
 
 /** Button **/
 .btn-default:hover {
     box-shadow: inset 0 1px 0 #9b413f;
-    background: -webkit-linear-gradient(top,#851e1b,#6e1a16);
-    background: linear-gradient(to bottom,#851e1b,#6e1a16);
+    background: -webkit-linear-gradient(top, #851e1b, #6e1a16);
+    background: linear-gradient(to bottom, #851e1b, #6e1a16);
     border: 1px solid #56120f;
-    color: #fff!important;
+    color: #fff !important;
 }
 
 .btn-default {
     height: 30px;
     line-height: 1.0;
-    background: linear-gradient(to bottom,#f0ebd7,#e6dbc1);
+    background: linear-gradient(to bottom, #f0ebd7, #e6dbc1);
     border: 1px solid #cebf93;
-    color: #861f1e!important;
+    color: #861f1e !important;
     box-shadow: none;
 }
 
@@ -252,8 +256,8 @@ html, body, .container {
     margin-bottom: 10px;
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.06);
-    border-color: rgba(0,0,0, 0.3);
-    box-shadow: 2px 2px 1px RGBa(0,0,0, 0.035);
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 1px RGBa(0, 0, 0, 0.035);
 }
 
 .attribute-list-item:last-child {
@@ -291,8 +295,8 @@ html, body, .container {
 }
 
 .attribute-badge {
-  padding: 7px;
-  margin-top: -3px;
+    padding: 7px;
+    margin-top: -3px;
 }
 
 .attribute-list-item .popover {
@@ -300,16 +304,16 @@ html, body, .container {
 }
 
 .attribute-progress-holder {
-    padding-right:0;
+    padding-right: 0;
 }
 
 .attribute-progress {
-    margin-top:7px;
+    margin-top: 7px;
 }
 
 .attribute-list-item .progress {
-    margin-top:10px;
-    margin-bottom:0;
+    margin-top: 10px;
+    margin-bottom: 0;
     height: 10px;
 }
 
@@ -318,7 +322,7 @@ html, body, .container {
 }
 
 .attribute-progress-bar-holder {
-    padding-left:0;
+    padding-left: 0;
 }
 
 .attribute-popover {
@@ -329,7 +333,7 @@ html, body, .container {
 
 /** Progress bar **/
 .progress {
-  box-shadow: 0px 0px 4px RGBa(0,0,0, 0.55);
+    box-shadow: 0px 0px 4px RGBa(0, 0, 0, 0.55);
 }
 
 /** Inventory **/
@@ -339,9 +343,9 @@ html, body, .container {
     margin: 3px;
     margin-top: -4px;
     margin-right: 0;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .inventory-popup-definition-list {
@@ -354,15 +358,15 @@ html, body, .container {
 
 /** Map **/
 #game-map canvas {
-    box-shadow: 0px 0px 2px rgba(0,0,0,0.6);
-    border: 1px solid rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .map-event-holder {
     border-radius: 2px;
     background-color: rgba(0, 0, 0, 0.06);
     border: 1px solid #9E9888;
-    box-shadow: 2px 2px 1px rgba(0,0,0, 0.035);
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.035);
 }
 
 .map-event-holder table {
@@ -384,11 +388,11 @@ html, body, .container {
 /** Combat **/
 
 .blue-icon-color {
-    fill:blue;
+    fill: blue;
 }
 
 .red-icon-color {
-    fill:red;
+    fill: red;
 }
 
 /** Error **/
@@ -398,7 +402,7 @@ html, body, .container {
     left: 50%;
     margin-left: -300px;
     width: 600px;
-    box-shadow: 2px 2px 1px RGBa(0,0,0, 0.035);
+    box-shadow: 2px 2px 1px RGBa(0, 0, 0, 0.035);
     top: 50px;
 }
 
@@ -414,9 +418,9 @@ button {
 
 .journal-item-watch {
     padding: 5px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 

@@ -30,4 +30,8 @@ public class SpellDefinitionCache {
     public SpellDefinition getSpellDefinition(int spellId) {
         return spellDefinitionMap.get(spellId);
     }
+
+    public boolean isSpellDefinitionExists(int spellId) {
+        return spellDefinitionMap.containsKey(spellId);
+    }
 }
