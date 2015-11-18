@@ -9,6 +9,7 @@ public class RawDropDefinition {
     private int item;
     private RawDropAmountDefinition amount;
     private double chance;
+    private boolean identified = true;
 
     public int getItem() {
         return item;
@@ -20,5 +21,9 @@ public class RawDropDefinition {
 
     public double getChance() {
         return chance;
+    }
+
+    public boolean isIdentified() {
+        return identified;
     }
 }

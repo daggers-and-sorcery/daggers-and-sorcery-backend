@@ -8,7 +8,7 @@ import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
-import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
+import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +23,14 @@ public class SettingsListResponseBuilder {
     private final ResponseFactory responseFactory;
     private final MonsterDefinitionCache monsterDefinitionCache;
     private final ItemDefinitionCache itemDefinitionCache;
-    private final SpellDefinitionManager spellDefinitionManager;
+    private final SpellDefinitionCache spellDefinitionCache;
 
     @Autowired
-    public SettingsListResponseBuilder(ResponseFactory responseFactory, MonsterDefinitionCache monsterDefinitionCache, ItemDefinitionCache itemDefinitionCache, SpellDefinitionManager spellDefinitionManager) {
+    public SettingsListResponseBuilder(ResponseFactory responseFactory, MonsterDefinitionCache monsterDefinitionCache, ItemDefinitionCache itemDefinitionCache, SpellDefinitionCache spellDefinitionCache) {
         this.responseFactory = responseFactory;
         this.monsterDefinitionCache = monsterDefinitionCache;
         this.itemDefinitionCache = itemDefinitionCache;
-        this.spellDefinitionManager = spellDefinitionManager;
+        this.spellDefinitionCache = spellDefinitionCache;
     }
 
     public Response build(UserEntity userEntity, List<CombatSettingsDatabaseEntity> combatSettingList, SettingsDatabaseEntity setting) {
@@ -51,7 +51,7 @@ public class SettingsListResponseBuilder {
             if (type == SettingType.ITEM) {
                 settingsData.put("use", itemDefinitionCache.getItemDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
             } else {
-                settingsData.put("use", spellDefinitionManager.getSpellDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
+                settingsData.put("use", spellDefinitionCache.getSpellDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
             }
             settingsData.put("type", type.name().toLowerCase());
 

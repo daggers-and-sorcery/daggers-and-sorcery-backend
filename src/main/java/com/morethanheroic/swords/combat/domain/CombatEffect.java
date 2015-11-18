@@ -16,5 +16,5 @@ public abstract class CombatEffect {
         return effectSettingHolder.getSetting(name);
     }
 
-    public abstract void apply(CombatEntity combatEntity);
+    public abstract void apply(CombatEntity combatEntity, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor);
 }

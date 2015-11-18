@@ -7,18 +7,18 @@ module.exports = function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData, $r
     $scope.scavengingSlider = 0;
     $scope.maxScavengingPointsToConvert = Math.floor((50 - $scope.user.scavengingPoints) / 5) * 5;
 
-    $scope.calculateMaxScavengingPointsToConvert = function() {
+    $scope.calculateMaxScavengingPointsToConvert = function () {
         var pountsUntilMax = Math.floor((50 - $scope.user.scavengingPoints) / 5) * 5;
 
-        if(pountsUntilMax / 5 > $rootScope.user.movement) {
+        if (pountsUntilMax / 5 > $rootScope.user.movement) {
             pountsUntilMax = $rootScope.user.movement * 5;
         }
 
         return pountsUntilMax;
     };
 
-    $scope.convertScavengingPoints = function() {
-        if($scope.scavengingSlider == 0) {
+    $scope.convertScavengingPoints = function () {
+        if ($scope.scavengingSlider == 0) {
             return;
         }
 
@@ -35,7 +35,6 @@ module.exports = function ($scope, $http, ATTRIBUTE_BONUS_MAP, characterData, $r
         $http.post('/skill/scavenging/convert', $.param(requestData), requestConfig).success(function (data, status, headers, config) {
             $rootScope.$broadcast('profile-update-needed');
         });
-        //console.log("Converting scavenging points!");
     };
 
     $scope.$on('profile-update-needed', function (event, args) {

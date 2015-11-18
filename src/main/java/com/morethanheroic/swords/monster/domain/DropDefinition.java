@@ -7,6 +7,7 @@ public class DropDefinition {
     private ItemDefinition item;
     private DropAmountDefinition amount;
     private double chance;
+    private boolean identified;
 
     private DropDefinition() {
     }
@@ -21,6 +22,10 @@ public class DropDefinition {
 
     public double getChance() {
         return chance;
+    }
+
+    public boolean isIdentified() {
+        return identified;
     }
 
     public static class  DropDefinitionBuilder {
@@ -41,6 +46,10 @@ public class DropDefinition {
 
         public void setChance(double chance) {
             dropDefinition.chance = chance;
+        }
+
+        public void setIdentified(boolean isIdentified) {
+            this.dropDefinition.identified = isIdentified;
         }
 
         public DropDefinition build() {

@@ -9,6 +9,7 @@ public class RawScavengingDefinition {
     private int item;
     private RawScavengingAmountDefinition amount;
     private double chance;
+    private boolean identified = true;
 
     public int getItem() {
         return item;
@@ -20,6 +21,10 @@ public class RawScavengingDefinition {
 
     public double getChance() {
         return chance;
+    }
+
+    public boolean isIdentified() {
+        return identified;
     }
 }
 

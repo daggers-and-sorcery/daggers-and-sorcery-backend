@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.item.service.transformer;
 
 import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.effect.service.EffectDefinitionBuilder;
+import com.morethanheroic.swords.effect.service.CombatEffectTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.ItemEffect;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
@@ -16,16 +16,14 @@ import java.util.List;
 @Service
 public class ItemDefinitionTransformer {
 
-    private final EffectDefinitionBuilder effectDefinitionBuilder;
-    private final ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
-    private final ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer;
+    @Autowired
+    private CombatEffectTransformer combatEffectTransformer;
 
     @Autowired
-    public ItemDefinitionTransformer(EffectDefinitionBuilder effectDefinitionBuilder, ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer, ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer) {
-        this.effectDefinitionBuilder = effectDefinitionBuilder;
-        this.itemDefinitionModifierListTransformer = itemDefinitionModifierListTransformer;
-        this.itemDefinitionRequirementListTransformer = itemDefinitionRequirementListTransformer;
-    }
+    private ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
+
+    @Autowired
+    private ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer;
 
     public ItemDefinition transform(RawItemDefinition rawItemDefinition) {
         ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder = new ItemDefinition.ItemDefinitionBuilder();
@@ -65,7 +63,7 @@ public class ItemDefinitionTransformer {
 
             if (rawEffectList != null) {
                 for (ItemEffect effect : rawEffectList) {
-                    effects.add(effectDefinitionBuilder.build(effect));
+                    effects.add(combatEffectTransformer.build(effect));
                 }
             }
 

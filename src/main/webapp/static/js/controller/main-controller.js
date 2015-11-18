@@ -3,7 +3,7 @@
 module.exports = require('js/app.js').controller('MainController', function ($scope, $rootScope, $state, $http, $timeout) {
     $rootScope.user = {
         loggedIn: false
-    }
+    };
 
     //Get user info at start
     $http.get('/user/info').success(function (data, status, headers, config) {
@@ -15,15 +15,15 @@ module.exports = require('js/app.js').controller('MainController', function ($sc
         $scope.errorText = args.message;
         $scope.errorVisible = true;
 
-        $scope.timeout = $timeout(function() {
+        $scope.timeout = $timeout(function () {
             $scope.errorVisible = false;
         }, 5000);
     });
 
-    $scope.closeError = function() {
+    $scope.closeError = function () {
         $scope.errorVisible = false;
         $timeout.cancel($scope.timeout);
-    }
+    };
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         //Logout the user
@@ -46,7 +46,7 @@ module.exports = require('js/app.js').controller('MainController', function ($sc
             event.preventDefault();
             $state.go('home');
         }
-    })
+    });
 
     //MERGED FROM RIGHT MENU
     $scope.user = {};

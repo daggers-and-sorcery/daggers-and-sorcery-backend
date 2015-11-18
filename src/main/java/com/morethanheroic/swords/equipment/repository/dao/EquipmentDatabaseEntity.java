@@ -15,6 +15,17 @@ public class EquipmentDatabaseEntity {
     private int chest;
     private int legs;
 
+    private boolean weaponIdentified;
+    private boolean offhandIdentified;
+    private boolean helmIdentified;
+    private boolean glovesIdentified;
+    private boolean ringIdentified;
+    private boolean amuletIdentified;
+    private boolean bootsIdentified;
+    private boolean bracerIdentified;
+    private boolean chestIdentified;
+    private boolean legsIdentified;
+
     public int getUserId() {
         return userId;
     }
@@ -101,5 +112,85 @@ public class EquipmentDatabaseEntity {
 
     public void setLegs(int legs) {
         this.legs = legs;
+    }
+
+    public boolean isWeaponIdentified() {
+        return weaponIdentified;
+    }
+
+    public void setWeaponIdentified(boolean weaponIdentified) {
+        this.weaponIdentified = weaponIdentified;
+    }
+
+    public boolean isOffhandIdentified() {
+        return offhandIdentified;
+    }
+
+    public void setOffhandIdentified(boolean offhandIdentified) {
+        this.offhandIdentified = offhandIdentified;
+    }
+
+    public boolean isHelmIdentified() {
+        return helmIdentified;
+    }
+
+    public void setHelmIdentified(boolean helmIdentified) {
+        this.helmIdentified = helmIdentified;
+    }
+
+    public boolean isGlovesIdentified() {
+        return glovesIdentified;
+    }
+
+    public void setGlovesIdentified(boolean glovesIdentified) {
+        this.glovesIdentified = glovesIdentified;
+    }
+
+    public boolean isRingIdentified() {
+        return ringIdentified;
+    }
+
+    public void setRingIdentified(boolean ringIdentified) {
+        this.ringIdentified = ringIdentified;
+    }
+
+    public boolean isAmuletIdentified() {
+        return amuletIdentified;
+    }
+
+    public void setAmuletIdentified(boolean amuletIdentified) {
+        this.amuletIdentified = amuletIdentified;
+    }
+
+    public boolean isBootsIdentified() {
+        return bootsIdentified;
+    }
+
+    public void setBootsIdentified(boolean bootsIdentified) {
+        this.bootsIdentified = bootsIdentified;
+    }
+
+    public boolean isBracerIdentified() {
+        return bracerIdentified;
+    }
+
+    public void setBracerIdentified(boolean bracerIdentified) {
+        this.bracerIdentified = bracerIdentified;
+    }
+
+    public boolean isChestIdentified() {
+        return chestIdentified;
+    }
+
+    public void setChestIdentified(boolean chestIdentified) {
+        this.chestIdentified = chestIdentified;
+    }
+
+    public boolean isLegsIdentified() {
+        return legsIdentified;
+    }
+
+    public void setLegsIdentified(boolean legsIdentified) {
+        this.legsIdentified = legsIdentified;
     }
 }

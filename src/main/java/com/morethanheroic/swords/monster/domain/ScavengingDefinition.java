@@ -7,6 +7,7 @@ public class ScavengingDefinition {
     private ItemDefinition item;
     private ScavengingAmountDefinition amount;
     private double chance;
+    private boolean identified;
 
     private ScavengingDefinition() {
     }
@@ -21,6 +22,10 @@ public class ScavengingDefinition {
 
     public double getChance() {
         return chance;
+    }
+
+    public boolean isIdentified() {
+        return identified;
     }
 
     public static class ScavengeDefinitionBuilder {
@@ -41,6 +46,10 @@ public class ScavengingDefinition {
 
         public void setChance(double chance) {
             scavengingDefinition.chance = chance;
+        }
+
+        public void setIdentified(boolean isIdentified) {
+            this.scavengingDefinition.identified = isIdentified;
         }
 
         public ScavengingDefinition build() {
