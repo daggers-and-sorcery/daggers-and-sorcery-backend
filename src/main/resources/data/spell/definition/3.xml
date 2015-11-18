@@ -8,4 +8,7 @@
     <spell:type>ALTERATION</spell:type>
     <spell:combat-spell>false</spell:combat-spell>
     <spell:open-page>true</spell:open-page>
+    <spell:effect-list>
+        <spell:effect target="com.morethanheroic.swords.combat.domain.effect.LesserIdentifyEffect"/>
+    </spell:effect-list>
 </spell:spell>

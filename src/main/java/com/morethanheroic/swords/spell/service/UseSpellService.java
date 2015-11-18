@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.spell.service;
 
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
@@ -67,26 +68,26 @@ public class UseSpellService {
         return true;
     }
 
-    public void useSpell(UserEntity userEntity, SpellDefinition spell) {
+    public void useSpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
         if (canUseSpell(userEntity, spell)) {
-            applySpell(userEntity, spell);
+            applySpell(userEntity, spell, combatEffectDataHolder);
         }
     }
 
-    public void useSpell(UserCombatEntity combatEntity, SpellDefinition spell) {
+    public void useSpell(UserCombatEntity combatEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
         if (canUseSpell(combatEntity, spell)) {
-            applySpell(combatEntity, spell);
+            applySpell(combatEntity, spell, combatEffectDataHolder);
         }
     }
 
-    private void applySpell(CombatEntity userCombatEntity, SpellDefinition spell) {
-        combatEffectApplierService.applyEffects(userCombatEntity, spell.getCombatEffects());
+    private void applySpell(CombatEntity userCombatEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
+        combatEffectApplierService.applyEffects(userCombatEntity, spell.getCombatEffects(), combatEffectDataHolder);
     }
 
-    private void applySpell(UserEntity userEntity, SpellDefinition spell) {
+    private void applySpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
         UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
 
-        combatEffectApplierService.applyEffects(userCombatEntity, spell.getCombatEffects());
+        combatEffectApplierService.applyEffects(userCombatEntity, spell.getCombatEffects(), combatEffectDataHolder);
 
         userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovement());
     }

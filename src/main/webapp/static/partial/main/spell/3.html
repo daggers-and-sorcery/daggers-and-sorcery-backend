@@ -1,6 +1,13 @@
 <div class="panel panel-default panel-shadow">
     <div class="panel-heading">Lesser identification</div>
     <div class="panel-body">
+        <div ng-if="result === true" class="bg-success text-center">
+            The spell was successful.
+        </div>
+        <div ng-if="result === false" class="bg-danger text-center">
+            The spell was unsuccessful.
+        </div>
+
         <table class="table table-responsive table-hover">
             <thead>
             <tr>

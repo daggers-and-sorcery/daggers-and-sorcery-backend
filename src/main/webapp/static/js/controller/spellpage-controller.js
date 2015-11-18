@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($scope, $state, $http, pagedata) {
+module.exports = function ($scope, $state, $http, $stateParams, pagedata) {
     $scope.pagedata = pagedata;
 
     $scope.goBack = function () {
@@ -8,9 +8,22 @@ module.exports = function ($scope, $state, $http, pagedata) {
     };
 
     $scope.unidentify = function (itemId) {
-        $http.get('/item/unidentify/' + itemId).then(function (response) {
-            console.log(response.data.data.result);
-            $scope.result = response.data.data.result;
+        var requestConfig = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+
+        $http.post('/spell/cast/3', $.param({'itemId': itemId}), requestConfig).then(function (response) {
+            $scope.result = response.data.data.success;
+
+            $scope.reload();
         });
     };
+
+    $scope.reload = function () {
+        return $http({method: 'GET', url: '/spell/page/' + $stateParams.spell}).then(function (response) {
+            $scope.pagedata = response.data.data;
+        });
+    }
 };

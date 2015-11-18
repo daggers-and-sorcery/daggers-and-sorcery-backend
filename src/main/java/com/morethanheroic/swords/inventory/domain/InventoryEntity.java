@@ -95,7 +95,7 @@ public class InventoryEntity {
     }
 
     public List<ItemDatabaseEntity> getItems() {
-        return inventoryMapper.getItems(userEntity.getId());
+        return inventoryMapper.getAllItems(userEntity.getId());
     }
 
     public List<ItemDatabaseEntity> getItems(boolean identified) {

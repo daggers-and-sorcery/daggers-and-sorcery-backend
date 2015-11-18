@@ -2,12 +2,12 @@ package com.morethanheroic.swords.settings.service.executor.action;
 
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.item.service.UseItemService;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
 import com.morethanheroic.swords.settings.service.executor.CombatSettingsAction;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.item.service.UseItemService;
-import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.spell.service.UseSpellService;
+import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 
 public class MonsterCombatSettings extends CombatSettingsAction {
 
@@ -18,7 +18,7 @@ public class MonsterCombatSettings extends CombatSettingsAction {
     @Override
     public void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity) {
         if (combat.getMonsterCombatEntity().getMonsterDefinition().getId() == combatSettingsEntity.getTarget()) {
-            executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity);
+            executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity, null);
         }
     }
 }

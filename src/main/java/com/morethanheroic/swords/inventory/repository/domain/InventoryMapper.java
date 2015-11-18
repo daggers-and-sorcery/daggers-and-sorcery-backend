@@ -15,7 +15,7 @@ public interface InventoryMapper {
     List<ItemDatabaseEntity> getItems(@Param("user_id") int userId, @Param("identified") boolean identified);
 
     @Select("SELECT * FROM inventory WHERE user_id = #{user_id}")
-    List<ItemDatabaseEntity> getItems(@Param("user_id") int userId);
+    List<ItemDatabaseEntity> getAllItems(@Param("user_id") int userId);
 
     @Select("SELECT * FROM inventory WHERE user_id = #{user_id} AND item_id = #{item_id} AND identified = #{identified}")
     ItemDatabaseEntity getItem(@Param("user_id") int userId, @Param("item_id") int itemId, @Param("identified") boolean identified);

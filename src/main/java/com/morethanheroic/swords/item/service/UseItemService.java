@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.item.service;
 
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
@@ -32,26 +33,26 @@ public class UseItemService {
         return inventoryFacade.getInventory(userEntity).hasItem(item.getId());
     }
 
-    public void useItem(UserCombatEntity combatEntity, ItemDefinition item) {
+    public void useItem(UserCombatEntity combatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         if (canUseItem(combatEntity.getUserEntity(), item)) {
-            applyItem(combatEntity, item);
+            applyItem(combatEntity, item, combatEffectDataHolder);
         }
     }
 
-    public void useItem(UserEntity userEntity, ItemDefinition item) {
+    public void useItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         if (canUseItem(userEntity, item)) {
-            applyItem(userEntity, item);
+            applyItem(userEntity, item, combatEffectDataHolder);
         }
     }
 
-    private void applyItem(CombatEntity userCombatEntity, ItemDefinition item) {
-        combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects());
+    private void applyItem(CombatEntity userCombatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
+        combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects(), combatEffectDataHolder);
     }
 
-    private void applyItem(UserEntity userEntity, ItemDefinition item) {
+    private void applyItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
 
-        combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects());
+        combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects(), combatEffectDataHolder);
 
         userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovement());
     }
