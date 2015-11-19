@@ -31,9 +31,13 @@ public class DropAdder {
         InventoryEntity inventory = inventoryFacade.getInventory(user);
 
         for (Drop drop : drops) {
-            result.addMessage(combatMessageBuilder.buildDropMessage(drop.getItem().getName(), drop.getAmount()));
+            if(drop.isIdentified()) {
+                result.addMessage(combatMessageBuilder.buildDropMessage(drop.getItem().getName(), drop.getAmount()));
+            } else {
+                result.addMessage(combatMessageBuilder.buildDropMessage("Unidentified item", drop.getAmount()));
+            }
 
-            inventory.addItem(drop.getItem(), drop.getAmount());
+            inventory.addItem(drop.getItem(), drop.getAmount(), drop.isIdentified());
         }
     }
 }

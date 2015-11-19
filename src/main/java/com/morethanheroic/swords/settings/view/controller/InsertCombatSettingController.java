@@ -7,7 +7,7 @@ import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseE
 import com.morethanheroic.swords.settings.repository.domain.CombatSettingsMapper;
 import com.morethanheroic.swords.settings.service.InsertSettingsResponseBuilder;
 import com.morethanheroic.swords.settings.view.request.InsertCombatSettingRequest;
-import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
+import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +25,7 @@ public class InsertCombatSettingController {
     private InsertSettingsResponseBuilder insertSettingsResponseBuilder;
 
     @Autowired
-    private SpellDefinitionManager spellDefinitionManager;
+    private SpellDefinitionCache spellDefinitionCache;
 
     @Autowired
     private CombatSettingsMapper combatSettingsMapper;
@@ -36,7 +36,7 @@ public class InsertCombatSettingController {
             return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-usable item selected!");
         }
 
-        if(insertCombatSettingRequest.getType() == SettingType.SPELL && !spellDefinitionManager.getSpellDefinition(insertCombatSettingRequest.getUse()).isCombatSpell()) {
+        if(insertCombatSettingRequest.getType() == SettingType.SPELL && !spellDefinitionCache.getSpellDefinition(insertCombatSettingRequest.getUse()).isCombatSpell()) {
             return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-combat spell selected!");
         }
 

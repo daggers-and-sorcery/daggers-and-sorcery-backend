@@ -23,15 +23,19 @@ public class RegenerationFacade {
     private RegenerationDateCalculator regenerationDateCalculator;
 
     public void regenerate(UserEntity user) {
-        int durationToCalculate = regenerationDateCalculator.calculatePassedDurationSinceLastRegeneration(user.getLastRegenerationDate().getTime());
+        int durationToRegenerate = calculateTheDurationToRegenerate(user);
 
-        if (durationToCalculate > 0) {
+        if (durationToRegenerate > 0) {
             user.regenerate(
-                    healthRegenerationCalculator.calculateRegeneration(user, durationToCalculate),
-                    manaRegenerationCalculator.calculateRegeneration(user, durationToCalculate),
-                    movementRegenerationCalculator.calculateRegeneration(user, durationToCalculate),
-                    regenerationDateCalculator.calculateNewRegenerationDate(user, durationToCalculate)
+                    healthRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
+                    manaRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
+                    movementRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
+                    regenerationDateCalculator.calculateNewRegenerationDate(user, durationToRegenerate)
             );
         }
+    }
+
+    private int calculateTheDurationToRegenerate(UserEntity user) {
+        return regenerationDateCalculator.calculatePassedDurationSinceLastRegeneration(user.getLastRegenerationDate().getTime());
     }
 }

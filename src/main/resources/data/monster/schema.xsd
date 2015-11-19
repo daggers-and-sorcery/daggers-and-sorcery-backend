@@ -128,6 +128,7 @@
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="chance" type="xs:double" minOccurs="1"/>
+                                        <xs:element name="identified" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
                                     </xs:all>
                                 </xs:complexType>
                             </xs:element>
@@ -150,6 +151,7 @@
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="chance" type="xs:double" minOccurs="1"/>
+                                        <xs:element name="identified" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
                                     </xs:all>
                                 </xs:complexType>
                             </xs:element>

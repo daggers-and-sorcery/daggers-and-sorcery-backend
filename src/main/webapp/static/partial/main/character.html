@@ -2,6 +2,7 @@
     <div class="panel-heading">Character</div>
     <div class="panel-body">
         <h4 class="attribute-list-name">General information</h4>
+
         <div class="row">
             <div class="col-md-4 attribute-list-column-left">
                 <ul class="list-group attribute-list-group">
@@ -18,55 +19,76 @@
         </div>
 
         <h4 class="attribute-list-name">Equipment</h4>
+
         <div class="row">
             <div class="col-md-6 attribute-list-column-left">
                 <ul class="list-group attribute-list-group">
-                    <li equipment-element class="list-group-item attribute-list-item" ng-repeat="(equipmentName, equipmentValue) in user.equipment" ng-if="$index % 2 === 0" equipment-value="equipmentValue" equipment-name="equipmentName"/>
+                    <li equipment-element class="list-group-item attribute-list-item"
+                        ng-repeat="(equipmentName, equipmentValue) in user.equipment" ng-if="$index % 2 === 0"
+                        equipment-value="equipmentValue" equipment-name="equipmentName"/>
                 </ul>
             </div>
             <div class="col-md-6 attribute-list-column-right">
                 <ul class="list-group attribute-list-group">
-                    <li equipment-element class="list-group-item attribute-list-item" ng-repeat="(equipmentName, equipmentValue) in user.equipment" ng-if="$index % 2 === 1" equipment-value="equipmentValue" equipment-name="equipmentName"/>
+                    <li equipment-element class="list-group-item attribute-list-item"
+                        ng-repeat="(equipmentName, equipmentValue) in user.equipment" ng-if="$index % 2 === 1"
+                        equipment-value="equipmentValue" equipment-name="equipmentName"/>
                 </ul>
             </div>
         </div>
 
         <h4 class="attribute-list-name">Basic attributes</h4>
+
         <div class="row">
-            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align" column-align-id="$index" source="user.attribute.BASIC"/>
+            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align"
+                                   column-align-id="$index" source="user.attribute.BASIC"/>
         </div>
 
         <h4 class="attribute-list-name">Combat attributes</h4>
+
         <div class="row">
-            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align" column-align-id="$index" source="user.attribute.COMBAT"/>
+            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align"
+                                   column-align-id="$index" source="user.attribute.COMBAT"/>
         </div>
 
-        <h4 class="attribute-list-name">General attributes <small>(Physical)</small></h4>
+        <h4 class="attribute-list-name">General attributes
+            <small>(Physical)</small>
+        </h4>
         <div class="row">
-            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align" column-align-id="$index" source="user.attribute.GENERAL_PHYSICAL"/>
+            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align"
+                                   column-align-id="$index" source="user.attribute.GENERAL_PHYSICAL"/>
         </div>
 
-        <h4 class="attribute-list-name">General attributes <small>(Mental)</small></h4>
+        <h4 class="attribute-list-name">General attributes
+            <small>(Mental)</small>
+        </h4>
         <div class="row">
-            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align" column-align-id="$index" source="user.attribute.GENERAL_MENTAL"/>
+            <attribute-list-column ng-repeat="align in ['left', 'center', 'right'] track by $index" column-align="align"
+                                   column-align-id="$index" source="user.attribute.GENERAL_MENTAL"/>
         </div>
 
         <h4 class="attribute-list-name">Skills</h4>
+
         <div class="row">
             <div class="col-xs-12">
                 <ul class="list-group attribute-list-group">
-                    <li class="list-group-item attribute-list-item" ng-repeat="(attributeName, attributeValue) in user.attribute.SKILL">
+                    <li class="list-group-item attribute-list-item"
+                        ng-repeat="(attributeName, attributeValue) in user.attribute.SKILL">
                         <div class="row">
                             <div class="col-md-4" style="padding-right:0;">
                                 {{attributeName | replace:'_':' ' | capitalize}}:
                             </div>
                             <div class="col-md-1">
-                                <span ng-if="attributeValue.maximum == 0" class="badge attribute-badge pull-right" popover-template="attributePopoverUrl" popover-trigger="mouseenter" popover-placement="right">{{attributeValue.actual}}</span>
+                                <span ng-if="attributeValue.maximum == 0" class="badge attribute-badge pull-right"
+                                      popover-template="attributePopoverUrl" popover-trigger="mouseenter"
+                                      popover-placement="right">{{attributeValue.actual}}</span>
                             </div>
                             <div class="col-md-7" style="padding-left:0;">
                                 <span style="position: absolute;font-size: 10px;width: 100%;text-align: center;padding-right: 20px;top: 3px;">{{attributeValue.actualXp}}/{{attributeValue.nextLevelXp}}</span>
+
                                 <div class="progress" style="margin-top:5px;margin-bottom:0; height: 10px;">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{100 - (attributeValue.nextLevelXp - attributeValue.actualXp) / (attributeValue.xpBetweenLevels / 100)}}%; background-color: #B75555;"></div>
+                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                         style="width:{{100 - (attributeValue.nextLevelXp - attributeValue.actualXp) / (attributeValue.xpBetweenLevels / 100)}}%; background-color: #B75555;"></div>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +98,7 @@
         </div>
 
         <h4 class="attribute-list-name">Inventory</h4>
+
         <div class="row">
             <inventory-list-column column-align="left" column-align-id="0" source="user.inventory"></inventory-list-column>
             <inventory-list-column column-align="center" column-align-id="1" source="user.inventory"></inventory-list-column>
@@ -83,6 +106,7 @@
         </div>
 
         <h4 class="attribute-list-name">Spell</h4>
+
         <div class="row">
             <spell-list-column column-align="left" column-align-id="0" source="user.spell"></spell-list-column>
             <spell-list-column column-align="center" column-align-id="1" source="user.spell"></spell-list-column>
@@ -90,6 +114,7 @@
         </div>
 
         <h4>Scavenging</h4>
+
         <div class="row">
             <div class="col-xs-12">
                 <ul class="list-group attribute-list-group">
@@ -98,12 +123,14 @@
                             <div class="col-xs-6" style="border-right: 1px solid rgba(1,1,1,0.4);">
                                 Scavenging points: <span>{{user.scavengingPoints}}/50</span><br>
                                 <span>Costs: {{calculateNeededMovementPoints(scavengingSlider)}} movement points</span><br>
+
                                 <div class="row scavenging-converter">
                                     <div class="col-xs-9" style="padding-right: 0;">
                                         <rzslider rz-slider-model="scavengingSlider" rz-slider-ceil="calculateMaxScavengingPointsToConvert()" rz-slider-step="5"></rzslider>
                                     </div>
                                     <div class="col-xs-3">
-                                        <span style="padding: 10px; border: 1px solid rgba(1,1,1,0.2);" ng-bind="scavengingSlider"></span>
+                                        <span style="padding: 10px; border: 1px solid rgba(1,1,1,0.2);"
+                                              ng-bind="scavengingSlider"></span>
                                         <span class="pull-right inventory-item-watch" ng-click="convertScavengingPoints()" style="width: 26px;height: 26px;cursor: pointer;">
                                             <img style="margin-top: -8px;width:14px;height:14px;" src="/icon/convert.svg">
                                         </span>
@@ -120,6 +147,7 @@
         </div>
 
         <h4 class="attribute-list-name">Other</h4>
+
         <div class="row">
             <div class="col-md-4 attribute-list-column-left">
                 <ul class="list-group attribute-list-group">

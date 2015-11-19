@@ -54,9 +54,13 @@ public class ScavengingAdder {
         InventoryEntity inventory = inventoryFacade.getInventory(user);
 
         for (ScavengingEntity scavengingEntity : scavengingResultList) {
-            combatResult.addMessage(combatMessageBuilder.buildScavengeMessage(scavengingEntity.getItem().getName(), scavengingEntity.getAmount()));
+            if(scavengingEntity.isIdentified()) {
+                combatResult.addMessage(combatMessageBuilder.buildScavengeMessage(scavengingEntity.getItem().getName(), scavengingEntity.getAmount()));
+            } else {
+                combatResult.addMessage(combatMessageBuilder.buildScavengeMessage("Unidentified item", scavengingEntity.getAmount()));
+            }
 
-            inventory.addItem(scavengingEntity.getItem(), scavengingEntity.getAmount());
+            inventory.addItem(scavengingEntity.getItem(), scavengingEntity.getAmount(), scavengingEntity.isIdentified());
         }
     }
 

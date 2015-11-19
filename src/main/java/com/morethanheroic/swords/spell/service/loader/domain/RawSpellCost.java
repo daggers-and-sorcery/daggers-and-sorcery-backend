@@ -1,11 +1,13 @@
-package com.morethanheroic.swords.spell.service.domain;
+package com.morethanheroic.swords.spell.service.loader.domain;
+
+import com.morethanheroic.swords.spell.domain.CostType;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SpellCost {
+public class RawSpellCost {
 
     @XmlElement(name = "cost-id")
     private int id;

@@ -11,6 +11,7 @@ import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
+import com.morethanheroic.swords.profile.service.response.ProfileInfoResponseBuilder;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -19,6 +20,7 @@ import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.testng.annotations.Test;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 import static org.mockito.Matchers.any;
@@ -32,7 +34,7 @@ public class ProfileInfoResponseBuilderServiceTest {
     public void testBuild() {
         ProfileInfoResponseBuilder profileInfoResponseBuilder = new ProfileInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionCache.class), buildAttributeUtilMock(), buildInventoryManagerMock(), null, null, null, null, null);
 
-        Response response = profileInfoResponseBuilder.build(buildUserEntityMock());
+        Response response = profileInfoResponseBuilder.build(buildUserEntityMock(), mock(HttpSession.class));
 
         assertEquals(response.getDataMap(), buildExpectedResult());
     }

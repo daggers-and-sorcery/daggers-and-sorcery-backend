@@ -21,6 +21,7 @@ public class ScavengingDefinitionTransformer {
         scavengeDefinitionBuilder.setAmount(scavengingAmountDefinitionTransformer.transform(rawScavengingDefinition.getAmount()));
         scavengeDefinitionBuilder.setItem(itemDefinitionCache.getItemDefinition(rawScavengingDefinition.getItem()));
         scavengeDefinitionBuilder.setChance(rawScavengingDefinition.getChance());
+        scavengeDefinitionBuilder.setIdentified(rawScavengingDefinition.isIdentified());
 
         return scavengeDefinitionBuilder.build();
     }

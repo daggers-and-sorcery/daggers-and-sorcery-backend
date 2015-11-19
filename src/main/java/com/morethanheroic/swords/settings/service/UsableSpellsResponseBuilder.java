@@ -4,8 +4,8 @@ import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
-import com.morethanheroic.swords.spell.service.SpellDefinitionManager;
-import com.morethanheroic.swords.spell.service.domain.SpellDefinition;
+import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
+import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +19,13 @@ public class UsableSpellsResponseBuilder {
 
     private final ResponseFactory responseFactory;
     private final SpellMapper spellMapper;
-    private final SpellDefinitionManager spellDefinitionManager;
+    private final SpellDefinitionCache spellDefinitionCache;
 
     @Autowired
-    public UsableSpellsResponseBuilder(ResponseFactory responseFactory, SpellMapper spellMapper, SpellDefinitionManager spellDefinitionManager) {
+    public UsableSpellsResponseBuilder(ResponseFactory responseFactory, SpellMapper spellMapper, SpellDefinitionCache spellDefinitionCache) {
         this.responseFactory = responseFactory;
         this.spellMapper = spellMapper;
-        this.spellDefinitionManager = spellDefinitionManager;
+        this.spellDefinitionCache = spellDefinitionCache;
     }
 
     public Response build(UserEntity userEntity) {
@@ -35,7 +35,7 @@ public class UsableSpellsResponseBuilder {
         List<SpellDatabaseEntity> spells = spellMapper.getAllSpellsForUser(userEntity.getId());
 
         for(SpellDatabaseEntity spell : spells) {
-            SpellDefinition spellDefinition = spellDefinitionManager.getSpellDefinition(spell.getSpellId());
+            SpellDefinition spellDefinition = spellDefinitionCache.getSpellDefinition(spell.getSpellId());
 
             if(spellDefinition.isCombatSpell()) {
                 HashMap<String, Object> spellInfo = new HashMap<>();

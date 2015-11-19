@@ -1,0 +1,35 @@
+<div class="panel panel-default panel-shadow">
+    <div class="panel-heading">Lesser identification</div>
+    <div class="panel-body">
+        <div ng-if="result === true" class="bg-success text-center">
+            The spell was successful.
+        </div>
+        <div ng-if="result === false" class="bg-danger text-center">
+            The spell was unsuccessful.
+        </div>
+
+        <table class="table table-responsive table-hover">
+            <thead>
+            <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Type</th>
+                <th class="text-center">Weight</th>
+                <th class="text-center">Unidentify</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in pagedata.itemlist">
+                <td ng-bind="item.definition.name"></td>
+                <td class="text-center" ng-bind="item.definition.type | capitalize:'first' | replace:'_':' '"></td>
+                <td class="text-center" ng-bind="item.definition.weight"></td>
+                <td class="text-center">
+                    <button class="btn btn-default" ng-click="unidentify(item.itemId)">Unidentify</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button class="btn btn-default" ng-click="goBack()">Back</button>
+        </div>
+    </div>
+</div>

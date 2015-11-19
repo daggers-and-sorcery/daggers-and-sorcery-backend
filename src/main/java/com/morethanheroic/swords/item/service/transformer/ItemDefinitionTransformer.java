@@ -1,13 +1,14 @@
 package com.morethanheroic.swords.item.service.transformer;
 
 import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.effect.service.EffectDefinitionBuilder;
+import com.morethanheroic.swords.effect.service.CombatEffectTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.ItemEffect;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,18 +16,16 @@ import java.util.List;
 @Service
 public class ItemDefinitionTransformer {
 
-    private final EffectDefinitionBuilder effectDefinitionBuilder;
-    private final ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
-    private final ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer;
+    @Autowired
+    private CombatEffectTransformer combatEffectTransformer;
 
     @Autowired
-    public ItemDefinitionTransformer(EffectDefinitionBuilder effectDefinitionBuilder, ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer, ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer) {
-        this.effectDefinitionBuilder = effectDefinitionBuilder;
-        this.itemDefinitionModifierListTransformer = itemDefinitionModifierListTransformer;
-        this.itemDefinitionRequirementListTransformer = itemDefinitionRequirementListTransformer;
-    }
+    private ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
 
-    public ItemDefinition transform(RawItemDefinition rawItemDefinition) throws Exception {
+    @Autowired
+    private ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer;
+
+    public ItemDefinition transform(RawItemDefinition rawItemDefinition) {
         ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder = new ItemDefinition.ItemDefinitionBuilder();
 
         itemDefinitionBuilder.setId(rawItemDefinition.getId());
@@ -58,15 +57,19 @@ public class ItemDefinitionTransformer {
         itemDefinitionBuilder.setSkillRequirements(itemDefinitionRequirementListTransformer.transformSkillRequirement(rawItemDefinition.getSkillRequirements()));
     }
 
-    private List<CombatEffect> buildEffects(List<ItemEffect> rawEffectList) throws Exception {
-        List<CombatEffect> effects = new ArrayList<>();
+    private List<CombatEffect> buildEffects(List<ItemEffect> rawEffectList) {
+        try {
+            List<CombatEffect> effects = new ArrayList<>();
 
-        if (rawEffectList != null) {
-            for (ItemEffect effect : rawEffectList) {
-                effects.add(effectDefinitionBuilder.build(effect));
+            if (rawEffectList != null) {
+                for (ItemEffect effect : rawEffectList) {
+                    effects.add(combatEffectTransformer.build(effect));
+                }
             }
-        }
 
-        return Collections.unmodifiableList(effects);
+            return Collections.unmodifiableList(effects);
+        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
