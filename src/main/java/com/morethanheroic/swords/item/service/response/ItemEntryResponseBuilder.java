@@ -3,15 +3,12 @@ package com.morethanheroic.swords.item.service.response;
 import com.morethanheroic.swords.attribute.domain.modifier.AttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.view.response.AttributeModifierResponseEntry;
 import com.morethanheroic.swords.attribute.view.response.AttributeRequirementResponseEntry;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 @Service
 public class ItemEntryResponseBuilder {
@@ -32,7 +29,7 @@ public class ItemEntryResponseBuilder {
             HashMap<String, Object> modifier = new HashMap<>();
 
             modifier.put("attribute", modifierDefinition.getAttribute());
-            if(modifierDefinition instanceof CombatAttributeModifierDefinition) {
+            if (modifierDefinition instanceof CombatAttributeModifierDefinition) {
                 modifier.put("value", formatCombatAttributeModifier((CombatAttributeModifierDefinition) modifierDefinition));
             } else {
                 modifier.put("value", modifierDefinition.getAmount());
