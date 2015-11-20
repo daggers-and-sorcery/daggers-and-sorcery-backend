@@ -52,4 +52,4 @@ buildscript {
 
 apply plugin: 'spring-boot'
 
-task stage(dependsOn: ['clean', 'installApp'])
+task stage(dependsOn: ['clean'])
