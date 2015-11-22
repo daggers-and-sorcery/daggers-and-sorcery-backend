@@ -50,6 +50,9 @@ buildscript {
     }
 }
 
+apply plugin: 'application'
+mainClassName = 'com.morethanheroic.swords.SwordsorceryServerApplication'
+
 apply plugin: 'spring-boot'
 
 task stage(dependsOn: ['clean', 'installApp'])
