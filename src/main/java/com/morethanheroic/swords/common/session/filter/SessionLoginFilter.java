@@ -3,6 +3,7 @@ package com.morethanheroic.swords.common.session.filter;
 import com.morethanheroic.swords.common.session.SessionAttributeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +24,8 @@ public class SessionLoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        if (request.getSession().getAttribute(SessionAttributeType.USER_ID) == null) {
-            response.sendError(401);
+        if (request.getSession().getAttribute(SessionAttributeType.USER_ID.name()) == null) {
+            response.sendError(HttpStatus.UNAUTHORIZED.value());
 
             return;
         }
