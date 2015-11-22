@@ -42,7 +42,7 @@ public class UserLoginController {
         if (user != null) {
             response.put("success", "true");
 
-            session.setAttribute(SessionAttributeType.USER_ID, user.getId());
+            session.setAttribute(SessionAttributeType.USER_ID.name(), user.getId());
 
             userRepository.updateLastLoginDate(user);
         } else {

@@ -3,13 +3,13 @@ package com.morethanheroic.swords.item.domain;
 import com.morethanheroic.swords.attribute.domain.modifier.*;
 import com.morethanheroic.swords.attribute.domain.requirement.*;
 import com.morethanheroic.swords.combat.domain.CombatEffect;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Data
+@Getter
 public class ItemDefinition {
 
     private int id;
