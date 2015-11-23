@@ -31,4 +31,8 @@ public class ShopDefinitionCache {
     public ShopDefinition getShopDefinition(int shopId) {
         return shopDefinitionMap.get(shopId);
     }
+
+    public boolean isShopExists(int shopId) {
+        return shopDefinitionMap.containsKey(shopId);
+    }
 }
