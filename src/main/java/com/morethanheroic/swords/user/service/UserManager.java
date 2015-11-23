@@ -1,8 +1,9 @@
 package com.morethanheroic.swords.user.service;
 
-import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
+import com.morethanheroic.swords.common.container.ServiceContainer;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.skill.repository.domain.SkillMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
@@ -31,8 +32,11 @@ public class UserManager {
     @Autowired
     private SettingsMapper settingsMapper;
 
+    @Autowired
+    private ServiceContainer serviceContainer;
+
     public UserEntity getUser(int id) {
-        return new UserEntity(userMapper.findById(id), userMapper);
+        return new UserEntity(userMapper.findById(id), serviceContainer, userMapper);
     }
 
     public void saveNewUser(String username, String password, String email, Race race) {

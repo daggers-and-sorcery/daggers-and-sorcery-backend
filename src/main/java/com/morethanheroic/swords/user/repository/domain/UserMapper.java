@@ -2,9 +2,11 @@ package com.morethanheroic.swords.user.repository.domain;
 
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
+@Repository
 public interface UserMapper {
 
     @Select("SELECT * FROM users WHERE username = #{param1} AND password = #{param2}")

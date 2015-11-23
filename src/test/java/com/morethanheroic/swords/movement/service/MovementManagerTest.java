@@ -38,7 +38,7 @@ public class MovementManagerTest {
         userDatabaseEntity.setY(33);
         userDatabaseEntity.setMap(0);
 
-        user = new UserEntity(userDatabaseEntity, mock(UserMapper.class));
+        user = new UserEntity(userDatabaseEntity, null, mock(UserMapper.class));
     }
 
     @Test

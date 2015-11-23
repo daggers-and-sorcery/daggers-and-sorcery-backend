@@ -26,12 +26,12 @@ public class UnidentifiedItemIdCalculator {
     //TODO: Move HttpSession out of this! It's a service, shouldn't know about sessions and shit like that!
     @SuppressWarnings("unchecked")
     public int getUnidentifiedItemId(HttpSession session, int itemId) {
-        HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP);
+        HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP.name());
 
         if (unidentifiedItemMap == null) {
             unidentifiedItemMap = new HashMap<>();
 
-            session.setAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP, unidentifiedItemMap);
+            session.setAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP.name(), unidentifiedItemMap);
         }
 
         if (!unidentifiedItemMap.containsKey(itemId)) {
@@ -43,7 +43,7 @@ public class UnidentifiedItemIdCalculator {
 
     @SuppressWarnings("unchecked")
     public int getRealItemId(HttpSession session, int unidentifiedId) {
-        HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP);
+        HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP.name());
 
         if (unidentifiedItemMap != null) {
             for (Map.Entry<Integer, Integer> entry : unidentifiedItemMap.entrySet()) {
