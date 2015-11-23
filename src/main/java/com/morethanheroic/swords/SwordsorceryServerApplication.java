@@ -38,7 +38,7 @@ import java.util.Random;
 @Configuration
 @Lazy
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
-@ComponentScan(lazyInit = true)
+@ComponentScan
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableRedisHttpSession
