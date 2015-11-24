@@ -49,10 +49,6 @@ public class ShopBuyStockController {
             throw new NotFoundException();
         }
 
-        if (!user.getInventory().hasItemAmount(itemId, itemAmount, isIdentifiedItem)) {
-            throw new ConflictException();
-        }
-
         ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
         ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(itemId);
 
