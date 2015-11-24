@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.shop.service.transformer;
 
-import com.morethanheroic.swords.shop.service.domain.ShopDefinition;
+import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.service.loader.domain.RawShopDefinition;
 import org.springframework.stereotype.Service;
 

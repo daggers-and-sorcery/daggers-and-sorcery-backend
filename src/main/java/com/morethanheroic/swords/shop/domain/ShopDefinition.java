@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.shop.service.domain;
+package com.morethanheroic.swords.shop.domain;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
