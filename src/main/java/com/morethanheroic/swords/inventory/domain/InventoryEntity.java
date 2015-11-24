@@ -101,4 +101,19 @@ public class InventoryEntity {
     public List<ItemDatabaseEntity> getItems(boolean identified) {
         return inventoryMapper.getItems(userEntity.getId(), identified);
     }
+
+    //TODO: write these
+    public int getMoneyAmount() {
+        //Calculate the amount of the user has from the money currency, it's mocked for now
+
+        return 100;
+    }
+
+    public void decreaseMoneyAmount(int value) {
+        //Decrease the money of the player
+    }
+
+    public void increaseMoneyAmount(int value) {
+        //Increase the money of the player
+    }
 }

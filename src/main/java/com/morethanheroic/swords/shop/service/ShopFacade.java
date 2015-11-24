@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.shop.service;
 
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
 import com.morethanheroic.swords.shop.domain.ShopItem;
@@ -39,5 +40,18 @@ public class ShopFacade {
 
     public List<ShopItem> getItemsInShop(ShopDefinition shopDefinition) {
         return shopItemTransformer.transform(shopMapper.getItemsInShop(shopDefinition.getId()));
+    }
+
+    //TODO: implement these
+    public void addItemToShop(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
+
+    }
+
+    public void removeItemFromShop(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
+
+    }
+
+    public boolean shopHasItem(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
+        return true;
     }
 }
