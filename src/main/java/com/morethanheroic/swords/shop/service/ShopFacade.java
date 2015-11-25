@@ -4,6 +4,7 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
 import com.morethanheroic.swords.shop.domain.ShopItem;
+import com.morethanheroic.swords.shop.repository.dao.ShopItemDatabaseEntity;
 import com.morethanheroic.swords.shop.repository.domain.ShopMapper;
 import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.shop.service.transformer.ShopItemTransformer;
@@ -42,16 +43,23 @@ public class ShopFacade {
         return shopItemTransformer.transform(shopMapper.getItemsInShop(shopDefinition.getId()));
     }
 
-    //TODO: implement these
     public void addItemToShop(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
-
+        shopMapper.addStock(shopDefinition.getId(), itemDefinition.getId(), amount);
     }
 
     public void removeItemFromShop(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
+        ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
 
+        if (amount - shopItemDatabaseEntity.getItemAmount() <= 0) {
+            shopMapper.deleteStock(shopDefinition.getId(), itemDefinition.getId());
+        } else {
+            shopMapper.removeStock(shopDefinition.getId(), itemDefinition.getId(), amount);
+        }
     }
 
     public boolean shopHasItem(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
-        return true;
+        ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
+
+        return shopItemDatabaseEntity.getItemAmount() >= amount;
     }
 }
