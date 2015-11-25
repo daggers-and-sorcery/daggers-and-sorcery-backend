@@ -2,6 +2,7 @@ package com.morethanheroic.swords.user.domain;
 
 import com.morethanheroic.swords.common.container.ServiceContainer;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
@@ -52,6 +53,10 @@ public class UserEntity {
 
     public int getMapId() {
         return userDatabaseEntity.getMap();
+    }
+
+    public MapInfoDefinition getMap() {
+        return serviceContainer.getMapInfoDefinitionManager().getMapInfoDefinition(userDatabaseEntity.getMap());
     }
 
     public void setPosition(int x, int y) {

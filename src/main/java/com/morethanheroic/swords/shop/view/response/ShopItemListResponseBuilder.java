@@ -38,6 +38,7 @@ public class ShopItemListResponseBuilder {
             Map<String, Object> item = new HashMap<>();
 
             item.put("itemDefinition", itemEntryResponseBuilder.buildItemEntry(shopItem.getItem()));
+            item.put("itemPrice", 1000);
             item.put("itemAmount", shopItem.getItemAmount());
 
             result.add(item);

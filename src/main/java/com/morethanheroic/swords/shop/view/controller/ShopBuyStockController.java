@@ -56,6 +56,9 @@ public class ShopBuyStockController {
             throw new ConflictException();
         }
 
+        //TODO: Check that the player is on the shop's position except if its the main shop
+        //TODO: Use main shop rates if the player using the main shop
+
         if (shopEntity.getShopSellPrice(itemDefinition) >= user.getInventory().getMoneyAmount()) {
             user.getInventory().decreaseMoneyAmount(shopEntity.getShopSellPrice(itemDefinition));
 

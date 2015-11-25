@@ -53,6 +53,9 @@ public class ShopSellStockController {
             throw new ConflictException();
         }
 
+        //TODO: Check that the player is on the shop's position except if its the main shop
+        //TODO: Use main shop rates if the player using the main shop
+
         ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
         ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(itemId);
 
