@@ -1,6 +1,35 @@
 <div class="panel panel-default panel-shadow">
-    <div class="panel-heading">Shop</div>
+    <div class="panel-heading">
+        Shop
+        <small style="font-size: 80%;color: gray;" ng-bind="'('+shopData.shopDefinition.name+')'"></small>
+        <div class="pull-right" style="margin-top: -3px; margin-right: -8px;">
+            <button class="btn btn-default">Shop's inventory</button>
+            <button class="btn btn-default">Your inventory</button>
+        </div>
+    </div>
     <div class="panel-body">
-        This is in a shop.
+        <h4 class="text-center">Shop inventory</h4>
+        <table class="table table-striped full-width-table">
+            <thead>
+            <tr>
+                <th class="text-center">Item name</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">To buy</th>
+                <th class="text-center">Buy</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in shopData.itemList">
+                <td class="shop-item-cell" style="width: 40%;" ng-bind="item.itemDefinition.name"></td>
+                <td class="shop-item-cell text-center" ng-bind="item.itemAmount"></td>
+                <td class="shop-item-cell text-center" ng-bind="item.itemPrice"></td>
+                <td class="shop-item-cell text-center"><input type="number" value="0"/></td>
+                <td class="shop-item-cell text-center">
+                    <button class="btn btn-default">Buy</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

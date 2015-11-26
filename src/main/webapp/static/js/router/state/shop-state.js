@@ -7,7 +7,7 @@ module.exports = {
     resolve: {
         shopData: function ($http, $stateParams) {
             return $http.get('/shop/' + $stateParams.shopId).then(function (response) {
-                return response.data;
+                return response.data.data;
             });
         }
     },
