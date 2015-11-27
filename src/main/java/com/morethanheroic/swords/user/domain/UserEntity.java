@@ -6,6 +6,7 @@ import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.movement.domain.MovementEntity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
+import com.morethanheroic.swords.settings.model.SettingsEntity;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
@@ -23,6 +24,7 @@ public class UserEntity {
     private RegenerationEntity regenerationEntity;
     private SkillEntity skillEntity;
     private AttributeEntity attributeEntity;
+    private SettingsEntity settingsEntity;
 
     public UserEntity(UserDatabaseEntity userDatabaseEntity, ServiceContainer serviceContainer, UserMapper userMapper) {
         this.userDatabaseEntity = userDatabaseEntity;
@@ -68,6 +70,14 @@ public class UserEntity {
         }
 
         return attributeEntity;
+    }
+
+    public SettingsEntity getSettings() {
+        if(settingsEntity == null) {
+            settingsEntity = serviceContainer.getSettingsManager().getSettings(this);
+        }
+
+        return settingsEntity;
     }
 
     public int getId() {
