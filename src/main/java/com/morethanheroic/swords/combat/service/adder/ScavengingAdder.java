@@ -47,7 +47,7 @@ public class ScavengingAdder {
     }
 
     public boolean shouldScavenge(UserEntity user) {
-        return settingsMapper.getSettings(user.getId()).isScavengingEnabled() && user.getScavengingPoint() > 0;
+        return settingsMapper.getSettings(user.getId()).isScavengingEnabled() && user.getSkills().getScavenging().getScavengingPoint() > 0;
     }
 
     private void awardScavengingDrops(CombatResult combatResult, UserEntity user, List<ScavengingEntity> scavengingResultList) {
@@ -76,7 +76,8 @@ public class ScavengingAdder {
         }
     }
 
+    //TODO: wtf?
     private void decreaseUserScavengingPoints(UserEntity user) {
-        user.setScavengingPoint(user.getScavengingPoint() - 1);
+        user.getSkills().getScavenging().setScavengingPoint(user.getSkills().getScavenging().getScavengingPoint() - 1);
     }
 }
