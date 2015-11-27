@@ -17,7 +17,7 @@ public class ManaCombatSettings extends CombatSettingsAction {
 
     @Override
     public void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity) {
-        if (combat.getUserCombatEntity().getUserEntity().getMana() < combatSettingsEntity.getTarget()) {
+        if (combat.getUserCombatEntity().getUserEntity().getManaPoints() < combatSettingsEntity.getTarget()) {
             executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity, null);
         }
     }

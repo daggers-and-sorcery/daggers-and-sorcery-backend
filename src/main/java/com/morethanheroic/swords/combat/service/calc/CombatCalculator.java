@@ -82,9 +82,9 @@ public class CombatCalculator {
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
 
-            mapManager.getMap(user.getMapId()).removeSpawn(spawn.getId());
+            user.getMovement().getMap().removeSpawn(spawn.getId());
 
-            userMapper.updateBasicCombatStats(combat.getUserCombatEntity().getUserEntity().getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getUserEntity().getMovement() - 1);
+            userMapper.updateBasicCombatStats(combat.getUserCombatEntity().getUserEntity().getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getUserEntity().getMovementPoints() - 1);
         }
     }
 }

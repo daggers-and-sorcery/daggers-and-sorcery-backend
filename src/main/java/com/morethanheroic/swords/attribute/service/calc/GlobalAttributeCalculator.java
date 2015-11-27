@@ -73,11 +73,11 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
 
     public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
         if (attribute == CombatAttribute.LIFE) {
-            return new AttributeCalculationResult(user.getHealth(), attribute);
+            return new AttributeCalculationResult(user.getHealthPoints(), attribute);
         } else if (attribute == CombatAttribute.MANA) {
-            return new AttributeCalculationResult(user.getMana(), attribute);
+            return new AttributeCalculationResult(user.getManaPoints(), attribute);
         } else if (attribute == BasicAttribute.MOVEMENT) {
-            return new AttributeCalculationResult(user.getMovement(), attribute);
+            return new AttributeCalculationResult(user.getMovementPoints(), attribute);
         }
 
         return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));

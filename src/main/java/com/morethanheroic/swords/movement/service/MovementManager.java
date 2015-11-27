@@ -2,7 +2,7 @@ package com.morethanheroic.swords.movement.service;
 
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.map.service.MapManager;
+import com.morethanheroic.swords.movement.domain.MovementEntity;
 import com.morethanheroic.swords.movement.view.request.MovementType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +12,18 @@ import org.springframework.stereotype.Service;
 public class MovementManager {
 
     @Autowired
-    private MapManager mapManager;
-
-    @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
 
-    public boolean move(UserEntity user, MovementType type) {
-        int targetX = getTargetXCoordinate(user, type);
-        int targetY = getTargetYCoordinate(user, type);
+    public boolean move(UserEntity userEntity, MovementType type) {
+        MovementEntity movementEntity = userEntity.getMovement();
 
-        if (canWalk(user, targetX, targetY)) {
-            user.setPosition(targetX, targetY);
-            user.setMovement(user.getMovement() - 1);
+        int targetX = getTargetXCoordinate(movementEntity, type);
+        int targetY = getTargetYCoordinate(movementEntity, type);
+
+        if (canWalk(userEntity, movementEntity, targetX, targetY)) {
+            movementEntity.setPosition(targetX, targetY);
+
+            userEntity.setMovementPoints(userEntity.getMovementPoints() - 1);
 
             return true;
         }
@@ -31,35 +31,35 @@ public class MovementManager {
         return false;
     }
 
-    private int getTargetXCoordinate(UserEntity user, MovementType type) {
+    private int getTargetXCoordinate(MovementEntity movementEntity, MovementType type) {
         switch (type) {
             case UP:
             case DOWN:
-                return user.getX();
+                return movementEntity.getX();
             case LEFT:
-                return user.getX() - 1;
+                return movementEntity.getX() - 1;
             case RIGHT:
-                return user.getX() + 1;
+                return movementEntity.getX() + 1;
         }
 
         throw new IllegalArgumentException();
     }
 
-    private int getTargetYCoordinate(UserEntity user, MovementType type) {
+    private int getTargetYCoordinate(MovementEntity movementEntity, MovementType type) {
         switch (type) {
             case UP:
-                return user.getY() - 1;
+                return movementEntity.getY() - 1;
             case DOWN:
-                return user.getY() + 1;
+                return movementEntity.getY() + 1;
             case LEFT:
             case RIGHT:
-                return user.getY();
+                return movementEntity.getY();
         }
 
         throw new IllegalArgumentException();
     }
 
-    private boolean canWalk(UserEntity user, int x, int y) {
+    private boolean canWalk(UserEntity user, MovementEntity movementEntity, int x, int y) {
         if (x < 0 || y < 0) {
             return false;
         }
@@ -68,6 +68,7 @@ public class MovementManager {
             return false;
         }
 
-        return mapManager.getMap(user.getMapId()).getTileAt(x, y).isWalkable();
+        //TODO: Map should have a isTileWalkable instead of tis train
+        return movementEntity.getMap().getTileAt(x, y).isWalkable();
     }
 }
