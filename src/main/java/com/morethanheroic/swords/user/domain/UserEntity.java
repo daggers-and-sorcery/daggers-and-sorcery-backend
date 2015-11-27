@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.user.domain;
 
+import com.morethanheroic.swords.attribute.domain.AttributeEntity;
 import com.morethanheroic.swords.common.container.ServiceContainer;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.movement.domain.MovementEntity;
@@ -21,6 +22,7 @@ public class UserEntity {
     private MovementEntity movementEntity;
     private RegenerationEntity regenerationEntity;
     private SkillEntity skillEntity;
+    private AttributeEntity attributeEntity;
 
     public UserEntity(UserDatabaseEntity userDatabaseEntity, ServiceContainer serviceContainer, UserMapper userMapper) {
         this.userDatabaseEntity = userDatabaseEntity;
@@ -58,6 +60,14 @@ public class UserEntity {
         }
 
         return skillEntity;
+    }
+
+    public AttributeEntity getAttributes() {
+        if(attributeEntity == null) {
+            this.attributeEntity = new AttributeEntity(this, serviceContainer.getGlobalAttributeCalculator());
+        }
+
+        return attributeEntity;
     }
 
     public int getId() {
