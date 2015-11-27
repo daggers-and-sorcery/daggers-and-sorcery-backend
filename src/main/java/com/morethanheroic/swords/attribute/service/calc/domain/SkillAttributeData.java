@@ -12,7 +12,7 @@ public class SkillAttributeData extends AttributeData {
     private final long nextLevelXp;
     private final long xpBetweenLevels;
 
-    private SkillAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, List<AttributeModifierEntry> attributeModifierEntryArray, long actualXp, long nextLevelXp, long xpBetweenLevels) {
+    private SkillAttributeData(Attribute attribute, AttributeCalculationResult actual, AttributeCalculationResult maximum, List<AttributeModifierEntry> attributeModifierEntryArray, long actualXp, long nextLevelXp, long xpBetweenLevels) {
         super(attribute, actual, maximum, attributeModifierEntryArray);
 
         this.actualXp = actualXp;

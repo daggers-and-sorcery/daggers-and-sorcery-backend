@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.morethanheroic.swords.attribute.domain.*;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.UnlimitedAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.equipment.EquipmentAttributeBonusCalculator;
 import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
 import com.morethanheroic.swords.skill.service.SkillManager;
@@ -86,8 +87,12 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
     }
 
-    public int calculateMaximumValue(UserEntity user, Attribute attribute) {
-        return attribute.isUnlimited() ? 0 : calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute)).getValue();
+    public AttributeCalculationResult calculateMaximumValue(UserEntity user, Attribute attribute) {
+        if(attribute.isUnlimited()) {
+            return new UnlimitedAttributeCalculationResult(attribute);
+        }
+
+        return calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
     }
 
     public AttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {

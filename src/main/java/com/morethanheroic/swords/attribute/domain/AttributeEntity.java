@@ -18,9 +18,7 @@ public class AttributeEntity {
         return globalAttributeCalculator.calculateActualValue(userEntity, attribute);
     }
 
-    //TODO: Fix this when max calculation is working correctly
     public AttributeCalculationResult getMaximumAttributeValue(Attribute attribute) {
-        //return globalAttributeCalculator.calculateMaximumValue(userEntity, attribute);
-        return null;
+        return globalAttributeCalculator.calculateMaximumValue(userEntity, attribute);
     }
 }

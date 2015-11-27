@@ -60,11 +60,11 @@ public class UserLoginController {
         if(user != null) {
             response.setData("loggedIn", true);
             response.setData("life", globalAttributeCalculator.calculateActualValue(user, CombatAttribute.LIFE).getValue());
-            response.setData("max_life", globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.LIFE));
+            response.setData("max_life", globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.LIFE).getValue());
             response.setData("mana", globalAttributeCalculator.calculateActualValue(user, CombatAttribute.MANA).getValue());
-            response.setData("max_mana", globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.MANA));
+            response.setData("max_mana", globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.MANA).getValue());
             response.setData("movement", globalAttributeCalculator.calculateActualValue(user, BasicAttribute.MOVEMENT).getValue());
-            response.setData("max_movement", globalAttributeCalculator.calculateMaximumValue(user, BasicAttribute.MOVEMENT));
+            response.setData("max_movement", globalAttributeCalculator.calculateMaximumValue(user, BasicAttribute.MOVEMENT).getValue());
         } else {
             response.setData("loggedIn", false);
         }

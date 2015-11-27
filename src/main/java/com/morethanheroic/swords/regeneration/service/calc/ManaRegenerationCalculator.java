@@ -17,7 +17,7 @@ public class ManaRegenerationCalculator implements RegenerationCalculator {
     @Override
     public int calculateRegeneration(UserEntity user, int durationToCalculate) {
         int newMana = user.getRegeneration().getManaPoints() + MANA_REGENERATION_UNIT * durationToCalculate;
-        int maxMana = globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.MANA);
+        int maxMana = globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.MANA).getValue();
 
         if (newMana > maxMana) {
             return maxMana;
