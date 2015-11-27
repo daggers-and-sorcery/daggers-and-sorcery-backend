@@ -1,22 +1,22 @@
 package com.morethanheroic.swords.combat.service.calc.scavenge.domain;
 
-import com.morethanheroic.swords.combat.domain.ScavengingEntity;
+import com.morethanheroic.swords.combat.domain.ScavengingResultEntity;
 
 import java.util.List;
 
 public class ScavengingResult {
 
-    private final List<ScavengingEntity> scavengingEntityList;
+    private final List<ScavengingResultEntity> scavengingResultEntityList;
 
-    public ScavengingResult(List<ScavengingEntity> scavengingEntityList) {
-        this.scavengingEntityList = scavengingEntityList;
+    public ScavengingResult(List<ScavengingResultEntity> scavengingResultEntityList) {
+        this.scavengingResultEntityList = scavengingResultEntityList;
     }
 
-    public List<ScavengingEntity> getScavengingResultList() {
-        return scavengingEntityList;
+    public List<ScavengingResultEntity> getScavengingResultList() {
+        return scavengingResultEntityList;
     }
 
     public boolean isSuccessfullScavenge() {
-        return scavengingEntityList.size() > 0;
+        return scavengingResultEntityList.size() > 0;
     }
 }

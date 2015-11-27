@@ -9,4 +9,8 @@ public class SettingsEntity {
     public SettingsEntity(SettingsDatabaseEntity settingsDatabaseEntity) {
         this.settingsDatabaseEntity = settingsDatabaseEntity;
     }
+
+    public boolean isScavengingEnabled() {
+        return settingsDatabaseEntity.isScavengingEnabled();
+    }
 }

@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 public class CombatCalculator {
 
     private final CombatMessageBuilder combatMessageBuilder;
-    private final MapManager mapManager;
     private final TurnCalculatorFactory turnCalculatorFactory;
     private final JournalManager journalManager;
     private final UserMapper userMapper;
@@ -44,7 +43,6 @@ public class CombatCalculator {
     public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, MapManager mapManager, JournalManager journalManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
-        this.mapManager = mapManager;
         this.journalManager = journalManager;
         this.userMapper = userMapper;
     }

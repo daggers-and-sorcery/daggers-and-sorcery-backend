@@ -1,83 +1,52 @@
 package com.morethanheroic.swords.combat.service.adder;
 
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.CombatResult;
-import com.morethanheroic.swords.combat.domain.ScavengingEntity;
-import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengingCalculator;
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
-import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
-import com.morethanheroic.swords.skill.service.SkillManager;
+import com.morethanheroic.swords.settings.model.SettingsEntity;
+import com.morethanheroic.swords.skill.domain.ScavengingEntity;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.service.scavenge.ScavengeDropAwarder;
+import com.morethanheroic.swords.skill.service.scavenge.ScavengeExperienceAwarder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ScavengingAdder {
 
     @Autowired
-    private SettingsMapper settingsMapper;
-
-    @Autowired
     private ScavengingCalculator scavengingCalculator;
 
     @Autowired
-    private CombatMessageBuilder combatMessageBuilder;
+    private ScavengeDropAwarder scavengeDropAwarder;
 
     @Autowired
-    private InventoryFacade inventoryFacade;
+    private ScavengeExperienceAwarder scavengeExperienceAwarder;
 
-    @Autowired
-    private SkillManager skillManager;
+    public void addScavengingResultsToUserFromMonsterDefinition(CombatResult result, UserEntity user, MonsterDefinition monsterDefinition) {
+        SettingsEntity settingsEntity = user.getSettings();
+        ScavengingEntity scavengingEntity = user.getSkills().getScavenging();
+        SkillEntity skillEntity = user.getSkills();
+        InventoryEntity inventoryEntity = user.getInventory();
 
-    public void addScavengingResultsToUserFromMonsterDefinition(CombatResult result, UserEntity user, MonsterDefinition monster) {
-        if (shouldScavenge(user)) {
-            ScavengingResult scavengingResult =  scavengingCalculator.calculateScavenge(user, monster);
+        if (shouldScavenge(settingsEntity, scavengingEntity)) {
+            ScavengingResult scavengingResult =  scavengingCalculator.calculateScavenge(skillEntity, monsterDefinition);
 
-            awardScavengingDrops(result, user, scavengingResult.getScavengingResultList());
-            awardScavengingXp(user, monster, scavengingResult.isSuccessfullScavenge());
+            scavengeDropAwarder.awardScavengingDrops(result, inventoryEntity, scavengingResult.getScavengingResultList());
+            scavengeExperienceAwarder.awardScavengingXp(skillEntity, monsterDefinition, scavengingResult.isSuccessfullScavenge());
 
-            decreaseUserScavengingPoints(user);
+            decreaseUserScavengingPoints(scavengingEntity);
         }
     }
 
-    public boolean shouldScavenge(UserEntity user) {
-        return settingsMapper.getSettings(user.getId()).isScavengingEnabled() && user.getSkills().getScavenging().getScavengingPoint() > 0;
+    private boolean shouldScavenge(SettingsEntity settingsEntity, ScavengingEntity scavengingEntity) {
+        return settingsEntity.isScavengingEnabled() && scavengingEntity.getScavengingPoint() > 0;
     }
 
-    private void awardScavengingDrops(CombatResult combatResult, UserEntity user, List<ScavengingEntity> scavengingResultList) {
-        InventoryEntity inventory = inventoryFacade.getInventory(user);
-
-        for (ScavengingEntity scavengingEntity : scavengingResultList) {
-            if(scavengingEntity.isIdentified()) {
-                combatResult.addMessage(combatMessageBuilder.buildScavengeMessage(scavengingEntity.getItem().getName(), scavengingEntity.getAmount()));
-            } else {
-                combatResult.addMessage(combatMessageBuilder.buildScavengeMessage("Unidentified item", scavengingEntity.getAmount()));
-            }
-
-            inventory.addItem(scavengingEntity.getItem(), scavengingEntity.getAmount(), scavengingEntity.isIdentified());
-        }
-    }
-
-    private void awardScavengingXp(UserEntity user, MonsterDefinition monster, boolean successfulScavenging) {
-        skillManager.getSkills(user).addSkillXp(SkillAttribute.SCAVENGING, calculateScavengingXp(monster, successfulScavenging));
-    }
-
-    private int calculateScavengingXp(MonsterDefinition monster, boolean successfulScavenging) {
-        if (successfulScavenging) {
-            return monster.getLevel() * 5;
-        } else {
-            return monster.getLevel();
-        }
-    }
-
-    //TODO: wtf?
-    private void decreaseUserScavengingPoints(UserEntity user) {
-        user.getSkills().getScavenging().setScavengingPoint(user.getSkills().getScavenging().getScavengingPoint() - 1);
+    private void decreaseUserScavengingPoints(ScavengingEntity scavengingEntity) {
+        scavengingEntity.setScavengingPoint(scavengingEntity.getScavengingPoint() - 1);
     }
 }

@@ -1,12 +1,12 @@
 package com.morethanheroic.swords.combat.service.calc.scavenge;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.combat.domain.ScavengingEntity;
+import com.morethanheroic.swords.combat.domain.ScavengingResultEntity;
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
-import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingAmountDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +21,14 @@ public class ScavengingCalculator {
     @Autowired
     private Random random;
 
-    @Autowired
-    private SkillManager skillManager;
+    public ScavengingResult calculateScavenge(SkillEntity skillEntity, MonsterDefinition monster) {
+        ArrayList<ScavengingResultEntity> result = new ArrayList<>();
 
-    public ScavengingResult calculateScavenge(UserEntity user, MonsterDefinition monster) {
-        ArrayList<ScavengingEntity> result = new ArrayList<>();
-
-        int scavengingLevel = skillManager.getSkills(user).getSkillLevel(SkillAttribute.SCAVENGING);
+        int scavengingLevel = skillEntity.getSkillLevel(SkillAttribute.SCAVENGING);
 
         for (ScavengingDefinition scavengingDefinition : monster.getScavengingDefinitions()) {
             if (100 * random.nextDouble() < calculateScavengingChance(scavengingDefinition.getChance(), monster.getLevel(), scavengingLevel)) {
-                result.add(new ScavengingEntity(scavengingDefinition.getItem(), calculateScavengingAmount(scavengingDefinition.getAmount()), scavengingDefinition.isIdentified()));
+                result.add(new ScavengingResultEntity(scavengingDefinition.getItem(), calculateScavengingAmount(scavengingDefinition.getAmount()), scavengingDefinition.isIdentified()));
             }
         }
 
