@@ -54,6 +54,6 @@ public class UseItemService {
 
         combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects(), combatEffectDataHolder);
 
-        userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
+        userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getRegeneration().getMovementPoints());
     }
 }

@@ -4,6 +4,7 @@ import com.morethanheroic.swords.common.container.ServiceContainer;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.movement.domain.MovementEntity;
 import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
@@ -17,6 +18,7 @@ public class UserEntity {
 
     private InventoryEntity inventoryEntity;
     private MovementEntity movementEntity;
+    private RegenerationEntity regenerationEntity;
 
     public UserEntity(UserDatabaseEntity userDatabaseEntity, ServiceContainer serviceContainer, UserMapper userMapper) {
         this.userDatabaseEntity = userDatabaseEntity;
@@ -40,6 +42,14 @@ public class UserEntity {
         return movementEntity;
     }
 
+    public RegenerationEntity getRegeneration() {
+        if(regenerationEntity == null) {
+            regenerationEntity = new RegenerationEntity(userDatabaseEntity, userMapper);
+        }
+
+        return regenerationEntity;
+    }
+
     public int getId() {
         return userDatabaseEntity.getId();
     }
@@ -60,42 +70,11 @@ public class UserEntity {
         return userDatabaseEntity.getLastLoginDate();
     }
 
-    public int getHealthPoints() {
-        return userDatabaseEntity.getHealth();
-    }
-
-    public int getManaPoints() {
-        return userDatabaseEntity.getMana();
-    }
-
-    public int getMovementPoints() {
-        return userDatabaseEntity.getMovement();
-    }
-
-    public void setMovementPoints(int value) {
-        userDatabaseEntity.setMovement(value);
-
-        userMapper.updateMovement(userDatabaseEntity.getId(), value);
-    }
-
-    public Date getLastRegenerationDate() {
-        return userDatabaseEntity.getLastRegenerationDate();
-    }
-
     public int getScavengingPoint() {
         return userDatabaseEntity.getScaveningPoint();
     }
 
     public void setScavengingPoint(int value) {
         userMapper.updateScavengingPoint(userDatabaseEntity.getId(), value);
-    }
-
-    public void regenerate(int health, int mana, int movement, Date date) {
-        userDatabaseEntity.setLastRegenerationDate(date);
-        userDatabaseEntity.setMana(mana);
-        userDatabaseEntity.setHealth(health);
-        userDatabaseEntity.setMovement(movement);
-
-        userMapper.updateRegeneration(userDatabaseEntity.getId(), health, mana, movement, date);
     }
 }

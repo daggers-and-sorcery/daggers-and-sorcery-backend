@@ -4,6 +4,7 @@ import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.movement.domain.MovementEntity;
 import com.morethanheroic.swords.movement.view.request.MovementType;
+import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class MovementManager {
 
     public boolean move(UserEntity userEntity, MovementType type) {
         MovementEntity movementEntity = userEntity.getMovement();
+        RegenerationEntity regenerationEntity = userEntity.getRegeneration();
 
         int targetX = getTargetXCoordinate(movementEntity, type);
         int targetY = getTargetYCoordinate(movementEntity, type);
@@ -23,7 +25,7 @@ public class MovementManager {
         if (canWalk(userEntity, movementEntity, targetX, targetY)) {
             movementEntity.setPosition(targetX, targetY);
 
-            userEntity.setMovementPoints(userEntity.getMovementPoints() - 1);
+            regenerationEntity.setMovementPoints(regenerationEntity.getMovementPoints() - 1);
 
             return true;
         }

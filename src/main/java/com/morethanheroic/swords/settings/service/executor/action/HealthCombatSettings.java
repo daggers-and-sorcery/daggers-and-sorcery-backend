@@ -17,7 +17,7 @@ public class HealthCombatSettings extends CombatSettingsAction {
 
     @Override
     public void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity) {
-        if (combat.getUserCombatEntity().getUserEntity().getHealthPoints() < combatSettingsEntity.getTarget()) {
+        if (combat.getUserCombatEntity().getUserEntity().getRegeneration().getHealthPoints() < combatSettingsEntity.getTarget()) {
             executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity, null);
         }
     }

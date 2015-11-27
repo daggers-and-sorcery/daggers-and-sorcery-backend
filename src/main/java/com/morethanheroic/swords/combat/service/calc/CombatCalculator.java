@@ -84,7 +84,8 @@ public class CombatCalculator {
 
             user.getMovement().getMap().removeSpawn(spawn.getId());
 
-            userMapper.updateBasicCombatStats(combat.getUserCombatEntity().getUserEntity().getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getUserEntity().getMovementPoints() - 1);
+            //TODO: What a fail trainwreck do something with it
+            userMapper.updateBasicCombatStats(combat.getUserCombatEntity().getUserEntity().getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getUserEntity().getRegeneration().getMovementPoints() - 1);
         }
     }
 }

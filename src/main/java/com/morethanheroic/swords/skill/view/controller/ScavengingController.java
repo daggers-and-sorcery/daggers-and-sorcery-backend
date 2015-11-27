@@ -31,9 +31,9 @@ public class ScavengingController {
             pointsToConvert = (int) Math.floor((MAX_SCAVENGING_POINTS - actualScavengingPoints) / 5);
         }
 
-        if (user.getMovementPoints() >= pointsToConvert) {
+        if (user.getRegeneration().getMovementPoints() >= pointsToConvert) {
             user.setScavengingPoint(user.getScavengingPoint() + pointsToConvert * MOVEMENT_TO_SCAVENGING_POINT_CONVERSION_RATE);
-            user.setMovementPoints(user.getMovementPoints() - pointsToConvert);
+            user.getRegeneration().setMovementPoints(user.getRegeneration().getMovementPoints() - pointsToConvert);
 
             response.setData("success", true);
         } else {
