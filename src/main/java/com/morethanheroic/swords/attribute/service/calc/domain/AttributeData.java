@@ -8,18 +8,18 @@ import java.util.List;
 public class AttributeData {
 
     private final AttributeCalculationResult actual;
-    private final int maximum;
+    private final AttributeCalculationResult maximum;
     private final List<AttributeModifierEntry> modifierDataArray;
     private final Attribute attribute;
 
-    public AttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, List<AttributeModifierEntry> attributeModifierEntryArray) {
+    public AttributeData(Attribute attribute, AttributeCalculationResult actual, AttributeCalculationResult maximum, List<AttributeModifierEntry> attributeModifierEntryArray) {
         this.attribute = attribute;
         this.actual = actual;
         this.maximum = maximum;
         this.modifierDataArray = attributeModifierEntryArray;
     }
 
-    public int getMaximum() {
+    public AttributeCalculationResult getMaximum() {
         return maximum;
     }
 
@@ -38,7 +38,7 @@ public class AttributeData {
     public static class AttributeDataBuilder {
 
         protected Attribute attribute;
-        protected int maximum;
+        protected AttributeCalculationResult maximum;
         protected AttributeCalculationResult actual;
         protected List<AttributeModifierEntry> attributeModifierArray;
 
@@ -46,7 +46,7 @@ public class AttributeData {
             this.attribute = attribute;
         }
 
-        public void setMaximum(int maximum) {
+        public void setMaximum(AttributeCalculationResult maximum) {
             this.maximum = maximum;
         }
 

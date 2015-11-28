@@ -20,15 +20,12 @@ public class DropAdder {
     private DropCalculator dropCalculator;
 
     @Autowired
-    private InventoryFacade inventoryFacade;
-
-    @Autowired
     private CombatMessageBuilder combatMessageBuilder;
 
     public void addDropsToUserFromMonsterDefinition(CombatResult result, UserEntity user, MonsterDefinition monster) {
         ArrayList<Drop> drops = dropCalculator.calculateDrop(monster);
 
-        InventoryEntity inventory = inventoryFacade.getInventory(user);
+        InventoryEntity inventoryEntity = user.getInventory();
 
         for (Drop drop : drops) {
             if(drop.isIdentified()) {
@@ -37,7 +34,7 @@ public class DropAdder {
                 result.addMessage(combatMessageBuilder.buildDropMessage("Unidentified item", drop.getAmount()));
             }
 
-            inventory.addItem(drop.getItem(), drop.getAmount(), drop.isIdentified());
+            inventoryEntity.addItem(drop.getItem(), drop.getAmount(), drop.isIdentified());
         }
     }
 }

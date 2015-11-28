@@ -114,7 +114,7 @@ public class ProfileInfoResponseBuilderServiceTest {
     private GlobalAttributeCalculator buildGlobalAttributeCalculatorMock() {
         GlobalAttributeCalculator globalAttributeCalculator = mock(GlobalAttributeCalculator.class);
 
-        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, new AttributeCalculationResult(10, GeneralAttribute.DEXTERITY), 20, Lists.newArrayList(new AttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(10))));
+        AttributeData attributeData = new AttributeData(GeneralAttribute.DEXTERITY, new AttributeCalculationResult(10, GeneralAttribute.DEXTERITY), new AttributeCalculationResult(20, GeneralAttribute.STRENGTH), Lists.newArrayList(new AttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(10))));
 
         when(globalAttributeCalculator.calculateAttributeValue(any(), any())).thenReturn(attributeData);
 
