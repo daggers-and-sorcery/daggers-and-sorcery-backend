@@ -4,6 +4,7 @@ import com.morethanheroic.swords.common.response.ConflictException;
 import com.morethanheroic.swords.common.response.NotFoundException;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
@@ -33,8 +34,8 @@ public class ShopSellStockController {
     @Autowired
     private ResponseFactory responseFactory;
 
-    @RequestMapping(value = "/shop/{shopId}/sell/{itemId}/{itemAmount}", method = RequestMethod.GET)
-    public Response sellStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId, @PathVariable int itemAmount) {
+    @RequestMapping(value = "/shop/{shopId}/sell/{itemId}", method = RequestMethod.GET)
+    public Response sellStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId) {
         if (!shopFacade.isShopExists(shopId)) {
             throw new NotFoundException();
         }
@@ -49,20 +50,25 @@ public class ShopSellStockController {
             throw new NotFoundException();
         }
 
-        if (!user.getInventory().hasItemAmount(itemId, itemAmount, isIdentifiedItem)) {
+        if (!user.getInventory().hasItemAmount(itemId, 1, isIdentifiedItem)) {
             throw new ConflictException();
         }
 
         //TODO: Check that the player is on the shop's position except if its the main shop
         //TODO: Use main shop rates if the player using the main shop
 
-        ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
         ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(itemId);
 
-        user.getInventory().increaseMoneyAmount(shopEntity.getShopBuyPrice(itemDefinition));
-        user.getInventory().removeItem(itemId, itemAmount, isIdentifiedItem);
+        if(itemDefinition.getType() == ItemType.COIN) {
+            throw new ConflictException();
+        }
 
-        shopEntity.buyItem(itemDefinition, itemAmount);
+        ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
+
+        user.getInventory().increaseMoneyAmount(shopEntity.getShopBuyPrice(itemDefinition));
+        user.getInventory().removeItem(itemId, 1, isIdentifiedItem);
+
+        shopEntity.buyItem(itemDefinition, 1);
 
         return responseFactory.newSuccessfulResponse(user);
     }

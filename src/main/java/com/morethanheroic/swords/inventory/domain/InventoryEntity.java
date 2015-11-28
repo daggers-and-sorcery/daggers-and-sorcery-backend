@@ -106,7 +106,7 @@ public class InventoryEntity {
     public int getMoneyAmount() {
         //Calculate the amount of the user has from the money currency, it's mocked for now
 
-        return 100;
+        return 10000;
     }
 
     public void decreaseMoneyAmount(int value) {

@@ -3,7 +3,7 @@ package com.morethanheroic.swords.shop.view.controller;
 import com.morethanheroic.swords.common.response.NotFoundException;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.shop.service.ShopFacade;
-import com.morethanheroic.swords.shop.view.response.ShopItemListResponseBuilder;
+import com.morethanheroic.swords.shop.service.response.ShopItemListResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -62,9 +62,12 @@
                 <div ng-show="$root.user.loggedIn" class="panel panel-default panel-shadow right-panel menu-panel">
                     <div class="panel-heading">Menu</div>
                     <div class="panel-body">
-                        <a ui-sref="character" class="btn btn-default right-menu-button">Character</a> <a ui-sref="map" class="btn btn-default right-menu-button">Map</a> <a ui-sref="journal" class="btn btn-default right-menu-button">Journal</a>
-                        <a ui-sref="settings" class="btn btn-default right-menu-button">Settings</a> <a ui-sref="shop({shopId: 'main'})" class="btn btn-default right-menu-button">Shop</a>
-                        <a ui-sref="auction" class="btn btn-default right-menu-button">Auction</a>
+                        <a ui-sref="character" class="btn btn-default right-menu-button">Character</a>
+                        <a ui-sref="map" class="btn btn-default right-menu-button">Map</a>
+                        <a ui-sref="journal" class="btn btn-default right-menu-button">Journal</a>
+                        <a ui-sref="settings" class="btn btn-default right-menu-button">Settings</a>
+                        <a ui-sref="shop({shopId: 'main'})" class="btn btn-default right-menu-button">Shop</a>
+                        <!--<a ui-sref="auction" class="btn btn-default right-menu-button">Auction</a>-->
                     </div>
                 </div>
                 <div ng-hide="$root.user.loggedIn" class="panel panel-default panel-shadow right-panel login-panel">

@@ -20,7 +20,7 @@ public interface ShopMapper {
     @Insert("INSERT INTO shop_stock SET shop_id = #{shop_id}, item_id = #{item_id}, item_amount = #{item_amount} ON DUPLICATE KEY UPDATE item_amount = item_amount + #{item_amount}")
     void addStock(@Param("shop_id") int shopId, @Param("item_id") int itemId, @Param("item_amount") int amount);
 
-    @Update("UPDATE shop_stock SET item_amount = #{item_amount} WHERE shop_id = #{shop_id} AND item_id = #{item_id}")
+    @Update("UPDATE shop_stock SET item_amount = item_amount - #{item_amount} WHERE shop_id = #{shop_id} AND item_id = #{item_id}")
     void removeStock(@Param("shop_id") int shopId, @Param("item_id") int itemId, @Param("item_amount") int amount);
 
     @Delete("DELETE FROM shop_stock WHERE shop_id = #{shop_id} AND item_id = #{item_id}")

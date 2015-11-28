@@ -50,7 +50,7 @@ public class ShopFacade {
     public void removeItemFromShop(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
         ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
 
-        if (amount - shopItemDatabaseEntity.getItemAmount() <= 0) {
+        if (shopItemDatabaseEntity.getItemAmount() - amount <= 0) {
             shopMapper.deleteStock(shopDefinition.getId(), itemDefinition.getId());
         } else {
             shopMapper.removeStock(shopDefinition.getId(), itemDefinition.getId(), amount);

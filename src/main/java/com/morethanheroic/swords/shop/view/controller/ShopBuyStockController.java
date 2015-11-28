@@ -33,8 +33,8 @@ public class ShopBuyStockController {
     @Autowired
     private ResponseFactory responseFactory;
 
-    @RequestMapping(value = "/shop/{shopId}/buy/{itemId}/{itemAmount}", method = RequestMethod.GET)
-    public Response buyStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId, @PathVariable int itemAmount) {
+    @RequestMapping(value = "/shop/{shopId}/buy/{itemId}", method = RequestMethod.GET)
+    public Response buyStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId) {
         if (!shopFacade.isShopExists(shopId)) {
             throw new NotFoundException();
         }
@@ -52,19 +52,19 @@ public class ShopBuyStockController {
         ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
         ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(itemId);
 
-        if (!shopEntity.hasItem(itemDefinition, itemAmount)) {
+        if (!shopEntity.hasItem(itemDefinition, 1)) {
             throw new ConflictException();
         }
 
         //TODO: Check that the player is on the shop's position except if its the main shop
         //TODO: Use main shop rates if the player using the main shop
 
-        if (shopEntity.getShopSellPrice(itemDefinition) >= user.getInventory().getMoneyAmount()) {
+        if (shopEntity.getShopSellPrice(itemDefinition) <= user.getInventory().getMoneyAmount()) {
             user.getInventory().decreaseMoneyAmount(shopEntity.getShopSellPrice(itemDefinition));
 
-            user.getInventory().addItem(itemDefinition, itemAmount);
+            user.getInventory().addItem(itemDefinition, 1);
 
-            shopEntity.sellItem(itemDefinition, itemAmount);
+            shopEntity.sellItem(itemDefinition, 1);
         }
 
         return responseFactory.newSuccessfulResponse(user);
