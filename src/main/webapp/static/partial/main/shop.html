@@ -26,7 +26,7 @@
                 <td class="shop-item-cell text-center" ng-bind="item.itemPrice"></td>
                 <!--<td class="shop-item-cell text-center"><input type="number" value="0"/></td>-->
                 <td class="shop-item-cell text-center">
-                    <button class="btn btn-default">Sell</button>
+                    <button class="btn btn-default" ng-click="sellItem(item.itemDefinition.id)">Sell</button>
                 </td>
             </tr>
             </tbody>

@@ -14,6 +14,12 @@ module.exports = function ($scope, $http, shopData) {
         });
     };
 
+    $scope.sellItem = function (itemId) {
+        $http.get('/shop/' + $scope.shopData.shopDefinition.id + '/sell/' + itemId).then(function () {
+            $scope.refreshShop();
+        });
+    };
+
     $scope.refreshShop = function () {
         $http.get('/shop/' + $scope.shopData.shopDefinition.id).then(function (response) {
             $scope.shopData = response.data.data;
