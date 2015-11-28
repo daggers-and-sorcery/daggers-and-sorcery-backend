@@ -10,7 +10,7 @@ public class GeneralAttributeData extends AttributeData {
 
     private final int pointsToNextLevel;
 
-    protected GeneralAttributeData(Attribute attribute, AttributeCalculationResult actual, int maximum, List<AttributeModifierEntry> attributeModifierEntryArray, int pointsToNextLevel) {
+    protected GeneralAttributeData(Attribute attribute, AttributeCalculationResult actual, AttributeCalculationResult maximum, List<AttributeModifierEntry> attributeModifierEntryArray, int pointsToNextLevel) {
         super(attribute, actual, maximum, attributeModifierEntryArray);
 
         this.pointsToNextLevel = pointsToNextLevel;

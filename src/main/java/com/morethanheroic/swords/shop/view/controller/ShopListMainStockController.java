@@ -20,6 +20,6 @@ public class ShopListMainStockController {
 
     @RequestMapping(value = "/shop/main", method = RequestMethod.GET)
     public Response listStock(UserEntity user) {
-        return shopItemListResponseBuilder.build(user, shopFacade.getShopEntity(user.getMap().getMainShop()));
+        return shopItemListResponseBuilder.build(user, shopFacade.getShopEntity(user.getMovement().getMap().getMainShop()));
     }
 }

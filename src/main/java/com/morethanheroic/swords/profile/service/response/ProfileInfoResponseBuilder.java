@@ -74,7 +74,7 @@ public class ProfileInfoResponseBuilder {
         response.setData("race", user.getRace());
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
-        response.setData("scavengingPoints", user.getScavengingPoint());
+        response.setData("scavengingPoints", user.getSkills().getScavenging().getScavengingPoint());
         response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), session));
         response.setData("equipment", buildEquipmentResponse(user, session));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));

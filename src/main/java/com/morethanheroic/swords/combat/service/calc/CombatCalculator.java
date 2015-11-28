@@ -6,14 +6,21 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.adder.DropAdder;
-import com.morethanheroic.swords.combat.service.adder.ScavengingAdder;
+import com.morethanheroic.swords.combat.service.adder.ScavengingAwarder;
 import com.morethanheroic.swords.combat.service.adder.XpAdder;
+import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengingCalculator;
+import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculatorFactory;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.settings.model.SettingsEntity;
+import com.morethanheroic.swords.skill.domain.ScavengingEntity;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.service.ScavengingFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +30,15 @@ import org.springframework.stereotype.Service;
 public class CombatCalculator {
 
     private final CombatMessageBuilder combatMessageBuilder;
-    private final MapManager mapManager;
     private final TurnCalculatorFactory turnCalculatorFactory;
     private final JournalManager journalManager;
     private final UserMapper userMapper;
 
     @Autowired
-    private DropAdder dropAdder;
+    private ScavengingFacade scavengingFacade;
 
     @Autowired
-    private ScavengingAdder scavengingAdder;
+    private DropAdder dropAdder;
 
     @Autowired
     private XpAdder xpAdder;
@@ -44,7 +50,6 @@ public class CombatCalculator {
     public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, MapManager mapManager, JournalManager journalManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
-        this.mapManager = mapManager;
         this.journalManager = journalManager;
         this.userMapper = userMapper;
     }
@@ -78,13 +83,15 @@ public class CombatCalculator {
             MonsterDefinition monster = combat.getMonsterCombatEntity().getMonsterDefinition();
 
             dropAdder.addDropsToUserFromMonsterDefinition(result, user, monster);
-            scavengingAdder.addScavengingResultsToUserFromMonsterDefinition(result, user, monster);
+
+            scavengingFacade.handleScavenging(result, user, monster);
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
 
-            mapManager.getMap(user.getMapId()).removeSpawn(spawn.getId());
+            user.getMovement().getMap().removeSpawn(spawn.getId());
 
-            userMapper.updateBasicCombatStats(combat.getUserCombatEntity().getUserEntity().getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getUserEntity().getMovement() - 1);
+            //TODO: Move user mapper outside, this class shouldn't know about user mapper at all, it should know more about user facade
+            userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getRegeneration().getMovementPoints() - 1);
         }
     }
 }

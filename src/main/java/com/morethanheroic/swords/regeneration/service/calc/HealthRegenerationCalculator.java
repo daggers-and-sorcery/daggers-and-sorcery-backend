@@ -16,8 +16,8 @@ public class HealthRegenerationCalculator implements RegenerationCalculator {
 
     @Override
     public int calculateRegeneration(UserEntity user, int durationToCalculate) {
-        int newHealth = user.getHealth() + HEALTH_REGENERATION_UNIT * durationToCalculate;
-        int maxHealth = globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.LIFE);
+        int newHealth = user.getRegeneration().getHealthPoints() + HEALTH_REGENERATION_UNIT * durationToCalculate;
+        int maxHealth = globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.LIFE).getValue();
 
         if (newHealth > maxHealth) {
             return maxHealth;

@@ -1,18 +1,19 @@
 package com.morethanheroic.swords.combat.service.calc.scavenge;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.combat.domain.ScavengingEntity;
+import com.morethanheroic.swords.combat.domain.ScavengingResultEntity;
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
-import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingAmountDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -21,21 +22,20 @@ public class ScavengingCalculator {
     @Autowired
     private Random random;
 
-    @Autowired
-    private SkillManager skillManager;
+    public ScavengingResult calculateScavenge(SkillEntity skillEntity, MonsterDefinition monster) {
+        List<ScavengingResultEntity> result = new ArrayList<>();
 
-    public ScavengingResult calculateScavenge(UserEntity user, MonsterDefinition monster) {
-        ArrayList<ScavengingEntity> result = new ArrayList<>();
-
-        int scavengingLevel = skillManager.getSkills(user).getSkillLevel(SkillAttribute.SCAVENGING);
+        int scavengingLevel = skillEntity.getSkillLevel(SkillAttribute.SCAVENGING);
 
         for (ScavengingDefinition scavengingDefinition : monster.getScavengingDefinitions()) {
             if (100 * random.nextDouble() < calculateScavengingChance(scavengingDefinition.getChance(), monster.getLevel(), scavengingLevel)) {
-                result.add(new ScavengingEntity(scavengingDefinition.getItem(), calculateScavengingAmount(scavengingDefinition.getAmount()), scavengingDefinition.isIdentified()));
+                result.add(new ScavengingResultEntity(scavengingDefinition.getItem(), calculateScavengingAmount(scavengingDefinition.getAmount()), scavengingDefinition.isIdentified()));
             }
         }
 
-        return new ScavengingResult(result);
+        int scavengingXp = calculateScavengingXp(monster, isSuccessfulScavenge(result));
+
+        return new ScavengingResult(result, scavengingXp);
     }
 
     /**
@@ -55,5 +55,17 @@ public class ScavengingCalculator {
         }
 
         return random.nextInt(scavengingAmountDefinition.getMaximumAmount() - scavengingAmountDefinition.getMinimumAmount()) + scavengingAmountDefinition.getMinimumAmount();
+    }
+
+    private boolean isSuccessfulScavenge(List<ScavengingResultEntity> result) {
+        return result.size() > 0;
+    }
+
+    private int calculateScavengingXp(MonsterDefinition monsterDefinition, boolean successfulScavenging) {
+        if (successfulScavenging) {
+            return monsterDefinition.getLevel() * 5;
+        } else {
+            return monsterDefinition.getLevel();
+        }
     }
 }

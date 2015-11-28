@@ -9,10 +9,16 @@ public class SkillEntity {
 
     private final UserEntity user;
     private final SkillMapper skillMapper;
+    private final ScavengingEntity scavengingEntity;
 
-    public SkillEntity(UserEntity user, SkillMapper skillMapper) {
+    public SkillEntity(UserEntity user, SkillMapper skillMapper, ScavengingEntity scavengingEntity) {
         this.user = user;
         this.skillMapper = skillMapper;
+        this.scavengingEntity = scavengingEntity;
+    }
+
+    public ScavengingEntity getScavenging() {
+        return scavengingEntity;
     }
 
     public void addSkillXp(SkillAttribute attribute, long value) {
