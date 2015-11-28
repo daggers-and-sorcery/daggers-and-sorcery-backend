@@ -6,14 +6,20 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.adder.DropAdder;
-import com.morethanheroic.swords.combat.service.adder.ScavengingAdder;
+import com.morethanheroic.swords.combat.service.adder.ScavengingAwarder;
 import com.morethanheroic.swords.combat.service.adder.XpAdder;
+import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengingCalculator;
+import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculatorFactory;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.settings.model.SettingsEntity;
+import com.morethanheroic.swords.skill.domain.ScavengingEntity;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +37,16 @@ public class CombatCalculator {
     private DropAdder dropAdder;
 
     @Autowired
-    private ScavengingAdder scavengingAdder;
+    private ScavengingAwarder scavengingAwarder;
 
     @Autowired
     private XpAdder xpAdder;
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private ScavengingCalculator scavengingCalculator;
 
     @Autowired
     public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, MapManager mapManager, JournalManager journalManager, UserMapper userMapper) {
@@ -76,14 +85,34 @@ public class CombatCalculator {
             MonsterDefinition monster = combat.getMonsterCombatEntity().getMonsterDefinition();
 
             dropAdder.addDropsToUserFromMonsterDefinition(result, user, monster);
-            scavengingAdder.addScavengingResultsToUserFromMonsterDefinition(result, user, monster);
+
+            //TODO: moce these somewhere else? Eg create a bean for it?
+            SettingsEntity settingsEntity = user.getSettings();
+            ScavengingEntity scavengingEntity = user.getSkills().getScavenging();
+            SkillEntity skillEntity = user.getSkills();
+            InventoryEntity inventoryEntity = user.getInventory();
+            if (shouldScavenge(settingsEntity, scavengingEntity)) {
+                ScavengingResult scavengingResult = scavengingCalculator.calculateScavenge(skillEntity, monster);
+
+                scavengingAwarder.awardScavengingResultToUser(result, skillEntity, inventoryEntity, scavengingResult);
+
+                decreaseUserScavengingPoints(scavengingEntity);
+            }
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
 
             user.getMovement().getMap().removeSpawn(spawn.getId());
 
-            //TODO: What a fail trainwreck do something with it
-            userMapper.updateBasicCombatStats(combat.getUserCombatEntity().getUserEntity().getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getUserEntity().getRegeneration().getMovementPoints() - 1);
+            //TODO: Move user mapper outside, this class shouldn't know about user mapper at all, it should know more about user facade
+            userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getRegeneration().getMovementPoints() - 1);
         }
+    }
+
+    private void decreaseUserScavengingPoints(ScavengingEntity scavengingEntity) {
+        scavengingEntity.setScavengingPoint(scavengingEntity.getScavengingPoint() - 1);
+    }
+
+    private boolean shouldScavenge(SettingsEntity settingsEntity, ScavengingEntity scavengingEntity) {
+        return settingsEntity.isScavengingEnabled() && scavengingEntity.getScavengingPoint() > 0;
     }
 }

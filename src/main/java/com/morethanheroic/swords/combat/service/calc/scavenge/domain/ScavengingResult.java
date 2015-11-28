@@ -1,22 +1,19 @@
 package com.morethanheroic.swords.combat.service.calc.scavenge.domain;
 
 import com.morethanheroic.swords.combat.domain.ScavengingResultEntity;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@Getter
+@RequiredArgsConstructor
 public class ScavengingResult {
 
-    private final List<ScavengingResultEntity> scavengingResultEntityList;
+    private final List<ScavengingResultEntity> scavengingResultList;
+    private final int scavengingXp;
 
-    public ScavengingResult(List<ScavengingResultEntity> scavengingResultEntityList) {
-        this.scavengingResultEntityList = scavengingResultEntityList;
-    }
-
-    public List<ScavengingResultEntity> getScavengingResultList() {
-        return scavengingResultEntityList;
-    }
-
-    public boolean isSuccessfullScavenge() {
-        return scavengingResultEntityList.size() > 0;
+    public boolean isSuccessfulScavenge() {
+        return scavengingResultList.size() > 0;
     }
 }

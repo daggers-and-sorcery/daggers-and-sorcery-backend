@@ -52,8 +52,11 @@ public class CombatMessageBuilder {
     private final String[] DROP_MESSANGE_LIST = new String[]{
             "Found ${amount} ${item} after looting the opponents body."
     };
-    private final String[] SCAVENGING_MESSANGE_LIST = new String[]{
+    private final String[] SCAVENGING_ITEM_MESSANGE_LIST = new String[]{
             "While scavenging you found ${amount} ${item}. Lucky you!"
+    };
+    private final String[] SCAVENGING_XP_MESSANGE_LIST = new String[]{
+            "After the scavenge you got ${amount} xp on Scavenging!"
     };
     private final String[] NEW_TURN_LIST = new String[]{
             "New turn starts: ${turn}!"
@@ -226,12 +229,21 @@ public class CombatMessageBuilder {
         return combatMessage;
     }
 
-    public CombatMessage buildScavengeMessage(String itemName, int amount) {
+    public CombatMessage buildScavengeItemAwardMessage(String itemName, int amount) {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("item", itemName);
         combatMessage.addData("amount", amount);
-        combatMessage.addData("message", SCAVENGING_MESSANGE_LIST[random.nextInt(SCAVENGING_MESSANGE_LIST.length)]);
+        combatMessage.addData("message", SCAVENGING_ITEM_MESSANGE_LIST[random.nextInt(SCAVENGING_ITEM_MESSANGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildScavengeXpAwardMessage(int amount) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("amount", amount);
+        combatMessage.addData("message", SCAVENGING_XP_MESSANGE_LIST[random.nextInt(SCAVENGING_XP_MESSANGE_LIST.length)]);
 
         return combatMessage;
     }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -22,7 +23,7 @@ public class ScavengingCalculator {
     private Random random;
 
     public ScavengingResult calculateScavenge(SkillEntity skillEntity, MonsterDefinition monster) {
-        ArrayList<ScavengingResultEntity> result = new ArrayList<>();
+        List<ScavengingResultEntity> result = new ArrayList<>();
 
         int scavengingLevel = skillEntity.getSkillLevel(SkillAttribute.SCAVENGING);
 
@@ -32,7 +33,9 @@ public class ScavengingCalculator {
             }
         }
 
-        return new ScavengingResult(result);
+        int scavengingXp = calculateScavengingXp(monster, isSuccessfulScavenge(result));
+
+        return new ScavengingResult(result, scavengingXp);
     }
 
     /**
@@ -52,5 +55,17 @@ public class ScavengingCalculator {
         }
 
         return random.nextInt(scavengingAmountDefinition.getMaximumAmount() - scavengingAmountDefinition.getMinimumAmount()) + scavengingAmountDefinition.getMinimumAmount();
+    }
+
+    private boolean isSuccessfulScavenge(List<ScavengingResultEntity> result) {
+        return result.size() > 0;
+    }
+
+    private int calculateScavengingXp(MonsterDefinition monsterDefinition, boolean successfulScavenging) {
+        if (successfulScavenging) {
+            return monsterDefinition.getLevel() * 5;
+        } else {
+            return monsterDefinition.getLevel();
+        }
     }
 }
