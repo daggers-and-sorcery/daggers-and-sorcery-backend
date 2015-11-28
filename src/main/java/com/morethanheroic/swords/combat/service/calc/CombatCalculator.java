@@ -20,6 +20,7 @@ import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.settings.model.SettingsEntity;
 import com.morethanheroic.swords.skill.domain.ScavengingEntity;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.service.ScavengingFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,19 +35,16 @@ public class CombatCalculator {
     private final UserMapper userMapper;
 
     @Autowired
-    private DropAdder dropAdder;
+    private ScavengingFacade scavengingFacade;
 
     @Autowired
-    private ScavengingAwarder scavengingAwarder;
+    private DropAdder dropAdder;
 
     @Autowired
     private XpAdder xpAdder;
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
-
-    @Autowired
-    private ScavengingCalculator scavengingCalculator;
 
     @Autowired
     public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, MapManager mapManager, JournalManager journalManager, UserMapper userMapper) {
@@ -86,18 +84,7 @@ public class CombatCalculator {
 
             dropAdder.addDropsToUserFromMonsterDefinition(result, user, monster);
 
-            //TODO: moce these somewhere else? Eg create a bean for it?
-            SettingsEntity settingsEntity = user.getSettings();
-            ScavengingEntity scavengingEntity = user.getSkills().getScavenging();
-            SkillEntity skillEntity = user.getSkills();
-            InventoryEntity inventoryEntity = user.getInventory();
-            if (shouldScavenge(settingsEntity, scavengingEntity)) {
-                ScavengingResult scavengingResult = scavengingCalculator.calculateScavenge(skillEntity, monster);
-
-                scavengingAwarder.awardScavengingResultToUser(result, skillEntity, inventoryEntity, scavengingResult);
-
-                decreaseUserScavengingPoints(scavengingEntity);
-            }
+            scavengingFacade.handleScavenging(result, user, monster);
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
 
@@ -106,13 +93,5 @@ public class CombatCalculator {
             //TODO: Move user mapper outside, this class shouldn't know about user mapper at all, it should know more about user facade
             userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getRegeneration().getMovementPoints() - 1);
         }
-    }
-
-    private void decreaseUserScavengingPoints(ScavengingEntity scavengingEntity) {
-        scavengingEntity.setScavengingPoint(scavengingEntity.getScavengingPoint() - 1);
-    }
-
-    private boolean shouldScavenge(SettingsEntity settingsEntity, ScavengingEntity scavengingEntity) {
-        return settingsEntity.isScavengingEnabled() && scavengingEntity.getScavengingPoint() > 0;
     }
 }

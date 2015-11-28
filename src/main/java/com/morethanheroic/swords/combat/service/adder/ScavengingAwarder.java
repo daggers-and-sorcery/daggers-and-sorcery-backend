@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScavengingAwarder {
 
+    private static final String UNIDENTIFIED_ITEM_NAME = "Unidentified item";
+
     @Autowired
     private CombatMessageBuilder combatMessageBuilder;
 
@@ -26,7 +28,7 @@ public class ScavengingAwarder {
             if(scavengingResultEntity.isIdentified()) {
                 combatResult.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(scavengingResultEntity.getItem().getName(), scavengingResultEntity.getAmount()));
             } else {
-                combatResult.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage("Unidentified item", scavengingResultEntity.getAmount()));
+                combatResult.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(UNIDENTIFIED_ITEM_NAME, scavengingResultEntity.getAmount()));
             }
 
             inventoryEntity.addItem(scavengingResultEntity.getItem(), scavengingResultEntity.getAmount(), scavengingResultEntity.isIdentified());
