@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.common.definition.service;
+package com.morethanheroic.swords.definition.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -21,6 +21,7 @@ import java.util.List;
 public class XMLDefinitionLoader {
 
     private static final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    private static final int MAXIMUM_ENTRIES_READ = 100;
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -28,16 +29,16 @@ public class XMLDefinitionLoader {
     public List loadDefinitions(Class clazz, String resourcePath, String schemaPath) throws IOException {
         try {
             return unmarshallTargetFiles(buildUnmarshaller(clazz, schemaPath), resourcePath);
-        } catch (JAXBException | IOException | SAXException e) {
+        } catch (Exception e) {
             throw new IOException(e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    private ArrayList unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath) throws JAXBException, IOException {
-        ArrayList list = new ArrayList<>();
+    private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath) throws JAXBException, IOException {
+        List list = new ArrayList<>();
 
-        for (int i = 1; i < 100; i++) {
+        for (int i = 1; i < MAXIMUM_ENTRIES_READ; i++) {
             Resource resource = applicationContext.getResource(resourcePath + i + ".xml");
 
             if (!resource.exists()) {
