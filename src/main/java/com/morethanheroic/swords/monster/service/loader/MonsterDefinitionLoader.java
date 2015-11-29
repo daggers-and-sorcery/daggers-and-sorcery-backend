@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.monster.service.loader;
 
-import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
+import com.morethanheroic.swords.definition.service.XmlDefinitionLoader;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.service.transformer.MonsterDefinitionTransformer;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class MonsterDefinitionLoader {
 
     @Autowired
-    private XMLDefinitionLoader xmlDefinitionLoader;
+    private XmlDefinitionLoader xmlDefinitionLoader;
 
     @Autowired
     private MonsterDefinitionTransformer monsterDefinitionTransformer;

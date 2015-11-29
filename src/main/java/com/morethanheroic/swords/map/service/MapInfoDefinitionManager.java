@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.map.service;
 
-import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
+import com.morethanheroic.swords.definition.service.XmlDefinitionLoader;
 import com.morethanheroic.swords.map.service.domain.MapInfoDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 public class MapInfoDefinitionManager {
 
     @Autowired
-    private XMLDefinitionLoader xmlDefinitionLoader;
+    private XmlDefinitionLoader xmlDefinitionLoader;
 
     private HashMap<Integer, MapInfoDefinition> mapInfoDefinitionMap = new HashMap<>();
 

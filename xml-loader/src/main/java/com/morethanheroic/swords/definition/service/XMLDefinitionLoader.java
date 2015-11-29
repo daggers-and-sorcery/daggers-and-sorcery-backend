@@ -17,10 +17,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Load xml classes and validate them based on the given schema url.
+ */
 @Service
-public class XMLDefinitionLoader {
+public class XmlDefinitionLoader {
 
-    private static final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    private static final SchemaFactory SCHEMA_FACTORY = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
     private static final int MAXIMUM_ENTRIES_READ = 100;
 
     @Autowired
@@ -29,17 +32,17 @@ public class XMLDefinitionLoader {
     public List loadDefinitions(Class clazz, String resourcePath, String schemaPath) throws IOException {
         try {
             return unmarshallTargetFiles(buildUnmarshaller(clazz, schemaPath), resourcePath);
-        } catch (Exception e) {
+        } catch (SAXException | JAXBException e) {
             throw new IOException(e);
         }
     }
 
     @SuppressWarnings("unchecked")
     private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath) throws JAXBException, IOException {
-        List list = new ArrayList<>();
+        final List list = new ArrayList<>();
 
         for (int i = 1; i < MAXIMUM_ENTRIES_READ; i++) {
-            Resource resource = applicationContext.getResource(resourcePath + i + ".xml");
+            final Resource resource = applicationContext.getResource(resourcePath + i + ".xml");
 
             if (!resource.exists()) {
                 return list;
@@ -52,13 +55,14 @@ public class XMLDefinitionLoader {
     }
 
     private Unmarshaller buildUnmarshaller(Class clazz, String schemaPath) throws IOException, SAXException, JAXBException {
-        Unmarshaller unmarshaller = JAXBContext.newInstance(clazz).createUnmarshaller();
+        final Unmarshaller unmarshaller = JAXBContext.newInstance(clazz).createUnmarshaller();
+
         unmarshaller.setSchema(buildSchema(schemaPath));
 
         return unmarshaller;
     }
 
     private Schema buildSchema(String schemaPath) throws IOException, SAXException {
-        return schemaFactory.newSchema(new StreamSource(applicationContext.getResource(schemaPath).getInputStream()));
+        return SCHEMA_FACTORY.newSchema(new StreamSource(applicationContext.getResource(schemaPath).getInputStream()));
     }
 }

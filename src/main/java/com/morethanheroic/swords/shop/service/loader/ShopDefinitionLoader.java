@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.shop.service.loader;
 
-import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
+import com.morethanheroic.swords.definition.service.XmlDefinitionLoader;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.service.loader.domain.RawShopDefinition;
 import com.morethanheroic.swords.shop.service.transformer.ShopDefinitionTransformer;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ShopDefinitionLoader {
 
     @Autowired
-    private XMLDefinitionLoader xmlDefinitionLoader;
+    private XmlDefinitionLoader xmlDefinitionLoader;
 
     @Autowired
     private ShopDefinitionTransformer shopDefinitionTransformer;
