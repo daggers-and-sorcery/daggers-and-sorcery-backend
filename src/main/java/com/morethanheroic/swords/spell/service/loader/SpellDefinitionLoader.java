@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.service.loader;
 
-import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
+import com.morethanheroic.swords.definition.service.XmlDefinitionLoader;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellDefinition;
 import com.morethanheroic.swords.spell.service.transformer.SpellDefinitionTransformer;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class SpellDefinitionLoader {
 
     @Autowired
-    private XMLDefinitionLoader xmlDefinitionLoader;
+    private XmlDefinitionLoader xmlDefinitionLoader;
 
     @Autowired
     private SpellDefinitionTransformer spellDefinitionTransformer;
