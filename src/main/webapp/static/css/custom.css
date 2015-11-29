@@ -448,3 +448,9 @@ button {
     top: 4px;
     left: 4px;
 }
+
+/** Shop **/
+.shop-item-cell {
+    height: 50px;
+    vertical-align: middle !important;
+}

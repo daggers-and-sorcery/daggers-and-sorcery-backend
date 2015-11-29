@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.definition.service;
+package com.morethanheroic.swords.common.definition.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -25,10 +25,15 @@ public class XMLDefinitionLoader {
     @Autowired
     private ApplicationContext applicationContext;
 
-    public List loadDefinitions(Class clazz, String resourcePath, String schemaPath) throws JAXBException, IOException, SAXException {
-        return unmarshallTargetFiles(buildUnmarshaller(clazz, schemaPath), resourcePath);
+    public List loadDefinitions(Class clazz, String resourcePath, String schemaPath) throws IOException {
+        try {
+            return unmarshallTargetFiles(buildUnmarshaller(clazz, schemaPath), resourcePath);
+        } catch (JAXBException | IOException | SAXException e) {
+            throw new IOException(e);
+        }
     }
 
+    @SuppressWarnings("unchecked")
     private ArrayList unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath) throws JAXBException, IOException {
         ArrayList list = new ArrayList<>();
 

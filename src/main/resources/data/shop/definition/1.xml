@@ -1,0 +1,6 @@
+<shop:shop xmlns:shop="http://www.swordsandsorcery.com/shop"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.swordsandsorcery.com/shop ../schema.xsd">
+    <shop:id>1</shop:id>
+    <shop:name>Lumby shop</shop:name>
+</shop:shop>

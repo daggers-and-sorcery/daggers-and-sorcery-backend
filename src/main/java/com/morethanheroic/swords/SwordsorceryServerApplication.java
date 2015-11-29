@@ -7,8 +7,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
@@ -38,14 +36,12 @@ import java.util.Random;
 @Configuration
 @Lazy
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
-@ComponentScan(lazyInit = true)
+@ComponentScan
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableRedisHttpSession
 @MapperScan("com.morethanheroic.swords")
 public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapter {
-
-    private static final Logger logger = LoggerFactory.getLogger(SwordsorceryServerApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(SwordsorceryServerApplication.class, args);
@@ -67,6 +63,13 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         urlPatterns.add("/user/logout");
         urlPatterns.add("/character/*");
         urlPatterns.add("/map/*");
+        urlPatterns.add("/shop/*");
+        urlPatterns.add("/equip/*");
+        urlPatterns.add("/item/use/*");
+        urlPatterns.add("/journal/*");
+        urlPatterns.add("/combat/*");
+        urlPatterns.add("/skill/*");
+        urlPatterns.add("/spell/*");
 
         registrationBean.setUrlPatterns(urlPatterns);
 

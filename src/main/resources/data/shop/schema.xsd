@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.swordsandsorcery.com/shop" xmlns="http://www.swordsandsorcery.com/shop" elementFormDefault="qualified">
+    <xs:element name="shop">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="id" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="name" type="xs:string" minOccurs="1"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

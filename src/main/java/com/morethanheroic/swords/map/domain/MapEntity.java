@@ -98,4 +98,8 @@ public class MapEntity {
 
         return null;
     }
+
+    public int getMainShop() {
+        return mapInfoDefinition.getMainShop();
+    }
 }

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.service.loader;
 
-import com.morethanheroic.swords.definition.service.XMLDefinitionLoader;
+import com.morethanheroic.swords.common.definition.service.XMLDefinitionLoader;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
 import com.morethanheroic.swords.item.service.transformer.ItemDefinitionTransformer;
