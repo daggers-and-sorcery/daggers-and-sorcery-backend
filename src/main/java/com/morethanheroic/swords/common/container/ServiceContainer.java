@@ -2,7 +2,6 @@ package com.morethanheroic.swords.common.container;
 
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.map.service.MapInfoDefinitionManager;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.settings.service.SettingsManager;
 import com.morethanheroic.swords.skill.service.SkillManager;

@@ -1,119 +1,118 @@
 <!DOCTYPE html>
 <html>
-    <head lang="en">
-        <title>Swords &amp; Sorcery</title>
+<head lang="en">
+    <title>Swords &amp; Sorcery</title>
 
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-        <script src="/bundle/bundle.js"></script>
+    <script src="/bundle/bundle.js"></script>
 
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/phaser/2.3.0/phaser.js"></script>
-    </head>
-    <body ng-app="swordssorcery" ng-controller="MainController">
-        <div class="container" role="main">
-            <div class="page-wrap">
-                <div class="row">
-                    <nav class="navbar navbar-inverse" role="navigation">
-                        <div class="container-fluid">
-                            <div class="navbar-header">
-                                <a ui-sref="index" class="navbar-brand">Swords &amp; Sorcery</a>
-                            </div>
-                            <div class="collapse navbar-collapse">
-                                <div ng-show="$root.user.loggedIn" class="navbar-button-holder" style="width: 600px;">
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-lg-3">
-                                            <span><svg-image src="'/icon/heart.svg'" class="progress-icon"/></span>
-                                            <span class="progress-info">{{$root.user.life}} / {{$root.user.max_life}}</span>
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: {{$root.user.life / ($root.user.max_life / 100)}}%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-lg-3">
-                                            <span><svg-image src="'/icon/magic.svg'" class="progress-icon"/></span>
-                                            <span class="progress-info">{{$root.user.mana}} / {{$root.user.max_mana}}</span>
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-info" role="progressbar" style="width: {{$root.user.mana / ($root.user.max_mana / 100)}}%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-lg-3">
-                                            <span><svg-image src="'/icon/steps.svg'" class="progress-icon"/></span>
-                                            <span class="progress-info">{{$root.user.movement}} / {{$root.user.max_movement}}</span>
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-warning" role="progressbar" style="width: {{$root.user.movement / ($root.user.max_movement / 100)}}%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-lg-3" style="text-align:right;">
-                                            <button class="btn btn-default" ui-sref="logout">Logout</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-                <div class="row">
-                    <div ng-show="errorVisible" class="alert alert-danger alert-dismissible global-error">
-                        {{errorText}}
-                        <a type="button" class="close" ng-click="closeError()"><span aria-hidden="true">&times;</span></a>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/phaser/2.3.0/phaser.js"></script>
+</head>
+<body ng-app="swordssorcery" ng-controller="MainController">
+<div class="container" role="main">
+    <div class="page-wrap">
+        <div class="row">
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a ui-sref="index" class="navbar-brand">Swords &amp; Sorcery</a>
                     </div>
-                    <div class="col-md-9 col-lg-9 content-middle" ui-view></div>
-                    <div class="col-md-3 col-lg-3 content-right">
-                        <div ng-show="$root.user.loggedIn" class="panel panel-default panel-shadow right-panel menu-panel">
-                            <div class="panel-heading">Menu</div>
-                            <div class="panel-body">
-                                <a ui-sref="character" class="btn btn-default right-menu-button">Character</a>
-                                <a ui-sref="map" class="btn btn-default right-menu-button">Map</a>
-                                <a ui-sref="journal" class="btn btn-default right-menu-button">Journal</a>
-                                <a ui-sref="settings" class="btn btn-default right-menu-button">Settings</a>
-                                <a ui-sref="shop" class="btn btn-default right-menu-button">Shop</a>
-                                <a ui-sref="auction" class="btn btn-default right-menu-button">Auction</a>
-                            </div>
-                        </div>
-                        <div ng-hide="$root.user.loggedIn" class="panel panel-default panel-shadow right-panel login-panel">
-                            <div class="panel-heading">Login</div>
-                            <div class="panel-body">
-                                <button class="btn btn-default right-menu-button" ui-sref="registration">Create an account</button>
-                                <div class="alert alert-danger" role="alert" ng-bind="error" ng-show="error" style="margin-bottom: 15px;"></div>
-                                <form ng-submit="submit()">
-                                    <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" placeholder="Username" ng-model="user.username"/>
+                    <div class="collapse navbar-collapse">
+                        <div ng-show="$root.user.loggedIn" class="navbar-button-holder" style="width: 600px;">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3 col-lg-3">
+                                    <span><svg-image src="'/icon/heart.svg'" class="progress-icon"/></span> <span class="progress-info">{{$root.user.life}} / {{$root.user.max_life}}</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width: {{$root.user.life / ($root.user.max_life / 100)}}%"></div>
                                     </div>
-                                    <div class="password">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password" placeholder="Password" ng-model="user.password"/>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-lg-3">
+                                    <span><svg-image src="'/icon/magic.svg'" class="progress-icon"/></span> <span class="progress-info">{{$root.user.mana}} / {{$root.user.max_mana}}</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" style="width: {{$root.user.mana / ($root.user.max_mana / 100)}}%"></div>
                                     </div>
-                                    <div class="login-button-holder">
-                                        <button type="submit" class="btn btn-default">Submit</button>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-lg-3">
+                                    <span><svg-image src="'/icon/steps.svg'" class="progress-icon"/></span> <span class="progress-info">{{$root.user.movement}} / {{$root.user.max_movement}}</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" style="width: {{$root.user.movement / ($root.user.max_movement / 100)}}%"></div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="panel panel-default panel-shadow right-panel">
-                                <div class="panel-heading">Usefull links</div>
-                                <div class="panel-body">
-                                    <button class="btn btn-default right-menu-button" ui-sref="knowledge">Knowledge base</button>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-lg-3" style="text-align:right;">
+                                    <button class="btn btn-default" ui-sref="logout">Logout</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <div ng-show="errorVisible" class="alert alert-danger alert-dismissible global-error">
+                {{errorText}} <a type="button" class="close" ng-click="closeError()"><span aria-hidden="true">&times;</span></a>
+            </div>
+            <div class="col-md-9 col-lg-9 content-middle" ui-view></div>
+            <div class="col-md-3 col-lg-3 content-right">
+                <div ng-show="$root.user.loggedIn" class="panel panel-default panel-shadow right-panel menu-panel">
+                    <div class="panel-heading">Menu</div>
+                    <div class="panel-body">
+                        <a ui-sref="character" class="btn btn-default right-menu-button">Character</a>
+                        <a ui-sref="map" class="btn btn-default right-menu-button">Map</a>
+                        <a ui-sref="journal" class="btn btn-default right-menu-button">Journal</a>
+                        <a ui-sref="settings" class="btn btn-default right-menu-button">Settings</a>
+                        <a ui-sref="shop({shopId: 'main'})" class="btn btn-default right-menu-button">Shop</a>
+                        <!--<a ui-sref="auction" class="btn btn-default right-menu-button">Auction</a>-->
+                    </div>
+                </div>
+                <div ng-hide="$root.user.loggedIn" class="panel panel-default panel-shadow right-panel login-panel">
+                    <div class="panel-heading">Login</div>
+                    <div class="panel-body">
+                        <button class="btn btn-default right-menu-button" ui-sref="registration">Create an account</button>
+                        <div class="alert alert-danger" role="alert" ng-bind="error" ng-show="error" style="margin-bottom: 15px;"></div>
+                        <form ng-submit="submit()">
+                            <div class="form-group">
+                                <label for="username">Username</label> <input type="text" class="form-control" id="username" placeholder="Username" ng-model="user.username"/>
+                            </div>
+                            <div class="password">
+                                <label for="password">Password</label> <input type="password" class="form-control" id="password" placeholder="Password" ng-model="user.password"/>
+                            </div>
+                            <div class="login-button-holder">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <div class="panel panel-default panel-shadow right-panel">
+                        <div class="panel-heading">Usefull links</div>
+                        <div class="panel-body">
+                            <button class="btn btn-default right-menu-button" ui-sref="knowledge">Knowledge base</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <footer class="site-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <div class="panel panel-default panel-shadow footer-panel">
-                            <div class="panel-body text-center footer-copyright-holder">
-                                <div>Created by Laxika.</div>
-                                <div class="small">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC BY 3.0</a></div>
-                            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <div class="panel panel-default panel-shadow footer-panel">
+                    <div class="panel-body text-center footer-copyright-holder">
+                        <div>Created by Laxika.</div>
+                        <div class="small">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a> from
+                            <a href="http://www.flaticon.com" title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC BY 3.0</a>
                         </div>
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
-    </body>
+    </footer>
+</div>
+</body>
 </html>

@@ -15,5 +15,6 @@ module.exports = require('js/app.js').config(function ($stateProvider, $urlRoute
         .state(require('js/router/state/journal-entry-state.js'))
         .state(require('js/router/state/settings-state.js'))
         .state(require('js/router/state/combat-state.js'))
-        .state(require('js/router/state/spellpage-state.js'));
+        .state(require('js/router/state/spellpage-state.js'))
+        .state(require('js/router/state/shop-state.js'));
 });
