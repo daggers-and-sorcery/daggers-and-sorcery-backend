@@ -35,8 +35,12 @@ public class RaceEntityTransformer {
     private Map<RacialModifier, RacialModifierEntry> transformModifierList(List<RawRacialModifierEntry> rawRacialModifierEntryList) {
         final Map<RacialModifier, RacialModifierEntry> result = new HashMap<>();
 
+        if (rawRacialModifierEntryList == null) {
+            return result;
+        }
+
         for (RawRacialModifierEntry rawRacialModifierEntry : rawRacialModifierEntryList) {
-            RacialModifierEntry racialModifierEntry;
+            final RacialModifierEntry racialModifierEntry;
 
             if (rawRacialModifierEntry instanceof RawNumericRacialModifierEntry) {
                 racialModifierEntry = new NumericRacialModifierEntry(rawRacialModifierEntry.getRacialModifier(), rawRacialModifierEntry.getValue());
