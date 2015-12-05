@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class RaceEntityCache {
     private RaceEntityLoader raceEntityLoader;
 
     @PostConstruct
-    private void initialize() {
+    private void initialize() throws IOException {
         final List<RaceEntity> raceEntityList = raceEntityLoader.loadRaceEntities();
 
         for (RaceEntity raceEntity : raceEntityList) {
