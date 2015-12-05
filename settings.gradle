@@ -1,3 +1,5 @@
 rootProject.name = 'swords-server'
 
 include 'xml-loader'
+include 'swords-race'
+
