@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Load xml classes and validate them based on the given schema url.
+ * Load xml classes and validate them based on the given schema url. it tries to load that many files with numeric numbers
+ * as given in the maximumFileCount in the resourcePath folder. (1.xml, 2.xml, 3.xml etc...) If the loader found more
+ * files that given in the maximumFileCount then throws an {@link com.sun.javaws.exceptions.InvalidArgumentException} otherwise
+ * loads as many files as it founds.
  */
 @Service
-public class NumericXmlDefinitionLoader {
-
-    private static final int MAXIMUM_ENTRIES_READ = 100;
+public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> {
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -27,19 +28,19 @@ public class NumericXmlDefinitionLoader {
     @Autowired
     private UnmarshallerBuilder unmarshallerBuilder;
 
-    public List loadDefinitions(Class clazz, String resourcePath, String schemaPath) throws IOException {
+    public List loadDefinitions(Class clazz, String resourcePath, String schemaPath, Integer maximumFileCount) throws IOException {
         try {
-            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath);
+            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath, maximumFileCount);
         } catch (SAXException | JAXBException e) {
             throw new IOException(e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath) throws JAXBException, IOException {
+    private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath, int maximumFileCount) throws JAXBException, IOException {
         final List list = new ArrayList<>();
 
-        for (int i = 1; i < MAXIMUM_ENTRIES_READ; i++) {
+        for (int i = 1; i < maximumFileCount; i++) {
             final Resource resource = applicationContext.getResource(resourcePath + i + ".xml");
 
             if (!resource.exists()) {

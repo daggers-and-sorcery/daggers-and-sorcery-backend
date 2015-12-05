@@ -28,6 +28,6 @@ public class SpellDefinitionLoader {
 
     @SuppressWarnings("unchecked")
     private List<RawSpellDefinition> loadRawSpellDefinitions() throws JAXBException, IOException, SAXException {
-        return numericXmlDefinitionLoader.loadDefinitions(RawSpellDefinition.class, "classpath:data/spell/definition/", "classpath:data/spell/schema.xsd");
+        return numericXmlDefinitionLoader.loadDefinitions(RawSpellDefinition.class, "classpath:data/spell/definition/", "classpath:data/spell/schema.xsd", 100);
     }
 }

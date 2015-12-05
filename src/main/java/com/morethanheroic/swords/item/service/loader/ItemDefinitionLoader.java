@@ -28,6 +28,6 @@ public class ItemDefinitionLoader {
 
     @SuppressWarnings("unchecked")
     private List<RawItemDefinition> loadRawItemDefinitions() throws JAXBException, IOException, SAXException {
-        return numericXmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd");
+        return numericXmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd", 100);
     }
 }

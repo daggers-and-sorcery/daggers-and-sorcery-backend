@@ -26,6 +26,6 @@ public class ShopDefinitionLoader {
 
     @SuppressWarnings("unchecked")
     private List<RawShopDefinition> loadRawShopDefinitions() throws IOException {
-        return numericXmlDefinitionLoader.loadDefinitions(RawShopDefinition.class, "classpath:data/shop/definition/", "classpath:data/shop/schema.xsd");
+        return numericXmlDefinitionLoader.loadDefinitions(RawShopDefinition.class, "classpath:data/shop/definition/", "classpath:data/shop/schema.xsd", 100);
     }
 }

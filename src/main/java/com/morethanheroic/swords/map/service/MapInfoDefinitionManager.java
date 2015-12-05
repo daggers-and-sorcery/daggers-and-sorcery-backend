@@ -20,7 +20,7 @@ public class MapInfoDefinitionManager {
     @PostConstruct
     @SuppressWarnings("unchecked")
     public void init() throws Exception {
-        List<MapInfoDefinition> mapInfoDefinitionList = numericXmlDefinitionLoader.loadDefinitions(MapInfoDefinition.class, "classpath:data/map/definition/", "classpath:data/map/schema.xsd");
+        List<MapInfoDefinition> mapInfoDefinitionList = numericXmlDefinitionLoader.loadDefinitions(MapInfoDefinition.class, "classpath:data/map/definition/", "classpath:data/map/schema.xsd", 100);
 
         for (MapInfoDefinition mapInfoDefinition : mapInfoDefinitionList) {
             mapInfoDefinitionMap.put(mapInfoDefinition.getId(), mapInfoDefinition);

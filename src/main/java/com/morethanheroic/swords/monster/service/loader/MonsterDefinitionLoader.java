@@ -28,6 +28,6 @@ public class MonsterDefinitionLoader {
 
     @SuppressWarnings("unchecked")
     private List<RawMonsterDefinition> loadRawMonsterDefinitions() throws JAXBException, IOException, SAXException {
-        return numericXmlDefinitionLoader.loadDefinitions(RawMonsterDefinition.class, "classpath:data/monster/definition/", "classpath:data/monster/schema.xsd");
+        return numericXmlDefinitionLoader.loadDefinitions(RawMonsterDefinition.class, "classpath:data/monster/definition/", "classpath:data/monster/schema.xsd", 100);
     }
 }
