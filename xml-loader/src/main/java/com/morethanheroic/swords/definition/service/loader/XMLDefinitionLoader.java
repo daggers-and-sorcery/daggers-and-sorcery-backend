@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.definition.service.loader;
 
+import com.morethanheroic.swords.definition.service.loader.unmarshaller.UnmarshallerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
@@ -29,9 +30,12 @@ public class XmlDefinitionLoader {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private UnmarshallerBuilder unmarshallerBuilder;
+
     public List loadDefinitions(Class clazz, String resourcePath, String schemaPath) throws IOException {
         try {
-            return unmarshallTargetFiles(buildUnmarshaller(clazz, schemaPath), resourcePath);
+            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath);
         } catch (SAXException | JAXBException e) {
             throw new IOException(e);
         }
@@ -52,17 +56,5 @@ public class XmlDefinitionLoader {
         }
 
         throw new IllegalStateException("Should be here! There is more items to read than the actual maxvalue!");
-    }
-
-    private Unmarshaller buildUnmarshaller(Class clazz, String schemaPath) throws IOException, SAXException, JAXBException {
-        final Unmarshaller unmarshaller = JAXBContext.newInstance(clazz).createUnmarshaller();
-
-        unmarshaller.setSchema(buildSchema(schemaPath));
-
-        return unmarshaller;
-    }
-
-    private Schema buildSchema(String schemaPath) throws IOException, SAXException {
-        return SCHEMA_FACTORY.newSchema(new StreamSource(applicationContext.getResource(schemaPath).getInputStream()));
     }
 }
