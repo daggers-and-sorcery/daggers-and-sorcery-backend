@@ -104,11 +104,16 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifier);
     }
 
-    private int getRacialModifierValue(Race race, GeneralAttribute attribute) {
+    public int getRacialModifierValue(Race race, GeneralAttribute attribute) {
         final RacialModifier racialModifier = attributeToRacialModifierConverter.convert(attribute);
         final RaceEntity raceEntity = raceEntityCache.getRaceEntity(race);
+        final NumericRacialModifierEntry racialModifierEntry = (NumericRacialModifierEntry) raceEntity.getRacialModifier(racialModifier);
 
-        return ((NumericRacialModifierEntry) raceEntity.getRacialModifier(racialModifier)).getValue();
+        if (racialModifierEntry == null) {
+            return 0;
+        }
+
+        return racialModifierEntry.getValue();
     }
 
     public AttributeCalculationResult calculateMaximumValue(UserEntity user, Attribute attribute) {

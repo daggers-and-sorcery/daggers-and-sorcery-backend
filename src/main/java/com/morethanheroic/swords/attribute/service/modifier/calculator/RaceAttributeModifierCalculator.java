@@ -30,18 +30,12 @@ public class RaceAttributeModifierCalculator implements AttributeModifierCalcula
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
 
-    @Autowired
-    private AttributeToRacialModifierConverter attributeToRacialModifierConverter;
-
-    @Autowired
-    private RaceEntityCache raceEntityCache;
-
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, Attribute attribute) {
         int racialModifierPercentage = NO_RACIAL_MODIFIER;
 
         if (attribute instanceof GeneralAttribute) {
-            racialModifierPercentage = getRacialModifierValue(user.getRace(), (GeneralAttribute) attribute);
+            racialModifierPercentage = globalAttributeCalculator.getRacialModifierValue(user.getRace(), (GeneralAttribute) attribute);
         }
 
         if (racialModifierPercentage != NO_RACIAL_MODIFIER) {
@@ -53,12 +47,5 @@ public class RaceAttributeModifierCalculator implements AttributeModifierCalcula
         }
 
         return Collections.emptyList();
-    }
-
-    private int getRacialModifierValue(Race race, GeneralAttribute attribute) {
-        final RacialModifier racialModifier = attributeToRacialModifierConverter.convert(attribute);
-        final RaceEntity raceEntity = raceEntityCache.getRaceEntity(race);
-
-        return ((NumericRacialModifierEntry) raceEntity.getRacialModifier(racialModifier)).getValue();
     }
 }
