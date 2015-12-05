@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.definition.service;
+package com.morethanheroic.swords.definition.service.loader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

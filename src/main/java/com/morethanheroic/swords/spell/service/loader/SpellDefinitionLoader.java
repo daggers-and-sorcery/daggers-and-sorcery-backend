@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.service.loader;
 
-import com.morethanheroic.swords.definition.service.XmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.XmlDefinitionLoader;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellDefinition;
 import com.morethanheroic.swords.spell.service.transformer.SpellDefinitionTransformer;
