@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<race:race xmlns:race="http://www.swordsandsorcery.com/race" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.swordsandsorcery.com/race ../schema.xsd">
+    <race:name>Elf</race:name>
+    <race:modifier-list>
+        <race:modifier>
+            <race:type>INTELLIGENCE</race:type>
+            <race:value>20</race:value>
+        </race:modifier>
+        <race:modifier>
+            <race:type>WILLPOWER</race:type>
+            <race:value>10</race:value>
+        </race:modifier>
+        <race:modifier>
+            <race:type>BEAUTY</race:type>
+            <race:value>10</race:value>
+        </race:modifier>
+        <race:modifier>
+            <race:type>STRENGTH</race:type>
+            <race:value>-20</race:value>
+        </race:modifier>
+        <race:modifier>
+            <race:type>ENDURANCE</race:type>
+            <race:value>-20</race:value>
+        </race:modifier>
+        <race:modifier>
+            <race:type>VITALITY</race:type>
+            <race:value>-10</race:value>
+        </race:modifier>
+    </race:modifier-list>
+</race:race>
