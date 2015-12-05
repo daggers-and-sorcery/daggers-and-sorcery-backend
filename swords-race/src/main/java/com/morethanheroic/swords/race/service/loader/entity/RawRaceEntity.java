@@ -16,8 +16,8 @@ public class RawRaceEntity {
     @XmlElement
     private String name;
 
-    @XmlAnyElement
+    @XmlAnyElement(lax = true)
     @XmlElementWrapper(name = "modifier-list")
-    @XmlElement(name = "modifier")
-    private List<RawRacialModifierEntry>  racialModifierList;
+    //@XmlElement(name = "modifier")
+    private List<RawRacialModifierEntry> racialModifierList;
 }

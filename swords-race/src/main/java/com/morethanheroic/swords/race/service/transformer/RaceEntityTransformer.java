@@ -8,6 +8,7 @@ import com.morethanheroic.swords.race.model.modifier.entry.RacialModifierEntry;
 import com.morethanheroic.swords.race.service.loader.entity.RawRaceEntity;
 import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawNumericRacialModifierEntry;
 import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawRacialModifierEntry;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Map;
 /**
  * Transform a {@link RawRaceEntity} to a {@link RaceEntity}.
  */
+@Service
 public class RaceEntityTransformer {
 
     public RaceEntity transform(RawRaceEntity rawRaceEntity) {

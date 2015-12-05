@@ -6,6 +6,7 @@ import com.morethanheroic.swords.race.model.RaceEntity;
 import com.morethanheroic.swords.race.service.loader.entity.RawRaceEntity;
 import com.morethanheroic.swords.race.service.transformer.RaceEntityTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 /**
  * Load the {@link RaceEntity}es from xml files.
  */
+@Service
 public class RaceEntityLoader {
 
     @Autowired
