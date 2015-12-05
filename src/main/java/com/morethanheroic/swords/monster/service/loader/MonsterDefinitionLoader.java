@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.monster.service.loader;
 
-import com.morethanheroic.swords.definition.service.loader.XmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.service.transformer.MonsterDefinitionTransformer;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class MonsterDefinitionLoader {
 
     @Autowired
-    private XmlDefinitionLoader xmlDefinitionLoader;
+    private NumericXmlDefinitionLoader numericXmlDefinitionLoader;
 
     @Autowired
     private MonsterDefinitionTransformer monsterDefinitionTransformer;
@@ -28,6 +28,6 @@ public class MonsterDefinitionLoader {
 
     @SuppressWarnings("unchecked")
     private List<RawMonsterDefinition> loadRawMonsterDefinitions() throws JAXBException, IOException, SAXException {
-        return xmlDefinitionLoader.loadDefinitions(RawMonsterDefinition.class, "classpath:data/monster/definition/", "classpath:data/monster/schema.xsd");
+        return numericXmlDefinitionLoader.loadDefinitions(RawMonsterDefinition.class, "classpath:data/monster/definition/", "classpath:data/monster/schema.xsd");
     }
 }

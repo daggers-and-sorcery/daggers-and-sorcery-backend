@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.service.loader;
 
-import com.morethanheroic.swords.definition.service.loader.XmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellDefinition;
 import com.morethanheroic.swords.spell.service.transformer.SpellDefinitionTransformer;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class SpellDefinitionLoader {
 
     @Autowired
-    private XmlDefinitionLoader xmlDefinitionLoader;
+    private NumericXmlDefinitionLoader numericXmlDefinitionLoader;
 
     @Autowired
     private SpellDefinitionTransformer spellDefinitionTransformer;
@@ -28,6 +28,6 @@ public class SpellDefinitionLoader {
 
     @SuppressWarnings("unchecked")
     private List<RawSpellDefinition> loadRawSpellDefinitions() throws JAXBException, IOException, SAXException {
-        return xmlDefinitionLoader.loadDefinitions(RawSpellDefinition.class, "classpath:data/spell/definition/", "classpath:data/spell/schema.xsd");
+        return numericXmlDefinitionLoader.loadDefinitions(RawSpellDefinition.class, "classpath:data/spell/definition/", "classpath:data/spell/schema.xsd");
     }
 }

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.definition.service.loader.unmarshaller;
 
-        import com.morethanheroic.swords.definition.service.loader.XmlDefinitionLoader;
+        import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.context.ApplicationContext;
         import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ package com.morethanheroic.swords.definition.service.loader.unmarshaller;
         import java.io.IOException;
 
 /**
- * Build an {@link Unmarshaller} that can be used in {@link XmlDefinitionLoader}.
+ * Build an {@link Unmarshaller} that can be used in {@link NumericXmlDefinitionLoader}.
  */
 @Service
 public class UnmarshallerBuilder {
