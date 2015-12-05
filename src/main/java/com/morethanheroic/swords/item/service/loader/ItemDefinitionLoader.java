@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.service.loader;
 
-import com.morethanheroic.swords.definition.service.XmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
 import com.morethanheroic.swords.item.service.transformer.ItemDefinitionTransformer;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class ItemDefinitionLoader {
 
     @Autowired
-    private XmlDefinitionLoader xmlDefinitionLoader;
+    private NumericXmlDefinitionLoader numericXmlDefinitionLoader;
 
     @Autowired
     private ItemDefinitionTransformer itemDefinitionTransformer;
@@ -28,6 +28,6 @@ public class ItemDefinitionLoader {
 
     @SuppressWarnings("unchecked")
     private List<RawItemDefinition> loadRawItemDefinitions() throws JAXBException, IOException, SAXException {
-        return xmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd");
+        return numericXmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, "classpath:data/item/definition/", "classpath:data/item/schema.xsd", 100);
     }
 }

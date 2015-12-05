@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.shop.service.loader;
 
-import com.morethanheroic.swords.definition.service.XmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.service.loader.domain.RawShopDefinition;
 import com.morethanheroic.swords.shop.service.transformer.ShopDefinitionTransformer;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ShopDefinitionLoader {
 
     @Autowired
-    private XmlDefinitionLoader xmlDefinitionLoader;
+    private NumericXmlDefinitionLoader numericXmlDefinitionLoader;
 
     @Autowired
     private ShopDefinitionTransformer shopDefinitionTransformer;
@@ -26,6 +26,6 @@ public class ShopDefinitionLoader {
 
     @SuppressWarnings("unchecked")
     private List<RawShopDefinition> loadRawShopDefinitions() throws IOException {
-        return xmlDefinitionLoader.loadDefinitions(RawShopDefinition.class, "classpath:data/shop/definition/", "classpath:data/shop/schema.xsd");
+        return numericXmlDefinitionLoader.loadDefinitions(RawShopDefinition.class, "classpath:data/shop/definition/", "classpath:data/shop/schema.xsd", 100);
     }
 }
