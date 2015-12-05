@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * An {@link XmlDefinitionLoader} that loads xml information based on a {@link java.lang.Enum}. The loader looks
  * for files in the given resource path with the enum names lowercase and _ replaces with -.
- *
+ * <p>
  * For example:
  * DWARF -> resourcePath/dwarf.xml
  * DARK_ELF -> resourcePath/dark-elf.xml
@@ -46,14 +46,14 @@ public class EnumXmlDefinitionLoader implements XmlDefinitionLoader<Class<? exte
         final List list = new ArrayList<>();
 
         for (Enum actualEnum : enumClass.getEnumConstants()) {
-            final String enumFileName = resourcePath + getFileNameFromEnum(actualEnum);
-            final Resource resource = applicationContext.getResource(enumFileName);
+            final String enumResourcePath = resourcePath + getFileNameFromEnum(actualEnum);
+            final Resource resource = applicationContext.getResource(enumResourcePath);
 
             if (!resource.exists()) {
-                throw new IllegalArgumentException("Definition for enum: " + actualEnum.name() + " does not exists!");
+                throw new IllegalArgumentException("Definition for enum: " + actualEnum.name() + " at " + enumResourcePath + " does not exists!");
             }
 
-            list.add(unmarshaller.unmarshal(applicationContext.getResource(enumFileName).getInputStream()));
+            list.add(unmarshaller.unmarshal(applicationContext.getResource(enumResourcePath).getInputStream()));
         }
 
         log.info("Loaded " + list.size() + " race entity definitions.");

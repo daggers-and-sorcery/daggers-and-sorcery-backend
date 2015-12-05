@@ -6,7 +6,7 @@
         <xs:complexType>
             <xs:all>
                 <xs:element name="name" type="xs:string"/>
-                <xs:element name="modifier-list">
+                <xs:element name="modifier-list" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="modifier" maxOccurs="unbounded">

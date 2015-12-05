@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class RaceEntityLoader {
 
     @Autowired
-    private EnumXmlDefinitionLoader numericXmlDefinitionLoader;
+    private EnumXmlDefinitionLoader enumXmlDefinitionLoader;
 
     @Autowired
     private RaceEntityTransformer raceEntityTransformer;
@@ -30,6 +30,6 @@ public class RaceEntityLoader {
 
     @SuppressWarnings("unchecked")
     public List<RawRaceEntity> loadRawRaceEntities() throws IOException {
-        return numericXmlDefinitionLoader.loadDefinitions(RawRaceEntity.class, "classpath:data/race/definition/", "classpath:data/race/schema.xsd", Race.class);
+        return enumXmlDefinitionLoader.loadDefinitions(RawRaceEntity.class, "classpath:data/race/definition/", "classpath:data/race/schema.xsd", Race.class);
     }
 }
