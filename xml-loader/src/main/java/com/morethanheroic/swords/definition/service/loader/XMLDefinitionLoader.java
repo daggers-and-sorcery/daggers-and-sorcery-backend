@@ -7,13 +7,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +19,6 @@ import java.util.List;
 @Service
 public class XmlDefinitionLoader {
 
-    private static final SchemaFactory SCHEMA_FACTORY = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
     private static final int MAXIMUM_ENTRIES_READ = 100;
 
     @Autowired
