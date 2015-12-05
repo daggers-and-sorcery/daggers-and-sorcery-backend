@@ -29,7 +29,7 @@ public class RaceEntityTransformer {
     }
 
     private Race buildRaceFromName(String name) {
-        return Race.valueOf(name.replace('-', '_').toUpperCase());
+        return Race.valueOf(name.replace(' ', '_').toUpperCase());
     }
 
     private Map<RacialModifier, RacialModifierEntry> transformModifierList(List<RawRacialModifierEntry> rawRacialModifierEntryList) {
