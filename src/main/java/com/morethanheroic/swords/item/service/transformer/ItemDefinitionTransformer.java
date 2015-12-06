@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.item.service.transformer;
 
-import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.effect.domain.Effect;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
 import com.morethanheroic.swords.effect.service.EffectTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.ItemEffect;

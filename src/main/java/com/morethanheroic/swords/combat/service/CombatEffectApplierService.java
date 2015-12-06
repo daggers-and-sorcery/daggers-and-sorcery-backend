@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.service;
 
-import com.morethanheroic.swords.combat.domain.CombatEffect;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;

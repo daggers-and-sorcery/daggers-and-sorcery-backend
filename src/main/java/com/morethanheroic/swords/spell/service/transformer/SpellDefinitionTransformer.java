@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.service.transformer;
 
-import com.morethanheroic.swords.combat.domain.CombatEffect;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
 import com.morethanheroic.swords.effect.service.EffectTransformer;
 import com.morethanheroic.swords.spell.domain.SkillAttributeRequirementDefinition;
 import com.morethanheroic.swords.spell.domain.SpellCost;
