@@ -1,7 +1,8 @@
 package com.morethanheroic.swords.item.service.transformer;
 
 import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.effect.service.CombatEffectTransformer;
+import com.morethanheroic.swords.effect.domain.Effect;
+import com.morethanheroic.swords.effect.service.EffectTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.ItemEffect;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ItemDefinitionTransformer {
 
     @Autowired
-    private CombatEffectTransformer combatEffectTransformer;
+    private EffectTransformer combatEffectTransformer;
 
     @Autowired
     private ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
@@ -63,7 +64,8 @@ public class ItemDefinitionTransformer {
 
             if (rawEffectList != null) {
                 for (ItemEffect effect : rawEffectList) {
-                    effects.add(combatEffectTransformer.build(effect));
+                    //TODO: Be careful, later this can't be only combat effects! Tis is highly coupled to combat class, thats a problem!
+                    effects.add((CombatEffect) combatEffectTransformer.build(effect));
                 }
             }
 

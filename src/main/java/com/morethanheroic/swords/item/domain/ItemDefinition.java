@@ -3,6 +3,7 @@ package com.morethanheroic.swords.item.domain;
 import com.morethanheroic.swords.attribute.domain.modifier.*;
 import com.morethanheroic.swords.attribute.domain.requirement.*;
 import com.morethanheroic.swords.combat.domain.CombatEffect;
+import com.morethanheroic.swords.effect.domain.Effect;
 import lombok.Getter;
 
 import java.util.ArrayList;

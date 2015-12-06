@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.spell.service.transformer;
 
 import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.effect.service.CombatEffectTransformer;
+import com.morethanheroic.swords.effect.service.EffectTransformer;
 import com.morethanheroic.swords.spell.domain.SkillAttributeRequirementDefinition;
 import com.morethanheroic.swords.spell.domain.SpellCost;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class SpellDefinitionTransformer {
 
     @Autowired
-    private CombatEffectTransformer combatEffectTransformer;
+    private EffectTransformer combatEffectTransformer;
 
     @Autowired
     private SkillAttributeRequirementDefinitionTransformer skillAttributeRequirementDefinitionTransformer;
@@ -50,7 +50,8 @@ public class SpellDefinitionTransformer {
         try {
             if (effectList != null) {
                 for (RawSpellEffect effect : effectList) {
-                    result.add(combatEffectTransformer.build(effect));
+                    //TODO: Latr this can't only be a combat effect! Be careful with that
+                    result.add((CombatEffect) combatEffectTransformer.build(effect));
                 }
             }
         } catch (Exception e) {

@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Random;
 
 @Configuration
-@Lazy
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 @ComponentScan
 @EnableWebMvc

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.effect.service;
 
-import com.morethanheroic.swords.combat.domain.CombatEffect;
+import com.morethanheroic.swords.effect.domain.Effect;
 import com.morethanheroic.swords.effect.domain.EffectSetting;
 import com.morethanheroic.swords.effect.domain.EffectSettingHolder;
 import com.morethanheroic.swords.effect.service.domain.RawEffect;
@@ -11,9 +11,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 @Service
-public class CombatEffectTransformer {
+public class EffectTransformer {
 
-    public CombatEffect build(RawEffect rawEffect) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    public Effect build(RawEffect rawEffect) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         HashMap<String, EffectSetting> settings = new HashMap<>();
 
         if (rawEffect.getEffectSettings() != null) {
@@ -22,6 +22,6 @@ public class CombatEffectTransformer {
             }
         }
 
-        return (CombatEffect) Class.forName(rawEffect.getTarget()).getConstructor(EffectSettingHolder.class).newInstance(new EffectSettingHolder(settings));
+        return (Effect) Class.forName(rawEffect.getTarget()).getConstructor(EffectSettingHolder.class).newInstance(new EffectSettingHolder(settings));
     }
 }
