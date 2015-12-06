@@ -51,7 +51,7 @@ public class SpellDefinitionTransformer {
             if (effectList != null) {
                 for (RawSpellEffect effect : effectList) {
                     //TODO: Latr this can't only be a combat effect! Be careful with that
-                    result.add((CombatEffect) combatEffectTransformer.build(effect));
+                    result.add((CombatEffect) combatEffectTransformer.transform(effect));
                 }
             }
         } catch (Exception e) {

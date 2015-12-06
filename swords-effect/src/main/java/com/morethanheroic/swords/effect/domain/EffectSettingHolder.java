@@ -1,12 +1,15 @@
 package com.morethanheroic.swords.effect.domain;
 
-import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Holds the settings for an effect.
+ */
 public class EffectSettingHolder {
 
-    private final HashMap<String, EffectSetting> settings;
+    private final Map<String, EffectSetting> settings;
 
-    public EffectSettingHolder(HashMap<String, EffectSetting> settings) {
+    public EffectSettingHolder(Map<String, EffectSetting> settings) {
         this.settings = settings;
     }
 
