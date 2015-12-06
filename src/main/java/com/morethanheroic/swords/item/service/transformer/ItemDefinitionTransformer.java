@@ -1,14 +1,14 @@
 package com.morethanheroic.swords.item.service.transformer;
 
-import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.effect.service.CombatEffectTransformer;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
+import com.morethanheroic.swords.effect.exception.InvalidEffectException;
+import com.morethanheroic.swords.effect.service.EffectTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.ItemEffect;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ItemDefinitionTransformer {
 
     @Autowired
-    private CombatEffectTransformer combatEffectTransformer;
+    private EffectTransformer combatEffectTransformer;
 
     @Autowired
     private ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
@@ -59,17 +59,18 @@ public class ItemDefinitionTransformer {
 
     private List<CombatEffect> buildEffects(List<ItemEffect> rawEffectList) {
         try {
-            List<CombatEffect> effects = new ArrayList<>();
+            final List<CombatEffect> effects = new ArrayList<>();
 
             if (rawEffectList != null) {
                 for (ItemEffect effect : rawEffectList) {
-                    effects.add(combatEffectTransformer.build(effect));
+                    //TODO: Be careful, later this can't be only combat effects! Tis is highly coupled to combat class, thats a problem!
+                    effects.add((CombatEffect) combatEffectTransformer.transform(effect));
                 }
             }
 
             return Collections.unmodifiableList(effects);
-        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | InstantiationException e) {
-            throw new RuntimeException(e);
+        } catch (InvalidEffectException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

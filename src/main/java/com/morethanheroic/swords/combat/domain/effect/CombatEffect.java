@@ -1,10 +1,13 @@
-package com.morethanheroic.swords.combat.domain;
+package com.morethanheroic.swords.combat.domain.effect;
 
+import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
+import com.morethanheroic.swords.effect.domain.Effect;
 import com.morethanheroic.swords.effect.domain.EffectSetting;
 import com.morethanheroic.swords.effect.domain.EffectSettingHolder;
 
-public abstract class CombatEffect {
+public abstract class CombatEffect implements Effect {
 
     private final EffectSettingHolder effectSettingHolder;
 

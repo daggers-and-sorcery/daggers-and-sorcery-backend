@@ -56,8 +56,6 @@ public class EnumXmlDefinitionLoader implements XmlDefinitionLoader<Class<? exte
             list.add(unmarshaller.unmarshal(applicationContext.getResource(enumResourcePath).getInputStream()));
         }
 
-        log.info("Loaded " + list.size() + " race entity definitions.");
-
         return list;
     }
 

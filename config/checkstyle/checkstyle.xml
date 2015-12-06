@@ -291,7 +291,6 @@
             <property name="allowedAbbreviationLength" value="1"/>
             <property name="allowedAbbreviations" value="AST"/>
         </module>
-        <module name="AbstractClassName"/>
         <module name="ClassTypeParameterName"/>
         <module name="ConstantName"/>
         <module name="InterfaceTypeParameterName"/>

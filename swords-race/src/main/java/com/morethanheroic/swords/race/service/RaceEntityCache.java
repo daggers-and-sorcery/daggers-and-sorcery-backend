@@ -3,6 +3,7 @@ package com.morethanheroic.swords.race.service;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceEntity;
 import com.morethanheroic.swords.race.service.loader.RaceEntityLoader;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.Map;
  * Store the {@link RaceEntity}es in a cached manner.
  */
 @Service
+@Slf4j
 public class RaceEntityCache {
 
     private Map<Race, RaceEntity> raceEntityMap = new EnumMap<>(Race.class);
@@ -26,6 +28,8 @@ public class RaceEntityCache {
     @PostConstruct
     private void initialize() throws IOException {
         final List<RaceEntity> raceEntityList = raceEntityLoader.loadRaceEntities();
+
+        log.info("Loaded " + raceEntityList.size() + " race entity definitions.");
 
         for (RaceEntity raceEntity : raceEntityList) {
             raceEntityMap.put(raceEntity.getRace(), raceEntity);

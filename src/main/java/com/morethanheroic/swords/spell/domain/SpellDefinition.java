@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.domain;
 
-import com.morethanheroic.swords.combat.domain.CombatEffect;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
 
 import java.util.ArrayList;
 import java.util.Collections;
