@@ -1,5 +1,8 @@
 package com.morethanheroic.swords.effect.domain;
 
+/**
+ * One variable for a spell effect.
+ */
 public class EffectSetting {
 
     private final String name;
