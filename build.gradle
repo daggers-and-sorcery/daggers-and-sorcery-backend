@@ -47,6 +47,7 @@ dependencies {
     compile project(':xml-loader')
     compile project(':swords-race')
     compile project(':swords-effect')
+    compile project(':swords-web')
 }
 
 buildscript {
