@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+/**
+ * Maps queries to methods.
+ */
 public interface NewsMapper {
 
     @Select(value = "SELECT * FROM news ORDER BY release_date DESC LIMIT #{amount}")

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Add an easy api for the news module.
+ */
 @Service
 public class NewsFacade {
 

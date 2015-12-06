@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Access point for the news.
+ */
 @RestController
 public class NewsController {
 

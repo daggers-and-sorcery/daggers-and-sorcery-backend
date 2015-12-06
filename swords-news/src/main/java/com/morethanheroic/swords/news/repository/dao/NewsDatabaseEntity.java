@@ -4,6 +4,9 @@ import lombok.Getter;
 
 import java.util.Date;
 
+/**
+ * Contains the data of a news entry in the database.
+ */
 @Getter
 public class NewsDatabaseEntity {
 
