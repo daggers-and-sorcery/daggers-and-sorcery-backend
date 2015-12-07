@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.money.service.cache;
 
+import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.money.domain.Money;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.service.loader.MoneyDefinitionLoader;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-public class MoneyDefinitionCache {
+public class MoneyDefinitionCache implements DefinitionCache<Money, MoneyDefinition> {
 
     private Map<Money, MoneyDefinition> moneyDefinitionMap = new EnumMap<>(Money.class);
 
@@ -27,7 +28,7 @@ public class MoneyDefinitionCache {
 
     @PostConstruct
     private void initialize() throws IOException {
-        final List<MoneyDefinition> moneyDefinitionList = moneyDefinitionLoader.loadMoneyDefinitions();
+        final List<MoneyDefinition> moneyDefinitionList = moneyDefinitionLoader.loadDefinitions();
 
         log.info("Loaded " + moneyDefinitionList.size() + " money definitions.");
 
@@ -36,7 +37,8 @@ public class MoneyDefinitionCache {
         }
     }
 
-    public MoneyDefinition getMoneyDefinition(Money money) {
+    @Override
+    public MoneyDefinition getDefinition(Money money) {
         return moneyDefinitionMap.get(money);
     }
 }

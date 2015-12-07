@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 //TODO: Rename the whole bunch to RaceDefinition
+//TODO: Use the common-definition package here too!
 /**
  * Store the {@link RaceEntity}es in a cached manner.
  */

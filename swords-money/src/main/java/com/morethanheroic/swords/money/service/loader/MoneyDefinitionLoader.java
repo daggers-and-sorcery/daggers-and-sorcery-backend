@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.money.service.loader;
 
+import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
 import com.morethanheroic.swords.money.domain.Money;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class MoneyDefinitionLoader {
+public class MoneyDefinitionLoader implements DefinitionLoader<MoneyDefinition>{
 
     @Autowired
     private EnumXmlDefinitionLoader enumXmlDefinitionLoader;
@@ -21,7 +22,8 @@ public class MoneyDefinitionLoader {
     @Autowired
     private MoneyDefinitionTransformer moneyDefinitionTransformer;
 
-    public List<MoneyDefinition> loadMoneyDefinitions() throws IOException {
+    @Override
+    public List<MoneyDefinition> loadDefinitions() throws IOException {
         return loadRawMoneyDefinitions().stream().map(moneyDefinitionTransformer::transform).collect(Collectors.toList());
     }
 
