@@ -1,0 +1,9 @@
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+}
+
+apply plugin: 'spring-boot'
