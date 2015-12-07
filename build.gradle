@@ -48,6 +48,7 @@ dependencies {
     compile project(':swords-race')
     compile project(':swords-effect')
     compile project(':swords-web')
+    compile project(':swords-money')
 }
 
 buildscript {

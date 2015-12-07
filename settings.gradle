@@ -5,5 +5,5 @@ include 'swords-race'
 include 'swords-effect'
 include 'swords-news'
 include 'swords-web'
-include 'swords-price'
+include 'swords-money'
 
