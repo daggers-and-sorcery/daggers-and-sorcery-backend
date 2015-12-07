@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.service.loader.domain;
 
-import com.morethanheroic.swords.item.domain.Price;
+import com.morethanheroic.swords.money.domain.Money;
 import lombok.Getter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,6 +10,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @Getter
 public class RawItemPriceDefinition {
 
-    private Price type;
+    private Money type;
     private int amount;
 }

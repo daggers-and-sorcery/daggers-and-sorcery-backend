@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Loads the {@link MoneyDefinition}s from xml files.
+ */
 @Service
 public class MoneyDefinitionLoader implements DefinitionLoader<MoneyDefinition>{
 

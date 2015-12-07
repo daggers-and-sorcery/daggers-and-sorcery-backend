@@ -6,6 +6,9 @@ import lombok.ToString;
 
 import java.util.List;
 
+/**
+ * Holds the static data of a {@link Money} entity.
+ */
 @Getter
 @Builder
 @ToString

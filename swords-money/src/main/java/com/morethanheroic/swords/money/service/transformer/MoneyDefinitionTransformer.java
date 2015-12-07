@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
+/**
+ * Transform {@link RawMoneyDefinition} to their domain object pair {@link MoneyDefinition}.
+ */
 @Service
 public class MoneyDefinitionTransformer implements DefinitionTransformer<MoneyDefinition, RawMoneyDefinition> {
 
