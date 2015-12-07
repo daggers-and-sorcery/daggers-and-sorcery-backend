@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.item.service.loader.domain;
 
 import com.morethanheroic.swords.item.domain.ItemType;
+import lombok.Getter;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
@@ -16,6 +17,11 @@ public class RawItemDefinition {
     private boolean usable;
     private int weight;
     private boolean equipment;
+
+    @XmlElementWrapper(name = "price")
+    @XmlElement(name = "price-entry")
+    @Getter
+    private ArrayList<RawItemPriceDefinition> priceList;
 
     @XmlElementWrapper(name = "use-effect-list")
     @XmlElement(name = "effect")
