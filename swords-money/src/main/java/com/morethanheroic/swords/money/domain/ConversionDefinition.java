@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Holds the data of a money conversion, how different types of the same money type can be converted between different items. (For example the data
- * of conversion from bronze to silver/gold/platinum etc...)
+ * Holds the data of a money conversion, how different types of the same money type can be converted between different items (for
+ * example the data of conversion from bronze to silver/gold/platinum etc...).
  */
 @Getter
 @Builder

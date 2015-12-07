@@ -17,7 +17,10 @@ import java.util.stream.Collectors;
  * Loads the {@link MoneyDefinition}s from xml files.
  */
 @Service
-public class MoneyDefinitionLoader implements DefinitionLoader<MoneyDefinition>{
+public class MoneyDefinitionLoader implements DefinitionLoader<MoneyDefinition> {
+
+    private static final String MONEY_DEFINITION_LOCATION = "classpath:data/money/definition/";
+    private static final String MONEY_SCHEMA_LOCATION = "classpath:data/money/schema.xsd";
 
     @Autowired
     private EnumXmlDefinitionLoader enumXmlDefinitionLoader;
@@ -32,6 +35,6 @@ public class MoneyDefinitionLoader implements DefinitionLoader<MoneyDefinition>{
 
     @SuppressWarnings("unchecked")
     public List<RawMoneyDefinition> loadRawMoneyDefinitions() throws IOException {
-        return enumXmlDefinitionLoader.loadDefinitions(RawMoneyDefinition.class, "classpath:data/money/definition/", "classpath:data/money/schema.xsd", Money.class);
+        return enumXmlDefinitionLoader.loadDefinitions(RawMoneyDefinition.class, MONEY_DEFINITION_LOCATION, MONEY_SCHEMA_LOCATION, Money.class);
     }
 }
