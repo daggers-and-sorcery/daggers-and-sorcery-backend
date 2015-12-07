@@ -9,7 +9,7 @@
     <item:price>
         <item:price-entry>
             <item:type>MONEY</item:type>
-            <item:amount>10</item:amount>
+            <item:amount>2</item:amount>
         </item:price-entry>
     </item:price>
 </item:item>
