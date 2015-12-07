@@ -13,6 +13,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+//TODO: Rename the whole bunch to RaceDefinition
 /**
  * Store the {@link RaceEntity}es in a cached manner.
  */
