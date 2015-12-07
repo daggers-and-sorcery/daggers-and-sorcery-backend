@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.price.service.cache;
+package com.morethanheroic.swords.money.service.cache;
 
 import org.springframework.stereotype.Service;
 

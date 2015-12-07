@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.price.service.transformer;
+package com.morethanheroic.swords.money.service.transformer;
 
 import org.springframework.stereotype.Service;
 
