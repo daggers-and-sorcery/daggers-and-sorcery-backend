@@ -19,6 +19,7 @@ public class ItemDefinition {
     private int weight;
     private List<CombatEffect> combatEffects;
     private boolean equipment;
+    private List<ItemPriceDefinition> itemPriceDefinitions;
 
     private List<BasicAttributeModifierDefinition> basicModifiers = Collections.<BasicAttributeModifierDefinition>emptyList();
     private List<CombatAttributeModifierDefinition> combatModifiers = Collections.<CombatAttributeModifierDefinition>emptyList();
@@ -31,6 +32,10 @@ public class ItemDefinition {
     private List<GeneralAttributeRequirementDefinition> generalRequirements = Collections.<GeneralAttributeRequirementDefinition>emptyList();
     private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.<SkillAttributeRequirementDefinition>emptyList();
     private List<AttributeRequirementDefinition> allRequirements = Collections.<AttributeRequirementDefinition>emptyList();
+
+    public boolean isTradeable() {
+        return itemPriceDefinitions.size() > 0 || type == ItemType.COIN;
+    }
 
     public static class ItemDefinitionBuilder {
 
@@ -94,6 +99,10 @@ public class ItemDefinition {
 
         public void setSkillRequirements(List<SkillAttributeRequirementDefinition> skillRequirements) {
             itemDefinition.skillRequirements = skillRequirements;
+        }
+
+        public void setPriceDefinition(List<ItemPriceDefinition> itemPriceDefinitions) {
+            itemDefinition.itemPriceDefinitions = itemPriceDefinitions;
         }
 
         public ItemDefinition build() {
