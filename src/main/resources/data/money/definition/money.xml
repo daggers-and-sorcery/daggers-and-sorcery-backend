@@ -15,11 +15,11 @@
         </money:conversion>
         <money:conversion>
             <money:target-id>50</money:target-id>
-            <money:conversion-rate>1000</money:conversion-rate>
+            <money:conversion-rate>10000</money:conversion-rate>
         </money:conversion>
         <money:conversion>
             <money:target-id>51</money:target-id>
-            <money:conversion-rate>10000</money:conversion-rate>
+            <money:conversion-rate>1000000</money:conversion-rate>
         </money:conversion>
     </money:conversion-list>
 </money:money>
