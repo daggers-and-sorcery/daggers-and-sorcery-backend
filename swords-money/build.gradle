@@ -14,6 +14,8 @@ dependencies {
 
     compile project(':xml-loader')
     compile project(':common-definition')
+
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
 
 apply plugin: 'spring-boot'
