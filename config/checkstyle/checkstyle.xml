@@ -204,7 +204,6 @@
 
         <!-- Imports -->
         <module name="AvoidStarImport"/>
-        <module name="AvoidStaticImport"/>
         <module name="CustomImportOrder">
             <property name="customImportOrderRules" value="THIRD_PARTY_PACKAGE###SPECIAL_IMPORTS###STANDARD_JAVA_PACKAGE###STATIC"/>
             <property name="specialImportsRegExp" value="^javax\."/>
@@ -276,7 +275,7 @@
         </module>
         <module name="OuterTypeFilename"/>
         <module name="TodoComment">
-            <property name="format" value="(TODO)|(FIXME)"/>
+            <property name="severity" value="warning"/>
         </module>
         <module name="TrailingComment"/>
         <module name="UncommentedMain"/>
