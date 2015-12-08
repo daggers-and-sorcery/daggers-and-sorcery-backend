@@ -4,6 +4,8 @@ import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.money.domain.Money;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.service.loader.MoneyDefinitionLoader;
+import com.sun.istack.internal.NotNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +21,13 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MoneyDefinitionCache implements DefinitionCache<Money, MoneyDefinition> {
 
     private Map<Money, MoneyDefinition> moneyDefinitionMap = new EnumMap<>(Money.class);
 
-    @Autowired
-    private MoneyDefinitionLoader moneyDefinitionLoader;
+    @NotNull
+    private final MoneyDefinitionLoader moneyDefinitionLoader;
 
     @PostConstruct
     private void initialize() throws IOException {
