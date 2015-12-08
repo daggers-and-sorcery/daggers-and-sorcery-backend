@@ -17,6 +17,7 @@ allprojects {
 
     project.ext.mybatis_version = '3.3.0'
     project.ext.guava_version = '18.0'
+    project.ext.checkstyle_version = '6.13'
 }
 
 dependencies {

@@ -62,7 +62,7 @@ public class ShopBuyStockController {
 
         //ATM we only use money as money, no support for special trades
         if (shopEntity.getShopSellPrice(itemDefinition) <= user.getInventory().getMoneyAmount(Money.MONEY)) {
-            user.getInventory().decreaseMoneyAmount(shopEntity.getShopSellPrice(itemDefinition));
+            user.getInventory().decreaseMoneyAmount(Money.MONEY, shopEntity.getShopSellPrice(itemDefinition));
 
             user.getInventory().addItem(itemDefinition, 1);
 

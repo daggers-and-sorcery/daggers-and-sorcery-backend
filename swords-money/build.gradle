@@ -1,10 +1,16 @@
+apply plugin: 'checkstyle'
+
+checkstyle {
+    toolVersion = checkstyle_version
+    configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml");
+}
+
 dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
 
     compile group: 'com.google.guava', name: 'guava', version: guava_version
-
 
     compile project(':xml-loader')
     compile project(':common-definition')

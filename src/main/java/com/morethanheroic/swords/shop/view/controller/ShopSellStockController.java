@@ -6,6 +6,7 @@ import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.money.domain.Money;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
@@ -65,7 +66,7 @@ public class ShopSellStockController {
 
         ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
 
-        user.getInventory().increaseMoneyAmount(shopEntity.getShopBuyPrice(itemDefinition));
+        user.getInventory().increaseMoneyAmount(Money.MONEY, shopEntity.getShopBuyPrice(itemDefinition));
         user.getInventory().removeItem(itemId, 1, isIdentifiedItem);
 
         shopEntity.buyItem(itemDefinition, 1);
