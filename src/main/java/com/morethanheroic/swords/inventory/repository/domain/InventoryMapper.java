@@ -13,6 +13,9 @@ public interface InventoryMapper {
     @Insert("INSERT INTO inventory SET user_id = #{user_id}, item_id = #{item_id}, amount = #{amount}, identified = #{identified} ON DUPLICATE KEY UPDATE amount = amount + #{amount}")
     void addItem(@Param("user_id") int userId, @Param("item_id") int itemId, @Param("amount") int amount, @Param("identified") boolean identified);
 
+    @Insert("INSERT INTO inventory SET user_id = #{user_id}, item_id = #{item_id}, amount = #{amount}, identified = #{identified} ON DUPLICATE KEY UPDATE amount = #{amount}")
+    void setItem(@Param("user_id") int userId, @Param("item_id") int itemId, @Param("amount") int amount, @Param("identified") boolean identified);
+
     @Select("SELECT * FROM inventory WHERE user_id = #{user_id} AND identified = #{identified}")
     List<ItemDatabaseEntity> getItems(@Param("user_id") int userId, @Param("identified") boolean identified);
 
