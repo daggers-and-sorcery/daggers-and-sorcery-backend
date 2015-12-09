@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.money.service;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.money.domain.ConversionDefinition;
 import com.morethanheroic.swords.money.domain.Money;
@@ -53,12 +54,14 @@ public class MoneyFacade {
     }
 
     public MoneyCalculationResult decreaseMoneyAmount(Money money, MoneyCalculationQuery moneyCalculationQuery, int amount) {
-        //Assert amount not negative
+        Preconditions.checkArgument(amount >= 0, "Amount must be positive!");
+
         return divideMoneyAmount(money, getMoneyAmount(money, moneyCalculationQuery) - amount);
     }
 
     public MoneyCalculationResult increaseMoneyAmount(Money money, MoneyCalculationQuery moneyCalculationQuery, int amount) {
-        //Assert amount not negative
+        Preconditions.checkArgument(amount >= 0, "Amount must be positive!");
+
         return divideMoneyAmount(money, getMoneyAmount(money, moneyCalculationQuery) + amount);
     }
 }
