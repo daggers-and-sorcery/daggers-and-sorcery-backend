@@ -2,9 +2,17 @@ package com.morethanheroic.swords.attribute.service.calc;
 
 import com.google.common.collect.ImmutableMap;
 import com.morethanheroic.swords.attribute.domain.*;
+import com.morethanheroic.swords.attribute.service.AttributeToRacialModifierConverter;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.UnlimitedAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.equipment.EquipmentAttributeBonusCalculator;
+import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.race.model.RaceEntity;
+import com.morethanheroic.swords.race.model.modifier.RacialModifier;
+import com.morethanheroic.swords.race.model.modifier.entry.NumericRacialModifierEntry;
+import com.morethanheroic.swords.race.service.RaceEntityCache;
+import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +41,12 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
 
     @Autowired
     private SkillManager skillManager;
+
+    @Autowired
+    private AttributeToRacialModifierConverter attributeToRacialModifierConverter;
+
+    @Autowired
+    private RaceEntityCache raceEntityCache;
 
     private Map<Class<? extends Attribute>, AttributeCalculator> attributeCalculatorMap;
 
@@ -72,19 +86,47 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     }
 
     public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
+        final RegenerationEntity regenerationEntity = user.getRegeneration();
+
         if (attribute == CombatAttribute.LIFE) {
-            return new AttributeCalculationResult(user.getHealth(), attribute);
+            return new AttributeCalculationResult(regenerationEntity.getHealthPoints(), attribute);
         } else if (attribute == CombatAttribute.MANA) {
-            return new AttributeCalculationResult(user.getMana(), attribute);
+            return new AttributeCalculationResult(regenerationEntity.getManaPoints(), attribute);
         } else if (attribute == BasicAttribute.MOVEMENT) {
-            return new AttributeCalculationResult(user.getMovement(), attribute);
+            return new AttributeCalculationResult(regenerationEntity.getMovementPoints(), attribute);
         }
 
-        return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute));
+        int racialModifier = 0;
+        if (attribute instanceof  GeneralAttribute) {
+            racialModifier = getRacialModifierValue(user.getRace(), (GeneralAttribute) attribute);
+        }
+
+        return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifier);
     }
 
-    public int calculateMaximumValue(UserEntity user, Attribute attribute) {
-        return attribute.isUnlimited() ? 0 : calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), user.getRace().getRacialModifier(attribute)).getValue();
+    public int getRacialModifierValue(Race race, GeneralAttribute attribute) {
+        final RacialModifier racialModifier = attributeToRacialModifierConverter.convert(attribute);
+        final RaceEntity raceEntity = raceEntityCache.getRaceEntity(race);
+        final NumericRacialModifierEntry racialModifierEntry = (NumericRacialModifierEntry) raceEntity.getRacialModifier(racialModifier);
+
+        if (racialModifierEntry == null) {
+            return 0;
+        }
+
+        return racialModifierEntry.getValue();
+    }
+
+    public AttributeCalculationResult calculateMaximumValue(UserEntity user, Attribute attribute) {
+        if (attribute.isUnlimited()) {
+            return new UnlimitedAttributeCalculationResult(attribute);
+        }
+
+        int racialModifier = 0;
+        if (attribute instanceof  GeneralAttribute) {
+            racialModifier = getRacialModifierValue(user.getRace(), (GeneralAttribute) attribute);
+        }
+
+        return calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), racialModifier);
     }
 
     public AttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {

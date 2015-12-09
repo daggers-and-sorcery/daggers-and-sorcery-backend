@@ -2,13 +2,14 @@ package com.morethanheroic.swords.item.domain;
 
 import com.morethanheroic.swords.attribute.domain.modifier.*;
 import com.morethanheroic.swords.attribute.domain.requirement.*;
-import com.morethanheroic.swords.combat.domain.CombatEffect;
-import com.morethanheroic.swords.item.service.loader.domain.*;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Getter
 public class ItemDefinition {
 
     private int id;
@@ -18,89 +19,22 @@ public class ItemDefinition {
     private int weight;
     private List<CombatEffect> combatEffects;
     private boolean equipment;
+    private List<ItemPriceDefinition> itemPriceDefinitions;
 
     private List<BasicAttributeModifierDefinition> basicModifiers = Collections.<BasicAttributeModifierDefinition>emptyList();
     private List<CombatAttributeModifierDefinition> combatModifiers = Collections.<CombatAttributeModifierDefinition>emptyList();
     private List<GeneralAttributeModifierDefinition> generalModifiers = Collections.<GeneralAttributeModifierDefinition>emptyList();
     private List<SkillAttributeModifierDefinition> skillModifiers = Collections.<SkillAttributeModifierDefinition>emptyList();
-    private List<AttributeModifierDefinition> allModifiersList = Collections.<AttributeModifierDefinition>emptyList();
+    private List<AttributeModifierDefinition> allModifiers = Collections.<AttributeModifierDefinition>emptyList();
 
     private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.<BasicAttributeRequirementDefinition>emptyList();
     private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.<CombatAttributeRequirementDefinition>emptyList();
     private List<GeneralAttributeRequirementDefinition> generalRequirements = Collections.<GeneralAttributeRequirementDefinition>emptyList();
     private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.<SkillAttributeRequirementDefinition>emptyList();
-    private List<AttributeRequirementDefinition> allRequirementsList = Collections.<AttributeRequirementDefinition>emptyList();
+    private List<AttributeRequirementDefinition> allRequirements = Collections.<AttributeRequirementDefinition>emptyList();
 
-    public String toString() {
-        return "ItemDefinition -> [id: " + id + " name: " + name + "]";
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ItemType getType() {
-        return type;
-    }
-
-    public boolean isUsable() {
-        return usable;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public boolean isEquipment() {
-        return equipment;
-    }
-
-    public List<BasicAttributeModifierDefinition> getBasicModifiers() {
-        return basicModifiers;
-    }
-
-    public List<CombatAttributeModifierDefinition> getCombatModifiers() {
-        return combatModifiers;
-    }
-
-    public List<GeneralAttributeModifierDefinition> getGeneralModifiers() {
-        return generalModifiers;
-    }
-
-    public List<SkillAttributeModifierDefinition> getSkillModifiers() {
-        return skillModifiers;
-    }
-
-    public List<AttributeModifierDefinition> getAllModifiers() {
-        return allModifiersList;
-    }
-
-    public List<SkillAttributeRequirementDefinition> getSkillRequirements() {
-        return skillRequirements;
-    }
-
-    public List<BasicAttributeRequirementDefinition> getBasicRequirements() {
-        return basicRequirements;
-    }
-
-    public List<CombatAttributeRequirementDefinition> getCombatRequirements() {
-        return combatRequirements;
-    }
-
-    public List<GeneralAttributeRequirementDefinition> getGeneralRequirements() {
-        return generalRequirements;
-    }
-
-    public List<AttributeRequirementDefinition> getAllRequirements() {
-        return allRequirementsList;
-    }
-
-    public List<CombatEffect> getCombatEffects() {
-        return combatEffects;
+    public boolean isTradeable() {
+        return itemPriceDefinitions.size() > 0 || type == ItemType.COIN;
     }
 
     public static class ItemDefinitionBuilder {
@@ -167,6 +101,10 @@ public class ItemDefinition {
             itemDefinition.skillRequirements = skillRequirements;
         }
 
+        public void setPriceDefinition(List<ItemPriceDefinition> itemPriceDefinitions) {
+            itemDefinition.itemPriceDefinitions = itemPriceDefinitions;
+        }
+
         public ItemDefinition build() {
             buildAllModifiersList();
             buildAllRequirementsList();
@@ -175,21 +113,21 @@ public class ItemDefinition {
         }
 
         private void buildAllModifiersList() {
-            itemDefinition.allModifiersList = new ArrayList<>();
+            itemDefinition.allModifiers = new ArrayList<>();
 
-            itemDefinition.allModifiersList.addAll(itemDefinition.basicModifiers);
-            itemDefinition.allModifiersList.addAll(itemDefinition.combatModifiers);
-            itemDefinition.allModifiersList.addAll(itemDefinition.generalModifiers);
-            itemDefinition.allModifiersList.addAll(itemDefinition.skillModifiers);
+            itemDefinition.allModifiers.addAll(itemDefinition.basicModifiers);
+            itemDefinition.allModifiers.addAll(itemDefinition.combatModifiers);
+            itemDefinition.allModifiers.addAll(itemDefinition.generalModifiers);
+            itemDefinition.allModifiers.addAll(itemDefinition.skillModifiers);
         }
 
         private void buildAllRequirementsList() {
-            itemDefinition.allRequirementsList = new ArrayList<>();
+            itemDefinition.allRequirements = new ArrayList<>();
 
-            itemDefinition.allRequirementsList.addAll(itemDefinition.basicRequirements);
-            itemDefinition.allRequirementsList.addAll(itemDefinition.skillRequirements);
-            itemDefinition.allRequirementsList.addAll(itemDefinition.combatRequirements);
-            itemDefinition.allRequirementsList.addAll(itemDefinition.generalRequirements);
+            itemDefinition.allRequirements.addAll(itemDefinition.basicRequirements);
+            itemDefinition.allRequirements.addAll(itemDefinition.skillRequirements);
+            itemDefinition.allRequirements.addAll(itemDefinition.combatRequirements);
+            itemDefinition.allRequirements.addAll(itemDefinition.generalRequirements);
         }
     }
 }

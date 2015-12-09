@@ -15,11 +15,11 @@ public class UserCombatEntity extends CombatEntity {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.userEntity = userEntity;
 
-        this.setActualHealth(userEntity.getHealth());
-        this.setMaximumHealth(globalAttributeCalculator.calculateMaximumValue(userEntity, CombatAttribute.LIFE));
+        this.setActualHealth(userEntity.getRegeneration().getHealthPoints());
+        this.setMaximumHealth(globalAttributeCalculator.calculateMaximumValue(userEntity, CombatAttribute.LIFE).getValue());
 
-        this.setActualMana(userEntity.getMana());
-        this.setMaximumMana(globalAttributeCalculator.calculateMaximumValue(userEntity, CombatAttribute.MANA));
+        this.setActualMana(userEntity.getRegeneration().getManaPoints());
+        this.setMaximumMana(globalAttributeCalculator.calculateMaximumValue(userEntity, CombatAttribute.MANA).getValue());
     }
 
     public UserEntity getUserEntity() {

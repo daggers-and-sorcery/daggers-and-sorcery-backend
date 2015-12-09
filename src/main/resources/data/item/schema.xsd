@@ -48,6 +48,26 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
+                <xs:element name="price" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="price-entry">
+                                <xs:complexType>
+                                    <xs:all>
+                                        <xs:element name="type">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="MONEY"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="amount" type="xs:int" />
+                                    </xs:all>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="usable" type="xs:boolean" default="false" minOccurs="0"/>
                 <xs:element name="use-effect-list" minOccurs="0">
                     <xs:complexType>

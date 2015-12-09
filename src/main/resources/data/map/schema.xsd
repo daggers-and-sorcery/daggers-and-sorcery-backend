@@ -6,6 +6,7 @@
         <xs:complexType>
             <xs:all>
                 <xs:element name="id" type="xs:unsignedInt" minOccurs="1"/>
+                <xs:element name="main-shop" type="xs:unsignedInt" minOccurs="1"/>
                 <xs:element name="spawn">
                     <xs:complexType>
                         <xs:all>

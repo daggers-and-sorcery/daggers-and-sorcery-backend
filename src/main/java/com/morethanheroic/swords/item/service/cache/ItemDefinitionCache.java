@@ -32,4 +32,8 @@ public class ItemDefinitionCache {
     public ItemDefinition getItemDefinition(int itemId) {
         return itemDefinitionMap.get(itemId);
     }
+
+    public boolean isItemExists(int itemId) {
+        return itemDefinitionMap.containsKey(itemId);
+    }
 }

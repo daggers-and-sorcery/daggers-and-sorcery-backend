@@ -5,22 +5,33 @@ import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
+import com.morethanheroic.swords.money.domain.ConversionDefinition;
+import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
+import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
+import com.morethanheroic.swords.money.domain.MoneyDefinition;
+import com.morethanheroic.swords.money.service.MoneyFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.sun.istack.internal.NotNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 //TODO: instead of true or false use an enum like IdentificationType.IDENTIFIED
+@RequiredArgsConstructor
 public class InventoryEntity {
 
-    private final JournalManager journalManager;
+    @NotNull
     private final UserEntity userEntity;
+
+    @NotNull
     private final InventoryMapper inventoryMapper;
 
-    public InventoryEntity(UserEntity userEntity, InventoryMapper inventoryMapper, JournalManager journalManager) {
-        this.userEntity = userEntity;
-        this.inventoryMapper = inventoryMapper;
-        this.journalManager = journalManager;
-    }
+    @NotNull
+    private final JournalManager journalManager;
+
+    @NotNull
+    private final MoneyFacade moneyFacade;
 
     public boolean hasItem(int itemId) {
         return hasItem(itemId, true);
@@ -43,7 +54,7 @@ public class InventoryEntity {
     }
 
     public int getItemAmount(int itemId, boolean identified) {
-        ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), itemId, identified);
+        final ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), itemId, identified);
 
         if (dbEntity != null) {
             return dbEntity.getAmount();
@@ -85,12 +96,20 @@ public class InventoryEntity {
     }
 
     public void removeItem(int itemId, int amount, boolean identified) {
-        int amountBeforeRemove = getItemAmount(itemId, identified);
+        final int amountBeforeRemove = getItemAmount(itemId, identified);
 
         if (amountBeforeRemove - amount > 0) {
             inventoryMapper.removeItem(userEntity.getId(), itemId, amountBeforeRemove - amount, identified);
         } else {
             inventoryMapper.deleteItem(userEntity.getId(), itemId, identified);
+        }
+    }
+
+    public void setItem(int itemId, int amount, boolean identified) {
+        if (amount == 0) {
+            inventoryMapper.deleteItem(userEntity.getId(), itemId, identified);
+        } else {
+            inventoryMapper.setItem(userEntity.getId(), itemId, amount, identified);
         }
     }
 
@@ -100,5 +119,42 @@ public class InventoryEntity {
 
     public List<ItemDatabaseEntity> getItems(boolean identified) {
         return inventoryMapper.getItems(userEntity.getId(), identified);
+    }
+
+    public int getMoneyAmount(final Money money) {
+        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(money);
+        final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQuery(moneyDefinition);
+
+        return moneyFacade.getMoneyAmount(Money.MONEY, moneyCalculationQuery);
+    }
+
+    public void decreaseMoneyAmount(final Money money, final int amount) {
+        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(money);
+        final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQuery(moneyDefinition);
+
+        applyMoneyCalculationResult(moneyDefinition, moneyFacade.decreaseMoneyAmount(money, moneyCalculationQuery, amount));
+    }
+
+    public void increaseMoneyAmount(final Money money, final int amount) {
+        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(money);
+        final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQuery(moneyDefinition);
+
+        applyMoneyCalculationResult(moneyDefinition, moneyFacade.increaseMoneyAmount(money, moneyCalculationQuery, amount));
+    }
+
+    private MoneyCalculationQuery buildMoneyCalculationQuery(MoneyDefinition moneyDefinition) {
+        final MoneyCalculationQuery moneyCalculationQuery = new MoneyCalculationQuery();
+
+        for (ConversionDefinition conversionDefinition : moneyDefinition.getConversionDefinitions()) {
+            moneyCalculationQuery.setCurrency(conversionDefinition.getTargetId(), getItemAmount(conversionDefinition.getTargetId()));
+        }
+
+        return moneyCalculationQuery;
+    }
+
+    private void applyMoneyCalculationResult(final MoneyDefinition moneyDefinition, final MoneyCalculationResult moneyCalculationResult) {
+        for (ConversionDefinition conversionDefinition : moneyDefinition.getConversionDefinitions()) {
+            setItem(conversionDefinition.getTargetId(), moneyCalculationResult.getCurrency(conversionDefinition.getTargetId()), true);
+        }
     }
 }

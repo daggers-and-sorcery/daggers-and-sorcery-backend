@@ -3,6 +3,7 @@
 <map:map xmlns:map="http://www.swordsandsorcery.com/map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.swordsandsorcery.com/map ../schema.xsd">
     <map:id>1</map:id>
+    <map:main-shop>1</map:main-shop>
     <map:spawn>
         <map:timer>5</map:timer>
         <!-- respawn in seconds -->

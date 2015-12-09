@@ -1,1 +1,10 @@
 rootProject.name = 'swords-server'
+
+include 'xml-loader'
+include 'swords-race'
+include 'swords-effect'
+include 'swords-news'
+include 'swords-web'
+include 'swords-money'
+include 'common-definition'
+

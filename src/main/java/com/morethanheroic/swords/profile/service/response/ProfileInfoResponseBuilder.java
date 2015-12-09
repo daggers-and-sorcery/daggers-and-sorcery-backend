@@ -20,6 +20,7 @@ import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifiedItemEntryResponseBuilder;
+import com.morethanheroic.swords.race.service.RaceEntityCache;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
@@ -54,6 +55,9 @@ public class ProfileInfoResponseBuilder {
     private ProfileUnidentifiedItemEntryResponseBuilder profileUnidentifiedItemEntryResponseBuilder;
 
     @Autowired
+    private RaceEntityCache raceEntityCache;
+
+    @Autowired
     public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionCache = itemDefinitionCache;
@@ -71,10 +75,10 @@ public class ProfileInfoResponseBuilder {
 
         response.setData("attribute", buildAttributeResponse(user));
         response.setData("username", user.getUsername());
-        response.setData("race", user.getRace());
+        response.setData("race", raceEntityCache.getRaceEntity(user.getRace()).getName());
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
-        response.setData("scavengingPoints", user.getScavengingPoint());
+        response.setData("scavengingPoints", user.getSkills().getScavenging().getScavengingPoint());
         response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), session));
         response.setData("equipment", buildEquipmentResponse(user, session));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));

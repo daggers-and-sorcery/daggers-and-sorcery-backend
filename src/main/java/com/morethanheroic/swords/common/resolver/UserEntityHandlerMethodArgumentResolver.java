@@ -27,10 +27,10 @@ public class UserEntityHandlerMethodArgumentResolver implements HandlerMethodArg
     public UserEntity resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpSession session = ((HttpServletRequest) webRequest.getNativeRequest()).getSession();
 
-        if (session.getAttribute(SessionAttributeType.USER_ID) == null) {
+        if (session.getAttribute(SessionAttributeType.USER_ID.name()) == null) {
             return null;
         }
 
-        return userManager.getUser((int) session.getAttribute(SessionAttributeType.USER_ID));
+        return userManager.getUser((int) session.getAttribute(SessionAttributeType.USER_ID.name()));
     }
 }

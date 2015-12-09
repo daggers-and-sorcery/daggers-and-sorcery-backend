@@ -26,7 +26,7 @@ public class RegenerationFacade {
         int durationToRegenerate = calculateTheDurationToRegenerate(user);
 
         if (durationToRegenerate > 0) {
-            user.regenerate(
+            user.getRegeneration().regenerate(
                     healthRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
                     manaRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
                     movementRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
@@ -36,6 +36,6 @@ public class RegenerationFacade {
     }
 
     private int calculateTheDurationToRegenerate(UserEntity user) {
-        return regenerationDateCalculator.calculatePassedDurationSinceLastRegeneration(user.getLastRegenerationDate().getTime());
+        return regenerationDateCalculator.calculatePassedDurationSinceLastRegeneration(user.getRegeneration().getLastRegenerationDate().getTime());
     }
 }

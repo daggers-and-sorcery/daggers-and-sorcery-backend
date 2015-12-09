@@ -19,8 +19,8 @@ public class RegenerationInterceptor extends HandlerInterceptorAdapter {
     private RegenerationFacade regenerationFacade;
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (request.getSession().getAttribute(SessionAttributeType.USER_ID) != null) {
-            UserEntity user = userManager.getUser((int) request.getSession().getAttribute(SessionAttributeType.USER_ID));
+        if (request.getSession().getAttribute(SessionAttributeType.USER_ID.name()) != null) {
+            UserEntity user = userManager.getUser((int) request.getSession().getAttribute(SessionAttributeType.USER_ID.name()));
 
             if (user != null) {
                 regenerationFacade.regenerate(user);

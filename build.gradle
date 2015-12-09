@@ -1,41 +1,57 @@
-apply plugin: 'java'
+allprojects {
+    apply plugin: 'java'
 
-group = 'com.morethanheroic.swords'
-version = '0.0.1'
+    group = 'com.morethanheroic.swords'
+    version = '0.0.1'
 
-description = ''
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+    repositories {
+        mavenCentral()
+    }
 
-repositories {
-    mavenCentral()
+    dependencies {
+        compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
+    }
+
+    project.ext.mybatis_version = '3.3.0'
+    project.ext.guava_version = '18.0'
+    project.ext.checkstyle_version = '6.13'
+    project.ext.findbugs_version = '3.0.1'
 }
 
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-redis'
-    compile (group: 'org.springframework.boot', name: 'spring-boot-starter') {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
     compile group: 'org.springframework.security', name: 'spring-security-core'
     compile group: 'org.springframework.session', name: 'spring-session', version: '1.0.2.RELEASE'
 
-    testCompile (group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
         exclude(module: 'commons-logging')
     }
-    
-    compile group: 'org.apache.commons', name: 'commons-math3', version:'3.5'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.4'
-    compile group: 'org.liquibase', name: 'liquibase-core', version:'3.3.2'
-    compile group: 'mysql', name: 'mysql-connector-java', version:'5.1.34'
-    compile group: 'org.mybatis', name: 'mybatis-spring', version:'1.2.3'
-    compile group: 'org.apache.commons', name: 'commons-dbcp2', version:'2.1'
-    compile group: 'org.mybatis', name: 'mybatis', version:'3.3.0'
-    compile group: 'com.google.guava', name: 'guava', version: '18.0'
 
-    testCompile group: 'org.testng', name: 'testng', version:'6.9.4'
+    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.5'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    compile group: 'org.liquibase', name: 'liquibase-core', version: '3.4.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.37'
+    compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.2.3'
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+    compile group: 'com.google.guava', name: 'guava', version: guava_version
+
+    testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+
+    compile project(':xml-loader')
+    compile project(':swords-race')
+    compile project(':swords-effect')
+    compile project(':swords-web')
+    compile project(':swords-money')
 }
 
 buildscript {
@@ -44,9 +60,12 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.2.6.RELEASE'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.3.0.RELEASE'
     }
 }
+
+apply plugin: 'application'
+mainClassName = 'com.morethanheroic.swords.SwordsorceryServerApplication'
 
 apply plugin: 'spring-boot'
 
