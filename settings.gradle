@@ -7,4 +7,6 @@ include 'swords-news'
 include 'swords-web'
 include 'swords-money'
 include 'common-definition'
+include 'swords-skill-cooking'
+include 'swords-recipe'
 
