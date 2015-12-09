@@ -42,7 +42,7 @@ public class MoneyFacade {
 
         final MoneyCalculationResult moneyCalculationResult = new MoneyCalculationResult();
         for (ConversionDefinition currencyDefinition : Lists.reverse(moneyDefinition.getConversionDefinitions())) {
-            final int amountToGetFromCurrency = (int) Math.floor(amount / currencyDefinition.getConversionRate());
+            final int amountToGetFromCurrency = amount / currencyDefinition.getConversionRate();
 
             moneyCalculationResult.setCurrency(currencyDefinition.getTargetId(), amountToGetFromCurrency);
 
@@ -53,10 +53,12 @@ public class MoneyFacade {
     }
 
     public MoneyCalculationResult decreaseMoneyAmount(Money money, MoneyCalculationQuery moneyCalculationQuery, int amount) {
+        //Assert amount not negative
         return divideMoneyAmount(money, getMoneyAmount(money, moneyCalculationQuery) - amount);
     }
 
     public MoneyCalculationResult increaseMoneyAmount(Money money, MoneyCalculationQuery moneyCalculationQuery, int amount) {
+        //Assert amount not negative
         return divideMoneyAmount(money, getMoneyAmount(money, moneyCalculationQuery) + amount);
     }
 }

@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.money.service.conversion;
 
 import com.morethanheroic.swords.money.domain.ConversionDefinition;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -9,6 +10,7 @@ import java.util.Comparator;
  * Compare {@link ConversionDefinition} entities by conversion rate.
  */
 @Service
+@SuppressFBWarnings("SE_COMPARATOR_SHOULD_BE_SERIALIZABLE")
 public class ConversionRateComparator implements Comparator<ConversionDefinition> {
 
     @Override
