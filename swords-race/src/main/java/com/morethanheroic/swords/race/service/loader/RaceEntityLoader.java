@@ -25,7 +25,7 @@ public class RaceEntityLoader {
     private RaceEntityTransformer raceEntityTransformer;
 
     public List<RaceEntity> loadRaceEntities() throws IOException {
-        return loadRawRaceEntities().stream().map(rawRaceEntity -> raceEntityTransformer.transform(rawRaceEntity)).collect(Collectors.toList());
+        return loadRawRaceEntities().stream().map(raceEntityTransformer::transform).collect(Collectors.toList());
     }
 
     @SuppressWarnings("unchecked")

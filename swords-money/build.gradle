@@ -1,0 +1,30 @@
+apply plugin: 'checkstyle'
+
+checkstyle {
+    toolVersion = checkstyle_version
+    configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml");
+}
+
+apply plugin: 'findbugs'
+
+findbugs {
+    toolVersion = findbugs_version
+    effort = "max"
+    reportLevel = "low"
+}
+
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile group: 'com.google.guava', name: 'guava', version: guava_version
+    compile group: 'com.google.code.findbugs', name: 'findbugs', version: findbugs_version
+
+    compile project(':xml-loader')
+    compile project(':common-definition')
+
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+}
+
+apply plugin: 'spring-boot'

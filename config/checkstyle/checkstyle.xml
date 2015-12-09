@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE module PUBLIC
-          "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
-          "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+        "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
     <!--
@@ -92,7 +92,9 @@
         <module name="AnnotationLocation">
             <property name="allowSamelineSingleParameterlessAnnotation" value="false"/>
         </module>
-        <module name="AnnotationUseStyle"/>
+        <module name="AnnotationUseStyle">
+            <property name="closingParens" value="ignore"/>
+        </module>
         <module name="MissingDeprecated"/>
         <module name="MissingOverride">
             <property name="javaFiveCompatibility" value="true"/>
@@ -136,7 +138,6 @@
 
         <!-- Coding -->
         <module name="ArrayTrailingComma"/>
-        <module name="AvoidInlineConditionals"/>
         <module name="CovariantEquals"/>
         <module name="DeclarationOrder"/>
         <module name="DefaultComesLast"/>
@@ -184,7 +185,6 @@
         <module name="OneStatementPerLine"/>
         <module name="OverloadMethodsDeclarationOrder"/>
         <module name="PackageDeclaration"/>
-        <module name="ParameterAssignment"/>
         <module name="RequireThis">
             <module name="ReturnCount"/>
             <module name="SimplifyBooleanExpression"/>
@@ -204,7 +204,6 @@
 
         <!-- Imports -->
         <module name="AvoidStarImport"/>
-        <module name="AvoidStaticImport"/>
         <module name="CustomImportOrder">
             <property name="customImportOrderRules" value="THIRD_PARTY_PACKAGE###SPECIAL_IMPORTS###STANDARD_JAVA_PACKAGE###STATIC"/>
             <property name="specialImportsRegExp" value="^javax\."/>
@@ -248,7 +247,8 @@
         <module name="ClassFanOutComplexity">
             <property name="max" value="25"/>
             <!-- Default classes are also listed-->
-            <property name="excludedClasses" value="boolean, byte, char, double, float, int, long, short,  void, Boolean, Byte, Character, Double, Float, Integer, Long, Short, Void, Object, Class, String, StringBuffer, StringBuilder, ArrayIndexOutOfBoundsException, Exception, RuntimeException, IllegalArgumentException, IllegalStateException, IndexOutOfBoundsException, NullPointerException, Throwable, SecurityException, UnsupportedOperationException, List, ArrayList, Deque, Queue, LinkedList, Set, HashSet, SortedSet, TreeSet, Map, HashMap, SortedMap, TreeMap, DetailsAST, CheckstyleException, UnsupportedEncodingException, BuildException, ConversionException, FileNotFoundException, TestException, Log, Sets, Multimap, TokenStreamRecognitionException, RecognitionException, TokenStreamException, IOException"/>
+            <property name="excludedClasses"
+                      value="boolean, byte, char, double, float, int, long, short,  void, Boolean, Byte, Character, Double, Float, Integer, Long, Short, Void, Object, Class, String, StringBuffer, StringBuilder, ArrayIndexOutOfBoundsException, Exception, RuntimeException, IllegalArgumentException, IllegalStateException, IndexOutOfBoundsException, NullPointerException, Throwable, SecurityException, UnsupportedOperationException, List, ArrayList, Deque, Queue, LinkedList, Set, HashSet, SortedSet, TreeSet, Map, HashMap, SortedMap, TreeMap, DetailsAST, CheckstyleException, UnsupportedEncodingException, BuildException, ConversionException, FileNotFoundException, TestException, Log, Sets, Multimap, TokenStreamRecognitionException, RecognitionException, TokenStreamException, IOException"/>
         </module>
         <module name="CyclomaticComplexity"/>
         <module name="JavaNCSS"/>
@@ -275,7 +275,7 @@
         </module>
         <module name="OuterTypeFilename"/>
         <module name="TodoComment">
-            <property name="format" value="(TODO)|(FIXME)" />
+            <property name="severity" value="warning"/>
         </module>
         <module name="TrailingComment"/>
         <module name="UncommentedMain"/>
@@ -325,7 +325,7 @@
             <property name="max" value="30"/>
         </module>
         <module name="LineLength">
-            <property name="max" value="140"/>
+            <property name="max" value="150"/>
             <property name="ignorePattern" value="^ *\* *[^ ]+$"/>
         </module>
         <module name="MethodCount">
@@ -340,6 +340,8 @@
         <module name="EmptyForIteratorPad"/>
         <module name="EmptyLineSeparator">
             <property name="allowNoEmptyLineBetweenFields" value="true"/>
+            <property name="allowMultipleEmptyLines" value="false"/>
+            <property name="tokens" value="IMPORT, CLASS_DEF, INTERFACE_DEF, ENUM_DEF, STATIC_INIT, INSTANCE_INIT, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
         </module>
         <module name="GenericWhitespace"/>
         <module name="MethodParamPad"/>

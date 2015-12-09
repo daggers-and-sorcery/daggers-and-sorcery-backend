@@ -33,6 +33,7 @@ public class ShopEntity {
         return shopFacade.shopHasItem(shopDefinition, itemDefinition, amount);
     }
 
+    //TODO: price calculation!
     public int getShopSellPrice(ItemDefinition itemDefinition) {
         return 10;
     }
