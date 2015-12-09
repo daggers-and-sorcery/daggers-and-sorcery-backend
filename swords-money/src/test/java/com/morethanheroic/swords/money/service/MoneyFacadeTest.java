@@ -57,6 +57,7 @@ public class MoneyFacadeTest {
     }
 
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void testDivideMoneyAmountShouldDivideCorrectly() {
         final MoneyCalculationResult result = underTest.divideMoneyAmount(Money.MONEY, 92881192);
 
@@ -67,6 +68,7 @@ public class MoneyFacadeTest {
     }
 
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void testDivideMoneyAmountShouldDivideCorrectlyWhenWeHaveMoreThanHundredPlatinum() {
         final MoneyCalculationResult result = underTest.divideMoneyAmount(Money.MONEY, 292881192);
 
@@ -77,6 +79,7 @@ public class MoneyFacadeTest {
     }
 
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void testIncreaseMoneyAmountShouldReturnCorrectlyIncreasedResult() {
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQueryMock(3102, 12, 34, 2);
 
@@ -89,6 +92,7 @@ public class MoneyFacadeTest {
     }
 
     @Test
+    @SuppressWarnings("checkstyle:magicnumber")
     public void testDecreaseMoneyAmountShouldReturnCorrectlyIncreasedResult() {
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQueryMock(3102, 12, 34, 2);
 
