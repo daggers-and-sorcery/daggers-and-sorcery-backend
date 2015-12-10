@@ -18,7 +18,7 @@ public class RawRecipeDefinition {
     private int chance;
 
     @XmlElement(name = "type")
-    private RecipeType recipeType;
+    private RecipeType type;
 
     @XmlElementWrapper(name = "ingredient-list")
     @XmlElement(name = "ingredient")
