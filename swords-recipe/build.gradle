@@ -3,8 +3,10 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':xml-loader')
+    compile project(':sword-skill')
+
     compile project(':common-definition')
+    compile project(':xml-loader')
 }
 
 apply plugin: 'spring-boot'
