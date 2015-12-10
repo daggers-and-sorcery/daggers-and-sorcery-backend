@@ -24,6 +24,9 @@ public class RecipeDefinitionTransformer implements DefinitionTransformer<Recipe
     @NotNull
     private final RecipeRewardTransformer recipeRewardTransformer;
 
+    @NotNull
+    private final RecipeRequirementTransformer recipeRequirementTransformer;
+
     @Override
     public RecipeDefinition transform(RawRecipeDefinition rawRecipeDefinition) {
         return RecipeDefinition.builder()
@@ -33,6 +36,7 @@ public class RecipeDefinitionTransformer implements DefinitionTransformer<Recipe
                 .recipeExperiences(recipeExperienceTransformer.transform(rawRecipeDefinition.getRawRecipeExperienceList()))
                 .recipeIngredients(recipeIngredientTransformer.transform(rawRecipeDefinition.getRecipeIngredientList()))
                 .recipeRewards(recipeRewardTransformer.transform(rawRecipeDefinition.getRawRecipeRewardList()))
+                .recipeRequirements(recipeRequirementTransformer.transform(rawRecipeDefinition.getRawRecipeRequirementList()))
                 .build();
     }
 }

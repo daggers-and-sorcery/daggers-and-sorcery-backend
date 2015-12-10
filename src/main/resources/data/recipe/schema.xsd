@@ -69,6 +69,26 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="requirement-list">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="requirement" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:all>
+                                        <xs:element name="skill">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="COOKING"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="amount" type="xs:unsignedInt"/>
+                                    </xs:all>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:all>
         </xs:complexType>
     </xs:element>

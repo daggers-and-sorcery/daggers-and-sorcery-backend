@@ -18,4 +18,5 @@ public class RecipeDefinition {
     private final List<RecipeIngredient> recipeIngredients;
     private final List<RecipeReward> recipeRewards;
     private final List<RecipeExperience> recipeExperiences;
+    private final List<RecipeRequirement> recipeRequirements;
 }

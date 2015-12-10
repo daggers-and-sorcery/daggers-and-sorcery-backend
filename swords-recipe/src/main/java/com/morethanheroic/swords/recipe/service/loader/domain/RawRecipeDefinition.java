@@ -35,4 +35,8 @@ public class RawRecipeDefinition {
     @XmlElementWrapper(name = "experience-list")
     @XmlElement(name = "experience")
     private List<RawRecipeExperience> rawRecipeExperienceList;
+
+    @XmlElementWrapper(name = "requirement-list")
+    @XmlElement(name = "requirement")
+    private List<RawRecipeRequirement> rawRecipeRequirementList;
 }
