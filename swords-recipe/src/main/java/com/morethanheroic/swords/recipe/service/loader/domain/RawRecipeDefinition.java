@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.recipe.service.loader.domain;
 
+import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
 import lombok.Getter;
 
@@ -9,6 +10,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.List;
 
+/**
+ * Contains the freshly loaded details of a {@link RecipeDefinition} domain object.
+ */
 @Getter
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RawRecipeDefinition {

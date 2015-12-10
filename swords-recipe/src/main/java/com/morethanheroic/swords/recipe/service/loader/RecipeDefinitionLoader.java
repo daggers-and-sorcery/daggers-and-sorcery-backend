@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class load {@link RecipeDefinition}s from xml files.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RecipeDefinitionLoader implements DefinitionLoader<RecipeDefinition> {

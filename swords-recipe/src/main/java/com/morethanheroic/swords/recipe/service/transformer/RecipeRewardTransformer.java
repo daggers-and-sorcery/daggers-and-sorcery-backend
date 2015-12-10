@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Transform {@link RawRecipeReward} to {@link RecipeReward} domain objects.
+ */
 @Service
 public class RecipeRewardTransformer implements DefinitionTransformer<RecipeReward, RawRecipeReward>, DefinitionListTransformer<List<RecipeReward>, List<RawRecipeReward>> {
 

@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Provides an easy to use api to the recipe module.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RecipeFacade {

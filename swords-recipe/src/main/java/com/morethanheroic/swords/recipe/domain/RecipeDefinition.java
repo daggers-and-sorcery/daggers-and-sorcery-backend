@@ -5,6 +5,9 @@ import lombok.Getter;
 
 import java.util.List;
 
+/**
+ * Contains the static data of a recipe.
+ */
 @Getter
 @Builder
 public class RecipeDefinition {

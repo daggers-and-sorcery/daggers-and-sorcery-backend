@@ -6,10 +6,12 @@ import com.morethanheroic.swords.recipe.domain.RecipeExperience;
 import com.morethanheroic.swords.recipe.service.loader.domain.RawRecipeExperience;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Transform {@link RawRecipeExperience} to {@link RecipeExperience} domain objects.
+ */
 @Service
 public class RecipeExperienceTransformer implements DefinitionTransformer<RecipeExperience, RawRecipeExperience>, DefinitionListTransformer<List<RecipeExperience>, List<RawRecipeExperience>> {
 

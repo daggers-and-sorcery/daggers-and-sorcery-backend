@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Transform {@link RawRecipeDefinition} to {@link RecipeDefinition} domain objects.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RecipeDefinitionTransformer implements DefinitionTransformer<RecipeDefinition, RawRecipeDefinition> {
