@@ -1,7 +1,11 @@
 package com.morethanheroic.swords.recipe.domain;
 
-/**
- * Created by Laxika on 2015.12.09..
- */
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
 public class RecipeDefinition {
+
+    private final int id;
 }

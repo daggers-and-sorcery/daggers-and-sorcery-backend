@@ -5,7 +5,7 @@ import com.morethanheroic.swords.common.response.NotFoundException;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
@@ -61,8 +61,8 @@ public class ShopBuyStockController {
         //TODO: Use main shop rates if the player using the main shop
 
         //ATM we only use money as money, no support for special trades
-        if (shopEntity.getShopSellPrice(itemDefinition) <= user.getInventory().getMoneyAmount(Money.MONEY)) {
-            user.getInventory().decreaseMoneyAmount(Money.MONEY, shopEntity.getShopSellPrice(itemDefinition));
+        if (shopEntity.getShopSellPrice(itemDefinition) <= user.getInventory().getMoneyAmount(MoneyType.MONEY)) {
+            user.getInventory().decreaseMoneyAmount(MoneyType.MONEY, shopEntity.getShopSellPrice(itemDefinition));
 
             user.getInventory().addItem(itemDefinition, 1);
 

@@ -2,7 +2,7 @@ package com.morethanheroic.swords.money.service;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.money.domain.ConversionDefinition;
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
@@ -42,7 +42,7 @@ public class MoneyFacadeTest {
 
     @Before
     public void before() {
-        when(moneyDefinitionCache.getDefinition(Money.MONEY)).thenReturn(buildMoneyDefinitionMock());
+        when(moneyDefinitionCache.getDefinition(MoneyType.MONEY)).thenReturn(buildMoneyDefinitionMock());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class MoneyFacadeTest {
     public void testGetMoneyAmountShouldReturnCorrectAmount() throws Exception {
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQueryMock(3102, 12, 34, 2);
 
-        final int result = underTest.getMoneyAmount(Money.MONEY, moneyCalculationQuery);
+        final int result = underTest.getMoneyAmount(MoneyType.MONEY, moneyCalculationQuery);
 
         //3102 + 12 * 100 + 34 * 10000 + 2 * 1000000
         assertThat(result, is(2344302));
@@ -59,7 +59,7 @@ public class MoneyFacadeTest {
     @Test
     @SuppressWarnings("checkstyle:magicnumber")
     public void testDivideMoneyAmountShouldDivideCorrectly() {
-        final MoneyCalculationResult result = underTest.divideMoneyAmount(Money.MONEY, 92881192);
+        final MoneyCalculationResult result = underTest.divideMoneyAmount(MoneyType.MONEY, 92881192);
 
         assertThat(result.getCurrency(BRONZE_COIN_ID), is(92));
         assertThat(result.getCurrency(SILVER_COIN_ID), is(11));
@@ -70,7 +70,7 @@ public class MoneyFacadeTest {
     @Test
     @SuppressWarnings("checkstyle:magicnumber")
     public void testDivideMoneyAmountShouldDivideCorrectlyWhenWeHaveMoreThanHundredPlatinum() {
-        final MoneyCalculationResult result = underTest.divideMoneyAmount(Money.MONEY, 292881192);
+        final MoneyCalculationResult result = underTest.divideMoneyAmount(MoneyType.MONEY, 292881192);
 
         assertThat(result.getCurrency(BRONZE_COIN_ID), is(92));
         assertThat(result.getCurrency(SILVER_COIN_ID), is(11));
@@ -83,7 +83,7 @@ public class MoneyFacadeTest {
     public void testIncreaseMoneyAmountShouldReturnCorrectlyIncreasedResult() {
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQueryMock(3102, 12, 34, 2);
 
-        final MoneyCalculationResult result = underTest.increaseMoneyAmount(Money.MONEY, moneyCalculationQuery, 4421);
+        final MoneyCalculationResult result = underTest.increaseMoneyAmount(MoneyType.MONEY, moneyCalculationQuery, 4421);
 
         assertThat(result.getCurrency(BRONZE_COIN_ID), is(23));
         assertThat(result.getCurrency(SILVER_COIN_ID), is(87));
@@ -96,7 +96,7 @@ public class MoneyFacadeTest {
     public void testDecreaseMoneyAmountShouldReturnCorrectlyIncreasedResult() {
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQueryMock(3102, 12, 34, 2);
 
-        final MoneyCalculationResult result = underTest.decreaseMoneyAmount(Money.MONEY, moneyCalculationQuery, 87922);
+        final MoneyCalculationResult result = underTest.decreaseMoneyAmount(MoneyType.MONEY, moneyCalculationQuery, 87922);
 
         assertThat(result.getCurrency(BRONZE_COIN_ID), is(80));
         assertThat(result.getCurrency(SILVER_COIN_ID), is(63));
@@ -106,7 +106,7 @@ public class MoneyFacadeTest {
 
     private MoneyDefinition buildMoneyDefinitionMock() {
         return MoneyDefinition.builder()
-                .id(Money.MONEY)
+                .id(MoneyType.MONEY)
                 .conversionDefinitions(Lists.newArrayList(
                         ConversionDefinition.builder()
                                 .targetId(BRONZE_COIN_ID)

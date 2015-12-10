@@ -2,7 +2,7 @@ package com.morethanheroic.swords.money.service.loader;
 
 import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.service.loader.domain.RawMoneyDefinition;
 import com.morethanheroic.swords.money.service.transformer.MoneyDefinitionTransformer;
@@ -38,6 +38,6 @@ public class MoneyDefinitionLoader implements DefinitionLoader<MoneyDefinition> 
 
     @SuppressWarnings("unchecked")
     public List<RawMoneyDefinition> loadRawMoneyDefinitions() throws IOException {
-        return enumXmlDefinitionLoader.loadDefinitions(RawMoneyDefinition.class, MONEY_DEFINITION_LOCATION, MONEY_SCHEMA_LOCATION, Money.class);
+        return enumXmlDefinitionLoader.loadDefinitions(RawMoneyDefinition.class, MONEY_DEFINITION_LOCATION, MONEY_SCHEMA_LOCATION, MoneyType.class);
     }
 }

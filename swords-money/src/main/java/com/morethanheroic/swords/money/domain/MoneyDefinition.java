@@ -7,13 +7,13 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * Holds the static data of a {@link Money} entity.
+ * Holds the static data of a {@link MoneyType} entity.
  */
 @Getter
 @Builder
 @ToString
 public class MoneyDefinition {
 
-    private Money id;
+    private MoneyType id;
     private List<ConversionDefinition> conversionDefinitions;
 }

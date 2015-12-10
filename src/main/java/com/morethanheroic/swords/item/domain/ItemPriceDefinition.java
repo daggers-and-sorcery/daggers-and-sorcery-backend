@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.domain;
 
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -10,6 +10,6 @@ import lombok.ToString;
 @Builder
 public class ItemPriceDefinition {
 
-    private Money type;
+    private MoneyType type;
     private int amount;
 }

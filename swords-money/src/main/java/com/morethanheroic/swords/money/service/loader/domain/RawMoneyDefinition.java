@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.money.service.loader.domain;
 
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import lombok.Getter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 public class RawMoneyDefinition {
 
-    private Money id;
+    private MoneyType id;
 
     @XmlElementWrapper(name = "conversion-list")
     @XmlElement(name = "conversion")

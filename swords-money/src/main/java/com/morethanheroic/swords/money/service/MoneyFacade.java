@@ -3,7 +3,7 @@ package com.morethanheroic.swords.money.service;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.money.domain.ConversionDefinition;
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
@@ -23,12 +23,12 @@ public class MoneyFacade {
     @NotNull
     private final MoneyDefinitionCache moneyDefinitionCache;
 
-    public MoneyDefinition getDefinition(Money money) {
-        return moneyDefinitionCache.getDefinition(money);
+    public MoneyDefinition getDefinition(MoneyType moneyType) {
+        return moneyDefinitionCache.getDefinition(moneyType);
     }
 
-    public int getMoneyAmount(Money money, MoneyCalculationQuery moneyCalculationQuery) {
-        final MoneyDefinition moneyDefinition = getDefinition(money);
+    public int getMoneyAmount(MoneyType moneyType, MoneyCalculationQuery moneyCalculationQuery) {
+        final MoneyDefinition moneyDefinition = getDefinition(moneyType);
 
         int result = 0;
         for (ConversionDefinition currencyDefinition : moneyDefinition.getConversionDefinitions()) {
@@ -38,8 +38,8 @@ public class MoneyFacade {
         return result;
     }
 
-    public MoneyCalculationResult divideMoneyAmount(Money money, int amount) {
-        final MoneyDefinition moneyDefinition = getDefinition(money);
+    public MoneyCalculationResult divideMoneyAmount(MoneyType moneyType, int amount) {
+        final MoneyDefinition moneyDefinition = getDefinition(moneyType);
 
         final MoneyCalculationResult moneyCalculationResult = new MoneyCalculationResult();
         for (ConversionDefinition currencyDefinition : Lists.reverse(moneyDefinition.getConversionDefinitions())) {
@@ -53,15 +53,15 @@ public class MoneyFacade {
         return moneyCalculationResult;
     }
 
-    public MoneyCalculationResult decreaseMoneyAmount(Money money, MoneyCalculationQuery moneyCalculationQuery, int amount) {
+    public MoneyCalculationResult decreaseMoneyAmount(MoneyType moneyType, MoneyCalculationQuery moneyCalculationQuery, int amount) {
         Preconditions.checkArgument(amount >= 0, "Amount must be positive!");
 
-        return divideMoneyAmount(money, getMoneyAmount(money, moneyCalculationQuery) - amount);
+        return divideMoneyAmount(moneyType, getMoneyAmount(moneyType, moneyCalculationQuery) - amount);
     }
 
-    public MoneyCalculationResult increaseMoneyAmount(Money money, MoneyCalculationQuery moneyCalculationQuery, int amount) {
+    public MoneyCalculationResult increaseMoneyAmount(MoneyType moneyType, MoneyCalculationQuery moneyCalculationQuery, int amount) {
         Preconditions.checkArgument(amount >= 0, "Amount must be positive!");
 
-        return divideMoneyAmount(money, getMoneyAmount(money, moneyCalculationQuery) + amount);
+        return divideMoneyAmount(moneyType, getMoneyAmount(moneyType, moneyCalculationQuery) + amount);
     }
 }

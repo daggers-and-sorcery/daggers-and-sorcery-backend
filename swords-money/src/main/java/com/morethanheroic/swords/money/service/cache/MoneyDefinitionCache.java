@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.money.service.cache;
 
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.service.loader.MoneyDefinitionLoader;
 import com.sun.istack.internal.NotNull;
@@ -22,12 +22,12 @@ import java.util.Map;
 @Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MoneyDefinitionCache implements DefinitionCache<Money, MoneyDefinition> {
-
-    private Map<Money, MoneyDefinition> moneyDefinitionMap = new EnumMap<>(Money.class);
+public class MoneyDefinitionCache implements DefinitionCache<MoneyType, MoneyDefinition> {
 
     @NotNull
     private final MoneyDefinitionLoader moneyDefinitionLoader;
+
+    private Map<MoneyType, MoneyDefinition> moneyDefinitionMap = new EnumMap<>(MoneyType.class);
 
     @PostConstruct
     private void initialize() throws IOException {
@@ -41,7 +41,7 @@ public class MoneyDefinitionCache implements DefinitionCache<Money, MoneyDefinit
     }
 
     @Override
-    public MoneyDefinition getDefinition(Money money) {
-        return moneyDefinitionMap.get(money);
+    public MoneyDefinition getDefinition(MoneyType moneyType) {
+        return moneyDefinitionMap.get(moneyType);
     }
 }
