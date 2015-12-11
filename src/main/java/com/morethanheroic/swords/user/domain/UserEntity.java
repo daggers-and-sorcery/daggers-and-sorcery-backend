@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.user.domain;
 
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
@@ -12,19 +11,31 @@ public class UserEntity {
     private final UserDatabaseEntity userDatabaseEntity;
     private final UserMapper userMapper;
 
-    private RegenerationEntity regenerationEntity;
-
     public UserEntity(UserDatabaseEntity userDatabaseEntity, UserMapper userMapper) {
         this.userDatabaseEntity = userDatabaseEntity;
         this.userMapper = userMapper;
     }
 
-    public RegenerationEntity getRegeneration() {
-        if (regenerationEntity == null) {
-            regenerationEntity = new RegenerationEntity(userDatabaseEntity, userMapper);
-        }
+    public int getHealthPoints() {
+        return userDatabaseEntity.getHealth();
+    }
 
-        return regenerationEntity;
+    public int getManaPoints() {
+        return userDatabaseEntity.getMana();
+    }
+
+    public int getMovementPoints() {
+        return userDatabaseEntity.getMovement();
+    }
+
+    public void setMovementPoints(int value) {
+        userDatabaseEntity.setMovement(value);
+
+        userMapper.updateMovement(userDatabaseEntity.getId(), value);
+    }
+
+    public Date getLastRegenerationDate() {
+        return userDatabaseEntity.getLastRegenerationDate();
     }
 
     public int getId() {

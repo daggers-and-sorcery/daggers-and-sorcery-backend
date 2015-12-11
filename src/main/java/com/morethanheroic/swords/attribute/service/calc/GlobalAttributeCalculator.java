@@ -13,6 +13,7 @@ import com.morethanheroic.swords.race.model.modifier.RacialModifier;
 import com.morethanheroic.swords.race.model.modifier.entry.NumericRacialModifierEntry;
 import com.morethanheroic.swords.race.service.RaceEntityCache;
 import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
+import com.morethanheroic.swords.regeneration.service.RegenerationFacade;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,14 +87,12 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     }
 
     public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
-        final RegenerationEntity regenerationEntity = user.getRegeneration();
-
         if (attribute == CombatAttribute.LIFE) {
-            return new AttributeCalculationResult(regenerationEntity.getHealthPoints(), attribute);
+            return new AttributeCalculationResult(user.getHealthPoints(), attribute);
         } else if (attribute == CombatAttribute.MANA) {
-            return new AttributeCalculationResult(regenerationEntity.getManaPoints(), attribute);
+            return new AttributeCalculationResult(user.getManaPoints(), attribute);
         } else if (attribute == BasicAttribute.MOVEMENT) {
-            return new AttributeCalculationResult(regenerationEntity.getMovementPoints(), attribute);
+            return new AttributeCalculationResult(user.getMovementPoints(), attribute);
         }
 
         int racialModifier = 0;

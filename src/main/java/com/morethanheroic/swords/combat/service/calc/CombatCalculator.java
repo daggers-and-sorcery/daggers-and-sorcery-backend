@@ -95,7 +95,7 @@ public class CombatCalculator {
             movementFacade.getEntity(user).getMap().removeSpawn(spawn.getId());
 
             //TODO: Move user mapper outside, this class shouldn't know about user mapper at all, it should know more about user facade
-            userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getRegeneration().getMovementPoints() - 1);
+            userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getMovementPoints() - 1);
         }
     }
 }

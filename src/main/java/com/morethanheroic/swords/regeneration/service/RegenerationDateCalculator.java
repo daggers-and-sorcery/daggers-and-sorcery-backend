@@ -20,6 +20,6 @@ public class RegenerationDateCalculator {
     }
 
     public Date calculateNewRegenerationDate(UserEntity user, int duration) {
-        return new Date(user.getRegeneration().getLastRegenerationDate().getTime() + TimeUnit.MINUTES.toMillis(duration * 5));
+        return new Date(user.getLastRegenerationDate().getTime() + TimeUnit.MINUTES.toMillis(duration * 5));
     }
 }
