@@ -10,4 +10,5 @@ include 'common-definition'
 include 'swords-skill-cooking'
 include 'swords-recipe'
 include 'swords-skill'
+include 'swords-user'
 

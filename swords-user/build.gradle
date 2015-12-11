@@ -5,10 +5,7 @@ dependencies {
 
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
-    compile project(':swords-skill')
-
-    compile project(':common-definition')
-    compile project(':xml-loader')
+    compile project(':swords-race')
 }
 
 apply plugin: 'spring-boot'
