@@ -3,6 +3,8 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+
     compile project(':sword-skill')
 
     compile project(':common-definition')
