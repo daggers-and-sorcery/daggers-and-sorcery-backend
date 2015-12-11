@@ -6,6 +6,7 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
     compile project(':swords-skill')
+    compile project(':swords-user')
 
     compile project(':common-definition')
     compile project(':xml-loader')
