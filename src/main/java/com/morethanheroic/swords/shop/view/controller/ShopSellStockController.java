@@ -2,6 +2,8 @@ package com.morethanheroic.swords.shop.view.controller;
 
 import com.morethanheroic.swords.common.response.ConflictException;
 import com.morethanheroic.swords.common.response.NotFoundException;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
@@ -35,6 +37,9 @@ public class ShopSellStockController {
     @Autowired
     private ResponseFactory responseFactory;
 
+    @Autowired
+    private InventoryFacade inventoryFacade;
+
     @RequestMapping(value = "/shop/{shopId}/sell/{itemId}", method = RequestMethod.GET)
     public Response sellStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId) {
         if (!shopFacade.isShopExists(shopId)) {
@@ -51,7 +56,9 @@ public class ShopSellStockController {
             throw new NotFoundException();
         }
 
-        if (!user.getInventory().hasItemAmount(itemId, 1, isIdentifiedItem)) {
+        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(user);
+
+        if (!inventoryEntity.hasItemAmount(itemId, 1, isIdentifiedItem)) {
             throw new ConflictException();
         }
 
@@ -66,8 +73,8 @@ public class ShopSellStockController {
 
         ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
 
-        user.getInventory().increaseMoneyAmount(MoneyType.MONEY, shopEntity.getShopBuyPrice(itemDefinition));
-        user.getInventory().removeItem(itemId, 1, isIdentifiedItem);
+        inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, shopEntity.getShopBuyPrice(itemDefinition));
+        inventoryEntity.removeItem(itemId, 1, isIdentifiedItem);
 
         shopEntity.buyItem(itemDefinition, 1);
 

@@ -15,8 +15,11 @@ public class MovementManager {
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
 
+    @Autowired
+    private MovementFacade movementFacade;
+
     public boolean move(UserEntity userEntity, MovementType type) {
-        MovementEntity movementEntity = userEntity.getMovement();
+        MovementEntity movementEntity = movementFacade.getEntity(userEntity);
         RegenerationEntity regenerationEntity = userEntity.getRegeneration();
 
         int targetX = getTargetXCoordinate(movementEntity, type);
