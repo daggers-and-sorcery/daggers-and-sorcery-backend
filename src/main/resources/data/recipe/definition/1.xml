@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recipe:recipe xmlns:recipe="http://www.swordsandsorcery.com/recipe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.swordsandsorcery.com/recipe ../schema.xsd">
+    <recipe:id>1</recipe:id>
+    <recipe:type>COOKING</recipe:type>
+    <recipe:chance>100</recipe:chance>
+    <recipe:ingredient-list>
+        <recipe:ingredient>
+            <recipe:id>10</recipe:id>
+            <recipe:amount>2</recipe:amount>
+        </recipe:ingredient>
+    </recipe:ingredient-list>
+    <recipe:reward-list>
+        <recipe:reward>
+            <recipe:id>2</recipe:id>
+            <recipe:amount>1</recipe:amount>
+        </recipe:reward>
+    </recipe:reward-list>
+    <recipe:experience-list>
+        <recipe:experience>
+            <recipe:skill>COOKING</recipe:skill>
+            <recipe:amount>10</recipe:amount>
+        </recipe:experience>
+    </recipe:experience-list>
+</recipe:recipe>

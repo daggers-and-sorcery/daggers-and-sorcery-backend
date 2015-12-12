@@ -2,6 +2,7 @@ package com.morethanheroic.swords.shop.service.response;
 
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -13,6 +14,8 @@ import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
 import com.morethanheroic.swords.shop.domain.ShopItem;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,29 +25,33 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ShopItemListResponseBuilder {
 
-    @Autowired
+    @NonNull
     private ResponseFactory responseFactory;
 
-    @Autowired
+    @NonNull
     private ProfileIdentifiedItemEntryResponseBuilder itemEntryResponseBuilder;
 
-    @Autowired
+    @NonNull
     private ItemDefinitionCache itemDefinitionCache;
 
+    @NonNull
+    private InventoryFacade inventoryFacade;
+
     public Response build(UserEntity userEntity, ShopEntity shopEntity) {
-        Response response = responseFactory.newResponse(userEntity);
+        final Response response = responseFactory.newResponse(userEntity);
 
         response.setData("shopDefinition", buildShopDefinition(shopEntity.getShopDefinition()));
         response.setData("itemList", buildItemList(shopEntity.getAllItemsInShop()));
-        response.setData("inventoryList", buildInventoryItemList(userEntity.getInventory()));
+        response.setData("inventoryList", buildInventoryItemList(inventoryFacade.getInventory(userEntity)));
 
         return response;
     }
 
     private Map<String, Object> buildShopDefinition(ShopDefinition shopDefinition) {
-        Map<String, Object> result = new HashMap<>();
+        final Map<String, Object> result = new HashMap<>();
 
         result.put("id", shopDefinition.getId());
         result.put("name", shopDefinition.getName());

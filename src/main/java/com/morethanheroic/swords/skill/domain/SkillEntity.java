@@ -78,7 +78,7 @@ public class SkillEntity {
                 skillMapper.addShieldDefenseXp(user.getId(), value);
                 break;
             case STAFF:
-                skillMapper.addStaffsXp(user.getId(),value);
+                skillMapper.addStaffsXp(user.getId(), value);
                 break;
             case WAND:
                 skillMapper.addWandsXp(user.getId(), value);
@@ -88,6 +88,9 @@ public class SkillEntity {
                 break;
             case SCAVENGING:
                 skillMapper.addScavengingXp(user.getId(), value);
+                break;
+            case COOKING:
+                skillMapper.addCookingXp(user.getId(), value);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown attribute: " + attribute);
@@ -142,6 +145,8 @@ public class SkillEntity {
                 return skills.getSpectresXp();
             case SCAVENGING:
                 return skills.getSpectresXp();
+            case COOKING:
+                return skills.getCookingXp();
             default:
                 throw new IllegalArgumentException("Unknown attribute: " + attribute);
         }

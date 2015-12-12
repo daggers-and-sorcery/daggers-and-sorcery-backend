@@ -16,7 +16,7 @@ public class MovementRegenerationCalculator implements RegenerationCalculator {
 
     @Override
     public int calculateRegeneration(UserEntity user, int durationToCalculate) {
-        int newMovement = user.getRegeneration().getMovementPoints() + MOVEMENT_REGENERATION_UNIT * durationToCalculate;
+        int newMovement = user.getMovementPoints() + MOVEMENT_REGENERATION_UNIT * durationToCalculate;
         int maxMovement = globalAttributeCalculator.calculateMaximumValue(user, BasicAttribute.MOVEMENT).getValue();
 
         if (newMovement > maxMovement) {

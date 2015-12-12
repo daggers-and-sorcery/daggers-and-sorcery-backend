@@ -6,7 +6,7 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.money.domain.ConversionDefinition;
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
@@ -121,25 +121,25 @@ public class InventoryEntity {
         return inventoryMapper.getItems(userEntity.getId(), identified);
     }
 
-    public int getMoneyAmount(final Money money) {
-        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(money);
+    public int getMoneyAmount(final MoneyType moneyType) {
+        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(moneyType);
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQuery(moneyDefinition);
 
-        return moneyFacade.getMoneyAmount(Money.MONEY, moneyCalculationQuery);
+        return moneyFacade.getMoneyAmount(MoneyType.MONEY, moneyCalculationQuery);
     }
 
-    public void decreaseMoneyAmount(final Money money, final int amount) {
-        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(money);
+    public void decreaseMoneyAmount(final MoneyType moneyType, final int amount) {
+        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(moneyType);
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQuery(moneyDefinition);
 
-        applyMoneyCalculationResult(moneyDefinition, moneyFacade.decreaseMoneyAmount(money, moneyCalculationQuery, amount));
+        applyMoneyCalculationResult(moneyDefinition, moneyFacade.decreaseMoneyAmount(moneyType, moneyCalculationQuery, amount));
     }
 
-    public void increaseMoneyAmount(final Money money, final int amount) {
-        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(money);
+    public void increaseMoneyAmount(final MoneyType moneyType, final int amount) {
+        final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(moneyType);
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQuery(moneyDefinition);
 
-        applyMoneyCalculationResult(moneyDefinition, moneyFacade.increaseMoneyAmount(money, moneyCalculationQuery, amount));
+        applyMoneyCalculationResult(moneyDefinition, moneyFacade.increaseMoneyAmount(moneyType, moneyCalculationQuery, amount));
     }
 
     private MoneyCalculationQuery buildMoneyCalculationQuery(MoneyDefinition moneyDefinition) {

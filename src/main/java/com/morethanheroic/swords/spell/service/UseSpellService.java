@@ -41,7 +41,7 @@ public class UseSpellService {
                     return false;
                 }
             } else if (rawSpellCost.getType() == CostType.MANA) {
-                if (userEntity.getRegeneration().getManaPoints() < rawSpellCost.getAmount()) {
+                if (userEntity.getManaPoints() < rawSpellCost.getAmount()) {
                     return false;
                 }
             }
@@ -89,6 +89,6 @@ public class UseSpellService {
 
         combatEffectApplierService.applyEffects(userCombatEntity, spell.getCombatEffects(), combatEffectDataHolder);
 
-        userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getRegeneration().getMovementPoints());
+        userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
     }
 }

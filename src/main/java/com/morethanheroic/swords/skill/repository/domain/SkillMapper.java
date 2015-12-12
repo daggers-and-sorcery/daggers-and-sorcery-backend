@@ -81,4 +81,7 @@ public interface SkillMapper {
 
     @Update("UPDATE skills SET scavenging_xp = scavengings_xp + #{value} WHERE user_id = #{userId}")
     void addScavengingXp(@Param("userId")int userId, @Param("value")long value);
+
+    @Update("UPDATE skills SET cooking_xp = cooking_xp + #{value} WHERE user_id = #{userId}")
+    void addCookingXp(@Param("userId")int userId, @Param("value")long value);
 }

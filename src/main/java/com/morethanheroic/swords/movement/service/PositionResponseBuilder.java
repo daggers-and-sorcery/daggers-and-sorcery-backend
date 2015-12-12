@@ -22,6 +22,9 @@ public class PositionResponseBuilder {
     private final ResponseFactory responseFactory;
 
     @Autowired
+    private MovementFacade movementFacade;
+
+    @Autowired
     public PositionResponseBuilder(MonsterDefinitionCache monsterDefinitionCache, MapManager mapManager, ResponseFactory responseFactory) {
         this.monsterDefinitionCache = monsterDefinitionCache;
         this.mapManager = mapManager;
@@ -31,7 +34,7 @@ public class PositionResponseBuilder {
     public Response build(UserEntity userEntity) {
         Response response = responseFactory.newResponse(userEntity);
 
-        MovementEntity movementEntity = userEntity.getMovement();
+        MovementEntity movementEntity = movementFacade.getEntity(userEntity);
 
         response.setData("x", movementEntity.getX());
         response.setData("y", movementEntity.getY());

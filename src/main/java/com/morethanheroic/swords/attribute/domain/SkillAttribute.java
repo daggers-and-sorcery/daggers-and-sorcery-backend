@@ -25,7 +25,8 @@ public enum SkillAttribute implements Attribute {
     STAFF(GeneralAttribute.INTELLIGENCE),
     WAND(GeneralAttribute.WILLPOWER),
     SPECTRE(GeneralAttribute.WISDOM),
-    SCAVENGING(GeneralAttribute.PERCEPTION);
+    SCAVENGING(GeneralAttribute.PERCEPTION),
+    COOKING(GeneralAttribute.VITALITY);
 
     private final GeneralAttribute incrementedAttribute;
 

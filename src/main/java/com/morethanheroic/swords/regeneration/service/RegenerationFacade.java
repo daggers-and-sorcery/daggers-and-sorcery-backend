@@ -1,9 +1,11 @@
 package com.morethanheroic.swords.regeneration.service;
 
+import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
 import com.morethanheroic.swords.regeneration.service.calc.HealthRegenerationCalculator;
 import com.morethanheroic.swords.regeneration.service.calc.ManaRegenerationCalculator;
 import com.morethanheroic.swords.regeneration.service.calc.MovementRegenerationCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,22 @@ public class RegenerationFacade {
     @Autowired
     private RegenerationDateCalculator regenerationDateCalculator;
 
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private RegenerationFacade regenerationFacade;
+
+
+    public RegenerationEntity getEntity(UserEntity userEntity) {
+        return new RegenerationEntity(userEntity.getUserDatabaseEntity(), userMapper);
+    }
+
     public void regenerate(UserEntity user) {
         int durationToRegenerate = calculateTheDurationToRegenerate(user);
 
         if (durationToRegenerate > 0) {
-            user.getRegeneration().regenerate(
+            regenerationFacade.getEntity(user).regenerate(
                     healthRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
                     manaRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
                     movementRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
@@ -36,6 +49,6 @@ public class RegenerationFacade {
     }
 
     private int calculateTheDurationToRegenerate(UserEntity user) {
-        return regenerationDateCalculator.calculatePassedDurationSinceLastRegeneration(user.getRegeneration().getLastRegenerationDate().getTime());
+        return regenerationDateCalculator.calculatePassedDurationSinceLastRegeneration(user.getLastRegenerationDate().getTime());
     }
 }

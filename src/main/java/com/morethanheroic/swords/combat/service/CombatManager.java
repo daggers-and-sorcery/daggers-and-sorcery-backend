@@ -8,6 +8,7 @@ import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.movement.domain.MovementEntity;
+import com.morethanheroic.swords.movement.service.MovementFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class CombatManager {
     private final MapManager mapManager;
 
     @Autowired
+    private MovementFacade movementFacade;
+
+    @Autowired
     public CombatManager(CombatCalculator combatCalculator, MonsterDefinitionCache monsterDefinitionCache, MapManager mapManager) {
         this.combatCalculator = combatCalculator;
         this.monsterDefinitionCache = monsterDefinitionCache;
@@ -27,7 +31,7 @@ public class CombatManager {
     }
 
     public CombatResult initiateCombat(UserEntity user, int monsterId) {
-        MovementEntity movementEntity = user.getMovement();
+        MovementEntity movementEntity = movementFacade.getEntity(user);
 
         MapObjectDatabaseEntity spawn = mapManager.getMap(movementEntity.getMap().getId()).getSpawnAt(movementEntity.getX(), movementEntity.getY(), monsterId);
 

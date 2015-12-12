@@ -15,28 +15,6 @@ public class RegenerationEntity {
         this.userMapper = userMapper;
     }
 
-    public int getHealthPoints() {
-        return userDatabaseEntity.getHealth();
-    }
-
-    public int getManaPoints() {
-        return userDatabaseEntity.getMana();
-    }
-
-    public int getMovementPoints() {
-        return userDatabaseEntity.getMovement();
-    }
-
-    public void setMovementPoints(int value) {
-        userDatabaseEntity.setMovement(value);
-
-        userMapper.updateMovement(userDatabaseEntity.getId(), value);
-    }
-
-    public Date getLastRegenerationDate() {
-        return userDatabaseEntity.getLastRegenerationDate();
-    }
-
     public void regenerate(int health, int mana, int movement, Date date) {
         userDatabaseEntity.setLastRegenerationDate(date);
         userDatabaseEntity.setMana(mana);

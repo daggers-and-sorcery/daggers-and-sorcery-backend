@@ -2,10 +2,12 @@ package com.morethanheroic.swords.shop.view.controller;
 
 import com.morethanheroic.swords.common.response.ConflictException;
 import com.morethanheroic.swords.common.response.NotFoundException;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.money.domain.Money;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
@@ -34,6 +36,9 @@ public class ShopBuyStockController {
     @Autowired
     private ResponseFactory responseFactory;
 
+    @Autowired
+    private InventoryFacade inventoryFacade;
+
     @RequestMapping(value = "/shop/{shopId}/buy/{itemId}", method = RequestMethod.GET)
     public Response buyStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId) {
         if (!shopFacade.isShopExists(shopId)) {
@@ -57,14 +62,16 @@ public class ShopBuyStockController {
             throw new ConflictException();
         }
 
-        //TODO: Check that the player is on the shop's position except if its the main shop
-        //TODO: Use main shop rates if the player using the main shop
+        //TODO: Check that the player is on the shop's position except if its the main shop.
+        //TODO: Use main shop rates if the player using the main shop.
+
+        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(user);
 
         //ATM we only use money as money, no support for special trades
-        if (shopEntity.getShopSellPrice(itemDefinition) <= user.getInventory().getMoneyAmount(Money.MONEY)) {
-            user.getInventory().decreaseMoneyAmount(Money.MONEY, shopEntity.getShopSellPrice(itemDefinition));
+        if (shopEntity.getShopSellPrice(itemDefinition) <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
+            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, shopEntity.getShopSellPrice(itemDefinition));
 
-            user.getInventory().addItem(itemDefinition, 1);
+            inventoryEntity.addItem(itemDefinition, 1);
 
             shopEntity.sellItem(itemDefinition, 1);
         }

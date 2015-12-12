@@ -17,6 +17,7 @@ import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.movement.service.MovementFacade;
 import com.morethanheroic.swords.settings.model.SettingsEntity;
 import com.morethanheroic.swords.skill.domain.ScavengingEntity;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
@@ -45,6 +46,9 @@ public class CombatCalculator {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private MovementFacade movementFacade;
 
     @Autowired
     public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, MapManager mapManager, JournalManager journalManager, UserMapper userMapper) {
@@ -88,10 +92,10 @@ public class CombatCalculator {
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
 
-            user.getMovement().getMap().removeSpawn(spawn.getId());
+            movementFacade.getEntity(user).getMap().removeSpawn(spawn.getId());
 
             //TODO: Move user mapper outside, this class shouldn't know about user mapper at all, it should know more about user facade
-            userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getRegeneration().getMovementPoints() - 1);
+            userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getMovementPoints() - 1);
         }
     }
 }
