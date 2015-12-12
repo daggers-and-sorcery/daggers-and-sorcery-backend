@@ -11,16 +11,7 @@ dependencies {
 apply plugin: 'spring-boot'
 
 apply plugin: 'checkstyle'
-
-checkstyle {
-    toolVersion = project.ext.checkstyle_version
-    configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml");
-}
+checkstyle checkstyle_config
 
 apply plugin: 'findbugs'
-
-findbugs {
-    toolVersion = project.ext.findbugs_version
-    effort = "max"
-    reportLevel = "low"
-}
+findbugs findbugs_config

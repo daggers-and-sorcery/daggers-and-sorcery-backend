@@ -6,6 +6,9 @@ import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
 import java.util.Date;
 
+/**
+ * Contains the data of an user.
+ */
 public class UserEntity {
 
     private final UserDatabaseEntity userDatabaseEntity;
@@ -58,7 +61,8 @@ public class UserEntity {
         return userDatabaseEntity.getLastLoginDate();
     }
 
-    //TODO: Remove this! This is only here for now! Should refactor it soon! Things that accessed in userDatabaseEntity should be accessed via this class.
+    //TODO: Remove this! This is only here for now! Should refactor it soon! Things that accessed in
+    //userDatabaseEntity should be accessed via this class.
     public UserDatabaseEntity getUserDatabaseEntity() {
         return userDatabaseEntity;
     }

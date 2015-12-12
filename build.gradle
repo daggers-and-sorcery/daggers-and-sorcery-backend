@@ -20,6 +20,17 @@ allprojects {
         guava_version = '18.0'
         checkstyle_version = '6.13'
         findbugs_version = '3.0.1'
+
+        checkstyle_config = {
+            toolVersion = project.ext.checkstyle_version
+            configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml");
+        }
+
+        findbugs_config = {
+            toolVersion = project.ext.findbugs_version
+            effort = "max"
+            reportLevel = "low"
+        }
     }
 }
 

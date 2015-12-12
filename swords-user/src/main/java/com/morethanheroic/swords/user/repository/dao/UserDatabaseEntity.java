@@ -4,6 +4,9 @@ import com.morethanheroic.swords.race.model.Race;
 
 import java.util.Date;
 
+/**
+ * Contains an user's data freshly fetched from the database.
+ */
 public class UserDatabaseEntity {
 
     private int id;
@@ -144,5 +147,9 @@ public class UserDatabaseEntity {
 
     public int getScaveningPoint() {
         return scavengingPoint;
+    }
+
+    public void setScavengingPoint(int scavengingPoint) {
+        this.scavengingPoint = scavengingPoint;
     }
 }
