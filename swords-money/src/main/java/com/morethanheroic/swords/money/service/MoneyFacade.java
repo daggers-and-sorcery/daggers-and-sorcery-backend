@@ -8,7 +8,7 @@ import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.service.cache.MoneyDefinitionCache;
-import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MoneyFacade {
 
-    @NotNull
+    @NonNull
     private final MoneyDefinitionCache moneyDefinitionCache;
 
     public MoneyDefinition getDefinition(MoneyType moneyType) {

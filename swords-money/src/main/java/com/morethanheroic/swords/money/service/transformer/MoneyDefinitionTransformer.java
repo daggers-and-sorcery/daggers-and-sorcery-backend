@@ -6,7 +6,7 @@ import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.service.conversion.ConversionRateComparator;
 import com.morethanheroic.swords.money.service.loader.domain.RawConversionDefinition;
 import com.morethanheroic.swords.money.service.loader.domain.RawMoneyDefinition;
-import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MoneyDefinitionTransformer implements DefinitionTransformer<MoneyDefinition, RawMoneyDefinition> {
 
-    @NotNull
+    @NonNull
     private final ConversionDefinitionTransformer conversionDefinitionTransformer;
 
-    @NotNull
+    @NonNull
     private final ConversionRateComparator conversionRateComparator;
 
     public MoneyDefinition transform(RawMoneyDefinition rawMoneyDefinition) {
