@@ -3,6 +3,7 @@ package com.morethanheroic.swords;
 import com.morethanheroic.swords.common.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.common.resolver.UserEntityHandlerMethodArgumentResolver;
 import com.morethanheroic.swords.common.session.filter.SessionLoginFilter;
+import com.morethanheroic.swords.common.sql.LocalDateHandler;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -136,7 +138,10 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(getMybatisDataSource());
+
         sessionFactory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
+
+        sessionFactory.getObject().getConfiguration().getTypeHandlerRegistry().register(LocalDate.class, new LocalDateHandler());
 
         return sessionFactory.getObject();
     }

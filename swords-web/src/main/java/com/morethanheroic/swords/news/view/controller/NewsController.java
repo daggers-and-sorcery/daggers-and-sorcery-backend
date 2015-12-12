@@ -24,6 +24,7 @@ public class NewsController {
     @ResponseBody
     @RequestMapping(value = "/news/last", method = RequestMethod.GET)
     public List<NewsEntity> news() {
+        //TODO: Use a builder instead of this! Send the date normalli because now LocalDate is formatted badly.
         return newsFacade.getLastNewsEntity(NEWS_AMOUNT_PER_PAGE);
     }
 }

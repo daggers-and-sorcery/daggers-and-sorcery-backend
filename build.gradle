@@ -15,10 +15,12 @@ allprojects {
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
     }
 
-    project.ext.mybatis_version = '3.3.0'
-    project.ext.guava_version = '18.0'
-    project.ext.checkstyle_version = '6.13'
-    project.ext.findbugs_version = '3.0.1'
+    ext {
+        mybatis_version = '3.3.0'
+        guava_version = '18.0'
+        checkstyle_version = '6.13'
+        findbugs_version = '3.0.1'
+    }
 }
 
 dependencies {
