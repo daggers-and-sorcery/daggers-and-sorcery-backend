@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class ConversionDefinition {
+public class Conversion {
 
     private int targetId;
     private int conversionRate;

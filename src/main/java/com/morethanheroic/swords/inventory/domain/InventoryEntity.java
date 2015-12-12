@@ -5,7 +5,7 @@ import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
-import com.morethanheroic.swords.money.domain.ConversionDefinition;
+import com.morethanheroic.swords.money.domain.Conversion;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
@@ -145,16 +145,16 @@ public class InventoryEntity {
     private MoneyCalculationQuery buildMoneyCalculationQuery(MoneyDefinition moneyDefinition) {
         final MoneyCalculationQuery moneyCalculationQuery = new MoneyCalculationQuery();
 
-        for (ConversionDefinition conversionDefinition : moneyDefinition.getConversionDefinitions()) {
-            moneyCalculationQuery.setCurrency(conversionDefinition.getTargetId(), getItemAmount(conversionDefinition.getTargetId()));
+        for (Conversion conversion : moneyDefinition.getConversions()) {
+            moneyCalculationQuery.setCurrency(conversion.getTargetId(), getItemAmount(conversion.getTargetId()));
         }
 
         return moneyCalculationQuery;
     }
 
     private void applyMoneyCalculationResult(final MoneyDefinition moneyDefinition, final MoneyCalculationResult moneyCalculationResult) {
-        for (ConversionDefinition conversionDefinition : moneyDefinition.getConversionDefinitions()) {
-            setItem(conversionDefinition.getTargetId(), moneyCalculationResult.getCurrency(conversionDefinition.getTargetId()), true);
+        for (Conversion conversion : moneyDefinition.getConversions()) {
+            setItem(conversion.getTargetId(), moneyCalculationResult.getCurrency(conversion.getTargetId()), true);
         }
     }
 }

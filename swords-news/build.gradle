@@ -4,6 +4,23 @@ dependencies {
     }
 
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+
+    compile project(':common-definition')
 }
 
 apply plugin: 'spring-boot'
+
+apply plugin: 'checkstyle'
+
+checkstyle {
+    toolVersion = project.ext.checkstyle_version
+    configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml");
+}
+
+apply plugin: 'findbugs'
+
+findbugs {
+    toolVersion = project.ext.findbugs_version
+    effort = "max"
+    reportLevel = "low"
+}

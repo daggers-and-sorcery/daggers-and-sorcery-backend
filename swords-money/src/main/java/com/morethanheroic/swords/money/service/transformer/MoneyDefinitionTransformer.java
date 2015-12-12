@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.money.service.transformer;
 
 import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
-import com.morethanheroic.swords.money.domain.ConversionDefinition;
+import com.morethanheroic.swords.money.domain.Conversion;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.service.conversion.ConversionRateComparator;
 import com.morethanheroic.swords.money.service.loader.domain.RawConversionDefinition;
@@ -31,12 +31,12 @@ public class MoneyDefinitionTransformer implements DefinitionTransformer<MoneyDe
     public MoneyDefinition transform(RawMoneyDefinition rawMoneyDefinition) {
         return MoneyDefinition.builder()
                 .id(rawMoneyDefinition.getId())
-                .conversionDefinitions(convertListOfConversionDefinitions(rawMoneyDefinition.getCombatModifiers()))
+                .conversions(convertListOfConversionDefinitions(rawMoneyDefinition.getCombatModifiers()))
                 .build();
     }
 
-    private List<ConversionDefinition> convertListOfConversionDefinitions(List<RawConversionDefinition> rawConversionDefinitions) {
-        final List<ConversionDefinition> result = rawConversionDefinitions.stream().map(conversionDefinitionTransformer::transform)
+    private List<Conversion> convertListOfConversionDefinitions(List<RawConversionDefinition> rawConversionDefinitions) {
+        final List<Conversion> result = rawConversionDefinitions.stream().map(conversionDefinitionTransformer::transform)
                 .collect(Collectors.toList());
 
         Collections.sort(result, conversionRateComparator);

@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.news.service;
 
 import com.morethanheroic.swords.news.domain.NewsEntity;
+import com.morethanheroic.swords.news.service.cache.NewsEntityCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class NewsFacade {
     private NewsEntityCache newsEntityCache;
 
     public NewsEntity getNewsEntity(int newsId) {
-        return newsEntityCache.getNewsEntity(newsId);
+        return newsEntityCache.getEntity(newsId);
     }
 
     public List<NewsEntity> getLastNewsEntity(int amount) {
