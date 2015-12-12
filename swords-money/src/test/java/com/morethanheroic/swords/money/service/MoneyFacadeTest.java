@@ -2,10 +2,10 @@ package com.morethanheroic.swords.money.service;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.money.domain.ConversionDefinition;
-import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.cache.MoneyDefinitionCache;
 import org.junit.Before;
 import org.junit.Test;

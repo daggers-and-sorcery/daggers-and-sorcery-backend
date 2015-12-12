@@ -27,10 +27,6 @@ public class RegenerationFacade {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private RegenerationFacade regenerationFacade;
-
-
     public RegenerationEntity getEntity(UserEntity userEntity) {
         return new RegenerationEntity(userEntity.getUserDatabaseEntity(), userMapper);
     }
@@ -39,7 +35,7 @@ public class RegenerationFacade {
         int durationToRegenerate = calculateTheDurationToRegenerate(user);
 
         if (durationToRegenerate > 0) {
-            regenerationFacade.getEntity(user).regenerate(
+            getEntity(user).regenerate(
                     healthRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
                     manaRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
                     movementRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
