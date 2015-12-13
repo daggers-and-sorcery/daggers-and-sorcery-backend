@@ -17,9 +17,6 @@ public class UserDatabaseEntity {
     private Instant registrationDate;
     private Instant lastLoginDate;
     private Instant lastRegenerationDate;
-    private int map;
-    private int x;
-    private int y;
     private int health;
     private int mana;
     private int movement;
@@ -83,30 +80,6 @@ public class UserDatabaseEntity {
 
     public void setLastLoginDate(Instant lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
-    }
-
-    public int getMap() {
-        return map;
-    }
-
-    public void setMap(int map) {
-        this.map = map;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public Instant getLastRegenerationDate() {

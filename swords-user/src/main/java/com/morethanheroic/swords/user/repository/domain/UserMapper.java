@@ -26,9 +26,6 @@ public interface UserMapper {
     @Update("UPDATE users SET last_login_date = NOW() WHERE id = #{id} AND email = #{email} AND username = #{username}")
     void updateLastLoginDate(UserDatabaseEntity user);
 
-    @Update("UPDATE users SET x = #{x}, y = #{y} WHERE id = #{userId}")
-    void updatePosition(@Param("userId") int userId, @Param("x") int x, @Param("y") int y);
-
     @Update("UPDATE users SET scavenging_point= #{scavenging_point} WHERE id = #{userId}")
     void updateScavengingPoint(@Param("userId") int userId, @Param("scavenging_point") int scavengingPoint);
 
@@ -43,8 +40,8 @@ public interface UserMapper {
                             @Param("movement") int movement, @Param("date") Instant date);
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    @Insert("INSERT INTO users SET username = #{username}, email = #{email}, password = #{password}, race = #{race}, x = #{x}, y = #{y},"
-            + " map = #{map}, health = #{health}, mana = #{mana}, movement = #{movement}, registration_date = #{registrationDate},"
+    @Insert("INSERT INTO users SET username = #{username}, email = #{email}, password = #{password}, race = #{race}, "
+            + "health = #{health}, mana = #{mana}, movement = #{movement}, registration_date = #{registrationDate},"
             + " last_login_date = #{lastLoginDate}")
     void insert(UserDatabaseEntity userDatabaseEntity);
 }

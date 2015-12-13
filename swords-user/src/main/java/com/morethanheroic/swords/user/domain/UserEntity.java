@@ -14,6 +14,7 @@ public class UserEntity {
     private final UserDatabaseEntity userDatabaseEntity;
     private final UserMapper userMapper;
 
+    //TODO: Use @Configurable to inject the UserMapper.
     public UserEntity(int userId, UserMapper userMapper) {
         this.userDatabaseEntity = userMapper.findById(userId);
         this.userMapper = userMapper;
