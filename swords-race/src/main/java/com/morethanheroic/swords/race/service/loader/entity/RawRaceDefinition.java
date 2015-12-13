@@ -18,7 +18,7 @@ import java.util.List;
 @XmlRootElement(name = "race")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Getter
-public class RawRaceEntity {
+public class RawRaceDefinition {
 
     @XmlElement
     private String name;

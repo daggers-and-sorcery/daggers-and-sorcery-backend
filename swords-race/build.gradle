@@ -4,6 +4,7 @@ dependencies {
     }
     compile group: 'com.google.code.findbugs', name: 'findbugs', version: findbugs_version
 
+    compile project(':common-definition')
     compile project(':xml-loader')
 }
 

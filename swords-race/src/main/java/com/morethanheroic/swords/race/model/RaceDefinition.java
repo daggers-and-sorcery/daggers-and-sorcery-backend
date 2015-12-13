@@ -11,7 +11,7 @@ import java.util.Map;
  * Store the static data of a race in the game.
  */
 @Builder
-public class RaceEntity {
+public class RaceDefinition {
 
     @Getter
     private final Race race;
