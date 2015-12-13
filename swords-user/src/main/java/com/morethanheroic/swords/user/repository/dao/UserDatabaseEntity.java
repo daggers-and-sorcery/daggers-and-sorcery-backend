@@ -2,8 +2,7 @@ package com.morethanheroic.swords.user.repository.dao;
 
 import com.morethanheroic.swords.race.model.Race;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.Instant;
 
 /**
  * Contains an user's data freshly fetched from the database.
@@ -15,10 +14,9 @@ public class UserDatabaseEntity {
     private String username;
     private String password;
     private Race race;
-    private LocalDate registrationDate;
-    private LocalDate lastLoginDate;
-    //TODO: Rename lastRegenerationDate to lastRegenerationTime.
-    private LocalTime lastRegenerationDate;
+    private Instant registrationDate;
+    private Instant lastLoginDate;
+    private Instant lastRegenerationDate;
     private int map;
     private int x;
     private int y;
@@ -71,19 +69,19 @@ public class UserDatabaseEntity {
         return "[id: " + getId() + " name: " + username + "]";
     }
 
-    public LocalDate getRegistrationDate() {
+    public Instant getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
+    public void setRegistrationDate(Instant registrationDate) {
         this.registrationDate = registrationDate;
     }
 
-    public LocalDate getLastLoginDate() {
+    public Instant getLastLoginDate() {
         return lastLoginDate;
     }
 
-    public void setLastLoginDate(LocalDate lastLoginDate) {
+    public void setLastLoginDate(Instant lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
     }
 
@@ -111,11 +109,11 @@ public class UserDatabaseEntity {
         this.y = y;
     }
 
-    public LocalTime getLastRegenerationDate() {
+    public Instant getLastRegenerationDate() {
         return lastRegenerationDate;
     }
 
-    public void setLastRegenerationDate(LocalTime lastRegenerationDate) {
+    public void setLastRegenerationDate(Instant lastRegenerationDate) {
         this.lastRegenerationDate = lastRegenerationDate;
     }
 

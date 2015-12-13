@@ -4,7 +4,6 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -19,7 +18,7 @@ public class RegenerationDateCalculator {
         return (int) Math.floor(passedMinutesSinceLastRegeneration / REGENERATION_INTERVAL);
     }
 
-    public LocalTime calculateNewRegenerationDate(UserEntity user, int duration) {
-        return LocalTime.from(Instant.ofEpochMilli(Instant.from(user.getLastRegenerationDate()).toEpochMilli() + TimeUnit.MINUTES.toMillis(duration * 5)));
+    public Instant calculateNewRegenerationDate(UserEntity user, int duration) {
+        return Instant.ofEpochMilli(Instant.from(user.getLastRegenerationDate()).toEpochMilli() + TimeUnit.MINUTES.toMillis(duration * 5));
     }
 }

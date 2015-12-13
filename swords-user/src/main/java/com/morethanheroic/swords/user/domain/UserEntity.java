@@ -4,8 +4,7 @@ import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.Instant;
 
 /**
  * Contains the data of an user.
@@ -38,7 +37,7 @@ public class UserEntity {
         userMapper.updateMovement(userDatabaseEntity.getId(), value);
     }
 
-    public LocalTime getLastRegenerationDate() {
+    public Instant getLastRegenerationDate() {
         return userDatabaseEntity.getLastRegenerationDate();
     }
 
@@ -54,11 +53,11 @@ public class UserEntity {
         return userDatabaseEntity.getRace();
     }
 
-    public LocalDate getRegistrationDate() {
+    public Instant getRegistrationDate() {
         return userDatabaseEntity.getRegistrationDate();
     }
 
-    public LocalDate getLastLoginDate() {
+    public Instant getLastLoginDate() {
         return userDatabaseEntity.getLastLoginDate();
     }
 

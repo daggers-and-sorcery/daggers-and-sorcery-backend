@@ -3,8 +3,7 @@ package com.morethanheroic.swords.regeneration.domain;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
-import java.time.LocalTime;
-import java.util.Date;
+import java.time.Instant;
 
 public class RegenerationEntity {
 
@@ -16,7 +15,7 @@ public class RegenerationEntity {
         this.userMapper = userMapper;
     }
 
-    public void regenerate(int health, int mana, int movement, LocalTime date) {
+    public void regenerate(int health, int mana, int movement, Instant date) {
         userDatabaseEntity.setLastRegenerationDate(date);
         userDatabaseEntity.setMana(mana);
         userDatabaseEntity.setHealth(health);

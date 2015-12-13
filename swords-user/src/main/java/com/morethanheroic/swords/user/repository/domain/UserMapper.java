@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalTime;
+import java.time.Instant;
 
 /**
  * Provides an API to access {@link UserEntity}es in the database.
@@ -40,7 +40,7 @@ public interface UserMapper {
 
     @Update("UPDATE users SET last_regeneration_date = #{date}, health = #{health}, mana = #{mana}, movement = #{movement} WHERE id = #{userId}")
     void updateRegeneration(@Param("userId") int userId, @Param("health") int health, @Param("mana") int mana,
-                            @Param("movement") int movement, @Param("date") LocalTime date);
+                            @Param("movement") int movement, @Param("date") Instant date);
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     @Insert("INSERT INTO users SET username = #{username}, email = #{email}, password = #{password}, race = #{race}, x = #{x}, y = #{y},"
