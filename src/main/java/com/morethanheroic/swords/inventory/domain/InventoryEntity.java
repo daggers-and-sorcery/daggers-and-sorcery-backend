@@ -6,13 +6,13 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.money.domain.Conversion;
-import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.MoneyFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -21,16 +21,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InventoryEntity {
 
-    @NotNull
+    @NonNull
     private final UserEntity userEntity;
 
-    @NotNull
+    @NonNull
     private final InventoryMapper inventoryMapper;
 
-    @NotNull
+    @NonNull
     private final JournalManager journalManager;
 
-    @NotNull
+    @NonNull
     private final MoneyFacade moneyFacade;
 
     public boolean hasItem(int itemId) {
