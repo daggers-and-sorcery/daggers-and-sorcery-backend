@@ -2,41 +2,43 @@ package com.morethanheroic.swords.movement.domain;
 
 import com.morethanheroic.swords.map.domain.MapEntity;
 import com.morethanheroic.swords.map.service.MapManager;
-import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
+import com.morethanheroic.swords.movement.repository.dao.MovementDatabaseEntity;
+import com.morethanheroic.swords.movement.repository.domain.MovementMapper;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
 public class MovementEntity {
 
-    private final UserDatabaseEntity userDatabaseEntity;
-    private final UserMapper userMapper;
+    private final MovementDatabaseEntity movementDatabaseEntity;
+    private final MovementMapper movementMapper;
     private final MapManager mapManager;
 
-    public MovementEntity(UserDatabaseEntity userDatabaseEntity, UserMapper userMapper, MapManager mapManager) {
-        this.userDatabaseEntity = userDatabaseEntity;
-        this.userMapper = userMapper;
+    public MovementEntity(MovementDatabaseEntity movementDatabaseEntity, MovementMapper movementMapper, MapManager mapManager) {
+        this.movementDatabaseEntity = movementDatabaseEntity;
+        this.movementMapper = movementMapper;
         this.mapManager = mapManager;
     }
 
     public void setPosition(int x, int y) {
-        userDatabaseEntity.setX(x);
-        userDatabaseEntity.setY(y);
+        movementDatabaseEntity.setX(x);
+        movementDatabaseEntity.setY(y);
 
-        userMapper.updatePosition(userDatabaseEntity.getId(), x, y);
+        movementMapper.updatePosition(movementDatabaseEntity.getUserId(), x, y);
     }
 
     public void setMap(int mapId) {
-        userDatabaseEntity.setMap(mapId);
+        movementDatabaseEntity.setMapId(mapId);
     }
 
     public MapEntity getMap() {
-        return mapManager.getMap(userDatabaseEntity.getMap());
+        return mapManager.getMap(movementDatabaseEntity.getMapId());
     }
 
     public int getX() {
-        return userDatabaseEntity.getX();
+        return movementDatabaseEntity.getX();
     }
 
     public int getY() {
-        return userDatabaseEntity.getY();
+        return movementDatabaseEntity.getY();
     }
 }

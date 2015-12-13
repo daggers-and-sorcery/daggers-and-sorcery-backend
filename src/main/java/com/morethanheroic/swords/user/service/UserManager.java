@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.user.service;
 
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
+import com.morethanheroic.swords.movement.service.MovementFacade;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.skill.repository.domain.SkillMapper;
@@ -11,13 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Service
 public class UserManager {
-
-    private static final int STARTING_POSITION_X = 6;
-    private static final int STARTING_POSITION_Y = 9;
 
     @Autowired
     private UserMapper userMapper;
@@ -31,8 +29,11 @@ public class UserManager {
     @Autowired
     private SettingsMapper settingsMapper;
 
+    @Autowired
+    private MovementFacade movementFacade;
+
     public UserEntity getUser(int id) {
-        return new UserEntity(userMapper.findById(id), userMapper);
+        return new UserEntity(id, userMapper);
     }
 
     public void saveNewUser(String username, String password, String email, Race race) {
@@ -42,23 +43,24 @@ public class UserManager {
         skillMapper.insert(user.getId());
         equipmentMapper.insert(user.getId());
         settingsMapper.insert(user.getId());
+
+        //TODO: later all this crap will be moved out of usermapper! Crap above and bellow...
+        UserEntity userEntity = getUser(user.getId());
+        movementFacade.createNewMovementEntity(userEntity);
     }
 
     @Transactional
     private UserDatabaseEntity createNewUserEntity(String username, String password, String email, Race race) {
         UserDatabaseEntity user = new UserDatabaseEntity(username, password);
 
-        Date date = new Date();
+        final Instant now = Instant.now();
 
-        user.setRegistrationDate(date);
-        user.setLastRegenerationDate(date);
-        user.setLastLoginDate(date);
+        user.setRegistrationDate(now);
+        user.setLastLoginDate(now);
+        user.setLastRegenerationDate(now);
 
         user.setEmail(email);
         user.setRace(race);
-        user.setX(STARTING_POSITION_X);
-        user.setY(STARTING_POSITION_Y);
-        user.setMap(1);
         user.setMovement(30);
         user.setHealth(15);
         user.setMana(15);

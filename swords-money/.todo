@@ -1,3 +1,0 @@
-[Refactor]:
-
-    - Rename ConversionDefinition to Conversion. (Only the main subject of the package is called definition.)

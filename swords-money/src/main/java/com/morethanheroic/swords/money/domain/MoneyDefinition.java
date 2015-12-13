@@ -15,5 +15,5 @@ import java.util.List;
 public class MoneyDefinition {
 
     private MoneyType id;
-    private List<ConversionDefinition> conversionDefinitions;
+    private List<Conversion> conversions;
 }

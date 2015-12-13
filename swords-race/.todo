@@ -1,7 +1,0 @@
-[Refactor]:
-
- - Rename the whole bunch to RaceDefinition.
- - Use the common-definition package.
- - Made the package checkstyle and findbugs ready.
- - Add checkstyle and findbugs to the module file.
- - Use constructor injection.

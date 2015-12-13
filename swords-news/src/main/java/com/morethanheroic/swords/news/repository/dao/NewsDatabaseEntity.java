@@ -2,7 +2,7 @@ package com.morethanheroic.swords.news.repository.dao;
 
 import lombok.Getter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Contains the data of a news entry in the database.
@@ -11,7 +11,7 @@ import java.util.Date;
 public class NewsDatabaseEntity {
 
     private int id;
-    private Date releaseDate;
+    private LocalDate releaseDate;
     private String title;
     private String message;
     private String icon;

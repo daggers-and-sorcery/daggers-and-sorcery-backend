@@ -2,11 +2,11 @@ package com.morethanheroic.swords.money.service.loader;
 
 import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
-import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.loader.domain.RawMoneyDefinition;
 import com.morethanheroic.swords.money.service.transformer.MoneyDefinitionTransformer;
-import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +25,10 @@ public class MoneyDefinitionLoader implements DefinitionLoader<MoneyDefinition> 
     private static final String MONEY_DEFINITION_LOCATION = "classpath:data/money/definition/";
     private static final String MONEY_SCHEMA_LOCATION = "classpath:data/money/schema.xsd";
 
-    @NotNull
+    @NonNull
     private final EnumXmlDefinitionLoader enumXmlDefinitionLoader;
 
-    @NotNull
+    @NonNull
     private final MoneyDefinitionTransformer moneyDefinitionTransformer;
 
     @Override

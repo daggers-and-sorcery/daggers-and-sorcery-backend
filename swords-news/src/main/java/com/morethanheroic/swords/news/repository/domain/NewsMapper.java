@@ -3,12 +3,14 @@ package com.morethanheroic.swords.news.repository.domain;
 import com.morethanheroic.swords.news.repository.dao.NewsDatabaseEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Maps queries to methods.
  */
+@Repository
 public interface NewsMapper {
 
     @Select(value = "SELECT * FROM news ORDER BY release_date DESC LIMIT #{amount}")

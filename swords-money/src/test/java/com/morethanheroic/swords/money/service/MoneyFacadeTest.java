@@ -1,11 +1,11 @@
 package com.morethanheroic.swords.money.service;
 
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.money.domain.ConversionDefinition;
-import com.morethanheroic.swords.money.domain.MoneyType;
+import com.morethanheroic.swords.money.domain.Conversion;
 import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.cache.MoneyDefinitionCache;
 import org.junit.Before;
 import org.junit.Test;
@@ -107,20 +107,20 @@ public class MoneyFacadeTest {
     private MoneyDefinition buildMoneyDefinitionMock() {
         return MoneyDefinition.builder()
                 .id(MoneyType.MONEY)
-                .conversionDefinitions(Lists.newArrayList(
-                        ConversionDefinition.builder()
+                .conversions(Lists.newArrayList(
+                        Conversion.builder()
                                 .targetId(BRONZE_COIN_ID)
                                 .conversionRate(BRONZE_CONVERSION_RATE)
                                 .build(),
-                        ConversionDefinition.builder()
+                        Conversion.builder()
                                 .targetId(SILVER_COIN_ID)
                                 .conversionRate(SILVER_CONVERSION_RATE)
                                 .build(),
-                        ConversionDefinition.builder()
+                        Conversion.builder()
                                 .targetId(GOLD_COIN_ID)
                                 .conversionRate(GOLD_CONVERSION_RATE)
                                 .build(),
-                        ConversionDefinition.builder()
+                        Conversion.builder()
                                 .targetId(PLATINUM_COIN_ID)
                                 .conversionRate(PLATINUM_CONVERSION_RATE)
                                 .build()

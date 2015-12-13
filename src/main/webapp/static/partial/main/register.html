@@ -67,7 +67,7 @@
                                 <a class="btn btn-default btn-no-outline race-paging-btn" ng-click="decreaseRace()"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
                             </div>
                             <div class="col-sm-4" style="line-height: 2.2;">
-                                <span class="race-name-holder">~ <span ng-bind="race[visibleRace].name | replace:'_':' ' | capitalize"></span> ~</span>
+                                <span class="race-name-holder">~ <span ng-bind="race[visibleRace] | replace:'_':' ' | capitalize"></span> ~</span>
                             </div>
                             <div class="col-sm-4 text-left" style="padding: 0;">
                                 <a class="btn btn-default btn-no-outline race-paging-btn" ng-click="increaseRace()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>

@@ -4,15 +4,19 @@ import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
-import java.util.Date;
+import java.time.Instant;
 
+/**
+ * Contains the data of an user.
+ */
 public class UserEntity {
 
     private final UserDatabaseEntity userDatabaseEntity;
     private final UserMapper userMapper;
 
-    public UserEntity(UserDatabaseEntity userDatabaseEntity, UserMapper userMapper) {
-        this.userDatabaseEntity = userDatabaseEntity;
+    //TODO: Use @Configurable to inject the UserMapper.
+    public UserEntity(int userId, UserMapper userMapper) {
+        this.userDatabaseEntity = userMapper.findById(userId);
         this.userMapper = userMapper;
     }
 
@@ -34,7 +38,7 @@ public class UserEntity {
         userMapper.updateMovement(userDatabaseEntity.getId(), value);
     }
 
-    public Date getLastRegenerationDate() {
+    public Instant getLastRegenerationDate() {
         return userDatabaseEntity.getLastRegenerationDate();
     }
 
@@ -50,15 +54,16 @@ public class UserEntity {
         return userDatabaseEntity.getRace();
     }
 
-    public Date getRegistrationDate() {
+    public Instant getRegistrationDate() {
         return userDatabaseEntity.getRegistrationDate();
     }
 
-    public Date getLastLoginDate() {
+    public Instant getLastLoginDate() {
         return userDatabaseEntity.getLastLoginDate();
     }
 
-    //TODO: Remove this! This is only here for now! Should refactor it soon! Things that accessed in userDatabaseEntity should be accessed via this class.
+    //TODO: Remove this! This is only here for now! Should refactor it soon! Things that accessed in
+    //userDatabaseEntity should be accessed via this class.
     public UserDatabaseEntity getUserDatabaseEntity() {
         return userDatabaseEntity;
     }

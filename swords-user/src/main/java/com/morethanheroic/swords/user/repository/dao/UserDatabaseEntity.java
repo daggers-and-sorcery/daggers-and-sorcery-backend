@@ -2,8 +2,11 @@ package com.morethanheroic.swords.user.repository.dao;
 
 import com.morethanheroic.swords.race.model.Race;
 
-import java.util.Date;
+import java.time.Instant;
 
+/**
+ * Contains an user's data freshly fetched from the database.
+ */
 public class UserDatabaseEntity {
 
     private int id;
@@ -11,12 +14,9 @@ public class UserDatabaseEntity {
     private String username;
     private String password;
     private Race race;
-    private Date registrationDate;
-    private Date lastLoginDate;
-    private Date lastRegenerationDate;
-    private int map;
-    private int x;
-    private int y;
+    private Instant registrationDate;
+    private Instant lastLoginDate;
+    private Instant lastRegenerationDate;
     private int health;
     private int mana;
     private int movement;
@@ -66,51 +66,27 @@ public class UserDatabaseEntity {
         return "[id: " + getId() + " name: " + username + "]";
     }
 
-    public Date getRegistrationDate() {
+    public Instant getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(Instant registrationDate) {
         this.registrationDate = registrationDate;
     }
 
-    public Date getLastLoginDate() {
+    public Instant getLastLoginDate() {
         return lastLoginDate;
     }
 
-    public void setLastLoginDate(Date lastLoginDate) {
+    public void setLastLoginDate(Instant lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public int getMap() {
-        return map;
-    }
-
-    public void setMap(int map) {
-        this.map = map;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public Date getLastRegenerationDate() {
+    public Instant getLastRegenerationDate() {
         return lastRegenerationDate;
     }
 
-    public void setLastRegenerationDate(Date lastRegenerationDate) {
+    public void setLastRegenerationDate(Instant lastRegenerationDate) {
         this.lastRegenerationDate = lastRegenerationDate;
     }
 
@@ -144,5 +120,9 @@ public class UserDatabaseEntity {
 
     public int getScaveningPoint() {
         return scavengingPoint;
+    }
+
+    public void setScavengingPoint(int scavengingPoint) {
+        this.scavengingPoint = scavengingPoint;
     }
 }

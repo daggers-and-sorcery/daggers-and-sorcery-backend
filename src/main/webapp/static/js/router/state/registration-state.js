@@ -17,7 +17,7 @@ module.exports = {
         $scope.visibleRace = 0;
         $scope.errorList = [];
         $scope.successfulRegistration = false;
-        $scope.race = racelist.data;
+        $scope.race = ['HUMAN', 'ORC', 'DWARF', 'ELF', 'DARK_ELF', 'LIZARDMEN', 'GNOME', 'DRACONIC'];
 
         $scope.decreaseRace = function () {
             if ($scope.visibleRace == 0) {
@@ -37,7 +37,7 @@ module.exports = {
             if (valid) {
                 var dataToSend = $scope.user;
 
-                dataToSend.race = $scope.race[$scope.visibleRace].name;
+                dataToSend.race = $scope.race[$scope.visibleRace];
 
                 $http.post('/user/register', dataToSend).success(function (data, status, headers, config) {
                     $scope.errorList = [];

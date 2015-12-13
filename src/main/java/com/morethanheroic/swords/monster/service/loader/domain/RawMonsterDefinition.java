@@ -2,7 +2,11 @@ package com.morethanheroic.swords.monster.service.loader.domain;
 
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collections;
 import java.util.List;
 
@@ -84,16 +88,16 @@ public class RawMonsterDefinition {
     }
 
     public List<RawDropDefinition> getDropDefinitions() {
-        if(rawDropDefinitions == null) {
-            return Collections.EMPTY_LIST;
+        if (rawDropDefinitions == null) {
+            return Collections.emptyList();
         }
 
         return Collections.unmodifiableList(rawDropDefinitions);
     }
 
     public List<RawScavengingDefinition> getScavengeDefinitions() {
-        if(rawScavengingDefinitions == null) {
-            return Collections.EMPTY_LIST;
+        if (rawScavengingDefinitions == null) {
+            return Collections.emptyList();
         }
 
         return Collections.unmodifiableList(rawScavengingDefinitions);

@@ -21,6 +21,9 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.testng.annotations.Test;
 
 import javax.servlet.http.HttpSession;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 import static org.mockito.Matchers.any;
@@ -137,8 +140,8 @@ public class ProfileInfoResponseBuilderServiceTest {
         UserEntity user = mock(UserEntity.class);
 
         when(user.getRace()).thenReturn(Race.DRACONIC);
-        when(user.getRegistrationDate()).thenReturn(new Date(1111111111));
-        when(user.getLastLoginDate()).thenReturn(new Date(2222));
+        when(user.getRegistrationDate()).thenReturn(Instant.ofEpochMilli(1111111111));
+        when(user.getLastLoginDate()).thenReturn(Instant.ofEpochMilli(2222));
         when(user.getUsername()).thenReturn("testuser");
 
         return user;

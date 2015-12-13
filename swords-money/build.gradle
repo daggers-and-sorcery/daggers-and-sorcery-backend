@@ -1,18 +1,3 @@
-apply plugin: 'checkstyle'
-
-checkstyle {
-    toolVersion = checkstyle_version
-    configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml");
-}
-
-apply plugin: 'findbugs'
-
-findbugs {
-    toolVersion = findbugs_version
-    effort = "max"
-    reportLevel = "low"
-}
-
 dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
@@ -28,3 +13,9 @@ dependencies {
 }
 
 apply plugin: 'spring-boot'
+
+apply plugin: 'checkstyle'
+checkstyle checkstyle_config
+
+apply plugin: 'findbugs'
+findbugs findbugs_config

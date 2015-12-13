@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.race.service.loader.adapter;
 
+import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawRacialModifierEntry;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -7,12 +9,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
- * A placeholder class that we can use to decide what {@link com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawRacialModifierEntry}
+ * A placeholder class that we can use to decide what {@link RawRacialModifierEntry}
  * we want to unmarshall into.
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 @Getter
 @ToString
+@XmlAccessorType(XmlAccessType.FIELD)
+@SuppressFBWarnings(value = "UWF_UNWRITTEN_FIELD", justification = "For some reason FindBugs doesn't detect the fields as being used.")
 public class RacialModifierEntityAdapterPlaceholder {
 
     private String type;

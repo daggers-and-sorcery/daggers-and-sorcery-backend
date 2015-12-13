@@ -2,13 +2,13 @@ package com.morethanheroic.swords.money.service;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.money.domain.ConversionDefinition;
-import com.morethanheroic.swords.money.domain.MoneyType;
+import com.morethanheroic.swords.money.domain.Conversion;
 import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
 import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.cache.MoneyDefinitionCache;
-import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MoneyFacade {
 
-    @NotNull
+    @NonNull
     private final MoneyDefinitionCache moneyDefinitionCache;
 
     public MoneyDefinition getDefinition(MoneyType moneyType) {
@@ -31,7 +31,7 @@ public class MoneyFacade {
         final MoneyDefinition moneyDefinition = getDefinition(moneyType);
 
         int result = 0;
-        for (ConversionDefinition currencyDefinition : moneyDefinition.getConversionDefinitions()) {
+        for (Conversion currencyDefinition : moneyDefinition.getConversions()) {
             result += currencyDefinition.getConversionRate() * moneyCalculationQuery.getCurrency(currencyDefinition.getTargetId());
         }
 
@@ -42,7 +42,7 @@ public class MoneyFacade {
         final MoneyDefinition moneyDefinition = getDefinition(moneyType);
 
         final MoneyCalculationResult moneyCalculationResult = new MoneyCalculationResult();
-        for (ConversionDefinition currencyDefinition : Lists.reverse(moneyDefinition.getConversionDefinitions())) {
+        for (Conversion currencyDefinition : Lists.reverse(moneyDefinition.getConversions())) {
             final int amountToGetFromCurrency = amount / currencyDefinition.getConversionRate();
 
             moneyCalculationResult.setCurrency(currencyDefinition.getTargetId(), amountToGetFromCurrency);

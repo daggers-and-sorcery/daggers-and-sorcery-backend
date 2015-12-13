@@ -9,6 +9,8 @@ import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 public class RegenerationFacade {
 
@@ -27,10 +29,6 @@ public class RegenerationFacade {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private RegenerationFacade regenerationFacade;
-
-
     public RegenerationEntity getEntity(UserEntity userEntity) {
         return new RegenerationEntity(userEntity.getUserDatabaseEntity(), userMapper);
     }
@@ -39,7 +37,7 @@ public class RegenerationFacade {
         int durationToRegenerate = calculateTheDurationToRegenerate(user);
 
         if (durationToRegenerate > 0) {
-            regenerationFacade.getEntity(user).regenerate(
+            getEntity(user).regenerate(
                     healthRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
                     manaRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
                     movementRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
@@ -49,6 +47,6 @@ public class RegenerationFacade {
     }
 
     private int calculateTheDurationToRegenerate(UserEntity user) {
-        return regenerationDateCalculator.calculatePassedDurationSinceLastRegeneration(user.getLastRegenerationDate().getTime());
+        return regenerationDateCalculator.calculatePassedDurationSinceLastRegeneration(Instant.from(user.getLastRegenerationDate()));
     }
 }
