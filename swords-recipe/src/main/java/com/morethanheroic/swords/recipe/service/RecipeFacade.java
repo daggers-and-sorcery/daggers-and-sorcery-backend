@@ -2,7 +2,6 @@ package com.morethanheroic.swords.recipe.service;
 
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.domain.RecipeEntity;
-import com.morethanheroic.swords.recipe.repository.dao.RecipeDatabaseEntity;
 import com.morethanheroic.swords.recipe.repository.domain.RecipeMapper;
 import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
