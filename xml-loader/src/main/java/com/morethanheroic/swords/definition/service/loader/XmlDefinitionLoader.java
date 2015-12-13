@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Blueprint for writing xml definition loaders.
+ * @param <T> The type of the loadable target.
  */
 public interface XmlDefinitionLoader<T> {
 

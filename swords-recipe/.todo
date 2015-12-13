@@ -1,3 +1,0 @@
-[Necessary]:
-
- - Move skills enum out to a swords-skill package to be able to use it in this package.

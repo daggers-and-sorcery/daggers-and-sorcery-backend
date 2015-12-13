@@ -6,18 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An {@link XmlDefinitionLoader} that loads xml information based on a {@link java.lang.Enum}. The loader looks
  * for files in the given resource path with the enum names lowercase and _ replaces with -.
- * <p>
  * For example:
  * DWARF -> resourcePath/dwarf.xml
  * DARK_ELF -> resourcePath/dark-elf.xml
@@ -36,13 +35,14 @@ public class EnumXmlDefinitionLoader implements XmlDefinitionLoader<Class<? exte
     public List loadDefinitions(Class clazz, String resourcePath, String schemaPath, Class<? extends Enum> target) throws IOException {
         try {
             return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath, target);
-        } catch (SAXException | JAXBException e) {
+        } catch (JAXBException e) {
             throw new IOException(e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath, Class<? extends Enum> enumClass) throws JAXBException, IOException {
+    private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath, Class<? extends Enum> enumClass) throws JAXBException,
+            IOException {
         final List list = new ArrayList<>();
 
         for (Enum actualEnum : enumClass.getEnumConstants()) {
@@ -60,6 +60,6 @@ public class EnumXmlDefinitionLoader implements XmlDefinitionLoader<Class<? exte
     }
 
     private String getFileNameFromEnum(Enum enumValue) {
-        return enumValue.name().toLowerCase().replace('_', '-') + ".xml";
+        return enumValue.name().toLowerCase(Locale.ENGLISH).replace('_', '-') + ".xml";
     }
 }

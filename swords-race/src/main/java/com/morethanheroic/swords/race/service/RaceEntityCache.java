@@ -3,6 +3,8 @@ package com.morethanheroic.swords.race.service;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceEntity;
 import com.morethanheroic.swords.race.service.loader.RaceEntityLoader;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +20,13 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RaceEntityCache {
 
     private Map<Race, RaceEntity> raceEntityMap = new EnumMap<>(Race.class);
 
-    @Autowired
-    private RaceEntityLoader raceEntityLoader;
+    @NonNull
+    private final RaceEntityLoader raceEntityLoader;
 
     @PostConstruct
     private void initialize() throws IOException {

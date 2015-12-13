@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -29,7 +30,7 @@ public class RaceEntityTransformer {
     }
 
     private Race buildRaceFromName(String name) {
-        return Race.valueOf(name.replace(' ', '_').toUpperCase());
+        return Race.valueOf(name.replace(' ', '_').toUpperCase(Locale.ENGLISH));
     }
 
     private Map<RacialModifier, RacialModifierEntry> transformModifierList(List<RawRacialModifierEntry> rawRacialModifierEntryList) {

@@ -10,5 +10,6 @@ import com.morethanheroic.swords.race.model.modifier.RacialModifier;
 public interface RacialModifierEntry<T> {
 
     RacialModifier getType();
+
     T getValue();
 }

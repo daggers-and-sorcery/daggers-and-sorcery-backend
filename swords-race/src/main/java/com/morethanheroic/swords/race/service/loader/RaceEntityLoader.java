@@ -5,6 +5,8 @@ import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceEntity;
 import com.morethanheroic.swords.race.service.loader.entity.RawRaceEntity;
 import com.morethanheroic.swords.race.service.transformer.RaceEntityTransformer;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +18,13 @@ import java.util.stream.Collectors;
  * Load the {@link RaceEntity}es from xml files.
  */
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RaceEntityLoader {
 
-    @Autowired
+    @NonNull
     private EnumXmlDefinitionLoader enumXmlDefinitionLoader;
 
-    @Autowired
+    @NonNull
     private RaceEntityTransformer raceEntityTransformer;
 
     public List<RaceEntity> loadRaceEntities() throws IOException {
@@ -30,6 +33,7 @@ public class RaceEntityLoader {
 
     @SuppressWarnings("unchecked")
     public List<RawRaceEntity> loadRawRaceEntities() throws IOException {
-        return enumXmlDefinitionLoader.loadDefinitions(RawRaceEntity.class, "classpath:data/race/definition/", "classpath:data/race/schema.xsd", Race.class);
+        return enumXmlDefinitionLoader.loadDefinitions(RawRaceEntity.class, "classpath:data/race/definition/", "classpath:data/race/schema.xsd",
+                Race.class);
     }
 }

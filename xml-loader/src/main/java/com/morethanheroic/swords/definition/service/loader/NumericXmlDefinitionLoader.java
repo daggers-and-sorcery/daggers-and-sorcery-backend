@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -31,7 +30,7 @@ public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> 
     public List loadDefinitions(Class clazz, String resourcePath, String schemaPath, Integer maximumFileCount) throws IOException {
         try {
             return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath, maximumFileCount);
-        } catch (SAXException | JAXBException e) {
+        } catch (JAXBException e) {
             throw new IOException(e);
         }
     }

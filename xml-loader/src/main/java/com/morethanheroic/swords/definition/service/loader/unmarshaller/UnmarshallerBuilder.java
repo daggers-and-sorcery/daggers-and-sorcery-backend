@@ -26,12 +26,16 @@ public class UnmarshallerBuilder {
     @Autowired
     private ApplicationContext applicationContext;
 
-    public Unmarshaller buildUnmarshaller(Class clazz, String schemaPath) throws IOException, SAXException, JAXBException {
-        final Unmarshaller unmarshaller = JAXBContext.newInstance(clazz).createUnmarshaller();
+    public Unmarshaller buildUnmarshaller(Class clazz, String schemaPath) throws IOException {
+        try {
+            final Unmarshaller unmarshaller = JAXBContext.newInstance(clazz).createUnmarshaller();
 
-        unmarshaller.setSchema(buildSchema(schemaPath));
+            unmarshaller.setSchema(buildSchema(schemaPath));
 
-        return unmarshaller;
+            return unmarshaller;
+        } catch (SAXException | JAXBException e) {
+            throw new IOException(e);
+        }
     }
 
     private Schema buildSchema(String schemaPath) throws IOException, SAXException {
