@@ -32,7 +32,7 @@ public class UserManager {
     private SettingsMapper settingsMapper;
 
     public UserEntity getUser(int id) {
-        return new UserEntity(userMapper.findById(id), userMapper);
+        return new UserEntity(id, userMapper);
     }
 
     public void saveNewUser(String username, String password, String email, Race race) {

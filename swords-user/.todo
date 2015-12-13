@@ -1,6 +1,2 @@
-[Enhancement]:
-
-    - Add checkstyle and findbugs.
-
  [Refactor]:
     - Move x, y and map out to it's own position table.

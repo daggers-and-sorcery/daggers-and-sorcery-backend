@@ -14,8 +14,8 @@ public class UserEntity {
     private final UserDatabaseEntity userDatabaseEntity;
     private final UserMapper userMapper;
 
-    public UserEntity(UserDatabaseEntity userDatabaseEntity, UserMapper userMapper) {
-        this.userDatabaseEntity = userDatabaseEntity;
+    public UserEntity(int userId, UserMapper userMapper) {
+        this.userDatabaseEntity = userMapper.findById(userId);
         this.userMapper = userMapper;
     }
 
