@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Service
@@ -48,11 +50,12 @@ public class UserManager {
     private UserDatabaseEntity createNewUserEntity(String username, String password, String email, Race race) {
         UserDatabaseEntity user = new UserDatabaseEntity(username, password);
 
-        Date date = new Date();
+        final LocalDate localDate = LocalDate.now();
 
-        user.setRegistrationDate(date);
-        user.setLastRegenerationDate(date);
-        user.setLastLoginDate(date);
+        user.setRegistrationDate(localDate);
+        user.setLastLoginDate(localDate);
+
+        user.setLastRegenerationDate(LocalTime.now());
 
         user.setEmail(email);
         user.setRace(race);
