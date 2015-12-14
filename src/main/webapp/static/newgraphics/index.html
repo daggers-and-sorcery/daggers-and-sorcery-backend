@@ -10,9 +10,35 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <style>
+        html,
         body {
+            height: 100%;
             background-color: #000;
             color: wheat;
+        }
+
+        button.button-default {
+            border: 25px;
+            border-image-slice: 20 fill;
+            border-image-source: url(/newgraphics/button_gray.png);
+
+            background-color: transparent;
+
+            color: wheat;
+
+            height: 62px;
+            line-height: 0;
+
+            outline: none;
+        }
+
+        .registration-button {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .login-button {
+            margin-top: 5px;
         }
 
         .header-menu {
@@ -26,10 +52,12 @@
 
         .footer-menu {
             background-image: url(/newgraphics/container_actions_bar_frame.png);
-            height: 98px;
             background-size: contain;
             background-repeat: no-repeat;
-            padding-top: 30px;
+            background-position: center;
+            font-size: 12px;
+            height: 60px;
+            padding-top: 20px;
             text-align: center;
         }
 
@@ -72,11 +100,26 @@
         .content-right {
             padding-left: 0;
         }
+
+        /* Wrapper for page content to push down footer */
+        #page-wrap {
+            min-height: 100%;
+            height: auto;
+            /* Negative indent footer by its height */
+            margin: 0 auto -60px;
+            /* Pad bottom by footer height */
+            padding: 0 0 60px;
+        }
+
+        /* Set the fixed height of the footer here */
+        #footer {
+            height: 60px;
+        }
     </style>
 </head>
 <body>
-<div class="container" role="main">
-    <div class="page-wrap">
+<div id="page-wrap">
+    <div class="container" role="main">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 header-menu"></div>
         </div>
@@ -101,14 +144,31 @@
                         <h3 class="panel-title">Login</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt sem quis sapien efficitur tristique. Pellentesque ullamcorper, enim at bibendum consectetur, felis erat euismod arcu, nec vehicula tellus libero facilisis metus. Sed in velit quis mauris gravida accumsan eu congue felis. Pellentesque enim elit, tincidunt in pellentesque at, tempus nec risus. Cras tempor accumsan diam, a volutpat enim rutrum sit amet. Pellentesque condimentum lectus. </p>
+                        <button class="button-default registration-button" ui-sref="registration" href="#/registration/">Create an account</button>
+                        <!-- this is the error response box, hidden for now! -->
+                        <div class="alert alert-danger ng-binding ng-hide" role="alert" ng-bind="error" ng-show="error" style="margin-bottom: 15px; display: none;"></div>
+                        <form ng-submit="submit()" class="ng-pristine ng-valid">
+                            <div class="form-group">
+                                <label for="username">Username</label> <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="username" placeholder="Username" ng-model="user.username">
+                            </div>
+                            <div class="password">
+                                <label for="password">Password</label> <input type="password" class="form-control ng-pristine ng-untouched ng-valid" id="password" placeholder="Password" ng-model="user.password">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="button-default login-button">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 footer-menu">
-                Hello world after
+                This website and its contents are copyright © 2016 More Than Heroic Studios
             </div>
         </div>
     </div>
