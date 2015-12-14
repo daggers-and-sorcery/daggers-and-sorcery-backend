@@ -10,8 +10,31 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <style>
-        .panel {
+        body {
+            background-color: #000;
             color: wheat;
+        }
+
+        .header-menu {
+            background-image: url(/newgraphics/btts_frame.png);
+            min-height: 180px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-bottom: -60px;
+            z-index: 100;
+        }
+
+        .footer-menu {
+            background-image: url(/newgraphics/container_actions_bar_frame.png);
+            height: 98px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .panel {
+            background-color: #000;
 
             border: 30px;
             border-top: 70px;
@@ -23,10 +46,10 @@
         }
 
         .panel > .panel-heading {
+            color: wheat;
             margin-top: -56px;
             padding-top: 5px;
             background: transparent;
-            color: wheat;
             padding-left: 0;
             border: 0;
         }
@@ -55,9 +78,7 @@
 <div class="container" role="main">
     <div class="page-wrap">
         <div class="row">
-            <div class="col-md-9 col-lg-9 content-middle">
-                Hello world before
-            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 header-menu"></div>
         </div>
         <div class="row">
             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 content-middle">
@@ -74,23 +95,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-9 col-sm-9 col-md-3 col-lg-3 content-right">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 content-right">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
+                        <h3 class="panel-title">Login</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt sem quis sapien efficitur tristique. Pellentesque ullamcorper, enim at bibendum consectetur, felis erat euismod arcu, nec vehicula tellus libero facilisis metus. Sed in velit quis mauris gravida accumsan eu congue felis. Pellentesque enim elit, tincidunt in pellentesque at, tempus nec risus. Cras tempor accumsan diam, a volutpat enim rutrum sit amet. Pellentesque condimentum lectus a dolor rhoncus, at semper purus tincidunt. Morbi eget ultricies nibh, ut vehicula ligula. Suspendisse potenti. Aenean faucibus eros eros, ut efficitur nulla rhoncus vitae. Nulla pretium, risus at placerat auctor, erat mi laoreet orci, et elementum dui lorem et diam. Etiam non magna vitae magna vehicula volutpat vitae sit amet lorem. Ut tristique id justo sed tristique. Aliquam ante nulla, congue at tellus ultricies, tempor fermentum justo. Morbi dictum eleifend ligula, accumsan elementum sem euismod eget. Donec cursus est ultrices diam venenatis euismod. Interdum et malesuada fames ac ante ipsum primis in faucibus. </p>
-
-                        <p>Nullam eleifend ullamcorper tellus eu pellentesque. Etiam scelerisque fermentum orci at elementum. Morbi hendrerit faucibus dictum. Quisque placerat consequat arcu, eu vehicula augue egestas vel. Vivamus lobortis mi tellus, non varius tortor venenatis sed. Morbi in aliquet velit, vel fermentum nunc. Aliquam ac nisl eu massa posuere pharetra. Ut vestibulum accumsan tempus. </p>
-
-                        <p>Nullam nulla mi, vulputate in cursus id, lacinia ut nunc. Cras iaculis ligula eu dignissim elementum. Integer nec mi a quam egestas varius nec ut leo. Phasellus augue magna, lacinia id turpis laoreet, gravida placerat massa. Quisque vel ligula nec lorem tristique volutpat sed ac felis. Morbi tristique, mi et pretium imperdiet, eros magna pretium nisi, nec imperdiet leo quam non purus. Cras sollicitudin congue mattis. Nulla fringilla volutpat eros sed consectetur. Vestibulum ligula enim, egestas vel velit non, dignissim fringilla purus. Vivamus sed purus ullamcorper, finibus purus non, sodales libero. In lacinia massa vitae risus ullamcorper, vitae porta elit varius. Maecenas euismod mattis mauris, et cursus velit sodales in. Curabitur orci nisi, aliquet non arcu id, mollis scelerisque turpis. </p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt sem quis sapien efficitur tristique. Pellentesque ullamcorper, enim at bibendum consectetur, felis erat euismod arcu, nec vehicula tellus libero facilisis metus. Sed in velit quis mauris gravida accumsan eu congue felis. Pellentesque enim elit, tincidunt in pellentesque at, tempus nec risus. Cras tempor accumsan diam, a volutpat enim rutrum sit amet. Pellentesque condimentum lectus. </p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-9 col-lg-9 content-middle">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 footer-menu">
                 Hello world after
             </div>
         </div>
