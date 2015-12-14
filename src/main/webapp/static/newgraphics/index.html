@@ -17,6 +17,20 @@
             color: wheat;
         }
 
+        input.form-control {
+            border: 10px;
+            border-image-source: url(/newgraphics/text_input.png);
+            border-image-slice: 22 fill;
+            background: transparent;
+            height: 38px;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        input.form-control:focus {
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(245,222,179,0.3);
+        }
+
         button.button-default {
             border: 25px;
             border-image-slice: 20 fill;
@@ -26,7 +40,7 @@
 
             color: wheat;
 
-            height: 62px;
+            height: 54px;
             line-height: 0;
 
             outline: none;
@@ -235,7 +249,7 @@
                         <div class="alert alert-danger ng-binding ng-hide" role="alert" ng-bind="error" ng-show="error" style="margin-bottom: 15px; display: none;"></div>
                         <form ng-submit="submit()" class="ng-pristine ng-valid">
                             <div class="form-group">
-                                <label for="username">Username</label> <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="username" placeholder="Username" ng-model="user.username">
+                                <label for="username">Username</label> <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="username" placeholder="Username" ng-model="user.username" autocomplete="off">
                             </div>
                             <div class="password">
                                 <label for="password">Password</label> <input type="password" class="form-control ng-pristine ng-untouched ng-valid" id="password" placeholder="Password" ng-model="user.password">
