@@ -10,8 +10,77 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <style>
-        .panel {
+        html,
+        body {
+            height: 100%;
+            background-color: #000;
             color: wheat;
+        }
+
+        input.form-control {
+            border: 10px;
+            border-image-source: url(/newgraphics/text_input.png);
+            border-image-slice: 22 fill;
+            background: transparent;
+            height: 38px;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        input.form-control:focus {
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(245,222,179,0.3);
+        }
+
+        button.button-default {
+            border: 25px;
+            border-image-slice: 20 fill;
+            border-image-source: url(/newgraphics/button_gray.png);
+
+            background-color: transparent;
+
+            color: wheat;
+
+            height: 54px;
+            line-height: 0;
+
+            outline: none;
+        }
+
+        button.button-default:hover {
+            border-image-source: url(/newgraphics/button_gray-HOVER.png);
+        }
+
+        .registration-button {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .login-button {
+            margin-top: 5px;
+        }
+
+        .header-menu {
+            background-image: url(/newgraphics/btts_frame.png);
+            min-height: 180px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-bottom: -60px;
+            z-index: 100;
+        }
+
+        .footer-menu {
+            background-image: url(/newgraphics/container_actions_bar_frame.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-size: 12px;
+            height: 60px;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .panel {
+            background-color: #000;
 
             border: 30px;
             border-top: 70px;
@@ -23,10 +92,10 @@
         }
 
         .panel > .panel-heading {
+            color: wheat;
             margin-top: -56px;
             padding-top: 5px;
             background: transparent;
-            color: wheat;
             padding-left: 0;
             border: 0;
         }
@@ -49,49 +118,161 @@
         .content-right {
             padding-left: 0;
         }
+
+        /* Wrapper for page content to push down footer */
+        #page-wrap {
+            min-height: 100%;
+            height: auto;
+            /* Negative indent footer by its height */
+            margin: 0 auto -60px;
+            /* Pad bottom by footer height */
+            padding: 0 0 60px;
+        }
+
+        /* Set the fixed height of the footer here */
+        #footer {
+            height: 60px;
+        }
+
+        .news-title {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .news-date {
+            margin-bottom: 10px;
+        }
+
+        .news-icon {
+            float: left;
+            margin-right: 8px;
+            margin-left: 3px;
+        }
+
+        .news-icon img {
+            width: 36px;
+        }
+
+        .news-entry-separator img {
+            width: 100%;
+        }
+
+        .news-entry {
+            margin-top: 5px;
+        }
+
+        .news-body {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .panel-heading-icon {
+            float: left;
+            margin-left: -6px;
+            margin-right: 6px;
+            margin-top: -3px;
+        }
+
+        .panel-heading-icon img {
+            width: 32px;
+        }
     </style>
 </head>
 <body>
-<div class="container" role="main">
-    <div class="page-wrap">
+<div id="page-wrap">
+    <div class="container" role="main">
         <div class="row">
-            <div class="col-md-9 col-lg-9 content-middle">
-                Hello world before
-            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 header-menu"></div>
         </div>
         <div class="row">
             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 content-middle">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
+                        <div class="panel-heading-icon">
+                            <img src="/newgraphics/swords.png"/>
+                        </div>
+                        <h3 class="panel-title">News</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt sem quis sapien efficitur tristique. Pellentesque ullamcorper, enim at bibendum consectetur, felis erat euismod arcu, nec vehicula tellus libero facilisis metus. Sed in velit quis mauris gravida accumsan eu congue felis. Pellentesque enim elit, tincidunt in pellentesque at, tempus nec risus. Cras tempor accumsan diam, a volutpat enim rutrum sit amet. Pellentesque condimentum lectus a dolor rhoncus, at semper purus tincidunt. Morbi eget ultricies nibh, ut vehicula ligula. Suspendisse potenti. Aenean faucibus eros eros, ut efficitur nulla rhoncus vitae. Nulla pretium, risus at placerat auctor, erat mi laoreet orci, et elementum dui lorem et diam. Etiam non magna vitae magna vehicula volutpat vitae sit amet lorem. Ut tristique id justo sed tristique. Aliquam ante nulla, congue at tellus ultricies, tempor fermentum justo. Morbi dictum eleifend ligula, accumsan elementum sem euismod eget. Donec cursus est ultrices diam venenatis euismod. Interdum et malesuada fames ac ante ipsum primis in faucibus. </p>
+                        <div class="news-entry">
+                            <div class="news-header">
+                                <div class="news-icon">
+                                    <img src="/newgraphics/header_icon_settings.png"/>
+                                </div>
+                                <h4 class="news-title">This is some news header</h4>
 
-                        <p>Nullam eleifend ullamcorper tellus eu pellentesque. Etiam scelerisque fermentum orci at elementum. Morbi hendrerit faucibus dictum. Quisque placerat consequat arcu, eu vehicula augue egestas vel. Vivamus lobortis mi tellus, non varius tortor venenatis sed. Morbi in aliquet velit, vel fermentum nunc. Aliquam ac nisl eu massa posuere pharetra. Ut vestibulum accumsan tempus. </p>
+                                <div class="news-date">19. 08. 2014</div>
+                            </div>
+                            <div class="news-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt sem quis sapien efficitur tristique. Pellentesque ullamcorper, enim at bibendum consectetur, felis erat euismod arcu, nec vehicula tellus libero facilisis metus. Sed in velit quis mauris gravida accumsan eu congue felis. Pellentesque enim elit, tincidunt in pellentesque at, tempus nec risus. Cras tempor accumsan diam, a volutpat enim rutrum sit amet. Pellentesque condimentum lectus a dolor rhoncus, at semper purus tincidunt. Morbi eget ultricies nibh, ut vehicula ligula. Suspendisse potenti. Aenean faucibus eros eros, ut efficitur nulla rhoncus vitae. Nulla pretium, risus at placerat auctor, erat mi laoreet orci, et elementum dui lorem et diam. Etiam non magna vitae magna vehicula volutpat vitae sit amet lorem. Ut tristique id justo sed tristique. Aliquam ante nulla, congue at tellus ultricies, tempor fermentum justo. Morbi dictum eleifend ligula, accumsan elementum sem euismod eget. Donec cursus est ultrices diam venenatis euismod. Interdum et malesuada fames ac ante ipsum primis in faucibus. </p>
+                            </div>
+                        </div>
+                        <div class="news-entry-separator">
+                            <img src="/newgraphics/seperator_2.png"/>
+                        </div>
+                        <div class="news-entry">
+                            <div class="news-header">
+                                <div class="news-icon">
+                                    <img src="/newgraphics/header_icon_settings.png"/>
+                                </div>
+                                <h4 class="news-title">This is some news header</h4>
 
-                        <p>Nullam nulla mi, vulputate in cursus id, lacinia ut nunc. Cras iaculis ligula eu dignissim elementum. Integer nec mi a quam egestas varius nec ut leo. Phasellus augue magna, lacinia id turpis laoreet, gravida placerat massa. Quisque vel ligula nec lorem tristique volutpat sed ac felis. Morbi tristique, mi et pretium imperdiet, eros magna pretium nisi, nec imperdiet leo quam non purus. Cras sollicitudin congue mattis. Nulla fringilla volutpat eros sed consectetur. Vestibulum ligula enim, egestas vel velit non, dignissim fringilla purus. Vivamus sed purus ullamcorper, finibus purus non, sodales libero. In lacinia massa vitae risus ullamcorper, vitae porta elit varius. Maecenas euismod mattis mauris, et cursus velit sodales in. Curabitur orci nisi, aliquet non arcu id, mollis scelerisque turpis. </p>
+                                <div class="news-date">19. 08. 2014</div>
+                            </div>
+                            <div class="news-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt sem quis sapien efficitur tristique. Pellentesque ullamcorper, enim at bibendum consectetur, felis erat euismod arcu, nec vehicula tellus libero facilisis metus. Sed in velit quis mauris gravida accumsan eu congue felis. Pellentesque enim elit, tincidunt in pellentesque at, tempus nec risus. Cras tempor accumsan diam, a volutpat enim rutrum sit amet. Pellentesque condimentum lectus a dolor rhoncus, at semper purus tincidunt. Morbi eget ultricies nibh, ut vehicula ligula. Suspendisse potenti. Aenean faucibus eros eros, ut efficitur nulla rhoncus vitae. Nulla pretium, risus at placerat auctor, erat mi laoreet orci, et elementum dui lorem et diam. Etiam non magna vitae magna vehicula volutpat vitae sit amet lorem. Ut tristique id justo sed tristique. Aliquam ante nulla, congue at tellus ultricies, tempor fermentum justo. Morbi dictum eleifend ligula, accumsan elementum sem euismod eget. Donec cursus est ultrices diam venenatis euismod. Interdum et malesuada fames ac ante ipsum primis in faucibus. </p>
+                            </div>
+                        </div>
+                        <div class="news-entry-separator">
+                            <img src="/newgraphics/seperator_2.png"/>
+                        </div>
+                        <div class="news-entry">
+                            <div class="news-header">
+                                <div class="news-icon">
+                                    <img src="/newgraphics/header_icon_settings.png"/>
+                                </div>
+                                <h4 class="news-title">This is some news header</h4>
+
+                                <div class="news-date">19. 08. 2014</div>
+                            </div>
+                            <div class="news-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt sem quis sapien efficitur tristique. Pellentesque ullamcorper, enim at bibendum consectetur, felis erat euismod arcu, nec vehicula tellus libero facilisis metus. Sed in velit quis mauris gravida accumsan eu congue felis. Pellentesque enim elit, tincidunt in pellentesque at, tempus nec risus. Cras tempor accumsan diam, a volutpat enim rutrum sit amet. Pellentesque condimentum lectus a dolor rhoncus, at semper purus tincidunt. Morbi eget ultricies nibh, ut vehicula ligula. Suspendisse potenti. Aenean faucibus eros eros, ut efficitur nulla rhoncus vitae. Nulla pretium, risus at placerat auctor, erat mi laoreet orci, et elementum dui lorem et diam. Etiam non magna vitae magna vehicula volutpat vitae sit amet lorem. Ut tristique id justo sed tristique. Aliquam ante nulla, congue at tellus ultricies, tempor fermentum justo. Morbi dictum eleifend ligula, accumsan elementum sem euismod eget. Donec cursus est ultrices diam venenatis euismod. Interdum et malesuada fames ac ante ipsum primis in faucibus. </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-9 col-sm-9 col-md-3 col-lg-3 content-right">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 content-right">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
+                        <h3 class="panel-title">Login</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tincidunt sem quis sapien efficitur tristique. Pellentesque ullamcorper, enim at bibendum consectetur, felis erat euismod arcu, nec vehicula tellus libero facilisis metus. Sed in velit quis mauris gravida accumsan eu congue felis. Pellentesque enim elit, tincidunt in pellentesque at, tempus nec risus. Cras tempor accumsan diam, a volutpat enim rutrum sit amet. Pellentesque condimentum lectus a dolor rhoncus, at semper purus tincidunt. Morbi eget ultricies nibh, ut vehicula ligula. Suspendisse potenti. Aenean faucibus eros eros, ut efficitur nulla rhoncus vitae. Nulla pretium, risus at placerat auctor, erat mi laoreet orci, et elementum dui lorem et diam. Etiam non magna vitae magna vehicula volutpat vitae sit amet lorem. Ut tristique id justo sed tristique. Aliquam ante nulla, congue at tellus ultricies, tempor fermentum justo. Morbi dictum eleifend ligula, accumsan elementum sem euismod eget. Donec cursus est ultrices diam venenatis euismod. Interdum et malesuada fames ac ante ipsum primis in faucibus. </p>
-
-                        <p>Nullam eleifend ullamcorper tellus eu pellentesque. Etiam scelerisque fermentum orci at elementum. Morbi hendrerit faucibus dictum. Quisque placerat consequat arcu, eu vehicula augue egestas vel. Vivamus lobortis mi tellus, non varius tortor venenatis sed. Morbi in aliquet velit, vel fermentum nunc. Aliquam ac nisl eu massa posuere pharetra. Ut vestibulum accumsan tempus. </p>
-
-                        <p>Nullam nulla mi, vulputate in cursus id, lacinia ut nunc. Cras iaculis ligula eu dignissim elementum. Integer nec mi a quam egestas varius nec ut leo. Phasellus augue magna, lacinia id turpis laoreet, gravida placerat massa. Quisque vel ligula nec lorem tristique volutpat sed ac felis. Morbi tristique, mi et pretium imperdiet, eros magna pretium nisi, nec imperdiet leo quam non purus. Cras sollicitudin congue mattis. Nulla fringilla volutpat eros sed consectetur. Vestibulum ligula enim, egestas vel velit non, dignissim fringilla purus. Vivamus sed purus ullamcorper, finibus purus non, sodales libero. In lacinia massa vitae risus ullamcorper, vitae porta elit varius. Maecenas euismod mattis mauris, et cursus velit sodales in. Curabitur orci nisi, aliquet non arcu id, mollis scelerisque turpis. </p>
+                        <button class="button-default registration-button" ui-sref="registration" href="#/registration/">Create an account</button>
+                        <!-- this is the error response box, hidden for now! -->
+                        <div class="alert alert-danger ng-binding ng-hide" role="alert" ng-bind="error" ng-show="error" style="margin-bottom: 15px; display: none;"></div>
+                        <form ng-submit="submit()" class="ng-pristine ng-valid">
+                            <div class="form-group">
+                                <label for="username">Username</label> <input type="text" class="form-control ng-pristine ng-valid ng-touched" id="username" placeholder="Username" ng-model="user.username" autocomplete="off">
+                            </div>
+                            <div class="password">
+                                <label for="password">Password</label> <input type="password" class="form-control ng-pristine ng-untouched ng-valid" id="password" placeholder="Password" ng-model="user.password">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="button-default login-button">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="container">
         <div class="row">
-            <div class="col-md-9 col-lg-9 content-middle">
-                Hello world after
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 footer-menu">
+                This website and its contents are copyright © 2016 More Than Heroic Studios
             </div>
         </div>
     </div>
