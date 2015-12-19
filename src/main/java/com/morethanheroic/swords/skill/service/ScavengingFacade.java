@@ -12,6 +12,7 @@ import com.morethanheroic.swords.settings.service.SettingsManager;
 import com.morethanheroic.swords.skill.domain.ScavengingEntity;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,19 @@ public class ScavengingFacade {
     @Autowired
     private SettingsManager settingsManager;
 
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private ScavengingFacade scavengingFacade;
+
+    public ScavengingEntity getEntity(UserEntity userEntity) {
+        return new ScavengingEntity(userEntity, userMapper);
+    }
+
     public void handleScavenging(CombatResult combatResult, UserEntity userEntity, MonsterDefinition monsterDefinition) {
         SettingsEntity settingsEntity = settingsManager.getSettings(userEntity);
-        ScavengingEntity scavengingEntity = skillManager.getSkills(userEntity).getScavenging();
+        ScavengingEntity scavengingEntity = scavengingFacade.getEntity(userEntity);
         SkillEntity skillEntity = skillManager.getSkills(userEntity);
         InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
 

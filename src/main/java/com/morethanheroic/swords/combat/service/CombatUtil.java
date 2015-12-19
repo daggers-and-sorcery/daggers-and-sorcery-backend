@@ -6,7 +6,7 @@ import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.skill.service.SkillManager;
-import com.morethanheroic.swords.skill.service.calc.SkillTypeCalculator;
+import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

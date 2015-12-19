@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill;
+package com.morethanheroic.swords.skill.domain;
 
 public enum SkillType {
 

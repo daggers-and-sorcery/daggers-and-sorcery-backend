@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.service.calc;
+package com.morethanheroic.swords.attribute.service.calc.type;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.item.domain.ItemType;

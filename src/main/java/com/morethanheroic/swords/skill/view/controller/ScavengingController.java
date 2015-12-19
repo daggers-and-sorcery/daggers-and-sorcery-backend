@@ -3,6 +3,7 @@ package com.morethanheroic.swords.skill.view.controller;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.ScavengingEntity;
+import com.morethanheroic.swords.skill.service.ScavengingFacade;
 import com.morethanheroic.swords.skill.service.SkillManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,15 @@ public class ScavengingController {
     @Autowired
     private SkillManager skillManager;
 
+    @Autowired
+    private ScavengingFacade scavengingFacade;
+
     @RequestMapping(value = "/skill/scavenging/convert", method = RequestMethod.POST)
     @Transient
     public Response convertMovementPoints(UserEntity user, @RequestParam int pointsToConvert) {
         Response response = responseFactory.newResponse(user);
 
-        ScavengingEntity scavengingEntity = skillManager.getSkills(user).getScavenging();
+        ScavengingEntity scavengingEntity = scavengingFacade.getEntity(user);
 
         int actualScavengingPoints = scavengingEntity.getScavengingPoint();
 

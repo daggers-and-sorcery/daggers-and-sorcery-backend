@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.recipe.domain;
 
-import com.morethanheroic.swords.skill.SkillType;
+import com.morethanheroic.swords.skill.domain.SkillType;
 import lombok.Builder;
 import lombok.Getter;
 
