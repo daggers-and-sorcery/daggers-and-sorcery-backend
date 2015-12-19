@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.domain;
+package com.morethanheroic.swords.scavenging.domain;
 
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;

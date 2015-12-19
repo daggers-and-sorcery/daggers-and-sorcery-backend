@@ -23,7 +23,7 @@ import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifi
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.skill.service.ScavengingFacade;
+import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
 import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;

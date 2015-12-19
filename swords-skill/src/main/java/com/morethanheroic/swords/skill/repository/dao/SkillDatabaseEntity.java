@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.repository.dao;
 
 /**
- * Provides an acces to the character's skill data in the database.
+ * Provides an access to the character's skill data in the database.
  */
 @SuppressWarnings("checkstyle:methodcount")
 public class SkillDatabaseEntity {

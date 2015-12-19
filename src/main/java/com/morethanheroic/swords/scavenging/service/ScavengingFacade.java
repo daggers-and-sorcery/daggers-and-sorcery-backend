@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.service;
+package com.morethanheroic.swords.scavenging.service;
 
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.adder.ScavengingAwarder;
@@ -7,10 +7,11 @@ import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingR
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.scavenging.domain.ScavengingEntity;
 import com.morethanheroic.swords.settings.model.SettingsEntity;
 import com.morethanheroic.swords.settings.service.SettingsManager;
-import com.morethanheroic.swords.skill.domain.ScavengingEntity;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
