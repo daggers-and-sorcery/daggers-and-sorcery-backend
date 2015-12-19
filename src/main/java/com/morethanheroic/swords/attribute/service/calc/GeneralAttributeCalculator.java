@@ -6,7 +6,7 @@ import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
-import com.morethanheroic.swords.skill.service.SkillManager;
+import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
     private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
 
     @Autowired
-    private SkillManager skillManager;
+    private SkillFacade skillFacade;
 
     @Autowired
     private SkillTypeCalculator skillTypeCalculator;
@@ -45,7 +45,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
 
         for (SkillAttribute skill : SkillAttribute.values()) {
             if (skill.getIncrementedAttribute() == attribute) {
-                result += skillManager.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
+                result += skillFacade.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
             }
         }
 
@@ -57,7 +57,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
 
         for (SkillAttribute skill : SkillAttribute.values()) {
             if (skill.getIncrementedAttribute() == attribute) {
-                result += skillManager.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
+                result += skillFacade.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
             }
         }
 

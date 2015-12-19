@@ -24,7 +24,7 @@ import com.morethanheroic.swords.race.service.RaceDefinitionCache;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.service.ScavengingFacade;
-import com.morethanheroic.swords.skill.service.SkillManager;
+import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
@@ -60,7 +60,7 @@ public class ProfileInfoResponseBuilder {
     private RaceDefinitionCache raceDefinitionCache;
 
     @Autowired
-    private SkillManager skillManager;
+    private SkillFacade skillFacade;
 
     @Autowired
     private ScavengingFacade scavengingFacade;

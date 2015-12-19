@@ -13,7 +13,7 @@ import com.morethanheroic.swords.race.model.RaceDefinition;
 import com.morethanheroic.swords.race.model.modifier.RacialModifier;
 import com.morethanheroic.swords.race.model.modifier.entry.NumericRacialModifierEntry;
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
-import com.morethanheroic.swords.skill.service.SkillManager;
+import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
 
     @Autowired
-    private SkillManager skillManager;
+    private SkillFacade skillFacade;
 
     @Autowired
     private AttributeToRacialModifierConverter attributeToRacialModifierConverter;
@@ -72,7 +72,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         AttributeCalculationResult result = new AttributeCalculationResult(attribute);
 
         if (attribute instanceof SkillAttribute) {
-            result.increaseValue(skillManager.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
+            result.increaseValue(skillFacade.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
         } else if (attribute instanceof GeneralAttribute) {
             result.increaseValue(attribute.getInitialValue());
             result.increaseValue(generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute));

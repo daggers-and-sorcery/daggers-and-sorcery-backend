@@ -29,7 +29,7 @@ public class ScavengingFacade {
     private InventoryFacade inventoryFacade;
 
     @Autowired
-    private SkillManager skillManager;
+    private SkillFacade skillFacade;
 
     @Autowired
     private SettingsManager settingsManager;
@@ -44,7 +44,7 @@ public class ScavengingFacade {
     public void handleScavenging(CombatResult combatResult, UserEntity userEntity, MonsterDefinition monsterDefinition) {
         SettingsEntity settingsEntity = settingsManager.getSettings(userEntity);
         ScavengingEntity scavengingEntity = getEntity(userEntity);
-        SkillEntity skillEntity = skillManager.getSkills(userEntity);
+        SkillEntity skillEntity = skillFacade.getSkills(userEntity);
         InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
 
         if (shouldScavenge(settingsEntity, scavengingEntity)) {

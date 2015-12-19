@@ -4,7 +4,7 @@ import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.ScavengingEntity;
 import com.morethanheroic.swords.skill.service.ScavengingFacade;
-import com.morethanheroic.swords.skill.service.SkillManager;
+import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ public class ScavengingController {
     private ResponseFactory responseFactory;
 
     @Autowired
-    private SkillManager skillManager;
+    private SkillFacade skillFacade;
 
     @Autowired
     private ScavengingFacade scavengingFacade;
