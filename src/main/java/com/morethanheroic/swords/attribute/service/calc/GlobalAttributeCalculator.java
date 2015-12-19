@@ -6,6 +6,7 @@ import com.morethanheroic.swords.attribute.service.AttributeToRacialModifierConv
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.UnlimitedAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.attribute.service.equipment.EquipmentAttributeBonusCalculator;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceDefinition;
@@ -47,6 +48,9 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     @Autowired
     private RaceDefinitionCache raceDefinitionCache;
 
+    @Autowired
+    private SkillTypeCalculator skillTypeCalculator;
+
     private Map<Class<? extends Attribute>, AttributeCalculator> attributeCalculatorMap;
 
     @PostConstruct
@@ -68,7 +72,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         AttributeCalculationResult result = new AttributeCalculationResult(attribute);
 
         if (attribute instanceof SkillAttribute) {
-            result.increaseValue(skillManager.getSkills(user).getSkillLevel((SkillAttribute) attribute));
+            result.increaseValue(skillManager.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
         } else if (attribute instanceof GeneralAttribute) {
             result.increaseValue(attribute.getInitialValue());
             result.increaseValue(generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute));

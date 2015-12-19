@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.skill.domain;
 
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.skill.repository.dao.SkillDatabaseEntity;
 import com.morethanheroic.swords.skill.repository.domain.SkillMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -15,7 +14,7 @@ public class SkillEntity {
         this.skillMapper = skillMapper;
     }
 
-    public void addSkillXp(SkillAttribute attribute, long value) {
+    public void addSkillXp(SkillType attribute, long value) {
         switch (attribute) {
             case TWO_HANDED_CRUSHING_WEAPONS:
                 skillMapper.addTwoHandedCrushingWeaponsXp(user.getId(), value);
@@ -91,7 +90,7 @@ public class SkillEntity {
         }
     }
 
-    public int getSkillXp(SkillAttribute attribute) {
+    public int getSkillXp(SkillType attribute) {
         SkillDatabaseEntity skills = skillMapper.getSkills(user.getId());
 
         switch (attribute) {
@@ -146,15 +145,15 @@ public class SkillEntity {
         }
     }
 
-    public int getSkillLevel(SkillAttribute attribute) {
+    public int getSkillLevel(SkillType attribute) {
         return getSkillLevelFromXp(getSkillXp(attribute));
     }
 
-    public long getSkillXpToNextLevel(SkillAttribute attribute) {
+    public long getSkillXpToNextLevel(SkillType attribute) {
         return getSkillXpFromLevel(getSkillLevel(attribute) + 1);
     }
 
-    public long getSkillXpBetweenNextLevel(SkillAttribute attribute) {
+    public long getSkillXpBetweenNextLevel(SkillType attribute) {
         return getSkillXpFromLevel(getSkillLevel(attribute) + 1) - getSkillXpFromLevel(getSkillLevel(attribute));
     }
 

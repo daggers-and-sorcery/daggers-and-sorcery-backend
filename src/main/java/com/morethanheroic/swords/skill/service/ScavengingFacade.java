@@ -37,16 +37,13 @@ public class ScavengingFacade {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private ScavengingFacade scavengingFacade;
-
     public ScavengingEntity getEntity(UserEntity userEntity) {
         return new ScavengingEntity(userEntity, userMapper);
     }
 
     public void handleScavenging(CombatResult combatResult, UserEntity userEntity, MonsterDefinition monsterDefinition) {
         SettingsEntity settingsEntity = settingsManager.getSettings(userEntity);
-        ScavengingEntity scavengingEntity = scavengingFacade.getEntity(userEntity);
+        ScavengingEntity scavengingEntity = getEntity(userEntity);
         SkillEntity skillEntity = skillManager.getSkills(userEntity);
         InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
 

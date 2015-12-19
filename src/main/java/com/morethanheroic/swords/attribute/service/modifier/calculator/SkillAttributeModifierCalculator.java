@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
+import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.skill.service.SkillManager;
@@ -19,10 +20,13 @@ public class SkillAttributeModifierCalculator implements AttributeModifierCalcul
     @Autowired
     private SkillManager skillManager;
 
+    @Autowired
+    private SkillTypeCalculator skillTypeCalculator;
+
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, SkillAttribute attribute) {
         return Lists.newArrayList(
-                new AttributeModifierEntry(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, new AttributeModifierValue(skillManager.getSkills(user).getSkillLevel(attribute)))
+                new AttributeModifierEntry(AttributeModifierType.LEVEL, AttributeModifierValueType.VALUE, new AttributeModifierValue(skillManager.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(attribute))))
         );
     }
 }

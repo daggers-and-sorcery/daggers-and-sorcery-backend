@@ -5,7 +5,7 @@ import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionL
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.loader.domain.RawRecipeDefinition;
 import com.morethanheroic.swords.recipe.service.transformer.RecipeDefinitionTransformer;
-import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +25,10 @@ public class RecipeDefinitionLoader implements DefinitionLoader<RecipeDefinition
     private static final String RECIPE_SCHEMA_LOCATION = "classpath:data/recipe/schema.xsd";
     private static final int RECIPE_COUNT = 100;
 
-    @NotNull
+    @NonNull
     private final NumericXmlDefinitionLoader numericXmlDefinitionLoader;
 
-    @NotNull
+    @NonNull
     private final RecipeDefinitionTransformer recipeDefinitionTransformer;
 
     @Override
