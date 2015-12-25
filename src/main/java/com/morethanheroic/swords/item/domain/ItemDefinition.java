@@ -1,11 +1,8 @@
 package com.morethanheroic.swords.item.domain;
 
-import com.morethanheroic.swords.attribute.domain.requirement.*;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -21,12 +18,7 @@ public class ItemDefinition {
     private List<ItemPriceDefinition> itemPriceDefinitions;
 
     private List<ItemModifierDefinition> modifiers;
-
-    private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.<BasicAttributeRequirementDefinition>emptyList();
-    private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.<CombatAttributeRequirementDefinition>emptyList();
-    private List<GeneralAttributeRequirementDefinition> generalRequirements = Collections.<GeneralAttributeRequirementDefinition>emptyList();
-    private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.<SkillAttributeRequirementDefinition>emptyList();
-    private List<AttributeRequirementDefinition> allRequirements = Collections.<AttributeRequirementDefinition>emptyList();
+    private List<ItemRequirementDefinition> requirements;
 
     public boolean isTradeable() {
         return itemPriceDefinitions.size() > 0 || type == ItemType.COIN;
@@ -68,20 +60,8 @@ public class ItemDefinition {
             itemDefinition.modifiers = modifiers;
         }
 
-        public void setBasicRequirements(List<BasicAttributeRequirementDefinition> basicRequirements) {
-            itemDefinition.basicRequirements = basicRequirements;
-        }
-
-        public void setCombatRequirements(List<CombatAttributeRequirementDefinition> combatRequirements) {
-            itemDefinition.combatRequirements = combatRequirements;
-        }
-
-        public void setGeneralRequirements(List<GeneralAttributeRequirementDefinition> generalRequirements) {
-            itemDefinition.generalRequirements = generalRequirements;
-        }
-
-        public void setSkillRequirements(List<SkillAttributeRequirementDefinition> skillRequirements) {
-            itemDefinition.skillRequirements = skillRequirements;
+        public void setRequirements(List<ItemRequirementDefinition> requirements) {
+            itemDefinition.requirements = requirements;
         }
 
         public void setPriceDefinition(List<ItemPriceDefinition> itemPriceDefinitions) {
@@ -89,18 +69,7 @@ public class ItemDefinition {
         }
 
         public ItemDefinition build() {
-            buildAllRequirementsList();
-
             return itemDefinition;
-        }
-
-        private void buildAllRequirementsList() {
-            itemDefinition.allRequirements = new ArrayList<>();
-
-            itemDefinition.allRequirements.addAll(itemDefinition.basicRequirements);
-            itemDefinition.allRequirements.addAll(itemDefinition.skillRequirements);
-            itemDefinition.allRequirements.addAll(itemDefinition.combatRequirements);
-            itemDefinition.allRequirements.addAll(itemDefinition.generalRequirements);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.equipment.service;
 
+import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlotMapper;
@@ -22,6 +23,9 @@ public class EquipmentManager {
     private final ItemDefinitionCache itemDefinitionCache;
 
     @Autowired
+    private ItemRequirementToAttributeConverter itemRequirementToAttributeConverter;
+
+    @Autowired
     public EquipmentManager(InventoryFacade inventoryFacade, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache) {
         this.inventoryFacade = inventoryFacade;
         this.equipmentMapper = equipmentMapper;
@@ -31,6 +35,6 @@ public class EquipmentManager {
     }
 
     public EquipmentEntity getEquipment(UserEntity userEntity) {
-        return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity), equipmentMapper, equipmentSlotMapper, globalAttributeCalculator, itemDefinitionCache);
+        return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity), equipmentMapper, equipmentSlotMapper, globalAttributeCalculator, itemDefinitionCache, itemRequirementToAttributeConverter);
     }
 }
