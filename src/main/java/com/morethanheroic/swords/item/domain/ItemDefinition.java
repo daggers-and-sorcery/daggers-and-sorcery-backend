@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.domain;
 
-import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
+import com.morethanheroic.swords.effect.domain.Effect;
 import lombok.Getter;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class ItemDefinition {
     private ItemType type;
     private boolean usable;
     private int weight;
-    private List<CombatEffect> combatEffects;
+    private List<Effect> combatEffects;
     private boolean equipment;
     private List<ItemPriceDefinition> itemPriceDefinitions;
 
@@ -48,7 +48,7 @@ public class ItemDefinition {
             itemDefinition.weight = weight;
         }
 
-        public void setCombatEffects(List<CombatEffect> combatEffects) {
+        public void setCombatEffects(List<Effect> combatEffects) {
             itemDefinition.combatEffects = combatEffects;
         }
 

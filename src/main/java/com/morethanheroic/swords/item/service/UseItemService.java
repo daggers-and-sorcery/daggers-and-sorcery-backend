@@ -2,6 +2,7 @@ package com.morethanheroic.swords.item.service;
 
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
@@ -11,6 +12,8 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UseItemService {
@@ -46,13 +49,13 @@ public class UseItemService {
     }
 
     private void applyItem(CombatEntity userCombatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
-        combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects(), combatEffectDataHolder);
+        combatEffectApplierService.applyEffects(userCombatEntity, (List) item.getCombatEffects(), combatEffectDataHolder);
     }
 
     private void applyItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
 
-        combatEffectApplierService.applyEffects(userCombatEntity, item.getCombatEffects(), combatEffectDataHolder);
+        combatEffectApplierService.applyEffects(userCombatEntity, (List) item.getCombatEffects(), combatEffectDataHolder);
 
         userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
     }

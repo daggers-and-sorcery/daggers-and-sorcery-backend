@@ -25,7 +25,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "use-effect-list")
     @XmlElement(name = "effect")
-    private ArrayList<ItemEffect> effectList;
+    private ArrayList<RawItemEffect> effectList;
 
     @XmlElementWrapper(name = "modifiers")
     @XmlElement(name = "modifier")
@@ -67,7 +67,7 @@ public class RawItemDefinition {
         return requirements;
     }
 
-    public ArrayList<ItemEffect> getEffectList() {
+    public ArrayList<RawItemEffect> getEffectList() {
         return effectList;
     }
 

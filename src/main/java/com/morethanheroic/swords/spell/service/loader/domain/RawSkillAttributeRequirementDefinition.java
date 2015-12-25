@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.spell.service.loader.domain;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.item.service.loader.domain.RawAttributeRequirementDefinition;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

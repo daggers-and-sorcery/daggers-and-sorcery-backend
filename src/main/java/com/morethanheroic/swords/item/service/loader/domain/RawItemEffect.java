@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ItemEffect extends RawEffect {
+public class RawItemEffect extends RawEffect {
 
     @XmlAttribute
     private String target;
