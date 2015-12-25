@@ -1,14 +1,12 @@
 package com.morethanheroic.swords.combat.service.calc.scavenge;
 
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.ScavengingResultEntity;
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingAmountDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
-import com.morethanheroic.swords.skill.service.SkillManager;
-import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +23,7 @@ public class ScavengingCalculator {
     public ScavengingResult calculateScavenge(SkillEntity skillEntity, MonsterDefinition monster) {
         List<ScavengingResultEntity> result = new ArrayList<>();
 
-        int scavengingLevel = skillEntity.getSkillLevel(SkillAttribute.SCAVENGING);
+        int scavengingLevel = skillEntity.getSkillLevel(SkillType.SCAVENGING);
 
         for (ScavengingDefinition scavengingDefinition : monster.getScavengingDefinitions()) {
             if (100 * random.nextDouble() < calculateScavengingChance(scavengingDefinition.getChance(), monster.getLevel(), scavengingLevel)) {

@@ -22,10 +22,10 @@ public class ItemDefinitionTransformer {
     private EffectTransformer combatEffectTransformer;
 
     @Autowired
-    private ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
+    private ItemModifierDefinitionTransformer itemModifierDefinitionTransformer;
 
     @Autowired
-    private ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer;
+    private ItemRequirementDefinitionTransformer itemRequirementDefinitionTransformer;
 
     public ItemDefinition transform(RawItemDefinition rawItemDefinition) {
         final ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder = new ItemDefinition.ItemDefinitionBuilder();
@@ -41,24 +41,10 @@ public class ItemDefinitionTransformer {
 
         itemDefinitionBuilder.setCombatEffects(buildEffects(rawItemDefinition.getEffectList()));
 
-        buildModifiers(itemDefinitionBuilder, rawItemDefinition);
-        buildRequirements(itemDefinitionBuilder, rawItemDefinition);
+        itemDefinitionBuilder.setModifiers(itemModifierDefinitionTransformer.transform(rawItemDefinition.getModifiers()));
+        itemDefinitionBuilder.setRequirements(itemRequirementDefinitionTransformer.transform(rawItemDefinition.getRequirements()));
 
         return itemDefinitionBuilder.build();
-    }
-
-    private void buildModifiers(ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder, RawItemDefinition rawItemDefinition) {
-        itemDefinitionBuilder.setBasicModifiers(itemDefinitionModifierListTransformer.transformBasicModifier(rawItemDefinition.getBasicModifiers()));
-        itemDefinitionBuilder.setCombatModifiers(itemDefinitionModifierListTransformer.transformCombatModifier(rawItemDefinition.getCombatModifiers()));
-        itemDefinitionBuilder.setGeneralModifiers(itemDefinitionModifierListTransformer.transformGeneralModifier(rawItemDefinition.getGeneralModifiers()));
-        itemDefinitionBuilder.setSkillModifiers(itemDefinitionModifierListTransformer.transformSkillModifier(rawItemDefinition.getSkillModifiers()));
-    }
-
-    private void buildRequirements(ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder, RawItemDefinition rawItemDefinition) {
-        itemDefinitionBuilder.setBasicRequirements(itemDefinitionRequirementListTransformer.transformBasicRequirement(rawItemDefinition.getBasicRequirements()));
-        itemDefinitionBuilder.setCombatRequirements(itemDefinitionRequirementListTransformer.transformCombatRequirement(rawItemDefinition.getCombatRequirements()));
-        itemDefinitionBuilder.setGeneralRequirements(itemDefinitionRequirementListTransformer.transformGeneralRequirement(rawItemDefinition.getGeneralRequirements()));
-        itemDefinitionBuilder.setSkillRequirements(itemDefinitionRequirementListTransformer.transformSkillRequirement(rawItemDefinition.getSkillRequirements()));
     }
 
     private List<CombatEffect> buildEffects(List<ItemEffect> rawEffectList) {

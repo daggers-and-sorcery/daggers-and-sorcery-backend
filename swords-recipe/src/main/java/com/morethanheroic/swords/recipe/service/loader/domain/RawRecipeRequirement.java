@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.recipe.service.loader.domain;
 
 import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
-import com.morethanheroic.swords.skill.SkillType;
+import com.morethanheroic.swords.skill.domain.SkillType;
 import lombok.Getter;
 
 import javax.xml.bind.annotation.XmlAccessType;

@@ -7,6 +7,7 @@ import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,6 @@ public class ScavengingAwarder {
     private void awardScavengingXp(CombatResult combatResult, SkillEntity skillEntity, ScavengingResult scavengingResult) {
         combatResult.addMessage(combatMessageBuilder.buildScavengeXpAwardMessage(scavengingResult.getScavengingXp()));
 
-        skillEntity.addSkillXp(SkillAttribute.SCAVENGING, scavengingResult.getScavengingXp());
+        skillEntity.addSkillXp(SkillType.SCAVENGING, scavengingResult.getScavengingXp());
     }
 }

@@ -4,6 +4,7 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
+import com.morethanheroic.swords.attribute.service.ItemModifierToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
@@ -28,6 +29,9 @@ public class EquipmentAttributeBonusCalculator {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private ItemModifierToAttributeConverter itemModifierToAttributeConverter;
 
     public AttributeCalculationResult calculateEquipmentBonus(UserEntity userEntity, Attribute attribute) {
         AttributeCalculationResult result = new AttributeCalculationResult(attribute);
@@ -58,20 +62,16 @@ public class EquipmentAttributeBonusCalculator {
     }
 
     private void calculateItemModifiers(AttributeCalculationResult result, ItemDefinition itemDefinition) {
-        itemDefinition.getAllModifiers().stream().filter(modifierDefinition -> modifierDefinition.getAttribute() == result.getAttribute()).forEach(modifierDefinition -> {
+        itemDefinition.getModifiers().stream().filter(modifierDefinition -> itemModifierToAttributeConverter.convert(modifierDefinition.getModifier()) == result.getAttribute()).forEach(modifierDefinition -> {
             result.increaseValue(modifierDefinition.getAmount());
 
-            if (modifierDefinition instanceof CombatAttributeModifierDefinition) {
-                calculateCombatModifier(result, (CombatAttributeModifierDefinition) modifierDefinition);
+            if (result.getAttribute() instanceof CombatAttribute) {
+                result.increaseD2(modifierDefinition.getD2());
+                result.increaseD4(modifierDefinition.getD4());
+                result.increaseD6(modifierDefinition.getD6());
+                result.increaseD8(modifierDefinition.getD8());
+                result.increaseD10(modifierDefinition.getD10());
             }
         });
-    }
-
-    private void calculateCombatModifier(AttributeCalculationResult result, CombatAttributeModifierDefinition combatAttributeModifierDefinition) {
-        result.increaseD2(combatAttributeModifierDefinition.getD2());
-        result.increaseD4(combatAttributeModifierDefinition.getD4());
-        result.increaseD6(combatAttributeModifierDefinition.getD6());
-        result.increaseD8(combatAttributeModifierDefinition.getD8());
-        result.increaseD10(combatAttributeModifierDefinition.getD10());
     }
 }

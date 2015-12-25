@@ -11,4 +11,5 @@ include 'swords-skill-cooking'
 include 'swords-recipe'
 include 'swords-skill'
 include 'swords-user'
+include 'swords-skill-scavenging'
 

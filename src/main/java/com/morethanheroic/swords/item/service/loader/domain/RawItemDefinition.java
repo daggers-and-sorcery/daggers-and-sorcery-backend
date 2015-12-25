@@ -27,37 +27,13 @@ public class RawItemDefinition {
     @XmlElement(name = "effect")
     private ArrayList<ItemEffect> effectList;
 
-    @XmlElementWrapper(name = "basic-modifiers")
+    @XmlElementWrapper(name = "modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<RawBasicAttributeModifierDefinition> basicModifiers;
+    private ArrayList<RawItemModifierDefinition> modifiers;
 
-    @XmlElementWrapper(name = "combat-modifiers")
-    @XmlElement(name = "modifier")
-    private ArrayList<RawCombatAttributeModifierDefinition> combatModifiers;
-
-    @XmlElementWrapper(name = "general-modifiers")
-    @XmlElement(name = "modifier")
-    private ArrayList<RawGeneralAttributeModifierDefinition> generalModifiers;
-
-    @XmlElementWrapper(name = "skill-modifiers")
-    @XmlElement(name = "modifier")
-    private ArrayList<RawSkillAttributeModifierDefinition> skillModifiers;
-
-    @XmlElementWrapper(name = "basic-requirements")
+    @XmlElementWrapper(name = "requirements")
     @XmlElement(name = "requirement")
-    private ArrayList<RawBasicAttributeRequirementDefinition> basicRequirements;
-
-    @XmlElementWrapper(name = "combat-requirements")
-    @XmlElement(name = "requirement")
-    private ArrayList<RawCombatAttributeRequirementDefinition> combatRequirements;
-
-    @XmlElementWrapper(name = "general-requirements")
-    @XmlElement(name = "requirement")
-    private ArrayList<RawGeneralAttributeRequirementDefinition> generalRequirements;
-
-    @XmlElementWrapper(name = "skill-requirements")
-    @XmlElement(name = "requirement")
-    private ArrayList<RawSkillAttributeRequirementDefinition> skillRequirements;
+    private ArrayList<RawItemRequirementDefinition> requirements;
 
     public int getId() {
         return id;
@@ -83,36 +59,12 @@ public class RawItemDefinition {
         return "RawItemDefinition -> [id: " + id + " name: " + name + "]";
     }
 
-    public List<RawBasicAttributeModifierDefinition> getBasicModifiers() {
-        return basicModifiers;
+    public List<RawItemModifierDefinition> getModifiers() {
+        return modifiers;
     }
 
-    public List<RawCombatAttributeModifierDefinition> getCombatModifiers() {
-        return combatModifiers;
-    }
-
-    public List<RawGeneralAttributeModifierDefinition> getGeneralModifiers() {
-        return generalModifiers;
-    }
-
-    public List<RawSkillAttributeModifierDefinition> getSkillModifiers() {
-        return skillModifiers;
-    }
-
-    public List<RawSkillAttributeRequirementDefinition> getSkillRequirements() {
-        return skillRequirements;
-    }
-
-    public List<RawBasicAttributeRequirementDefinition> getBasicRequirements() {
-        return basicRequirements;
-    }
-
-    public List<RawCombatAttributeRequirementDefinition> getCombatRequirements() {
-        return combatRequirements;
-    }
-
-    public List<RawGeneralAttributeRequirementDefinition> getGeneralRequirements() {
-        return generalRequirements;
+    public List<RawItemRequirementDefinition> getRequirements() {
+        return requirements;
     }
 
     public ArrayList<ItemEffect> getEffectList() {

@@ -3,7 +3,7 @@ package com.morethanheroic.swords.recipe.service.cache;
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.loader.RecipeDefinitionLoader;
-import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RecipeDefinitionCache implements DefinitionCache<Integer, RecipeDefinition> {
 
-    @NotNull
+    @NonNull
     private final RecipeDefinitionLoader recipeDefinitionLoader;
 
     private final Map<Integer, RecipeDefinition> recipeDefinitionMap = new HashMap<>();

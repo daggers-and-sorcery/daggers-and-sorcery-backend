@@ -23,7 +23,8 @@ import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifi
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.skill.service.SkillManager;
+import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
+import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
@@ -59,7 +60,10 @@ public class ProfileInfoResponseBuilder {
     private RaceDefinitionCache raceDefinitionCache;
 
     @Autowired
-    private SkillManager skillManager;
+    private SkillFacade skillFacade;
+
+    @Autowired
+    private ScavengingFacade scavengingFacade;
 
     @Autowired
     public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
@@ -82,7 +86,7 @@ public class ProfileInfoResponseBuilder {
         response.setData("race", raceDefinitionCache.getDefinition(user.getRace()).getName());
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
-        response.setData("scavengingPoints", skillManager.getSkills(user).getScavenging().getScavengingPoint());
+        response.setData("scavengingPoints", scavengingFacade.getEntity(user).getScavengingPoint());
         response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), session));
         response.setData("equipment", buildEquipmentResponse(user, session));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));

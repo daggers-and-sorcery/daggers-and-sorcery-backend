@@ -1,5 +1,8 @@
-package com.morethanheroic.swords.skill;
+package com.morethanheroic.swords.skill.domain;
 
+/**
+ * List of the available skills in the game.
+ */
 public enum SkillType {
 
     TWO_HANDED_CRUSHING_WEAPONS,

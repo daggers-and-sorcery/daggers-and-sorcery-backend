@@ -3,7 +3,7 @@ package com.morethanheroic.swords.recipe.service.transformer;
 import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.loader.domain.RawRecipeDefinition;
-import com.sun.istack.internal.NotNull;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +15,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RecipeDefinitionTransformer implements DefinitionTransformer<RecipeDefinition, RawRecipeDefinition> {
 
-    @NotNull
+    @NonNull
     private final RecipeExperienceTransformer recipeExperienceTransformer;
 
-    @NotNull
+    @NonNull
     private final RecipeIngredientTransformer recipeIngredientTransformer;
 
-    @NotNull
+    @NonNull
     private final RecipeRewardTransformer recipeRewardTransformer;
 
-    @NotNull
+    @NonNull
     private final RecipeRequirementTransformer recipeRequirementTransformer;
 
     @Override

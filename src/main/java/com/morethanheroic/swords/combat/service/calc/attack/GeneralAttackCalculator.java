@@ -8,6 +8,7 @@ import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatUtil;
+import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class GeneralAttackCalculator implements AttackCalculator {
@@ -22,7 +23,7 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         if (combatUtil.getUserArmorType(userCombatEntity.getUserEntity()) != null) {
             result.addRewardXp(combatUtil.getUserArmorSkillType(userCombatEntity.getUserEntity()), amount);
         } else {
-            result.addRewardXp(SkillAttribute.ARMORLESS_DEFENSE, amount);
+            result.addRewardXp(SkillType.ARMORLESS_DEFENSE, amount);
         }
     }
 
@@ -30,7 +31,7 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         if (combatUtil.getUserWeaponType(userCombatEntity.getUserEntity()) != null) {
             result.addRewardXp(combatUtil.getUserWeaponSkillType(userCombatEntity.getUserEntity()), amount);
         } else {
-            result.addRewardXp(SkillAttribute.FISTFIGHT, amount);
+            result.addRewardXp(SkillType.FISTFIGHT, amount);
         }
     }
 

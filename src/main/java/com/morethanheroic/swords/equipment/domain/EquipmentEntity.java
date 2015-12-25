@@ -1,11 +1,13 @@
 package com.morethanheroic.swords.equipment.domain;
 
 import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
+import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemRequirementDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
@@ -17,14 +19,16 @@ public class EquipmentEntity {
     private final EquipmentSlotMapper equipmentSlotMapper;
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemDefinitionCache itemDefinitionCache;
+    private final ItemRequirementToAttributeConverter itemRequirementToAttributeConverter;
 
-    public EquipmentEntity(UserEntity userEntity, InventoryEntity inventoryEntity, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache) {
+    public EquipmentEntity(UserEntity userEntity, InventoryEntity inventoryEntity, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, ItemRequirementToAttributeConverter itemRequirementToAttributeConverter) {
         this.userEntity = userEntity;
         this.inventoryEntity = inventoryEntity;
         this.equipmentMapper = equipmentMapper;
         this.equipmentSlotMapper = equipmentSlotMapper;
         this.itemDefinitionCache = itemDefinitionCache;
         this.globalAttributeCalculator = globalAttributeCalculator;
+        this.itemRequirementToAttributeConverter = itemRequirementToAttributeConverter;
     }
 
     public boolean equipItem(ItemDefinition item, boolean identified) {
@@ -91,8 +95,8 @@ public class EquipmentEntity {
     }
 
     public boolean canEquip(ItemDefinition item) {
-        for (AttributeRequirementDefinition requirement : item.getAllRequirements()) {
-            if (globalAttributeCalculator.calculateActualValue(userEntity, requirement.getAttribute()).getValue() < requirement.getAmount()) {
+        for (ItemRequirementDefinition requirement : item.getRequirements()) {
+            if (globalAttributeCalculator.calculateActualValue(userEntity, itemRequirementToAttributeConverter.convert(requirement.getRequirement())).getValue() < requirement.getAmount()) {
                 return false;
             }
         }
