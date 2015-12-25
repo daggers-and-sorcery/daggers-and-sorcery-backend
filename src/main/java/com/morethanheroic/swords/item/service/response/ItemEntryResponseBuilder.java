@@ -1,10 +1,9 @@
 package com.morethanheroic.swords.item.service.response;
 
-import com.morethanheroic.swords.attribute.domain.modifier.AttributeModifierDefinition;
-import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.view.response.AttributeRequirementResponseEntry;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemModifierDefinition;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,15 +24,11 @@ public class ItemEntryResponseBuilder {
         ArrayList<HashMap<String, Object>> modifiers = new ArrayList<>();
         result.put("modifiers", modifiers);
 
-        for (AttributeModifierDefinition modifierDefinition : itemDefinition.getAllModifiers()) {
+        for (ItemModifierDefinition modifierDefinition : itemDefinition.getModifiers()) {
             HashMap<String, Object> modifier = new HashMap<>();
 
-            modifier.put("attribute", modifierDefinition.getAttribute());
-            if (modifierDefinition instanceof CombatAttributeModifierDefinition) {
-                modifier.put("value", formatCombatAttributeModifier((CombatAttributeModifierDefinition) modifierDefinition));
-            } else {
-                modifier.put("value", modifierDefinition.getAmount());
-            }
+            modifier.put("attribute", modifierDefinition.getModifier());
+            modifier.put("value", formatCombatAttributeModifier(modifierDefinition));
 
             modifiers.add(modifier);
         }
@@ -48,7 +43,7 @@ public class ItemEntryResponseBuilder {
         return result;
     }
 
-    private String formatCombatAttributeModifier(CombatAttributeModifierDefinition attributeModifierValue) {
+    private String formatCombatAttributeModifier(ItemModifierDefinition attributeModifierValue) {
         String result = String.valueOf(attributeModifierValue.getAmount());
 
         if (attributeModifierValue.getD2() > 0) {

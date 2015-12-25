@@ -4,6 +4,7 @@ import com.morethanheroic.swords.item.domain.ItemModifierDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemModifierDefinition;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,10 @@ import java.util.stream.Collectors;
 public class ItemModifierDefinitionTransformer {
 
     public List<ItemModifierDefinition> transform(List<RawItemModifierDefinition> rawItemModifierDefinitionList) {
+        if (rawItemModifierDefinitionList == null) {
+            return Collections.emptyList();
+        }
+
         return rawItemModifierDefinitionList.stream().map(this::transform).collect(Collectors.toList());
     }
 

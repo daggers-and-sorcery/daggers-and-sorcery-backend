@@ -96,6 +96,12 @@ public class SkillTypeCalculator {
                 return SkillType.SPECTRE;
             case ARMORLESS_DEFENSE:
                 return SkillType.ARMORLESS_DEFENSE;
+            case COOKING:
+                return SkillType.COOKING;
+            case FISTFIGHT:
+                return SkillType.FISTFIGHT;
+            case SCAVENGING:
+                return SkillType.SCAVENGING;
             default:
                 throw new IllegalArgumentException("No skill found for skill attribute type: " + skillAttribute);
         }
