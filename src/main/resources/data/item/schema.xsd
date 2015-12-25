@@ -101,13 +101,13 @@
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="weight" type="xs:unsignedInt" minOccurs="1"/>
-                <xs:element name="combat-modifiers" minOccurs="0">
+                <xs:element name="modifiers" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="modifier" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="attribute" minOccurs="1" maxOccurs="1">
+                                        <xs:element name="modifier" minOccurs="1" maxOccurs="1">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
                                                     <xs:enumeration value="ATTACK"/>
@@ -119,6 +119,13 @@
                                                     <xs:enumeration value="INITIATION"/>
                                                     <xs:enumeration value="LIFE"/>
                                                     <xs:enumeration value="MANA"/>
+                                                    <xs:enumeration value="STRENGTH"/>
+                                                    <xs:enumeration value="PERCEPTION"/>
+                                                    <xs:enumeration value="DEXTERITY"/>
+                                                    <xs:enumeration value="TWO_HANDED_CRUSHING_WEAPONS"/>
+                                                    <xs:enumeration value="ONE_HANDED_CRUSHING_WEAPONS"/>
+                                                    <xs:enumeration value="ONE_HANDED_AXES"/>
+                                                    <xs:enumeration value="MOVEMENT"/>
                                                 </xs:restriction>
                                             </xs:simpleType>
                                         </xs:element>
@@ -135,144 +142,23 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="general-modifiers" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="modifier" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="attribute" minOccurs="1" maxOccurs="1">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                    <xs:enumeration value="STRENGTH"/>
-                                                    <xs:enumeration value="PERCEPTION"/>
-                                                    <xs:enumeration value="DEXTERITY"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="amount" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="skill-modifiers" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="modifier" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="attribute" minOccurs="1" maxOccurs="1">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                    <xs:enumeration value="TWO_HANDED_CRUSHING_WEAPONS"/>
-                                                    <xs:enumeration value="ONE_HANDED_CRUSHING_WEAPONS"/>
-                                                    <xs:enumeration value="ONE_HANDED_AXES"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="amount" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="basic-modifiers" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="modifier" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="attribute" minOccurs="1" maxOccurs="1">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                    <xs:enumeration value="MOVEMENT"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="amount" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="combat-requirements" minOccurs="0">
+                <xs:element name="requirements" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="requirement" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="attribute" minOccurs="1" maxOccurs="1">
+                                        <xs:element name="requirement" minOccurs="1" maxOccurs="1">
                                             <xs:simpleType>
                                                 <xs:restriction base="xs:string">
                                                     <xs:enumeration value="ATTACK"/>
                                                     <xs:enumeration value="DEFENSE"/>
                                                     <xs:enumeration value="INITIATION"/>
                                                     <xs:enumeration value="LIFE"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="amount" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="basic-requirements" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="requirement" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="attribute" minOccurs="1" maxOccurs="1">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
                                                     <xs:enumeration value="MOVEMENT"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="amount" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="skill-requirements" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="requirement" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="attribute" minOccurs="1" maxOccurs="1">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
                                                     <xs:enumeration value="TWO_HANDED_CRUSHING_WEAPONS"/>
                                                     <xs:enumeration value="ONE_HANDED_CRUSHING_WEAPONS"/>
                                                     <xs:enumeration value="ONE_HANDED_AXES"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="amount" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="general-requirements" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="requirement" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="attribute" minOccurs="1" maxOccurs="1">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
                                                     <xs:enumeration value="STRENGTH"/>
                                                     <xs:enumeration value="PERCEPTION"/>
                                                     <xs:enumeration value="DEXTERITY"/>

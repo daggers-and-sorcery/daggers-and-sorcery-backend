@@ -6,12 +6,12 @@
     <item:name>Bronze Axe</item:name>
     <item:type>ONE_HANDED_AXES</item:type>
     <item:equipment>true</item:equipment>
-    <item:combat-modifiers>
+    <item:modifiers>
         <item:modifier>
-            <item:attribute>ATTACK</item:attribute>
+            <item:modifier>ATTACK</item:modifier>
             <item:amount>5</item:amount>
             <item:d6>3</item:d6>
         </item:modifier>
-    </item:combat-modifiers>
+    </item:modifiers>
     <item:weight>120</item:weight>
 </item:item>
