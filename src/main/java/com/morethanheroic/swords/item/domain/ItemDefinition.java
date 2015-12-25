@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.item.domain;
 
-import com.morethanheroic.swords.attribute.domain.modifier.*;
 import com.morethanheroic.swords.attribute.domain.requirement.*;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
 import lombok.Getter;
@@ -21,11 +20,7 @@ public class ItemDefinition {
     private boolean equipment;
     private List<ItemPriceDefinition> itemPriceDefinitions;
 
-    private List<BasicAttributeModifierDefinition> basicModifiers = Collections.<BasicAttributeModifierDefinition>emptyList();
-    private List<CombatAttributeModifierDefinition> combatModifiers = Collections.<CombatAttributeModifierDefinition>emptyList();
-    private List<GeneralAttributeModifierDefinition> generalModifiers = Collections.<GeneralAttributeModifierDefinition>emptyList();
-    private List<SkillAttributeModifierDefinition> skillModifiers = Collections.<SkillAttributeModifierDefinition>emptyList();
-    private List<AttributeModifierDefinition> allModifiers = Collections.<AttributeModifierDefinition>emptyList();
+    private List<ItemModifierDefinition> modifiers;
 
     private List<BasicAttributeRequirementDefinition> basicRequirements = Collections.<BasicAttributeRequirementDefinition>emptyList();
     private List<CombatAttributeRequirementDefinition> combatRequirements = Collections.<CombatAttributeRequirementDefinition>emptyList();
@@ -69,20 +64,8 @@ public class ItemDefinition {
             itemDefinition.equipment = equipment;
         }
 
-        public void setBasicModifiers(List<BasicAttributeModifierDefinition> basicModifiers) {
-            itemDefinition.basicModifiers = basicModifiers;
-        }
-
-        public void setCombatModifiers(List<CombatAttributeModifierDefinition> combatModifiers) {
-            itemDefinition.combatModifiers = combatModifiers;
-        }
-
-        public void setGeneralModifiers(List<GeneralAttributeModifierDefinition> generalModifiers) {
-            itemDefinition.generalModifiers = generalModifiers;
-        }
-
-        public void setSkillModifiers(List<SkillAttributeModifierDefinition> skillModifiers) {
-            itemDefinition.skillModifiers = skillModifiers;
+        public void setModifiers(List<ItemModifierDefinition> modifiers) {
+            itemDefinition.modifiers = modifiers;
         }
 
         public void setBasicRequirements(List<BasicAttributeRequirementDefinition> basicRequirements) {
@@ -106,19 +89,9 @@ public class ItemDefinition {
         }
 
         public ItemDefinition build() {
-            buildAllModifiersList();
             buildAllRequirementsList();
 
             return itemDefinition;
-        }
-
-        private void buildAllModifiersList() {
-            itemDefinition.allModifiers = new ArrayList<>();
-
-            itemDefinition.allModifiers.addAll(itemDefinition.basicModifiers);
-            itemDefinition.allModifiers.addAll(itemDefinition.combatModifiers);
-            itemDefinition.allModifiers.addAll(itemDefinition.generalModifiers);
-            itemDefinition.allModifiers.addAll(itemDefinition.skillModifiers);
         }
 
         private void buildAllRequirementsList() {

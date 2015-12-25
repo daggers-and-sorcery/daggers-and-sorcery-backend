@@ -27,6 +27,9 @@ public class ItemDefinitionTransformer {
     @Autowired
     private ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer;
 
+    @Autowired
+    private ItemModifierDefinitionTransformer itemModifierDefinitionTransformer;
+
     public ItemDefinition transform(RawItemDefinition rawItemDefinition) {
         final ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder = new ItemDefinition.ItemDefinitionBuilder();
 
@@ -41,17 +44,11 @@ public class ItemDefinitionTransformer {
 
         itemDefinitionBuilder.setCombatEffects(buildEffects(rawItemDefinition.getEffectList()));
 
-        buildModifiers(itemDefinitionBuilder, rawItemDefinition);
+        itemDefinitionBuilder.setModifiers(itemModifierDefinitionTransformer.transform(rawItemDefinition.getModifiers()));
+
         buildRequirements(itemDefinitionBuilder, rawItemDefinition);
 
         return itemDefinitionBuilder.build();
-    }
-
-    private void buildModifiers(ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder, RawItemDefinition rawItemDefinition) {
-        itemDefinitionBuilder.setBasicModifiers(itemDefinitionModifierListTransformer.transformBasicModifier(rawItemDefinition.getBasicModifiers()));
-        itemDefinitionBuilder.setCombatModifiers(itemDefinitionModifierListTransformer.transformCombatModifier(rawItemDefinition.getCombatModifiers()));
-        itemDefinitionBuilder.setGeneralModifiers(itemDefinitionModifierListTransformer.transformGeneralModifier(rawItemDefinition.getGeneralModifiers()));
-        itemDefinitionBuilder.setSkillModifiers(itemDefinitionModifierListTransformer.transformSkillModifier(rawItemDefinition.getSkillModifiers()));
     }
 
     private void buildRequirements(ItemDefinition.ItemDefinitionBuilder itemDefinitionBuilder, RawItemDefinition rawItemDefinition) {

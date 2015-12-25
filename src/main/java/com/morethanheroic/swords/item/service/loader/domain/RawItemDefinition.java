@@ -27,21 +27,9 @@ public class RawItemDefinition {
     @XmlElement(name = "effect")
     private ArrayList<ItemEffect> effectList;
 
-    @XmlElementWrapper(name = "basic-modifiers")
+    @XmlElementWrapper(name = "modifiers")
     @XmlElement(name = "modifier")
-    private ArrayList<RawBasicAttributeModifierDefinition> basicModifiers;
-
-    @XmlElementWrapper(name = "combat-modifiers")
-    @XmlElement(name = "modifier")
-    private ArrayList<RawCombatAttributeModifierDefinition> combatModifiers;
-
-    @XmlElementWrapper(name = "general-modifiers")
-    @XmlElement(name = "modifier")
-    private ArrayList<RawGeneralAttributeModifierDefinition> generalModifiers;
-
-    @XmlElementWrapper(name = "skill-modifiers")
-    @XmlElement(name = "modifier")
-    private ArrayList<RawSkillAttributeModifierDefinition> skillModifiers;
+    private ArrayList<RawItemModifierDefinition> modifiers;
 
     @XmlElementWrapper(name = "basic-requirements")
     @XmlElement(name = "requirement")
@@ -83,20 +71,8 @@ public class RawItemDefinition {
         return "RawItemDefinition -> [id: " + id + " name: " + name + "]";
     }
 
-    public List<RawBasicAttributeModifierDefinition> getBasicModifiers() {
-        return basicModifiers;
-    }
-
-    public List<RawCombatAttributeModifierDefinition> getCombatModifiers() {
-        return combatModifiers;
-    }
-
-    public List<RawGeneralAttributeModifierDefinition> getGeneralModifiers() {
-        return generalModifiers;
-    }
-
-    public List<RawSkillAttributeModifierDefinition> getSkillModifiers() {
-        return skillModifiers;
+    public List<RawItemModifierDefinition> getModifiers() {
+        return modifiers;
     }
 
     public List<RawSkillAttributeRequirementDefinition> getSkillRequirements() {
