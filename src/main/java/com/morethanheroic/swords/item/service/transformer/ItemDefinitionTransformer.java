@@ -22,12 +22,6 @@ public class ItemDefinitionTransformer {
     private EffectTransformer combatEffectTransformer;
 
     @Autowired
-    private ItemDefinitionModifierListTransformer itemDefinitionModifierListTransformer;
-
-    @Autowired
-    private ItemDefinitionRequirementListTransformer itemDefinitionRequirementListTransformer;
-
-    @Autowired
     private ItemModifierDefinitionTransformer itemModifierDefinitionTransformer;
 
     @Autowired
