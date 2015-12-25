@@ -1,8 +1,7 @@
-package com.morethanheroic.swords.item.service;
+package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;

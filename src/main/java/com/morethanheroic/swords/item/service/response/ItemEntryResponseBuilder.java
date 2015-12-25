@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//TODO: move this to web after item package is refactored to its own module
 @Service
 public class ItemEntryResponseBuilder {
 
