@@ -14,3 +14,15 @@ dependencies {
 }
 
 apply plugin: 'spring-boot'
+
+apply plugin: 'checkstyle'
+checkstyle checkstyle_config
+
+apply plugin: 'findbugs'
+findbugs findbugs_config
+
+//TODO: use common-definition loaders/caches etc
+//TODO: check all classes for checkstyle etc errors
+//TODO: Anything that possible to be moved out to web from the old package must be moved asap
+
+//Next should be the monster package

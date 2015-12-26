@@ -1,12 +1,15 @@
 package com.morethanheroic.swords.item.service.transformer;
 
+import com.google.common.collect.ImmutableList;
 import com.morethanheroic.swords.item.domain.ItemModifierDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemModifierDefinition;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class ItemModifierDefinitionTransformer {
@@ -16,7 +19,7 @@ public class ItemModifierDefinitionTransformer {
             return Collections.emptyList();
         }
 
-        return rawItemModifierDefinitionList.stream().map(this::transform).collect(Collectors.toList());
+        return rawItemModifierDefinitionList.stream().map(this::transform).collect(collectingAndThen(toList(), ImmutableList::copyOf));
     }
 
     public ItemModifierDefinition transform(RawItemModifierDefinition rawItemModifierDefinition) {

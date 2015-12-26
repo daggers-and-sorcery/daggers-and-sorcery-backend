@@ -1,8 +1,14 @@
 package com.morethanheroic.swords.item.domain;
 
+/**
+ * Contains the types of the modifier an item can have. The modifiers are modify the attribute of the user somehow
+ * (eg. giving the more strength or reducing it's attack by a given amount or percentage).
+ */
 public enum ItemModifier {
+
     //Basic
     MOVEMENT,
+
     //Combat
     MANA,
     LIFE,
@@ -15,6 +21,7 @@ public enum ItemModifier {
     SPELL_RESISTANCE,
     DAMAGE,
     RANGED_DAMAGE,
+
     //General
     STRENGTH,
     PERCEPTION,
@@ -27,6 +34,7 @@ public enum ItemModifier {
     WISDOM,
     WILLPOWER,
     CHARISMA,
+
     //Skill
     TWO_HANDED_CRUSHING_WEAPONS,
     ONE_HANDED_CRUSHING_WEAPONS,

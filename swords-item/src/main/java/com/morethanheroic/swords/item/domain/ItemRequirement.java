@@ -1,8 +1,14 @@
 package com.morethanheroic.swords.item.domain;
 
+/**
+ * Contains the type of requirements an item can have. If all of the requirements not met then the user can't equip
+ * the item (eg: 8 strength needed to equip or 30 attack to wear).
+ */
 public enum ItemRequirement {
+
     //Basic
     MOVEMENT,
+
     //Combat
     MANA,
     LIFE,
@@ -15,6 +21,7 @@ public enum ItemRequirement {
     SPELL_RESISTANCE,
     DAMAGE,
     RANGED_DAMAGE,
+
     //General
     STRENGTH,
     PERCEPTION,
@@ -27,6 +34,7 @@ public enum ItemRequirement {
     WISDOM,
     WILLPOWER,
     CHARISMA,
+
     //Skill
     TWO_HANDED_CRUSHING_WEAPONS,
     ONE_HANDED_CRUSHING_WEAPONS,

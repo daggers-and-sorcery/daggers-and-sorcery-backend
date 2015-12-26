@@ -1,5 +1,9 @@
 package com.morethanheroic.swords.item.domain;
 
+/**
+ * Contains the available types of an item. the type decides for example which equipment spot does the item go on when
+ * equiped etc.
+ */
 public enum ItemType {
     TWO_HANDED_CRUSHING_WEAPONS,
     ONE_HANDED_CRUSHING_WEAPONS,

@@ -2,9 +2,14 @@ package com.morethanheroic.swords.item.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
+/**
+ * Contains the definitions of an item modifier on an item.
+ */
 @Builder
 @Getter
+@ToString
 public class ItemModifierDefinition {
 
     private final ItemModifier modifier;

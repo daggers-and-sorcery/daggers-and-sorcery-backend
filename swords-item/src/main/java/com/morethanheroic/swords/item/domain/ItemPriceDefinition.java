@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Contains the definition of the item's price in a given currency.
+ */
 @Getter
 @ToString
 @Builder
