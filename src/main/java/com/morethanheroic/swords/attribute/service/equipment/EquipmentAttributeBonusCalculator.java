@@ -3,7 +3,6 @@ package com.morethanheroic.swords.attribute.service.equipment;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.domain.modifier.CombatAttributeModifierDefinition;
 import com.morethanheroic.swords.attribute.service.ItemModifierToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
@@ -42,7 +41,7 @@ public class EquipmentAttributeBonusCalculator {
             int item = equipmentEntity.getEquipmentIdOnSlot(slot);
 
             if(item != EMPTY_EQUIPMENT_SLOT) {
-                calculateItemModifiers(result, itemDefinitionCache.getItemDefinition(item));
+                calculateItemModifiers(result, itemDefinitionCache.getDefinition(item));
             }
         }
 

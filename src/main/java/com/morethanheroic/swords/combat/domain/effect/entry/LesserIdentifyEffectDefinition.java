@@ -1,17 +1,17 @@
 package com.morethanheroic.swords.combat.domain.effect.entry;
 
-import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
-import com.morethanheroic.swords.effect.domain.EffectSettingHolder;
+import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 
-public class LesserIdentifyEffect extends CombatEffect {
+public class LesserIdentifyEffectDefinition extends CombatEffectDefinition {
 
-    public LesserIdentifyEffect(EffectSettingHolder effectSettingHolder) {
-        super(effectSettingHolder);
+    public LesserIdentifyEffectDefinition(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
+        super(effectSettingDefinitionHolder);
     }
 
     @Override

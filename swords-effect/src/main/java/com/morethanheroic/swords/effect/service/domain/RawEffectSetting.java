@@ -1,7 +1,9 @@
 package com.morethanheroic.swords.effect.service.domain;
 
+import com.morethanheroic.swords.effect.domain.EffectSettingDefinition;
+
 /**
- * A freshly loaded {@link com.morethanheroic.swords.effect.domain.EffectSetting}.
+ * A freshly loaded {@link EffectSettingDefinition}.
  */
 public abstract class RawEffectSetting {
 

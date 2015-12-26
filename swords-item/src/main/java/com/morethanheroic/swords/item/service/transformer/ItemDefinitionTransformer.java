@@ -1,35 +1,36 @@
 package com.morethanheroic.swords.item.service.transformer;
 
-import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.effect.domain.Effect;
-import com.morethanheroic.swords.effect.exception.InvalidEffectException;
-import com.morethanheroic.swords.effect.service.EffectTransformer;
+import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionListTransformer;
+import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.domain.ItemPriceDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
-import com.morethanheroic.swords.item.service.loader.domain.RawItemEffect;
-import com.morethanheroic.swords.item.service.loader.domain.RawItemPriceDefinition;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
+/**
+ * Transform a {@link RawItemDefinition} to {@link ItemDefinition}.
+ */
 @Service
-public class ItemDefinitionTransformer {
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class ItemDefinitionTransformer implements DefinitionTransformer<ItemDefinition, RawItemDefinition> {
 
-    @Autowired
-    private EffectTransformer combatEffectTransformer;
+    @NonNull
+    private final EffectDefinitionTransformer combatEffectDefinitionTransformer;
 
-    @Autowired
-    private ItemModifierDefinitionTransformer itemModifierDefinitionTransformer;
+    @NonNull
+    private final ItemModifierDefinitionTransformer itemModifierDefinitionTransformer;
 
-    @Autowired
-    private ItemRequirementDefinitionTransformer itemRequirementDefinitionTransformer;
+    @NonNull
+    private final ItemRequirementDefinitionTransformer itemRequirementDefinitionTransformer;
+
+    @NonNull
+    private final ItemPriceDefinitionListTransformer itemPriceDefinitionListTransformer;
+
+    @NonNull
+    private final EffectDefinitionListTransformer effectDefinitionListTransformer;
 
     public ItemDefinition transform(RawItemDefinition rawItemDefinition) {
         return ItemDefinition.builder()
@@ -39,43 +40,11 @@ public class ItemDefinitionTransformer {
                 .usable(rawItemDefinition.isUsable())
                 .weight(rawItemDefinition.getWeight())
                 .equipment(rawItemDefinition.isEquipment())
-                .priceDefinitions(transformPriceList(rawItemDefinition.getPriceList()))
-                .combatEffects(buildEffects(rawItemDefinition.getEffectList()))
+                .priceDefinitions(itemPriceDefinitionListTransformer.transform(rawItemDefinition.getPriceList()))
+                //TODO: use a real item effect definition based on the effectlistdef
+                .combatEffects(effectDefinitionListTransformer.transform(rawItemDefinition.getEffectList()))
                 .modifiers(itemModifierDefinitionTransformer.transform(rawItemDefinition.getModifiers()))
                 .requirements(itemRequirementDefinitionTransformer.transform(rawItemDefinition.getRequirements()))
-                .build();
-    }
-
-    //TODO: create own transformer!
-    private List<Effect> buildEffects(List<RawItemEffect> rawEffectList) {
-        try {
-            final List<Effect> effects = new ArrayList<>();
-
-            if (rawEffectList != null) {
-                for (RawItemEffect effect : rawEffectList) {
-                    effects.add(combatEffectTransformer.transform(effect));
-                }
-            }
-
-            return ImmutableList.copyOf(effects);
-        } catch (InvalidEffectException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    //TODO: create own transformer service!
-    private List<ItemPriceDefinition> transformPriceList(List<RawItemPriceDefinition> rawItemPriceDefinitions) {
-        if (rawItemPriceDefinitions == null) {
-            return Collections.emptyList();
-        }
-
-        return rawItemPriceDefinitions.stream().map(this::transform).collect(collectingAndThen(toList(), ImmutableList::copyOf));
-    }
-
-    private ItemPriceDefinition transform(RawItemPriceDefinition rawItemPriceDefinition) {
-        return ItemPriceDefinition.builder()
-                .type(rawItemPriceDefinition.getType())
-                .amount(rawItemPriceDefinition.getAmount())
                 .build();
     }
 }

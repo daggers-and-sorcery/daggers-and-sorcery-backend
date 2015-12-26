@@ -21,7 +21,7 @@ public class RawSpellDefinition {
 
     @XmlElementWrapper(name = "effect-list")
     @XmlElement(name = "effect")
-    private ArrayList<RawSpellEffect> effectList;
+    private ArrayList<RawSpellEffectDefinition> effectList;
 
     @XmlElementWrapper(name = "cost-list")
     @XmlElement(name = "cost")
@@ -47,7 +47,7 @@ public class RawSpellDefinition {
         return combatSpell;
     }
 
-    public ArrayList<RawSpellEffect> getEffectList() {
+    public ArrayList<RawSpellEffectDefinition> getEffectList() {
         return effectList;
     }
 

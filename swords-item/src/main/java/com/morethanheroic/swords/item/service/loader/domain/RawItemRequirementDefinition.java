@@ -6,6 +6,9 @@ import lombok.Getter;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+/**
+ * A freshly loaded requirements data from the item's xml file.
+ */
 @Getter
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RawItemRequirementDefinition {

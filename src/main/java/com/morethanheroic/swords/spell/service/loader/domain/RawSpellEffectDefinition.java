@@ -1,12 +1,12 @@
 package com.morethanheroic.swords.spell.service.loader.domain;
 
-import com.morethanheroic.swords.effect.service.domain.RawEffect;
+import com.morethanheroic.swords.effect.service.domain.RawEffectDefinition;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RawSpellEffect extends RawEffect {
+public class RawSpellEffectDefinition extends RawEffectDefinition {
 
     @XmlAttribute
     private String target;

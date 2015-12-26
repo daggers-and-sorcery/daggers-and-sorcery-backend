@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.equipment.domain;
 
-import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
 import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
@@ -46,7 +45,7 @@ public class EquipmentEntity {
         } else {
             //Reequip the item we had before if not met the requirements for the new item after removing this (the previous)
             if (previousEquipment != 0) {
-                equipWithoutCheck(itemDefinitionCache.getItemDefinition(previousEquipment), identified);
+                equipWithoutCheck(itemDefinitionCache.getDefinition(previousEquipment), identified);
                 inventoryEntity.removeItem(previousEquipment, 1, identified);
             }
         }
@@ -105,7 +104,7 @@ public class EquipmentEntity {
     }
 
     public ItemDefinition getEquipmentDefinitionOnSlot(EquipmentSlot slot) {
-        return itemDefinitionCache.getItemDefinition(getEquipmentIdOnSlot(slot));
+        return itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(slot));
     }
 
     public int getEquipmentIdOnSlot(EquipmentSlot slot) {

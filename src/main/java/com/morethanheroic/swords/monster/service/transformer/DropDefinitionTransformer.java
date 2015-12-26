@@ -19,7 +19,7 @@ public class DropDefinitionTransformer {
         DropDefinition.DropDefinitionBuilder dropDefinitionBuilder = new DropDefinition.DropDefinitionBuilder();
 
         dropDefinitionBuilder.setAmount(dropAmountDefinitionTransformer.transform(rawDropDefinition.getAmount()));
-        dropDefinitionBuilder.setItem(itemDefinitionCache.getItemDefinition(rawDropDefinition.getItem()));
+        dropDefinitionBuilder.setItem(itemDefinitionCache.getDefinition(rawDropDefinition.getItem()));
         dropDefinitionBuilder.setChance(rawDropDefinition.getChance());
         dropDefinitionBuilder.setIdentified(rawDropDefinition.isIdentified());
 

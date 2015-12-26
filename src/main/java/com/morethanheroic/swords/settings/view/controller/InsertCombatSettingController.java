@@ -32,7 +32,7 @@ public class InsertCombatSettingController {
 
     @RequestMapping(value = "/combat/settings/insert", method = RequestMethod.POST)
     public Response insertSetting(UserEntity userEntity, @RequestBody InsertCombatSettingRequest insertCombatSettingRequest) {
-        if(insertCombatSettingRequest.getType() == SettingType.ITEM && !itemDefinitionCache.getItemDefinition(insertCombatSettingRequest.getUse()).isUsable()) {
+        if(insertCombatSettingRequest.getType() == SettingType.ITEM && !itemDefinitionCache.getDefinition(insertCombatSettingRequest.getUse()).isUsable()) {
             return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-usable item selected!");
         }
 

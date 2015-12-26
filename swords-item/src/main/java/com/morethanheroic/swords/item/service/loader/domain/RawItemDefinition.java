@@ -7,6 +7,9 @@ import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A freshly loaded item definition data from the item's xml file.
+ */
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RawItemDefinition {
@@ -25,7 +28,7 @@ public class RawItemDefinition {
 
     @XmlElementWrapper(name = "use-effect-list")
     @XmlElement(name = "effect")
-    private ArrayList<RawItemEffect> effectList;
+    private ArrayList<RawItemEffectDefinition> effectList;
 
     @XmlElementWrapper(name = "modifiers")
     @XmlElement(name = "modifier")
@@ -67,7 +70,7 @@ public class RawItemDefinition {
         return requirements;
     }
 
-    public ArrayList<RawItemEffect> getEffectList() {
+    public ArrayList<RawItemEffectDefinition> getEffectList() {
         return effectList;
     }
 

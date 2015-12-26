@@ -51,7 +51,7 @@ public class LesserIdentificationPageEntry extends SpellPageEntry {
             Map<String, Object> itemdata = new HashMap<>();
 
             itemdata.put("itemId", unidentifiedItemIdCalculator.getUnidentifiedItemId(httpSession, itemDatabaseEntity.getItemId()));
-            itemdata.put("definition", unidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(itemDatabaseEntity.getItemId())));
+            itemdata.put("definition", unidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(itemDatabaseEntity.getItemId())));
 
             result.add(itemdata);
         }

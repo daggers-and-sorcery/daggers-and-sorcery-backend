@@ -49,7 +49,7 @@ public class SettingsListResponseBuilder {
 
             SettingType type = combatSettingsDatabaseEntity.getType();
             if (type == SettingType.ITEM) {
-                settingsData.put("use", itemDefinitionCache.getItemDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
+                settingsData.put("use", itemDefinitionCache.getDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
             } else {
                 settingsData.put("use", spellDefinitionCache.getSpellDefinition(combatSettingsDatabaseEntity.getSettingsId()).getName());
             }

@@ -108,9 +108,9 @@ public class ProfileInfoResponseBuilder {
                 slotData.put("empty", true);
             } else {
                 if (equipmentEntity.isEquipmentIdentifiedOnSlot(slot)) {
-                    slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment)));
+                    slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment)));
                 } else {
-                    slotData.put("description", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, equipment)));
+                    slotData.put("description", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, equipment)));
                 }
             }
 
@@ -133,9 +133,9 @@ public class ProfileInfoResponseBuilder {
             itemData.put("item", convertItemDatabaseEntityToSendableObject(item));
 
             if (item.isIdentified()) {
-                itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId())));
+                itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId())));
             } else {
-                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, item.getItemId())));
+                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, item.getItemId())));
             }
 
             inventoryData.add(itemData);

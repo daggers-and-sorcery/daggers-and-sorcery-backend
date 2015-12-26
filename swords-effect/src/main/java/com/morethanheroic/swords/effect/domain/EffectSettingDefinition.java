@@ -3,12 +3,12 @@ package com.morethanheroic.swords.effect.domain;
 /**
  * One variable for a spell effect.
  */
-public class EffectSetting {
+public class EffectSettingDefinition {
 
     private final String name;
     private final String value;
 
-    public EffectSetting(String name, String value) {
+    public EffectSettingDefinition(String name, String value) {
         this.name = name;
         this.value = value;
     }

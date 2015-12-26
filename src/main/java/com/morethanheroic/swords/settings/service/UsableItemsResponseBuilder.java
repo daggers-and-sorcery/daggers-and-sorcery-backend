@@ -30,7 +30,7 @@ public class UsableItemsResponseBuilder {
 
         ArrayList<HashMap<String, Object>> itemsResult = new ArrayList<>();
         for(JournalDatabaseEntity journalEntry : journalItems) {
-            ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(journalEntry.getJournalId());
+            ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(journalEntry.getJournalId());
 
             if(itemDefinition.isUsable()) {
                 HashMap<String, Object> itemData = new HashMap<>();

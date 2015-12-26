@@ -6,6 +6,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 
+/**
+ * A freshly loaded effect settings data from the item's xml file.
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ItemEffectSetting extends RawEffectSetting {
 

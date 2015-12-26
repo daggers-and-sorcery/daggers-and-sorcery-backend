@@ -35,7 +35,7 @@ public abstract class CombatSettingsAction {
 
         switch (combatSettingsEntity.getType()) {
             case ITEM:
-                useItemService.useItem(userEntity, itemDefinitionCache.getItemDefinition(combatSettingsEntity.getSettingsId()), combatEffectDataHolder);
+                useItemService.useItem(userEntity, itemDefinitionCache.getDefinition(combatSettingsEntity.getSettingsId()), combatEffectDataHolder);
                 break;
             case SPELL:
                 useSpellService.useSpell(userEntity, spellDefinitionCache.getSpellDefinition(combatSettingsEntity.getSettingsId()), combatEffectDataHolder);

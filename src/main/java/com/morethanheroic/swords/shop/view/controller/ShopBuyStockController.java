@@ -56,7 +56,7 @@ public class ShopBuyStockController {
         }
 
         ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
-        ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(itemId);
+        ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(itemId);
 
         if (!shopEntity.hasItem(itemDefinition, 1)) {
             throw new ConflictException();

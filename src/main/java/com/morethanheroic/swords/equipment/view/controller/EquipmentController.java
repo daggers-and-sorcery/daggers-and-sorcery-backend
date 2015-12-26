@@ -45,8 +45,8 @@ public class EquipmentController {
             itemId = unidentifiedItemIdCalculator.getRealItemId(session, itemId);
         }
 
-        if (inventoryFacade.getInventory(user).hasItem(itemId, identifiedItem) && itemDefinitionCache.getItemDefinition(itemId).isEquipment()) {
-            if (equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getItemDefinition(itemId), identifiedItem)) {
+        if (inventoryFacade.getInventory(user).hasItem(itemId, identifiedItem) && itemDefinitionCache.getDefinition(itemId).isEquipment()) {
+            if (equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getDefinition(itemId), identifiedItem)) {
                 return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }
         }

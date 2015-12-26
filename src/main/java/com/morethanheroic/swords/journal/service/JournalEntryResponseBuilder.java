@@ -34,7 +34,7 @@ public class JournalEntryResponseBuilder {
 
         switch (journalType) {
             case ITEM:
-                response.setData("journal_entry", itemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(journalId)));
+                response.setData("journal_entry", itemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(journalId)));
                 break;
             case MONSTER:
                 response.setData("journal_entry", monsterEntryResponseBuilder.buildMonsterEntry(monsterDefinitionCache.getMonsterDefinition(journalId)));

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * A base class for freshly loaded effects.
  */
-public abstract class RawEffect {
+public abstract class RawEffectDefinition {
 
     public abstract String getTarget();
 

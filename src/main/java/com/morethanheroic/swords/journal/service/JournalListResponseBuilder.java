@@ -57,7 +57,7 @@ public class JournalListResponseBuilder {
     }
 
     private JournalListResponseEntry convertItemEntity(JournalDatabaseEntity entity) {
-        ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(entity.getJournalId());
+        ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(entity.getJournalId());
 
         return new JournalListResponseEntry(itemDefinition.getId(), itemDefinition.getName());
     }
