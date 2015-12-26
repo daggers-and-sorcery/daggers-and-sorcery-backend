@@ -15,7 +15,6 @@ import java.util.ArrayList;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RawItemEffectDefinition extends RawEffectDefinition {
 
-    //TODO: maybe this is not converted? Where do we use this? It's needed some kind of serious checking!
     @XmlAttribute
     private String target;
 
@@ -23,10 +22,12 @@ public class RawItemEffectDefinition extends RawEffectDefinition {
     @XmlElement(name = "effect-setting")
     private ArrayList<ItemEffectSetting> effectSettings;
 
+    @Override
     public String getTarget() {
         return target;
     }
 
+    @Override
     public ArrayList<ItemEffectSetting> getEffectSettings() {
         return effectSettings;
     }
