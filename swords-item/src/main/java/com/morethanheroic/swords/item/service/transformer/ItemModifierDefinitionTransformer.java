@@ -1,27 +1,17 @@
 package com.morethanheroic.swords.item.service.transformer;
 
-import com.google.common.collect.ImmutableList;
+import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.item.domain.ItemModifierDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemModifierDefinition;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
+/**
+ * Transform a {@link RawItemModifierDefinition} to a {@link ItemModifierDefinition}.
+ */
 @Service
-public class ItemModifierDefinitionTransformer {
+public class ItemModifierDefinitionTransformer implements DefinitionTransformer<ItemModifierDefinition, RawItemModifierDefinition> {
 
-    public List<ItemModifierDefinition> transform(List<RawItemModifierDefinition> rawItemModifierDefinitionList) {
-        if (rawItemModifierDefinitionList == null) {
-            return Collections.emptyList();
-        }
-
-        return rawItemModifierDefinitionList.stream().map(this::transform).collect(collectingAndThen(toList(), ImmutableList::copyOf));
-    }
-
+    @Override
     public ItemModifierDefinition transform(RawItemModifierDefinition rawItemModifierDefinition) {
         return ItemModifierDefinition.builder()
                 .amount(rawItemModifierDefinition.getAmount())

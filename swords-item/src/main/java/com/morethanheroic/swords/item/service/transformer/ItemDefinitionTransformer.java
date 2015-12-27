@@ -1,9 +1,7 @@
 package com.morethanheroic.swords.item.service.transformer;
 
 import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
-import com.morethanheroic.swords.effect.service.domain.RawEffectDefinition;
 import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionListTransformer;
-import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
 import lombok.NonNull;
@@ -21,13 +19,10 @@ import java.util.List;
 public class ItemDefinitionTransformer implements DefinitionTransformer<ItemDefinition, RawItemDefinition> {
 
     @NonNull
-    private final EffectDefinitionTransformer combatEffectDefinitionTransformer;
+    private final ItemModifierDefinitionListTransformer itemModifierDefinitionListTransformer;
 
     @NonNull
-    private final ItemModifierDefinitionTransformer itemModifierDefinitionTransformer;
-
-    @NonNull
-    private final ItemRequirementDefinitionTransformer itemRequirementDefinitionTransformer;
+    private final ItemRequirementDefinitionListTransformer itemRequirementDefinitionListTransformer;
 
     @NonNull
     private final ItemPriceDefinitionListTransformer itemPriceDefinitionListTransformer;
@@ -46,8 +41,8 @@ public class ItemDefinitionTransformer implements DefinitionTransformer<ItemDefi
                 .equipment(rawItemDefinition.isEquipment())
                 .priceDefinitions(itemPriceDefinitionListTransformer.transform(rawItemDefinition.getPriceList()))
                 .combatEffects(effectDefinitionListTransformer.transform((List) rawItemDefinition.getEffectList()))
-                .modifiers(itemModifierDefinitionTransformer.transform(rawItemDefinition.getModifiers()))
-                .requirements(itemRequirementDefinitionTransformer.transform(rawItemDefinition.getRequirements()))
+                .modifiers(itemModifierDefinitionListTransformer.transform(rawItemDefinition.getModifiers()))
+                .requirements(itemRequirementDefinitionListTransformer.transform(rawItemDefinition.getRequirements()))
                 .build();
     }
 }

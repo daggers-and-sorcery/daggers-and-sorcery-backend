@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.service.response;
 
-import com.morethanheroic.swords.attribute.view.response.AttributeRequirementResponseEntry;
+import com.morethanheroic.swords.item.service.response.domain.ItemRequirementResponseEntry;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemModifierDefinition;
 import com.morethanheroic.swords.item.domain.ItemRequirementDefinition;
@@ -34,11 +34,11 @@ public class ItemEntryResponseBuilder {
             modifiers.add(modifier);
         }
 
-        ArrayList<AttributeRequirementResponseEntry> requirements = new ArrayList<>();
+        ArrayList<ItemRequirementResponseEntry> requirements = new ArrayList<>();
         result.put("requirements", requirements);
 
         for (ItemRequirementDefinition requirementDefinition : itemDefinition.getRequirements()) {
-            requirements.add(new AttributeRequirementResponseEntry(requirementDefinition.getRequirement(), requirementDefinition.getAmount()));
+            requirements.add(new ItemRequirementResponseEntry(requirementDefinition.getRequirement(), requirementDefinition.getAmount()));
         }
 
         return result;

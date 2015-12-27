@@ -15,6 +15,9 @@ import java.util.List;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Transform a {@link List} of {@link RawItemPriceDefinition} to a {@link List} of {@link ItemPriceDefinition}.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ItemPriceDefinitionListTransformer implements DefinitionListTransformer<List<ItemPriceDefinition>, List<RawItemPriceDefinition>> {
