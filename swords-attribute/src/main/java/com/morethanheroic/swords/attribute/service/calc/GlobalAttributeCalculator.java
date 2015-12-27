@@ -1,13 +1,17 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
 import com.google.common.collect.ImmutableMap;
-import com.morethanheroic.swords.attribute.domain.*;
+import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
+import com.morethanheroic.swords.attribute.domain.CombatAttribute;
+import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeToRacialModifierConverter;
+import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.UnlimitedAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
-import com.morethanheroic.swords.attribute.service.equipment.EquipmentAttributeBonusCalculator;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceDefinition;
 import com.morethanheroic.swords.race.model.modifier.RacialModifier;
@@ -19,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -37,9 +42,6 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     private BasicAttributeCalculator basicAttributeCalculator;
 
     @Autowired
-    private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
-
-    @Autowired
     private SkillFacade skillFacade;
 
     @Autowired
@@ -50,6 +52,9 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
 
     @Autowired
     private SkillTypeCalculator skillTypeCalculator;
+
+    @Autowired
+    private List<AttributeBonusProvider> attributeBonusProviders;
 
     private Map<Class<? extends Attribute>, AttributeCalculator> attributeCalculatorMap;
 
@@ -83,7 +88,9 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
             result.increaseValue(attribute.getInitialValue());
         }
 
-        result.addCalculationResult(equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute));
+        for (AttributeBonusProvider attributeBonusProvider : attributeBonusProviders) {
+            result.addCalculationResult(attributeBonusProvider.calculateBonus(user, attribute));
+        }
 
         return result;
     }
@@ -98,7 +105,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         }
 
         int racialModifier = 0;
-        if (attribute instanceof  GeneralAttribute) {
+        if (attribute instanceof GeneralAttribute) {
             racialModifier = getRacialModifierValue(user.getRace(), (GeneralAttribute) attribute);
         }
 
@@ -123,7 +130,7 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         }
 
         int racialModifier = 0;
-        if (attribute instanceof  GeneralAttribute) {
+        if (attribute instanceof GeneralAttribute) {
             racialModifier = getRacialModifierValue(user.getRace(), (GeneralAttribute) attribute);
         }
 
@@ -137,7 +144,10 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
         if (attribute instanceof CombatAttribute) {
             result.increaseValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute));
         }
-        result.addCalculationResult(equipmentAttributeBonusCalculator.calculateEquipmentBonus(userEntity, attribute));
+
+        for (AttributeBonusProvider attributeBonusProvider : attributeBonusProviders) {
+            result.addCalculationResult(attributeBonusProvider.calculateBonus(userEntity, attribute));
+        }
 
         return result;
     }

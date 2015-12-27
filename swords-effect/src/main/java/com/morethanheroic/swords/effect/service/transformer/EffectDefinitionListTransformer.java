@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -23,6 +24,10 @@ public class EffectDefinitionListTransformer implements DefinitionListTransforme
 
     @Override
     public List<EffectDefinition> transform(List<RawEffectDefinition> rawDefinition) {
+        if (rawDefinition == null) {
+            return Collections.emptyList();
+        }
+
         return rawDefinition.stream().map(effectDefinitionTransformer::transform).collect(collectingAndThen(toList(), ImmutableList::copyOf));
     }
 }

@@ -13,4 +13,5 @@ include 'swords-skill'
 include 'swords-user'
 include 'swords-skill-scavenging'
 include 'swords-item'
+include 'swords-attribute'
 

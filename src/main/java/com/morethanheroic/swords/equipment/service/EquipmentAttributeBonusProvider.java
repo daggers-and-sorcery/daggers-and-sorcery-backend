@@ -1,14 +1,14 @@
-package com.morethanheroic.swords.attribute.service.equipment;
+package com.morethanheroic.swords.equipment.service;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.ItemModifierToAttributeConverter;
+import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.EquipmentManager;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EquipmentAttributeBonusCalculator {
+public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
 
     private static final int EMPTY_EQUIPMENT_SLOT = 0;
 
@@ -32,15 +32,16 @@ public class EquipmentAttributeBonusCalculator {
     @Autowired
     private ItemModifierToAttributeConverter itemModifierToAttributeConverter;
 
-    public AttributeCalculationResult calculateEquipmentBonus(UserEntity userEntity, Attribute attribute) {
+    @Override
+    public AttributeCalculationResult calculateBonus(UserEntity userEntity, Attribute attribute) {
         AttributeCalculationResult result = new AttributeCalculationResult(attribute);
 
         EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
 
-        for(EquipmentSlot slot : EquipmentSlot.values()) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
             int item = equipmentEntity.getEquipmentIdOnSlot(slot);
 
-            if(item != EMPTY_EQUIPMENT_SLOT) {
+            if (item != EMPTY_EQUIPMENT_SLOT) {
                 calculateItemModifiers(result, itemDefinitionCache.getDefinition(item));
             }
         }
@@ -52,7 +53,7 @@ public class EquipmentAttributeBonusCalculator {
 
     private void calculateNoWeaponFistfightModifiers(AttributeCalculationResult result, EquipmentEntity equipmentEntity, UserEntity userEntity) {
         if (equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.WEAPON) == EMPTY_EQUIPMENT_SLOT) {
-            if(result.getAttribute() == CombatAttribute.ATTACK) {
+            if (result.getAttribute() == CombatAttribute.ATTACK) {
                 result.increaseD4(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 3));
             } else if (result.getAttribute() == CombatAttribute.DAMAGE) {
                 result.increaseD2(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 3));

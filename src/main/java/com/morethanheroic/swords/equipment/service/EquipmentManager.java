@@ -19,18 +19,19 @@ public class EquipmentManager {
     private final InventoryFacade inventoryFacade;
     private final EquipmentMapper equipmentMapper;
     private final EquipmentSlotMapper equipmentSlotMapper;
-    private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemDefinitionCache itemDefinitionCache;
 
     @Autowired
     private ItemRequirementToAttributeConverter itemRequirementToAttributeConverter;
 
     @Autowired
-    public EquipmentManager(InventoryFacade inventoryFacade, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache) {
+    private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    public EquipmentManager(InventoryFacade inventoryFacade, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, ItemDefinitionCache itemDefinitionCache) {
         this.inventoryFacade = inventoryFacade;
         this.equipmentMapper = equipmentMapper;
         this.equipmentSlotMapper = equipmentSlotMapper;
-        this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionCache = itemDefinitionCache;
     }
 

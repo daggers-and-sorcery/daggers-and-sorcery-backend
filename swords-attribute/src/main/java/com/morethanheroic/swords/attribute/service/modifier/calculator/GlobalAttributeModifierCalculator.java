@@ -6,6 +6,7 @@ import com.morethanheroic.swords.attribute.domain.*;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -29,7 +30,8 @@ public class GlobalAttributeModifierCalculator {
     private BasicAttributeModifierCalculator basicAttributeModifierCalculator;
 
     @Autowired
-    private EquipmentAttributeModifierCalculator equipmentAttributeModifierCalculator;
+    @Qualifier("equipmentAttributeModifierCalculator")
+    private AttributeModifierCalculator equipmentAttributeModifierCalculator;
 
     @Autowired
     private RaceAttributeModifierCalculator raceAttributeModifierCalculator;

@@ -1,10 +1,10 @@
-package com.morethanheroic.swords.attribute.service.modifier.calculator;
+package com.morethanheroic.swords.equipment.service;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
-import com.morethanheroic.swords.attribute.service.equipment.EquipmentAttributeBonusCalculator;
+import com.morethanheroic.swords.attribute.service.modifier.calculator.AttributeModifierCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -17,12 +17,12 @@ import java.util.List;
 public class EquipmentAttributeModifierCalculator implements AttributeModifierCalculator {
 
     @Autowired
-    private EquipmentAttributeBonusCalculator equipmentAttributeBonusCalculator;
+    private EquipmentAttributeBonusProvider equipmentAttributeBonusProvider;
 
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, Attribute attribute) {
         return Lists.newArrayList(
-                new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierValueType.VALUE, new AttributeModifierValue(equipmentAttributeBonusCalculator.calculateEquipmentBonus(user, attribute)))
+                new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierValueType.VALUE, new AttributeModifierValue(equipmentAttributeBonusProvider.calculateBonus(user, attribute)))
         );
     }
 }
