@@ -23,6 +23,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -45,7 +46,7 @@ import java.util.Random;
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableRedisHttpSession
-@MapperScan("com.morethanheroic.swords")
+@MapperScan(value = "com.morethanheroic.swords", annotationClass = Repository.class)
 public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapter {
 
     public static void main(String[] args) {

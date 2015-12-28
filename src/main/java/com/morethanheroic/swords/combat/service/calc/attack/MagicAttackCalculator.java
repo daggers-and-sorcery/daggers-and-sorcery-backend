@@ -1,16 +1,16 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
-import com.morethanheroic.swords.combat.service.DiceUtil;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.DiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MagicAttackCalculator  extends GeneralAttackCalculator {
+public class MagicAttackCalculator extends GeneralAttackCalculator {
 
     @Autowired
     private DiceUtil diceUtil;

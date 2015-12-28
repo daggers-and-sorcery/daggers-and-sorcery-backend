@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface MapObjectMapper {
 
     @Select("SELECT * FROM map_object WHERE map_id = #{mapId} AND object_type = 'MONSTER'")

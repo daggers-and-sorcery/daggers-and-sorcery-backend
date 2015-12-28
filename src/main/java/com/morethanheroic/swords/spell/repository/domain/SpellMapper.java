@@ -4,9 +4,11 @@ import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface SpellMapper {
 
     @Select(value = "SELECT * FROM spells WHERE user_id = #{user_id}")
