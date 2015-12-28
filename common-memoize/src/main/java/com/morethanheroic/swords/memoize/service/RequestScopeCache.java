@@ -14,7 +14,7 @@ public class RequestScopeCache {
 
     public static final Object NONE = new Object();
 
-    private final Map<InvocationContext, Object> cache = new HashMap<InvocationContext, Object>();
+    private final Map<InvocationContext, Object> cache = new HashMap<>();
 
     public Object get(InvocationContext invocationContext) {
         return cache.containsKey(invocationContext) ? cache.get(invocationContext) : NONE;
