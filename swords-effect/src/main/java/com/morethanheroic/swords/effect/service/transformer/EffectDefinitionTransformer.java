@@ -36,7 +36,8 @@ public class EffectDefinitionTransformer implements DefinitionTransformer<Effect
         }
     }
 
-    private EffectDefinition createNewEffect(String effect, Map<String, EffectSettingDefinition> settings) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    private EffectDefinition createNewEffect(String effect, Map<String, EffectSettingDefinition> settings)
+            throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
         return (EffectDefinition) getConstructorForEffect(effect).newInstance(new EffectSettingDefinitionHolder(settings));
     }
 

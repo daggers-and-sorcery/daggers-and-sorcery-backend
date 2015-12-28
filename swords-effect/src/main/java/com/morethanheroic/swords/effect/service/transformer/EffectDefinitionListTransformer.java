@@ -15,6 +15,9 @@ import java.util.List;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Convert a {@link List} of {@link RawEffectDefinition} to a {@link List} of {@link EffectDefinition}.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EffectDefinitionListTransformer implements DefinitionListTransformer<List<EffectDefinition>, List<RawEffectDefinition>> {

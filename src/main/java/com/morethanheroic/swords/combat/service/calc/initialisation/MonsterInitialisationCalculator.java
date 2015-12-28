@@ -1,11 +1,9 @@
 package com.morethanheroic.swords.combat.service.calc.initialisation;
 
-import com.morethanheroic.swords.attribute.service.DiceUtil;
+import com.morethanheroic.swords.combat.service.DiceUtil;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Random;
 
 @Service
 public class MonsterInitialisationCalculator {
