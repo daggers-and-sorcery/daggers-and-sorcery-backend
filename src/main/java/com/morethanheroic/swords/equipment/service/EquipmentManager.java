@@ -7,6 +7,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlotMapper;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.memoize.Memoize;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -35,6 +36,7 @@ public class EquipmentManager {
         this.itemDefinitionCache = itemDefinitionCache;
     }
 
+    @Memoize
     public EquipmentEntity getEquipment(UserEntity userEntity) {
         return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity), equipmentMapper, equipmentSlotMapper, globalAttributeCalculator, itemDefinitionCache, itemRequirementToAttributeConverter);
     }

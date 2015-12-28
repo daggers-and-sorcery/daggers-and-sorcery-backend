@@ -20,6 +20,7 @@ allprojects {
         guava_version = '18.0'
         checkstyle_version = '6.13'
         findbugs_version = '3.0.1'
+        commons_lang_version = '3.0.1'
 
         checkstyle_config = {
             toolVersion = project.ext.checkstyle_version
@@ -61,6 +62,8 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 
     compile project(':xml-loader')
+    compile project(':common-memoize')
+
     compile project(':swords-user')
     compile project(':swords-skill')
     compile project(':swords-skill-scavenging')
