@@ -14,7 +14,8 @@ public class GeneralAttributeData extends AttributeData {
 
     private final int pointsToNextLevel;
 
-    @Builder
+    //At the moment lombok doesn't support builders correctly in inheritance. This should be fixed when lombok issue a fix (if this happens ever)
+    @Builder(builderMethodName = "generalAttributeDataBuilder")
     private GeneralAttributeData(Attribute attribute, AttributeCalculationResult actual, AttributeCalculationResult maximum, List<AttributeModifierEntry> modifierData, int pointsToNextLevel) {
         super(attribute, actual, maximum, modifierData);
 

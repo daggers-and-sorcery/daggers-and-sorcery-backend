@@ -4,7 +4,6 @@ import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeFacade;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
-import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class CombatAttributeCalculator implements AttributeCalculator<CombatAttr
 
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, CombatAttribute attribute) {
-        return AttributeData.builder()
+        return AttributeData.attributeDataBuilder()
                 .attribute(attribute)
                 .actual(attributeFacade.calculateAttributeValue(user, attribute))
                 .maximum(attributeFacade.calculateAttributeMaximumValue(user, attribute))

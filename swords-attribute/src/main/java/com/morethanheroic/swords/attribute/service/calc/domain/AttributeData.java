@@ -13,7 +13,7 @@ import java.util.List;
  * as possible.
  */
 @Getter
-@Builder
+@Builder(builderMethodName = "attributeDataBuilder")
 public class AttributeData {
 
     @NonNull

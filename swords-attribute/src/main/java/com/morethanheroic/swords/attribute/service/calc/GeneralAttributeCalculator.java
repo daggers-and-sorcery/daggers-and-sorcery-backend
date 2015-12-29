@@ -30,7 +30,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
 
     @Override
     public GeneralAttributeData calculateAttributeValue(UserEntity user, GeneralAttribute attribute) {
-        return GeneralAttributeData.builder()
+        return GeneralAttributeData.generalAttributeDataBuilder()
                 .attribute(attribute)
                 .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
                 .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))

@@ -18,7 +18,7 @@ public class BasicAttributeCalculator implements AttributeCalculator<BasicAttrib
 
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, BasicAttribute attribute) {
-        return AttributeData.builder()
+        return AttributeData.attributeDataBuilder()
                 .attribute(attribute)
                 .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
                 .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))
