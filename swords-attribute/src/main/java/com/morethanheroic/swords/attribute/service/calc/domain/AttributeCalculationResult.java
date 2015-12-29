@@ -5,12 +5,12 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 public class AttributeCalculationResult {
 
     private Attribute attribute;
-    private int value = 0;
-    private int d2 = 0;
-    private int d4 = 0;
-    private int d6 = 0;
-    private int d8 = 0;
-    private int d10 = 0;
+    private int value;
+    private int d2;
+    private int d4;
+    private int d6;
+    private int d8;
+    private int d10;
 
     public AttributeCalculationResult(Attribute attribute) {
         this(0, attribute);
