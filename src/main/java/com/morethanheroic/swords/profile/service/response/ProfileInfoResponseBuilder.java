@@ -7,10 +7,12 @@ import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
+import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentManager;
@@ -34,7 +36,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -180,20 +186,24 @@ public class ProfileInfoResponseBuilder {
     private String formatCombatAttributeModifier(AttributeCalculationResult attributeModifierValue) {
         String result = String.valueOf(attributeModifierValue.getValue());
 
-        if (attributeModifierValue.getD2() > 0) {
-            result += " + " + attributeModifierValue.getD2() + "d2";
-        }
-        if (attributeModifierValue.getD4() > 0) {
-            result += " + " + attributeModifierValue.getD4() + "d4";
-        }
-        if (attributeModifierValue.getD6() > 0) {
-            result += " + " + attributeModifierValue.getD6() + "d6";
-        }
-        if (attributeModifierValue.getD8() > 0) {
-            result += " + " + attributeModifierValue.getD8() + "d8";
-        }
-        if (attributeModifierValue.getD10() > 0) {
-            result += " + " + attributeModifierValue.getD10() + "d10";
+        if (attributeModifierValue instanceof CombatAttributeCalculationResult) {
+            final CombatAttributeCalculationResult combatAttributeCalculationResult = (CombatAttributeCalculationResult) attributeModifierValue;
+
+            if (combatAttributeCalculationResult.getD2() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD2() + "d2";
+            }
+            if (combatAttributeCalculationResult.getD4() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD4() + "d4";
+            }
+            if (combatAttributeCalculationResult.getD6() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD6() + "d6";
+            }
+            if (combatAttributeCalculationResult.getD8() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD8() + "d8";
+            }
+            if (combatAttributeCalculationResult.getD10() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD10() + "d10";
+            }
         }
 
         return result;
@@ -235,20 +245,24 @@ public class ProfileInfoResponseBuilder {
     private String formatCombatAttributeModifier(AttributeModifierValue attributeModifierValue) {
         String result = String.valueOf(attributeModifierValue.getValue());
 
-        if (attributeModifierValue.getD2() > 0) {
-            result += " + " + attributeModifierValue.getD2() + "d2";
-        }
-        if (attributeModifierValue.getD4() > 0) {
-            result += " + " + attributeModifierValue.getD4() + "d4";
-        }
-        if (attributeModifierValue.getD6() > 0) {
-            result += " + " + attributeModifierValue.getD6() + "d6";
-        }
-        if (attributeModifierValue.getD8() > 0) {
-            result += " + " + attributeModifierValue.getD8() + "d8";
-        }
-        if (attributeModifierValue.getD10() > 0) {
-            result += " + " + attributeModifierValue.getD10() + "d10";
+        if (attributeModifierValue instanceof CombatAttributeModifierValue) {
+            final CombatAttributeModifierValue combatAttributeModifierValue = (CombatAttributeModifierValue) attributeModifierValue;
+
+            if (combatAttributeModifierValue.getD2() > 0) {
+                result += " + " + combatAttributeModifierValue.getD2() + "d2";
+            }
+            if (combatAttributeModifierValue.getD4() > 0) {
+                result += " + " + combatAttributeModifierValue.getD4() + "d4";
+            }
+            if (combatAttributeModifierValue.getD6() > 0) {
+                result += " + " + combatAttributeModifierValue.getD6() + "d6";
+            }
+            if (combatAttributeModifierValue.getD8() > 0) {
+                result += " + " + combatAttributeModifierValue.getD8() + "d8";
+            }
+            if (combatAttributeModifierValue.getD10() > 0) {
+                result += " + " + combatAttributeModifierValue.getD10() + "d10";
+            }
         }
 
         return result;

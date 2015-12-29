@@ -3,6 +3,7 @@ package com.morethanheroic.swords.combat.domain.entity;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.combat.domain.DiceAttribute;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
@@ -72,14 +73,17 @@ public class UserCombatEntity extends CombatEntity {
     }
 
     private DiceAttribute attributeCalculationToDiceAttribute(AttributeCalculationResult attributeCalculationResult) {
-        DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
+        final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
 
         diceAttributeBuilder.setValue(attributeCalculationResult.getValue());
-        diceAttributeBuilder.setD2(attributeCalculationResult.getD2());
-        diceAttributeBuilder.setD4(attributeCalculationResult.getD4());
-        diceAttributeBuilder.setD6(attributeCalculationResult.getD6());
-        diceAttributeBuilder.setD8(attributeCalculationResult.getD8());
-        diceAttributeBuilder.setD10(attributeCalculationResult.getD10());
+
+        if (attributeCalculationResult instanceof CombatAttributeCalculationResult) {
+            diceAttributeBuilder.setD2(((CombatAttributeCalculationResult) attributeCalculationResult).getD2());
+            diceAttributeBuilder.setD4(((CombatAttributeCalculationResult) attributeCalculationResult).getD4());
+            diceAttributeBuilder.setD6(((CombatAttributeCalculationResult) attributeCalculationResult).getD6());
+            diceAttributeBuilder.setD8(((CombatAttributeCalculationResult) attributeCalculationResult).getD8());
+            diceAttributeBuilder.setD10(((CombatAttributeCalculationResult) attributeCalculationResult).getD10());
+        }
 
         return diceAttributeBuilder.build();
     }

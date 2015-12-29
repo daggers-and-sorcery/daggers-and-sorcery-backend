@@ -7,6 +7,7 @@ import com.morethanheroic.swords.attribute.service.ItemModifierToAttributeConver
 import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -34,12 +35,11 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
 
     @Override
     public AttributeCalculationResult calculateBonus(UserEntity userEntity, Attribute attribute) {
-        AttributeCalculationResult result = new AttributeCalculationResult(attribute);
-
-        EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
+        final AttributeCalculationResult result = createAttributeCalculationResult(attribute);
+        final EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
-            int item = equipmentEntity.getEquipmentIdOnSlot(slot);
+            final int item = equipmentEntity.getEquipmentIdOnSlot(slot);
 
             if (item != EMPTY_EQUIPMENT_SLOT) {
                 calculateItemModifiers(result, itemDefinitionCache.getDefinition(item));
@@ -51,12 +51,20 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
         return result;
     }
 
+    private AttributeCalculationResult createAttributeCalculationResult(Attribute attribute) {
+        if (attribute instanceof CombatAttribute) {
+            return new CombatAttributeCalculationResult((CombatAttribute) attribute);
+        } else {
+            return new AttributeCalculationResult(attribute);
+        }
+    }
+
     private void calculateNoWeaponFistfightModifiers(AttributeCalculationResult result, EquipmentEntity equipmentEntity, UserEntity userEntity) {
         if (equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.WEAPON) == EMPTY_EQUIPMENT_SLOT) {
             if (result.getAttribute() == CombatAttribute.ATTACK) {
-                result.increaseD4(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 3));
+                ((CombatAttributeCalculationResult) result).increaseD4(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 3));
             } else if (result.getAttribute() == CombatAttribute.DAMAGE) {
-                result.increaseD2(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 3));
+                ((CombatAttributeCalculationResult) result).increaseD2(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 3));
             }
         }
     }
@@ -66,11 +74,11 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
             result.increaseValue(modifierDefinition.getAmount());
 
             if (result.getAttribute() instanceof CombatAttribute) {
-                result.increaseD2(modifierDefinition.getD2());
-                result.increaseD4(modifierDefinition.getD4());
-                result.increaseD6(modifierDefinition.getD6());
-                result.increaseD8(modifierDefinition.getD8());
-                result.increaseD10(modifierDefinition.getD10());
+                ((CombatAttributeCalculationResult) result).increaseD2(modifierDefinition.getD2());
+                ((CombatAttributeCalculationResult) result).increaseD4(modifierDefinition.getD4());
+                ((CombatAttributeCalculationResult) result).increaseD6(modifierDefinition.getD6());
+                ((CombatAttributeCalculationResult) result).increaseD8(modifierDefinition.getD8());
+                ((CombatAttributeCalculationResult) result).increaseD10(modifierDefinition.getD10());
             }
         });
     }

@@ -7,6 +7,7 @@ import com.morethanheroic.swords.attribute.domain.type.AttributeModifierUnitType
 import com.morethanheroic.swords.attribute.service.calc.CombatAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
+import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class CombatAttributeModifierCalculator implements AttributeModifierCalcu
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, CombatAttribute attribute) {
         return Lists.newArrayList(
-                new AttributeModifierEntry(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierUnitType.VALUE, new AttributeModifierValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, attribute))),
-                new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierUnitType.VALUE, new AttributeModifierValue(attribute.getInitialValue()))
+                new AttributeModifierEntry(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, attribute))),
+                new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue(attribute.getInitialValue()))
         );
     }
 }

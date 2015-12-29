@@ -10,6 +10,7 @@ import com.morethanheroic.swords.attribute.service.AttributeToRacialModifierConv
 import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.UnlimitedAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.race.model.Race;
@@ -74,7 +75,12 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     }
 
     public AttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
-        AttributeCalculationResult result = new AttributeCalculationResult(attribute);
+        AttributeCalculationResult result;
+        if (attribute instanceof CombatAttribute) {
+            result = new CombatAttributeCalculationResult((CombatAttribute) attribute);
+        } else {
+            result = new AttributeCalculationResult(attribute);
+        }
 
         if (attribute instanceof SkillAttribute) {
             result.increaseValue(skillFacade.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
@@ -97,9 +103,9 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
 
     public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
         if (attribute == CombatAttribute.LIFE) {
-            return new AttributeCalculationResult(user.getHealthPoints(), attribute);
+            return new CombatAttributeCalculationResult(user.getHealthPoints(), (CombatAttribute) attribute);
         } else if (attribute == CombatAttribute.MANA) {
-            return new AttributeCalculationResult(user.getManaPoints(), attribute);
+            return new CombatAttributeCalculationResult(user.getManaPoints(), (CombatAttribute) attribute);
         } else if (attribute == BasicAttribute.MOVEMENT) {
             return new AttributeCalculationResult(user.getMovementPoints(), attribute);
         }
