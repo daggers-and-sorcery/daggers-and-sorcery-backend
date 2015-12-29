@@ -20,12 +20,29 @@ public class GeneralAttributeData extends AttributeData {
         return pointsToNextLevel;
     }
 
-    public static class GeneralAttributeDataBuilder extends AttributeDataBuilder {
+    public static class GeneralAttributeDataBuilder {
 
         private int pointsToNextLevel;
 
+        protected Attribute attribute;
+        protected AttributeCalculationResult maximum;
+        protected AttributeCalculationResult actual;
+        protected List<AttributeModifierEntry> attributeModifierArray;
+
         public GeneralAttributeDataBuilder(GeneralAttribute attribute) {
-            super(attribute);
+            this.attribute = attribute;
+        }
+
+        public void setMaximum(AttributeCalculationResult maximum) {
+            this.maximum = maximum;
+        }
+
+        public void setActual(AttributeCalculationResult actual) {
+            this.actual = actual;
+        }
+
+        public void setAttributeModifierData(List<AttributeModifierEntry> attributeModifierArray) {
+            this.attributeModifierArray = attributeModifierArray;
         }
 
         public int getPointsToNextLevel() {

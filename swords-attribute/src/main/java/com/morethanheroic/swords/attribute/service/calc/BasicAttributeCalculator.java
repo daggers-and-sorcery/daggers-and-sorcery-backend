@@ -18,12 +18,11 @@ public class BasicAttributeCalculator implements AttributeCalculator<BasicAttrib
 
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, BasicAttribute attribute) {
-        AttributeData.AttributeDataBuilder attributeDataBuilder = new AttributeData.AttributeDataBuilder(attribute);
-
-        attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, attribute));
-        attributeDataBuilder.setMaximum(globalAttributeCalculator.calculateMaximumValue(user, attribute));
-        attributeDataBuilder.setAttributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute));
-
-        return attributeDataBuilder.build();
+        return AttributeData.builder()
+                .attribute(attribute)
+                .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
+                .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))
+                .modifierDataArray(globalAttributeModifierCalculator.calculateModifierData(user, attribute))
+                .build();
     }
 }

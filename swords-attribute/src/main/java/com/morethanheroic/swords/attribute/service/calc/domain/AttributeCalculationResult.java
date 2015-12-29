@@ -1,13 +1,19 @@
 package com.morethanheroic.swords.attribute.service.calc.domain;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Contains the result of some attribute calculations.
  */
 public class AttributeCalculationResult {
 
-    private Attribute attribute;
+    @Getter
+    private final Attribute attribute;
+
+    @Getter
+    @Setter
     private int value;
 
     public AttributeCalculationResult(Attribute attribute) {
@@ -19,23 +25,11 @@ public class AttributeCalculationResult {
         this.attribute = attribute;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public void increaseValue(int amount) {
         this.value += amount;
     }
 
     public void addCalculationResult(AttributeCalculationResult attributeCalculationResult) {
         this.value += attributeCalculationResult.value;
-    }
-
-    public Attribute getAttribute() {
-        return attribute;
     }
 }

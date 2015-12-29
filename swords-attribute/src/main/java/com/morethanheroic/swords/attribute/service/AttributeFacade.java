@@ -4,9 +4,13 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
+import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AttributeFacade {
@@ -14,7 +18,10 @@ public class AttributeFacade {
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
 
-    public AttributeData getAttributeData(UserEntity userEntity, Attribute attribute) {
+    @Autowired
+    private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
+
+    public AttributeData calculateAttributeData(UserEntity userEntity, Attribute attribute) {
         return globalAttributeCalculator.calculateAttributeValue(userEntity, attribute);
     }
 
@@ -24,5 +31,9 @@ public class AttributeFacade {
 
     public AttributeCalculationResult calculateAttributeMaximumValue(UserEntity userEntity, Attribute attribute) {
         return globalAttributeCalculator.calculateMaximumValue(userEntity, attribute);
+    }
+
+    public List<AttributeModifierEntry> calculateAttributeModifierData(UserEntity user, Attribute attribute) {
+        return globalAttributeModifierCalculator.calculateModifierData(user, attribute);
     }
 }

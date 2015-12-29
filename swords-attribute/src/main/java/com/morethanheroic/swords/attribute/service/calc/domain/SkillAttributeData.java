@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.attribute.service.calc.domain;
 
+import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
@@ -32,14 +33,31 @@ public class SkillAttributeData extends AttributeData {
         return xpBetweenLevels;
     }
 
-    public static class SkillAttributeDataBuilder extends AttributeDataBuilder {
+    public static class SkillAttributeDataBuilder {
 
         private long actualXp;
         private long nextLevelXp;
         private long xpBetweenLevels;
 
+        protected Attribute attribute;
+        protected AttributeCalculationResult maximum;
+        protected AttributeCalculationResult actual;
+        protected List<AttributeModifierEntry> attributeModifierArray;
+
         public SkillAttributeDataBuilder(SkillAttribute attribute) {
-            super(attribute);
+            this.attribute = attribute;
+        }
+
+        public void setMaximum(AttributeCalculationResult maximum) {
+            this.maximum = maximum;
+        }
+
+        public void setActual(AttributeCalculationResult actual) {
+            this.actual = actual;
+        }
+
+        public void setAttributeModifierData(List<AttributeModifierEntry> attributeModifierArray) {
+            this.attributeModifierArray = attributeModifierArray;
         }
 
         public long getActualXp() {
@@ -58,7 +76,6 @@ public class SkillAttributeData extends AttributeData {
             this.nextLevelXp = nextLevelXp;
         }
 
-        @Override
         public SkillAttributeData build() {
             return new SkillAttributeData(attribute, actual, maximum, attributeModifierArray, actualXp, nextLevelXp, xpBetweenLevels);
         }
