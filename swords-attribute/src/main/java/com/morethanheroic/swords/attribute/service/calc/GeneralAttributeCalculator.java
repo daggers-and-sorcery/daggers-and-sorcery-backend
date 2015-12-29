@@ -30,14 +30,13 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
 
     @Override
     public GeneralAttributeData calculateAttributeValue(UserEntity user, GeneralAttribute attribute) {
-        GeneralAttributeData.GeneralAttributeDataBuilder attributeDataBuilder = new GeneralAttributeData.GeneralAttributeDataBuilder(attribute);
-
-        attributeDataBuilder.setActual(globalAttributeCalculator.calculateActualValue(user, attribute));
-        attributeDataBuilder.setMaximum(globalAttributeCalculator.calculateMaximumValue(user, attribute));
-        attributeDataBuilder.setAttributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute));
-        attributeDataBuilder.setPointsToNextLevel(calculatePointsToAttributeLevel(user, attribute));
-
-        return attributeDataBuilder.build();
+        return GeneralAttributeData.builder()
+                .attribute(attribute)
+                .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
+                .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))
+                .modifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute))
+                .pointsToNextLevel(calculatePointsToAttributeLevel(user, attribute))
+                .build();
     }
 
     public int calculatePointsToAttributeLevel(UserEntity user, Attribute attribute) {

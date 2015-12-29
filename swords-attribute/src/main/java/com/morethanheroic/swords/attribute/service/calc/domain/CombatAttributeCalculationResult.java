@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Holds the result of a combat calculation.
+ * Holds the result of a combat attribute calculation.
  */
 @Getter
 @Setter
@@ -37,24 +37,8 @@ public class CombatAttributeCalculationResult extends AttributeCalculationResult
         this.d6 += amount;
     }
 
-    public int getD8() {
-        return d8;
-    }
-
-    public void setD8(int d8) {
-        this.d8 = d8;
-    }
-
     public void increaseD8(int amount) {
         this.d8 += amount;
-    }
-
-    public int getD10() {
-        return d10;
-    }
-
-    public void setD10(int d10) {
-        this.d10 = d10;
     }
 
     public void increaseD10(int amount) {
