@@ -3,7 +3,7 @@ package com.morethanheroic.swords.attribute.service.modifier.calculator;
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
-import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
+import com.morethanheroic.swords.attribute.domain.type.AttributeModifierUnitType;
 import com.morethanheroic.swords.attribute.service.calc.CombatAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
@@ -22,8 +22,8 @@ public class CombatAttributeModifierCalculator implements AttributeModifierCalcu
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, CombatAttribute attribute) {
         return Lists.newArrayList(
-                new AttributeModifierEntry(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierValueType.VALUE, new AttributeModifierValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, attribute))),
-                new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierValueType.VALUE, new AttributeModifierValue(attribute.getInitialValue()))
+                new AttributeModifierEntry(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierUnitType.VALUE, new AttributeModifierValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, attribute))),
+                new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierUnitType.VALUE, new AttributeModifierValue(attribute.getInitialValue()))
         );
     }
 }

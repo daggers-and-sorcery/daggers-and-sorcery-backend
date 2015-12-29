@@ -219,7 +219,7 @@ public class ProfileInfoResponseBuilder {
             HashMap<String, Object> attributeModifierResponse = new HashMap<>();
 
             attributeModifierResponse.put("attributeModifierType", attributeModifierEntry.getAttributeModifierType().name());
-            attributeModifierResponse.put("attributeModifierValueType", attributeModifierEntry.getAttributeModifierValueType().name());
+            attributeModifierResponse.put("attributeModifierValueType", attributeModifierEntry.getAttributeModifierUnitType().name());
             if (attribute.getAttributeType() == AttributeType.COMBAT) {
                 attributeModifierResponse.put("attributeModifierValue", formatCombatAttributeModifier(attributeModifierEntry.getAttributeModifierValue()));
             } else {

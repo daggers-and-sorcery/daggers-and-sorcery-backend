@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
-import com.morethanheroic.swords.attribute.domain.type.AttributeModifierValueType;
+import com.morethanheroic.swords.attribute.domain.type.AttributeModifierUnitType;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
@@ -36,7 +36,7 @@ public class RaceAttributeModifierCalculator implements AttributeModifierCalcula
             final int racialModifierValue = globalAttributeCalculator.calculatePercentageModifiedAttribute(globalAttributeCalculator.calculateActualBeforePercentageMultiplication(user, attribute), racialModifierPercentage).getValue() - globalAttributeCalculator.calculateActualBeforePercentageMultiplication(user, attribute).getValue();
 
             return Lists.newArrayList(
-                    new PercentageAttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierValueType.PERCENTAGE, new AttributeModifierValue(racialModifierValue), racialModifierPercentage)
+                    new PercentageAttributeModifierEntry(AttributeModifierType.RACIAL, AttributeModifierUnitType.PERCENTAGE, new AttributeModifierValue(racialModifierValue), racialModifierPercentage)
             );
         }
 

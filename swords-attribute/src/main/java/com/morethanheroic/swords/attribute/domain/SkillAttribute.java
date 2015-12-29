@@ -1,9 +1,15 @@
 package com.morethanheroic.swords.attribute.domain;
 
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
+import lombok.RequiredArgsConstructor;
 
+/**
+ * The {@link AttributeType#SKILL} attributes.
+ */
+@RequiredArgsConstructor
 public enum SkillAttribute implements Attribute {
 
+    //TODO: Load these values from an xml file and use an SkillAttributeDefinition class.
     TWO_HANDED_CRUSHING_WEAPONS(GeneralAttribute.STRENGTH),
     ONE_HANDED_CRUSHING_WEAPONS(GeneralAttribute.STRENGTH),
     TWO_HANDED_AXES(GeneralAttribute.DEXTERITY),
@@ -29,10 +35,6 @@ public enum SkillAttribute implements Attribute {
     COOKING(GeneralAttribute.VITALITY);
 
     private final GeneralAttribute incrementedAttribute;
-
-    SkillAttribute(GeneralAttribute incrementedAttribute) {
-        this.incrementedAttribute = incrementedAttribute;
-    }
 
     @Override
     public AttributeType getAttributeType() {

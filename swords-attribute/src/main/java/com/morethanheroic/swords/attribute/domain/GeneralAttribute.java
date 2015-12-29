@@ -2,9 +2,15 @@ package com.morethanheroic.swords.attribute.domain;
 
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.domain.type.GeneralAttributeType;
+import lombok.RequiredArgsConstructor;
 
+/**
+ * The {@link AttributeType#GENERAL} attributes.
+ */
+@RequiredArgsConstructor
 public enum GeneralAttribute implements Attribute {
 
+    //TODO: Load these values from an xml file and use an GeneralAttributeDefinition class.
     STRENGTH(10, true, GeneralAttributeType.PHYSICAL),
     PERCEPTION(10, true, GeneralAttributeType.PHYSICAL),
     DEXTERITY(10, true, GeneralAttributeType.PHYSICAL),
@@ -21,12 +27,6 @@ public enum GeneralAttribute implements Attribute {
     private final int initialValue;
     private final boolean unlimited;
     private final GeneralAttributeType attributeType;
-
-    GeneralAttribute(int initialValue, boolean unlimited, GeneralAttributeType attributeType) {
-        this.initialValue = initialValue;
-        this.unlimited = unlimited;
-        this.attributeType = attributeType;
-    }
 
     @Override
     public AttributeType getAttributeType() {

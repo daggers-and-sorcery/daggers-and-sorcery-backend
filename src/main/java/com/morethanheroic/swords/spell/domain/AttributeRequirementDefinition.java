@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.attribute.domain.requirement;
+package com.morethanheroic.swords.spell.domain;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 

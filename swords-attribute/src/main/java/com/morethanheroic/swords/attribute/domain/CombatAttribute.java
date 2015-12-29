@@ -1,13 +1,19 @@
 package com.morethanheroic.swords.attribute.domain;
 
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The {@link AttributeType#COMBAT} attributes.
+ */
+@RequiredArgsConstructor
 public enum CombatAttribute implements Attribute {
 
+    //TODO: Load these values from an xml file and use an CombatAttributeDefinition class.
     MANA(0, false, new GeneralAttribute[]{GeneralAttribute.INTELLIGENCE, GeneralAttribute.WISDOM, GeneralAttribute.WILLPOWER}, 0.5),
     LIFE(15, false, new GeneralAttribute[]{GeneralAttribute.VITALITY, GeneralAttribute.ENDURANCE}, 0.5),
     INITIATION(10, true, new GeneralAttribute[]{GeneralAttribute.SWIFTNESS, GeneralAttribute.PERCEPTION}, 0.5),
@@ -24,13 +30,6 @@ public enum CombatAttribute implements Attribute {
     private final boolean unlimited;
     private final GeneralAttribute[] bonusAttributes;
     private final double bonusPercentage;
-
-    CombatAttribute(int initialValue, boolean unlimited, GeneralAttribute[] bonusAttributes, double bonusPercentage) {
-        this.initialValue = initialValue;
-        this.unlimited = unlimited;
-        this.bonusAttributes = bonusAttributes;
-        this.bonusPercentage = bonusPercentage;
-    }
 
     @Override
     public AttributeType getAttributeType() {
