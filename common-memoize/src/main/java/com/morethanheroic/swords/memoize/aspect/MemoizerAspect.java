@@ -8,6 +8,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * This aspect is used to create the memoize functionality with the {@link com.morethanheroic.swords.memoize.Memoize} annotation.
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/Memoization">https://en.wikipedia.org/wiki/Memoization</a>
+ */
 @Aspect
 @Component
 public class MemoizerAspect {
@@ -16,6 +21,7 @@ public class MemoizerAspect {
     private RequestScopeCache requestScopeCache;
 
     @Around("@annotation(com.morethanheroic.swords.memoize.Memoize)")
+    @SuppressWarnings("checkstyle:illegalthrows")
     public Object memoize(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final InvocationContext invocationContext = buildInvocationContext(proceedingJoinPoint);
 

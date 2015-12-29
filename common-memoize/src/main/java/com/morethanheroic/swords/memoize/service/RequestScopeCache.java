@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This cache is re-created for every request, can be used to cache method invocations for one request time.
+ */
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "request")
 public class RequestScopeCache {
