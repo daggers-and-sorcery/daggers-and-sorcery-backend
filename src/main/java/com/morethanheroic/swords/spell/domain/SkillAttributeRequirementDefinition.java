@@ -3,6 +3,7 @@ package com.morethanheroic.swords.spell.domain;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
 
+//TODO: We shouldn't depend on the spell module this way!
 public class SkillAttributeRequirementDefinition extends AttributeRequirementDefinition {
 
     private SkillAttribute attribute;

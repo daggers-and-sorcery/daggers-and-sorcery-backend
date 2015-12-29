@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This cache is re-created for every request, can be used to cache method invocations for one request time.
+ * This cache is re-created for every request, can be used to cache method invocations for one request time. It's not thread safe!
  */
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "request")

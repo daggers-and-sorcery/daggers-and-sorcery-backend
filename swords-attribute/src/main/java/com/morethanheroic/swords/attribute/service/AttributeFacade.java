@@ -22,7 +22,7 @@ public class AttributeFacade {
         return globalAttributeCalculator.calculateActualValue(userEntity, attribute);
     }
 
-    public AttributeCalculationResult calculateAttributeMaximumvalue(UserEntity userEntity, Attribute attribute) {
+    public AttributeCalculationResult calculateAttributeMaximumValue(UserEntity userEntity, Attribute attribute) {
         return globalAttributeCalculator.calculateMaximumValue(userEntity, attribute);
     }
 }

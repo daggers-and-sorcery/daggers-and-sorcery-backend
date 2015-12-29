@@ -107,6 +107,8 @@ public class EquipmentEntity {
         return itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(slot));
     }
 
+    //TODO: refactor this to only once get the equipment from the database
+    //We should be careful y the way, we should update the equipmentdatabaseentity when gthings change (eg equip/unequip anything)
     public int getEquipmentIdOnSlot(EquipmentSlot slot) {
         switch (slot) {
             case WEAPON:
