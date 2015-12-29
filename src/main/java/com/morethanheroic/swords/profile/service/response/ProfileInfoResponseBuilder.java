@@ -171,7 +171,7 @@ public class ProfileInfoResponseBuilder {
         }
         attributeResponse.put("maximum", attributeData.getMaximum());
         attributeResponse.put("attribute", buildAttributeInfo(attribute));
-        attributeResponse.put("modifierDataArray", buildAttributeModifiers(attribute, attributeData.getModifierDataArray()));
+        attributeResponse.put("modifierDataArray", buildAttributeModifiers(attribute, attributeData.getModifierData()));
         if (attribute.getAttributeType() == AttributeType.GENERAL) {
             attributeResponse.put("pointsToNextLevel", ((GeneralAttributeData) attributeData).getPointsToNextLevel());
         } else if (attribute.getAttributeType() == AttributeType.SKILL) {

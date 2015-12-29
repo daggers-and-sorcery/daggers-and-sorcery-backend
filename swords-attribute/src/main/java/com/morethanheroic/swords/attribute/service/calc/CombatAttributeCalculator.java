@@ -21,7 +21,7 @@ public class CombatAttributeCalculator implements AttributeCalculator<CombatAttr
                 .attribute(attribute)
                 .actual(attributeFacade.calculateAttributeValue(user, attribute))
                 .maximum(attributeFacade.calculateAttributeMaximumValue(user, attribute))
-                .modifierDataArray(attributeFacade.calculateAttributeModifierData(user, attribute))
+                .modifierData(attributeFacade.calculateAttributeModifierData(user, attribute))
                 .build();
     }
 

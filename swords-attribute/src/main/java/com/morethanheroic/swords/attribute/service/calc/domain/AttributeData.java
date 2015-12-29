@@ -25,7 +25,6 @@ public class AttributeData {
     @NonNull
     private final AttributeCalculationResult maximum;
 
-    //TODO: remove array from it's name (especially because its a list).
     @NonNull
-    private final List<AttributeModifierEntry> modifierDataArray;
+    private final List<AttributeModifierEntry> modifierData;
 }

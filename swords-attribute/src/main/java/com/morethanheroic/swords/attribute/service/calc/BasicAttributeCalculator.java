@@ -22,7 +22,7 @@ public class BasicAttributeCalculator implements AttributeCalculator<BasicAttrib
                 .attribute(attribute)
                 .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
                 .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))
-                .modifierDataArray(globalAttributeModifierCalculator.calculateModifierData(user, attribute))
+                .modifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute))
                 .build();
     }
 }

@@ -46,7 +46,7 @@ public class GeneralAttributeCalculatorTest {
 
         assertEquals(attributeDataStrength.getActual().getValue(), 12);
         assertEquals(attributeDataStrength.getMaximum().getValue(), 0);
-        assertEquals(attributeDataStrength.getModifierDataArray(), null);
+        assertEquals(attributeDataStrength.getModifierData(), null);
         assertEquals(attributeDataStrength.getAttribute(), GeneralAttribute.STRENGTH);
         assertEquals(attributeDataStrength.getPointsToNextLevel(), 8);
     }
