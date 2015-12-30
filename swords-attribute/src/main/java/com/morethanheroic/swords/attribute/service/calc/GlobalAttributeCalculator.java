@@ -130,7 +130,7 @@ public class GlobalAttributeCalculator {
     }
 
     public AttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
-        AttributeCalculationResult result = new AttributeCalculationResult(attribute);
+        final AttributeCalculationResult result = new AttributeCalculationResult(attribute);
 
         result.increaseValue(attribute.getInitialValue());
         if (attribute instanceof CombatAttribute) {
@@ -145,7 +145,6 @@ public class GlobalAttributeCalculator {
     }
 
     public AttributeCalculationResult calculatePercentageModifiedAttribute(AttributeCalculationResult attributeValue, int percentage) {
-
         attributeValue.setValue((int) (attributeValue.getValue() * ((double) percentage / 100 + 1)));
 
         return attributeValue;
