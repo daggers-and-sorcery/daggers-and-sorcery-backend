@@ -27,6 +27,10 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This calculator is used when you don't know the attribute's type or it doesn't matter for you. It will automatically
+ * delegate the calls to the appropriate {@link AttributeCalculator}.
+ */
 @Service
 public class GlobalAttributeCalculator implements AttributeCalculator {
 

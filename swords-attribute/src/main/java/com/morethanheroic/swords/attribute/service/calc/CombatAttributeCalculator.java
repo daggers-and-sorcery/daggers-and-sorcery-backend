@@ -8,6 +8,9 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Used to calculate a {@link com.morethanheroic.swords.attribute.domain.type.AttributeType#COMBAT} attribute's all data related to the player.
+ */
 @Service
 public class CombatAttributeCalculator implements AttributeCalculator<CombatAttribute> {
 
