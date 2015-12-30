@@ -41,6 +41,11 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
                 .build();
     }
 
+    @Override
+    public Class<GeneralAttribute> getSupportedType() {
+        return GeneralAttribute.class;
+    }
+
     public int calculatePointsToAttributeLevel(UserEntity user, Attribute attribute) {
         final SkillEntity skillEntity = skillFacade.getSkills(user);
 

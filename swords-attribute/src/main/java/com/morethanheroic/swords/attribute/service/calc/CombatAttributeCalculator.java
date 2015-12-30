@@ -27,6 +27,11 @@ public class CombatAttributeCalculator implements AttributeCalculator<CombatAttr
                 .build();
     }
 
+    @Override
+    public Class<CombatAttribute> getSupportedType() {
+        return CombatAttribute.class;
+    }
+
     public int calculateAllBonusByGeneralAttributes(UserEntity user, CombatAttribute attribute) {
         int result = 0;
 

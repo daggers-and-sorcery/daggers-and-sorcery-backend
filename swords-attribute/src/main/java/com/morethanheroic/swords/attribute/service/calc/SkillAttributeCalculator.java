@@ -41,4 +41,9 @@ public class SkillAttributeCalculator implements AttributeCalculator<SkillAttrib
                 .xpBetweenLevels(skillEntity.getSkillXpBetweenNextLevel(skillType))
                 .build();
     }
+
+    @Override
+    public Class<SkillAttribute> getSupportedType() {
+        return SkillAttribute.class;
+    }
 }

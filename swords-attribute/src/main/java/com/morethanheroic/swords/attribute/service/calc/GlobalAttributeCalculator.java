@@ -9,9 +9,9 @@ import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeToRacialModifierConverter;
 import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.UnlimitedAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceDefinition;
@@ -31,6 +31,7 @@ import java.util.Map;
  * This calculator is used when you don't know the attribute's type or it doesn't matter for you. It will automatically
  * delegate the calls to the appropriate {@link AttributeCalculator}.
  */
+//TODO: remove the AttributeCalculator interface form this class.
 @Service
 public class GlobalAttributeCalculator implements AttributeCalculator {
 
@@ -61,21 +62,17 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     @Autowired
     private List<AttributeBonusProvider> attributeBonusProviders;
 
-    private Map<Class<? extends Attribute>, AttributeCalculator> attributeCalculatorMap;
-
-    @PostConstruct
-    public void initialize() {
-        attributeCalculatorMap = ImmutableMap.<Class<? extends Attribute>, AttributeCalculator>of(
-                SkillAttribute.class, skillAttributeCalculator,
-                GeneralAttribute.class, generalAttributeCalculator,
-                CombatAttribute.class, combatAttributeCalculator,
-                BasicAttribute.class, basicAttributeCalculator
-        );
-    }
+    @Autowired
+    private AttributeCalculatorLocator attributeCalculatorLocator;
 
     @SuppressWarnings("unchecked")
     public AttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
-        return attributeCalculatorMap.get(attribute.getClass()).calculateAttributeValue(user, attribute);
+        return attributeCalculatorLocator.getCalculator(attribute).calculateAttributeValue(user, attribute);
+    }
+
+    @Override
+    public Class getSupportedType() {
+        return null;
     }
 
     public AttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {

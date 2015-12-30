@@ -25,4 +25,8 @@ public class BasicAttributeCalculator implements AttributeCalculator<BasicAttrib
                 .modifierData(attributeFacade.calculateAttributeModifierData(user, attribute))
                 .build();
     }
+
+    public Class<BasicAttribute> getSupportedType() {
+        return BasicAttribute.class;
+    }
 }
