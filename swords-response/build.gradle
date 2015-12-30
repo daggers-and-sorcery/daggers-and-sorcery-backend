@@ -1,0 +1,12 @@
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jackson_version
+
+    compile project(':swords-attribute')
+    compile project(':swords-user')
+}
+
+apply plugin: 'spring-boot'

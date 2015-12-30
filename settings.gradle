@@ -15,4 +15,5 @@ include 'swords-skill-scavenging'
 include 'swords-item'
 include 'swords-attribute'
 include 'common-memoize'
+include 'swords-response'
 

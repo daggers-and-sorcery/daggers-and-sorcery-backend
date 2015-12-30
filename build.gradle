@@ -21,6 +21,7 @@ allprojects {
         checkstyle_version = '6.13'
         findbugs_version = '3.0.1'
         commons_lang_version = '3.0.1'
+        jackson_version = '2.6.4'
 
         checkstyle_config = {
             toolVersion = project.ext.checkstyle_version
@@ -65,6 +66,7 @@ dependencies {
     compile project(':common-memoize')
 
     compile project(':swords-user')
+    compile project(':swords-response')
     compile project(':swords-skill')
     compile project(':swords-skill-scavenging')
     compile project(':swords-race')
