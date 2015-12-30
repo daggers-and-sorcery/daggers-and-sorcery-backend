@@ -2,37 +2,42 @@ package com.morethanheroic.swords.response.service;
 
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
-import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.AttributeFacade;
 import com.morethanheroic.swords.response.domain.CharacterData;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Create new {@link Response} objects based on the data provided in the {@link UserEntity}.
+ */
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ResponseFactory {
 
-    private final GlobalAttributeCalculator globalAttributeCalculator;
+    private static final boolean SUCCESSFUL_REQUEST = true;
+    private static final boolean FAILED_REQUEST = false;
 
-    @Autowired
-    public ResponseFactory(GlobalAttributeCalculator globalAttributeCalculator) {
-        this.globalAttributeCalculator = globalAttributeCalculator;
-    }
+    @NonNull
+    private final AttributeFacade attributeFacade;
 
     public Response newResponse(UserEntity userEntity) {
         return new Response(buildCharacterData(userEntity));
     }
 
     public Response newSuccessfulResponse(UserEntity userEntity) {
-        return buildStatusResponse(userEntity, true);
+        return buildStatusResponse(userEntity, SUCCESSFUL_REQUEST);
     }
 
     public Response newFailedResponse(UserEntity userEntity) {
-        return buildStatusResponse(userEntity, false);
+        return buildStatusResponse(userEntity, FAILED_REQUEST);
     }
 
     private Response buildStatusResponse(UserEntity userEntity, boolean status) {
-        Response response = newResponse(userEntity);
+        final Response response = newResponse(userEntity);
 
         response.setData("success", status);
 
@@ -45,9 +50,9 @@ public class ResponseFactory {
         }
 
         return new CharacterData(
-                globalAttributeCalculator.calculateActualValue(user, BasicAttribute.MOVEMENT).getValue(),
-                globalAttributeCalculator.calculateActualValue(user, CombatAttribute.LIFE).getValue(),
-                globalAttributeCalculator.calculateActualValue(user, CombatAttribute.MANA).getValue()
+                attributeFacade.calculateAttributeValue(user, BasicAttribute.MOVEMENT).getValue(),
+                attributeFacade.calculateAttributeValue(user, CombatAttribute.LIFE).getValue(),
+                attributeFacade.calculateAttributeValue(user, CombatAttribute.MANA).getValue()
         );
     }
 }
