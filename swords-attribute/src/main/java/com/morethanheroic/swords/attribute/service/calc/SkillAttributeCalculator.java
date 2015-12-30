@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
-import com.morethanheroic.swords.attribute.service.calc.domain.SkillAttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;

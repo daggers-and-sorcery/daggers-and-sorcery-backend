@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.attribute.service.modifier.domain;
 
-import com.morethanheroic.swords.attribute.service.calc.domain.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import lombok.Getter;
 
 @Getter
