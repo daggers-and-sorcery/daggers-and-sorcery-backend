@@ -33,6 +33,7 @@ public class SkillAttributeCalculator implements AttributeCalculator<SkillAttrib
         final SkillEntity skillEntity = skillFacade.getSkills(user);
 
         return SkillAttributeData.skillAttributeDataBuilder()
+                .attribute(attribute)
                 .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
                 .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))
                 .attributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute))

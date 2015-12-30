@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class AttributeCalculatorLocator {
     @Autowired
     private List<AttributeCalculator> attributeCalculators;
 
-    private Map<Class<? extends Attribute>, AttributeCalculator> attributeCalculatorMap;
+    private Map<Class<? extends Attribute>, AttributeCalculator> attributeCalculatorMap = new HashMap<>();
 
     @PostConstruct
     @SuppressWarnings("unchecked")

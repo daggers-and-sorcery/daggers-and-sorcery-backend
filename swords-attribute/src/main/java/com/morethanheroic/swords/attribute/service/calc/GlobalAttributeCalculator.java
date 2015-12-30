@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
-import com.google.common.collect.ImmutableMap;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
@@ -23,29 +22,20 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This calculator is used when you don't know the attribute's type or it doesn't matter for you. It will automatically
  * delegate the calls to the appropriate {@link AttributeCalculator}.
  */
-//TODO: remove the AttributeCalculator interface form this class.
 @Service
-public class GlobalAttributeCalculator implements AttributeCalculator {
-
-    @Autowired
-    private SkillAttributeCalculator skillAttributeCalculator;
+public class GlobalAttributeCalculator {
 
     @Autowired
     private GeneralAttributeCalculator generalAttributeCalculator;
 
     @Autowired
     private CombatAttributeCalculator combatAttributeCalculator;
-
-    @Autowired
-    private BasicAttributeCalculator basicAttributeCalculator;
 
     @Autowired
     private SkillFacade skillFacade;
@@ -68,11 +58,6 @@ public class GlobalAttributeCalculator implements AttributeCalculator {
     @SuppressWarnings("unchecked")
     public AttributeData calculateAttributeValue(UserEntity user, Attribute attribute) {
         return attributeCalculatorLocator.getCalculator(attribute).calculateAttributeValue(user, attribute);
-    }
-
-    @Override
-    public Class getSupportedType() {
-        return null;
     }
 
     public AttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
