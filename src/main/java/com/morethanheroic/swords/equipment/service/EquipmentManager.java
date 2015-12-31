@@ -41,4 +41,8 @@ public class EquipmentManager {
     public EquipmentEntity getEquipment(UserEntity userEntity) {
         return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity), equipmentMapper, equipmentSlotMapper, globalAttributeCalculator, itemDefinitionCache, itemRequirementToAttributeConverter);
     }
+
+    public void createEquipmentForUser(UserEntity userEntity) {
+        equipmentMapper.insert(userEntity.getId());
+    }
 }

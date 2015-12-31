@@ -1,14 +1,13 @@
 package com.morethanheroic.swords.user.view.request;
 
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.common.validator.annotation.StringEnumeration;
-import com.morethanheroic.swords.common.validator.annotation.UniqueInDb;
+import com.morethanheroic.swords.validator.annotation.StringEnumeration;
+import com.morethanheroic.swords.validator.annotation.UniqueInDb;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.GroupSequence;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.validation.groups.Default;
 
 @GroupSequence({RegistrationRequest.class, RegistrationRequest.OrderFirst.class, RegistrationRequest.OrderSecond.class})
 public class RegistrationRequest {
@@ -73,6 +72,7 @@ public class RegistrationRequest {
 
     public interface OrderFirst {
     }
+
     public interface OrderSecond {
     }
 }

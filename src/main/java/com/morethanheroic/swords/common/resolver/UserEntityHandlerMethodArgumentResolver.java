@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.common.resolver;
 
-import com.morethanheroic.swords.common.session.SessionAttributeType;
+import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;

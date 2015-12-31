@@ -65,6 +65,7 @@ dependencies {
     compile project(':xml-loader')
     compile project(':common-memoize')
     compile project(':common-session')
+    compile project(':common-validator')
 
     compile project(':swords-user')
     compile project(':swords-response')

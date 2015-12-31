@@ -1,6 +1,6 @@
-package com.morethanheroic.swords.common.validator;
+package com.morethanheroic.swords.validator;
 
-import com.morethanheroic.swords.common.validator.annotation.StringEnumeration;
+import com.morethanheroic.swords.validator.annotation.StringEnumeration;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

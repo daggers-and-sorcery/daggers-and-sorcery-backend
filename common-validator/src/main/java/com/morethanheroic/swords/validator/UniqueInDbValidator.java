@@ -1,6 +1,6 @@
-package com.morethanheroic.swords.common.validator;
+package com.morethanheroic.swords.validator;
 
-import com.morethanheroic.swords.common.validator.annotation.UniqueInDb;
+import com.morethanheroic.swords.validator.annotation.UniqueInDb;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;

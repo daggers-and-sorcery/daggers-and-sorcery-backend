@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.common.interceptor;
 
-import com.morethanheroic.swords.common.session.SessionAttributeType;
+import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.regeneration.service.RegenerationFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserManager;

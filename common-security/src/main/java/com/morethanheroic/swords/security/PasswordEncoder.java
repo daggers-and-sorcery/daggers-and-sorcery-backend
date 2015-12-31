@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class PasswordEncoder {
 
     private static final int ENCODING_STRENGTH = 256;
-    private static final String SALT = "#&@@>#&&#@#si_ip3rs33cr37sh13t#&@@>#&&#@#"
+    private static final String SALT = "#&@@>#&&#@#si_ip3rs33cr37sh13t#&@@>#&&#@#";
 
     private final ShaPasswordEncoder shaPasswordEncoder = new ShaPasswordEncoder(ENCODING_STRENGTH);
 

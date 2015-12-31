@@ -1,11 +1,18 @@
-package com.morethanheroic.swords.common.validator.annotation;
+package com.morethanheroic.swords.validator.annotation;
 
-import com.morethanheroic.swords.common.validator.StringEnumerationValidator;
+import com.morethanheroic.swords.validator.StringEnumerationValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
+/**
+ * Check that a string exists in the given enum.
+ */
 @Documented
 @Constraint(validatedBy = StringEnumerationValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER, ElementType.CONSTRUCTOR})

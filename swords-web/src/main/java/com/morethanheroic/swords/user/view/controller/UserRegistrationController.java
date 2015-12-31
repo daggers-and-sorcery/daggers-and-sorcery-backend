@@ -2,6 +2,8 @@ package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.security.PasswordEncoder;
+import com.morethanheroic.swords.skill.service.SkillFacade;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.service.UserManager;
 import com.morethanheroic.swords.user.view.request.RegistrationRequest;
@@ -32,6 +34,9 @@ public class UserRegistrationController {
     @NonNull
     private final UserManager userManager;
 
+    @NonNull
+    private final SkillFacade skillFacade;
+
     //TODO: if ever refactor this use Response instead!
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @Transactional
@@ -51,11 +56,18 @@ public class UserRegistrationController {
             return new ResponseEntity<>(resultAsList, HttpStatus.BAD_REQUEST);
         } else {
             String username = registrationRequest.getUsername();
-            String password = passwordEncoder.encodePassword(registrationRequest.getPasswordFirst(), null);
+            String password = passwordEncoder.encodePassword(registrationRequest.getPasswordFirst());
             String email = registrationRequest.getEmail();
             Race race = Race.valueOf(registrationRequest.getRace());
 
-            userManager.saveNewUser(username, password, email, race);
+            UserEntity userEntity = userManager.createUser(username, password, email, race);
+
+            skillFacade.createSkillsForUser(userEntity);
+
+            //TODO: enable these when they are refactored out of the main package! That should be done asap!
+            //equipmentManager.createSkillsForUser(userEntity);
+            //settingsManager.createSettingsForUser(userEntity);
+            //movementFacade.createMovementForUser(userEntity);
 
             //TODO: add user email validation
 

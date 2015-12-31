@@ -7,6 +7,7 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-core'
 
     compile project(':common-security')
+    compile project(':common-validator')
 
     compile project(':swords-news')
     compile project(':swords-user')

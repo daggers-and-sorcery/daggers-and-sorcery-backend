@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.inventory.service;
 
-import com.morethanheroic.swords.common.session.SessionAttributeType;
+import com.morethanheroic.swords.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
