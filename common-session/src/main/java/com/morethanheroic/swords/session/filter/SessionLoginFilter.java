@@ -1,8 +1,7 @@
-package com.morethanheroic.swords.common.session.filter;
+package com.morethanheroic.swords.session.filter;
 
 import com.morethanheroic.swords.common.session.SessionAttributeType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.*;
@@ -10,13 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+//TODO: Add the SessionAttributeType.USER_ID at creation time so we can separate common sessions from the sessions related to swords.
+//TODO: finish refactoring of this @ home...
+@Log4j
 public class SessionLoginFilter implements Filter {
-
-    private static final Logger logger = LoggerFactory.getLogger(SessionLoginFilter.class);
 
     @Override
     public void init(FilterConfig fc) throws ServletException {
-        logger.info("Initialising SessionCheckerFilter");
+        log.info("Initialising SessionCheckerFilter");
     }
 
     @Override

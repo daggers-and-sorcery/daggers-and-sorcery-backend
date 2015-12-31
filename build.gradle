@@ -64,6 +64,7 @@ dependencies {
 
     compile project(':xml-loader')
     compile project(':common-memoize')
+    compile project(':common-session')
 
     compile project(':swords-user')
     compile project(':swords-response')
@@ -75,6 +76,7 @@ dependencies {
     compile project(':swords-money')
     compile project(':swords-item')
     compile project(':swords-attribute')
+    compile project(':swords-session')
 }
 
 buildscript {
