@@ -1,18 +1,8 @@
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
-
     compile group: 'org.springframework.security', name: 'spring-security-core'
-
-    compile project(':common-security')
-
-    compile project(':swords-news')
-    compile project(':swords-user')
-    compile project(':swords-attribute')
-    compile project(':swords-response')
-    compile project(':swords-session')
 }
 
 apply plugin: 'spring-boot'

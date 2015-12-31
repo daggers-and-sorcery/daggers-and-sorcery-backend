@@ -5,29 +5,30 @@ import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeFacade;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
+import com.morethanheroic.swords.security.PasswordEncoder;
+import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
-import com.morethanheroic.swords.session.SessionAttributeType;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserLoginController {
 
-    @NonNull
-    private final UserMapper userMapper;
+    private static final UserEntity LOGGED_OUT_USER = null;
 
     @NonNull
-    private final ShaPasswordEncoder shaPasswordEncoder;
+    private final UserMapper userMapper;
 
     @NonNull
     private final AttributeFacade attributeFacade;
@@ -36,17 +37,18 @@ public class UserLoginController {
     private final ResponseFactory responseFactory;
 
     @NonNull
-    private final ResponseFactory responseFactory;
+    private final PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public Response login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
         //TODO: Move this to UserFacade (UserManager atm) when it's moved out of the main swords package into its own module.
-        final UserDatabaseEntity user = userMapper.findByUsernameAndPassword(username, shaPasswordEncoder.encodePassword(password, null));
+        final UserDatabaseEntity user = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
         final UserEntity userEntity = new UserEntity(user.getId(), userMapper);
 
         final Response response = responseFactory.newResponse(userEntity);
 
-        //In this if use something like is userFacade.isUserExists(username, password) and move getUser inside the if
+        //TODO: In this if use something like is userFacade.isExistingUser(userEntity) and move getUser inside the if
+        //TODO: Create response builders for this and separate action from response building.
         if (userEntity != null) {
             response.setData("success", "true");
 
@@ -63,10 +65,12 @@ public class UserLoginController {
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
     public Response info(UserEntity user) {
-        Response response = responseFactory.newResponse(user);
+        final Response response = responseFactory.newResponse(user);
 
-        if(user != null) {
+        //TODO: Use userFacade.isExistingUser(userEntity) instead of this if.
+        if (user != null) {
             response.setData("loggedIn", true);
+            //TODO: Do we really need to set this data? It's automatically set afaik.
             response.setData("life", attributeFacade.calculateAttributeValue(user, CombatAttribute.LIFE).getValue());
             response.setData("max_life", attributeFacade.calculateAttributeMaximumValue(user, CombatAttribute.LIFE).getValue());
             response.setData("mana", attributeFacade.calculateAttributeValue(user, CombatAttribute.MANA).getValue());
@@ -81,12 +85,12 @@ public class UserLoginController {
     }
 
     @RequestMapping(value = "/user/logout", method = RequestMethod.GET)
-    public HashMap<String, String> logout(HttpSession session) {
+    public Response logout(HttpSession session) {
         session.invalidate();
 
-        HashMap<String, String> response = new HashMap<>();
+        final Response response = responseFactory.newResponse(LOGGED_OUT_USER);
 
-        response.put("loggedIn", "false");
+        response.setData("loggedIn", "false");
 
         return response;
     }

@@ -1,16 +1,15 @@
 package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.security.PasswordEncoder;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
-import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import com.morethanheroic.swords.user.service.UserManager;
 import com.morethanheroic.swords.user.view.request.RegistrationRequest;
-import com.sun.org.apache.xpath.internal.SourceTree;
-import org.apache.ibatis.session.SqlSession;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -20,24 +19,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserRegistrationController {
 
-    private final ShaPasswordEncoder shaPasswordEncoder;
-    private final UserManager userManager;
+    @NonNull
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserRegistrationController(ShaPasswordEncoder shaPasswordEncoder, UserManager userManager) {
-        this.shaPasswordEncoder = shaPasswordEncoder;
-        this.userManager = userManager;
-    }
+    //TODO: Refactor the UserManager from the main package asap!
+    @NonNull
+    private final UserManager userManager;
 
     //TODO: if ever refactor this use Response instead!
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @Transactional
+    //TODO: Use Response.
     public ResponseEntity<Object> register(@Valid @RequestBody RegistrationRequest registrationRequest, BindingResult result) {
         if (!registrationRequest.getPasswordFirst().equals(registrationRequest.getPasswordSecond())) {
             result.addError(new ObjectError(String.valueOf(UserDatabaseEntity.class), "The two passwords must be equals."));
@@ -53,7 +51,7 @@ public class UserRegistrationController {
             return new ResponseEntity<>(resultAsList, HttpStatus.BAD_REQUEST);
         } else {
             String username = registrationRequest.getUsername();
-            String password = shaPasswordEncoder.encodePassword(registrationRequest.getPasswordFirst(), null);
+            String password = passwordEncoder.encodePassword(registrationRequest.getPasswordFirst(), null);
             String email = registrationRequest.getEmail();
             Race race = Race.valueOf(registrationRequest.getRace());
 

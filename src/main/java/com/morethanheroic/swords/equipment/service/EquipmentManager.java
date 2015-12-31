@@ -36,6 +36,7 @@ public class EquipmentManager {
         this.itemDefinitionCache = itemDefinitionCache;
     }
 
+    //TODO: we should create a @InjectToReturn that automatically resolve @Autowired inside returned object. It should run before @Memoize.
     @Memoize
     public EquipmentEntity getEquipment(UserEntity userEntity) {
         return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity), equipmentMapper, equipmentSlotMapper, globalAttributeCalculator, itemDefinitionCache, itemRequirementToAttributeConverter);

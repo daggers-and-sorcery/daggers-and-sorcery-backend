@@ -18,4 +18,5 @@ include 'common-memoize'
 include 'swords-response'
 include 'common-session'
 include 'swords-session'
+include 'common-security'
 
