@@ -9,25 +9,31 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemRequirementDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class EquipmentEntity {
 
     private final UserEntity userEntity;
     private final InventoryEntity inventoryEntity;
-    private final EquipmentMapper equipmentMapper;
-    private final EquipmentSlotMapper equipmentSlotMapper;
-    private final GlobalAttributeCalculator globalAttributeCalculator;
-    private final ItemDefinitionCache itemDefinitionCache;
-    private final ItemRequirementToAttributeConverter itemRequirementToAttributeConverter;
 
-    public EquipmentEntity(UserEntity userEntity, InventoryEntity inventoryEntity, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, ItemRequirementToAttributeConverter itemRequirementToAttributeConverter) {
+    @Autowired
+    private EquipmentMapper equipmentMapper;
+
+    @Autowired
+    private EquipmentSlotMapper equipmentSlotMapper;
+
+    @Autowired
+    private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private ItemDefinitionCache itemDefinitionCache;
+
+    @Autowired
+    private ItemRequirementToAttributeConverter itemRequirementToAttributeConverter;
+
+    public EquipmentEntity(UserEntity userEntity, InventoryEntity inventoryEntity) {
         this.userEntity = userEntity;
         this.inventoryEntity = inventoryEntity;
-        this.equipmentMapper = equipmentMapper;
-        this.equipmentSlotMapper = equipmentSlotMapper;
-        this.itemDefinitionCache = itemDefinitionCache;
-        this.globalAttributeCalculator = globalAttributeCalculator;
-        this.itemRequirementToAttributeConverter = itemRequirementToAttributeConverter;
     }
 
     public boolean equipItem(ItemDefinition item, boolean identified) {

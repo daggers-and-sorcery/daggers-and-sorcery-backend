@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.dependency.aspect;
 
+import lombok.extern.log4j.Log4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.LOWEST_PRECEDENCE)
+@Log4j
 public class InjectAtReturnAspect {
 
     @Autowired
@@ -19,8 +21,10 @@ public class InjectAtReturnAspect {
 
     @Around("@annotation(com.morethanheroic.swords.dependency.InjectAtReturn)")
     @SuppressWarnings("checkstyle:illegalthrows")
-    public Object memoize(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    public Object injectAtReturn(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final Object result = proceedingJoinPoint.proceed();
+
+        log.debug("Autowiring: " + result);
 
         autowireBeanFactory.autowireBean(result);
 

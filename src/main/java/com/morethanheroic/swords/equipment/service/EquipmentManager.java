@@ -18,30 +18,16 @@ import org.springframework.stereotype.Service;
 @Lazy
 public class EquipmentManager {
 
-    private final InventoryFacade inventoryFacade;
-    private final EquipmentMapper equipmentMapper;
-    private final EquipmentSlotMapper equipmentSlotMapper;
-    private final ItemDefinitionCache itemDefinitionCache;
+    @Autowired
+    private InventoryFacade inventoryFacade;
 
     @Autowired
-    private ItemRequirementToAttributeConverter itemRequirementToAttributeConverter;
+    private EquipmentMapper equipmentMapper;
 
-    @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
-
-    @Autowired
-    public EquipmentManager(InventoryFacade inventoryFacade, EquipmentMapper equipmentMapper, EquipmentSlotMapper equipmentSlotMapper, ItemDefinitionCache itemDefinitionCache) {
-        this.inventoryFacade = inventoryFacade;
-        this.equipmentMapper = equipmentMapper;
-        this.equipmentSlotMapper = equipmentSlotMapper;
-        this.itemDefinitionCache = itemDefinitionCache;
-    }
-
-    //TODO: we should create a @InjectToReturn that automatically resolve @Autowired inside returned object. It should run before @Memoize.
     @Memoize
     @InjectAtReturn
     public EquipmentEntity getEquipment(UserEntity userEntity) {
-        return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity), equipmentMapper, equipmentSlotMapper, globalAttributeCalculator, itemDefinitionCache, itemRequirementToAttributeConverter);
+        return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity));
     }
 
     public void createEquipmentForUser(UserEntity userEntity) {

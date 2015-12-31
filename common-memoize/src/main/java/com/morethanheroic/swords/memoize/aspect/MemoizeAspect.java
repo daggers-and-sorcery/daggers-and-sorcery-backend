@@ -2,6 +2,7 @@ package com.morethanheroic.swords.memoize.aspect;
 
 import com.morethanheroic.swords.memoize.context.InvocationContext;
 import com.morethanheroic.swords.memoize.service.RequestScopeCache;
+import lombok.extern.log4j.Log4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+@Log4j
 public class MemoizeAspect {
 
     @Autowired
@@ -29,7 +31,11 @@ public class MemoizeAspect {
         if (RequestScopeCache.NONE == result) {
             result = proceedingJoinPoint.proceed();
 
+            log.debug("Memoizing result: " + result + ", for method invocation: " + invocationContext);
+
             requestScopeCache.put(invocationContext, result);
+        } else {
+            log.debug("Using memoized result: " + result + ", for method invocation: " + invocationContext);
         }
 
         return result;
