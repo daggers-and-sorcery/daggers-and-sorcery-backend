@@ -14,6 +14,7 @@ import javax.validation.groups.Default;
 @GroupSequence({RegistrationRequest.class, RegistrationRequest.OrderFirst.class, RegistrationRequest.OrderSecond.class})
 public class RegistrationRequest {
 
+    //TODO: refactor UniqueInDb to its own common-validation module also rename it to UniqueInDatabase.
     @NotNull(message = "Email is required.")
     @Email(message = "Email must be a valid email.")
     @UniqueInDb(field = "email", model = "users", message = "An user with this email already exists.", groups = OrderFirst.class)
