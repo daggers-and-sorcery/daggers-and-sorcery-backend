@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class MemoizerAspect {
+public class MemoizeAspect {
 
     @Autowired
     private RequestScopeCache requestScopeCache;

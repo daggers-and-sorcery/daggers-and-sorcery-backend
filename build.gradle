@@ -66,6 +66,7 @@ dependencies {
     compile project(':common-memoize')
     compile project(':common-session')
     compile project(':common-validator')
+    compile project(':common-dependency-injection')
 
     compile project(':swords-user')
     compile project(':swords-response')

@@ -2,6 +2,7 @@ package com.morethanheroic.swords.equipment.service;
 
 import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.dependency.InjectAtReturn;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlotMapper;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
@@ -38,6 +39,7 @@ public class EquipmentManager {
 
     //TODO: we should create a @InjectToReturn that automatically resolve @Autowired inside returned object. It should run before @Memoize.
     @Memoize
+    @InjectAtReturn
     public EquipmentEntity getEquipment(UserEntity userEntity) {
         return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity), equipmentMapper, equipmentSlotMapper, globalAttributeCalculator, itemDefinitionCache, itemRequirementToAttributeConverter);
     }

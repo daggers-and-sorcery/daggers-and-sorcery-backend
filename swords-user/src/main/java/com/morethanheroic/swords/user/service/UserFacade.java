@@ -41,7 +41,9 @@ public class UserFacade {
 
     @Transactional
     public UserEntity createUser(String username, String password, String email, Race race) {
-        return userCreator.createUser(username, password, email, race);
+        final UserDatabaseEntity userDatabaseEntity = userCreator.createUser(username, password, email, race);
+
+        return getUser(userDatabaseEntity.getId());
     }
 
     public void updateLastLoginTime(UserEntity userEntity) {

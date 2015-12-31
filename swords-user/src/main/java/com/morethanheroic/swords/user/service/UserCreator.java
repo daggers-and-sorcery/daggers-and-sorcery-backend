@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.user.service;
 
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import lombok.NonNull;
@@ -25,15 +24,12 @@ public class UserCreator {
     @NonNull
     private final UserMapper userMapper;
 
-    @NonNull
-    private final UserFacade userFacade;
-
-    public UserEntity createUser(String username, String password, String email, Race race) {
+    public UserDatabaseEntity createUser(String username, String password, String email, Race race) {
         final UserDatabaseEntity user = createNewUserEntity(username, password, email, race);
 
         userMapper.insert(user);
 
-        return userFacade.getUser(user.getId());
+        return user;
     }
 
     private UserDatabaseEntity createNewUserEntity(String username, String password, String email, Race race) {
