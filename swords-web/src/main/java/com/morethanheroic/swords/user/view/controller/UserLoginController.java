@@ -5,11 +5,9 @@ import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeFacade;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.security.PasswordEncoder;
 import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
-import com.morethanheroic.swords.user.repository.domain.UserMapper;
+import com.morethanheroic.swords.user.service.UserFacade;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * Handles all login and user information related requests.
+ */
 @RestController
+@SuppressWarnings("checkstyle:multiplestringliterals")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserLoginController {
 
     private static final UserEntity LOGGED_OUT_USER = null;
 
     @NonNull
-    private final UserMapper userMapper;
+    private final UserFacade userFacade;
 
     @NonNull
     private final AttributeFacade attributeFacade;
@@ -36,25 +38,18 @@ public class UserLoginController {
     @NonNull
     private final ResponseFactory responseFactory;
 
-    @NonNull
-    private final PasswordEncoder passwordEncoder;
-
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public Response login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
-        //TODO: Move this to UserFacade (UserManager atm) when it's moved out of the main swords package into its own module.
-        final UserDatabaseEntity user = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
-        final UserEntity userEntity = new UserEntity(user.getId(), userMapper);
+        final UserEntity userEntity = userFacade.getUser(username, password);
 
-        final Response response = responseFactory.newResponse(userEntity);
-
-        //TODO: In this if use something like is userFacade.isExistingUser(userEntity) and move getUser inside the if
         //TODO: Create response builders for this and separate action from response building.
+        final Response response = responseFactory.newResponse(userEntity);
         if (userEntity != null) {
             response.setData("success", "true");
 
-            session.setAttribute(SessionAttributeType.USER_ID.name(), user.getId());
+            session.setAttribute(SessionAttributeType.USER_ID.name(), userEntity.getId());
 
-            userMapper.updateLastLoginDate(user);
+            userFacade.updateLastLoginTime(userEntity);
         } else {
             response.setData("success", "false");
             response.setData("error", "Wrong username or password!");
@@ -67,7 +62,6 @@ public class UserLoginController {
     public Response info(UserEntity user) {
         final Response response = responseFactory.newResponse(user);
 
-        //TODO: Use userFacade.isExistingUser(userEntity) instead of this if.
         if (user != null) {
             response.setData("loggedIn", true);
             //TODO: Do we really need to set this data? It's automatically set afaik.

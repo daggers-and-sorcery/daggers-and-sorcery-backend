@@ -9,6 +9,10 @@ import javax.validation.GroupSequence;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * Hold the data of and validate a registration request.
+ */
+@SuppressWarnings("checkstyle:magicnumber")
 @GroupSequence({RegistrationRequest.class, RegistrationRequest.OrderFirst.class, RegistrationRequest.OrderSecond.class})
 public class RegistrationRequest {
 
@@ -70,9 +74,15 @@ public class RegistrationRequest {
         this.race = race;
     }
 
+    /**
+     * Dummy interface used for ordering.
+     */
     public interface OrderFirst {
     }
 
+    /**
+     * Dummy interface used for ordering.
+     */
     public interface OrderSecond {
     }
 }
