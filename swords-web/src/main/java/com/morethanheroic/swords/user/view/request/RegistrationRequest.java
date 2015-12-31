@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.user.view.request;
 
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.common.validator.annotation.StringEnumeration;
 import com.morethanheroic.swords.common.validator.annotation.UniqueInDb;
 import org.hibernate.validator.constraints.Email;
