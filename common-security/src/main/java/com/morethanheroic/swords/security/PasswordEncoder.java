@@ -3,6 +3,9 @@ package com.morethanheroic.swords.security;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Encode a password with a pre-defined salt and security level.
+ */
 @Service
 public class PasswordEncoder {
 

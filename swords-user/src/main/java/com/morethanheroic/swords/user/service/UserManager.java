@@ -22,7 +22,7 @@ public class UserManager {
 
     @Transactional
     public UserEntity createUser(String username, String password, String email, Race race) {
-        UserDatabaseEntity user = createNewUserEntity(username, password, email, race);
+        final UserDatabaseEntity user = createNewUserEntity(username, password, email, race);
 
         userMapper.insert(user);
 
@@ -31,7 +31,7 @@ public class UserManager {
 
     //TODO: Remove this crap? A facade shouldnt have private stuff lying around.
     private UserDatabaseEntity createNewUserEntity(String username, String password, String email, Race race) {
-        UserDatabaseEntity user = new UserDatabaseEntity(username, password);
+        final UserDatabaseEntity user = new UserDatabaseEntity(username, password);
 
         final Instant now = Instant.now();
 
