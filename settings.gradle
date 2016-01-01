@@ -21,4 +21,5 @@ include 'swords-session'
 include 'common-security'
 include 'common-validator'
 include 'common-dependency-injection'
+include 'swords-monster'
 

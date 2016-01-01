@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.domain.entity;
 
-import com.morethanheroic.swords.combat.domain.DiceAttribute;
+import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 
 public class MonsterCombatEntity extends CombatEntity {

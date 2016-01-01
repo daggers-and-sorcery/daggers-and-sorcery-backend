@@ -1,6 +1,6 @@
-package com.morethanheroic.swords.monster.service.response;
+package com.morethanheroic.swords.journal.service.response;
 
-import com.morethanheroic.swords.combat.domain.DiceAttribute;
+import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import org.springframework.stereotype.Service;
 

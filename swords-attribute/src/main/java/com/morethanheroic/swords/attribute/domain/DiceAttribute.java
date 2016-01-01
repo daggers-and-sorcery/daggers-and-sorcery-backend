@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.domain;
+package com.morethanheroic.swords.attribute.domain;
 
 public class DiceAttribute {
 

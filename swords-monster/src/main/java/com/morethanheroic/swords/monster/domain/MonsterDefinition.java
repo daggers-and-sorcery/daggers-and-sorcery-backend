@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.monster.domain;
 
-import com.morethanheroic.swords.combat.domain.DiceAttribute;
-import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
+import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class MonsterDefinition {
     private DiceAttribute damage;
     private DiceAttribute magicAttack;
     private DiceAttribute magicDamage;
-    private AttackType attackType;
+    private MonsterAttackType attackType;
     private List<DropDefinition> dropDefinitions;
     private List<ScavengingDefinition> scavengingDefinitions;
 
@@ -72,7 +71,7 @@ public class MonsterDefinition {
         return damage;
     }
 
-    public AttackType getAttackType() {
+    public MonsterAttackType getAttackType() {
         return attackType;
     }
 
@@ -156,7 +155,7 @@ public class MonsterDefinition {
             monsterDefinition.spellResistance = spellResistance;
         }
 
-        public void setAttackType(AttackType attackType) {
+        public void setAttackType(MonsterAttackType attackType) {
             monsterDefinition.attackType = attackType;
         }
 

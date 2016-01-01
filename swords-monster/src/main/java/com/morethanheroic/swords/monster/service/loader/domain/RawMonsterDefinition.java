@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.monster.service.loader.domain;
 
-import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
+import com.morethanheroic.swords.monster.domain.MonsterAttackType;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -33,7 +33,7 @@ public class RawMonsterDefinition {
     private RawDiceAttribute magicAttack;
     private RawDiceAttribute damage;
     @XmlElement(name = "attack-type")
-    private AttackType attackType;
+    private MonsterAttackType attackType;
 
     @XmlElementWrapper(name = "droplist")
     @XmlElement(name = "drop")
@@ -83,7 +83,7 @@ public class RawMonsterDefinition {
         return rangedDamage;
     }
 
-    public AttackType getAttackType() {
+    public MonsterAttackType getAttackType() {
         return attackType;
     }
 

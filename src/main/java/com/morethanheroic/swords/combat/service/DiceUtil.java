@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
-import com.morethanheroic.swords.combat.domain.DiceAttribute;
+import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
