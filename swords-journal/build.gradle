@@ -6,9 +6,6 @@ dependencies {
     compile project(':swords-monster')
     compile project(':swords-item')
     compile project(':swords-response')
-
-    //TODO: this shouldnt be here, we need to refactor it asap
-    compile project(':swords-web')
 }
 
 apply plugin: 'spring-boot'
