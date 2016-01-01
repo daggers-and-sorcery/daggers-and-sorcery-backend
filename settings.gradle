@@ -23,4 +23,5 @@ include 'common-validator'
 include 'common-dependency-injection'
 include 'swords-monster'
 include 'swords-journal'
+include 'swords-inventory'
 

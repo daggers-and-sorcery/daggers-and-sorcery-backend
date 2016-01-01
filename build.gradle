@@ -81,6 +81,7 @@ dependencies {
     compile project(':swords-journal')
     compile project(':swords-attribute')
     compile project(':swords-session')
+    compile project(':swords-inventory')
 }
 
 buildscript {
