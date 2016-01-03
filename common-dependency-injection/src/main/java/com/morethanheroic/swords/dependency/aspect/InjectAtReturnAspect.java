@@ -27,6 +27,7 @@ public class InjectAtReturnAspect {
         log.debug("Autowiring: " + result);
 
         autowireBeanFactory.autowireBean(result);
+        autowireBeanFactory.initializeBean(result, null);
 
         return result;
     }

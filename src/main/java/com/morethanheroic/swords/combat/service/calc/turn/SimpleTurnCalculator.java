@@ -12,7 +12,7 @@ import com.morethanheroic.swords.combat.service.calc.attack.RangedAttackCalculat
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
 import com.morethanheroic.swords.settings.service.executor.CombatSettingsExecutor;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.EquipmentManager;
+import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
     private AttackTypeCalculator attackTypeCalculator;
 
     @Autowired
-    private EquipmentManager equipmentManager;
+    private EquipmentFacade equipmentFacade;
 
     @Autowired
     private InitialisationCalculator initialisationCalculator;
@@ -92,6 +92,6 @@ public class SimpleTurnCalculator implements TurnCalculator {
     }
 
     private AttackType calculateUserAttackType(UserEntity userEntity) {
-        return attackTypeCalculator.calculateAttackType(equipmentManager.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON));
+        return attackTypeCalculator.calculateAttackType(equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON));
     }
 }

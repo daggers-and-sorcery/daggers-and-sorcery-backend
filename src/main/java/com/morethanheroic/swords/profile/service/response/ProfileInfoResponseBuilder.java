@@ -15,7 +15,7 @@ import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModi
 import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.EquipmentManager;
+import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
@@ -50,7 +50,7 @@ public class ProfileInfoResponseBuilder {
     private final ItemDefinitionCache itemDefinitionCache;
     private final AttributeUtil attributeUtil;
     private final InventoryFacade inventoryFacade;
-    private final EquipmentManager equipmentManager;
+    private final EquipmentFacade equipmentFacade;
     private final ResponseFactory responseFactory;
     private final ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder;
     private final SpellDefinitionCache spellDefinitionCache;
@@ -72,12 +72,12 @@ public class ProfileInfoResponseBuilder {
     private ScavengingFacade scavengingFacade;
 
     @Autowired
-    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionCache = itemDefinitionCache;
         this.attributeUtil = attributeUtil;
         this.inventoryFacade = inventoryFacade;
-        this.equipmentManager = equipmentManager;
+        this.equipmentFacade = equipmentFacade;
         this.responseFactory = responseFactory;
         this.profileIdentifiedItemEntryResponseBuilder = profileIdentifiedItemEntryResponseBuilder;
         this.spellDefinitionCache = spellDefinitionCache;
@@ -103,7 +103,7 @@ public class ProfileInfoResponseBuilder {
     private HashMap<String, HashMap<String, Object>> buildEquipmentResponse(UserEntity userEntity, HttpSession session) {
         HashMap<String, HashMap<String, Object>> equipmentHolder = new HashMap<>();
 
-        EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
+        EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             int equipment = equipmentEntity.getEquipmentIdOnSlot(slot);

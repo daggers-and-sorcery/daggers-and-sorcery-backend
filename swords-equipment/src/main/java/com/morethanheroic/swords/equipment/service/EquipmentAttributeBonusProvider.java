@@ -22,7 +22,7 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
     private static final int EMPTY_EQUIPMENT_SLOT = 0;
 
     @Autowired
-    private EquipmentManager equipmentManager;
+    private EquipmentFacade equipmentFacade;
 
     @Autowired
     private ItemDefinitionCache itemDefinitionCache;
@@ -36,7 +36,7 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
     @Override
     public AttributeCalculationResult calculateBonus(UserEntity userEntity, Attribute attribute) {
         final AttributeCalculationResult result = createAttributeCalculationResult(attribute);
-        final EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
+        final EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             final int item = equipmentEntity.getEquipmentIdOnSlot(slot);

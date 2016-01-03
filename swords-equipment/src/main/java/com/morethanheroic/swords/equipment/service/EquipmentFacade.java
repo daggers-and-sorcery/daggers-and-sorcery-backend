@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EquipmentManager {
-
-    @Autowired
-    private InventoryFacade inventoryFacade;
+public class EquipmentFacade {
 
     @Autowired
     private EquipmentMapper equipmentMapper;
@@ -21,7 +18,7 @@ public class EquipmentManager {
     @Memoize
     @InjectAtReturn
     public EquipmentEntity getEquipment(UserEntity userEntity) {
-        return new EquipmentEntity(userEntity, inventoryFacade.getInventory(userEntity));
+        return new EquipmentEntity(userEntity);
     }
 
     public void createEquipmentForUser(UserEntity userEntity) {

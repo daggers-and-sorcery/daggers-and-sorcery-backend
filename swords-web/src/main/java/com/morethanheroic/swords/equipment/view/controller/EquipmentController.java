@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.equipment.view.controller;
 
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.EquipmentManager;
+import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 @Lazy
 public class EquipmentController {
 
-    private final EquipmentManager equipmentManager;
+    private final EquipmentFacade equipmentFacade;
     private final InventoryFacade inventoryFacade;
     private final ItemDefinitionCache itemDefinitionCache;
     private final EquipmentResponseBuilder equipmentResponseBuilder;
@@ -30,10 +30,10 @@ public class EquipmentController {
     private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
 
     @Autowired
-    public EquipmentController(InventoryFacade inventoryFacade, ItemDefinitionCache itemDefinitionCache, EquipmentManager equipmentManager, EquipmentResponseBuilder equipmentResponseBuilder) {
+    public EquipmentController(InventoryFacade inventoryFacade, ItemDefinitionCache itemDefinitionCache, EquipmentFacade equipmentFacade, EquipmentResponseBuilder equipmentResponseBuilder) {
         this.inventoryFacade = inventoryFacade;
         this.itemDefinitionCache = itemDefinitionCache;
-        this.equipmentManager = equipmentManager;
+        this.equipmentFacade = equipmentFacade;
         this.equipmentResponseBuilder = equipmentResponseBuilder;
     }
 
@@ -46,7 +46,7 @@ public class EquipmentController {
         }
 
         if (inventoryFacade.getInventory(user).hasItem(itemId, identifiedItem) && itemDefinitionCache.getDefinition(itemId).isEquipment()) {
-            if (equipmentManager.getEquipment(user).equipItem(itemDefinitionCache.getDefinition(itemId), identifiedItem)) {
+            if (equipmentFacade.getEquipment(user).equipItem(itemDefinitionCache.getDefinition(itemId), identifiedItem)) {
                 return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }
         }
@@ -58,7 +58,7 @@ public class EquipmentController {
     @RequestMapping(value = "/unequip/{slotId}", method = RequestMethod.GET)
     public Response unequip(UserEntity user, @PathVariable String slotId) {
         //TODO has enough inventory slots
-        equipmentManager.getEquipment(user).unequipItem(EquipmentSlot.valueOf(slotId));
+        equipmentFacade.getEquipment(user).unequipItem(EquipmentSlot.valueOf(slotId));
 
         return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
     }
