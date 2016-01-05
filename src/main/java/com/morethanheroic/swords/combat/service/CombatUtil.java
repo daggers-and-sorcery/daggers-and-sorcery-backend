@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.EquipmentManager;
+import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.skill.domain.SkillType;
@@ -16,13 +16,13 @@ public class CombatUtil {
 
     private final SkillFacade skillFacade;
     private final SkillTypeCalculator skillTypeCalculator;
-    private final EquipmentManager equipmentManager;
+    private final EquipmentFacade equipmentFacade;
 
     @Autowired
-    public CombatUtil(SkillFacade skillFacade, SkillTypeCalculator skillTypeCalculator, EquipmentManager equipmentManager) {
+    public CombatUtil(SkillFacade skillFacade, SkillTypeCalculator skillTypeCalculator, EquipmentFacade equipmentFacade) {
         this.skillFacade = skillFacade;
         this.skillTypeCalculator = skillTypeCalculator;
-        this.equipmentManager = equipmentManager;
+        this.equipmentFacade = equipmentFacade;
     }
 
     public int getUserWeaponSkillLevel(UserEntity user) {
@@ -66,7 +66,7 @@ public class CombatUtil {
     }
 
     public ItemType getUserWeaponType(UserEntity user) {
-        ItemDefinition itemDefinition = equipmentManager.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
+        ItemDefinition itemDefinition = equipmentFacade.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
 
         if(itemDefinition == null) {
             return null;
@@ -76,7 +76,7 @@ public class CombatUtil {
     }
 
     public ItemType getUserArmorType(UserEntity user) {
-        ItemDefinition itemDefinition = equipmentManager.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.CHEST);
+        ItemDefinition itemDefinition = equipmentFacade.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.CHEST);
 
         if(itemDefinition == null) {
             return null;

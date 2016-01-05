@@ -15,4 +15,8 @@ public class SettingsManager {
     public SettingsEntity getSettings(UserEntity userEntity) {
         return new SettingsEntity(settingsMapper.getSettings(userEntity.getId()));
     }
+
+    public void createSettingsForUser(UserEntity userEntity) {
+        settingsMapper.insert(userEntity.getId());
+    }
 }

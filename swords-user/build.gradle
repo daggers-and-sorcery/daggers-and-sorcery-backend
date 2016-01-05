@@ -1,9 +1,13 @@
 dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
 
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+
+    compile project(':common-memoize')
+    compile project(':common-security')
 
     compile project(':swords-race')
 }

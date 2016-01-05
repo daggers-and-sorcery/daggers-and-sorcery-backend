@@ -15,7 +15,11 @@ public class SkillFacade {
     @Autowired
     private SkillMapper skillMapper;
 
-    public SkillEntity getSkills(UserEntity user) {
-        return new SkillEntity(user, skillMapper);
+    public SkillEntity getSkills(UserEntity userEntity) {
+        return new SkillEntity(userEntity, skillMapper);
+    }
+
+    public void createSkillsForUser(UserEntity userEntity) {
+        skillMapper.insert(userEntity.getId());
     }
 }

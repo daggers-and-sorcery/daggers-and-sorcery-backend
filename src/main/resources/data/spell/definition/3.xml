@@ -9,6 +9,6 @@
     <spell:combat-spell>false</spell:combat-spell>
     <spell:open-page>true</spell:open-page>
     <spell:effect-list>
-        <spell:effect target="com.morethanheroic.swords.combat.domain.effect.entry.LesserIdentifyEffect"/>
+        <spell:effect target="com.morethanheroic.swords.combat.domain.effect.entry.LesserIdentifyEffectDefinition"/>
     </spell:effect-list>
 </spell:spell>

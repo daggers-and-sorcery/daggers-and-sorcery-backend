@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.domain.entity;
 
-import com.morethanheroic.swords.combat.domain.DiceAttribute;
+import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 
 public abstract class CombatEntity {
 

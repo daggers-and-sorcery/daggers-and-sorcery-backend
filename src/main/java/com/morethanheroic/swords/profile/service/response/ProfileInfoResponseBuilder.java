@@ -5,15 +5,17 @@ import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.AttributeData;
-import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
-import com.morethanheroic.swords.attribute.service.calc.domain.SkillAttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
+import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.EquipmentManager;
+import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
@@ -34,7 +36,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +50,7 @@ public class ProfileInfoResponseBuilder {
     private final ItemDefinitionCache itemDefinitionCache;
     private final AttributeUtil attributeUtil;
     private final InventoryFacade inventoryFacade;
-    private final EquipmentManager equipmentManager;
+    private final EquipmentFacade equipmentFacade;
     private final ResponseFactory responseFactory;
     private final ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder;
     private final SpellDefinitionCache spellDefinitionCache;
@@ -66,12 +72,12 @@ public class ProfileInfoResponseBuilder {
     private ScavengingFacade scavengingFacade;
 
     @Autowired
-    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentManager equipmentManager, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
+    public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
         this.globalAttributeCalculator = globalAttributeCalculator;
         this.itemDefinitionCache = itemDefinitionCache;
         this.attributeUtil = attributeUtil;
         this.inventoryFacade = inventoryFacade;
-        this.equipmentManager = equipmentManager;
+        this.equipmentFacade = equipmentFacade;
         this.responseFactory = responseFactory;
         this.profileIdentifiedItemEntryResponseBuilder = profileIdentifiedItemEntryResponseBuilder;
         this.spellDefinitionCache = spellDefinitionCache;
@@ -97,7 +103,7 @@ public class ProfileInfoResponseBuilder {
     private HashMap<String, HashMap<String, Object>> buildEquipmentResponse(UserEntity userEntity, HttpSession session) {
         HashMap<String, HashMap<String, Object>> equipmentHolder = new HashMap<>();
 
-        EquipmentEntity equipmentEntity = equipmentManager.getEquipment(userEntity);
+        EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             int equipment = equipmentEntity.getEquipmentIdOnSlot(slot);
@@ -108,9 +114,9 @@ public class ProfileInfoResponseBuilder {
                 slotData.put("empty", true);
             } else {
                 if (equipmentEntity.isEquipmentIdentifiedOnSlot(slot)) {
-                    slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment)));
+                    slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment)));
                 } else {
-                    slotData.put("description", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(equipment), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, equipment)));
+                    slotData.put("description", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, equipment)));
                 }
             }
 
@@ -133,9 +139,9 @@ public class ProfileInfoResponseBuilder {
             itemData.put("item", convertItemDatabaseEntityToSendableObject(item));
 
             if (item.isIdentified()) {
-                itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId())));
+                itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId())));
             } else {
-                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getItemDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, item.getItemId())));
+                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, item.getItemId())));
             }
 
             inventoryData.add(itemData);
@@ -165,7 +171,7 @@ public class ProfileInfoResponseBuilder {
         }
         attributeResponse.put("maximum", attributeData.getMaximum());
         attributeResponse.put("attribute", buildAttributeInfo(attribute));
-        attributeResponse.put("modifierDataArray", buildAttributeModifiers(attribute, attributeData.getModifierDataArray()));
+        attributeResponse.put("modifierDataArray", buildAttributeModifiers(attribute, attributeData.getModifierData()));
         if (attribute.getAttributeType() == AttributeType.GENERAL) {
             attributeResponse.put("pointsToNextLevel", ((GeneralAttributeData) attributeData).getPointsToNextLevel());
         } else if (attribute.getAttributeType() == AttributeType.SKILL) {
@@ -180,20 +186,24 @@ public class ProfileInfoResponseBuilder {
     private String formatCombatAttributeModifier(AttributeCalculationResult attributeModifierValue) {
         String result = String.valueOf(attributeModifierValue.getValue());
 
-        if (attributeModifierValue.getD2() > 0) {
-            result += " + " + attributeModifierValue.getD2() + "d2";
-        }
-        if (attributeModifierValue.getD4() > 0) {
-            result += " + " + attributeModifierValue.getD4() + "d4";
-        }
-        if (attributeModifierValue.getD6() > 0) {
-            result += " + " + attributeModifierValue.getD6() + "d6";
-        }
-        if (attributeModifierValue.getD8() > 0) {
-            result += " + " + attributeModifierValue.getD8() + "d8";
-        }
-        if (attributeModifierValue.getD10() > 0) {
-            result += " + " + attributeModifierValue.getD10() + "d10";
+        if (attributeModifierValue instanceof CombatAttributeCalculationResult) {
+            final CombatAttributeCalculationResult combatAttributeCalculationResult = (CombatAttributeCalculationResult) attributeModifierValue;
+
+            if (combatAttributeCalculationResult.getD2() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD2() + "d2";
+            }
+            if (combatAttributeCalculationResult.getD4() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD4() + "d4";
+            }
+            if (combatAttributeCalculationResult.getD6() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD6() + "d6";
+            }
+            if (combatAttributeCalculationResult.getD8() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD8() + "d8";
+            }
+            if (combatAttributeCalculationResult.getD10() > 0) {
+                result += " + " + combatAttributeCalculationResult.getD10() + "d10";
+            }
         }
 
         return result;
@@ -219,7 +229,7 @@ public class ProfileInfoResponseBuilder {
             HashMap<String, Object> attributeModifierResponse = new HashMap<>();
 
             attributeModifierResponse.put("attributeModifierType", attributeModifierEntry.getAttributeModifierType().name());
-            attributeModifierResponse.put("attributeModifierValueType", attributeModifierEntry.getAttributeModifierValueType().name());
+            attributeModifierResponse.put("attributeModifierValueType", attributeModifierEntry.getAttributeModifierUnitType().name());
             if (attribute.getAttributeType() == AttributeType.COMBAT) {
                 attributeModifierResponse.put("attributeModifierValue", formatCombatAttributeModifier(attributeModifierEntry.getAttributeModifierValue()));
             } else {
@@ -235,20 +245,24 @@ public class ProfileInfoResponseBuilder {
     private String formatCombatAttributeModifier(AttributeModifierValue attributeModifierValue) {
         String result = String.valueOf(attributeModifierValue.getValue());
 
-        if (attributeModifierValue.getD2() > 0) {
-            result += " + " + attributeModifierValue.getD2() + "d2";
-        }
-        if (attributeModifierValue.getD4() > 0) {
-            result += " + " + attributeModifierValue.getD4() + "d4";
-        }
-        if (attributeModifierValue.getD6() > 0) {
-            result += " + " + attributeModifierValue.getD6() + "d6";
-        }
-        if (attributeModifierValue.getD8() > 0) {
-            result += " + " + attributeModifierValue.getD8() + "d8";
-        }
-        if (attributeModifierValue.getD10() > 0) {
-            result += " + " + attributeModifierValue.getD10() + "d10";
+        if (attributeModifierValue instanceof CombatAttributeModifierValue) {
+            final CombatAttributeModifierValue combatAttributeModifierValue = (CombatAttributeModifierValue) attributeModifierValue;
+
+            if (combatAttributeModifierValue.getD2() > 0) {
+                result += " + " + combatAttributeModifierValue.getD2() + "d2";
+            }
+            if (combatAttributeModifierValue.getD4() > 0) {
+                result += " + " + combatAttributeModifierValue.getD4() + "d4";
+            }
+            if (combatAttributeModifierValue.getD6() > 0) {
+                result += " + " + combatAttributeModifierValue.getD6() + "d6";
+            }
+            if (combatAttributeModifierValue.getD8() > 0) {
+                result += " + " + combatAttributeModifierValue.getD8() + "d8";
+            }
+            if (combatAttributeModifierValue.getD10() > 0) {
+                result += " + " + combatAttributeModifierValue.getD10() + "d10";
+            }
         }
 
         return result;

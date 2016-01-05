@@ -1,0 +1,12 @@
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile project(':swords-journal')
+    compile project(':swords-money')
+    compile project(':swords-user')
+    compile project(':swords-session')
+}
+
+apply plugin: 'spring-boot'

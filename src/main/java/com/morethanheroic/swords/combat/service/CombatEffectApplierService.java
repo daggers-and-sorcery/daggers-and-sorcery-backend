@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.service;
 
-import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -19,13 +19,13 @@ public class CombatEffectApplierService {
     @Autowired
     private CombatEffectServiceAccessor combatEffectServiceAccessor;
 
-    public void applyEffects(CombatEntity combatEntity, List<CombatEffect> combatEffects, CombatEffectDataHolder combatEffectDataHolder) {
-        for (CombatEffect combatEffect : combatEffects) {
+    public void applyEffects(CombatEntity combatEntity, List<CombatEffectDefinition> combatEffects, CombatEffectDataHolder combatEffectDataHolder) {
+        for (CombatEffectDefinition combatEffect : combatEffects) {
             applyEffect(combatEntity, combatEffect, combatEffectDataHolder);
         }
     }
 
-    public void applyEffect(CombatEntity combatEntity, CombatEffect combatEffect, CombatEffectDataHolder combatEffectDataHolder) {
+    public void applyEffect(CombatEntity combatEntity, CombatEffectDefinition combatEffect, CombatEffectDataHolder combatEffectDataHolder) {
         combatEffect.apply(combatEntity, combatEffectDataHolder, combatEffectServiceAccessor);
     }
 }

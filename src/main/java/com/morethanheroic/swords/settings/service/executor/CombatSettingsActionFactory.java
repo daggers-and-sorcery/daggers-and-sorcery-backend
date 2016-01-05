@@ -6,7 +6,7 @@ import com.morethanheroic.swords.settings.service.executor.action.ManaCombatSett
 import com.morethanheroic.swords.settings.service.executor.action.MonsterCombatSettings;
 import com.morethanheroic.swords.settings.service.executor.action.TurnCombatSettings;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.item.service.UseItemService;
+import com.morethanheroic.swords.combat.service.UseItemService;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.spell.service.UseSpellService;
 import org.springframework.beans.factory.annotation.Autowired;

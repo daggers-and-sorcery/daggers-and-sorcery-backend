@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.service.calc.domain.GeneralAttributeData;
+import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -46,7 +46,7 @@ public class GeneralAttributeCalculatorTest {
 
         assertEquals(attributeDataStrength.getActual().getValue(), 12);
         assertEquals(attributeDataStrength.getMaximum().getValue(), 0);
-        assertEquals(attributeDataStrength.getModifierDataArray(), null);
+        assertEquals(attributeDataStrength.getModifierData(), null);
         assertEquals(attributeDataStrength.getAttribute(), GeneralAttribute.STRENGTH);
         assertEquals(attributeDataStrength.getPointsToNextLevel(), 8);
     }

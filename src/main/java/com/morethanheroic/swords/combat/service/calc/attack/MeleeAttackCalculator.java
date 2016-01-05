@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
-import com.morethanheroic.swords.attribute.service.DiceUtil;
+import com.morethanheroic.swords.combat.service.DiceUtil;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;

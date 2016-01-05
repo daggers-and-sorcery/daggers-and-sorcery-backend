@@ -65,7 +65,7 @@ public class ShopSellStockController {
         //TODO: Check that the player is on the shop's position except if its the main shop
         //TODO: Use main shop rates if the player using the main shop
 
-        ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(itemId);
+        ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(itemId);
 
         if(itemDefinition.getType() == ItemType.COIN) {
             throw new ConflictException();

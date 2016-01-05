@@ -1,14 +1,14 @@
 package com.morethanheroic.swords.spell.service.transformer;
 
-import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
-import com.morethanheroic.swords.effect.service.EffectTransformer;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
+import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionTransformer;
 import com.morethanheroic.swords.spell.domain.SkillAttributeRequirementDefinition;
 import com.morethanheroic.swords.spell.domain.SpellCost;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSkillAttributeRequirementDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellCost;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellDefinition;
-import com.morethanheroic.swords.spell.service.loader.domain.RawSpellEffect;
+import com.morethanheroic.swords.spell.service.loader.domain.RawSpellEffectDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class SpellDefinitionTransformer {
 
     @Autowired
-    private EffectTransformer combatEffectTransformer;
+    private EffectDefinitionTransformer combatEffectDefinitionTransformer;
 
     @Autowired
     private SkillAttributeRequirementDefinitionTransformer skillAttributeRequirementDefinitionTransformer;
@@ -44,14 +44,14 @@ public class SpellDefinitionTransformer {
         return spellDefinitionBuilder.build();
     }
 
-    private List<CombatEffect> transformCombatEffects(List<RawSpellEffect> effectList) {
-        List<CombatEffect> result = new ArrayList<>();
+    private List<CombatEffectDefinition> transformCombatEffects(List<RawSpellEffectDefinition> effectList) {
+        List<CombatEffectDefinition> result = new ArrayList<>();
 
         try {
             if (effectList != null) {
-                for (RawSpellEffect effect : effectList) {
+                for (RawSpellEffectDefinition effect : effectList) {
                     //TODO: Latr this can't only be a combat effect! Be careful with that
-                    result.add((CombatEffect) combatEffectTransformer.transform(effect));
+                    result.add((CombatEffectDefinition) combatEffectDefinitionTransformer.transform(effect));
                 }
             }
         } catch (Exception e) {

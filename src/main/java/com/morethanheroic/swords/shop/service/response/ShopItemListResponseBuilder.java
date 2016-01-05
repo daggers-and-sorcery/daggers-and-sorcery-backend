@@ -6,7 +6,6 @@ import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.item.service.response.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
@@ -79,7 +78,7 @@ public class ShopItemListResponseBuilder {
         List<Map<String, Object>> result = new ArrayList<>();
 
         for (ItemDatabaseEntity shopItem : inventoryEntity.getItems()) {
-            ItemDefinition itemDefinition = itemDefinitionCache.getItemDefinition(shopItem.getItemId());
+            ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(shopItem.getItemId());
 
             if(itemDefinition.getType() == ItemType.COIN) {
                 continue;

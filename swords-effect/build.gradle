@@ -2,6 +2,16 @@ dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
+
+    compile group: 'com.google.guava', name: 'guava', version: guava_version
+
+    compile project(':common-definition')
 }
 
 apply plugin: 'spring-boot'
+
+apply plugin: 'checkstyle'
+checkstyle checkstyle_config
+
+apply plugin: 'findbugs'
+findbugs findbugs_config

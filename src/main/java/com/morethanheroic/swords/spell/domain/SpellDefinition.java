@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.domain;
 
-import com.morethanheroic.swords.combat.domain.effect.CombatEffect;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +13,7 @@ public class SpellDefinition {
     private SpellType type;
     private boolean combatSpell;
     private boolean openPage = false;
-    private List<CombatEffect> combatEffects;
+    private List<CombatEffectDefinition> combatEffects;
     private List<SpellCost> rawSpellCosts = Collections.unmodifiableList(new ArrayList<>());
     private List<SkillAttributeRequirementDefinition> skillRequirements = Collections.unmodifiableList(new ArrayList<>());
 
@@ -33,7 +33,7 @@ public class SpellDefinition {
         return combatSpell;
     }
 
-    public List<CombatEffect> getCombatEffects() {
+    public List<CombatEffectDefinition> getCombatEffects() {
         return combatEffects;
     }
 
@@ -73,7 +73,7 @@ public class SpellDefinition {
             spellDefinition.openPage = openPage;
         }
 
-        public void setCombatEffects(List<CombatEffect> combatEffects) {
+        public void setCombatEffects(List<CombatEffectDefinition> combatEffects) {
             spellDefinition.combatEffects = combatEffects;
         }
 

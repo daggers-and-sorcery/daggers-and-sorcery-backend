@@ -22,7 +22,7 @@ public class ShopItemTransformer {
     public ShopItem transform(ShopItemDatabaseEntity shopItemDatabaseEntity) {
         return ShopItem.builder()
                 .itemAmount(shopItemDatabaseEntity.getItemAmount())
-                .item(itemDefinitionCache.getItemDefinition(shopItemDatabaseEntity.getItemId()))
+                .item(itemDefinitionCache.getDefinition(shopItemDatabaseEntity.getItemId()))
                 .shopId(shopItemDatabaseEntity.getShopId())
                 .build();
     }

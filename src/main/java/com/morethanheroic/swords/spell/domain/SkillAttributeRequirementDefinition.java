@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.spell.domain;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.domain.requirement.AttributeRequirementDefinition;
 
+//TODO: WRONG! Check the item module how this should have been implemented.
 public class SkillAttributeRequirementDefinition extends AttributeRequirementDefinition {
 
     private SkillAttribute attribute;
