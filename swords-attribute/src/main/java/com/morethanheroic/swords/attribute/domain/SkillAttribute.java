@@ -2,11 +2,13 @@ package com.morethanheroic.swords.attribute.domain;
 
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.WordUtils;
+
+import java.util.Locale;
 
 /**
  * The {@link AttributeType#SKILL} attributes.
  */
-@RequiredArgsConstructor
 public enum SkillAttribute implements Attribute {
 
     //TODO: Load these values from an xml file and use an SkillAttributeDefinition class.
@@ -35,6 +37,13 @@ public enum SkillAttribute implements Attribute {
     COOKING(GeneralAttribute.VITALITY);
 
     private final GeneralAttribute incrementedAttribute;
+    private final String name;
+
+    SkillAttribute(GeneralAttribute incrementedAttribute) {
+        this.incrementedAttribute = incrementedAttribute;
+
+        this.name = WordUtils.capitalize(this.name().replace("_", " ").toLowerCase(Locale.ENGLISH));
+    }
 
     @Override
     public AttributeType getAttributeType() {
@@ -53,7 +62,7 @@ public enum SkillAttribute implements Attribute {
 
     @Override
     public String getName() {
-        return this.name();
+        return name;
     }
 
     public GeneralAttribute getIncrementedAttribute() {
