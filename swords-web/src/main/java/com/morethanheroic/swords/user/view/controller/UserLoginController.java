@@ -42,25 +42,29 @@ public class UserLoginController {
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public Response login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
         //TODO: Move this to UserFacade (UserManager atm) when it's moved out of the main swords package into its own module.
-        final UserDatabaseEntity user = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
-        final UserEntity userEntity = new UserEntity(user.getId(), userMapper);
-
-        final Response response = responseFactory.newResponse(userEntity);
-
+        final UserDatabaseEntity userDatabaseEntity = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
+        
         //TODO: In this if use something like is userFacade.isExistingUser(userEntity) and move getUser inside the if
         //TODO: Create response builders for this and separate action from response building.
-        if (userEntity != null) {
+        if (userDatabaseEntity != null) {
+            final UserEntity userEntity = new UserEntity(userDatabaseEntity.getId(), userMapper);
+            final Response response = responseFactory.newResponse(userEntity);
+
             response.setData("success", "true");
 
-            session.setAttribute(SessionAttributeType.USER_ID.name(), user.getId());
+            session.setAttribute(SessionAttributeType.USER_ID.name(), userDatabaseEntity.getId());
 
-            userMapper.updateLastLoginDate(user);
+            userMapper.updateLastLoginDate(userDatabaseEntity);
+
+            return response;
         } else {
+            final Response response = responseFactory.newResponse(LOGGED_OUT_USER);
+
             response.setData("success", "false");
             response.setData("error", "Wrong username or password!");
-        }
 
-        return response;
+            return response;
+        }
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
