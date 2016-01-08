@@ -1,26 +1,29 @@
 package com.morethanheroic.swords.user.view.request;
 
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.common.validator.annotation.StringEnumeration;
-import com.morethanheroic.swords.common.validator.annotation.UniqueInDb;
+import com.morethanheroic.swords.validator.annotation.StringEnumeration;
+import com.morethanheroic.swords.validator.annotation.UniqueInDatabaseTable;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.GroupSequence;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.validation.groups.Default;
 
+/**
+ * Hold the data of and validate a registration request.
+ */
+@SuppressWarnings("checkstyle:magicnumber")
 @GroupSequence({RegistrationRequest.class, RegistrationRequest.OrderFirst.class, RegistrationRequest.OrderSecond.class})
 public class RegistrationRequest {
 
     //TODO: refactor UniqueInDb to its own common-validation module also rename it to UniqueInDatabase.
     @NotNull(message = "Email is required.")
     @Email(message = "Email must be a valid email.")
-    @UniqueInDb(field = "email", model = "users", message = "An user with this email already exists.", groups = OrderFirst.class)
+    @UniqueInDatabaseTable(field = "email", table = "users", message = "An user with this email already exists.", groups = OrderFirst.class)
     private String email;
     @NotNull(message = "Username is required.")
     @Size(min = 6, max = 16, message = "Username must be between 6 and 16 characters.")
-    @UniqueInDb(field = "username", model = "users", message = "An user with this username already exists.", groups = OrderSecond.class)
+    @UniqueInDatabaseTable(field = "username", table = "users", message = "An user with this username already exists.", groups = OrderSecond.class)
     private String username;
     @NotNull(message = "Password is required.")
     @Size(min = 6, max = 16, message = "Password must be between 6 and 16 characters.")
@@ -71,8 +74,15 @@ public class RegistrationRequest {
         this.race = race;
     }
 
+    /**
+     * Dummy interface used for ordering.
+     */
     public interface OrderFirst {
     }
+
+    /**
+     * Dummy interface used for ordering.
+     */
     public interface OrderSecond {
     }
 }

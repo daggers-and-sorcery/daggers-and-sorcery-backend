@@ -65,7 +65,10 @@ dependencies {
     compile project(':xml-loader')
     compile project(':common-memoize')
     compile project(':common-session')
+    compile project(':common-validator')
+    compile project(':common-dependency-injection')
 
+    compile project(':swords-equipment')
     compile project(':swords-user')
     compile project(':swords-response')
     compile project(':swords-skill')
@@ -75,8 +78,11 @@ dependencies {
     compile project(':swords-web')
     compile project(':swords-money')
     compile project(':swords-item')
+    compile project(':swords-monster')
+    compile project(':swords-journal')
     compile project(':swords-attribute')
     compile project(':swords-session')
+    compile project(':swords-inventory')
 }
 
 buildscript {

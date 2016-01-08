@@ -24,7 +24,7 @@ public class MovementFacade {
         return new MovementEntity(movementMapper.findEntity(userEntity.getId()), movementMapper, mapManager);
     }
 
-    public void createNewMovementEntity(UserEntity userEntity) {
+    public void createMovementForUser(UserEntity userEntity) {
         movementMapper.createNewPosition(userEntity.getId(), STARTING_MAP_ID, STARTING_POSITION_X, STARTING_POSITION_Y);
     }
 }

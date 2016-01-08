@@ -1,0 +1,4 @@
+[Refactor]:
+
+    - Move all response builders to web.
+    - Remove dependency on spring-boot-starter-web.

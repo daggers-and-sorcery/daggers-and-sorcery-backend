@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.common.resolver;
 
-import com.morethanheroic.swords.common.session.SessionAttributeType;
+import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import com.morethanheroic.swords.user.service.UserManager;
+import com.morethanheroic.swords.user.service.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class UserEntityHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Autowired
-    private UserManager userManager;
+    private UserFacade userFacade;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -31,6 +31,6 @@ public class UserEntityHandlerMethodArgumentResolver implements HandlerMethodArg
             return null;
         }
 
-        return userManager.getUser((int) session.getAttribute(SessionAttributeType.USER_ID.name()));
+        return userFacade.getUser((int) session.getAttribute(SessionAttributeType.USER_ID.name()));
     }
 }

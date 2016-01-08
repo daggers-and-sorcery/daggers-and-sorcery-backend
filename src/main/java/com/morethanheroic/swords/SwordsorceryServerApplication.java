@@ -2,7 +2,8 @@ package com.morethanheroic.swords;
 
 import com.morethanheroic.swords.common.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.common.resolver.UserEntityHandlerMethodArgumentResolver;
-import com.morethanheroic.swords.common.session.filter.SessionLoginFilter;
+import com.morethanheroic.swords.session.SessionAttributeType;
+import com.morethanheroic.swords.session.filter.SessionLoginFilter;
 import com.morethanheroic.swords.common.sql.InstantHandler;
 import com.morethanheroic.swords.common.sql.LocalDateHandler;
 import com.morethanheroic.swords.common.sql.LocalTimeHandler;
@@ -26,6 +27,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -61,12 +63,12 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     @Bean
     public FilterRegistrationBean filterSessionLoginBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        SessionLoginFilter sessionFilter = new SessionLoginFilter();
+        SessionLoginFilter sessionFilter = new SessionLoginFilter(SessionAttributeType.USER_ID.name());
 
         registrationBean.setFilter(sessionFilter);
 
         ArrayList<String> urlPatterns = new ArrayList<>();
-        urlPatterns.add("/user/logout");
+        urlPatterns.add("/userEntity/logout");
         urlPatterns.add("/character/*");
         urlPatterns.add("/map/*");
         urlPatterns.add("/shop/*");
@@ -174,5 +176,10 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
         }
 
         return redisConnectionFactory;
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
     }
 }

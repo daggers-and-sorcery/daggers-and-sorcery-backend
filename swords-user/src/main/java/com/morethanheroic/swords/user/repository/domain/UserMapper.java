@@ -23,8 +23,8 @@ public interface UserMapper {
     @Select("SELECT * FROM users WHERE id = #{id}")
     UserDatabaseEntity findById(int id);
 
-    @Update("UPDATE users SET last_login_date = NOW() WHERE id = #{id} AND email = #{email} AND username = #{username}")
-    void updateLastLoginDate(UserDatabaseEntity user);
+    @Update("UPDATE users SET last_login_date = NOW() WHERE id = #{id}")
+    void updateLastLoginDate(@Param("id") int id);
 
     @Update("UPDATE users SET scavenging_point= #{scavenging_point} WHERE id = #{userId}")
     void updateScavengingPoint(@Param("userId") int userId, @Param("scavenging_point") int scavengingPoint);
