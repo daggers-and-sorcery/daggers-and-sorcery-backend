@@ -43,7 +43,7 @@ public class UserLoginController {
     public Response login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
         //TODO: Move this to UserFacade (UserManager atm) when it's moved out of the main swords package into its own module.
         final UserDatabaseEntity userDatabaseEntity = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
-        
+
         //TODO: In this if use something like is userFacade.isExistingUser(userEntity) and move getUser inside the if
         //TODO: Create response builders for this and separate action from response building.
         if (userDatabaseEntity != null) {
