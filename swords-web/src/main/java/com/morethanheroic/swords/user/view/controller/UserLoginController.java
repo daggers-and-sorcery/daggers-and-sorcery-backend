@@ -53,9 +53,9 @@ public class UserLoginController {
         } else {
             response.setData("success", "false");
             response.setData("error", "Wrong username or password!");
-
-            return response;
         }
+
+        return response;
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
