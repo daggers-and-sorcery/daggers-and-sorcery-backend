@@ -25,7 +25,9 @@ import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
 import com.morethanheroic.swords.skill.service.SkillFacade;
@@ -46,7 +48,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ProfileInfoResponseBuilder {
+public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoResponseBuilderConfiguration> {
 
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemDefinitionCache itemDefinitionCache;
@@ -89,8 +91,11 @@ public class ProfileInfoResponseBuilder {
         this.spellMapper = spellMapper;
     }
 
-    public Response build(UserEntity user, HttpSession session) {
-        Response response = responseFactory.newResponse(user);
+    public Response build(ProfileInfoResponseBuilderConfiguration profileInfoResponseBuilderConfiguration) {
+        UserEntity user = profileInfoResponseBuilderConfiguration.getUserEntity();
+        HttpSession session = profileInfoResponseBuilderConfiguration.getHttpSession();
+
+        CharacterRefreshResponse response = responseFactory.newResponse(user);
 
         response.setData("attribute", buildAttributeResponse(user));
         response.setData("username", user.getUsername());

@@ -6,7 +6,7 @@ import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -38,7 +38,7 @@ public class EquipmentController {
     }
 
     @RequestMapping(value = "/equip/{itemId}", method = RequestMethod.GET)
-    public Response equip(UserEntity user, HttpSession session, @PathVariable int itemId) {
+    public CharacterRefreshResponse equip(UserEntity user, HttpSession session, @PathVariable int itemId) {
         boolean identifiedItem = unidentifiedItemIdCalculator.isIdentifiedItem(itemId);
 
         if (!identifiedItem) {
@@ -56,7 +56,7 @@ public class EquipmentController {
 
 
     @RequestMapping(value = "/unequip/{slotId}", method = RequestMethod.GET)
-    public Response unequip(UserEntity user, @PathVariable String slotId) {
+    public CharacterRefreshResponse unequip(UserEntity user, @PathVariable String slotId) {
         //TODO has enough inventory slots
         equipmentFacade.getEquipment(user).unequipItem(EquipmentSlot.valueOf(slotId));
 

@@ -5,7 +5,7 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.profile.service.response.ProfileInfoResponseBuilder;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -28,7 +28,7 @@ public class ProfileInfoResponseBuilderServiceTest {
     public void testBuild() {
         ProfileInfoResponseBuilder profileInfoResponseBuilder = new ProfileInfoResponseBuilder(buildGlobalAttributeCalculatorMock(), mock(ItemDefinitionCache.class), buildAttributeUtilMock(), buildInventoryManagerMock(), null, null, null, null, null);
 
-        Response response = profileInfoResponseBuilder.build(buildUserEntityMock(), mock(HttpSession.class));
+        CharacterRefreshResponse response = profileInfoResponseBuilder.build(buildUserEntityMock(), mock(HttpSession.class));
 
         assertEquals(response.getDataMap(), buildExpectedResult());
     }

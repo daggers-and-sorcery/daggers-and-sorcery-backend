@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.view.controller;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalEntryResponseBuilder;
 import com.morethanheroic.swords.journal.service.JournalListResponseBuilder;
@@ -27,12 +27,12 @@ public class JournalController {
     }
 
     @RequestMapping(value = "/journal/list/{journal_type}", method = RequestMethod.GET)
-    public Response listJournal(UserEntity userEntity, @PathVariable("journal_type") JournalType journalType) {
+    public CharacterRefreshResponse listJournal(UserEntity userEntity, @PathVariable("journal_type") JournalType journalType) {
         return journalListResponseBuilder.build(userEntity, journalType);
     }
 
     @RequestMapping(value = "/journal/entry/{journal_type}/{journal_id}", method = RequestMethod.GET)
-    public Response journalEntry(UserEntity userEntity, @PathVariable("journal_type") JournalType journalType, @PathVariable("journal_id") int journalId) {
+    public CharacterRefreshResponse journalEntry(UserEntity userEntity, @PathVariable("journal_type") JournalType journalType, @PathVariable("journal_id") int journalId) {
         if (journalManager.hasJournal(userEntity, journalType, journalId)) {
             return journalEntryResponseBuilder.build(userEntity, journalType, journalId);
         } else {

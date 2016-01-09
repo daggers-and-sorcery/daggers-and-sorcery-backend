@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.settings.service;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
@@ -28,8 +28,8 @@ public class UsableSpellsResponseBuilder {
         this.spellDefinitionCache = spellDefinitionCache;
     }
 
-    public Response build(UserEntity userEntity) {
-        Response response =  responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity) {
+        CharacterRefreshResponse response =  responseFactory.newResponse(userEntity);
         ArrayList<HashMap<String, Object>> spelllist = new ArrayList<>();
 
         List<SpellDatabaseEntity> spells = spellMapper.getAllSpellsForUser(userEntity.getId());

@@ -6,7 +6,7 @@ import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.service.response.UnidentifiedItemEntryResponseBuilder;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.spell.service.page.PageEntryDataContainer;
 import com.morethanheroic.swords.spell.service.page.SpellPageEntry;
@@ -34,8 +34,8 @@ public class LesserIdentificationPageEntry extends SpellPageEntry {
     }
 
     @Override
-    public Response build(PageEntryDataContainer pageEntryDataContainer) {
-        Response response = responseFactory.newResponse(pageEntryDataContainer.getUserEntity());
+    public CharacterRefreshResponse build(PageEntryDataContainer pageEntryDataContainer) {
+        CharacterRefreshResponse response = responseFactory.newResponse(pageEntryDataContainer.getUserEntity());
         InventoryEntity inventory = inventoryFacade.getInventory(pageEntryDataContainer.getUserEntity());
         List<ItemDatabaseEntity> unidentifiedItems = inventory.getItems(false);
 

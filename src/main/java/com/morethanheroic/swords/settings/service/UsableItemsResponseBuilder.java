@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.settings.service;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -25,8 +25,8 @@ public class UsableItemsResponseBuilder {
         this.itemDefinitionCache = itemDefinitionCache;
     }
 
-    public Response build(UserEntity userEntity, List<JournalDatabaseEntity> journalItems) {
-        Response response = responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity, List<JournalDatabaseEntity> journalItems) {
+        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         ArrayList<HashMap<String, Object>> itemsResult = new ArrayList<>();
         for(JournalDatabaseEntity journalEntry : journalItems) {
