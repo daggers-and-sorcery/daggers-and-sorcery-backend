@@ -2,8 +2,10 @@ package com.morethanheroic.swords.profile.service.response;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
+import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
@@ -70,6 +72,9 @@ public class ProfileInfoResponseBuilder {
 
     @Autowired
     private ScavengingFacade scavengingFacade;
+
+    @Autowired
+    private SkillAttributeDefinitionCache skillAttributeDefinitionCache;
 
     @Autowired
     public ProfileInfoResponseBuilder(GlobalAttributeCalculator globalAttributeCalculator, ItemDefinitionCache itemDefinitionCache, AttributeUtil attributeUtil, InventoryFacade inventoryFacade, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
@@ -212,9 +217,15 @@ public class ProfileInfoResponseBuilder {
     private HashMap<String, Object> buildAttributeInfo(Attribute attribute) {
         HashMap<String, Object> attributeDataResponse = new HashMap<>();
 
-        attributeDataResponse.put("name", attribute.getName());
+        if (attribute.getAttributeType() == AttributeType.SKILL) {
+            attributeDataResponse.put("name", skillAttributeDefinitionCache.getDefinition((SkillAttribute) attribute).getName());
+        } else {
+            attributeDataResponse.put("name", attribute.getName());
+        }
+
         attributeDataResponse.put("initialValue", attribute.getInitialValue());
         attributeDataResponse.put("attributeType", attribute.getAttributeType().name());
+
         if (attribute.getAttributeType() == AttributeType.GENERAL) {
             attributeDataResponse.put("generalAttributeType", ((GeneralAttribute) attribute).getGeneralAttributeType().name());
         }

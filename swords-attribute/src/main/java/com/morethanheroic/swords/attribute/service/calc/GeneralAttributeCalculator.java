@@ -4,6 +4,7 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeFacade;
+import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
@@ -30,6 +31,9 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
     @Autowired
     private SkillTypeCalculator skillTypeCalculator;
 
+    @Autowired
+    private SkillAttributeDefinitionCache skillAttributeDefinitionCache;
+
     @Override
     public GeneralAttributeData calculateAttributeValue(UserEntity user, GeneralAttribute attribute) {
         return GeneralAttributeData.generalAttributeDataBuilder()
@@ -52,7 +56,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
         //TODO: this can be further optimized.
         int result = 0;
         for (SkillAttribute skill : SkillAttribute.values()) {
-            if (skill.getIncrementedAttribute() == attribute) {
+            if (skillAttributeDefinitionCache.getDefinition(skill).getIncrementedAttribute() == attribute) {
                 result += skillEntity.getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
             }
         }
@@ -66,7 +70,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
         //TODO: this can be further optimized.
         int result = 0;
         for (SkillAttribute skill : SkillAttribute.values()) {
-            if (skill.getIncrementedAttribute() == attribute) {
+            if (skillAttributeDefinitionCache.getDefinition(skill).getIncrementedAttribute() == attribute) {
                 result += skillEntity.getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
             }
         }
