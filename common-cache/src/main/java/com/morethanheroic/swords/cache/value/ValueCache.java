@@ -1,10 +1,9 @@
-package com.morethanheroic.swords.equipment.cache;
+package com.morethanheroic.swords.cache.value;
 
 /**
- * This is a test class, move this to somewhere else when finsihed working with it.
+ * A cache that can contain one value and lazy-load it from a {@link ValueCacheProvider} on the first request.
  */
-//TODO: move this to its own module
-public class ValueCache<T, K extends Cacheable<T, Z>, Z> {
+public class ValueCache<T, K extends ValueCacheProvider<T, Z>, Z> {
 
     private final K queryFrom;
     private final Z queryId;

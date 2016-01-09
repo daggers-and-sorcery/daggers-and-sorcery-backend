@@ -1,95 +1,159 @@
 package com.morethanheroic.swords.skill.domain;
 
+import com.morethanheroic.swords.cache.value.ValueCache;
 import com.morethanheroic.swords.skill.repository.dao.SkillDatabaseEntity;
 import com.morethanheroic.swords.skill.repository.domain.SkillMapper;
+import com.morethanheroic.swords.skill.service.SkillValueCacheProvider;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.PostConstruct;
 
 /**
- * Contains the data of the user's skills in the game.
+ * Contains the data of the userEntity's skills in the game.
  */
 public class SkillEntity {
 
     private static final int XP_UNTIL_LEVEL_TWO = 32;
 
-    private final UserEntity user;
-    private final SkillMapper skillMapper;
+    @Autowired
+    private SkillMapper skillMapper;
 
-    public SkillEntity(UserEntity user, SkillMapper skillMapper) {
-        this.user = user;
-        this.skillMapper = skillMapper;
+    @Autowired
+    private SkillValueCacheProvider skillValueCacheProvider;
+
+    private final UserEntity userEntity;
+    private ValueCache<SkillDatabaseEntity, SkillValueCacheProvider, UserEntity> skillValueCache;
+
+    public SkillEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
-    @SuppressWarnings({"checkstyle:cyclomaticcomplexity", "checkstyle:javancss"})
-    public void addSkillXp(SkillType attribute, long value) {
+    @PostConstruct
+    public void initialize() {
+        skillValueCache = new ValueCache<>(skillValueCacheProvider, userEntity);
+    }
+
+    //TODO: Do something with this!
+    @SuppressWarnings({"checkstyle:cyclomaticcomplexity", "checkstyle:javancss", "checkstyle:ExecutableStatementCount"})
+    public void addSkillXp(SkillType attribute, int value) {
+        final SkillDatabaseEntity skillDatabaseEntity = skillValueCache.getEntity();
+
         switch (attribute) {
             case TWO_HANDED_CRUSHING_WEAPONS:
-                skillMapper.addTwoHandedCrushingWeaponsXp(user.getId(), value);
+                skillDatabaseEntity.setTwoHandedCrushingWeaponsXp(value);
+
+                skillMapper.addTwoHandedCrushingWeaponsXp(userEntity.getId(), value);
                 break;
             case ONE_HANDED_CRUSHING_WEAPONS:
-                skillMapper.addOneHandedCrushingWeaponsXp(user.getId(), value);
+                skillDatabaseEntity.setOneHandedCrushingWeaponsXp(value);
+
+                skillMapper.addOneHandedCrushingWeaponsXp(userEntity.getId(), value);
                 break;
             case TWO_HANDED_AXES:
-                skillMapper.addTwoHandedAxesXp(user.getId(), value);
+                skillDatabaseEntity.setTwoHandedAxesXp(value);
+
+                skillMapper.addTwoHandedAxesXp(userEntity.getId(), value);
                 break;
             case ONE_HANDED_AXES:
-                skillMapper.addOneHandedAxesXp(user.getId(), value);
+                skillDatabaseEntity.setOneHandedAxesXp(value);
+
+                skillMapper.addOneHandedAxesXp(userEntity.getId(), value);
                 break;
             case THROWING_WEAPONS:
-                skillMapper.addThrowingWeaponsXp(user.getId(), value);
+                skillDatabaseEntity.setThrowingWeaponsXp(value);
+
+                skillMapper.addThrowingWeaponsXp(userEntity.getId(), value);
                 break;
             case FISTFIGHT:
-                skillMapper.addFistfightXp(user.getId(), value);
+                skillDatabaseEntity.setFistfightXp(value);
+
+                skillMapper.addFistfightXp(userEntity.getId(), value);
                 break;
             case LONGSWORDS:
-                skillMapper.addLongswordsXp(user.getId(), value);
+                skillDatabaseEntity.setLongswordsXp(value);
+
+                skillMapper.addLongswordsXp(userEntity.getId(), value);
                 break;
             case SHORTSWORDS:
-                skillMapper.addShortswordsXp(user.getId(), value);
+                skillDatabaseEntity.setShortswordsXp(value);
+
+                skillMapper.addShortswordsXp(userEntity.getId(), value);
                 break;
             case POLEARMS:
-                skillMapper.addPolearmsXp(user.getId(), value);
+                skillDatabaseEntity.setPolearmsXp(value);
+
+                skillMapper.addPolearmsXp(userEntity.getId(), value);
                 break;
             case DAGGERS:
-                skillMapper.addDaggersXp(user.getId(), value);
+                skillDatabaseEntity.setDaggersXp(value);
+
+                skillMapper.addDaggersXp(userEntity.getId(), value);
                 break;
             case LONGBOWS:
-                skillMapper.addLongbowsXp(user.getId(), value);
+                skillDatabaseEntity.setLongswordsXp(value);
+
+                skillMapper.addLongbowsXp(userEntity.getId(), value);
                 break;
             case SHORTBOWS:
-                skillMapper.addShortbowsXp(user.getId(), value);
+                skillDatabaseEntity.setShortswordsXp(value);
+
+                skillMapper.addShortbowsXp(userEntity.getId(), value);
                 break;
             case CROSSBOWS:
-                skillMapper.addCrossbowsXp(user.getId(), value);
+                skillDatabaseEntity.setCrossbowsXp(value);
+
+                skillMapper.addCrossbowsXp(userEntity.getId(), value);
                 break;
             case LIGHT_ARMOR:
-                skillMapper.addLightArmorXp(user.getId(), value);
+                skillDatabaseEntity.setLightArmorXp(value);
+
+                skillMapper.addLightArmorXp(userEntity.getId(), value);
                 break;
             case HEAVY_ARMOR:
-                skillMapper.addHeavyArmorXp(user.getId(), value);
+                skillDatabaseEntity.setHeavyArmorXp(value);
+
+                skillMapper.addHeavyArmorXp(userEntity.getId(), value);
                 break;
             case ROBE_ARMOR:
-                skillMapper.addRobeArmorXp(user.getId(), value);
+                skillDatabaseEntity.setRobeArmorXp(value);
+
+                skillMapper.addRobeArmorXp(userEntity.getId(), value);
                 break;
             case ARMORLESS_DEFENSE:
-                skillMapper.addArmorlessDefenseXp(user.getId(), value);
+                skillDatabaseEntity.setArmorlessDefenseXp(value);
+
+                skillMapper.addArmorlessDefenseXp(userEntity.getId(), value);
                 break;
             case SHIELD_DEFENSE:
-                skillMapper.addShieldDefenseXp(user.getId(), value);
+                skillDatabaseEntity.setShieldDefenseXp(value);
+
+                skillMapper.addShieldDefenseXp(userEntity.getId(), value);
                 break;
             case STAFF:
-                skillMapper.addStaffsXp(user.getId(), value);
+                skillDatabaseEntity.setStaffsXp(value);
+
+                skillMapper.addStaffsXp(userEntity.getId(), value);
                 break;
             case WAND:
-                skillMapper.addWandsXp(user.getId(), value);
+                skillDatabaseEntity.setWandsXp(value);
+
+                skillMapper.addWandsXp(userEntity.getId(), value);
                 break;
             case SPECTRE:
-                skillMapper.addSpectresXp(user.getId(), value);
+                skillDatabaseEntity.setSpectresXp(value);
+
+                skillMapper.addSpectresXp(userEntity.getId(), value);
                 break;
             case SCAVENGING:
-                skillMapper.addScavengingXp(user.getId(), value);
+                skillDatabaseEntity.setScavengingXp(value);
+
+                skillMapper.addScavengingXp(userEntity.getId(), value);
                 break;
             case COOKING:
-                skillMapper.addCookingXp(user.getId(), value);
+                skillDatabaseEntity.setCookingXp(value);
+
+                skillMapper.addCookingXp(userEntity.getId(), value);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown attribute: " + attribute);
@@ -98,7 +162,7 @@ public class SkillEntity {
 
     @SuppressWarnings({"checkstyle:cyclomaticcomplexity", "checkstyle:javancss"})
     public int getSkillXp(SkillType attribute) {
-        final SkillDatabaseEntity skills = skillMapper.getSkills(user.getId());
+        final SkillDatabaseEntity skills = skillValueCache.getEntity();
 
         switch (attribute) {
             case TWO_HANDED_CRUSHING_WEAPONS:
