@@ -35,7 +35,7 @@ public class SkillEntity {
     }
 
     //TODO: Do something with this!
-    @SuppressWarnings({"checkstyle:cyclomaticcomplexity", "checkstyle:javancss"})
+    @SuppressWarnings({"checkstyle:cyclomaticcomplexity", "checkstyle:javancss", "checkstyle:ExecutableStatementCount"})
     public void addSkillXp(SkillType attribute, int value) {
         final SkillDatabaseEntity skillDatabaseEntity = skillValueCache.getEntity();
 
