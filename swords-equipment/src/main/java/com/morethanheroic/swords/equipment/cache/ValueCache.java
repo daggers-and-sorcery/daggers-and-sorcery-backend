@@ -10,7 +10,7 @@ public class ValueCache<T, K extends Cacheable<T, Z>, Z> {
     private final Z queryId;
 
     private T entity;
-    private boolean queried;
+    private boolean initialized;
 
     public ValueCache(K queryFrom, Z queryId) {
         this.queryFrom = queryFrom;
@@ -18,10 +18,20 @@ public class ValueCache<T, K extends Cacheable<T, Z>, Z> {
     }
 
     public T getEntity() {
-        if (!queried) {
-            entity = queryFrom.getCacheEntity(queryId);
+        if (!isInitialized()) {
+            initializeEntity();
         }
 
         return entity;
+    }
+
+    private boolean isInitialized() {
+        return initialized;
+    }
+
+    private void initializeEntity() {
+        entity = queryFrom.getCacheEntity(queryId);
+
+        initialized = true;
     }
 }
