@@ -2,10 +2,10 @@ package com.morethanheroic.swords.equipment.domain;
 
 import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.equipment.cache.CacheableEquipmentProvider;
-import com.morethanheroic.swords.equipment.cache.ValueCache;
+import com.morethanheroic.swords.cache.value.ValueCache;
 import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
+import com.morethanheroic.swords.equipment.service.EquipmentValueCacheProvider;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -39,12 +39,12 @@ public class EquipmentEntity {
     private InventoryFacade inventoryFacade;
 
     @Autowired
-    private CacheableEquipmentProvider cacheableEquipmentProvider;
+    private EquipmentValueCacheProvider cacheableEquipmentProvider;
 
     private final UserEntity userEntity;
 
     private InventoryEntity inventoryEntity;
-    private ValueCache<EquipmentDatabaseEntity, CacheableEquipmentProvider, Integer> equipmentProviderIntegerValueCache;
+    private ValueCache<EquipmentDatabaseEntity, EquipmentValueCacheProvider, Integer> equipmentProviderIntegerValueCache;
 
     @PostConstruct
     public void initialize() {
