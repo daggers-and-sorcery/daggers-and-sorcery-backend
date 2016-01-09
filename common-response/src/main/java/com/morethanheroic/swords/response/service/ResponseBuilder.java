@@ -5,5 +5,5 @@ import com.morethanheroic.swords.response.domain.Response;
 
 public interface ResponseBuilder<T extends ResponseBuilderConfiguration> {
 
-    Response build(T responseConfiguration);
+    Response build(T responseBuilderConfiguration);
 }
