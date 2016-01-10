@@ -1,26 +1,31 @@
 package com.morethanheroic.swords.attribute.service;
 
+import com.google.common.collect.ImmutableSet;
+import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.domain.Attribute;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Service
 public class AttributeUtil {
 
-    private Set<Attribute> attributeSet = new HashSet<>();
+    private final Set<Attribute> attributeSet;
 
     public AttributeUtil() {
-        attributeSet.addAll(Arrays.asList(BasicAttribute.values()));
-        attributeSet.addAll(Arrays.asList(CombatAttribute.values()));
-        attributeSet.addAll(Arrays.asList(GeneralAttribute.values()));
-        attributeSet.addAll(Arrays.asList(SkillAttribute.values()));
+        final Set<Attribute> temporarySet = new LinkedHashSet<>();
+
+        temporarySet.addAll(Arrays.asList(BasicAttribute.values()));
+        temporarySet.addAll(Arrays.asList(CombatAttribute.values()));
+        temporarySet.addAll(Arrays.asList(GeneralAttribute.values()));
+        temporarySet.addAll(Arrays.asList(SkillAttribute.values()));
+
+        attributeSet = ImmutableSet.copyOf(temporarySet);
     }
 
     public Set<Attribute> getAllAttributes() {

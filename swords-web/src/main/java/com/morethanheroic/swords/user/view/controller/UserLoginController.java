@@ -3,7 +3,7 @@ package com.morethanheroic.swords.user.view.controller;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeFacade;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -39,11 +39,11 @@ public class UserLoginController {
     private final ResponseFactory responseFactory;
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public Response login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
+    public CharacterRefreshResponse login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
         final UserEntity userEntity = userFacade.getUser(username, password);
 
         //TODO: Create response builders for this and separate action from response building.
-        final Response response = responseFactory.newResponse(userEntity);
+        final CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
         if (userEntity != null) {
             response.setData("success", "true");
 
@@ -59,8 +59,8 @@ public class UserLoginController {
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
-    public Response info(UserEntity user) {
-        final Response response = responseFactory.newResponse(user);
+    public CharacterRefreshResponse info(UserEntity user) {
+        final CharacterRefreshResponse response = responseFactory.newResponse(user);
 
         if (user != null) {
             response.setData("loggedIn", true);
@@ -79,10 +79,10 @@ public class UserLoginController {
     }
 
     @RequestMapping(value = "/user/logout", method = RequestMethod.GET)
-    public Response logout(HttpSession session) {
+    public CharacterRefreshResponse logout(HttpSession session) {
         session.invalidate();
 
-        final Response response = responseFactory.newResponse(LOGGED_OUT_USER);
+        final CharacterRefreshResponse response = responseFactory.newResponse(LOGGED_OUT_USER);
 
         response.setData("loggedIn", "false");
 

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.movement.service;
 
 import com.morethanheroic.swords.movement.domain.MovementEntity;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
 import com.morethanheroic.swords.map.service.MapManager;
@@ -31,8 +31,8 @@ public class PositionResponseBuilder {
         this.responseFactory = responseFactory;
     }
 
-    public Response build(UserEntity userEntity) {
-        Response response = responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity) {
+        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         MovementEntity movementEntity = movementFacade.getEntity(userEntity);
 

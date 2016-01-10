@@ -4,7 +4,7 @@ import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.service.UseItemService;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.service.response.UseItemResponseBuilder;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +30,7 @@ public class UseItemController {
     @Transactional
     @RequestMapping(value = "/item/use/{itemId}", method = RequestMethod.GET)
     @SuppressWarnings("unchecked")
-    public Response useItem(UserEntity userEntity, HttpSession httpSession, @RequestParam Map<String, String> allRequestParams, @PathVariable int itemId) {
+    public CharacterRefreshResponse useItem(UserEntity userEntity, HttpSession httpSession, @RequestParam Map<String, String> allRequestParams, @PathVariable int itemId) {
         if (useItemService.canUseItem(userEntity, itemDefinitionCache.getDefinition(itemId))) {
             useItemService.useItem(userEntity, itemDefinitionCache.getDefinition(itemId), new CombatEffectDataHolder((Map) allRequestParams, httpSession));
 

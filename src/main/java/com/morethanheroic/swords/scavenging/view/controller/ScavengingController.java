@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.scavenging.view.controller;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.scavenging.domain.ScavengingEntity;
 import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
@@ -27,8 +27,8 @@ public class ScavengingController {
 
     @RequestMapping(value = "/skill/scavenging/convert", method = RequestMethod.POST)
     @Transient
-    public Response convertMovementPoints(UserEntity user, @RequestParam int pointsToConvert) {
-        Response response = responseFactory.newResponse(user);
+    public CharacterRefreshResponse convertMovementPoints(UserEntity user, @RequestParam int pointsToConvert) {
+        CharacterRefreshResponse response = responseFactory.newResponse(user);
 
         ScavengingEntity scavengingEntity = scavengingFacade.getEntity(user);
 

@@ -25,8 +25,10 @@ public class SkillAttributeModifierCalculator implements AttributeModifierCalcul
 
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, SkillAttribute attribute) {
+        final int skillLevel = skillFacade.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(attribute));
+
         return Lists.newArrayList(
-                new AttributeModifierEntry(AttributeModifierType.LEVEL, AttributeModifierUnitType.VALUE, new AttributeModifierValue(skillFacade.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(attribute))))
+                new AttributeModifierEntry(AttributeModifierType.LEVEL, AttributeModifierUnitType.VALUE, new AttributeModifierValue(skillLevel))
         );
     }
 }

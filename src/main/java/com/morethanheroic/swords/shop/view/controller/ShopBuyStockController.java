@@ -8,7 +8,7 @@ import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.money.domain.MoneyType;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
 import com.morethanheroic.swords.shop.service.ShopFacade;
@@ -40,7 +40,7 @@ public class ShopBuyStockController {
     private InventoryFacade inventoryFacade;
 
     @RequestMapping(value = "/shop/{shopId}/buy/{itemId}", method = RequestMethod.GET)
-    public Response buyStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId) {
+    public CharacterRefreshResponse buyStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId) {
         if (!shopFacade.isShopExists(shopId)) {
             throw new NotFoundException();
         }

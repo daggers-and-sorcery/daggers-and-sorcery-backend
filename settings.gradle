@@ -26,4 +26,5 @@ include 'swords-journal'
 include 'swords-inventory'
 include 'swords-equipment'
 include 'common-cache'
+include 'common-response'
 

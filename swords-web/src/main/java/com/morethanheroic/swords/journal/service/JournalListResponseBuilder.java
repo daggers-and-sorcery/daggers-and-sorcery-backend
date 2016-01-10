@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.service;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -32,8 +32,8 @@ public class JournalListResponseBuilder {
         this.monsterDefinitionCache = monsterDefinitionCache;
     }
 
-    public Response build(UserEntity userEntity, JournalType journalType) {
-        Response response = responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity, JournalType journalType) {
+        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         response.setData("journal_info", transformDatabaseEntityList(journalManager.getJournalEntryListByType(userEntity, journalType), journalType));
 

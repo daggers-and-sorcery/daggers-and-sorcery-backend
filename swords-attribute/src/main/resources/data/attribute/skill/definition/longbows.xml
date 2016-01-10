@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<skill-attribute:skill-attribute xmlns:skill-attribute="http://www.swordsandsorcery.com/skill-attribute" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                 xsi:schemaLocation="http://www.swordsandsorcery.com/skill-attribute ../schema.xsd">
+    <skill-attribute:name>Longbows</skill-attribute:name>
+    <skill-attribute:incremented-attribute>DEXTERITY</skill-attribute:incremented-attribute>
+</skill-attribute:skill-attribute>

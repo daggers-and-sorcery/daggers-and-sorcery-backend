@@ -220,21 +220,21 @@ public class SkillEntity {
         return getSkillLevelFromXp(getSkillXp(attribute));
     }
 
-    public long getSkillXpToNextLevel(SkillType attribute) {
+    public int getSkillXpToNextLevel(SkillType attribute) {
         return getSkillXpFromLevel(getSkillLevel(attribute) + 1);
     }
 
-    public long getSkillXpBetweenNextLevel(SkillType attribute) {
+    public int getSkillXpBetweenNextLevel(SkillType attribute) {
         return getSkillXpFromLevel(getSkillLevel(attribute) + 1) - getSkillXpFromLevel(getSkillLevel(attribute));
     }
 
     @SuppressWarnings("checkstyle:magicnumber")
-    public long getSkillXpFromLevel(int level) {
+    public int getSkillXpFromLevel(int level) {
         if (level < 1) {
             return 0;
         }
 
-        return (long) Math.ceil((Math.pow((double) level, (double) 2) * (((double) level * (double) level) / (double) 4) + (double) 60) / (double) 2);
+        return (int) Math.ceil((Math.pow((double) level, (double) 2) * (((double) level * (double) level) / (double) 4) + (double) 60) / (double) 2);
     }
 
     @SuppressWarnings("checkstyle:magicnumber")

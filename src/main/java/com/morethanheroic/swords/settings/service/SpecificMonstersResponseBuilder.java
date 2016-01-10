@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.settings.service;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
@@ -25,8 +25,8 @@ public class SpecificMonstersResponseBuilder {
         this.monsterDefinitionCache = monsterDefinitionCache;
     }
 
-    public Response build(UserEntity userEntity, List<JournalDatabaseEntity> journalMonsters) {
-        Response response =  responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity, List<JournalDatabaseEntity> journalMonsters) {
+        CharacterRefreshResponse response =  responseFactory.newResponse(userEntity);
 
         ArrayList<HashMap<String, Object>> monstersResult = new ArrayList<>();
         for(JournalDatabaseEntity journalEntry : journalMonsters) {

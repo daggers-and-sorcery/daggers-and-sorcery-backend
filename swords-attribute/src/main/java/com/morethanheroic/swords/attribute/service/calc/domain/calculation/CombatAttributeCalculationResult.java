@@ -57,4 +57,9 @@ public class CombatAttributeCalculationResult extends AttributeCalculationResult
             this.d10 += ((CombatAttributeCalculationResult) attributeCalculationResult).d10;
         }
     }
+
+    @Override
+    public boolean isZero() {
+        return super.isZero() && d2 == 0 && d4 == 0 && d6 == 0 && d8 == 0 && d10 == 0;
+    }
 }

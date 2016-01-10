@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.shop.view.controller;
 
 import com.morethanheroic.swords.movement.service.MovementFacade;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.shop.service.ShopFacade;
 import com.morethanheroic.swords.shop.service.response.ShopItemListResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -23,7 +23,7 @@ public class ShopListMainStockController {
     private MovementFacade movementFacade;
 
     @RequestMapping(value = "/shop/main", method = RequestMethod.GET)
-    public Response listStock(UserEntity user) {
+    public CharacterRefreshResponse listStock(UserEntity user) {
         return shopItemListResponseBuilder.build(user, shopFacade.getShopEntity(movementFacade.getEntity(user).getMap().getMainShop()));
     }
 }

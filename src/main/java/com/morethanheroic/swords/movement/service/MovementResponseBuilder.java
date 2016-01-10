@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.movement.service;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ public class MovementResponseBuilder {
         this.positionResponseBuilder = positionResponseBuilder;
     }
 
-    public Response build(UserEntity user, boolean success) {
-        Response response = positionResponseBuilder.build(user);
+    public CharacterRefreshResponse build(UserEntity user, boolean success) {
+        CharacterRefreshResponse response = positionResponseBuilder.build(user);
 
         response.setData("success", success);
 

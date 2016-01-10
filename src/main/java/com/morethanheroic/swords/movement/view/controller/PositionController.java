@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.movement.view.controller;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.movement.service.PositionResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class PositionController {
     }
 
     @RequestMapping(value = "/character/position", method = RequestMethod.GET)
-    public Response position(UserEntity user) {
+    public CharacterRefreshResponse position(UserEntity user) {
         return positionResponseBuilder.build(user);
     }
 }

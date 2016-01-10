@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.service.response;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,8 @@ public class CastSpellResponseBuilder {
         this.responseFactory = responseFactory;
     }
 
-    public Response build(UserEntity userEntity, boolean success) {
-        Response response = responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity, boolean success) {
+        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         response.setData("success", success);
 
