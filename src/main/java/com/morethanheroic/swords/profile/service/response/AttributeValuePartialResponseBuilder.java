@@ -15,9 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -36,9 +37,22 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
     @NonNull
     private final AttributeUtil attributeUtil;
 
+    private Set<Attribute> attributes;
+
+    @PostConstruct
+    private void initialize() {
+        attributes = attributeUtil.getAllAttributes();
+    }
+
     @Override
     public Collection<PartialResponse> build(ProfileInfoResponseBuilderConfiguration responseBuilderConfiguration) {
-        return attributeUtil.getAllAttributes().stream().map(attribute -> buildAttributeResponse(responseBuilderConfiguration.getUserEntity(), attribute)).collect(Collectors.toCollection(LinkedList::new));
+        //Do NOT convert this to streams! That will modify the ordering!
+        final LinkedList<PartialResponse> result = new LinkedList<>();
+        for (Attribute attribute : attributes) {
+            result.add(buildAttributeResponse(responseBuilderConfiguration.getUserEntity(), attribute));
+        }
+
+        return result;
     }
 
     private PartialResponse buildAttributeResponse(UserEntity user, Attribute attribute) {
