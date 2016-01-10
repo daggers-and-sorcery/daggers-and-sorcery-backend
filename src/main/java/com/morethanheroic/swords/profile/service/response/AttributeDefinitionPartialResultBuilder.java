@@ -22,14 +22,19 @@ public class AttributeDefinitionPartialResultBuilder implements PartialResponseB
     @Override
     public AttributeDefinitionPartialResponse build(AttributeDefinitionPartialResponseBuilderConfiguration responseBuilderConfiguration) {
         final Attribute attribute = responseBuilderConfiguration.getAttribute();
+        final AttributeDefinitionPartialResponse.AttributeDefinitionPartialResponseBuilder attributeDefinitionPartialResponseBuilder = AttributeDefinitionPartialResponse.builder();
 
-        return AttributeDefinitionPartialResponse.builder()
+        attributeDefinitionPartialResponseBuilder
                 .id(attribute)
                 .name(buildName(attribute))
                 .initialValue(attribute.getInitialValue())
-                .attributeType(attribute.getAttributeType())
-                .generalAttributeType(buildGeneralAttributeType(attribute))
-                .build();
+                .attributeType(attribute.getAttributeType());
+
+        if (attribute.getAttributeType() == AttributeType.GENERAL) {
+            attributeDefinitionPartialResponseBuilder.generalAttributeType(((GeneralAttribute) attribute).getGeneralAttributeType());
+        }
+
+        return attributeDefinitionPartialResponseBuilder.build();
     }
 
     private String buildName(Attribute attribute) {
@@ -38,14 +43,5 @@ public class AttributeDefinitionPartialResultBuilder implements PartialResponseB
         } else {
             return attribute.getName();
         }
-    }
-
-    //TODO: create a GeneralAttributeDefinitionPartialResult and return that not null here
-    private GeneralAttributeType buildGeneralAttributeType(Attribute attribute) {
-        if (attribute.getAttributeType() == AttributeType.GENERAL) {
-            ((GeneralAttribute) attribute).getGeneralAttributeType();
-        }
-
-        return null;
     }
 }

@@ -2,8 +2,6 @@ package com.morethanheroic.swords.profile.service.response;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
@@ -63,32 +61,6 @@ public class AttributeModifierPartialResponseBuilder implements PartialResponseC
             }
             if (combatAttributeModifierValue.getD10() > 0) {
                 result += " + " + combatAttributeModifierValue.getD10() + "d10";
-            }
-        }
-
-        return result;
-    }
-
-    private String formatCombatAttributeModifier(AttributeCalculationResult attributeModifierValue) {
-        String result = String.valueOf(attributeModifierValue.getValue());
-
-        if (attributeModifierValue instanceof CombatAttributeCalculationResult) {
-            final CombatAttributeCalculationResult combatAttributeCalculationResult = (CombatAttributeCalculationResult) attributeModifierValue;
-
-            if (combatAttributeCalculationResult.getD2() > 0) {
-                result += " + " + combatAttributeCalculationResult.getD2() + "d2";
-            }
-            if (combatAttributeCalculationResult.getD4() > 0) {
-                result += " + " + combatAttributeCalculationResult.getD4() + "d4";
-            }
-            if (combatAttributeCalculationResult.getD6() > 0) {
-                result += " + " + combatAttributeCalculationResult.getD6() + "d6";
-            }
-            if (combatAttributeCalculationResult.getD8() > 0) {
-                result += " + " + combatAttributeCalculationResult.getD8() + "d8";
-            }
-            if (combatAttributeCalculationResult.getD10() > 0) {
-                result += " + " + combatAttributeCalculationResult.getD10() + "d10";
             }
         }
 
