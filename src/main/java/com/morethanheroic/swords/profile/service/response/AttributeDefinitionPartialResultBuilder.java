@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.profile.service.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttributeDefinitionPartialResultBuilder implements PartialResponseBuilder<AttributeDefinitionPartialResponseBuilderConfiguration> {
 
     @NonNull

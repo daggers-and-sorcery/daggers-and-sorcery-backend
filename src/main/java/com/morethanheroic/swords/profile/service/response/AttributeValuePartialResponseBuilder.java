@@ -4,6 +4,7 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
@@ -37,6 +38,12 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
     @NonNull
     private final AttributeUtil attributeUtil;
 
+    @NonNull
+    private final AttributeCalculationResultPartialResponseBuilder attributeCalculationResultPartialResponseBuilder;
+
+    @NonNull
+    private final CombatAttributeCalculationResultPartialResponseBuilder combatAttributeCalculationResultPartialResponseBuilder;
+
     private Set<Attribute> attributes;
 
     @PostConstruct
@@ -58,9 +65,7 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
     private PartialResponse buildAttributeResponse(UserEntity user, Attribute attribute) {
         final AttributeData attributeData = globalAttributeCalculator.calculateAttributeValue(user, attribute);
 
-        return AttributeValuePartialResponse.builder()
-                .actual(attributeData.getActual())
-                .maximum(attributeData.getMaximum())
+        final AttributeValuePartialResponse.AttributeValuePartialResponseBuilder attributeValuePartialResponseBuilder = AttributeValuePartialResponse.builder()
                 .attribute(attributeDefinitionPartialResultBuilder.build(
                         AttributeDefinitionPartialResponseBuilderConfiguration.builder()
                                 .attribute(attribute)
@@ -71,47 +76,47 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
                                 .attribute(attribute)
                                 .modifierData(attributeData.getModifierData())
                                 .build()
-                ))
-                .pointsToNextLevel(buildPointsToNextLevel(attributeData))
-                .actualXp(buildActualXp(attributeData))
-                .nextLevelXp(buildNextLevelXp(attributeData))
-                .xpBetweenLevels(buildXpBetweenLevels(attributeData))
-                .build();
-    }
+                ));
 
-    //ToDO: Only call and add this if the attribute is GENERAL
-    private Integer buildPointsToNextLevel(AttributeData attributeData) {
-        if (attributeData.getAttribute().getAttributeType() == AttributeType.GENERAL) {
-            return ((GeneralAttributeData) attributeData).getPointsToNextLevel();
+        if (attribute.getAttributeType() == AttributeType.COMBAT) {
+            attributeValuePartialResponseBuilder
+                    .actual(combatAttributeCalculationResultPartialResponseBuilder.build(
+                            CombatAttributeCalculationResultPartialResponseConfiguration.builder()
+                                    .combatAttributeCalculationResult((CombatAttributeCalculationResult) attributeData.getActual())
+                                    .build()
+                    ))
+                    .maximum(combatAttributeCalculationResultPartialResponseBuilder.build(
+                            CombatAttributeCalculationResultPartialResponseConfiguration.builder()
+                                    .combatAttributeCalculationResult((CombatAttributeCalculationResult) attributeData.getActual())
+                                    .build()
+                    ));
+        } else {
+            attributeValuePartialResponseBuilder
+                    .actual(attributeCalculationResultPartialResponseBuilder.build(
+                            AttributeCalculationResultPartialResponseConfiguration.builder()
+                                    .attributeCalculationResult(attributeData.getActual())
+                                    .build()
+                    ))
+                    .maximum(attributeCalculationResultPartialResponseBuilder.build(
+                            AttributeCalculationResultPartialResponseConfiguration.builder()
+                                    .attributeCalculationResult(attributeData.getActual())
+                                    .build()
+                    ));
         }
 
-        return null;
-    }
+        if (attribute.getAttributeType() == AttributeType.SKILL) {
+            final SkillAttributeData skillAttributeData = (SkillAttributeData) attributeData;
 
-    //ToDO: Only call and add this if the attribute is SKILL
-    private Integer buildActualXp(AttributeData attributeData) {
-        if (attributeData.getAttribute().getAttributeType() == AttributeType.SKILL) {
-            return ((SkillAttributeData) attributeData).getActualXp();
+            attributeValuePartialResponseBuilder
+                    .actualXp(skillAttributeData.getActualXp())
+                    .nextLevelXp(skillAttributeData.getNextLevelXp())
+                    .xpBetweenLevels(skillAttributeData.getXpBetweenLevels());
         }
 
-        return null;
-    }
-
-    //ToDO: Only call and add this if the attribute is SKILL
-    private Integer buildNextLevelXp(AttributeData attributeData) {
-        if (attributeData.getAttribute().getAttributeType() == AttributeType.SKILL) {
-            return ((SkillAttributeData) attributeData).getNextLevelXp();
+        if (attribute.getAttributeType() == AttributeType.GENERAL) {
+            attributeValuePartialResponseBuilder.pointsToNextLevel(((GeneralAttributeData) attributeData).getPointsToNextLevel());
         }
 
-        return null;
-    }
-
-    //ToDO: Only call and add this if the attribute is SKILL
-    private Integer buildXpBetweenLevels(AttributeData attributeData) {
-        if (attributeData.getAttribute().getAttributeType() == AttributeType.SKILL) {
-            return ((SkillAttributeData) attributeData).getXpBetweenLevels();
-        }
-
-        return null;
+        return attributeValuePartialResponseBuilder.build();
     }
 }

@@ -14,8 +14,8 @@ import java.util.Collection;
 public class AttributeValuePartialResponse extends PartialResponse {
 
     //TODO: Instead of AttributeCalculationResult use PartialResponses depending on the type of the attribute.
-    private final AttributeCalculationResult actual;
-    private final AttributeCalculationResult maximum;
+    private final AttributeCalculationResultPartialResponse actual;
+    private final AttributeCalculationResultPartialResponse maximum;
     private final AttributeDefinitionPartialResponse attribute;
     private final Collection<AttributeModifierPartialResponse> modifierDataArray;
 
