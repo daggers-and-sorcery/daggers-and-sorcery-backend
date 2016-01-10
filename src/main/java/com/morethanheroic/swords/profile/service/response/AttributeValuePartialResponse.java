@@ -24,4 +24,7 @@ public class AttributeValuePartialResponse extends PartialResponse {
     private final Integer actualXp;
     private final Integer nextLevelXp;
     private final Integer xpBetweenLevels;
+
+    private final Integer baseValue;
+    private final Integer bonusValue;
 }

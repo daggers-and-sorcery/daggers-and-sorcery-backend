@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.profile.service.response;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
@@ -8,8 +9,10 @@ import com.morethanheroic.swords.attribute.service.calc.domain.calculation.Comba
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.response.domain.PartialResponse;
 import com.morethanheroic.swords.response.service.PartialResponseCollectionBuilder;
+import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -111,6 +114,20 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
                     .actualXp(skillAttributeData.getActualXp())
                     .nextLevelXp(skillAttributeData.getNextLevelXp())
                     .xpBetweenLevels(skillAttributeData.getXpBetweenLevels());
+
+            int baseValue = 0;
+            int bonusValue = 0;
+            for (AttributeModifierEntry attributeModifierEntry : skillAttributeData.getModifierData()) {
+                if (attributeModifierEntry.getAttributeModifierType() == AttributeModifierType.LEVEL) {
+                    baseValue += attributeModifierEntry.getAttributeModifierValue().getValue();
+                } else {
+                    bonusValue += attributeModifierEntry.getAttributeModifierValue().getValue();
+                }
+            }
+
+            attributeValuePartialResponseBuilder
+                    .baseValue(baseValue)
+                    .bonusValue(bonusValue);
         }
 
         if (attribute.getAttributeType() == AttributeType.GENERAL) {
