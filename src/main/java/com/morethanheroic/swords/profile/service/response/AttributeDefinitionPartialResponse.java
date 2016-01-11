@@ -18,4 +18,5 @@ public class AttributeDefinitionPartialResponse extends PartialResponse {
     private final int initialValue;
     private final AttributeType attributeType;
     private final GeneralAttributeType generalAttributeType;
+    private final boolean hasPage;
 }

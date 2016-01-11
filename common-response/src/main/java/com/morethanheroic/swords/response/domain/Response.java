@@ -1,8 +1,11 @@
 package com.morethanheroic.swords.response.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response {
 
     private final Map<String, Object> data = new HashMap<>();

@@ -12,4 +12,5 @@ public class SkillAttributeDefinition {
     private String name;
     private SkillAttribute skillAttribute;
     private GeneralAttribute incrementedAttribute;
+    private boolean hasPage;
 }
