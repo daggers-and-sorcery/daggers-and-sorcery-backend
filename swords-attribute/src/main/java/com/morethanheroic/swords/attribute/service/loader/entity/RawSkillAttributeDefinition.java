@@ -18,4 +18,7 @@ public class RawSkillAttributeDefinition {
 
     @XmlElement(name = "incremented-attribute")
     private GeneralAttribute incrementedAttribute;
+
+    @XmlElement(name = "has-page")
+    private boolean hasPage;
 }

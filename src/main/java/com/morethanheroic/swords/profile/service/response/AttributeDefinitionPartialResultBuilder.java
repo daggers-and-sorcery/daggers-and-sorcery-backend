@@ -4,7 +4,6 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
-import com.morethanheroic.swords.attribute.domain.type.GeneralAttributeType;
 import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
 import com.morethanheroic.swords.response.service.PartialResponseBuilder;
 import lombok.NonNull;
@@ -32,6 +31,10 @@ public class AttributeDefinitionPartialResultBuilder implements PartialResponseB
 
         if (attribute.getAttributeType() == AttributeType.GENERAL) {
             attributeDefinitionPartialResponseBuilder.generalAttributeType(((GeneralAttribute) attribute).getGeneralAttributeType());
+        }
+
+        if (attribute.getAttributeType() == AttributeType.SKILL) {
+            attributeDefinitionPartialResponseBuilder.hasPage(skillAttributeDefinitionCache.getDefinition((SkillAttribute) attribute).isHasPage());
         }
 
         return attributeDefinitionPartialResponseBuilder.build();

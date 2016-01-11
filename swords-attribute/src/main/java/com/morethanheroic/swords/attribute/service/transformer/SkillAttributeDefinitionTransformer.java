@@ -17,6 +17,7 @@ public class SkillAttributeDefinitionTransformer implements DefinitionTransforme
                 .name(rawDefinition.getName())
                 .skillAttribute(buildSkillAttributeFromName(rawDefinition.getName()))
                 .incrementedAttribute(rawDefinition.getIncrementedAttribute())
+                .hasPage(rawDefinition.isHasPage())
                 .build();
     }
 
