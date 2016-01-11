@@ -30,7 +30,8 @@ public class ItemEntryResponseBuilder {
         for (ItemModifierDefinition modifierDefinition : itemDefinition.getModifiers()) {
             HashMap<String, Object> modifier = new HashMap<>();
 
-            modifier.put("attribute", modifierDefinition.getModifier());
+            //TODO: Load the names from definitions
+            modifier.put("attribute", WordUtils.capitalize(modifierDefinition.getModifier().name().toLowerCase().replace("_", " ")));
             modifier.put("value", formatCombatAttributeModifier(modifierDefinition));
 
             modifiers.add(modifier);
