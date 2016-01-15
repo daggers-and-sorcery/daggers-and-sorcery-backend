@@ -4,8 +4,6 @@ import com.morethanheroic.swords.map.domain.MapEntity;
 import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.movement.repository.dao.MovementDatabaseEntity;
 import com.morethanheroic.swords.movement.repository.domain.MovementMapper;
-import com.morethanheroic.swords.user.domain.UserEntity;
-import com.morethanheroic.swords.user.repository.domain.UserMapper;
 
 public class MovementEntity {
 
