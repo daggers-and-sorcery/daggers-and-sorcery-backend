@@ -25,4 +25,5 @@ include 'swords-monster'
 include 'swords-journal'
 include 'swords-inventory'
 include 'swords-equipment'
+include 'swords-map'
 
