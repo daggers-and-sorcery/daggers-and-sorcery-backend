@@ -15,12 +15,12 @@ import java.util.List;
 @Getter
 public class SkillAttributeData extends AttributeData {
 
-    private final long actualXp;
-    private final long nextLevelXp;
-    private final long xpBetweenLevels;
+    private final int actualXp;
+    private final int nextLevelXp;
+    private final int xpBetweenLevels;
 
     @Builder(builderMethodName = "skillAttributeDataBuilder")
-    private SkillAttributeData(Attribute attribute, AttributeCalculationResult actual, AttributeCalculationResult maximum, List<AttributeModifierEntry> attributeModifierData, long actualXp, long nextLevelXp, long xpBetweenLevels) {
+    private SkillAttributeData(Attribute attribute, AttributeCalculationResult actual, AttributeCalculationResult maximum, List<AttributeModifierEntry> attributeModifierData, int actualXp, int nextLevelXp, int xpBetweenLevels) {
         super(attribute, actual, maximum, attributeModifierData);
 
         this.actualXp = actualXp;

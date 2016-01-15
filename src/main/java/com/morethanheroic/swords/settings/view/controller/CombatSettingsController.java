@@ -4,7 +4,7 @@ import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.settings.service.*;
 import com.morethanheroic.swords.settings.view.request.SaveOtherSettingsRequest;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -34,7 +34,7 @@ public class CombatSettingsController {
     private SettingsMapper settingsMapper;
 
     @RequestMapping(value = "/combat/settings/usable/{type}", method = RequestMethod.GET)
-    public Response usableItems(UserEntity userEntity, @PathVariable SettingType type) {
+    public CharacterRefreshResponse usableItems(UserEntity userEntity, @PathVariable SettingType type) {
         if (type == SettingType.ITEM) {
             return usableItemsResponseBuilder.build(userEntity, journalManager.getJournalEntryListByType(userEntity, JournalType.ITEM));
         } else if (type == SettingType.SPELL) {
@@ -45,12 +45,12 @@ public class CombatSettingsController {
     }
 
     @RequestMapping(value = "/combat/settings/specific_monsters", method = RequestMethod.GET)
-    public Response specificMonster(UserEntity userEntity) {
+    public CharacterRefreshResponse specificMonster(UserEntity userEntity) {
         return specificMonstersResponseBuilder.build(userEntity, journalManager.getJournalEntryListByType(userEntity, JournalType.MONSTER));
     }
 
     @RequestMapping(value = "/combat/settings/other/save", method = RequestMethod.POST)
-    public Response saveOtherSettings(UserEntity userEntity, @RequestBody SaveOtherSettingsRequest saveOtherSettingsRequest) {
+    public CharacterRefreshResponse saveOtherSettings(UserEntity userEntity, @RequestBody SaveOtherSettingsRequest saveOtherSettingsRequest) {
         settingsMapper.saveScavengingEnabled(userEntity.getId(), saveOtherSettingsRequest.isScavengingEnabled());
 
         return saveOtherSettingsResponseBuilder.build(userEntity, "Settings successfully saved!");

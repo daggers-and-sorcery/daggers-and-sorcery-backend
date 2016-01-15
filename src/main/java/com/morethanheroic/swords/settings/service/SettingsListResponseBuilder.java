@@ -4,7 +4,7 @@ import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.model.TriggerType;
 import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseEntity;
 import com.morethanheroic.swords.settings.repository.dao.SettingsDatabaseEntity;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
@@ -33,8 +33,8 @@ public class SettingsListResponseBuilder {
         this.spellDefinitionCache = spellDefinitionCache;
     }
 
-    public Response build(UserEntity userEntity, List<CombatSettingsDatabaseEntity> combatSettingList, SettingsDatabaseEntity setting) {
-        Response response = responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity, List<CombatSettingsDatabaseEntity> combatSettingList, SettingsDatabaseEntity setting) {
+        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         response.setData("settings", buildCombatSettings(combatSettingList));
         response.setData("otherSettings", buildOtherSettings(setting));

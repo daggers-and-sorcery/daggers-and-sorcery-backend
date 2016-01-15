@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.settings.view.controller;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.repository.dao.CombatSettingsDatabaseEntity;
@@ -31,7 +31,7 @@ public class InsertCombatSettingController {
     private CombatSettingsMapper combatSettingsMapper;
 
     @RequestMapping(value = "/combat/settings/insert", method = RequestMethod.POST)
-    public Response insertSetting(UserEntity userEntity, @RequestBody InsertCombatSettingRequest insertCombatSettingRequest) {
+    public CharacterRefreshResponse insertSetting(UserEntity userEntity, @RequestBody InsertCombatSettingRequest insertCombatSettingRequest) {
         if(insertCombatSettingRequest.getType() == SettingType.ITEM && !itemDefinitionCache.getDefinition(insertCombatSettingRequest.getUse()).isUsable()) {
             return insertSettingsResponseBuilder.build(userEntity, "Invalid, non-usable item selected!");
         }

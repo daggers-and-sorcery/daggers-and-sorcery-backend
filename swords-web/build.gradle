@@ -8,6 +8,7 @@ dependencies {
 
     compile project(':common-security')
     compile project(':common-validator')
+    compile project(':common-response')
 
     compile project(':swords-news')
     compile project(':swords-user')

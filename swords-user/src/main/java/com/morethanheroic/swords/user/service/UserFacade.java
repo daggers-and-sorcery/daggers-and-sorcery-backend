@@ -36,7 +36,7 @@ public class UserFacade {
     public UserEntity getUser(String username, String password) {
         final UserDatabaseEntity user = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
 
-        return new UserEntity(user.getId(), userMapper);
+        return user != null ? new UserEntity(user.getId(), userMapper) : null;
     }
 
     @Transactional

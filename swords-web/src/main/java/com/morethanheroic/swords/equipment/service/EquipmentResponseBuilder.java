@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.equipment.service;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ public class EquipmentResponseBuilder {
         this.responseFactory = responseFactory;
     }
 
-    public Response build(UserEntity user, boolean result) {
-        Response response = responseFactory.newResponse(user);
+    public CharacterRefreshResponse build(UserEntity user, boolean result) {
+        CharacterRefreshResponse response = responseFactory.newResponse(user);
         response.setData("success", result);
 
         return response;

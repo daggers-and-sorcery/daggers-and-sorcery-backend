@@ -5,7 +5,7 @@ import com.morethanheroic.swords.item.service.response.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.journal.service.response.MonsterEntryResponseBuilder;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,8 @@ public class JournalEntryResponseBuilder {
     @Autowired
     private MonsterEntryResponseBuilder monsterEntryResponseBuilder;
 
-    public Response build(UserEntity userEntity, JournalType journalType, int journalId) {
-        Response response = responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity, JournalType journalType, int journalId) {
+        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         switch (journalType) {
             case ITEM:
@@ -46,8 +46,8 @@ public class JournalEntryResponseBuilder {
         return response;
     }
 
-    public Response buildInvalidRequest(UserEntity userEntity) {
-        Response response = responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse buildInvalidRequest(UserEntity userEntity) {
+        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         response.setData("journal_entry", "Unavailable!");
 

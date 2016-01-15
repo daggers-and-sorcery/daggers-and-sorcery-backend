@@ -7,7 +7,7 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
@@ -39,8 +39,8 @@ public class ShopItemListResponseBuilder {
     @NonNull
     private InventoryFacade inventoryFacade;
 
-    public Response build(UserEntity userEntity, ShopEntity shopEntity) {
-        final Response response = responseFactory.newResponse(userEntity);
+    public CharacterRefreshResponse build(UserEntity userEntity, ShopEntity shopEntity) {
+        final CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         response.setData("shopDefinition", buildShopDefinition(shopEntity.getShopDefinition()));
         response.setData("itemList", buildItemList(shopEntity.getAllItemsInShop()));

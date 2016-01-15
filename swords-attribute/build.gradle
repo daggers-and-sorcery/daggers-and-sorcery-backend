@@ -5,6 +5,9 @@ dependencies {
 
     compile group: 'com.google.guava', name: 'guava', version: guava_version
 
+    compile project(':common-definition')
+    compile project(':xml-loader')
+
     compile project(':swords-user')
     compile project(':swords-skill')
     compile project(':swords-race')

@@ -2,8 +2,10 @@ package com.morethanheroic.swords.equipment.domain;
 
 import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.cache.value.ValueCache;
 import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
+import com.morethanheroic.swords.equipment.service.EquipmentValueCacheProvider;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -17,10 +19,6 @@ import javax.annotation.PostConstruct;
 
 @RequiredArgsConstructor
 public class EquipmentEntity {
-
-    private final UserEntity userEntity;
-
-    private InventoryEntity inventoryEntity;
 
     @Autowired
     private EquipmentMapper equipmentMapper;
@@ -40,9 +38,19 @@ public class EquipmentEntity {
     @Autowired
     private InventoryFacade inventoryFacade;
 
+    @Autowired
+    private EquipmentValueCacheProvider cacheableEquipmentProvider;
+
+    private final UserEntity userEntity;
+
+    private InventoryEntity inventoryEntity;
+    private ValueCache<EquipmentDatabaseEntity, EquipmentValueCacheProvider, Integer> equipmentProviderIntegerValueCache;
+
     @PostConstruct
     public void initialize() {
         inventoryEntity = inventoryFacade.getInventory(userEntity);
+
+        equipmentProviderIntegerValueCache = new ValueCache<>(cacheableEquipmentProvider, userEntity.getId());
     }
 
     public boolean equipItem(ItemDefinition item, boolean identified) {
@@ -69,11 +77,19 @@ public class EquipmentEntity {
     }
 
     private void equipWithoutCheck(ItemDefinition item, boolean identified) {
+        final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
+
         switch (equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType())) {
             case WEAPON:
+                equipmentDatabaseEntity.setWeapon(item.getId());
+                equipmentDatabaseEntity.setWeaponIdentified(identified);
+
                 equipmentMapper.equipWeapon(userEntity.getId(), item.getId(), identified);
                 break;
             case OFFHAND:
+                equipmentDatabaseEntity.setOffhand(item.getId());
+                equipmentDatabaseEntity.setOffhandIdentified(identified);
+
                 equipmentMapper.equipOffhand(userEntity.getId(), item.getId(), identified);
                 break;
             default:
@@ -82,23 +98,31 @@ public class EquipmentEntity {
     }
 
     public int unequipItem(EquipmentSlot slot) {
-        EquipmentDatabaseEntity equipment = equipmentMapper.getEquipment(userEntity.getId());
+        final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
 
         switch (slot) {
             case WEAPON:
-                int previousWeapon = equipment.getWeapon();
+                final int previousWeapon = equipmentDatabaseEntity.getWeapon();
 
                 if (previousWeapon != 0) {
-                    inventoryEntity.addItem(previousWeapon, 1, equipment.isWeaponIdentified());
+                    inventoryEntity.addItem(previousWeapon, 1, equipmentDatabaseEntity.isWeaponIdentified());
+
+                    equipmentDatabaseEntity.setWeapon(0);
+                    equipmentDatabaseEntity.setWeaponIdentified(true);
+
                     equipmentMapper.equipWeapon(userEntity.getId(), 0, true);
                 }
 
                 return previousWeapon;
             case OFFHAND:
-                int previousOffhand = equipment.getOffhand();
+                final int previousOffhand = equipmentDatabaseEntity.getOffhand();
 
                 if (previousOffhand != 0) {
-                    inventoryEntity.addItem(previousOffhand, 1, equipment.isOffhandIdentified());
+                    inventoryEntity.addItem(previousOffhand, 1, equipmentDatabaseEntity.isOffhandIdentified());
+
+                    equipmentDatabaseEntity.setOffhand(0);
+                    equipmentDatabaseEntity.setOffhandIdentified(true);
+
                     equipmentMapper.equipOffhand(userEntity.getId(), 0, true);
                 }
 
@@ -122,57 +146,59 @@ public class EquipmentEntity {
         return itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(slot));
     }
 
-    //TODO: refactor this to only once get the equipment from the database
-    //We should be careful y the way, we should update the equipmentdatabaseentity when gthings change (eg equip/unequip anything)
     public int getEquipmentIdOnSlot(EquipmentSlot slot) {
+        final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
+
         switch (slot) {
             case WEAPON:
-                return equipmentMapper.getEquipment(userEntity.getId()).getWeapon();
+                return equipmentDatabaseEntity.getWeapon();
             case OFFHAND:
-                return equipmentMapper.getEquipment(userEntity.getId()).getOffhand();
+                return equipmentDatabaseEntity.getOffhand();
             case HELM:
-                return equipmentMapper.getEquipment(userEntity.getId()).getHelm();
+                return equipmentDatabaseEntity.getHelm();
             case GLOVES:
-                return equipmentMapper.getEquipment(userEntity.getId()).getGloves();
+                return equipmentDatabaseEntity.getGloves();
             case RING:
-                return equipmentMapper.getEquipment(userEntity.getId()).getRing();
+                return equipmentDatabaseEntity.getRing();
             case AMULET:
-                return equipmentMapper.getEquipment(userEntity.getId()).getAmulet();
+                return equipmentDatabaseEntity.getAmulet();
             case BOOTS:
-                return equipmentMapper.getEquipment(userEntity.getId()).getBoots();
+                return equipmentDatabaseEntity.getBoots();
             case BRACER:
-                return equipmentMapper.getEquipment(userEntity.getId()).getBracer();
+                return equipmentDatabaseEntity.getBracer();
             case CHEST:
-                return equipmentMapper.getEquipment(userEntity.getId()).getChest();
+                return equipmentDatabaseEntity.getChest();
             case LEGS:
-                return equipmentMapper.getEquipment(userEntity.getId()).getLegs();
+                return equipmentDatabaseEntity.getLegs();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
         }
     }
 
     public boolean isEquipmentIdentifiedOnSlot(EquipmentSlot slot) {
+        final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
+
         switch (slot) {
             case WEAPON:
-                return equipmentMapper.getEquipment(userEntity.getId()).isWeaponIdentified();
+                return equipmentDatabaseEntity.isWeaponIdentified();
             case OFFHAND:
-                return equipmentMapper.getEquipment(userEntity.getId()).isOffhandIdentified();
+                return equipmentDatabaseEntity.isOffhandIdentified();
             case HELM:
-                return equipmentMapper.getEquipment(userEntity.getId()).isHelmIdentified();
+                return equipmentDatabaseEntity.isHelmIdentified();
             case GLOVES:
-                return equipmentMapper.getEquipment(userEntity.getId()).isGlovesIdentified();
+                return equipmentDatabaseEntity.isGlovesIdentified();
             case RING:
-                return equipmentMapper.getEquipment(userEntity.getId()).isRingIdentified();
+                return equipmentDatabaseEntity.isRingIdentified();
             case AMULET:
-                return equipmentMapper.getEquipment(userEntity.getId()).isAmuletIdentified();
+                return equipmentDatabaseEntity.isAmuletIdentified();
             case BOOTS:
-                return equipmentMapper.getEquipment(userEntity.getId()).isBootsIdentified();
+                return equipmentDatabaseEntity.isBootsIdentified();
             case BRACER:
-                return equipmentMapper.getEquipment(userEntity.getId()).isBracerIdentified();
+                return equipmentDatabaseEntity.isBracerIdentified();
             case CHEST:
-                return equipmentMapper.getEquipment(userEntity.getId()).isChestIdentified();
+                return equipmentDatabaseEntity.isChestIdentified();
             case LEGS:
-                return equipmentMapper.getEquipment(userEntity.getId()).isLegsIdentified();
+                return equipmentDatabaseEntity.isLegsIdentified();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
         }

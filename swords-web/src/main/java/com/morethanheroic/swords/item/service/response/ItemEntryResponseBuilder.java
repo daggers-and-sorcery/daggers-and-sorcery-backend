@@ -4,6 +4,7 @@ import com.morethanheroic.swords.item.service.response.domain.ItemRequirementRes
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemModifierDefinition;
 import com.morethanheroic.swords.item.domain.ItemRequirementDefinition;
+import org.apache.commons.lang.WordUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class ItemEntryResponseBuilder {
         HashMap<String, Object> result = new HashMap<>();
 
         result.put("name", itemDefinition.getName());
-        result.put("type", itemDefinition.getType().name());
+        //TODO: later define real display name for item types somewhere (own definition?)
+        result.put("type", WordUtils.capitalize(itemDefinition.getType().name().toLowerCase().replace("_", " ")));
         result.put("weight", itemDefinition.getWeight());
         result.put("equipment", itemDefinition.isEquipment());
         result.put("usable", itemDefinition.isUsable());
@@ -28,7 +30,8 @@ public class ItemEntryResponseBuilder {
         for (ItemModifierDefinition modifierDefinition : itemDefinition.getModifiers()) {
             HashMap<String, Object> modifier = new HashMap<>();
 
-            modifier.put("attribute", modifierDefinition.getModifier());
+            //TODO: Load the names from definitions
+            modifier.put("attribute", WordUtils.capitalize(modifierDefinition.getModifier().name().toLowerCase().replace("_", " ")));
             modifier.put("value", formatCombatAttributeModifier(modifierDefinition));
 
             modifiers.add(modifier);

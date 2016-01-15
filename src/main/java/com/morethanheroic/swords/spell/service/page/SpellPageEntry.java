@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.spell.service.page;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 
 public abstract class SpellPageEntry {
 
-    public abstract Response build(PageEntryDataContainer pageEntryDataContainer);
+    public abstract CharacterRefreshResponse build(PageEntryDataContainer pageEntryDataContainer);
 }

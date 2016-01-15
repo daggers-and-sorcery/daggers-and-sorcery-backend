@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.swordsandsorcery.com/skill-attribute"
+           xmlns="http://www.swordsandsorcery.com/skill-attribute" elementFormDefault="qualified">
+    <xs:element name="skill-attribute">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="has-page" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="incremented-attribute">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="STRENGTH"/>
+                            <xs:enumeration value="ENDURANCE"/>
+                            <xs:enumeration value="VITALITY"/>
+                            <xs:enumeration value="INTELLIGENCE"/>
+                            <xs:enumeration value="WISDOM"/>
+                            <xs:enumeration value="WILLPOWER"/>
+                            <xs:enumeration value="PERCEPTION"/>
+                            <xs:enumeration value="SWIFTNESS"/>
+                            <xs:enumeration value="DEXTERITY"/>
+                            <xs:enumeration value="CHARISMA"/>
+                            <xs:enumeration value="BEAUTY"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

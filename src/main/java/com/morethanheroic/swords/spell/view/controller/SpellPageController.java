@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.spell.view.controller;
 
 import com.morethanheroic.swords.common.response.NotFoundException;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.spell.service.page.PageEntryDataContainer;
 import com.morethanheroic.swords.spell.service.page.SpellPageRegistry;
@@ -24,7 +24,7 @@ public class SpellPageController {
     private SpellDefinitionCache spellDefinitionCache;
 
     @RequestMapping(value = "/spell/page/{spellId}", method = RequestMethod.GET)
-    public Response castSpell(UserEntity userEntity, HttpSession httpSession, @PathVariable int spellId) {
+    public CharacterRefreshResponse castSpell(UserEntity userEntity, HttpSession httpSession, @PathVariable int spellId) {
         if (!spellDefinitionCache.isSpellDefinitionExists(spellId)) {
             throw new NotFoundException();
         }
