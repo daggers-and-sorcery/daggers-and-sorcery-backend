@@ -5,6 +5,7 @@ import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
+import com.morethanheroic.swords.attribute.service.modifier.domain.PercentageAttributeModifierEntry;
 import com.morethanheroic.swords.response.service.PartialResponseCollectionBuilder;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,18 @@ public class AttributeModifierPartialResponseBuilder implements PartialResponseC
         final List<AttributeModifierPartialResponse> result = new ArrayList<>();
 
         for (AttributeModifierEntry attributeModifierEntry : responseBuilderConfiguration.getModifierData()) {
-            result.add(
-                    AttributeModifierPartialResponse.builder()
-                            .attributeModifierType(attributeModifierEntry.getAttributeModifierType())
-                            .attributeModifierValueType(attributeModifierEntry.getAttributeModifierUnitType())
-                            .attributeModifierValue(buildAttributeModifierValue(responseBuilderConfiguration.getAttribute(), attributeModifierEntry))
-                            .build()
-            );
+            final AttributeModifierPartialResponse.AttributeModifierPartialResponseBuilder attributeModifierPartialResponseBuilder = AttributeModifierPartialResponse.builder();
+
+            attributeModifierPartialResponseBuilder
+                    .attributeModifierType(attributeModifierEntry.getAttributeModifierType())
+                    .attributeModifierValueType(attributeModifierEntry.getAttributeModifierUnitType())
+                    .attributeModifierValue(buildAttributeModifierValue(responseBuilderConfiguration.getAttribute(), attributeModifierEntry));
+
+            if (attributeModifierEntry instanceof PercentageAttributeModifierEntry) {
+                attributeModifierPartialResponseBuilder.percentageBonus(((PercentageAttributeModifierEntry) attributeModifierEntry).getPercentageBonus());
+            }
+
+            result.add(attributeModifierPartialResponseBuilder.build());
         }
 
         return result;
