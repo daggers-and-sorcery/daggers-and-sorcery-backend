@@ -3,6 +3,7 @@ package com.morethanheroic.swords.profile.service.response;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.domain.SkillAttributeDefinition;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
 import com.morethanheroic.swords.response.service.PartialResponseBuilder;
@@ -34,7 +35,11 @@ public class AttributeDefinitionPartialResultBuilder implements PartialResponseB
         }
 
         if (attribute.getAttributeType() == AttributeType.SKILL) {
-            attributeDefinitionPartialResponseBuilder.hasPage(skillAttributeDefinitionCache.getDefinition((SkillAttribute) attribute).isHasPage());
+            final SkillAttributeDefinition skillAttributeDefinition = skillAttributeDefinitionCache.getDefinition((SkillAttribute) attribute);
+
+            attributeDefinitionPartialResponseBuilder.hasPage(skillAttributeDefinition.isHasPage());
+            attributeDefinitionPartialResponseBuilder.incrementedAttribute(skillAttributeDefinition.getIncrementedAttribute());
+            attributeDefinitionPartialResponseBuilder.incrementedAttributeName(skillAttributeDefinition.getIncrementedAttribute().getName());
         }
 
         return attributeDefinitionPartialResponseBuilder.build();

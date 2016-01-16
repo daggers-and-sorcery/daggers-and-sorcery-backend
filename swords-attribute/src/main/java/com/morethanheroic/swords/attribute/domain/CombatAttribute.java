@@ -2,6 +2,7 @@ package com.morethanheroic.swords.attribute.domain;
 
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.WordUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,7 +49,7 @@ public enum CombatAttribute implements Attribute {
 
     @Override
     public String getName() {
-        return this.name();
+        return WordUtils.capitalize(this.name().toLowerCase().replaceAll("_", " "));
     }
 
     public List<GeneralAttribute> getBonusAttributes() {

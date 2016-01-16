@@ -15,6 +15,8 @@ public class AttributeDefinitionPartialResponse extends PartialResponse {
 
     private final Attribute id;
     private final String name;
+    private final Attribute incrementedAttribute;
+    private final String incrementedAttributeName;
     private final int initialValue;
     private final AttributeType attributeType;
     private final GeneralAttributeType generalAttributeType;

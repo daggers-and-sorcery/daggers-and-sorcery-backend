@@ -3,6 +3,7 @@ package com.morethanheroic.swords.attribute.domain;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.domain.type.GeneralAttributeType;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.WordUtils;
 
 /**
  * The {@link AttributeType#GENERAL} attributes.
@@ -45,7 +46,7 @@ public enum GeneralAttribute implements Attribute {
 
     @Override
     public String getName() {
-        return this.name();
+        return WordUtils.capitalize(this.name().toLowerCase());
     }
 
     public GeneralAttributeType getGeneralAttributeType() {
