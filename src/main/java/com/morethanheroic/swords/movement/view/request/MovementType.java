@@ -1,5 +1,5 @@
 package com.morethanheroic.swords.movement.view.request;
 
 public enum MovementType {
-    UP, DOWN, LEFT, RIGHT
+    LEFT_UP, LEFT_DOWN, RIGHT, LEFT, RIGHT_UP, RIGHT_DOWN
 }

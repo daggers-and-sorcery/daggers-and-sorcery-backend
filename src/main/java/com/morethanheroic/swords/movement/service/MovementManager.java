@@ -36,9 +36,20 @@ public class MovementManager {
 
     private int getTargetXCoordinate(MovementEntity movementEntity, MovementType type) {
         switch (type) {
-            case UP:
-            case DOWN:
-                return movementEntity.getX();
+            case RIGHT_UP:
+            case RIGHT_DOWN:
+                if (movementEntity.getY() % 2 == 0) {
+                    return movementEntity.getX();
+                } else {
+                    return movementEntity.getX() + 1;
+                }
+            case LEFT_DOWN:
+            case LEFT_UP:
+                if (movementEntity.getY() % 2 == 0) {
+                    return movementEntity.getX() - 1;
+                } else {
+                    return movementEntity.getX();
+                }
             case LEFT:
                 return movementEntity.getX() - 1;
             case RIGHT:
@@ -50,12 +61,14 @@ public class MovementManager {
 
     private int getTargetYCoordinate(MovementEntity movementEntity, MovementType type) {
         switch (type) {
-            case UP:
+            case RIGHT_UP:
+            case LEFT_UP:
                 return movementEntity.getY() - 1;
-            case DOWN:
+            case RIGHT_DOWN:
+            case LEFT_DOWN:
                 return movementEntity.getY() + 1;
-            case LEFT:
             case RIGHT:
+            case LEFT:
                 return movementEntity.getY();
         }
 
