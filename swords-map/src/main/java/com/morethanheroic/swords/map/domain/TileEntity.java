@@ -21,4 +21,13 @@ public class TileEntity {
     public int getY() {
         return tileDefinition.getY();
     }
+
+    public int getBackground() {
+        return tileDefinition.getBackground();
+    }
+
+    //TODO: objects ome here later! Like bush,trees, houses etc
+    public Object[] getObjects() {
+        return new Object[0];
+    }
 }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 @Service
 public class MapConverter {
 
+    public final static String GROUND_LAYER_NAME = "Ground";
     public final static String COLLISION_LAYER_NAME = "Collision";
     private final static int EMPTY_TILE = 0;
 
@@ -21,7 +22,7 @@ public class MapConverter {
 
         for (int x = 0; x < rawMap.getWidth(); x++) {
             for (int y = 0; y < rawMap.getHeight(); y++) {
-                tileDefinitions[x][y] = new TileDefinition(isPositionWalkable(layers, x, y), x, y);
+                tileDefinitions[x][y] = new TileDefinition(isPositionWalkable(layers, x, y), x, y, layers.get(GROUND_LAYER_NAME).getDataAt(x, y));
             }
         }
 
