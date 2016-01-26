@@ -79,7 +79,7 @@ public class MovementManagerTest {
 
         for (int x = 0; x < 40; x++) {
             for (int y = 0; y < 80; y++) {
-                tileDefinitions[x][y] = new TileDefinition(true, x, y);
+                tileDefinitions[x][y] = new TileDefinition(true, x, y, 1);
             }
         }
 
