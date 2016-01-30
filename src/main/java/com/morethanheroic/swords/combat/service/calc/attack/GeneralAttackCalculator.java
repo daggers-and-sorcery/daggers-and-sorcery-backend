@@ -8,6 +8,7 @@ import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatUtil;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,7 +38,7 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
 
     protected void dealMiss(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(result, (UserCombatEntity) opponent, combatUtil.getUserArmorSkillLevel(((UserCombatEntity) opponent).getUserEntity()));
+            addDefenseXp(result, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 2);
 
             result.addMessage(combatMessageBuilder.buildMonsterRangedMissMessage(attacker.getName()));
         } else {
