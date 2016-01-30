@@ -21,6 +21,10 @@ public class MonsterCombatEntity extends CombatEntity {
         return monsterDefinition;
     }
 
+    public int getLevel() {
+        return monsterDefinition.getLevel();
+    }
+
     @Override
     public DiceAttribute getAttack() {
         return monsterDefinition.getAttack();
