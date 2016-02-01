@@ -38,7 +38,7 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
 
     protected void dealMiss(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(result, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 2);
+            addDefenseXp(result, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
 
             result.addMessage(combatMessageBuilder.buildMonsterRangedMissMessage(attacker.getName()));
         } else {
