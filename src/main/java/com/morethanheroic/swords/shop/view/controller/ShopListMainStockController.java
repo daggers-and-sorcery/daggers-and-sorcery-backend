@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 public class ShopListMainStockController {
 
@@ -23,7 +25,7 @@ public class ShopListMainStockController {
     private MovementFacade movementFacade;
 
     @RequestMapping(value = "/shop/main", method = RequestMethod.GET)
-    public CharacterRefreshResponse listStock(UserEntity user) {
-        return shopItemListResponseBuilder.build(user, shopFacade.getShopEntity(movementFacade.getEntity(user).getMap().getMainShop()));
+    public CharacterRefreshResponse listStock(UserEntity user, HttpSession httpSession) {
+        return shopItemListResponseBuilder.build(user, httpSession, shopFacade.getShopEntity(movementFacade.getEntity(user).getMap().getMainShop()));
     }
 }
