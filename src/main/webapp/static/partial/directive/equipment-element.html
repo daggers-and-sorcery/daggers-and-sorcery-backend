@@ -1,6 +1,0 @@
-<span ng-if="!equipmentValue.empty">{{equipmentName | capitalize}}:</span>
-<span ng-if="equipmentValue.empty">{{equipmentName | capitalize}}:</span>
-<span ng-if="!equipmentValue.empty" class="pull-right inventory-item-watch" ng-click="unequip(equipmentName)" style="width: 26px;height: 26px;margin-top: -3.5px;cursor: pointer;"><img style="margin-top: -8px;" src="/icon/equip.svg"></span>
-<span ng-if="!equipmentValue.empty" class="glyphicon glyphicon-eye-open pull-right inventory-item-watch" popover-template="inventoryPopover.templateUrl" popover-trigger="mouseenter" popover-placement="right"></span>
-<span ng-if="!equipmentValue.empty" class="pull-right" ng-bind="equipmentValue.description.name"></span>
-<span ng-if="equipmentValue.empty" class="pull-right">Empty</span>

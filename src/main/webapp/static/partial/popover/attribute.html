@@ -1,8 +1,0 @@
-<div>
-    <ul class="attribute-popover">
-        <li ng-repeat="attributeModifier in attributeValue.modifierDataArray" ng-if="attributeModifier.attributeModifierValue != 0">
-            <span ng-if="attributeModifier.attributeModifierValueType == 'VALUE'">{{attributeModifier.attributeModifierValue}} - {{attributeBonusNameMap[attributeModifier.attributeModifierType]}}</span>
-            <span ng-if="attributeModifier.attributeModifierValueType == 'PERCENTAGE'">{{attributeModifier.percentageBonus}}% <small>({{attributeModifier.attributeModifierValue}})</small> - {{attributeBonusNameMap[attributeModifier.attributeModifierType]}}</span>
-        </li>
-    </ul>
-</div>
