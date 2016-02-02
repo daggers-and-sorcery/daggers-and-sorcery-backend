@@ -35,7 +35,8 @@ public class SessionLoginFilter implements Filter {
         final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         final HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
-        if (!httpServletRequest.getMethod().equalsIgnoreCase("OPTIONS") && httpServletRequest.getSession().getAttribute(sessionAttributeName) == null) {
+        if (!httpServletRequest.getMethod().equalsIgnoreCase("OPTIONS")
+                && httpServletRequest.getSession().getAttribute(sessionAttributeName) == null) {
             httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value());
 
             return;
