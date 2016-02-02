@@ -46,7 +46,7 @@ public class InventoryEntity {
     }
 
     public boolean hasItemAmount(int itemId, int amount, boolean identified) {
-        return getItemAmount(itemId, identified) > amount;
+        return getItemAmount(itemId, identified) >= amount;
     }
 
     public int getItemAmount(int itemId) {

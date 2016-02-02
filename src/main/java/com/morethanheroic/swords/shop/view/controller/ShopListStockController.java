@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 public class ShopListStockController {
 
@@ -21,13 +23,13 @@ public class ShopListStockController {
     private ShopItemListResponseBuilder shopItemListResponseBuilder;
 
     @RequestMapping(value = "/shop/{shopId}", method = RequestMethod.GET)
-    public CharacterRefreshResponse listStock(UserEntity user, @PathVariable int shopId) {
+    public CharacterRefreshResponse listStock(UserEntity user, @PathVariable int shopId, HttpSession httpSession) {
         if (!shopFacade.isShopExists(shopId)) {
             throw new NotFoundException();
         }
 
         //TODO: Check that the user is on the same tile as the shop
 
-        return shopItemListResponseBuilder.build(user, shopFacade.getShopEntity(shopId));
+        return shopItemListResponseBuilder.build(user, httpSession, shopFacade.getShopEntity(shopId));
     }
 }
