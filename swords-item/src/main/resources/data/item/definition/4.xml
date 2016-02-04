@@ -5,5 +5,11 @@
     <item:id>4</item:id>
     <item:name>Copper ore</item:name>
     <item:type>ORE</item:type>
-    <item:weight>50</item:weight>
+    <item:weight>200</item:weight>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>5</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>
