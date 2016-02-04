@@ -5,5 +5,5 @@
     <item:id>3</item:id>
     <item:name>Tin ore</item:name>
     <item:type>ORE</item:type>
-    <item:weight>50</item:weight>
+    <item:weight>20</item:weight>
 </item:item>
