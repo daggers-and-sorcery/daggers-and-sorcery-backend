@@ -1,0 +1,16 @@
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile project(':common-event')
+    compile project(':swords-user')
+}
+
+apply plugin: 'spring-boot'
+
+apply plugin: 'checkstyle'
+checkstyle checkstyle_config
+
+apply plugin: 'findbugs'
+findbugs findbugs_config
