@@ -3,14 +3,8 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
-
-    compile project(':common-memoize')
-    compile project(':common-cache')
-    compile project(':common-dependency-injection')
-
+    compile project(':common-event')
     compile project(':swords-user')
-    compile project(':swords-registration')
 }
 
 apply plugin: 'spring-boot'

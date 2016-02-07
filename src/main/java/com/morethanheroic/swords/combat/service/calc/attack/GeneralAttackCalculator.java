@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -8,7 +7,6 @@ import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatUtil;
-import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 

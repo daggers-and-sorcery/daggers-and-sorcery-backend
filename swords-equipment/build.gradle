@@ -12,6 +12,7 @@ dependencies {
     compile project(':swords-journal')
     compile project(':swords-money')
     compile project(':swords-inventory')
+    compile project(':swords-registration')
 }
 
 apply plugin: 'spring-boot'

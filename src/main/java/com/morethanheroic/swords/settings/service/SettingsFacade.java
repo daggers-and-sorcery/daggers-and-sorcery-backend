@@ -3,20 +3,19 @@ package com.morethanheroic.swords.settings.service;
 import com.morethanheroic.swords.settings.model.SettingsEntity;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SettingsManager {
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class SettingsFacade {
 
-    @Autowired
-    private SettingsMapper settingsMapper;
+    @NonNull
+    private final SettingsMapper settingsMapper;
 
     public SettingsEntity getSettings(UserEntity userEntity) {
         return new SettingsEntity(settingsMapper.getSettings(userEntity.getId()));
-    }
-
-    public void createSettingsForUser(UserEntity userEntity) {
-        settingsMapper.insert(userEntity.getId());
     }
 }

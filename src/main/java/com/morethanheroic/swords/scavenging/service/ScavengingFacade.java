@@ -9,7 +9,7 @@ import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.scavenging.domain.ScavengingEntity;
 import com.morethanheroic.swords.settings.model.SettingsEntity;
-import com.morethanheroic.swords.settings.service.SettingsManager;
+import com.morethanheroic.swords.settings.service.SettingsFacade;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -33,7 +33,7 @@ public class ScavengingFacade {
     private SkillFacade skillFacade;
 
     @Autowired
-    private SettingsManager settingsManager;
+    private SettingsFacade settingsFacade;
 
     @Autowired
     private UserMapper userMapper;
@@ -43,7 +43,7 @@ public class ScavengingFacade {
     }
 
     public void handleScavenging(CombatResult combatResult, UserEntity userEntity, MonsterDefinition monsterDefinition) {
-        SettingsEntity settingsEntity = settingsManager.getSettings(userEntity);
+        SettingsEntity settingsEntity = settingsFacade.getSettings(userEntity);
         ScavengingEntity scavengingEntity = getEntity(userEntity);
         SkillEntity skillEntity = skillFacade.getSkills(userEntity);
         InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
