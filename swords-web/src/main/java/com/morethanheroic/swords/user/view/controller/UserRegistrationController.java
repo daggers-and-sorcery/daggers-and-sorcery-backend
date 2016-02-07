@@ -71,9 +71,6 @@ public class UserRegistrationController {
 
             loginEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
 
-            //TODO: enable these when they are refactored out of the main package! That should be done asap!
-            //movementFacade.createMovementForUser(userEntity);
-
             //TODO: add user email validation.
 
             return new ResponseEntity<>("{}", HttpStatus.OK);
