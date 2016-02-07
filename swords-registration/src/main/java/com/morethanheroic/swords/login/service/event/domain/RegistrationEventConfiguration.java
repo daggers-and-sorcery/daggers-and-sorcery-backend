@@ -4,13 +4,13 @@ import com.morethanheroic.swords.event.EventConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 /**
- * Configuration for LoginEvents.
+ * Configuration for RegistrationEvents.
  */
-public class LoginEventConfiguration implements EventConfiguration {
+public class RegistrationEventConfiguration implements EventConfiguration {
 
     private final UserEntity userEntity;
 
-    public LoginEventConfiguration(UserEntity userEntity) {
+    public RegistrationEventConfiguration(UserEntity userEntity) {
         this.userEntity = userEntity;
     }
 

@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.user.view.controller;
 
+import com.morethanheroic.swords.login.service.event.RegistrationEventDispatcher;
+import com.morethanheroic.swords.login.service.event.domain.RegistrationEventConfiguration;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.security.PasswordEncoder;
 import com.morethanheroic.swords.skill.service.SkillFacade;
@@ -40,6 +42,9 @@ public class UserRegistrationController {
     @NonNull
     private final SkillFacade skillFacade;
 
+    @NonNull
+    private final RegistrationEventDispatcher loginEventDispatcher;
+
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @Transactional
     //TODO: Use Response.
@@ -64,14 +69,12 @@ public class UserRegistrationController {
 
             final UserEntity userEntity = userFacade.createUser(username, password, email, race);
 
-            skillFacade.createSkillsForUser(userEntity);
+            loginEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
 
             //TODO: enable these when they are refactored out of the main package! That should be done asap!
-            //equipmentManager.createSkillsForUser(userEntity);
-            //settingsManager.createSettingsForUser(userEntity);
             //movementFacade.createMovementForUser(userEntity);
 
-            //TODO: add user email validation
+            //TODO: add user email validation.
 
             return new ResponseEntity<>("{}", HttpStatus.OK);
         }
