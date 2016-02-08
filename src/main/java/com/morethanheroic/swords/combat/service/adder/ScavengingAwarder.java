@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.combat.service.adder;
 
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.ScavengingResultEntity;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
@@ -21,12 +20,12 @@ public class ScavengingAwarder {
 
     public void awardScavengingResultToUser(CombatResult combatResult, SkillEntity skillEntity, InventoryEntity inventoryEntity, ScavengingResult scavengingResult) {
         awardScavengingDrops(combatResult, inventoryEntity, scavengingResult);
-        awardScavengingXp(combatResult, skillEntity,scavengingResult);
+        awardScavengingXp(combatResult, skillEntity, scavengingResult);
     }
 
     private void awardScavengingDrops(CombatResult combatResult, InventoryEntity inventoryEntity, ScavengingResult scavengingResult) {
         for (ScavengingResultEntity scavengingResultEntity : scavengingResult.getScavengingResultList()) {
-            if(scavengingResultEntity.isIdentified()) {
+            if (scavengingResultEntity.isIdentified()) {
                 combatResult.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(scavengingResultEntity.getItem().getName(), scavengingResultEntity.getAmount()));
             } else {
                 combatResult.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(UNIDENTIFIED_ITEM_NAME, scavengingResultEntity.getAmount()));

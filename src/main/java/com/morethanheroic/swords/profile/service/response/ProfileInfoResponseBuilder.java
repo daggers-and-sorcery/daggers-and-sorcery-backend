@@ -1,20 +1,5 @@
 package com.morethanheroic.swords.profile.service.response;
 
-import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.domain.type.AttributeType;
-import com.morethanheroic.swords.attribute.service.AttributeUtil;
-import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
-import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
-import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
-import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
@@ -29,8 +14,6 @@ import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
-import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
@@ -45,7 +28,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoResponseBuilderConfiguration> {
@@ -66,9 +48,6 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
 
     @Autowired
     private RaceDefinitionCache raceDefinitionCache;
-
-    @Autowired
-    private ScavengingFacade scavengingFacade;
 
     @Autowired
     private AttributeValuePartialResponseBuilder attributeValuePartialResponseBuilder;
@@ -95,7 +74,6 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         response.setData("race", raceDefinitionCache.getDefinition(user.getRace()).getName());
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
-        response.setData("scavengingPoints", scavengingFacade.getEntity(user).getScavengingPoint());
         response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), session));
         response.setData("equipment", buildEquipmentResponse(user, session));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));
