@@ -16,7 +16,7 @@ public class ScavengingInfoController {
 
     private final ScavengingInfoResponseBuilder scavengingInfoResponseBuilder;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/skill/scavenging/info", method = RequestMethod.GET)
     public Response scavengingInfo(UserEntity userEntity) {
         return scavengingInfoResponseBuilder.build(
                 ScavengingInfoResponseBuilderConfiguration.builder()
