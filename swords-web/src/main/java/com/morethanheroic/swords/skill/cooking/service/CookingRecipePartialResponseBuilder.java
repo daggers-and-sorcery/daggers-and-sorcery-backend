@@ -2,9 +2,9 @@ package com.morethanheroic.swords.skill.cooking.service;
 
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.response.service.PartialResponseBuilder;
-import com.morethanheroic.swords.skill.cooking.service.ingredient.service.CookingRecipeIngredientListPartialResponseBuilder;
+import com.morethanheroic.swords.skill.cooking.service.ingredient.CookingRecipeIngredientListPartialResponseBuilder;
 import com.morethanheroic.swords.skill.cooking.service.domain.CookingRecipePartialResponse;
-import com.morethanheroic.swords.skill.cooking.service.ingredient.service.domain.CookingRecipeIngredientListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.cooking.service.ingredient.domain.CookingRecipeIngredientListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.cooking.service.domain.configuration.CookingRecipePartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

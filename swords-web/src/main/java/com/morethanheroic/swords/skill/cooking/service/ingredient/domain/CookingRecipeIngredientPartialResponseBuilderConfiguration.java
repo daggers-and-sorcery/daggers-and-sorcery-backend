@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.cooking.service.ingredient.service.domain;
+package com.morethanheroic.swords.skill.cooking.service.ingredient.domain;
 
 import com.morethanheroic.swords.recipe.domain.RecipeIngredient;
 import com.morethanheroic.swords.response.service.ResponseBuilderConfiguration;

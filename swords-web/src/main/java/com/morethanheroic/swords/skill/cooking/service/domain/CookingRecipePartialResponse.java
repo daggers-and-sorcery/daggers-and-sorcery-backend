@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.cooking.service.domain;
 
 import com.morethanheroic.swords.response.domain.PartialResponse;
-import com.morethanheroic.swords.skill.cooking.service.ingredient.service.domain.CookingRecipeIngredientPartialResponse;
+import com.morethanheroic.swords.skill.cooking.service.ingredient.domain.CookingRecipeIngredientPartialResponse;
 import lombok.Builder;
 import lombok.Getter;
 
