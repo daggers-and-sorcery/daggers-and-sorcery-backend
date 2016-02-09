@@ -87,6 +87,8 @@ dependencies {
     compile project(':swords-session')
     compile project(':swords-inventory')
     compile project(':swords-registration')
+    compile project(':swords-combat')
+    compile project(':swords-settings')
 }
 
 buildscript {

@@ -36,6 +36,7 @@ public class ScavengingFacade {
     private SettingsFacade settingsFacade;
 
     @Autowired
+    //TODO: we don't want to tie ourselves to the UserMapper! This should be removed asap!
     private UserMapper userMapper;
 
     public ScavengingEntity getEntity(UserEntity userEntity) {
