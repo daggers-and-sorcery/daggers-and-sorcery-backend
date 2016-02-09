@@ -23,4 +23,10 @@
             <recipe:amount>10</recipe:amount>
         </recipe:experience>
     </recipe:experience-list>
+    <recipe:requirement-list>
+        <recipe:requirement>
+            <recipe:skill>COOKING</recipe:skill>
+            <recipe:amount>1</recipe:amount>
+        </recipe:requirement>
+    </recipe:requirement-list>
 </recipe:recipe>
