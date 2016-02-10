@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.cooking.service.domain;
+package com.morethanheroic.swords.skill.cooking.service.requirement.domain;
 
 import com.morethanheroic.swords.response.domain.PartialResponse;
 import com.morethanheroic.swords.skill.domain.SkillType;

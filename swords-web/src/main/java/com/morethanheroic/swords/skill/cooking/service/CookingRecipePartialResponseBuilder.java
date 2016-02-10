@@ -8,6 +8,8 @@ import com.morethanheroic.swords.skill.cooking.service.experience.CookingRecipeE
 import com.morethanheroic.swords.skill.cooking.service.experience.domain.CookingRecipeExperienceListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.cooking.service.ingredient.CookingRecipeIngredientListPartialResponseBuilder;
 import com.morethanheroic.swords.skill.cooking.service.ingredient.domain.CookingRecipeIngredientListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.cooking.service.requirement.CookingRecipeRequirementListPartialResponseBuilder;
+import com.morethanheroic.swords.skill.cooking.service.requirement.domain.CookingRecipeRequirementListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.cooking.service.reward.CookingRecipeRewardListPartialResponseBuilder;
 import com.morethanheroic.swords.skill.cooking.service.reward.domain.CookingRecipeRewardListPartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class CookingRecipePartialResponseBuilder implements PartialResponseBuild
     private final CookingRecipeIngredientListPartialResponseBuilder cookingRecipeIngredientListPartialResponseBuilder;
     private final CookingRecipeRewardListPartialResponseBuilder cookingRecipeRewardListPartialResponseBuilder;
     private final CookingRecipeExperienceListPartialResponseBuilder cookingRecipeExperienceListPartialResponseBuilder;
+    private final CookingRecipeRequirementListPartialResponseBuilder cookingRecipeRequirementListPartialResponseBuilder;
 
     @Override
     public CookingRecipePartialResponse build(CookingRecipePartialResponseBuilderConfiguration cookingRecipePartialResponseBuilderConfiguration) {
@@ -48,6 +51,13 @@ public class CookingRecipePartialResponseBuilder implements PartialResponseBuild
                                 CookingRecipeExperienceListPartialResponseBuilderConfiguration.builder()
                                         .recipeExperiences(recipeDefinition.getRecipeExperiences())
                                         .build()
+                        )
+                )
+                .recipeRequirements(
+                        cookingRecipeRequirementListPartialResponseBuilder.build(
+                                CookingRecipeRequirementListPartialResponseBuilderConfiguration.builder()
+                                .recipeRequirements(recipeDefinition.getRecipeRequirements())
+                                .build()
                         )
                 )
                 .build();
