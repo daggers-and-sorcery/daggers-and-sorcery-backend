@@ -4,6 +4,8 @@ import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.skill.cooking.service.domain.CookingRecipePartialResponse;
 import com.morethanheroic.swords.skill.cooking.service.domain.configuration.CookingRecipePartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.cooking.service.experience.CookingRecipeExperienceListPartialResponseBuilder;
+import com.morethanheroic.swords.skill.cooking.service.experience.domain.CookingRecipeExperienceListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.cooking.service.ingredient.CookingRecipeIngredientListPartialResponseBuilder;
 import com.morethanheroic.swords.skill.cooking.service.ingredient.domain.CookingRecipeIngredientListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.cooking.service.reward.CookingRecipeRewardListPartialResponseBuilder;
@@ -18,6 +20,7 @@ public class CookingRecipePartialResponseBuilder implements PartialResponseBuild
 
     private final CookingRecipeIngredientListPartialResponseBuilder cookingRecipeIngredientListPartialResponseBuilder;
     private final CookingRecipeRewardListPartialResponseBuilder cookingRecipeRewardListPartialResponseBuilder;
+    private final CookingRecipeExperienceListPartialResponseBuilder cookingRecipeExperienceListPartialResponseBuilder;
 
     @Override
     public CookingRecipePartialResponse build(CookingRecipePartialResponseBuilderConfiguration cookingRecipePartialResponseBuilderConfiguration) {
@@ -37,6 +40,13 @@ public class CookingRecipePartialResponseBuilder implements PartialResponseBuild
                         cookingRecipeRewardListPartialResponseBuilder.build(
                                 CookingRecipeRewardListPartialResponseBuilderConfiguration.builder()
                                         .recipeRewards(recipeDefinition.getRecipeRewards())
+                                        .build()
+                        )
+                )
+                .recipeExperiences(
+                        cookingRecipeExperienceListPartialResponseBuilder.build(
+                                CookingRecipeExperienceListPartialResponseBuilderConfiguration.builder()
+                                        .recipeExperiences(recipeDefinition.getRecipeExperiences())
                                         .build()
                         )
                 )

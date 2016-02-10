@@ -2,6 +2,7 @@ package com.morethanheroic.swords.response.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,10 @@ public class Response {
     }
 
     public void setData(String name, PartialResponse value) {
+        data.put(name, value);
+    }
+
+    public void setData(String name, Collection<PartialResponse> value) {
         data.put(name, value);
     }
 
