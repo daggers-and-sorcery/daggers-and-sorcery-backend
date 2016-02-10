@@ -23,6 +23,8 @@ public class RawRecipeDefinition {
 
     private int chance;
 
+    private String name;
+
     @XmlElement(name = "type")
     private RecipeType type;
 

@@ -16,6 +16,7 @@ public class CookingRecipePartialResponse extends PartialResponse {
 
     private final int id;
     private final int chance;
+    private final String name;
     private final List<CookingRecipeIngredientPartialResponse> recipeIngredients;
     private final List<CookingRecipeRewardPartialResponse> recipeRewards;
     private final List<CookingRecipeExperiencePartialResponse> recipeExperiences;

@@ -6,6 +6,7 @@
         <xs:complexType>
             <xs:all>
                 <xs:element name="id" type="xs:unsignedInt"/>
+                <xs:element name="name" type="xs:string"/>
                 <xs:element name="type">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">

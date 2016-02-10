@@ -31,6 +31,7 @@ public class CookingRecipePartialResponseBuilder implements PartialResponseBuild
 
         return CookingRecipePartialResponse.builder()
                 .id(recipeDefinition.getId())
+                .name(recipeDefinition.getName())
                 .chance(recipeDefinition.getChance())
                 .recipeIngredients(
                         cookingRecipeIngredientListPartialResponseBuilder.build(

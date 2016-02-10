@@ -14,6 +14,7 @@ public class RecipeDefinition {
 
     private final int id;
     private final int chance;
+    private final String name;
     private final RecipeType type;
     private final List<RecipeIngredient> recipeIngredients;
     private final List<RecipeReward> recipeRewards;
