@@ -20,7 +20,7 @@ public class ItemEntryResponseBuilder {
         result.put("name", itemDefinition.getName());
         //TODO: later define real display name for item types somewhere (own definition?)
         result.put("type", WordUtils.capitalize(itemDefinition.getType().name().toLowerCase().replace("_", " ")));
-        result.put("weight", itemDefinition.getWeight());
+        result.put("weight", (double) itemDefinition.getWeight() / 100);
         result.put("equipment", itemDefinition.isEquipment());
         result.put("usable", itemDefinition.isUsable());
 
