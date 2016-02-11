@@ -5,5 +5,11 @@
     <item:id>11</item:id>
     <item:name>Recipe: Fried peanut</item:name>
     <item:type>RECIPE</item:type>
-    <item:weight>30</item:weight>
+    <item:weight>10</item:weight>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>20</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>
