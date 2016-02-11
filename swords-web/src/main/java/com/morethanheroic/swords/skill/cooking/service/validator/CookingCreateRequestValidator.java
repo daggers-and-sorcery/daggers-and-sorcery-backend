@@ -27,7 +27,7 @@ public class CookingCreateRequestValidator {
     private final InventoryFacade inventoryFacade;
 
     public void validate(UserEntity userEntity, CookingCreateRequest cookingCreateRequest) {
-        if (recipeDefinitionCache.hasDefinition(cookingCreateRequest.getRecipeId())) {
+        if (!recipeDefinitionCache.hasDefinition(cookingCreateRequest.getRecipeId())) {
             throw new NotFoundException();
         }
 

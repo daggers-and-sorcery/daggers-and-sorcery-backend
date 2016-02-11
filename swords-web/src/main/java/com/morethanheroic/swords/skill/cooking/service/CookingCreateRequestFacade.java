@@ -29,6 +29,7 @@ public class CookingCreateRequestFacade {
 
         return cookingCreateResponseBuilder.build(
                 CookingCreateResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
                         .success(true)
                         .build()
         );

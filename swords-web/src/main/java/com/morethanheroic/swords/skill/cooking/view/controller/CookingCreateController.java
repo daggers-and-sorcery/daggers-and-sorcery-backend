@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.skill.cooking.view.controller;
 
+import com.morethanheroic.swords.response.domain.Response;
 import com.morethanheroic.swords.skill.cooking.service.CookingCreateRequestFacade;
 import com.morethanheroic.swords.skill.cooking.view.request.CookingCreateRequest;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -19,7 +20,7 @@ public class CookingCreateController {
     private final CookingCreateRequestFacade cookingCreateRequestFacade;
 
     @RequestMapping(value = "/skill/cooking/create", method = RequestMethod.POST)
-    public void create(UserEntity userEntity, @RequestBody @Valid CookingCreateRequest cookingCreateRequest) {
-        cookingCreateRequestFacade.handleCookingCreateRequest(userEntity, cookingCreateRequest);
+    public Response create(UserEntity userEntity, @RequestBody @Valid CookingCreateRequest cookingCreateRequest) {
+        return cookingCreateRequestFacade.handleCookingCreateRequest(userEntity, cookingCreateRequest);
     }
 }
