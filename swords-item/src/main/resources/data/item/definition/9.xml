@@ -9,13 +9,15 @@
     <item:modifiers>
         <item:modifier>
             <item:modifier>ATTACK</item:modifier>
-            <item:amount>5</item:amount>
-            <item:d6>3</item:d6>
-        </item:modifier>
-        <item:modifier>
-            <item:modifier>ONE_HANDED_CRUSHING_WEAPONS</item:modifier>
-            <item:amount>5</item:amount>
+            <item:amount>1</item:amount>
+            <item:d2>2</item:d2>
         </item:modifier>
     </item:modifiers>
-    <item:weight>120</item:weight>
+    <item:weight>200</item:weight>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>15</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>
