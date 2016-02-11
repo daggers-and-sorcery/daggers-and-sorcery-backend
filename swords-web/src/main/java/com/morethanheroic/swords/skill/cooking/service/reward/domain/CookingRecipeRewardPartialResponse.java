@@ -8,6 +8,6 @@ import lombok.Getter;
 @Getter
 public class CookingRecipeRewardPartialResponse extends PartialResponse {
 
-    private final int id;
+    private final String name;
     private final int amount;
 }

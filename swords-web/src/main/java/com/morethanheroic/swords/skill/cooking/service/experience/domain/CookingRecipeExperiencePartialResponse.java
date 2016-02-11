@@ -9,6 +9,6 @@ import lombok.Getter;
 @Getter
 public class CookingRecipeExperiencePartialResponse extends PartialResponse {
 
-    private final SkillType skill;
+    private final String skill;
     private final int amount;
 }

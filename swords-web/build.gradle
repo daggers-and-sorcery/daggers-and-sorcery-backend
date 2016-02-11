@@ -19,6 +19,7 @@ dependencies {
     compile project(':swords-recipe')
     compile project(':swords-registration')
     compile project(':swords-skill-scavenging')
+    compile project(':swords-skill-cooking')
 }
 
 apply plugin: 'spring-boot'

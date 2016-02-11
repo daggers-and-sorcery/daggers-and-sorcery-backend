@@ -43,4 +43,8 @@ public class RecipeDefinitionCache implements DefinitionCache<Integer, RecipeDef
     public RecipeDefinition getDefinition(Integer id) {
         return recipeDefinitionMap.get(id);
     }
+
+    public boolean hasDefinition(Integer id) {
+        return recipeDefinitionMap.containsKey(id);
+    }
 }

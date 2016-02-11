@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.spell.view.controller;
 
-import com.morethanheroic.swords.common.response.NotFoundException;
+import com.morethanheroic.swords.response.exception.NotFoundException;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.spell.service.page.PageEntryDataContainer;
