@@ -8,9 +8,8 @@
     <item:equipment>true</item:equipment>
     <item:modifiers>
         <item:modifier>
-            <item:modifier>ATTACK</item:modifier>
-            <item:amount>1</item:amount>
-            <item:d2>2</item:d2>
+            <item:modifier>DEFENSE</item:modifier>
+            <item:amount>2</item:amount>
         </item:modifier>
     </item:modifiers>
     <item:weight>200</item:weight>
