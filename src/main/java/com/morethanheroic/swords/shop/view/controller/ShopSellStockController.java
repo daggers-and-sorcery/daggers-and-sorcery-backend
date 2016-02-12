@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.shop.view.controller;
 
-import com.morethanheroic.swords.common.response.ConflictException;
-import com.morethanheroic.swords.common.response.NotFoundException;
+import com.morethanheroic.swords.response.exception.ConflictException;
+import com.morethanheroic.swords.response.exception.NotFoundException;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;

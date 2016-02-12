@@ -31,6 +31,7 @@ public class RecipeDefinitionTransformer implements DefinitionTransformer<Recipe
     public RecipeDefinition transform(RawRecipeDefinition rawRecipeDefinition) {
         return RecipeDefinition.builder()
                 .id(rawRecipeDefinition.getId())
+                .name(rawRecipeDefinition.getName())
                 .chance(rawRecipeDefinition.getChance())
                 .type(rawRecipeDefinition.getType())
                 .recipeExperiences(recipeExperienceTransformer.transform(rawRecipeDefinition.getRawRecipeExperienceList()))
