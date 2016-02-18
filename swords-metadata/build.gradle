@@ -5,6 +5,10 @@ dependencies {
     }
 
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+
+    compile project(':common-dependency-injection')
+
+    compile project(':swords-user')
 }
 
 apply plugin: 'spring-boot'
