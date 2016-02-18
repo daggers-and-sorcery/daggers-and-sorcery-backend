@@ -32,4 +32,5 @@ include 'common-event'
 include 'swords-registration'
 include 'swords-combat'
 include 'swords-settings'
+include 'swords-metadata'
 

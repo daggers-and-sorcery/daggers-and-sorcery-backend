@@ -1,0 +1,19 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160219-1">
+        <createTable tableName="user_meta">
+            <column name="user_id" type="int unsigned">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="meta_id" type="int unsigned">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="meta_value" type="int unsigned">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
