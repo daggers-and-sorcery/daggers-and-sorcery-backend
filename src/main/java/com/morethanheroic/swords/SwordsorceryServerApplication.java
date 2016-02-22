@@ -1,12 +1,12 @@
 package com.morethanheroic.swords;
 
+import com.morethanheroic.session.filter.SessionLoginFilter;
 import com.morethanheroic.swords.common.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.common.resolver.UserEntityHandlerMethodArgumentResolver;
-import com.morethanheroic.swords.session.SessionAttributeType;
-import com.morethanheroic.swords.session.filter.SessionLoginFilter;
 import com.morethanheroic.swords.common.sql.InstantHandler;
 import com.morethanheroic.swords.common.sql.LocalDateHandler;
 import com.morethanheroic.swords.common.sql.LocalTimeHandler;
+import com.morethanheroic.swords.session.SessionAttributeType;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -19,7 +19,6 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
