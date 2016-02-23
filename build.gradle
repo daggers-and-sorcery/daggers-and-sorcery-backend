@@ -21,12 +21,42 @@ plugins {
 allprojects {
     apply plugin: 'java'
 
+    artifactory {
+        contextUrl = "http://artifactory.morethanheroic.com/artifactory"
+        publish {
+            repository {
+                repoKey = 'libs-release-local'
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+                maven = true
+            }
+            defaults {
+                publications ('mavenJava')
+            }
+        }
+        resolve {
+            repository {
+                repoKey = 'libs-release'
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+                maven = true
+            }
+        }
+    }
+
+    apply plugin: 'maven-publish'
+    apply plugin: "com.jfrog.artifactory"
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
     group = 'com.morethanheroic.swords'
     version = '0.0.1'
-
-    repositories {
-        mavenCentral()
-    }
 
     dependencies {
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
@@ -77,7 +107,8 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
     compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-    compile group: 'com.morethanheroic', name: 'common-session', version: '1.1'
+    compile group: 'com.morethanheroic', name: 'common-session', version: '1.3.0'
+    compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.0'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
@@ -85,7 +116,6 @@ dependencies {
     compile project(':xml-loader')
     compile project(':common-memoize')
     compile project(':common-validator')
-    compile project(':common-response')
     compile project(':common-dependency-injection')
 
     compile project(':swords-equipment')
@@ -115,37 +145,3 @@ mainClassName = 'com.morethanheroic.swords.SwordsorceryServerApplication'
 apply plugin: 'spring-boot'
 
 task stage(dependsOn: ['clean', 'installApp'])
-
-apply plugin: 'maven-publish'
-apply plugin: "com.jfrog.artifactory"
-
-artifactory {
-    contextUrl = "http://artifactory.morethanheroic.com/artifactory"
-    publish {
-        repository {
-            repoKey = 'libs-release-local'
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-            maven = true
-        }
-        defaults {
-            publications ('mavenJava')
-        }
-    }
-    resolve {
-        repository {
-            repoKey = 'libs-release'
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-            maven = true
-        }
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}

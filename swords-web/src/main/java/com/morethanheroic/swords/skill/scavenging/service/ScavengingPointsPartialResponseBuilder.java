@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.scavenging.service;
 
-import com.morethanheroic.swords.response.domain.PartialResponse;
-import com.morethanheroic.swords.response.service.PartialResponseBuilder;
+import com.morethanheroic.response.domain.PartialResponse;
+import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
 import com.morethanheroic.swords.skill.scavenging.service.domain.ScavengingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.scavenging.service.domain.ScavengingPointsPartialResponse;

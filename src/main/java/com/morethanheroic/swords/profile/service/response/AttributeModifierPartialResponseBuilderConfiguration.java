@@ -2,7 +2,7 @@ package com.morethanheroic.swords.profile.service.response;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
-import com.morethanheroic.swords.response.service.ResponseBuilderConfiguration;
+import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.login.service.event.domain;
 
-import com.morethanheroic.swords.event.EventHandler;
+import com.morethanheroic.event.EventHandler;
 
 /**
  * This class can be used to respond to RegistrationEvents.

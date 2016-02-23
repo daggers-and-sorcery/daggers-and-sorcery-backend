@@ -2,7 +2,7 @@ package com.morethanheroic.swords.profile.view.controller;
 
 import com.morethanheroic.swords.profile.service.response.ProfileInfoResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.ProfileInfoResponseBuilderConfiguration;
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

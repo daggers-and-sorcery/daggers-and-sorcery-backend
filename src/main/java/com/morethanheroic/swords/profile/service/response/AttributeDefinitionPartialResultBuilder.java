@@ -6,7 +6,7 @@ import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttributeDefinition;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
-import com.morethanheroic.swords.response.service.PartialResponseBuilder;
+import com.morethanheroic.response.service.PartialResponseBuilder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

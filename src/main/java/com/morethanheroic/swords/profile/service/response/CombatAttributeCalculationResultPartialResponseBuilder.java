@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.profile.service.response;
 
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
-import com.morethanheroic.swords.response.service.PartialResponseBuilder;
+import com.morethanheroic.response.service.PartialResponseBuilder;
 import org.springframework.stereotype.Service;
 
 @Service

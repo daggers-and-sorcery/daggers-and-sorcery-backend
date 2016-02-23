@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.login.service.event.domain;
 
-import com.morethanheroic.swords.event.EventConfiguration;
+import com.morethanheroic.event.EventConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 /**

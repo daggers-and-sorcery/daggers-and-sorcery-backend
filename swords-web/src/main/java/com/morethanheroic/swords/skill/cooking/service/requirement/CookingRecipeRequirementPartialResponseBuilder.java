@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.cooking.service.requirement;
 
 import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
-import com.morethanheroic.swords.response.service.PartialResponseBuilder;
+import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.skill.cooking.service.requirement.domain.CookingRecipeRequirementPartialResponse;
 import com.morethanheroic.swords.skill.cooking.service.requirement.domain.CookingRecipeRequirementPartialResponseBuilderConfiguration;
 import org.apache.commons.lang3.text.WordUtils;

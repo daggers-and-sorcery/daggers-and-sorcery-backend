@@ -11,8 +11,8 @@ import com.morethanheroic.swords.profile.service.response.item.ProfileIdentified
 import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
-import com.morethanheroic.swords.response.domain.Response;
-import com.morethanheroic.swords.response.service.ResponseBuilder;
+import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;

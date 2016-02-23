@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.domain.type.GeneralAttributeType;
-import com.morethanheroic.swords.response.domain.PartialResponse;
+import com.morethanheroic.response.domain.PartialResponse;
 import lombok.Builder;
 import lombok.Getter;
 

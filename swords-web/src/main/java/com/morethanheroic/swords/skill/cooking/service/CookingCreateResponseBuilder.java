@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.cooking.service;
 
-import com.morethanheroic.swords.response.domain.Response;
-import com.morethanheroic.swords.response.service.ResponseBuilder;
+import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.cooking.service.domain.configuration.CookingCreateResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.cooking.service.domain.configuration.CookingCreateSuccessPartialResponseBuilderConfiguration;

@@ -3,7 +3,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':common-event')
+    compile group: 'com.morethanheroic', name: 'common-event', version: '1.0.0'
     compile project(':swords-user')
 }
 
