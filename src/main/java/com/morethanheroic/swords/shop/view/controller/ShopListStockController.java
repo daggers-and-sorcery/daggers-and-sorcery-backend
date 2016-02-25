@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.shop.view.controller;
 
-import com.morethanheroic.swords.response.exception.NotFoundException;
+import com.morethanheroic.response.exception.NotFoundException;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.shop.service.ShopFacade;
 import com.morethanheroic.swords.shop.service.response.ShopItemListResponseBuilder;

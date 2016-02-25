@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.skill.cooking.view.controller;
 
-import com.morethanheroic.swords.response.domain.Response;
+import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.skill.cooking.service.CookingCreateRequestFacade;
 import com.morethanheroic.swords.skill.cooking.view.request.CookingCreateRequest;
 import com.morethanheroic.swords.user.domain.UserEntity;

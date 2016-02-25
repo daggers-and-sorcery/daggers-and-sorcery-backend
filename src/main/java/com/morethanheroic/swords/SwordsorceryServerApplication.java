@@ -1,9 +1,8 @@
 package com.morethanheroic.swords;
 
+import com.morethanheroic.session.configuration.EnableSessionManagement;
 import com.morethanheroic.swords.common.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.common.resolver.UserEntityHandlerMethodArgumentResolver;
-import com.morethanheroic.swords.session.SessionAttributeType;
-import com.morethanheroic.swords.session.filter.SessionLoginFilter;
 import com.morethanheroic.swords.common.sql.InstantHandler;
 import com.morethanheroic.swords.common.sql.LocalDateHandler;
 import com.morethanheroic.swords.common.sql.LocalTimeHandler;
@@ -15,15 +14,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -38,7 +33,6 @@ import java.net.URISyntaxException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -47,7 +41,20 @@ import java.util.Random;
 @ComponentScan
 @EnableWebMvc
 @EnableTransactionManagement
-@EnableRedisHttpSession
+@EnableSessionManagement(
+        sessionProtectedUrls = {
+                "/user/logout",
+                "/character/*",
+                "/map/*",
+                "/shop/*",
+                "/equip/*",
+                "/item/use/*",
+                "/journal/*",
+                "/combat/*",
+                "/skill/*",
+                "/spell/*"
+        }
+)
 @MapperScan(value = "com.morethanheroic.swords", annotationClass = Repository.class)
 public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapter {
 
@@ -58,30 +65,6 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     @Bean
     public ShaPasswordEncoder shaPasswordEncoder() {
         return new ShaPasswordEncoder(256);
-    }
-
-    @Bean
-    public FilterRegistrationBean filterSessionLoginBean() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        SessionLoginFilter sessionFilter = new SessionLoginFilter(SessionAttributeType.USER_ID.name());
-
-        registrationBean.setFilter(sessionFilter);
-
-        ArrayList<String> urlPatterns = new ArrayList<>();
-        urlPatterns.add("/userEntity/logout");
-        urlPatterns.add("/character/*");
-        urlPatterns.add("/map/*");
-        urlPatterns.add("/shop/*");
-        urlPatterns.add("/equip/*");
-        urlPatterns.add("/item/use/*");
-        urlPatterns.add("/journal/*");
-        urlPatterns.add("/combat/*");
-        urlPatterns.add("/skill/*");
-        urlPatterns.add("/spell/*");
-
-        registrationBean.setUrlPatterns(urlPatterns);
-
-        return registrationBean;
     }
 
     @Override
@@ -158,24 +141,6 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     @Bean
     public Random getRandom() {
         return new Random();
-    }
-
-    @Bean
-    public JedisConnectionFactory redisConnectionFactory() throws URISyntaxException {
-        JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
-
-        if (System.getenv("REDISCLOUD_URL") != null) {
-            URI redisURI = new URI(System.getenv("REDISCLOUD_URL"));
-
-            redisConnectionFactory.setHostName(redisURI.getHost());
-            redisConnectionFactory.setPort(redisURI.getPort());
-            redisConnectionFactory.setPassword(redisURI.getUserInfo().split(":", 2)[1]);
-        } else {
-            redisConnectionFactory.setHostName("127.0.0.1");
-            redisConnectionFactory.setPort(6379);
-        }
-
-        return redisConnectionFactory;
     }
 
     @Override

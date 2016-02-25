@@ -1,15 +1,62 @@
+buildscript {
+    repositories {
+        maven {
+            url 'http://artifactory.morethanheroic.com/artifactory'
+            credentials {
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+            }
+        }
+    }
+
+    dependencies {
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.3.0.RELEASE'
+    }
+}
+
+plugins {
+    id "com.jfrog.artifactory" version "4.0.0"
+}
+
 allprojects {
     apply plugin: 'java'
 
+    artifactory {
+        contextUrl = "http://artifactory.morethanheroic.com/artifactory"
+        publish {
+            repository {
+                repoKey = 'libs-release-local'
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+                maven = true
+            }
+            defaults {
+                publications ('mavenJava')
+            }
+        }
+        resolve {
+            repository {
+                repoKey = 'libs-release'
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+                maven = true
+            }
+        }
+    }
+
+    apply plugin: 'maven-publish'
+    apply plugin: "com.jfrog.artifactory"
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
     group = 'com.morethanheroic.swords'
     version = '0.0.1'
-
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-    repositories {
-        mavenCentral()
-    }
 
     dependencies {
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
@@ -39,7 +86,6 @@ allprojects {
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-redis'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
@@ -60,14 +106,15 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
     compile group: 'com.google.guava', name: 'guava', version: guava_version
 
+    compile group: 'com.morethanheroic', name: 'common-session', version: '1.3.1'
+    compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.0'
+
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 
     compile project(':xml-loader')
     compile project(':common-memoize')
-    compile project(':common-session')
     compile project(':common-validator')
-    compile project(':common-response')
     compile project(':common-dependency-injection')
 
     compile project(':swords-equipment')
@@ -89,16 +136,6 @@ dependencies {
     compile project(':swords-registration')
     compile project(':swords-combat')
     compile project(':swords-settings')
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.3.0.RELEASE'
-    }
 }
 
 apply plugin: 'application'

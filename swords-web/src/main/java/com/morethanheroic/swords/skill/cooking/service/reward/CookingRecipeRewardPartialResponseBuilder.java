@@ -2,7 +2,7 @@ package com.morethanheroic.swords.skill.cooking.service.reward;
 
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.recipe.domain.RecipeReward;
-import com.morethanheroic.swords.response.service.PartialResponseBuilder;
+import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.skill.cooking.service.reward.domain.CookingRecipeRewardPartialResponse;
 import com.morethanheroic.swords.skill.cooking.service.reward.domain.CookingRecipeRewardPartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.cooking.service.experience;
 
 import com.morethanheroic.swords.recipe.domain.RecipeExperience;
-import com.morethanheroic.swords.response.service.PartialResponseCollectionBuilder;
+import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.skill.cooking.service.experience.domain.CookingRecipeExperienceListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.cooking.service.experience.domain.CookingRecipeExperiencePartialResponse;
 import com.morethanheroic.swords.skill.cooking.service.experience.domain.CookingRecipeExperiencePartialResponseBuilderConfiguration;

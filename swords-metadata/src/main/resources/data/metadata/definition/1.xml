@@ -1,0 +1,16 @@
+<metadata:metadata xmlns:metadata="http://www.swordsandsorcery.com/metadata"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.swordsandsorcery.com/metadata ../schema.xsd">
+    <metadata:id>1</metadata:id>
+    <metadata:name>PRELUDE_SHOWN</metadata:name>
+    <metadata:values>
+        <metadata:value>
+            <metadata:id>0</metadata:id>
+            <metadata:name>NOT_SHOWN</metadata:name>
+        </metadata:value>
+        <metadata:value>
+            <metadata:id>1</metadata:id>
+            <metadata:name>ALREADY_SHOWN</metadata:name>
+        </metadata:value>
+    </metadata:values>
+</metadata:metadata>

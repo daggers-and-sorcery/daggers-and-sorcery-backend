@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.skill.cooking.service;
 
-import com.morethanheroic.swords.response.service.PartialResponseBuilder;
+import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.skill.cooking.service.domain.CookingCreateSuccessPartialResponse;
 import com.morethanheroic.swords.skill.cooking.service.domain.configuration.CookingCreateSuccessPartialResponseBuilderConfiguration;
 import org.springframework.stereotype.Service;

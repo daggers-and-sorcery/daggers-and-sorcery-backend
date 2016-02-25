@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.login.service.event;
 
-import com.morethanheroic.swords.event.EventDispatcher;
+import com.morethanheroic.event.EventDispatcher;
 import com.morethanheroic.swords.login.service.event.domain.RegistrationEventConfiguration;
 import com.morethanheroic.swords.login.service.event.domain.RegistrationEventHandler;
 import lombok.RequiredArgsConstructor;

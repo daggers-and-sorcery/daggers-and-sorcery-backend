@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.profile.service.response;
 
+import com.morethanheroic.response.domain.PartialResponse;
+import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
@@ -10,9 +12,6 @@ import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeDat
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
-import com.morethanheroic.swords.response.domain.PartialResponse;
-import com.morethanheroic.swords.response.service.PartialResponseCollectionBuilder;
-import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

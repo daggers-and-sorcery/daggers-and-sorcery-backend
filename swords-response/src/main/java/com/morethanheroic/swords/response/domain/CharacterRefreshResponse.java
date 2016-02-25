@@ -2,6 +2,7 @@ package com.morethanheroic.swords.response.domain;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.morethanheroic.response.domain.Response;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

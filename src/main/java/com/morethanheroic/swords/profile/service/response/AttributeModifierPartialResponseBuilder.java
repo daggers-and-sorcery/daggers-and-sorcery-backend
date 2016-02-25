@@ -6,7 +6,7 @@ import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModi
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
 import com.morethanheroic.swords.attribute.service.modifier.domain.PercentageAttributeModifierEntry;
-import com.morethanheroic.swords.response.service.PartialResponseCollectionBuilder;
+import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
