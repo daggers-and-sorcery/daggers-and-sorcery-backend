@@ -86,7 +86,6 @@ allprojects {
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-redis'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
@@ -107,7 +106,7 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
     compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-    compile group: 'com.morethanheroic', name: 'common-session', version: '1.3.0'
+    compile group: 'com.morethanheroic', name: 'common-session', version: '1.3.1'
     compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.0'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
