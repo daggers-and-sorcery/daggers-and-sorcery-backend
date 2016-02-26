@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.user.view.controller;
+package com.morethanheroic.swords.user.web.controller;
 
 import com.morethanheroic.swords.login.service.event.RegistrationEventDispatcher;
 import com.morethanheroic.swords.login.service.event.domain.RegistrationEventConfiguration;
@@ -8,7 +8,7 @@ import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.service.UserFacade;
-import com.morethanheroic.swords.user.view.request.RegistrationRequest;
+import com.morethanheroic.swords.user.web.request.RegistrationRequest;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

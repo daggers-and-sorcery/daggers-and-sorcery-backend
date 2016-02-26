@@ -1,5 +1,9 @@
-package com.morethanheroic.swords.user.view.controller;
+package com.morethanheroic.swords.user.web.controller;
 
+import com.morethanheroic.login.domain.LoginRequest;
+import com.morethanheroic.login.service.LoginFacade;
+import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeFacade;
@@ -11,6 +15,7 @@ import com.morethanheroic.swords.user.service.UserFacade;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +43,19 @@ public class UserLoginController {
     @NonNull
     private final ResponseFactory responseFactory;
 
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @RestController
+    @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+    public class LoginController {
+
+        private final LoginFacade loginFacade;
+
+        @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+        public Response login(SessionEntity sessionEntity, @RequestBody LoginRequest loginRequest) {
+            return loginFacade.handleLoginRequest(sessionEntity, loginRequest);
+        }
+    }
+
+    /*@RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public CharacterRefreshResponse login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
         final UserEntity userEntity = userFacade.getUser(username, password);
 
@@ -56,7 +73,7 @@ public class UserLoginController {
         }
 
         return response;
-    }
+    }*/
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
     public CharacterRefreshResponse info(UserEntity user) {
