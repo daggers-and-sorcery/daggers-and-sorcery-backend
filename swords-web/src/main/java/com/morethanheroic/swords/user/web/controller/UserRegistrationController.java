@@ -43,7 +43,7 @@ public class UserRegistrationController {
     private final SkillFacade skillFacade;
 
     @NonNull
-    private final RegistrationEventDispatcher loginEventDispatcher;
+    private final RegistrationEventDispatcher registrationEventDispatcher;
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @Transactional
@@ -69,7 +69,7 @@ public class UserRegistrationController {
 
             final UserEntity userEntity = userFacade.createUser(username, password, email, race);
 
-            loginEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
+            registrationEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
 
             //TODO: add user email validation.
 
