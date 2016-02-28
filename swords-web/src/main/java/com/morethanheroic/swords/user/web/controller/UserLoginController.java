@@ -1,28 +1,32 @@
-package com.morethanheroic.swords.user.view.controller;
+package com.morethanheroic.swords.user.web.controller;
 
+import com.morethanheroic.login.configuration.EnableLogin;
+import com.morethanheroic.login.domain.LoginRequest;
+import com.morethanheroic.login.service.LoginFacade;
+import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeFacade;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserFacade;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 
 /**
  * Handles all login and user information related requests.
  */
 @RestController
+@EnableLogin
 @SuppressWarnings("checkstyle:multiplestringliterals")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserLoginController {
@@ -38,24 +42,12 @@ public class UserLoginController {
     @NonNull
     private final ResponseFactory responseFactory;
 
+    @NonNull
+    private final LoginFacade loginFacade;
+
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public CharacterRefreshResponse login(HttpSession session, @RequestParam String username, @RequestParam String password) throws UnsupportedEncodingException {
-        final UserEntity userEntity = userFacade.getUser(username, password);
-
-        //TODO: Create response builders for this and separate action from response building.
-        final CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
-        if (userEntity != null) {
-            response.setData("success", "true");
-
-            session.setAttribute(SessionAttributeType.USER_ID.name(), userEntity.getId());
-
-            userFacade.updateLastLoginTime(userEntity);
-        } else {
-            response.setData("success", "false");
-            response.setData("error", "Wrong username or password!");
-        }
-
-        return response;
+    public Response login(SessionEntity sessionEntity, @RequestBody LoginRequest loginRequest) {
+        return loginFacade.handleLoginRequest(sessionEntity, loginRequest);
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)

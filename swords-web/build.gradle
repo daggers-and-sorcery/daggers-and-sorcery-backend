@@ -6,7 +6,8 @@ dependencies {
 
     compile group: 'org.springframework.security', name: 'spring-security-core'
 
-    compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-login', version: '1.1.7'
+    compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.1'
 
     compile project(':common-security')
     compile project(':common-validator')

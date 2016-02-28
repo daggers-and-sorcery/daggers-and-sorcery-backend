@@ -30,13 +30,13 @@ public class UserFacade {
 
     @Memoize
     public UserEntity getUser(int id) {
-        return new UserEntity(id, userMapper);
+        return new UserEntity(id, userMapper.findById(id), userMapper);
     }
 
     public UserEntity getUser(String username, String password) {
-        final UserDatabaseEntity user = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
+        final UserDatabaseEntity userDatabaseEntity = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
 
-        return user != null ? new UserEntity(user.getId(), userMapper) : null;
+        return userDatabaseEntity != null ? new UserEntity(userDatabaseEntity.getId(), userDatabaseEntity, userMapper) : null;
     }
 
     @Transactional
