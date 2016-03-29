@@ -6,9 +6,6 @@ dependencies {
 
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
-    compile group: 'com.morethanheroic', name: 'common-login', version: '1.1.8'
-    compile group: 'com.morethanheroic', name: 'common-user', version: '1.0.4'
-
     compile project(':common-memoize')
     compile project(':common-security')
 
@@ -20,5 +17,5 @@ apply plugin: 'spring-boot'
 apply plugin: 'checkstyle'
 checkstyle checkstyle_config
 
-//apply plugin: 'findbugs'
-//findbugs findbugs_config
+apply plugin: 'findbugs'
+findbugs findbugs_config

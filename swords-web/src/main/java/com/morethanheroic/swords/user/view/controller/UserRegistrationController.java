@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.user.web.controller;
+package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.swords.login.service.event.RegistrationEventDispatcher;
 import com.morethanheroic.swords.login.service.event.domain.RegistrationEventConfiguration;
@@ -8,7 +8,7 @@ import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.service.UserFacade;
-import com.morethanheroic.swords.user.web.request.RegistrationRequest;
+import com.morethanheroic.swords.user.view.request.RegistrationRequest;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class UserRegistrationController {
     private final SkillFacade skillFacade;
 
     @NonNull
-    private final RegistrationEventDispatcher registrationEventDispatcher;
+    private final RegistrationEventDispatcher loginEventDispatcher;
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @Transactional
@@ -69,7 +69,7 @@ public class UserRegistrationController {
 
             final UserEntity userEntity = userFacade.createUser(username, password, email, race);
 
-            registrationEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
+            loginEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
 
             //TODO: add user email validation.
 

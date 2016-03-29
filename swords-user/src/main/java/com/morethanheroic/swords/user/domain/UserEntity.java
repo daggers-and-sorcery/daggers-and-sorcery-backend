@@ -9,20 +9,14 @@ import java.time.Instant;
 /**
  * Contains the data of an user.
  */
-public class UserEntity extends com.morethanheroic.user.domain.UserEntity {
+public class UserEntity {
 
-    private UserDatabaseEntity userDatabaseEntity;
-    private UserMapper userMapper;
+    private final UserDatabaseEntity userDatabaseEntity;
+    private final UserMapper userMapper;
 
-    public UserEntity(int userId, UserDatabaseEntity userDatabaseEntity, UserMapper userMapper) {
-        super(userId, userDatabaseEntity.getUsername(), userDatabaseEntity.getPassword(), userDatabaseEntity.getEmail());
-
-        this.userDatabaseEntity = userDatabaseEntity;
+    public UserEntity(int userId, UserMapper userMapper) {
+        this.userDatabaseEntity = userMapper.findById(userId);
         this.userMapper = userMapper;
-    }
-
-    public UserEntity(int id, String username, String password, String email) {
-        super(id, username, password, email);
     }
 
     public int getHealthPoints() {
@@ -45,6 +39,14 @@ public class UserEntity extends com.morethanheroic.user.domain.UserEntity {
 
     public Instant getLastRegenerationDate() {
         return userDatabaseEntity.getLastRegenerationDate();
+    }
+
+    public int getId() {
+        return userDatabaseEntity.getId();
+    }
+
+    public String getUsername() {
+        return userDatabaseEntity.getUsername();
     }
 
     public Race getRace() {

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.user.web.request;
+package com.morethanheroic.swords.user.view.request;
 
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.validator.annotation.StringEnumeration;

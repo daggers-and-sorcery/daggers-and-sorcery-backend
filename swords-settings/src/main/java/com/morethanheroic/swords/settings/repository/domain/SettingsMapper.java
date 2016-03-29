@@ -11,11 +11,11 @@ import org.springframework.stereotype.Repository;
 public interface SettingsMapper {
 
     @Insert("INSERT INTO settings SET user_id = #{user_id}")
-    void insert(@Param("user_id") long userId);
+    void insert(@Param("user_id") int userId);
 
     @Update("UPDATE settings SET scavenging_enabled = #{scavenging_enabled} WHERE user_id = #{user_id}")
-    void saveScavengingEnabled(@Param("user_id") long userId, @Param("scavenging_enabled") boolean scavengingEnabled);
+    void saveScavengingEnabled(@Param("user_id") int userId, @Param("scavenging_enabled") boolean scavengingEnabled);
 
     @Select("SELECT * FROM settings WHERE user_id = #{user_id}")
-    SettingsDatabaseEntity getSettings(@Param("user_id") long userId);
+    SettingsDatabaseEntity getSettings(@Param("user_id") int userId);
 }

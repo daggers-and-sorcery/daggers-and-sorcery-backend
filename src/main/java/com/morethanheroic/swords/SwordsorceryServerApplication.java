@@ -1,6 +1,5 @@
 package com.morethanheroic.swords;
 
-import com.morethanheroic.application.Application;
 import com.morethanheroic.session.configuration.EnableSessionManagement;
 import com.morethanheroic.swords.common.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.common.resolver.UserEntityHandlerMethodArgumentResolver;
@@ -14,6 +13,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -56,7 +56,7 @@ import java.util.Random;
         }
 )
 @MapperScan(value = "com.morethanheroic.swords", annotationClass = Repository.class)
-public class SwordsorceryServerApplication extends Application {
+public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapter {
 
     public static void main(String[] args) {
         SpringApplication.run(SwordsorceryServerApplication.class, args);
@@ -113,7 +113,7 @@ public class SwordsorceryServerApplication extends Application {
         } else {
             dataSource.setUrl("jdbc:mysql://localhost:3306/swords");
             dataSource.setUsername("root");
-            dataSource.setPassword("");
+            dataSource.setPassword("root");
         }
 
         return dataSource;

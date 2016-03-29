@@ -1,15 +1,12 @@
-package com.morethanheroic.swords.user.web.controller;
+package com.morethanheroic.swords.user.view.controller;
 
-import com.morethanheroic.login.configuration.EnableLogin;
 import com.morethanheroic.login.domain.LoginRequest;
-import com.morethanheroic.login.service.LoginFacade;
-import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeFacade;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
+import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserFacade;
 import lombok.NonNull;
@@ -21,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Handles all login and user information related requests.
  */
 @RestController
-@EnableLogin
 @SuppressWarnings("checkstyle:multiplestringliterals")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserLoginController {
@@ -42,12 +39,24 @@ public class UserLoginController {
     @NonNull
     private final ResponseFactory responseFactory;
 
-    @NonNull
-    private final LoginFacade loginFacade;
-
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public Response login(SessionEntity sessionEntity, @RequestBody LoginRequest loginRequest) {
-        return loginFacade.handleLoginRequest(sessionEntity, loginRequest);
+    public CharacterRefreshResponse login(HttpSession session, @RequestBody LoginRequest loginRequest) throws UnsupportedEncodingException {
+        final UserEntity userEntity = userFacade.getUser(loginRequest.getUsername(), loginRequest.getPassword());
+
+        //TODO: Create response builders for this and separate action from response building.
+        final CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
+        if (userEntity != null) {
+            response.setData("success", "true");
+
+            session.setAttribute(SessionAttributeType.USER_ID.name(), userEntity.getId());
+
+            userFacade.updateLastLoginTime(userEntity);
+        } else {
+            response.setData("success", "false");
+            response.setData("error", "Wrong username or password!");
+        }
+
+        return response;
     }
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
