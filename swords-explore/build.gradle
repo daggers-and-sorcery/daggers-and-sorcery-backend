@@ -9,6 +9,7 @@ dependencies {
 
     compile project(':swords-user')
     compile project(':swords-response')
+    compile project(':swords-combat')
 }
 
 apply plugin: 'spring-boot'

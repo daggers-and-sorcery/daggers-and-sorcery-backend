@@ -1,7 +1,5 @@
 package com.morethanheroic.swords.combat.domain;
 
-import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 

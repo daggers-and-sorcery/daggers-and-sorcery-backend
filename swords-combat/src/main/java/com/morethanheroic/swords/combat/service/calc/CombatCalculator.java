@@ -10,10 +10,7 @@ import com.morethanheroic.swords.combat.service.adder.XpAdder;
 import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculatorFactory;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
-import com.morethanheroic.swords.map.repository.domain.MapObjectDatabaseEntity;
-import com.morethanheroic.swords.map.service.MapManager;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
-import com.morethanheroic.swords.movement.service.MovementFacade;
 import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
@@ -41,23 +38,20 @@ public class CombatCalculator {
     private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
-    private MovementFacade movementFacade;
-
-    @Autowired
-    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, MapManager mapManager, JournalManager journalManager, UserMapper userMapper) {
+    public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, JournalManager journalManager, UserMapper userMapper) {
         this.turnCalculatorFactory = turnCalculatorFactory;
         this.combatMessageBuilder = combatMessageBuilder;
         this.journalManager = journalManager;
         this.userMapper = userMapper;
     }
 
-    public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition, MapObjectDatabaseEntity spawn) {
+    public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition) {
         CombatResult result = new CombatResult();
         Combat combat = new Combat(userEntity, monsterDefinition, globalAttributeCalculator);
 
         startFight(result, combat);
         calculateFight(result, combat);
-        endFight(result, combat, spawn);
+        endFight(result, combat);
 
         return result;
     }
@@ -74,7 +68,7 @@ public class CombatCalculator {
         }
     }
 
-    private void endFight(CombatResult result, Combat combat, MapObjectDatabaseEntity spawn) {
+    private void endFight(CombatResult result, Combat combat) {
         if (result.getWinner() == Winner.PLAYER) {
             UserEntity user = combat.getUserCombatEntity().getUserEntity();
             MonsterDefinition monster = combat.getMonsterCombatEntity().getMonsterDefinition();
@@ -84,8 +78,6 @@ public class CombatCalculator {
             scavengingFacade.handleScavenging(result, user, monster);
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
-
-            movementFacade.getEntity(user).getMap().removeSpawn(spawn.getId());
 
             //TODO: Move user mapper outside, this class shouldn't know about user mapper at all, it should know more about user facade
             userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getMovementPoints() - 1);

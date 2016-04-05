@@ -14,8 +14,6 @@ import java.util.List;
 @Service
 public class CombatEffectApplierService {
 
-    private static final Logger logger = LoggerFactory.getLogger(CombatEffectApplierService.class);
-
     @Autowired
     private CombatEffectServiceAccessor combatEffectServiceAccessor;
 
