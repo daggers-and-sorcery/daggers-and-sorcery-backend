@@ -23,8 +23,11 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
 
         for (ExplorationEventEntryResult explorationEventEntryResult : explorationResponseBuilderConfiguration.getExplorationEventEntryResults().getExplorationEventEntryResults()) {
             if (explorationEventEntryResult instanceof TextExplorationEventEntryResult) {
+                TextExplorationEventEntryResult textExplorationEventEntryResult = (TextExplorationEventEntryResult) explorationEventEntryResult;
+
                 result.add(
                         TextExplorationEventPartialResponse.builder()
+                                .content(textExplorationEventEntryResult.getContent())
                                 .build()
                 );
             } else if (explorationEventEntryResult instanceof CombatExplorationEventEntryResult) {

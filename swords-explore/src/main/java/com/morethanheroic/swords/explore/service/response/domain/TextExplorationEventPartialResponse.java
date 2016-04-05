@@ -7,4 +7,8 @@ import lombok.Getter;
 @Builder
 @Getter
 public class TextExplorationEventPartialResponse extends PartialResponse {
+
+    private final ExplorationEventResponseType eventType = ExplorationEventResponseType.TEXT;
+    
+    private final String content;
 }

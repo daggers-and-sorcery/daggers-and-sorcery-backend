@@ -3,6 +3,7 @@ package com.morethanheroic.swords.explore.service.cache;
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventDefinition;
+import com.morethanheroic.swords.explore.domain.event.entry.impl.TextExplorationEventEntry;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +21,9 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
         explorationEventDefinitions.add(
                 ExplorationEventDefinition.builder()
                         .explorationEventEntries(Lists.newArrayList(
-
+                                TextExplorationEventEntry.builder()
+                                        .content("asd")
+                                        .build()
                                 )
                         )
                         .build()
