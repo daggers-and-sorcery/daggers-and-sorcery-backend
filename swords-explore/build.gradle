@@ -1,13 +1,15 @@
 dependencies {
+    compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.0'
+
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-user')
-    compile project(':swords-inventory')
-    compile project(':swords-skill')
-    compile project(':swords-settings')
     compile project(':common-definition')
+
+    compile project(':swords-user')
+    compile project(':swords-response')
+    compile project(':swords-combat')
 }
 
 apply plugin: 'spring-boot'

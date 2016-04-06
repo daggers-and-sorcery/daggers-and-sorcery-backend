@@ -30,4 +30,4 @@ include 'swords-registration'
 include 'swords-combat'
 include 'swords-settings'
 include 'swords-metadata'
-
+include 'swords-explore'

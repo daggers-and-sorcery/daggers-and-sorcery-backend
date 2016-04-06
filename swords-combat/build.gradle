@@ -5,6 +5,8 @@ dependencies {
     compile project(':swords-inventory')
     compile project(':swords-skill')
     compile project(':swords-item')
+    compile project(':swords-equipment')
+    compile project(':swords-skill-scavenging')
 }
 
 apply plugin: 'spring-boot'
