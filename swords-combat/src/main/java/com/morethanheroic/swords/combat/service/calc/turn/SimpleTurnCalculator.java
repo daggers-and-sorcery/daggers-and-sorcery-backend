@@ -10,7 +10,7 @@ import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
 import com.morethanheroic.swords.combat.service.calc.attack.MeleeAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.attack.RangedAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
-import com.morethanheroic.swords.settings.service.executor.CombatSettingsExecutor;
+import com.morethanheroic.swords.combat.service.executor.CombatSettingsExecutor;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;

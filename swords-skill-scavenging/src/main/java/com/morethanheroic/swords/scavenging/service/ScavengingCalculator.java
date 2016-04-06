@@ -1,10 +1,10 @@
-package com.morethanheroic.swords.combat.service.calc.scavenge;
+package com.morethanheroic.swords.scavenging.service;
 
-import com.morethanheroic.swords.combat.domain.ScavengingResultEntity;
-import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
+import com.morethanheroic.swords.scavenging.domain.ScavengingResultEntity;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingAmountDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
+import com.morethanheroic.swords.scavenging.domain.ScavengingResult;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;

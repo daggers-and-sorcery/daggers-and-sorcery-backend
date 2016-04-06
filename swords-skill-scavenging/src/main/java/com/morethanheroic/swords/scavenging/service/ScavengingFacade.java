@@ -1,9 +1,6 @@
 package com.morethanheroic.swords.scavenging.service;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
-import com.morethanheroic.swords.combat.service.adder.ScavengingAwarder;
-import com.morethanheroic.swords.combat.service.calc.scavenge.ScavengingCalculator;
-import com.morethanheroic.swords.combat.service.calc.scavenge.domain.ScavengingResult;
+import com.morethanheroic.swords.scavenging.domain.ScavengingResult;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -16,6 +13,8 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class ScavengingFacade {
@@ -43,7 +42,7 @@ public class ScavengingFacade {
         return new ScavengingEntity(userEntity, userMapper);
     }
 
-    public void handleScavenging(CombatResult combatResult, UserEntity userEntity, MonsterDefinition monsterDefinition) {
+    public ScavengingResult handleScavenging(UserEntity userEntity, MonsterDefinition monsterDefinition) {
         SettingsEntity settingsEntity = settingsFacade.getSettings(userEntity);
         ScavengingEntity scavengingEntity = getEntity(userEntity);
         SkillEntity skillEntity = skillFacade.getSkills(userEntity);
@@ -52,10 +51,14 @@ public class ScavengingFacade {
         if (shouldScavenge(settingsEntity, scavengingEntity)) {
             ScavengingResult scavengingResult = scavengingCalculator.calculateScavenge(skillEntity, monsterDefinition);
 
-            scavengingAwarder.awardScavengingResultToUser(combatResult, skillEntity, inventoryEntity, scavengingResult);
+            scavengingAwarder.awardScavengingResultToUser(skillEntity, inventoryEntity, scavengingResult);
 
             decreaseUserScavengingPoints(scavengingEntity);
+
+            return scavengingResult;
         }
+
+        return new ScavengingResult(Collections.emptyList(), 0);
     }
 
     private void decreaseUserScavengingPoints(ScavengingEntity scavengingEntity) {

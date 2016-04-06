@@ -4,7 +4,6 @@ dependencies {
     }
 
     compile project(':swords-user')
-    compile project(':swords-combat')
     compile project(':swords-inventory')
     compile project(':swords-skill')
     compile project(':swords-settings')

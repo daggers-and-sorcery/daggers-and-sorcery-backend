@@ -1,6 +1,5 @@
-package com.morethanheroic.swords.combat.service.calc.scavenge.domain;
+package com.morethanheroic.swords.scavenging.domain;
 
-import com.morethanheroic.swords.combat.domain.ScavengingResultEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

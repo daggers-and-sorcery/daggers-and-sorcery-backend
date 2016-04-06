@@ -11,6 +11,8 @@ import com.morethanheroic.swords.combat.service.calc.turn.TurnCalculatorFactory;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.scavenging.domain.ScavengingResult;
+import com.morethanheroic.swords.scavenging.domain.ScavengingResultEntity;
 import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CombatCalculator {
+
+    private static final String UNIDENTIFIED_ITEM_NAME = "Unidentified item";
 
     private final CombatMessageBuilder combatMessageBuilder;
     private final TurnCalculatorFactory turnCalculatorFactory;
@@ -75,7 +79,17 @@ public class CombatCalculator {
 
             dropAdder.addDropsToUserFromMonsterDefinition(result, user, monster);
 
-            scavengingFacade.handleScavenging(result, user, monster);
+            ScavengingResult scavengingResult = scavengingFacade.handleScavenging(user, monster);
+
+
+            for (ScavengingResultEntity scavengingResultEntity : scavengingResult.getScavengingResultList()) {
+                if (scavengingResultEntity.isIdentified()) {
+                    result.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(scavengingResultEntity.getItem().getName(), scavengingResultEntity.getAmount()));
+                } else {
+                    result.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(UNIDENTIFIED_ITEM_NAME, scavengingResultEntity.getAmount()));
+                }
+            }
+            result.addMessage(combatMessageBuilder.buildScavengeXpAwardMessage(scavengingResult.getScavengingXp()));
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
 

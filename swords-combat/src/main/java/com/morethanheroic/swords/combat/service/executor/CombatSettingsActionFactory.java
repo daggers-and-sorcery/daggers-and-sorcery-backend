@@ -1,10 +1,10 @@
-package com.morethanheroic.swords.settings.service.executor;
+package com.morethanheroic.swords.combat.service.executor;
 
 import com.morethanheroic.swords.settings.model.TriggerType;
-import com.morethanheroic.swords.settings.service.executor.action.HealthCombatSettings;
-import com.morethanheroic.swords.settings.service.executor.action.ManaCombatSettings;
-import com.morethanheroic.swords.settings.service.executor.action.MonsterCombatSettings;
-import com.morethanheroic.swords.settings.service.executor.action.TurnCombatSettings;
+import com.morethanheroic.swords.combat.service.executor.action.HealthCombatSettings;
+import com.morethanheroic.swords.combat.service.executor.action.ManaCombatSettings;
+import com.morethanheroic.swords.combat.service.executor.action.MonsterCombatSettings;
+import com.morethanheroic.swords.combat.service.executor.action.TurnCombatSettings;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.combat.service.UseItemService;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.domain;
+package com.morethanheroic.swords.scavenging.domain;
 
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 

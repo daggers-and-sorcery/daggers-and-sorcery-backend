@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.settings.service.executor;
+package com.morethanheroic.swords.combat.service.executor;
 
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
