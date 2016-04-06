@@ -31,8 +31,11 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                                 .build()
                 );
             } else if (explorationEventEntryResult instanceof CombatExplorationEventEntryResult) {
+                CombatExplorationEventEntryResult combatExplorationEventEntryResult = (CombatExplorationEventEntryResult) explorationEventEntryResult;
+
                 result.add(
                         CombatExplorationEventPartialResponse.builder()
+                                .combatMessages(combatExplorationEventEntryResult.getCombatMessages())
                                 .build()
                 );
             }
