@@ -24,7 +24,7 @@
     <recipe:reward-list>
         <recipe:reward>
             <recipe:id>21</recipe:id>
-            <recipe:amount>1</recipe:amount>
+            <recipe:amount>3</recipe:amount>
         </recipe:reward>
     </recipe:reward-list>
     <recipe:experience-list>
