@@ -6,4 +6,10 @@
     <item:name>Recipe: Peanut butter</item:name>
     <item:type>RECIPE</item:type>
     <item:weight>10</item:weight>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>10</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>
