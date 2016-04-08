@@ -1,9 +1,8 @@
 package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.login.domain.LoginRequest;
-import com.morethanheroic.swords.attribute.domain.BasicAttribute;
-import com.morethanheroic.swords.attribute.domain.CombatAttribute;
-import com.morethanheroic.swords.attribute.service.AttributeFacade;
+import com.morethanheroic.swords.metadata.domain.MetadataEntity;
+import com.morethanheroic.swords.metadata.service.MetadataFacade;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.session.SessionAttributeType;
@@ -34,10 +33,10 @@ public class UserLoginController {
     private final UserFacade userFacade;
 
     @NonNull
-    private final AttributeFacade attributeFacade;
+    private final ResponseFactory responseFactory;
 
     @NonNull
-    private final ResponseFactory responseFactory;
+    private final MetadataFacade metadataFacade;
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public CharacterRefreshResponse login(HttpSession session, @RequestBody LoginRequest loginRequest) throws UnsupportedEncodingException {
@@ -50,30 +49,18 @@ public class UserLoginController {
 
             session.setAttribute(SessionAttributeType.USER_ID.name(), userEntity.getId());
 
+            final MetadataEntity metadataEntity = metadataFacade.getEntity(userEntity, "PRELUDE_SHOWN");
+
+            if (metadataEntity.getValue().equals("NOT_SHOWN")) {
+                response.setData("prelude", true);
+
+                metadataEntity.setValue("ALREADY_SHOWN");
+            }
+
             userFacade.updateLastLoginTime(userEntity);
         } else {
             response.setData("success", "false");
             response.setData("error", "Wrong username or password!");
-        }
-
-        return response;
-    }
-
-    @RequestMapping(value = "/user/info", method = RequestMethod.GET)
-    public CharacterRefreshResponse info(UserEntity user) {
-        final CharacterRefreshResponse response = responseFactory.newResponse(user);
-
-        if (user != null) {
-            response.setData("loggedIn", true);
-            //TODO: Do we really need to set this data? It's automatically set afaik.
-            response.setData("life", attributeFacade.calculateAttributeValue(user, CombatAttribute.LIFE).getValue());
-            response.setData("max_life", attributeFacade.calculateAttributeMaximumValue(user, CombatAttribute.LIFE).getValue());
-            response.setData("mana", attributeFacade.calculateAttributeValue(user, CombatAttribute.MANA).getValue());
-            response.setData("max_mana", attributeFacade.calculateAttributeMaximumValue(user, CombatAttribute.MANA).getValue());
-            response.setData("movement", attributeFacade.calculateAttributeValue(user, BasicAttribute.MOVEMENT).getValue());
-            response.setData("max_movement", attributeFacade.calculateAttributeMaximumValue(user, BasicAttribute.MOVEMENT).getValue());
-        } else {
-            response.setData("loggedIn", false);
         }
 
         return response;

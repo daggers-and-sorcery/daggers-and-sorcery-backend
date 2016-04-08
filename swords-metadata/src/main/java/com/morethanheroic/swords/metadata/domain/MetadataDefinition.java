@@ -19,4 +19,14 @@ public class MetadataDefinition {
     public MetadataValueDefinition getValueDefinition(int valueId) {
         return values.get(valueId);
     }
+
+    public MetadataValueDefinition getValueDefinition(String valueName) {
+        for (MetadataValueDefinition metadataValueDefinition : values) {
+            if (metadataValueDefinition.getValue().equals(valueName)) {
+                return metadataValueDefinition;
+            }
+        }
+
+        throw new IllegalArgumentException("Unknown value definition: " + valueName + " for: " + name);
+    }
 }

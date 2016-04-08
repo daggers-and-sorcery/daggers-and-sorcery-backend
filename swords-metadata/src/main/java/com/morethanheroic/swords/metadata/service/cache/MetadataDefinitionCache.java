@@ -17,12 +17,12 @@ import java.util.Map;
 @Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class MetadataDefinitionCache implements DefinitionCache<Integer, MetadataDefinition> {
+public class MetadataDefinitionCache implements DefinitionCache<String, MetadataDefinition> {
 
     @NonNull
     private final MetadataDefinitionLoader metadataDefinitionLoader;
 
-    private final Map<Integer, MetadataDefinition> metadataDefinitionsMap;
+    private final Map<String, MetadataDefinition> metadataDefinitionsMap;
 
     @PostConstruct
     public void init() throws IOException {
@@ -31,12 +31,12 @@ public class MetadataDefinitionCache implements DefinitionCache<Integer, Metadat
         log.info("Loaded " + metadataDefinitions.size() + " metadata definitions.");
 
         for (MetadataDefinition metadataDefinition : metadataDefinitions) {
-            metadataDefinitionsMap.put(metadataDefinition.getId(), metadataDefinition);
+            metadataDefinitionsMap.put(metadataDefinition.getName(), metadataDefinition);
         }
     }
 
     @Override
-    public MetadataDefinition getDefinition(Integer key) {
+    public MetadataDefinition getDefinition(String key) {
         return metadataDefinitionsMap.get(key);
     }
 }

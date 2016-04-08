@@ -33,6 +33,16 @@ public class MetadataEntity {
     }
 
     public String getValue() {
+        if (metadataDatabaseEntity == null) {
+            return metadataDefinition.getValueDefinition(0).getValue();
+        }
+
         return metadataDefinition.getValueDefinition(metadataDatabaseEntity.getMetaValue()).getValue();
+    }
+
+    public void setValue(String value) {
+        final int valueId = metadataDefinition.getValueDefinition(value).getId();
+
+        metadataMapper.setMetadata(userEntity.getId(), metadataDefinition.getId(), valueId);
     }
 }
