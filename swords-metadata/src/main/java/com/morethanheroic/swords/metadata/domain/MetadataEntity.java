@@ -25,14 +25,14 @@ public class MetadataEntity {
     }
 
     public int getId() {
-        return metadataDatabaseEntity.getMetaId();
+        return metadataDefinition.getId();
     }
 
     public String getName() {
-        return "";
+        return metadataDefinition.getName();
     }
 
     public String getValue() {
-        return "";
+        return metadataDefinition.getValueDefinition(metadataDatabaseEntity.getMetaValue()).getValue();
     }
 }

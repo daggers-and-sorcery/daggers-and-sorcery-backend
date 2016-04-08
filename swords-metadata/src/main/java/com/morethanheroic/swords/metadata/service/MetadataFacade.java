@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class MetadataFacade {
 
     @InjectAtReturn
-    public MetadataEntity getEntity(UserEntity userEntity, MetadataDefinition metadaataDefinition) {
-        return new MetadataEntity(userEntity, metadaataDefinition);
+    public MetadataEntity getEntity(UserEntity userEntity, MetadataDefinition metadataDefinition) {
+        return new MetadataEntity(userEntity, metadataDefinition);
     }
 }
