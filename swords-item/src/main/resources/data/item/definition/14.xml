@@ -5,5 +5,21 @@
     <item:id>14</item:id>
     <item:name>Apple</item:name>
     <item:type>FRUIT</item:type>
-    <item:weight>0</item:weight>
+    <item:weight>10</item:weight>
+    <item:use-effect-list>
+        <item:effect target="com.morethanheroic.swords.combat.domain.effect.entry.HealCombatEffectDefinition">
+          	<item:settings-list>
+              	<item:effect-setting>
+                  	<item:setting-name>amount</item:setting-name>
+                  	<item:setting-value>5</item:setting-value>
+                </item:effect-setting>
+            </item:settings-list>
+      	</item:effect>
+    </item:use-effect-list>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>3</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>
