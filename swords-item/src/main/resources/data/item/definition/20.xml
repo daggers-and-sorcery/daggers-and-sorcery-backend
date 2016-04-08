@@ -6,6 +6,14 @@
     <item:name>Bronze sword</item:name>
     <item:type>SHORTSWORDS</item:type>
     <item:weight>300</item:weight>
+    <item:equipment>true</item:equipment>
+    <item:modifiers>
+        <item:modifier>
+            <item:modifier>ATTACK</item:modifier>
+            <item:amount>1</item:amount>
+            <item:d6>1</item:d6>
+        </item:modifier>
+    </item:modifiers>
     <item:price>
         <item:price-entry>
             <item:type>MONEY</item:type>
