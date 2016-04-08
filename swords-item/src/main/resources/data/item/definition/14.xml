@@ -5,5 +5,11 @@
     <item:id>14</item:id>
     <item:name>Apple</item:name>
     <item:type>FRUIT</item:type>
-    <item:weight>0</item:weight>
+    <item:weight>10</item:weight>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>3</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>
