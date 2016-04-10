@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.item.domain;
 
 import com.morethanheroic.swords.effect.domain.EffectDefinition;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -27,5 +28,25 @@ public class ItemDefinition {
 
     public boolean isTradeable() {
         return priceDefinitions.size() > 0 || type == ItemType.COIN;
+    }
+
+    public boolean hasPriceDefinitionFor(MoneyType moneyType) {
+        for (ItemPriceDefinition itemPriceDefinition : priceDefinitions) {
+            if (itemPriceDefinition.getType() == moneyType) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public ItemPriceDefinition getPriceDefinitionFor(MoneyType moneyType) {
+        for (ItemPriceDefinition itemPriceDefinition : priceDefinitions) {
+            if (itemPriceDefinition.getType() == moneyType) {
+                return itemPriceDefinition;
+            }
+        }
+
+        throw new IllegalArgumentException("Item: " + id + " doesn't have price definition for money type: " + moneyType);
     }
 }
