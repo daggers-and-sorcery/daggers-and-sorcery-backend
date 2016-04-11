@@ -10,6 +10,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
@@ -17,6 +18,7 @@ import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvc
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -92,50 +94,6 @@ public class SwordsorceryServerApplication extends WebMvcAutoConfigurationAdapte
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("/static/");
-    }
-
-    @Bean
-    public DataSource getMybatisDataSource() throws URISyntaxException {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-
-        //Production
-        if (System.getenv("CLEARDB_DATABASE_URL") != null) {
-            URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-
-            String username = dbUri.getUserInfo().split(":")[0];
-            String password = dbUri.getUserInfo().split(":")[1];
-            String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
-
-            dataSource.setUrl(dbUrl);
-            dataSource.setUsername(username);
-            dataSource.setPassword(password);
-        } else {
-            dataSource.setUrl("jdbc:mysql://localhost:3306/swords");
-            dataSource.setUsername("root");
-            dataSource.setPassword("root");
-        }
-
-        return dataSource;
-    }
-
-    @Bean
-    public DataSourceTransactionManager transactionManager() throws URISyntaxException {
-        return new DataSourceTransactionManager(getMybatisDataSource());
-    }
-
-    @Bean
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
-        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(getMybatisDataSource());
-
-        sessionFactory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
-
-        sessionFactory.getObject().getConfiguration().getTypeHandlerRegistry().register(LocalDate.class, new LocalDateHandler());
-        sessionFactory.getObject().getConfiguration().getTypeHandlerRegistry().register(LocalTime.class, new LocalTimeHandler());
-        sessionFactory.getObject().getConfiguration().getTypeHandlerRegistry().register(Instant.class, new InstantHandler());
-
-        return sessionFactory.getObject();
     }
 
     @Bean
