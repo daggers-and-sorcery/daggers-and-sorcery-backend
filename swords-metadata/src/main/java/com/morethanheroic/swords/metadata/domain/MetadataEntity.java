@@ -25,14 +25,24 @@ public class MetadataEntity {
     }
 
     public int getId() {
-        return metadataDatabaseEntity.getMetaId();
+        return metadataDefinition.getId();
     }
 
     public String getName() {
-        return "";
+        return metadataDefinition.getName();
     }
 
     public String getValue() {
-        return "";
+        if (metadataDatabaseEntity == null) {
+            return metadataDefinition.getValueDefinition(0).getValue();
+        }
+
+        return metadataDefinition.getValueDefinition(metadataDatabaseEntity.getMetaValue()).getValue();
+    }
+
+    public void setValue(String value) {
+        final int valueId = metadataDefinition.getValueDefinition(value).getId();
+
+        metadataMapper.setMetadata(userEntity.getId(), metadataDefinition.getId(), valueId);
     }
 }

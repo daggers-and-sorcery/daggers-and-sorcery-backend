@@ -17,5 +17,6 @@ apply plugin: 'spring-boot'
 apply plugin: 'checkstyle'
 checkstyle checkstyle_config
 
-apply plugin: 'findbugs'
-findbugs findbugs_config
+//TODO: Re-enable
+//apply plugin: 'findbugs'
+//findbugs findbugs_config

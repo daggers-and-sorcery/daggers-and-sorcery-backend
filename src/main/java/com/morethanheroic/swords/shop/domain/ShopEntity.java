@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.shop.domain;
 
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.shop.service.ShopFacade;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,12 +34,11 @@ public class ShopEntity {
         return shopFacade.shopHasItem(shopDefinition, itemDefinition, amount);
     }
 
-    //TODO: price calculation!
     public int getShopSellPrice(ItemDefinition itemDefinition) {
-        return 10;
+        return itemDefinition.getPriceDefinitionFor(MoneyType.MONEY).getAmount();
     }
 
     public int getShopBuyPrice(ItemDefinition itemDefinition) {
-        return 10;
+        return itemDefinition.getPriceDefinitionFor(MoneyType.MONEY).getAmount() / 2;
     }
 }
