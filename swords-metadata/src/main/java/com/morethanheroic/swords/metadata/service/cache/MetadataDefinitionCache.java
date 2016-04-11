@@ -11,18 +11,18 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MetadataDefinitionCache implements DefinitionCache<String, MetadataDefinition> {
 
-    @NonNull
-    private final MetadataDefinitionLoader metadataDefinitionLoader;
+    @Autowired
+    private MetadataDefinitionLoader metadataDefinitionLoader;
 
-    private final Map<String, MetadataDefinition> metadataDefinitionsMap;
+    private final Map<String, MetadataDefinition> metadataDefinitionsMap = new HashMap<>();
 
     @PostConstruct
     public void init() throws IOException {
