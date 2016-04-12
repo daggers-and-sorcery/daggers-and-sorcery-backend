@@ -22,7 +22,7 @@ public class MetadataDefinition {
 
     public MetadataValueDefinition getValueDefinition(String valueName) {
         for (MetadataValueDefinition metadataValueDefinition : values) {
-            if (metadataValueDefinition.getValue().equals(valueName)) {
+            if (metadataValueDefinition.getName().equals(valueName)) {
                 return metadataValueDefinition;
             }
         }

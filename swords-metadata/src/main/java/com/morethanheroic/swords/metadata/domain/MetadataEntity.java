@@ -8,19 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
-@RequiredArgsConstructor
 public class MetadataEntity {
-
-    @Autowired
-    private MetadataMapper metadataMapper;
 
     private final UserEntity userEntity;
     private final MetadataDefinition metadataDefinition;
+    private final MetadataMapper metadataMapper;
+    private final MetadataDatabaseEntity metadataDatabaseEntity;
 
-    private MetadataDatabaseEntity metadataDatabaseEntity;
+    public MetadataEntity(UserEntity userEntity, MetadataDefinition metadataDefinition, MetadataMapper metadataMapper) {
+        this.userEntity = userEntity;
+        this.metadataDefinition = metadataDefinition;
+        this.metadataMapper = metadataMapper;
 
-    @PostConstruct
-    public void initialize() {
         metadataDatabaseEntity = metadataMapper.getMetadata(userEntity.getId(), metadataDefinition.getId());
     }
 
@@ -34,10 +33,10 @@ public class MetadataEntity {
 
     public String getValue() {
         if (metadataDatabaseEntity == null) {
-            return metadataDefinition.getValueDefinition(0).getValue();
+            return metadataDefinition.getValueDefinition(0).getName();
         }
 
-        return metadataDefinition.getValueDefinition(metadataDatabaseEntity.getMetaValue()).getValue();
+        return metadataDefinition.getValueDefinition(metadataDatabaseEntity.getMetaValue()).getName();
     }
 
     public void setValue(String value) {

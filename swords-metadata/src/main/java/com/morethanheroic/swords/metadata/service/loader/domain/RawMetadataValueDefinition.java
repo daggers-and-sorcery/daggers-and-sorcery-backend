@@ -10,5 +10,5 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class RawMetadataValueDefinition {
 
     private int id;
-    private String value;
+    private String name;
 }

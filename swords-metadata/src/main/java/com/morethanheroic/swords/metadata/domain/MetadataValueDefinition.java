@@ -8,5 +8,5 @@ import lombok.Getter;
 public class MetadataValueDefinition {
 
     private int id;
-    private String value;
+    private String name;
 }

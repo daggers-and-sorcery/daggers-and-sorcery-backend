@@ -12,7 +12,7 @@ public class MetadataValueDefinitionTransformer implements DefinitionTransformer
     public MetadataValueDefinition transform(RawMetadataValueDefinition rawDefinition) {
         return MetadataValueDefinition.builder()
                 .id(rawDefinition.getId())
-                .value(rawDefinition.getValue())
+                .name(rawDefinition.getName())
                 .build();
     }
 }
