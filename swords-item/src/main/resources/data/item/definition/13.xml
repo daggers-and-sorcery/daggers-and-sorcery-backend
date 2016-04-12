@@ -6,4 +6,25 @@
     <item:name>Recipe: Peanut butter</item:name>
     <item:type>RECIPE</item:type>
     <item:weight>10</item:weight>
+    <item:usable>true</item:usable>
+    <item:use-effect-list>
+        <item:effect target="com.morethanheroic.swords.combat.domain.effect.entry.LearnRecipeEffectDefinition">
+            <item:settings-list>
+                <item:effect-setting>
+                    <item:setting-name>recipe-item-id</item:setting-name>
+                    <item:setting-value>13</item:setting-value>
+                </item:effect-setting>
+                <item:effect-setting>
+                    <item:setting-name>recipe-id</item:setting-name>
+                    <item:setting-value>2</item:setting-value>
+                </item:effect-setting>
+            </item:settings-list>
+        </item:effect>
+    </item:use-effect-list>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>10</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>

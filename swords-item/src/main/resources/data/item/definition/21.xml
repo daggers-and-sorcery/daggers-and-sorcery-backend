@@ -5,5 +5,26 @@
     <item:id>21</item:id>
     <item:name>Recipe: Apple pie</item:name>
     <item:type>RECIPE</item:type>
-    <item:weight>0</item:weight>
+    <item:weight>20</item:weight>
+    <item:usable>true</item:usable>
+    <item:use-effect-list>
+        <item:effect target="com.morethanheroic.swords.combat.domain.effect.entry.LearnRecipeEffectDefinition">
+            <item:settings-list>
+                <item:effect-setting>
+                    <item:setting-name>recipe-item-id</item:setting-name>
+                    <item:setting-value>21</item:setting-value>
+                </item:effect-setting>
+                <item:effect-setting>
+                    <item:setting-name>recipe-id</item:setting-name>
+                    <item:setting-value>3</item:setting-value>
+                </item:effect-setting>
+            </item:settings-list>
+        </item:effect>
+    </item:use-effect-list>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>10</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>

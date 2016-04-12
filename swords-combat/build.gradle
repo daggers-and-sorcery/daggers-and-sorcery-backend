@@ -7,6 +7,7 @@ dependencies {
     compile project(':swords-skill')
     compile project(':swords-item')
     compile project(':swords-equipment')
+    compile project(':swords-recipe')
     compile project(':swords-skill-scavenging')
 }
 

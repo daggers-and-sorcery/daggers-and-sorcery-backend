@@ -5,5 +5,11 @@
     <item:id>18</item:id>
     <item:name>Vial</item:name>
     <item:type>MATERIAL</item:type>
-    <item:weight>0</item:weight>
+    <item:weight>20</item:weight>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>3</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>
