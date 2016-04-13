@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.profile.view.controller;
 
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.profile.service.response.ProfileInfoResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.ProfileInfoResponseBuilderConfiguration;
 import com.morethanheroic.response.domain.Response;
@@ -21,11 +22,11 @@ public class CharacterProfileController {
     private final ProfileInfoResponseBuilder profileInfoResponseBuilder;
 
     @RequestMapping(value = "/character/info", method = RequestMethod.GET)
-    public Response info(UserEntity user, HttpSession session) {
+    public Response info(UserEntity user, SessionEntity sessionEntity) {
         final ProfileInfoResponseBuilderConfiguration profileInfoResponseBuilderConfiguration =
                 ProfileInfoResponseBuilderConfiguration.builder()
                         .userEntity(user)
-                        .httpSession(session)
+                        .sessionEntity(sessionEntity)
                         .build();
 
         return profileInfoResponseBuilder.build(profileInfoResponseBuilderConfiguration);

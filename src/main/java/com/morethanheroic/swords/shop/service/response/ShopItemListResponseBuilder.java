@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.shop.service.response;
 
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -48,12 +49,12 @@ public class ShopItemListResponseBuilder {
     @NonNull
     private InventoryFacade inventoryFacade;
 
-    public CharacterRefreshResponse build(UserEntity userEntity, HttpSession httpSession, ShopEntity shopEntity) {
+    public CharacterRefreshResponse build(UserEntity userEntity, SessionEntity sessionEntity, ShopEntity shopEntity) {
         final CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
         response.setData("shopDefinition", buildShopDefinition(shopEntity.getShopDefinition()));
-        response.setData("itemList", buildItemList(shopEntity.getAllItemsInShop()));
-        response.setData("inventoryList", buildInventoryItemList(httpSession, inventoryFacade.getInventory(userEntity)));
+        response.setData("itemList", buildItemList(shopEntity));
+        response.setData("inventoryList", buildInventoryItemList(shopEntity, sessionEntity, inventoryFacade.getInventory(userEntity)));
 
         return response;
     }
@@ -67,14 +68,14 @@ public class ShopItemListResponseBuilder {
         return result;
     }
 
-    private List<Map<String, Object>> buildItemList(List<ShopItem> itemsInShop) {
+    private List<Map<String, Object>> buildItemList(ShopEntity shopEntity) {
         List<Map<String, Object>> result = new ArrayList<>();
 
-        for (ShopItem shopItem : itemsInShop) {
+        for (ShopItem shopItem : shopEntity.getAllItemsInShop()) {
             Map<String, Object> item = new HashMap<>();
 
             item.put("itemDefinition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(shopItem.getItem()));
-            item.put("itemPrice", 1000);
+            item.put("itemPrice", shopEntity.getShopSellPrice(shopItem.getItem()));
             item.put("itemAmount", shopItem.getItemAmount());
 
             result.add(item);
@@ -83,7 +84,7 @@ public class ShopItemListResponseBuilder {
         return result;
     }
 
-    private List<Map<String, Object>> buildInventoryItemList(HttpSession httpSession, InventoryEntity inventoryEntity) {
+    private List<Map<String, Object>> buildInventoryItemList(ShopEntity shopEntity, SessionEntity sessionEntity, InventoryEntity inventoryEntity) {
         List<Map<String, Object>> result = new ArrayList<>();
 
         for (ItemDatabaseEntity shopItem : inventoryEntity.getItems()) {
@@ -98,9 +99,9 @@ public class ShopItemListResponseBuilder {
             if (shopItem.isIdentified()) {
                 item.put("itemDefinition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinition));
             } else {
-                item.put("itemDefinition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinition, unidentifiedItemIdCalculator.getUnidentifiedItemId(httpSession, itemDefinition.getId())));
+                item.put("itemDefinition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinition, unidentifiedItemIdCalculator.getUnidentifiedItemId(sessionEntity, itemDefinition.getId())));
             }
-            item.put("itemPrice", 1000);
+            item.put("itemPrice", shopEntity.getShopBuyPrice(itemDefinition));
             item.put("itemAmount", shopItem.getAmount());
 
             result.add(item);

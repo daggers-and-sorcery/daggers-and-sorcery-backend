@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.profile.service.response;
 
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
@@ -65,7 +66,7 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
 
     public Response build(ProfileInfoResponseBuilderConfiguration profileInfoResponseBuilderConfiguration) {
         UserEntity user = profileInfoResponseBuilderConfiguration.getUserEntity();
-        HttpSession session = profileInfoResponseBuilderConfiguration.getHttpSession();
+        SessionEntity sessionEntity = profileInfoResponseBuilderConfiguration.getSessionEntity();
 
         CharacterRefreshResponse response = responseFactory.newResponse(user);
 
@@ -74,14 +75,14 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         response.setData("race", raceDefinitionCache.getDefinition(user.getRace()).getName());
         response.setData("registrationDate", user.getRegistrationDate());
         response.setData("lastLoginDate", user.getLastLoginDate());
-        response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), session));
-        response.setData("equipment", buildEquipmentResponse(user, session));
+        response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), sessionEntity));
+        response.setData("equipment", buildEquipmentResponse(user, sessionEntity));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));
 
         return response;
     }
 
-    private HashMap<String, HashMap<String, Object>> buildEquipmentResponse(UserEntity userEntity, HttpSession session) {
+    private HashMap<String, HashMap<String, Object>> buildEquipmentResponse(UserEntity userEntity, SessionEntity sessionEntity) {
         HashMap<String, HashMap<String, Object>> equipmentHolder = new HashMap<>();
 
         EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
@@ -97,7 +98,7 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
                 if (equipmentEntity.isEquipmentIdentifiedOnSlot(slot)) {
                     slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment)));
                 } else {
-                    slotData.put("description", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, equipment)));
+                    slotData.put("description", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment), unidentifiedItemIdCalculator.getUnidentifiedItemId(sessionEntity, equipment)));
                 }
             }
 
@@ -107,7 +108,7 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         return equipmentHolder;
     }
 
-    private ArrayList<HashMap<String, Object>> buildInventoryResponse(List<ItemDatabaseEntity> items, HttpSession session) {
+    private ArrayList<HashMap<String, Object>> buildInventoryResponse(List<ItemDatabaseEntity> items, SessionEntity sessionEntity) {
         ArrayList<HashMap<String, Object>> inventoryData = new ArrayList<>();
 
         for (ItemDatabaseEntity item : items) {
@@ -118,7 +119,7 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
             if (item.isIdentified()) {
                 itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId())));
             } else {
-                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(session, item.getItemId())));
+                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(sessionEntity, item.getItemId())));
             }
 
             inventoryData.add(itemData);
