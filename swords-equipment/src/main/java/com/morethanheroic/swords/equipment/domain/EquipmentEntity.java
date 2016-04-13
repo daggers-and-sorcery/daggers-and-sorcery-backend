@@ -128,7 +128,7 @@ public class EquipmentEntity {
 
                 return previousOffhand;
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
     }
 
