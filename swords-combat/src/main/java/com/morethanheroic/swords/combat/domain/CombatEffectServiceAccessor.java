@@ -2,9 +2,13 @@ package com.morethanheroic.swords.combat.domain;
 
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.recipe.service.RecipeFacade;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Getter
 @Service
 public class CombatEffectServiceAccessor {
 
@@ -14,11 +18,9 @@ public class CombatEffectServiceAccessor {
     @Autowired
     private InventoryFacade inventoryFacade;
 
-    public UnidentifiedItemIdCalculator getUnidentifiedItemIdCalculator() {
-        return unidentifiedItemIdCalculator;
-    }
+    @Autowired
+    private RecipeFacade recipeFacade;
 
-    public InventoryFacade getInventoryFacade() {
-        return inventoryFacade;
-    }
+    @Autowired
+    private ItemDefinitionCache itemDefinitionCache;
 }

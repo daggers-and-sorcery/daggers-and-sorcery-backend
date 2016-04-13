@@ -81,15 +81,19 @@ public class CombatCalculator {
 
             ScavengingResult scavengingResult = scavengingFacade.handleScavenging(user, monster);
 
+            if (scavengingResult.isSuccessfulScavenge()) {
+                for (ScavengingResultEntity scavengingResultEntity : scavengingResult.getScavengingResultList()) {
+                    if (scavengingResultEntity.isIdentified()) {
+                        result.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(scavengingResultEntity.getItem().getName(), scavengingResultEntity.getAmount()));
+                    } else {
+                        result.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(UNIDENTIFIED_ITEM_NAME, scavengingResultEntity.getAmount()));
+                    }
+                }
 
-            for (ScavengingResultEntity scavengingResultEntity : scavengingResult.getScavengingResultList()) {
-                if (scavengingResultEntity.isIdentified()) {
-                    result.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(scavengingResultEntity.getItem().getName(), scavengingResultEntity.getAmount()));
-                } else {
-                    result.addMessage(combatMessageBuilder.buildScavengeItemAwardMessage(UNIDENTIFIED_ITEM_NAME, scavengingResultEntity.getAmount()));
+                if(scavengingResult.getScavengingXp() > 0) {
+                    result.addMessage(combatMessageBuilder.buildScavengeXpAwardMessage(scavengingResult.getScavengingXp()));
                 }
             }
-            result.addMessage(combatMessageBuilder.buildScavengeXpAwardMessage(scavengingResult.getScavengingXp()));
 
             xpAdder.addXpToUserFromMonsterDefinition(result, user);
 

@@ -4,6 +4,19 @@
            xsi:schemaLocation="http://www.swordsandsorcery.com/item ../schema.xsd">
     <item:id>10</item:id>
     <item:name>Bronze pickaxe</item:name>
-    <item:type>TOOL</item:type>
-    <item:weight>30</item:weight>
+    <item:type>ONE_HANDED_CRUSHING_WEAPONS</item:type>
+    <item:equipment>true</item:equipment>
+    <item:modifiers>
+        <item:modifier>
+            <item:modifier>DEFENSE</item:modifier>
+            <item:amount>2</item:amount>
+        </item:modifier>
+    </item:modifiers>
+    <item:weight>200</item:weight>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>15</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>

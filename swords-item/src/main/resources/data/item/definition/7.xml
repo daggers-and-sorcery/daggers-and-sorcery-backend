@@ -5,5 +5,11 @@
     <item:id>7</item:id>
     <item:name>Stem</item:name>
     <item:type>MATERIAL</item:type>
-    <item:weight>10</item:weight>
+    <item:weight>1</item:weight>
+    <item:price>
+        <item:price-entry>
+            <item:type>MONEY</item:type>
+            <item:amount>1</item:amount>
+        </item:price-entry>
+    </item:price>
 </item:item>
