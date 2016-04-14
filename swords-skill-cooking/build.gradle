@@ -5,6 +5,8 @@ dependencies {
     compile project(':swords-user')
     compile project(':swords-recipe')
     compile project(':swords-inventory')
+
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
 
 apply plugin: 'spring-boot'
