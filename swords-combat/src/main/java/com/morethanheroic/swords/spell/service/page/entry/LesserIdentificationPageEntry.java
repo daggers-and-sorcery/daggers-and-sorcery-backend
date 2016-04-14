@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.spell.service.page.entry;
 
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -39,12 +40,12 @@ public class LesserIdentificationPageEntry extends SpellPageEntry {
         InventoryEntity inventory = inventoryFacade.getInventory(pageEntryDataContainer.getUserEntity());
         List<ItemDatabaseEntity> unidentifiedItems = inventory.getItems(false);
 
-        response.setData("itemlist", convertToResponseItem(pageEntryDataContainer.getHttpSession(), unidentifiedItems));
+        response.setData("itemlist", convertToResponseItem(pageEntryDataContainer.getSessionEntity(), unidentifiedItems));
 
         return response;
     }
 
-    private List<Map<String, Object>> convertToResponseItem(HttpSession httpSession, List<ItemDatabaseEntity> unidentifiedItems) {
+    private List<Map<String, Object>> convertToResponseItem(SessionEntity httpSession, List<ItemDatabaseEntity> unidentifiedItems) {
         List<Map<String, Object>> result = new ArrayList<>();
 
         for (ItemDatabaseEntity itemDatabaseEntity : unidentifiedItems) {

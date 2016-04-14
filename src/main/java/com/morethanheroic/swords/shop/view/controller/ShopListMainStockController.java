@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.shop.view.controller;
 
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.shop.service.ShopFacade;
 import com.morethanheroic.swords.shop.service.response.ShopItemListResponseBuilder;
@@ -21,8 +22,8 @@ public class ShopListMainStockController {
     private ShopItemListResponseBuilder shopItemListResponseBuilder;
 
     @RequestMapping(value = "/shop/main", method = RequestMethod.GET)
-    public CharacterRefreshResponse listStock(UserEntity user, HttpSession httpSession) {
+    public CharacterRefreshResponse listStock(UserEntity user, SessionEntity sessionEntity) {
         //TODO: shop is hardcoded for now!
-        return shopItemListResponseBuilder.build(user, httpSession, shopFacade.getShopEntity(1));
+        return shopItemListResponseBuilder.build(user, sessionEntity, shopFacade.getShopEntity(1));
     }
 }

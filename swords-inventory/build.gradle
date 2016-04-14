@@ -3,6 +3,8 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+    compile group: 'com.morethanheroic', name: 'common-session', version: '1.4.12'
+
     compile project(':swords-journal')
     compile project(':swords-money')
     compile project(':swords-user')

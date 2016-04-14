@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.shop.view.controller;
 
 import com.morethanheroic.response.exception.NotFoundException;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.shop.service.ShopFacade;
 import com.morethanheroic.swords.shop.service.response.ShopItemListResponseBuilder;
@@ -23,13 +24,13 @@ public class ShopListStockController {
     private ShopItemListResponseBuilder shopItemListResponseBuilder;
 
     @RequestMapping(value = "/shop/{shopId}", method = RequestMethod.GET)
-    public CharacterRefreshResponse listStock(UserEntity user, @PathVariable int shopId, HttpSession httpSession) {
+    public CharacterRefreshResponse listStock(UserEntity user, @PathVariable int shopId, SessionEntity sessionEntity) {
         if (!shopFacade.isShopExists(shopId)) {
             throw new NotFoundException();
         }
 
-        //TODO: Check that the user is on the same tile as the shop
+        //TODO: Check that the user is in the same city as the shop
 
-        return shopItemListResponseBuilder.build(user, httpSession, shopFacade.getShopEntity(shopId));
+        return shopItemListResponseBuilder.build(user, sessionEntity, shopFacade.getShopEntity(shopId));
     }
 }

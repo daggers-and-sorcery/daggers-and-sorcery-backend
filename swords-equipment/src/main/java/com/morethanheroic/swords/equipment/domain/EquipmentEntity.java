@@ -128,7 +128,7 @@ public class EquipmentEntity {
 
                 return previousOffhand;
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
     }
 
@@ -159,6 +159,7 @@ public class EquipmentEntity {
             case GLOVES:
                 return equipmentDatabaseEntity.getGloves();
             case RING:
+            case LEFT_RING:
                 return equipmentDatabaseEntity.getRing();
             case AMULET:
                 return equipmentDatabaseEntity.getAmulet();
@@ -188,6 +189,7 @@ public class EquipmentEntity {
             case GLOVES:
                 return equipmentDatabaseEntity.isGlovesIdentified();
             case RING:
+            case LEFT_RING:
                 return equipmentDatabaseEntity.isRingIdentified();
             case AMULET:
                 return equipmentDatabaseEntity.isAmuletIdentified();
