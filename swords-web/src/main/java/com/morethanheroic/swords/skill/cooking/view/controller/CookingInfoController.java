@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.skill.cooking.view.controller;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.skill.cooking.service.CookingInfoResponseBuilder;
-import com.morethanheroic.swords.skill.cooking.service.domain.configuration.CookingInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.cooking.service.response.CookingInfoResponseBuilder;
+import com.morethanheroic.swords.skill.cooking.service.response.domain.configuration.CookingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

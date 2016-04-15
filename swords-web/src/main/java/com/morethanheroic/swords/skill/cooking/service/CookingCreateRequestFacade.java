@@ -2,8 +2,9 @@ package com.morethanheroic.swords.skill.cooking.service;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
-import com.morethanheroic.swords.skill.cooking.CookingFacade;
-import com.morethanheroic.swords.skill.cooking.service.domain.configuration.CookingCreateResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.cooking.domain.CookingResult;
+import com.morethanheroic.swords.skill.cooking.service.response.CookingCreateResponseBuilder;
+import com.morethanheroic.swords.skill.cooking.service.response.domain.configuration.CookingCreateResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.cooking.service.validator.CookingCreateRequestValidator;
 import com.morethanheroic.swords.skill.cooking.view.request.CookingCreateRequest;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -23,15 +24,19 @@ public class CookingCreateRequestFacade {
 
     @Transactional
     public Response handleCookingCreateRequest(UserEntity userEntity, CookingCreateRequest cookingCreateRequest) {
-        cookingCreateRequestValidator.validate(userEntity, cookingCreateRequest);
+        cookingCreateRequestValidator.validate(cookingCreateRequest);
 
-        cookingFacade.cook(userEntity, recipeDefinitionCache.getDefinition(cookingCreateRequest.getRecipeId()));
+        CookingResult cookingResult = cookingFacade.cook(userEntity, recipeDefinitionCache.getDefinition(cookingCreateRequest.getRecipeId()));
 
         return cookingCreateResponseBuilder.build(
                 CookingCreateResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
-                        .success(true)
+                        .success(isSuccessfulCooking(cookingResult))
                         .build()
         );
+    }
+
+    private boolean isSuccessfulCooking(CookingResult cookingResult) {
+        return  cookingResult == CookingResult.SUCCESSFUL;
     }
 }

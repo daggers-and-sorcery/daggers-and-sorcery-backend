@@ -37,5 +37,6 @@ public enum ItemType {
     AMULET,
     GLOVES,
     BOOTS,
-    HELM
+    HELM,
+    LIQUID
 }
