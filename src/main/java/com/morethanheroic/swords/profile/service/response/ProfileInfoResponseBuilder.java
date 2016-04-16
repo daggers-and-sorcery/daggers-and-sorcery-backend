@@ -65,32 +65,32 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     }
 
     public Response build(ProfileInfoResponseBuilderConfiguration profileInfoResponseBuilderConfiguration) {
-        UserEntity user = profileInfoResponseBuilderConfiguration.getUserEntity();
-        SessionEntity sessionEntity = profileInfoResponseBuilderConfiguration.getSessionEntity();
+        final UserEntity userEntity = profileInfoResponseBuilderConfiguration.getUserEntity();
+        final SessionEntity sessionEntity = profileInfoResponseBuilderConfiguration.getSessionEntity();
 
-        CharacterRefreshResponse response = responseFactory.newResponse(user);
+        final Response response = responseFactory.newResponse(userEntity);
 
         response.setData("attribute", attributeValuePartialResponseBuilder.build(profileInfoResponseBuilderConfiguration));
-        response.setData("username", user.getUsername());
-        response.setData("race", raceDefinitionCache.getDefinition(user.getRace()).getName());
-        response.setData("registrationDate", user.getRegistrationDate());
-        response.setData("lastLoginDate", user.getLastLoginDate());
-        response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(user).getItems(), sessionEntity));
-        response.setData("equipment", buildEquipmentResponse(user, sessionEntity));
-        response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(user.getId())));
+        response.setData("username", userEntity.getUsername());
+        response.setData("race", raceDefinitionCache.getDefinition(userEntity.getRace()).getName());
+        response.setData("registrationDate", userEntity.getRegistrationDate().getEpochSecond() * 1000);
+        response.setData("lastLoginDate", userEntity.getLastLoginDate().getEpochSecond() * 1000);
+        response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(userEntity).getItems(), sessionEntity));
+        response.setData("equipment", buildEquipmentResponse(userEntity, sessionEntity));
+        response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(userEntity.getId())));
 
         return response;
     }
 
-    private HashMap<String, HashMap<String, Object>> buildEquipmentResponse(UserEntity userEntity, SessionEntity sessionEntity) {
-        HashMap<String, HashMap<String, Object>> equipmentHolder = new HashMap<>();
+    private Map<String, Map<String, Object>> buildEquipmentResponse(UserEntity userEntity, SessionEntity sessionEntity) {
+        final Map<String, Map<String, Object>> equipmentHolder = new HashMap<>();
 
-        EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
+        final EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
-            int equipment = equipmentEntity.getEquipmentIdOnSlot(slot);
+            final int equipment = equipmentEntity.getEquipmentIdOnSlot(slot);
 
-            HashMap<String, Object> slotData = new HashMap<>();
+            final Map<String, Object> slotData = new HashMap<>();
 
             if (equipment == 0) {
                 slotData.put("empty", true);

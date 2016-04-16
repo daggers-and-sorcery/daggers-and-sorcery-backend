@@ -14,6 +14,8 @@ import java.util.List;
 @Builder
 public class ShopEntity {
 
+    private static final int MINIMUM_BUY_PRICE = 1;
+
     private final int id;
     private final ShopDefinition shopDefinition;
     private final ShopFacade shopFacade;
@@ -39,6 +41,6 @@ public class ShopEntity {
     }
 
     public int getShopBuyPrice(ItemDefinition itemDefinition) {
-        return itemDefinition.getPriceDefinitionFor(MoneyType.MONEY).getAmount() / 2;
+        return Math.max(MINIMUM_BUY_PRICE, itemDefinition.getPriceDefinitionFor(MoneyType.MONEY).getAmount() / 2);
     }
 }
