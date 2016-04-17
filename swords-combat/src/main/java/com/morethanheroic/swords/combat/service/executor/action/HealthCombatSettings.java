@@ -17,7 +17,8 @@ public class HealthCombatSettings extends CombatSettingsAction {
 
     @Override
     public void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity) {
-        if (combat.getUserCombatEntity().getUserEntity().getHealthPoints() < combatSettingsEntity.getTarget()) {
+        //BUG: !!! This should calculate percentage not exact value!!!!
+        if (combat.getUserCombatEntity().getActualHealth() < combatSettingsEntity.getTarget()) {
             executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity, null);
         }
     }

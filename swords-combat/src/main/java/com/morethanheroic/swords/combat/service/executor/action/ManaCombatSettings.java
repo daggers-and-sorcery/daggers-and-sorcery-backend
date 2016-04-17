@@ -17,7 +17,8 @@ public class ManaCombatSettings extends CombatSettingsAction {
 
     @Override
     public void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity) {
-        if (combat.getUserCombatEntity().getUserEntity().getManaPoints() < combatSettingsEntity.getTarget()) {
+        //BUG: !!! This should calculate percentage not exact value!!!!
+        if (combat.getUserCombatEntity().getActualMana() < combatSettingsEntity.getTarget()) {
             executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity, null);
         }
     }
