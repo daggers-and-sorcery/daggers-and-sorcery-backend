@@ -2,7 +2,13 @@ package com.morethanheroic.swords.skill.cooking.service;
 
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.recipe.domain.*;
+import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
+import com.morethanheroic.swords.recipe.domain.RecipeExperience;
+import com.morethanheroic.swords.recipe.domain.RecipeIngredient;
+import com.morethanheroic.swords.recipe.domain.RecipeItemRequirement;
+import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
+import com.morethanheroic.swords.recipe.domain.RecipeReward;
+import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
 import com.morethanheroic.swords.recipe.service.RecipeFacade;
 import com.morethanheroic.swords.skill.cooking.domain.CookingResult;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
@@ -37,11 +43,19 @@ public class CookingFacade {
 
     //TODO: move this to a separate service object
     private boolean canCook(UserEntity userEntity, RecipeDefinition recipeDefinition) {
-        final SkillEntity skillEntity = skillFacade.getSkills(userEntity);
-        //Has the required skills
         for (RecipeRequirement recipeRequirement : recipeDefinition.getRecipeRequirements()) {
-            if (skillEntity.getSkillLevel(recipeRequirement.getSkill()) < recipeRequirement.getAmount()) {
-                return false;
+            if (recipeRequirement instanceof RecipeSkillRequirement) {
+                final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;
+
+                if (skillFacade.getSkills(userEntity).getSkillLevel(recipeSkillRequirement.getSkill()) < recipeSkillRequirement.getAmount()) {
+                    return false;
+                }
+            } else if (recipeRequirement instanceof RecipeItemRequirement) {
+                final RecipeItemRequirement recipeItemRequirement = (RecipeItemRequirement) recipeRequirement;
+
+                if (!inventoryFacade.getInventory(userEntity).hasItemAmount(recipeItemRequirement.getItem(), recipeItemRequirement.getAmount())) {
+                    return false;
+                }
             }
         }
 

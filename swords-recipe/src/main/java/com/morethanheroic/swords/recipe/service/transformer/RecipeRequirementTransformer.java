@@ -3,7 +3,10 @@ package com.morethanheroic.swords.recipe.service.transformer;
 import com.morethanheroic.swords.definition.transformer.DefinitionListTransformer;
 import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
+import com.morethanheroic.swords.recipe.service.loader.domain.RawRecipeItemRequirement;
 import com.morethanheroic.swords.recipe.service.loader.domain.RawRecipeRequirement;
+import com.morethanheroic.swords.recipe.service.loader.domain.RawRecipeSkillRequirement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +19,19 @@ import java.util.stream.Collectors;
 public class RecipeRequirementTransformer implements DefinitionTransformer<RecipeRequirement, RawRecipeRequirement>,
         DefinitionListTransformer<List<RecipeRequirement>, List<RawRecipeRequirement>> {
 
+    @Autowired
+    private RecipeItemRequirementTransformer recipeItemRequirementTransformer;
+
+    @Autowired
+    private RecipeSkillRequirementTransformer recipeSkillRequirementTransformer;
+
     @Override
     public RecipeRequirement transform(RawRecipeRequirement rawDefinition) {
-        return RecipeRequirement.builder()
-                .skill(rawDefinition.getSkill())
-                .amount(rawDefinition.getAmount())
-                .build();
+        if (rawDefinition instanceof RawRecipeItemRequirement) {
+            return recipeItemRequirementTransformer.transform((RawRecipeItemRequirement) rawDefinition);
+        }
+
+        return recipeSkillRequirementTransformer.transform((RawRecipeSkillRequirement) rawDefinition);
     }
 
     @Override

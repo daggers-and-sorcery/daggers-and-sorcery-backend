@@ -41,6 +41,14 @@ public class InventoryEntity {
         return getItemAmount(itemId, identified) > 0;
     }
 
+    public boolean hasItemAmount(ItemDefinition item, int amount) {
+        return hasItemAmount(item.getId(), amount, true);
+    }
+
+    public boolean hasItemAmount(ItemDefinition item, int amount, boolean identified) {
+        return hasItemAmount(item.getId(), amount, identified);
+    }
+
     public boolean hasItemAmount(int itemId, int amount) {
         return hasItemAmount(itemId, amount, true);
     }
