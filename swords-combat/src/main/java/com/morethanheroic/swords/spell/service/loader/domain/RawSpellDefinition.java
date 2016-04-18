@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.spell.service.loader.domain;
 
 import com.morethanheroic.swords.spell.domain.SpellType;
+import lombok.Getter;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ public class RawSpellDefinition {
     private int id;
     private String name;
     private SpellType type;
+
+    @Getter
+    private String description;
 
     @XmlElement(name = "combat-spell")
     private boolean combatSpell;
