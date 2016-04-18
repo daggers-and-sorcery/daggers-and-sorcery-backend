@@ -41,7 +41,10 @@ import java.util.Random;
 
 @Configuration
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
-@ComponentScan
+@ComponentScan({
+        "com.morethanheroic.swords",
+        "com.morethanheroic.math"
+})
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableSessionManagement(

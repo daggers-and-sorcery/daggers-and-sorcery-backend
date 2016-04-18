@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.service.executor;
 
+import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.settings.model.TriggerType;
 import com.morethanheroic.swords.combat.service.executor.action.HealthCombatSettings;
 import com.morethanheroic.swords.combat.service.executor.action.ManaCombatSettings;
@@ -20,10 +21,10 @@ public class CombatSettingsActionFactory {
     private final EnumMap<TriggerType, CombatSettingsAction> combatSettingsActionMap = new EnumMap<>(TriggerType.class);
 
     @Autowired
-    public CombatSettingsActionFactory(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache) {
+    public CombatSettingsActionFactory(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache, PercentageCalculator percentageCalculator) {
         combatSettingsActionMap.put(TriggerType.MONSTER, new MonsterCombatSettings(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache));
-        combatSettingsActionMap.put(TriggerType.MANA, new ManaCombatSettings(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache));
-        combatSettingsActionMap.put(TriggerType.HEALTH, new HealthCombatSettings(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache));
+        combatSettingsActionMap.put(TriggerType.MANA, new ManaCombatSettings(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache, percentageCalculator));
+        combatSettingsActionMap.put(TriggerType.HEALTH, new HealthCombatSettings(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache, percentageCalculator));
         combatSettingsActionMap.put(TriggerType.TURN, new TurnCombatSettings(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache));
     }
 
