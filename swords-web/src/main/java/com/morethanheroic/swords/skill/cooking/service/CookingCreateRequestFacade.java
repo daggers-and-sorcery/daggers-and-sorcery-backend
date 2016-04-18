@@ -26,7 +26,7 @@ public class CookingCreateRequestFacade {
     public Response handleCookingCreateRequest(UserEntity userEntity, CookingCreateRequest cookingCreateRequest) {
         cookingCreateRequestValidator.validate(cookingCreateRequest);
 
-        CookingResult cookingResult = cookingFacade.cook(userEntity, recipeDefinitionCache.getDefinition(cookingCreateRequest.getRecipeId()));
+        final CookingResult cookingResult = cookingFacade.cook(userEntity, recipeDefinitionCache.getDefinition(cookingCreateRequest.getRecipeId()));
 
         return cookingCreateResponseBuilder.build(
                 CookingCreateResponseBuilderConfiguration.builder()

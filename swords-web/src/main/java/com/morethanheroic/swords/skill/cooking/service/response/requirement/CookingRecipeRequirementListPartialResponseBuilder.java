@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CookingRecipeRequirementListPartialResponseBuilder implements PartialResponseCollectionBuilder<CookingRecipeRequirementListPartialResponseBuilderConfiguration> {
 
-    private final CookingRecipeRequirementPartialResponseBuilder cookingRecipeIngredientPartialResponseBuilder;
+    private final CookingRecipeRequirementPartialResponseBuilder cookingRecipeRequirementPartialResponseBuilder;
 
     @Override
     public List<CookingRecipeRequirementPartialResponse> build(CookingRecipeRequirementListPartialResponseBuilderConfiguration responseBuilderConfiguration) {
@@ -25,7 +25,7 @@ public class CookingRecipeRequirementListPartialResponseBuilder implements Parti
         final List<RecipeRequirement> recipeRequirements = responseBuilderConfiguration.getRecipeRequirements();
         for (RecipeRequirement recipeRequirement : recipeRequirements) {
             result.add(
-                    cookingRecipeIngredientPartialResponseBuilder.build(
+                    cookingRecipeRequirementPartialResponseBuilder.build(
                             CookingRecipeRequirementPartialResponseBuilderConfiguration.builder()
                                     .recipeRequirement(recipeRequirement)
                                     .build()

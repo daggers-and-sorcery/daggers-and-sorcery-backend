@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -40,7 +41,10 @@ public class RawRecipeDefinition {
     @XmlElement(name = "experience")
     private List<RawRecipeExperience> rawRecipeExperienceList;
 
+    @XmlElements({
+            @XmlElement(name = "skill-requirement", type = RawRecipeSkillRequirement.class),
+            @XmlElement(name = "item-requirement", type = RawRecipeItemRequirement.class)
+    })
     @XmlElementWrapper(name = "requirement-list")
-    @XmlElement(name = "requirement")
     private List<RawRecipeRequirement> rawRecipeRequirementList;
 }

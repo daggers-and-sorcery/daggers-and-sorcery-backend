@@ -37,7 +37,7 @@ public abstract class CombatEntity {
         if (actualMana - amount < 0) {
             actualMana = 0;
         } else {
-            actualMana -= -amount;
+            actualMana -= amount;
         }
     }
 

@@ -80,8 +80,20 @@ public class UseSpellService {
         }
     }
 
-    private void applySpell(CombatEntity userCombatEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
-        combatEffectApplierService.applyEffects(userCombatEntity, spell.getCombatEffects(), combatEffectDataHolder);
+    private void applySpell(CombatEntity combatEntity, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
+        for (SpellCost spellCost : spellDefinition.getSpellCosts()) {
+            if (spellCost.getType() == CostType.ITEM) {
+                if (combatEntity instanceof UserCombatEntity) {
+                    UserEntity userEntity = ((UserCombatEntity) combatEntity).getUserEntity();
+
+                    inventoryFacade.getInventory(userEntity).removeItem(spellCost.getId(), spellCost.getAmount());
+                }
+            } else if (spellCost.getType() == CostType.MANA) {
+                combatEntity.decreaseActualMana(spellCost.getAmount());
+            }
+        }
+
+        combatEffectApplierService.applyEffects(combatEntity, spellDefinition.getCombatEffects(), combatEffectDataHolder);
     }
 
     private void applySpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {

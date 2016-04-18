@@ -19,4 +19,8 @@ public class SpellLearningService {
     public void learnSpell(UserEntity userEntity, SpellDefinition spellDefinition) {
         spellMapper.learnSpell(userEntity.getId(), spellDefinition.getId());
     }
+
+    public boolean hasSpellLearned(UserEntity userEntity, SpellDefinition spellDefinition) {
+        return spellMapper.hasSpell(userEntity.getId(), spellDefinition.getId()) > 0;
+    }
 }

@@ -74,12 +74,12 @@ public class CombatCalculator {
 
     private void endFight(CombatResult result, Combat combat) {
         if (result.getWinner() == Winner.PLAYER) {
-            UserEntity user = combat.getUserCombatEntity().getUserEntity();
+            UserEntity userEntity = combat.getUserCombatEntity().getUserEntity();
             MonsterDefinition monster = combat.getMonsterCombatEntity().getMonsterDefinition();
 
-            dropAdder.addDropsToUserFromMonsterDefinition(result, user, monster);
+            dropAdder.addDropsToUserFromMonsterDefinition(result, userEntity, monster);
 
-            ScavengingResult scavengingResult = scavengingFacade.handleScavenging(user, monster);
+            ScavengingResult scavengingResult = scavengingFacade.handleScavenging(userEntity, monster);
 
             if (scavengingResult.isSuccessfulScavenge()) {
                 for (ScavengingResultEntity scavengingResultEntity : scavengingResult.getScavengingResultList()) {
@@ -95,10 +95,10 @@ public class CombatCalculator {
                 }
             }
 
-            xpAdder.addXpToUserFromMonsterDefinition(result, user);
+            xpAdder.addXpToUserFromMonsterDefinition(result, userEntity);
 
             //TODO: Move user mapper outside, this class shouldn't know about user mapper at all, it should know more about user facade
-            userMapper.updateBasicCombatStats(user.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), user.getMovementPoints() - 1);
+            userMapper.updateBasicCombatStats(userEntity.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), userEntity.getMovementPoints() - 1);
         }
     }
 }
