@@ -147,6 +147,7 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
 
             spellData.put("id", spellDefinition.getId());
             spellData.put("name", spellDefinition.getName());
+            spellData.put("description", spellDefinition.getDescription());
             spellData.put("combatSpell", spellDefinition.isCombatSpell());
             spellData.put("castingCost", spellDefinition.getSpellCosts());
             spellData.put("openPage", spellDefinition.isOpenPage());

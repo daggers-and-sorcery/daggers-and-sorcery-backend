@@ -40,6 +40,7 @@ public class SpellDefinitionTransformer {
         spellDefinitionBuilder.setSkillRequirements(transformSkillRequirements(rawSpellDefinition.getSkillRequirements()));
         spellDefinitionBuilder.setSpellCosts(transformSpellCosts(rawSpellDefinition.getCostList()));
         spellDefinitionBuilder.setType(rawSpellDefinition.getType());
+        spellDefinitionBuilder.setDescription(rawSpellDefinition.getDescription());
 
         return spellDefinitionBuilder.build();
     }

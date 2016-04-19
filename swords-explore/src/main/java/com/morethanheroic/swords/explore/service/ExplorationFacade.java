@@ -15,7 +15,7 @@ public class ExplorationFacade {
 
     @Transactional
     public ExplorationResult explore(UserEntity userEntity) {
-        if(userEntity.getMovementPoints() > 0) {
+        if(userEntity.getMovementPoints() <= 0) {
             //TODO: Do a better response than this!
             return ExplorationResult.builder().build();
         }
