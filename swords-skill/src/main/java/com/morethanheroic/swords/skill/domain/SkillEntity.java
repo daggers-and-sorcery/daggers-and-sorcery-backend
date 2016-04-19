@@ -41,6 +41,7 @@ public class SkillEntity {
 
         switch (attribute) {
             case TWO_HANDED_CRUSHING_WEAPONS:
+                //TODO: BUG: SET is not good!!!! We must add the new value or set the good value!
                 skillDatabaseEntity.setTwoHandedCrushingWeaponsXp(value);
 
                 skillMapper.addTwoHandedCrushingWeaponsXp(userEntity.getId(), value);
