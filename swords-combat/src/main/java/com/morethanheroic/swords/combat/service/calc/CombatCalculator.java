@@ -14,10 +14,16 @@ import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.scavenging.domain.ScavengingResult;
 import com.morethanheroic.swords.scavenging.domain.ScavengingResultEntity;
 import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
+import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.domain.SkillType;
+import com.morethanheroic.swords.skill.service.HighestSkillCalculator;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CombatCalculator {
@@ -40,6 +46,12 @@ public class CombatCalculator {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private HighestSkillCalculator highestSkillCalculator;
+
+    @Autowired
+    private SkillEntityFactory skillEntityFactory;
 
     @Autowired
     public CombatCalculator(TurnCalculatorFactory turnCalculatorFactory, CombatMessageBuilder combatMessageBuilder, JournalManager journalManager, UserMapper userMapper) {
@@ -73,8 +85,9 @@ public class CombatCalculator {
     }
 
     private void endFight(CombatResult result, Combat combat) {
+        UserEntity userEntity = combat.getUserCombatEntity().getUserEntity();
+
         if (result.getWinner() == Winner.PLAYER) {
-            UserEntity userEntity = combat.getUserCombatEntity().getUserEntity();
             MonsterDefinition monster = combat.getMonsterCombatEntity().getMonsterDefinition();
 
             dropAdder.addDropsToUserFromMonsterDefinition(result, userEntity, monster);
@@ -99,6 +112,16 @@ public class CombatCalculator {
 
             //TODO: Move user mapper outside, this class shouldn't know about user mapper at all, it should know more about user facade
             userMapper.updateBasicCombatStats(userEntity.getId(), combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getActualMana(), userEntity.getMovementPoints() - 1);
+        } else {
+            //death mechanism
+            final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
+
+            List<SkillType> highestTreeSkill = highestSkillCalculator.getHighestSkills(skillEntity);
+
+            for(SkillType skill : highestTreeSkill) {
+                //TODO:
+                //skillEntity.removeSkillXp(skill);
+            }
         }
     }
 }
