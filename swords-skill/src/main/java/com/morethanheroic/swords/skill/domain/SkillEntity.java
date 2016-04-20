@@ -40,31 +40,31 @@ public class SkillEntity {
         final SkillDatabaseEntity skillDatabaseEntity = skillValueCache.getEntity();
 
         switch (attribute) {
-            case TWO_HANDED_CRUSHING_WEAPONS:
+            case TWO_HANDED_CRUSHING_WEAPONS: //x
                 //TODO: BUG: SET is not good!!!! We must add the new value or set the good value!
                 skillDatabaseEntity.setTwoHandedCrushingWeaponsXp(value);
 
-                skillMapper.addTwoHandedCrushingWeaponsXp(userEntity.getId(), value);
+                skillMapper.increaseTwoHandedCrushingWeaponsXp(userEntity.getId(), value);
                 break;
-            case ONE_HANDED_CRUSHING_WEAPONS:
+            case ONE_HANDED_CRUSHING_WEAPONS: //x
                 skillDatabaseEntity.setOneHandedCrushingWeaponsXp(value);
 
-                skillMapper.addOneHandedCrushingWeaponsXp(userEntity.getId(), value);
+                skillMapper.increaseOneHandedCrushingWeaponsXp(userEntity.getId(), value);
                 break;
-            case TWO_HANDED_AXES:
+            case TWO_HANDED_AXES: //x
                 skillDatabaseEntity.setTwoHandedAxesXp(value);
 
-                skillMapper.addTwoHandedAxesXp(userEntity.getId(), value);
+                skillMapper.increaseTwoHandedAxesXp(userEntity.getId(), value);
                 break;
-            case ONE_HANDED_AXES:
+            case ONE_HANDED_AXES: //x
                 skillDatabaseEntity.setOneHandedAxesXp(value);
 
-                skillMapper.addOneHandedAxesXp(userEntity.getId(), value);
+                skillMapper.increaseOneHandedAxesXp(userEntity.getId(), value);
                 break;
-            case THROWING_WEAPONS:
+            case THROWING_WEAPONS: //x
                 skillDatabaseEntity.setThrowingWeaponsXp(value);
 
-                skillMapper.addThrowingWeaponsXp(userEntity.getId(), value);
+                skillMapper.increaseThrowingWeaponsXp(userEntity.getId(), value);
                 break;
             case FISTFIGHT:
                 skillDatabaseEntity.setFistfightXp(value);

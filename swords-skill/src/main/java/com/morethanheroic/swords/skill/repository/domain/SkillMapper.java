@@ -20,19 +20,34 @@ public interface SkillMapper {
     SkillDatabaseEntity getSkills(@Param("userId") int userId);
 
     @Update("UPDATE skills SET two_handed_crushing_weapons_xp = two_handed_crushing_weapons_xp + #{value} WHERE user_id = #{userId}")
-    void addTwoHandedCrushingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseTwoHandedCrushingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET two_handed_crushing_weapons_xp = two_handed_crushing_weapons_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseTwoHandedCrushingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET one_handed_crushing_weapons_xp = one_handed_crushing_weapons_xp + #{value} WHERE user_id = #{userId}")
-    void addOneHandedCrushingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseOneHandedCrushingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET one_handed_crushing_weapons_xp = one_handed_crushing_weapons_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseOneHandedCrushingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET two_handed_axes_xp = two_handed_axes_xp + #{value} WHERE user_id = #{userId}")
-    void addTwoHandedAxesXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseTwoHandedAxesXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET two_handed_axes_xp = two_handed_axes_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseTwoHandedAxesXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET one_handed_axes_xp = one_handed_axes_xp + #{value} WHERE user_id = #{userId}")
-    void addOneHandedAxesXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseOneHandedAxesXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET one_handed_axes_xp = one_handed_axes_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseOneHandedAxesXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET throwing_weapons_xp = throwing_weapons_xp + #{value} WHERE user_id = #{userId}")
-    void addThrowingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseThrowingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET throwing_weapons_xp = throwing_weapons_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseThrowingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET fistfight_xp = fistfight_xp + #{value} WHERE user_id = #{userId}")
     void addFistfightXp(@Param("userId") int userId, @Param("value") long value);
