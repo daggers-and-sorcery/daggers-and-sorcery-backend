@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class DropAdder {
+public class DropAwarder {
 
     @NonNull
     private final DropCalculator dropCalculator;

@@ -1,24 +1,27 @@
 package com.morethanheroic.swords.explore.service.cache;
 
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.combat.service.CombatManager;
+import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.domain.event.entry.impl.CombatExplorationEventEntry;
 import com.morethanheroic.swords.explore.domain.event.entry.impl.TextExplorationEventEntry;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class ExplorationEventDefinitionCache implements DefinitionCache<Integer, ExplorationEventDefinition> {
 
     @Autowired
-    private CombatManager combatManager;
+    private CombatCalculator combatCalculator;
+
+    @Autowired
+    private MonsterDefinitionCache monsterDefinitionCache;
 
     private List<ExplorationEventDefinition> explorationEventDefinitions = new ArrayList<>();
 
@@ -32,8 +35,8 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
                                         .build(),
 
                                 CombatExplorationEventEntry.builder()
-                                        .monster(1)
-                                        .combatManager(combatManager)
+                                        .monsterDefinition(monsterDefinitionCache.getMonsterDefinition(1))
+                                        .combatCalculator(combatCalculator)
                                         .build()
                                 )
                         )

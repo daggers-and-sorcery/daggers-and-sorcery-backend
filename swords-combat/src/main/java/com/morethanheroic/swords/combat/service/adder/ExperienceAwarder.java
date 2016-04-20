@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class XpAdder {
+public class ExperienceAwarder {
 
     @Autowired
     private SkillFacade skillFacade;
