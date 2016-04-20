@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.combat.service.calc.initialisation;
 
 import com.morethanheroic.swords.combat.domain.Combat;
-import com.morethanheroic.swords.combat.service.calc.CombatEntity;
+import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,10 @@ public class InitialisationCalculator {
         this.monsterInitialisationCalculator = monsterInitialisationCalculator;
     }
 
-    public CombatEntity calculateInitialisation(Combat combat) {
+    public CombatEntityType calculateInitialisation(Combat combat) {
         int monsterInitialisation = monsterInitialisationCalculator.calculateInitialisation(combat.getMonsterCombatEntity().getMonsterDefinition());
         int playerInitiation = humanInitialisationCalculator.calculateInitialisation(combat.getUserCombatEntity().getUserEntity());
 
-        return monsterInitialisation >= playerInitiation ? CombatEntity.MONSTER : CombatEntity.HUMAN;
+        return monsterInitialisation >= playerInitiation ? CombatEntityType.MONSTER : CombatEntityType.HUMAN;
     }
 }

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.adder;
+package com.morethanheroic.swords.combat.service.awarder;
 
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Drop;
@@ -28,10 +28,10 @@ public class DropAwarder {
     @NonNull
     private final InventoryFacade inventoryFacade;
 
-    public void addDropsToUserFromMonsterDefinition(CombatResult result, UserEntity user, MonsterDefinition monster) {
+    public void addDropsToUserFromMonsterDefinition(CombatResult result, UserEntity userEntity, MonsterDefinition monster) {
         final ArrayList<Drop> drops = dropCalculator.calculateDrop(monster);
 
-        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(user);
+        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
 
         for (Drop drop : drops) {
             if (drop.isIdentified()) {

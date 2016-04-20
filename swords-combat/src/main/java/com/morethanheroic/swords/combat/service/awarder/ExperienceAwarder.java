@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.adder;
+package com.morethanheroic.swords.combat.service.awarder;
 
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;

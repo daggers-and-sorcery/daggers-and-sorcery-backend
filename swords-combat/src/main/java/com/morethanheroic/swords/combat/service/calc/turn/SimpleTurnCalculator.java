@@ -4,7 +4,7 @@ import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
-import com.morethanheroic.swords.combat.service.calc.CombatEntity;
+import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
 import com.morethanheroic.swords.combat.service.calc.attack.MeleeAttackCalculator;
@@ -56,7 +56,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
     }
 
     private void doAttacks(CombatResult result, Combat combat) {
-        if (initialisationCalculator.calculateInitialisation(combat) == CombatEntity.MONSTER) {
+        if (initialisationCalculator.calculateInitialisation(combat) == CombatEntityType.MONSTER) {
             monsterAttackFirst(combat, result);
         } else {
             playerAttackFirst(combat, result);
