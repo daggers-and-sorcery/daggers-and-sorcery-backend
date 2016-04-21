@@ -68,34 +68,64 @@ public interface SkillMapper {
     void decreaseShortswordsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET polearms_xp = polearms_xp + #{value} WHERE user_id = #{userId}")
-    void addPolearmsXp(@Param("userId") int userId, @Param("value") long value);
+    void increasePolearmsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET polearms_xp = polearms_xp - #{value} WHERE user_id = #{userId}")
+    void decreasePolearmsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET daggers_xp = daggers_xp + #{value} WHERE user_id = #{userId}")
-    void addDaggersXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseDaggersXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET daggers_xp = daggers_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseDaggersXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET longbows_xp = longbows_xp + #{value} WHERE user_id = #{userId}")
-    void addLongbowsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseLongbowsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET longbows_xp = longbows_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseLongbowsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET shortbows_xp = shortbows_xp + #{value} WHERE user_id = #{userId}")
-    void addShortbowsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseShortbowsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET shortbows_xp = shortbows_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseShortbowsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET crossbows_xp = crossbows_xp + #{value} WHERE user_id = #{userId}")
-    void addCrossbowsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseCrossbowsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET crossbows_xp = crossbows_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseCrossbowsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET light_armor_xp = light_armor_xp + #{value} WHERE user_id = #{userId}")
-    void addLightArmorXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseLightArmorXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET light_armor_xp = light_armor_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseLightArmorXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET heavy_armor_xp = heavy_armor_xp + #{value} WHERE user_id = #{userId}")
-    void addHeavyArmorXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseHeavyArmorXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET heavy_armor_xp = heavy_armor_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseHeavyArmorXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET robe_armor_xp = robe_armor_xp + #{value} WHERE user_id = #{userId}")
-    void addRobeArmorXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseRobeArmorXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET robe_armor_xp = robe_armor_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseRobeArmorXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET armorless_defense_xp = armorless_defense_xp + #{value} WHERE user_id = #{userId}")
-    void addArmorlessDefenseXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseArmorlessDefenseXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET armorless_defense_xp = armorless_defense_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseArmorlessDefenseXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET shield_defense_xp = shield_defense_xp + #{value} WHERE user_id = #{userId}")
-    void addShieldDefenseXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseShieldDefenseXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET shield_defense_xp = shield_defense_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseShieldDefenseXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET staffs_xp = staffs_xp + #{value} WHERE user_id = #{userId}")
     void addStaffsXp(@Param("userId") int userId, @Param("value") long value);

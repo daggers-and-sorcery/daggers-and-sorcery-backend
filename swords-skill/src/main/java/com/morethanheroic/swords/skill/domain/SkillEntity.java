@@ -81,55 +81,55 @@ public class SkillEntity {
 
                 skillMapper.increaseShortswordsXp(userEntity.getId(), value);
                 break;
-            case POLEARMS:
+            case POLEARMS: //x
                 skillDatabaseEntity.setPolearmsXp(value);
 
-                skillMapper.addPolearmsXp(userEntity.getId(), value);
+                skillMapper.increasePolearmsXp(userEntity.getId(), value);
                 break;
-            case DAGGERS:
+            case DAGGERS: //x
                 skillDatabaseEntity.setDaggersXp(value);
 
-                skillMapper.addDaggersXp(userEntity.getId(), value);
+                skillMapper.increaseDaggersXp(userEntity.getId(), value);
                 break;
-            case LONGBOWS:
+            case LONGBOWS: //x
                 skillDatabaseEntity.setLongswordsXp(value);
 
-                skillMapper.addLongbowsXp(userEntity.getId(), value);
+                skillMapper.increaseLongbowsXp(userEntity.getId(), value);
                 break;
-            case SHORTBOWS:
+            case SHORTBOWS: //x
                 skillDatabaseEntity.setShortswordsXp(value);
 
-                skillMapper.addShortbowsXp(userEntity.getId(), value);
+                skillMapper.increaseShortbowsXp(userEntity.getId(), value);
                 break;
-            case CROSSBOWS:
+            case CROSSBOWS: //x
                 skillDatabaseEntity.setCrossbowsXp(value);
 
-                skillMapper.addCrossbowsXp(userEntity.getId(), value);
+                skillMapper.increaseCrossbowsXp(userEntity.getId(), value);
                 break;
-            case LIGHT_ARMOR:
+            case LIGHT_ARMOR: //x
                 skillDatabaseEntity.setLightArmorXp(value);
 
-                skillMapper.addLightArmorXp(userEntity.getId(), value);
+                skillMapper.increaseLightArmorXp(userEntity.getId(), value);
                 break;
-            case HEAVY_ARMOR:
+            case HEAVY_ARMOR: //x
                 skillDatabaseEntity.setHeavyArmorXp(value);
 
-                skillMapper.addHeavyArmorXp(userEntity.getId(), value);
+                skillMapper.increaseHeavyArmorXp(userEntity.getId(), value);
                 break;
-            case ROBE_ARMOR:
+            case ROBE_ARMOR: //x
                 skillDatabaseEntity.setRobeArmorXp(value);
 
-                skillMapper.addRobeArmorXp(userEntity.getId(), value);
+                skillMapper.increaseRobeArmorXp(userEntity.getId(), value);
                 break;
-            case ARMORLESS_DEFENSE:
+            case ARMORLESS_DEFENSE: //x
                 skillDatabaseEntity.setArmorlessDefenseXp(value);
 
-                skillMapper.addArmorlessDefenseXp(userEntity.getId(), value);
+                skillMapper.increaseArmorlessDefenseXp(userEntity.getId(), value);
                 break;
-            case SHIELD_DEFENSE:
+            case SHIELD_DEFENSE: //x
                 skillDatabaseEntity.setShieldDefenseXp(value);
 
-                skillMapper.addShieldDefenseXp(userEntity.getId(), value);
+                skillMapper.increaseShieldDefenseXp(userEntity.getId(), value);
                 break;
             case STAFF:
                 skillDatabaseEntity.setStaffsXp(value);
