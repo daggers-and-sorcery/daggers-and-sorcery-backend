@@ -66,20 +66,20 @@ public class SkillEntity {
 
                 skillMapper.increaseThrowingWeaponsXp(userEntity.getId(), value);
                 break;
-            case FISTFIGHT:
+            case FISTFIGHT: //x
                 skillDatabaseEntity.setFistfightXp(value);
 
-                skillMapper.addFistfightXp(userEntity.getId(), value);
+                skillMapper.increaseFistfightXp(userEntity.getId(), value);
                 break;
-            case LONGSWORDS:
+            case LONGSWORDS: //x
                 skillDatabaseEntity.setLongswordsXp(value);
 
-                skillMapper.addLongswordsXp(userEntity.getId(), value);
+                skillMapper.increaseLongswordsXp(userEntity.getId(), value);
                 break;
-            case SHORTSWORDS:
+            case SHORTSWORDS: //x
                 skillDatabaseEntity.setShortswordsXp(value);
 
-                skillMapper.addShortswordsXp(userEntity.getId(), value);
+                skillMapper.increaseShortswordsXp(userEntity.getId(), value);
                 break;
             case POLEARMS:
                 skillDatabaseEntity.setPolearmsXp(value);
@@ -189,7 +189,7 @@ public class SkillEntity {
             case LONGBOWS:
                 return skills.getLongswordsXp();
             case SHORTBOWS:
-                return skills.getShowrtbowsXp();
+                return skills.getShortbowsXp();
             case CROSSBOWS:
                 return skills.getCrossbowsXp();
             case LIGHT_ARMOR:

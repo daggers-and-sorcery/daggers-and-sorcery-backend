@@ -50,13 +50,22 @@ public interface SkillMapper {
     void decreaseThrowingWeaponsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET fistfight_xp = fistfight_xp + #{value} WHERE user_id = #{userId}")
-    void addFistfightXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseFistfightXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET fistfight_xp = fistfight_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseFistfightXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET longswords_xp = longswords_xp + #{value} WHERE user_id = #{userId}")
-    void addLongswordsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseLongswordsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET longswords_xp = longswords_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseLongswordsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET shortswords_xp = shortswords_xp + #{value} WHERE user_id = #{userId}")
-    void addShortswordsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseShortswordsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET shortswords_xp = shortswords_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseShortswordsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET polearms_xp = polearms_xp + #{value} WHERE user_id = #{userId}")
     void addPolearmsXp(@Param("userId") int userId, @Param("value") long value);

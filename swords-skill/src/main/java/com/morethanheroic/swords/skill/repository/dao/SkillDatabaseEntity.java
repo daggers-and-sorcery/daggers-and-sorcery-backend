@@ -20,7 +20,7 @@ public class SkillDatabaseEntity {
     private int polearmsXp;
     private int daggersXp;
     private int longbowsXp;
-    private int showrtbowsXp;
+    private int shortbowsXp;
     private int crossbowsXp;
     private int lightArmorXp;
     private int heavyArmorXp;
