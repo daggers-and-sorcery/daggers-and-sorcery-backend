@@ -128,17 +128,32 @@ public interface SkillMapper {
     void decreaseShieldDefenseXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET staffs_xp = staffs_xp + #{value} WHERE user_id = #{userId}")
-    void addStaffsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseStaffsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET staffs_xp = staffs_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseStaffsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET wands_xp = wands_xp + #{value} WHERE user_id = #{userId}")
-    void addWandsXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseWandsXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET wands_xp = wands_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseWandsXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET spectres_xp = spectres_xp + #{value} WHERE user_id = #{userId}")
-    void addSpectresXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseSpectresXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET spectres_xp = spectres_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseSpectresXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET scavenging_xp = scavenging_xp + #{value} WHERE user_id = #{userId}")
-    void addScavengingXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseScavengingXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET scavenging_xp = scavenging_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseScavengingXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET cooking_xp = cooking_xp + #{value} WHERE user_id = #{userId}")
-    void addCookingXp(@Param("userId") int userId, @Param("value") long value);
+    void increaseCookingXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET cooking_xp = cooking_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseCookingXp(@Param("userId") int userId, @Param("value") long value);
 }

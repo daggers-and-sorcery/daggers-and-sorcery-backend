@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 /**
- * Contains the data of the userEntity's skills in the game.
+ * Contains the data of the user's skills like level and experience. Don't create it manually, use
+ * {@link com.morethanheroic.swords.skill.service.factory.SkillEntityFactory} instead.
  */
 public class SkillEntity {
 
@@ -131,30 +132,30 @@ public class SkillEntity {
 
                 skillMapper.increaseShieldDefenseXp(userEntity.getId(), value);
                 break;
-            case STAFF:
+            case STAFF: //x
                 skillDatabaseEntity.setStaffsXp(value);
 
-                skillMapper.addStaffsXp(userEntity.getId(), value);
+                skillMapper.increaseStaffsXp(userEntity.getId(), value);
                 break;
-            case WAND:
+            case WAND: //x
                 skillDatabaseEntity.setWandsXp(value);
 
-                skillMapper.addWandsXp(userEntity.getId(), value);
+                skillMapper.increaseWandsXp(userEntity.getId(), value);
                 break;
-            case SPECTRE:
+            case SPECTRE: //x
                 skillDatabaseEntity.setSpectresXp(value);
 
-                skillMapper.addSpectresXp(userEntity.getId(), value);
+                skillMapper.increaseSpectresXp(userEntity.getId(), value);
                 break;
-            case SCAVENGING:
+            case SCAVENGING: //x
                 skillDatabaseEntity.setScavengingXp(value);
 
-                skillMapper.addScavengingXp(userEntity.getId(), value);
+                skillMapper.increaseScavengingXp(userEntity.getId(), value);
                 break;
-            case COOKING:
+            case COOKING: //x
                 skillDatabaseEntity.setCookingXp(value);
 
-                skillMapper.addCookingXp(userEntity.getId(), value);
+                skillMapper.increaseCookingXp(userEntity.getId(), value);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown attribute: " + attribute);
