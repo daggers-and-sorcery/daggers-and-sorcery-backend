@@ -16,9 +16,9 @@ public class LesserIdentifyEffectDefinition extends CombatEffectDefinition {
 
     @Override
     public void apply(CombatEntity combatEntity, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
-        InventoryEntity inventoryEntity = combatEffectServiceAccessor.getInventoryFacade().getInventory(((UserCombatEntity) combatEntity).getUserEntity());
+        final InventoryEntity inventoryEntity = combatEffectServiceAccessor.getInventoryFacade().getInventory(((UserCombatEntity) combatEntity).getUserEntity());
 
-        int realItem = combatEffectServiceAccessor.getUnidentifiedItemIdCalculator().getRealItemId(combatEffectDataHolder.getHttpSession(), Integer.parseInt((String) combatEffectDataHolder.getParameters().get("itemId")));
+        final int realItem = combatEffectServiceAccessor.getUnidentifiedItemIdCalculator().getRealItemId(combatEffectDataHolder.getSessionEntity(), Integer.parseInt((String) combatEffectDataHolder.getParameters().get("itemId")));
 
         if (inventoryEntity.hasItem(realItem, false)) {
             inventoryEntity.removeItem(realItem, 1, false);

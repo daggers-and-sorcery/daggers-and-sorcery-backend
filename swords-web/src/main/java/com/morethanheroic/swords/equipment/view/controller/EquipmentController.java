@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.equipment.view.controller;
 
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
@@ -38,11 +39,11 @@ public class EquipmentController {
     }
 
     @RequestMapping(value = "/equip/{itemId}", method = RequestMethod.GET)
-    public CharacterRefreshResponse equip(UserEntity user, HttpSession session, @PathVariable int itemId) {
-        boolean identifiedItem = unidentifiedItemIdCalculator.isIdentifiedItem(itemId);
+    public CharacterRefreshResponse equip(UserEntity user, SessionEntity sessionEntity, @PathVariable int itemId) {
+        final boolean identifiedItem = unidentifiedItemIdCalculator.isIdentifiedItem(itemId);
 
         if (!identifiedItem) {
-            itemId = unidentifiedItemIdCalculator.getRealItemId(session, itemId);
+            itemId = unidentifiedItemIdCalculator.getRealItemId(sessionEntity, itemId);
         }
 
         if (inventoryFacade.getInventory(user).hasItem(itemId, identifiedItem) && itemDefinitionCache.getDefinition(itemId).isEquipment()) {

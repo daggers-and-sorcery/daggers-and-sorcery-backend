@@ -43,12 +43,12 @@ public class UnidentifiedItemIdCalculator {
     }
 
     @SuppressWarnings("unchecked")
-    public int getRealItemId(HttpSession session, int unidentifiedId) {
-        HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) session.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP.name());
+    public int getRealItemId(SessionEntity sessionEntity, int unidentifiedId) {
+        final Map<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) sessionEntity.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP.name());
 
         if (unidentifiedItemMap != null) {
             for (Map.Entry<Integer, Integer> entry : unidentifiedItemMap.entrySet()) {
-                Integer unidentifiedMapEntryId = entry.getValue();
+                final Integer unidentifiedMapEntryId = entry.getValue();
 
                 if (unidentifiedMapEntryId == unidentifiedId) {
                     return entry.getKey();
