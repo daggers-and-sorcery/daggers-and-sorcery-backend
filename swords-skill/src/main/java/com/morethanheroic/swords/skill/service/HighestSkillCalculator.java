@@ -20,10 +20,10 @@ public class HighestSkillCalculator {
 
         for (SkillType skillType : SkillType.values()) {
             if (result.size() < 3) {
-                result.put(skillType, skillEntity.getSkillXp(skillType));
+                result.put(skillType, skillEntity.getExperience(skillType));
             }
 
-            final int actualSkillXp = skillEntity.getSkillXp(skillType);
+            final int actualSkillXp = skillEntity.getExperience(skillType);
 
             //The algorithm is so fucked up because we can't iterate over the map and modify it at the same time.
             //For more info look up ConcurrentModificationException.

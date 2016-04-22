@@ -9,7 +9,7 @@ public interface SkillHandler {
 
     void decreaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value);
 
-    long getExperience(SkillDatabaseEntity skillDatabaseEntity);
+    int getExperience(SkillDatabaseEntity skillDatabaseEntity);
 
     SkillType getSupportedSkillType();
 }

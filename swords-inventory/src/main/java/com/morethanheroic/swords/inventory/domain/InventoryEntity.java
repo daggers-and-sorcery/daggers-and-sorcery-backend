@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 //TODO: instead of true or false use an enum like IdentificationType.IDENTIFIED
+//TODO: Use @Autowired to inject the services.
 @RequiredArgsConstructor
 public class InventoryEntity {
 

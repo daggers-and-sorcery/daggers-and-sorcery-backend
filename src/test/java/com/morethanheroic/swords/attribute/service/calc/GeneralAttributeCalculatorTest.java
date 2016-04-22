@@ -35,7 +35,7 @@ public class GeneralAttributeCalculatorTest {
     public void testCalculateAttributeValue() {
         UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
-        //user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
+        //user.getSkills().increaseExperience(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
         UserEntity userEntity = new UserEntity(user.getId(), null);
 
@@ -55,7 +55,7 @@ public class GeneralAttributeCalculatorTest {
     public void testCalculatePointsToAttributeLevel() {
         UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
-        //user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
+        //user.getSkills().increaseExperience(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
         UserEntity userEntity = new UserEntity(user.getId(), null);
 
@@ -66,7 +66,7 @@ public class GeneralAttributeCalculatorTest {
     public void testCalculatePointsBonusBySkills() {
         UserDatabaseEntity user = new UserDatabaseEntity("test", "test");
         user.setRace(Race.ORC);
-        //user.getSkills().addSkillXp(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 100000);
+        //user.getSkills().increaseExperience(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 100000);
 
         UserEntity userEntity = new UserEntity(user.getId(), null);
 

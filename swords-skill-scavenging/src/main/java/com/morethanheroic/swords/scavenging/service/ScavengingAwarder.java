@@ -22,6 +22,6 @@ public class ScavengingAwarder {
     }
 
     private void awardScavengingXp(SkillEntity skillEntity, ScavengingResult scavengingResult) {
-        skillEntity.addSkillXp(SkillType.SCAVENGING, scavengingResult.getScavengingXp());
+        skillEntity.increaseExperience(SkillType.SCAVENGING, scavengingResult.getScavengingXp());
     }
 }

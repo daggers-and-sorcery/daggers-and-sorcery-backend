@@ -69,7 +69,7 @@ public class GlobalAttributeCalculator {
         }
 
         if (attribute instanceof SkillAttribute) {
-            result.increaseValue(skillFacade.getSkills(user).getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
+            result.increaseValue(skillFacade.getSkills(user).getLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
         } else if (attribute instanceof GeneralAttribute) {
             result.increaseValue(attribute.getInitialValue());
             result.increaseValue(generalAttributeCalculator.calculatePointsBonusBySkills(user, attribute));

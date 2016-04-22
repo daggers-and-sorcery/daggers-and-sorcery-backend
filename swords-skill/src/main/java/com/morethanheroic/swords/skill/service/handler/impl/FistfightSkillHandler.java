@@ -28,7 +28,7 @@ public class FistfightSkillHandler implements SkillHandler {
     }
 
     @Override
-    public long getExperience(SkillDatabaseEntity skillDatabaseEntity) {
+    public int getExperience(SkillDatabaseEntity skillDatabaseEntity) {
         return skillDatabaseEntity.getFistfightXp();
     }
 

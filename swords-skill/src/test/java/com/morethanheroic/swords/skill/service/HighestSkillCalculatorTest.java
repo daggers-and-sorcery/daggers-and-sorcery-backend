@@ -23,13 +23,13 @@ public class HighestSkillCalculatorTest {
 
     @Test
     public void testWhenHighestSkillCalculatorCalledWithCorrectSkillEntity() {
-        when(skillEntity.getSkillXp(SkillType.CROSSBOWS)).thenReturn(98);
-        when(skillEntity.getSkillXp(SkillType.DAGGERS)).thenReturn(97);
-        when(skillEntity.getSkillXp(SkillType.ARMORLESS_DEFENSE)).thenReturn(100);
-        when(skillEntity.getSkillXp(SkillType.LIGHT_ARMOR)).thenReturn(96);
-        when(skillEntity.getSkillXp(SkillType.LONGBOWS)).thenReturn(95);
-        when(skillEntity.getSkillXp(SkillType.COOKING)).thenReturn(99);
-        when(skillEntity.getSkillXp(SkillType.FISTFIGHT)).thenReturn(94);
+        when(skillEntity.getExperience(SkillType.CROSSBOWS)).thenReturn(98);
+        when(skillEntity.getExperience(SkillType.DAGGERS)).thenReturn(97);
+        when(skillEntity.getExperience(SkillType.ARMORLESS_DEFENSE)).thenReturn(100);
+        when(skillEntity.getExperience(SkillType.LIGHT_ARMOR)).thenReturn(96);
+        when(skillEntity.getExperience(SkillType.LONGBOWS)).thenReturn(95);
+        when(skillEntity.getExperience(SkillType.COOKING)).thenReturn(99);
+        when(skillEntity.getExperience(SkillType.FISTFIGHT)).thenReturn(94);
 
         final List<SkillType> result = underTest.getHighestSkills(skillEntity);
 

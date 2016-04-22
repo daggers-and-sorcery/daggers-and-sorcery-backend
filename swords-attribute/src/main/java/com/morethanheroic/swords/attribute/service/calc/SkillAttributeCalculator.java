@@ -40,9 +40,9 @@ public class SkillAttributeCalculator implements AttributeCalculator<SkillAttrib
                 .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
                 .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))
                 .attributeModifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute))
-                .actualXp(skillEntity.getSkillXp(skillType))
-                .nextLevelXp(skillEntity.getSkillXpToNextLevel(skillType))
-                .xpBetweenLevels(skillEntity.getSkillXpBetweenNextLevel(skillType))
+                .actualXp(skillEntity.getExperience(skillType))
+                .nextLevelXp(skillEntity.getExperienceToNextLevel(skillType))
+                .xpBetweenLevels(skillEntity.getExperienceBetweenNextLevel(skillType))
                 .build();
     }
 

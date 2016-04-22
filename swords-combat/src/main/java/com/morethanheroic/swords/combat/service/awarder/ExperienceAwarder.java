@@ -28,7 +28,7 @@ public class ExperienceAwarder {
         for (Map.Entry<SkillType, Integer> rewardEntity : rewardXpMap.entrySet()) {
             result.addMessage(combatMessageBuilder.buildXpRewardMessage(rewardEntity.getKey().name(), rewardEntity.getValue()));
 
-            skillEntity.addSkillXp(rewardEntity.getKey(), rewardEntity.getValue());
+            skillEntity.increaseExperience(rewardEntity.getKey(), rewardEntity.getValue());
         }
     }
 }

@@ -47,7 +47,7 @@ public class CookingFacade {
             if (recipeRequirement instanceof RecipeSkillRequirement) {
                 final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;
 
-                if (skillFacade.getSkills(userEntity).getSkillLevel(recipeSkillRequirement.getSkill()) < recipeSkillRequirement.getAmount()) {
+                if (skillFacade.getSkills(userEntity).getLevel(recipeSkillRequirement.getSkill()) < recipeSkillRequirement.getAmount()) {
                     return false;
                 }
             } else if (recipeRequirement instanceof RecipeItemRequirement) {
@@ -100,7 +100,7 @@ public class CookingFacade {
 
     private void awardExperience(SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
         for (RecipeExperience recipeExperience : recipeDefinition.getRecipeExperiences()) {
-            skillEntity.addSkillXp(recipeExperience.getSkill(), recipeExperience.getAmount());
+            skillEntity.increaseExperience(recipeExperience.getSkill(), recipeExperience.getAmount());
         }
     }
 }

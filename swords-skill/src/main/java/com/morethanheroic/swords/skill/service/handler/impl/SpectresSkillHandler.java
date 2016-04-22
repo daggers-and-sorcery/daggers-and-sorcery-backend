@@ -28,7 +28,7 @@ public class SpectresSkillHandler implements SkillHandler {
     }
 
     @Override
-    public long getExperience(SkillDatabaseEntity skillDatabaseEntity) {
+    public int getExperience(SkillDatabaseEntity skillDatabaseEntity) {
         return skillDatabaseEntity.getSpectresXp();
     }
 

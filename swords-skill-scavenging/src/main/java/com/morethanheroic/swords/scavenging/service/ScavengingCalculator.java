@@ -23,7 +23,7 @@ public class ScavengingCalculator {
     public ScavengingResult calculateScavenge(SkillEntity skillEntity, MonsterDefinition monster) {
         List<ScavengingResultEntity> result = new ArrayList<>();
 
-        int scavengingLevel = skillEntity.getSkillLevel(SkillType.SCAVENGING);
+        int scavengingLevel = skillEntity.getLevel(SkillType.SCAVENGING);
 
         for (ScavengingDefinition scavengingDefinition : monster.getScavengingDefinitions()) {
             if (100 * random.nextDouble() < calculateScavengingChance(scavengingDefinition.getChance(), monster.getLevel(), scavengingLevel)) {

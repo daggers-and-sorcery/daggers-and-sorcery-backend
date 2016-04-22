@@ -28,7 +28,7 @@ public class ShieldDefenseSkillHandler implements SkillHandler {
     }
 
     @Override
-    public long getExperience(SkillDatabaseEntity skillDatabaseEntity) {
+    public int getExperience(SkillDatabaseEntity skillDatabaseEntity) {
         return skillDatabaseEntity.getShieldDefenseXp();
     }
 

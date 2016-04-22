@@ -29,20 +29,20 @@ public class CombatUtil {
         SkillType skill = getUserWeaponSkillType(user);
 
         if(skill == null) {
-            return skillFacade.getSkills(user).getSkillLevel(SkillType.FISTFIGHT);
+            return skillFacade.getSkills(user).getLevel(SkillType.FISTFIGHT);
         }
 
-        return skillFacade.getSkills(user).getSkillLevel(getUserWeaponSkillType(user));
+        return skillFacade.getSkills(user).getLevel(getUserWeaponSkillType(user));
     }
 
     public int getUserArmorSkillLevel(UserEntity user) {
         SkillType skill = getUserArmorSkillType(user);
 
         if(skill == null) {
-            return skillFacade.getSkills(user).getSkillLevel(SkillType.ARMORLESS_DEFENSE);
+            return skillFacade.getSkills(user).getLevel(SkillType.ARMORLESS_DEFENSE);
         }
 
-        return skillFacade.getSkills(user).getSkillLevel(getUserArmorSkillType(user));
+        return skillFacade.getSkills(user).getLevel(getUserArmorSkillType(user));
     }
 
     public SkillType getUserArmorSkillType(UserEntity user) {
