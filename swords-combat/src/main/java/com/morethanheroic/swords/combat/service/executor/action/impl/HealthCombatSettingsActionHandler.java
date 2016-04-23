@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.executor.action.handler;
+package com.morethanheroic.swords.combat.service.executor.action.impl;
 
 import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;

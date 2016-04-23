@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.executor.action.handler;
+package com.morethanheroic.swords.combat.service.executor.action.impl;
 
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
@@ -9,15 +9,15 @@ import com.morethanheroic.swords.combat.service.executor.action.CombatSettingsAc
 import com.morethanheroic.swords.spell.service.UseSpellService;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 
-public class MonsterCombatSettingsHandler extends CombatSettingsActionHandler {
+public class TurnCombatSettingsHandler extends CombatSettingsActionHandler {
 
-    public MonsterCombatSettingsHandler(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache) {
+    public TurnCombatSettingsHandler(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache) {
         super(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache);
     }
 
     @Override
     public void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity) {
-        if (combat.getMonsterCombatEntity().getMonsterDefinition().getId() == combatSettingsEntity.getTarget()) {
+        if (combat.getTurn() == combatSettingsEntity.getTarget()) {
             executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity, null);
         }
     }

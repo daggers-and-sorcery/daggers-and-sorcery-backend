@@ -2,10 +2,10 @@ package com.morethanheroic.swords.combat.service.executor.action;
 
 import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.combat.service.UseItemService;
-import com.morethanheroic.swords.combat.service.executor.action.handler.HealthCombatSettingsActionHandler;
-import com.morethanheroic.swords.combat.service.executor.action.handler.ManaCombatSettingsHandler;
-import com.morethanheroic.swords.combat.service.executor.action.handler.MonsterCombatSettingsHandler;
-import com.morethanheroic.swords.combat.service.executor.action.handler.TurnCombatSettingsHandler;
+import com.morethanheroic.swords.combat.service.executor.action.impl.HealthCombatSettingsActionHandler;
+import com.morethanheroic.swords.combat.service.executor.action.impl.ManaCombatSettingsHandler;
+import com.morethanheroic.swords.combat.service.executor.action.impl.MonsterCombatSettingsHandler;
+import com.morethanheroic.swords.combat.service.executor.action.impl.TurnCombatSettingsHandler;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.model.TriggerType;
 import com.morethanheroic.swords.spell.service.UseSpellService;
