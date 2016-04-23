@@ -14,11 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 @Service
 public class CombatSettingsActionHandlerFactory {
 
-    private final EnumMap<TriggerType, CombatSettingsActionHandler> combatSettingsActionMap = new EnumMap<>(TriggerType.class);
+    private final Map<TriggerType, CombatSettingsActionHandler> combatSettingsActionMap = new EnumMap<>(TriggerType.class);
 
     //TODO: add messages to everywhere, convert all *CombatSettings to *CombatSettingsHandler and autowire them as
     //lists and build the enum map from the list post construct.
