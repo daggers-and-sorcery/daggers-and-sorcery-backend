@@ -1,10 +1,10 @@
 package com.morethanheroic.swords.settings.service;
 
+import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UsableItemsResponseBuilder {
@@ -26,14 +27,14 @@ public class UsableItemsResponseBuilder {
     }
 
     public CharacterRefreshResponse build(UserEntity userEntity, List<JournalDatabaseEntity> journalItems) {
-        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
+        final CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
 
-        ArrayList<HashMap<String, Object>> itemsResult = new ArrayList<>();
-        for(JournalDatabaseEntity journalEntry : journalItems) {
-            ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(journalEntry.getJournalId());
+        final List<Map<String, Object>> itemsResult = new ArrayList<>();
+        for (JournalDatabaseEntity journalEntry : journalItems) {
+            final ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(journalEntry.getJournalId());
 
-            if(itemDefinition.isUsable()) {
-                HashMap<String, Object> itemData = new HashMap<>();
+            if (itemDefinition.isUsable()) {
+                final Map<String, Object> itemData = new HashMap<>();
 
                 itemData.put("id", itemDefinition.getId());
                 itemData.put("name", itemDefinition.getName());

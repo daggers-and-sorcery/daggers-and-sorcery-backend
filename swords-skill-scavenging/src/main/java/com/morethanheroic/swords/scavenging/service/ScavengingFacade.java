@@ -20,7 +20,7 @@ import java.util.Collections;
 public class ScavengingFacade {
 
     @Autowired
-    private ScavengingAwarder scavengingAwarder;
+    private ScavengingResultAwarder scavengingResultAwarder;
 
     @Autowired
     private ScavengingCalculator scavengingCalculator;
@@ -51,7 +51,7 @@ public class ScavengingFacade {
         if (shouldScavenge(settingsEntity, scavengingEntity)) {
             ScavengingResult scavengingResult = scavengingCalculator.calculateScavenge(skillEntity, monsterDefinition);
 
-            scavengingAwarder.awardScavengingResultToUser(skillEntity, inventoryEntity, scavengingResult);
+            scavengingResultAwarder.awardScavengingResultToUser(skillEntity, inventoryEntity, scavengingResult);
 
             decreaseUserScavengingPoints(scavengingEntity);
 

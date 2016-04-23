@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.spell.view.controller;
 
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
@@ -37,11 +38,11 @@ public class CastSpellController {
     @Transactional
     @RequestMapping(value = "/spell/cast/{spellId}")
     @SuppressWarnings("unchecked")
-    public CharacterRefreshResponse castSpell(UserEntity userEntity, HttpSession httpSession, @RequestParam Map<String, String> allRequestParams, @PathVariable int spellId) {
-        SpellDefinition spellDefinition = spellDefinitionCache.getSpellDefinition(spellId);
+    public CharacterRefreshResponse castSpell(UserEntity userEntity, SessionEntity sessionEntity, @RequestParam Map<String, String> allRequestParams, @PathVariable int spellId) {
+        final SpellDefinition spellDefinition = spellDefinitionCache.getSpellDefinition(spellId);
 
         if (spellDefinition != null && spellMapper.hasSpell(userEntity.getId(), spellId) > 0 && useSpellService.canUseSpell(userEntity, spellDefinition)) {
-            useSpellService.useSpell(userEntity, spellDefinition, new CombatEffectDataHolder((Map) allRequestParams, httpSession));
+            useSpellService.useSpell(userEntity, spellDefinition, new CombatEffectDataHolder((Map) allRequestParams, sessionEntity));
 
             return castSpellResponseBuilder.build(userEntity, true);
         }

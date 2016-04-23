@@ -22,7 +22,7 @@ public class CombatSettingsExecutor {
     }
 
     public void executeCombatSettings(CombatResult result, Combat combat) {
-        List<CombatSettingsEntity> combatSettingsEntityList = combatSettingsFacade.getAllCombatSettings(combat.getUserCombatEntity().getUserEntity());
+        final List<CombatSettingsEntity> combatSettingsEntityList = combatSettingsFacade.getAllCombatSettings(combat.getUserCombatEntity().getUserEntity());
 
         for (CombatSettingsEntity combatSettingsEntity : combatSettingsEntityList) {
             combatSettingsActionFactory.getActionForTrigger(combatSettingsEntity.getTrigger()).executeAction(result, combat, combatSettingsEntity);

@@ -8,7 +8,7 @@ import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ScavengingAwarder {
+public class ScavengingResultAwarder {
 
     public void awardScavengingResultToUser(SkillEntity skillEntity, InventoryEntity inventoryEntity, ScavengingResult scavengingResult) {
         awardScavengingDrops(inventoryEntity, scavengingResult);

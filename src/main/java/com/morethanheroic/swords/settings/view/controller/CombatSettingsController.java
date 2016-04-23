@@ -33,6 +33,7 @@ public class CombatSettingsController {
     @Autowired
     private SettingsMapper settingsMapper;
 
+    //TODO: Create two separate controller, one for spells and one for items because this method does too much...
     @RequestMapping(value = "/combat/settings/usable/{type}", method = RequestMethod.GET)
     public CharacterRefreshResponse usableItems(UserEntity userEntity, @PathVariable SettingType type) {
         if (type == SettingType.ITEM) {

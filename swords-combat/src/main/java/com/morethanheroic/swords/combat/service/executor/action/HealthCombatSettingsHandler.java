@@ -3,26 +3,35 @@ package com.morethanheroic.swords.combat.service.executor.action;
 import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.UseItemService;
+import com.morethanheroic.swords.combat.service.executor.CombatSettingsAction;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
-import com.morethanheroic.swords.combat.service.executor.CombatSettingsAction;
 import com.morethanheroic.swords.spell.service.UseSpellService;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class HealthCombatSettings extends CombatSettingsAction {
+@Service
+public class HealthCombatSettingsHandler extends CombatSettingsAction {
 
     private final PercentageCalculator percentageCalculator;
+    private final CombatMessageBuilder combatMessageBuilder;
 
-    public HealthCombatSettings(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache, PercentageCalculator percentageCalculator) {
+    @Autowired
+    public HealthCombatSettingsHandler(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache, PercentageCalculator percentageCalculator, CombatMessageBuilder combatMessageBuilder) {
         super(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache);
 
         this.percentageCalculator = percentageCalculator;
+        this.combatMessageBuilder = combatMessageBuilder;
     }
 
     @Override
-    public void executeAction(CombatResult result, Combat combat, CombatSettingsEntity combatSettingsEntity) {
+    public void executeAction(CombatResult combatResult, Combat combat, CombatSettingsEntity combatSettingsEntity) {
         if (percentageCalculator.calculatePercentage(combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getMaximumHealth()) < combatSettingsEntity.getTarget()) {
+            combatResult.addMessage(combatMessageBuilder.buildHealthSettingTriggeredMessage(combatSettingsEntity.getTarget()));
+
             executeCombatSettings(combat.getUserCombatEntity(), combatSettingsEntity, null);
         }
     }

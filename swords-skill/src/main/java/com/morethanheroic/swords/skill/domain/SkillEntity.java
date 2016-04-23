@@ -2,11 +2,11 @@ package com.morethanheroic.swords.skill.domain;
 
 import com.morethanheroic.swords.cache.value.ValueCache;
 import com.morethanheroic.swords.skill.repository.dao.SkillDatabaseEntity;
-import com.morethanheroic.swords.skill.repository.domain.SkillMapper;
 import com.morethanheroic.swords.skill.service.SkillValueCacheProvider;
 import com.morethanheroic.swords.skill.service.handler.SkillHandlerProvider;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.annotation.PostConstruct;
 
@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
  * Contains the data of the user's skills like level and experience. Don't create it manually, use
  * {@link com.morethanheroic.swords.skill.service.factory.SkillEntityFactory} instead.
  */
+@Configurable
 public class SkillEntity {
 
     private static final int XP_UNTIL_LEVEL_TWO = 32;

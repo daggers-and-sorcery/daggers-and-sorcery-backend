@@ -64,6 +64,18 @@ public class CombatMessageBuilder {
     private final String[] REWARD_XP_LIST = new String[]{
             "After the fight got ${amount} xp on ${skill}!"
     };
+    private final String[] HEALTH_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
+            "Your health went under ${percentage} percentage. Time to do something!"
+    };
+
+    public CombatMessage buildHealthSettingTriggeredMessage(int percentage) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("percentage", percentage);
+        combatMessage.addData("message", HEALTH_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(HEALTH_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
 
     public CombatMessage buildFightInitialisationMessage(String monster) {
         CombatMessage combatMessage = new CombatMessage();
