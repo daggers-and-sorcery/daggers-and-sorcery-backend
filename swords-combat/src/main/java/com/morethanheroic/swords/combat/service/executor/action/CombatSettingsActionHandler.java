@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.executor;
+package com.morethanheroic.swords.combat.service.executor.action;
 
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
@@ -14,7 +14,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @RequiredArgsConstructor
-public abstract class CombatSettingsAction {
+public abstract class CombatSettingsActionHandler {
 
     private final UseItemService useItemService;
     private final ItemDefinitionCache itemDefinitionCache;

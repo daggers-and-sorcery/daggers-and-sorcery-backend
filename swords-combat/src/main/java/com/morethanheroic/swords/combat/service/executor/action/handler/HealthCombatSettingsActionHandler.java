@@ -1,11 +1,11 @@
-package com.morethanheroic.swords.combat.service.executor.action;
+package com.morethanheroic.swords.combat.service.executor.action.handler;
 
 import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.UseItemService;
-import com.morethanheroic.swords.combat.service.executor.CombatSettingsAction;
+import com.morethanheroic.swords.combat.service.executor.action.CombatSettingsActionHandler;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
 import com.morethanheroic.swords.spell.service.UseSpellService;
@@ -14,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HealthCombatSettingsHandler extends CombatSettingsAction {
+public class HealthCombatSettingsActionHandler extends CombatSettingsActionHandler {
 
     private final PercentageCalculator percentageCalculator;
     private final CombatMessageBuilder combatMessageBuilder;
 
     @Autowired
-    public HealthCombatSettingsHandler(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache, PercentageCalculator percentageCalculator, CombatMessageBuilder combatMessageBuilder) {
+    public HealthCombatSettingsActionHandler(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache, PercentageCalculator percentageCalculator, CombatMessageBuilder combatMessageBuilder) {
         super(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache);
 
         this.percentageCalculator = percentageCalculator;
