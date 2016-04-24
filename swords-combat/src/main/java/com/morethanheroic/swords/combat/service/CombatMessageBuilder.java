@@ -1,11 +1,14 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.skill.domain.SkillType;
 import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
+
+import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
 
 @Service
 public class CombatMessageBuilder {
@@ -85,6 +88,24 @@ public class CombatMessageBuilder {
     private final String[] TURN_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
             "You have a special settings in ${turn} turn. Time to use it!"
     };
+
+    public CombatMessage buildResurrectionMessage() {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("message", "You have been ressurected on maximum health.");
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildExperienceLossByDeathMessage(SkillType skillType, int experience) {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("skill", skillType.getName());
+        combatMessage.addData("experience", experience);
+        combatMessage.addData("message", "You lost ${experience} experience in ${skill} because of dying.");
+
+        return combatMessage;
+    }
 
     public CombatMessage buildTurnSettingTriggeredMessage(int turn) {
         final CombatMessage combatMessage = new CombatMessage();
