@@ -74,7 +74,7 @@ allprojects {
         findbugs_config = {
             toolVersion = project.ext.findbugs_version
             effort = "max"
-            reportLevel = "low"
+            reportLevel = "medium"
         }
     }
 

@@ -28,11 +28,12 @@ public class HighestSkillCalculator {
             //The algorithm is so fucked up because we can't iterate over the map and modify it at the same time.
             //For more info look up ConcurrentModificationException.
             SkillType toReplace = null;
-            for (SkillType skillTypeInMap : result.keySet()) {
-
-                if (result.get(skillTypeInMap) < actualSkillXp) {
-                    toReplace = skillTypeInMap;
-                    break;
+            int smallestValue = 0;
+            for (Map.Entry<SkillType, Integer> resultEntry : result.entrySet()) {
+                //The new entity must choose the key of the smallest value already in the map.
+                if (resultEntry.getValue() < actualSkillXp && (resultEntry.getValue() <= smallestValue || smallestValue == 0)) {
+                    toReplace = resultEntry.getKey();
+                    smallestValue = resultEntry.getValue();
                 }
             }
 
