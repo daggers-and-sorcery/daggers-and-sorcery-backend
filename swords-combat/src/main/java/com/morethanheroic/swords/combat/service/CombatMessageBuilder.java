@@ -76,6 +76,42 @@ public class CombatMessageBuilder {
     private final String[] USE_SPELL_MESSAGE_LIST = new String[] {
             "You use the ${spell} spell."
     };
+    private final String[] MANA_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
+            "Your mana went under ${percentage} percentage. Time to do something!"
+    };
+    private final String[] MONSTER_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
+            "You have a special settings against ${name}. Time to use it!"
+    };
+    private final String[] TURN_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
+            "You have a special settings in ${turn} turn. Time to use it!"
+    };
+
+    public CombatMessage buildTurnSettingTriggeredMessage(int turn) {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("turn", turn);
+        combatMessage.addData("message", TURN_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(TURN_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildMonsterSettingTriggeredMessage(String monsterName) {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("name", monsterName);
+        combatMessage.addData("message", MONSTER_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(MONSTER_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildManaSettingTriggeredMessage(int percentage) {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("percentage", percentage);
+        combatMessage.addData("message", MANA_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(MANA_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
 
     public CombatMessage buildUseSpellMessage(String spell) {
          final CombatMessage combatMessage = new CombatMessage();

@@ -3,6 +3,7 @@ package com.morethanheroic.swords.combat.service.executor.action.impl;
 import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.executor.action.resolver.CombatSettingsActionHandlerResolverProvider;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
 import com.morethanheroic.swords.combat.service.executor.action.CombatSettingsActionHandler;
@@ -16,16 +17,20 @@ import org.springframework.stereotype.Service;
 public class ManaCombatSettingsActionHandler extends CombatSettingsActionHandler {
 
     private final PercentageCalculator percentageCalculator;
+    private final CombatMessageBuilder combatMessageBuilder;
 
-    public ManaCombatSettingsActionHandler(CombatSettingsActionHandlerResolverProvider combatSettingsActionHandlerResolverProvider, PercentageCalculator percentageCalculator) {
+    public ManaCombatSettingsActionHandler(CombatSettingsActionHandlerResolverProvider combatSettingsActionHandlerResolverProvider, PercentageCalculator percentageCalculator, CombatMessageBuilder combatMessageBuilder) {
         super(combatSettingsActionHandlerResolverProvider);
 
         this.percentageCalculator = percentageCalculator;
+        this.combatMessageBuilder = combatMessageBuilder
     }
 
     @Override
     public void executeAction(CombatResult combatResult, Combat combat, CombatSettingsEntity combatSettingsEntity) {
         if (percentageCalculator.calculatePercentage(combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getMaximumMana()) < combatSettingsEntity.getTarget()) {
+            combatResult.addMessage(combatMessageBuilder.buildManaSettingTriggeredMessage(combatSettingsEntity.getTarget()));
+
             executeCombatSettings(combat.getUserCombatEntity(), combatResult, combatSettingsEntity);
         }
     }
