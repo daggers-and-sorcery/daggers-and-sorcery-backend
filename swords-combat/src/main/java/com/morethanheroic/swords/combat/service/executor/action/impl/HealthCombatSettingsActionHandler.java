@@ -6,6 +6,7 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.executor.action.CombatSettingsActionHandler;
 import com.morethanheroic.swords.combat.service.executor.action.resolver.CombatSettingsActionHandlerResolverProvider;
+import com.morethanheroic.swords.settings.model.TriggerType;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,10 @@ public class HealthCombatSettingsActionHandler extends CombatSettingsActionHandl
 
             executeCombatSettings(combat.getUserCombatEntity(), combatResult, combatSettingsEntity);
         }
+    }
+
+    @Override
+    public TriggerType getTriggerType() {
+        return TriggerType.HEALTH;
     }
 }

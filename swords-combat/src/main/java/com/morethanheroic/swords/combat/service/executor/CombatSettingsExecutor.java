@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.service.executor;
 
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatResult;
-import com.morethanheroic.swords.combat.service.executor.action.CombatSettingsActionHandlerFactory;
+import com.morethanheroic.swords.combat.service.executor.action.CombatSettingsActionHandlerProvider;
 import com.morethanheroic.swords.settings.service.CombatSettingsFacade;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +14,19 @@ import java.util.List;
 public class CombatSettingsExecutor {
 
     private final CombatSettingsFacade combatSettingsFacade;
-    private final CombatSettingsActionHandlerFactory combatSettingsActionHandlerFactory;
+    private final CombatSettingsActionHandlerProvider combatSettingsActionHandlerProvider;
 
     @Autowired
-    public CombatSettingsExecutor(CombatSettingsFacade combatSettingsFacade, CombatSettingsActionHandlerFactory combatSettingsActionHandlerFactory) {
+    public CombatSettingsExecutor(CombatSettingsFacade combatSettingsFacade, CombatSettingsActionHandlerProvider combatSettingsActionHandlerProvider) {
         this.combatSettingsFacade = combatSettingsFacade;
-        this.combatSettingsActionHandlerFactory = combatSettingsActionHandlerFactory;
+        this.combatSettingsActionHandlerProvider = combatSettingsActionHandlerProvider;
     }
 
     public void executeCombatSettings(CombatResult result, Combat combat) {
         final List<CombatSettingsEntity> combatSettingsEntityList = combatSettingsFacade.getAllCombatSettings(combat.getUserCombatEntity().getUserEntity());
 
         for (CombatSettingsEntity combatSettingsEntity : combatSettingsEntityList) {
-            combatSettingsActionHandlerFactory.getActionForTrigger(combatSettingsEntity.getTrigger()).executeAction(result, combat, combatSettingsEntity);
+            combatSettingsActionHandlerProvider.getActionForTrigger(combatSettingsEntity.getTrigger()).executeAction(result, combat, combatSettingsEntity);
         }
     }
 }

@@ -7,10 +7,12 @@ import com.morethanheroic.swords.combat.service.UseItemService;
 import com.morethanheroic.swords.combat.service.executor.action.resolver.CombatSettingsActionHandlerResolverProvider;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.settings.model.TriggerType;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
 import com.morethanheroic.swords.combat.service.executor.action.CombatSettingsActionHandler;
 import com.morethanheroic.swords.spell.service.UseSpellService;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +20,7 @@ public class MonsterCombatSettingsActionHandler extends CombatSettingsActionHand
 
     private final CombatMessageBuilder combatMessageBuilder;
 
+    @Autowired
     public MonsterCombatSettingsActionHandler(CombatSettingsActionHandlerResolverProvider combatSettingsActionHandlerResolverProvider, CombatMessageBuilder combatMessageBuilder) {
         super(combatSettingsActionHandlerResolverProvider);
 
@@ -33,5 +36,10 @@ public class MonsterCombatSettingsActionHandler extends CombatSettingsActionHand
 
             executeCombatSettings(combat.getUserCombatEntity(), combatResult, combatSettingsEntity);
         }
+    }
+
+    @Override
+    public TriggerType getTriggerType() {
+        return TriggerType.MONSTER;
     }
 }
