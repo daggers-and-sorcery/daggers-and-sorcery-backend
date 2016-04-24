@@ -2,6 +2,7 @@ package com.morethanheroic.swords.shop.view.controller;
 
 import com.morethanheroic.response.exception.ConflictException;
 import com.morethanheroic.response.exception.NotFoundException;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
@@ -41,7 +42,7 @@ public class ShopSellStockController {
     private InventoryFacade inventoryFacade;
 
     @RequestMapping(value = "/shop/{shopId}/sell/{itemId}", method = RequestMethod.GET)
-    public CharacterRefreshResponse sellStock(UserEntity user, HttpSession httpSession, @PathVariable int shopId, @PathVariable int itemId) {
+    public CharacterRefreshResponse sellStock(UserEntity user, SessionEntity sessionEntity, @PathVariable int shopId, @PathVariable int itemId) {
         if (!shopFacade.isShopExists(shopId)) {
             throw new NotFoundException();
         }
@@ -49,7 +50,7 @@ public class ShopSellStockController {
         boolean isIdentifiedItem = unidentifiedItemIdCalculator.isIdentifiedItem(itemId);
 
         if (!isIdentifiedItem) {
-            itemId = unidentifiedItemIdCalculator.getRealItemId(httpSession, itemId);
+            itemId = unidentifiedItemIdCalculator.getRealItemId(sessionEntity, itemId);
         }
 
         if (!itemDefinitionCache.isItemExists(itemId)) {

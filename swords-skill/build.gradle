@@ -1,4 +1,6 @@
 dependencies {
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }

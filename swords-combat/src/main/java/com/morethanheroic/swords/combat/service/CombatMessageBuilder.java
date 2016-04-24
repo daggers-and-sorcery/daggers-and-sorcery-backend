@@ -1,15 +1,21 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.skill.domain.SkillType;
 import org.apache.commons.lang3.text.WordUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
+import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
+
 @Service
 public class CombatMessageBuilder {
 
-    private final Random random = new Random();
+    @Autowired
+    private Random random;
+
     private final String[] FIGHT_INITIAL_MESSANGE_LIST = new String[]{
             "This is a lovely fight with ${monster}.",
             "Yeah ${monster} is fighting me!!!"
@@ -64,6 +70,96 @@ public class CombatMessageBuilder {
     private final String[] REWARD_XP_LIST = new String[]{
             "After the fight got ${amount} xp on ${skill}!"
     };
+    private final String[] HEALTH_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
+            "Your health went under ${percentage} percentage. Time to do something!"
+    };
+    private final String[] USE_ITEM_MESSAGE_LIST = new String[] {
+            "You use the ${item} item."
+    };
+    private final String[] USE_SPELL_MESSAGE_LIST = new String[] {
+            "You use the ${spell} spell."
+    };
+    private final String[] MANA_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
+            "Your mana went under ${percentage} percentage. Time to do something!"
+    };
+    private final String[] MONSTER_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
+            "You have a special settings against ${name}. Time to use it!"
+    };
+    private final String[] TURN_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
+            "You have a special settings in ${turn} turn. Time to use it!"
+    };
+
+    public CombatMessage buildResurrectionMessage() {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("message", "You have been ressurected on maximum health.");
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildExperienceLossByDeathMessage(SkillType skillType, int experience) {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("skill", skillType.getName());
+        combatMessage.addData("experience", experience);
+        combatMessage.addData("message", "You lost ${experience} experience in ${skill} because of dying.");
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildTurnSettingTriggeredMessage(int turn) {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("turn", turn);
+        combatMessage.addData("message", TURN_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(TURN_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildMonsterSettingTriggeredMessage(String monsterName) {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("name", monsterName);
+        combatMessage.addData("message", MONSTER_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(MONSTER_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildManaSettingTriggeredMessage(int percentage) {
+        final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("percentage", percentage);
+        combatMessage.addData("message", MANA_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(MANA_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildUseSpellMessage(String spell) {
+         final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("spell", spell);
+        combatMessage.addData("message", USE_SPELL_MESSAGE_LIST[random.nextInt(USE_SPELL_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildUseItemMessage(String item) {
+         final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("item", item);
+        combatMessage.addData("message", USE_ITEM_MESSAGE_LIST[random.nextInt(USE_ITEM_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildHealthSettingTriggeredMessage(int percentage) {
+        CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("percentage", percentage);
+        combatMessage.addData("message", HEALTH_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(HEALTH_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
 
     public CombatMessage buildFightInitialisationMessage(String monster) {
         CombatMessage combatMessage = new CombatMessage();

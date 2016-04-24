@@ -1,11 +1,9 @@
 package com.morethanheroic.swords.combat.service;
 
-import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

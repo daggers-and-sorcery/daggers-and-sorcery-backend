@@ -61,6 +61,14 @@ public class UserEntity {
         return userDatabaseEntity.getLastLoginDate();
     }
 
+    public void setBasicStats(int health, int mana, int movement) {
+        userDatabaseEntity.setHealth(health);
+        userDatabaseEntity.setMana(mana);
+        userDatabaseEntity.setMovement(movement);
+
+        userMapper.updateBasicCombatStats(userDatabaseEntity.getId(), health, mana, movement);
+    }
+
     //TODO: Remove this! This is only here for now! Should refactor it soon! Things that accessed in
     //userDatabaseEntity should be accessed via this class.
     public UserDatabaseEntity getUserDatabaseEntity() {

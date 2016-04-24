@@ -7,7 +7,6 @@ import com.morethanheroic.swords.attribute.service.AttributeFacade;
 import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
-import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -57,7 +56,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
         int result = 0;
         for (SkillAttribute skill : SkillAttribute.values()) {
             if (skillAttributeDefinitionCache.getDefinition(skill).getIncrementedAttribute() == attribute) {
-                result += skillEntity.getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
+                result += skillEntity.getLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
             }
         }
 
@@ -71,7 +70,7 @@ public class GeneralAttributeCalculator implements AttributeCalculator<GeneralAt
         int result = 0;
         for (SkillAttribute skill : SkillAttribute.values()) {
             if (skillAttributeDefinitionCache.getDefinition(skill).getIncrementedAttribute() == attribute) {
-                result += skillEntity.getSkillLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
+                result += skillEntity.getLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute(skill)) - STARTING_SKILL_LEVEL;
             }
         }
 

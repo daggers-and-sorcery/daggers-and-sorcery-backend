@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.item.view.controller;
 
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.service.UseItemService;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -30,9 +31,9 @@ public class UseItemController {
     @Transactional
     @RequestMapping(value = "/item/use/{itemId}", method = RequestMethod.GET)
     @SuppressWarnings("unchecked")
-    public CharacterRefreshResponse useItem(UserEntity userEntity, HttpSession httpSession, @RequestParam Map<String, String> allRequestParams, @PathVariable int itemId) {
+    public CharacterRefreshResponse useItem(UserEntity userEntity, SessionEntity sessionEntity, @RequestParam Map<String, String> allRequestParams, @PathVariable int itemId) {
         if (useItemService.canUseItem(userEntity, itemDefinitionCache.getDefinition(itemId))) {
-            useItemService.useItem(userEntity, itemDefinitionCache.getDefinition(itemId), new CombatEffectDataHolder((Map) allRequestParams, httpSession));
+            useItemService.useItem(userEntity, itemDefinitionCache.getDefinition(itemId), new CombatEffectDataHolder((Map) allRequestParams, sessionEntity));
 
             return useItemResponseBuilder.build(userEntity, true);
         }
