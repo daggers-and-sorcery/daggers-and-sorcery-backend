@@ -1,10 +1,13 @@
 package com.morethanheroic.swords.combat.service.executor.action.resolver.impl;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.executor.action.resolver.CombatSettingsActionHandlerResolver;
 import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
+import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.UseSpellService;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +20,15 @@ public class SpellCombatSettingsActionHandlerResolver implements CombatSettingsA
 
     private final UseSpellService useSpellService;
     private final SpellDefinitionCache spellDefinitionCache;
+    private final CombatMessageBuilder combatMessageBuilder;
 
     @Override
-    public void handleSettings(UserCombatEntity userEntity, CombatSettingsEntity combatSettingsEntity, CombatEffectDataHolder combatEffectDataHolder) {
-        useSpellService.useSpell(userEntity, spellDefinitionCache.getSpellDefinition(combatSettingsEntity.getSettingsId()), combatEffectDataHolder);
+    public void handleSettings(UserCombatEntity userEntity, CombatResult combatResult, CombatSettingsEntity combatSettingsEntity, CombatEffectDataHolder combatEffectDataHolder) {
+        final SpellDefinition spellToUse = spellDefinitionCache.getSpellDefinition(combatSettingsEntity.getSettingsId());
+
+        combatResult.addMessage(combatMessageBuilder.buildUseSpellMessage(spellToUse.getName()));
+
+        useSpellService.useSpell(userEntity, spellToUse, combatEffectDataHolder);
     }
 
     @Override

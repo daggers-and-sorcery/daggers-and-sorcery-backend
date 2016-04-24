@@ -3,9 +3,9 @@ package com.morethanheroic.swords.combat.service.executor.action;
 import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.combat.service.UseItemService;
 import com.morethanheroic.swords.combat.service.executor.action.impl.HealthCombatSettingsActionHandler;
-import com.morethanheroic.swords.combat.service.executor.action.impl.ManaCombatSettingsHandler;
-import com.morethanheroic.swords.combat.service.executor.action.impl.MonsterCombatSettingsHandler;
-import com.morethanheroic.swords.combat.service.executor.action.impl.TurnCombatSettingsHandler;
+import com.morethanheroic.swords.combat.service.executor.action.impl.ManaCombatSettingsActionHandler;
+import com.morethanheroic.swords.combat.service.executor.action.impl.MonsterCombatSettingsActionHandler;
+import com.morethanheroic.swords.combat.service.executor.action.impl.TurnCombatSettingsActionHandler;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.model.TriggerType;
 import com.morethanheroic.swords.spell.service.UseSpellService;
@@ -25,10 +25,10 @@ public class CombatSettingsActionHandlerFactory {
     //lists and build the enum map from the list post construct.
     @Autowired
     public CombatSettingsActionHandlerFactory(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseSpellService useSpellService, SpellDefinitionCache spellDefinitionCache, PercentageCalculator percentageCalculator, HealthCombatSettingsActionHandler healthCombatSettingsActionHandler) {
-        combatSettingsActionMap.put(TriggerType.MONSTER, new MonsterCombatSettingsHandler(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache));
-        combatSettingsActionMap.put(TriggerType.MANA, new ManaCombatSettingsHandler(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache, percentageCalculator));
+        combatSettingsActionMap.put(TriggerType.MONSTER, new MonsterCombatSettingsActionHandler(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache));
+        combatSettingsActionMap.put(TriggerType.MANA, new ManaCombatSettingsActionHandler(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache, percentageCalculator));
         combatSettingsActionMap.put(TriggerType.HEALTH, healthCombatSettingsActionHandler);
-        combatSettingsActionMap.put(TriggerType.TURN, new TurnCombatSettingsHandler(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache));
+        combatSettingsActionMap.put(TriggerType.TURN, new TurnCombatSettingsActionHandler(useItemService, itemDefinitionCache, useSpellService, spellDefinitionCache));
     }
 
     public CombatSettingsActionHandler getActionForTrigger(TriggerType triggerType) {

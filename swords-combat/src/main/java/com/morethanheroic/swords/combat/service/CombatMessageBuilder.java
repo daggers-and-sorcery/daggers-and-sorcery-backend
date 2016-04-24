@@ -2,6 +2,7 @@ package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.combat.domain.CombatMessage;
 import org.apache.commons.lang3.text.WordUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -9,7 +10,9 @@ import java.util.Random;
 @Service
 public class CombatMessageBuilder {
 
-    private final Random random = new Random();
+    @Autowired
+    private Random random;
+
     private final String[] FIGHT_INITIAL_MESSANGE_LIST = new String[]{
             "This is a lovely fight with ${monster}.",
             "Yeah ${monster} is fighting me!!!"
@@ -67,6 +70,30 @@ public class CombatMessageBuilder {
     private final String[] HEALTH_SETTING_TRIGGERED_MESSAGE_LIST = new String[] {
             "Your health went under ${percentage} percentage. Time to do something!"
     };
+    private final String[] USE_ITEM_MESSAGE_LIST = new String[] {
+            "You use the ${item} item."
+    };
+    private final String[] USE_SPELL_MESSAGE_LIST = new String[] {
+            "You use the ${spell} spell."
+    };
+
+    public CombatMessage buildUseSpellMessage(String spell) {
+         final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("spell", spell);
+        combatMessage.addData("message", USE_SPELL_MESSAGE_LIST[random.nextInt(USE_SPELL_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
+
+    public CombatMessage buildUseItemMessage(String item) {
+         final CombatMessage combatMessage = new CombatMessage();
+
+        combatMessage.addData("item", item);
+        combatMessage.addData("message", USE_ITEM_MESSAGE_LIST[random.nextInt(USE_ITEM_MESSAGE_LIST.length)]);
+
+        return combatMessage;
+    }
 
     public CombatMessage buildHealthSettingTriggeredMessage(int percentage) {
         CombatMessage combatMessage = new CombatMessage();

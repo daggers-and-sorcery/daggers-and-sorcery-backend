@@ -1,9 +1,12 @@
 package com.morethanheroic.swords.combat.service.executor.action.resolver.impl;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.UseItemService;
 import com.morethanheroic.swords.combat.service.executor.action.resolver.CombatSettingsActionHandlerResolver;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.settings.model.SettingType;
 import com.morethanheroic.swords.settings.service.domain.CombatSettingsEntity;
@@ -17,10 +20,15 @@ public class ItemCombatSettingsActionHandlerResolver implements CombatSettingsAc
 
     private final UseItemService useItemService;
     private final ItemDefinitionCache itemDefinitionCache;
+    private final CombatMessageBuilder combatMessageBuilder;
 
     @Override
-    public void handleSettings(UserCombatEntity userEntity, CombatSettingsEntity combatSettingsEntity, CombatEffectDataHolder combatEffectDataHolder) {
-        useItemService.useItem(userEntity, itemDefinitionCache.getDefinition(combatSettingsEntity.getSettingsId()), combatEffectDataHolder);
+    public void handleSettings(UserCombatEntity userEntity, CombatResult combatResult, CombatSettingsEntity combatSettingsEntity, CombatEffectDataHolder combatEffectDataHolder) {
+        final ItemDefinition itemToUse = itemDefinitionCache.getDefinition(combatSettingsEntity.getSettingsId());
+
+        combatResult.addMessage(combatMessageBuilder.buildUseItemMessage(itemToUse.getName()));
+
+        useItemService.useItem(userEntity, itemToUse, combatEffectDataHolder);
     }
 
     @Override
