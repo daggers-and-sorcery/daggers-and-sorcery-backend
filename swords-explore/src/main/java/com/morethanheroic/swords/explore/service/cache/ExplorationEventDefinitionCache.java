@@ -32,7 +32,7 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
                 ExplorationEventDefinition.builder()
                         .explorationEventEntries(Lists.newArrayList(
                                 TextExplorationEventEntry.builder()
-                                        .content("You awake from a refreshing nap and feel your stomach growl hungrily. As the last rays of sunlight recede through the nearby window, you slide out of bed and pack a satchel with supplies. You yearn to visit the inn outside the city, so you exit your dwelling and walk down the bustling streets of Sevgard until you arrive at the massive, oaken gate. A pair of guards waves you over the drawbridge, and you follow the beaten path to a settlement named Farmfields. In the early evening, lanterns are flickering to life and illuminate the path to the quaint inn. This is the perfect opportunity to learn about the local goings-on, and your throat feels quite parched and your stomach quite empty.")
+                                        .content("You awake from a refreshing nap and feel your stomach growl hungrily. As the last rays of sunlight recede through the nearby window, you slide out of bed and pack a satchel with supplies. You yearn to visit the inn outside the city, so you exit your dwelling and walk down the bustling streets of Sevgard until you arrive at the massive, oaken gate. A pair of guards waves you over the drawbridge, and you follow the beaten path to Farmfields. In the early evening, lanterns are flickering to life and illuminate the path to the quaint inn. This is the perfect opportunity to learn about the local goings-on, and your throat feels quite parched and your stomach quite empty.")
                                         .build(),
                                 TextExplorationEventEntry.builder()
                                         .content("You enter the inn and sit at a table in the corner which allows you to see all of the patrons. Farmers and dusty adventurers surround the bar. Barmaids balance platters of steaming meats and tankards of sloshing ale. A quartet plays center stage whilst the tallest of the four sings a ditty about lost love. You hear a lute, a harp, an ocarina, and a soft drum, and you begin to relax to the tranquil music. Suddenly, the door slams open and silences the evening crowd.")
@@ -45,7 +45,7 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
                                         .build(),
                                 //TODO: Use an Orc Brigand ere instead the Goblin one.
                                 CombatExplorationEventEntry.builder()
-                                        .monsterDefinition(monsterDefinitionCache.getMonsterDefinition(1))
+                                        .monsterDefinition(monsterDefinitionCache.getMonsterDefinition(6))
                                         .combatCalculator(combatCalculator)
                                         .build(),
                                 TextExplorationEventEntry.builder()
