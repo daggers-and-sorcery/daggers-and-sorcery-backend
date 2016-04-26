@@ -92,6 +92,7 @@ public class CombatMessageBuilder {
     public CombatMessage buildResurrectionMessage() {
         final CombatMessage combatMessage = new CombatMessage();
 
+        combatMessage.addData("icon", "resurrection");
         combatMessage.addData("message", "You have been ressurected on maximum health.");
 
         return combatMessage;
@@ -102,6 +103,7 @@ public class CombatMessageBuilder {
 
         combatMessage.addData("skill", skillType.getName());
         combatMessage.addData("experience", experience);
+        combatMessage.addData("icon", "xploss");
         combatMessage.addData("message", "You lost ${experience} experience in ${skill} because of dying.");
 
         return combatMessage;
@@ -111,6 +113,7 @@ public class CombatMessageBuilder {
         final CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("turn", turn);
+        combatMessage.addData("icon", "trigger");
         combatMessage.addData("message", TURN_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(TURN_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
 
         return combatMessage;
@@ -120,6 +123,7 @@ public class CombatMessageBuilder {
         final CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("name", monsterName);
+        combatMessage.addData("icon", "trigger");
         combatMessage.addData("message", MONSTER_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(MONSTER_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
 
         return combatMessage;
@@ -129,6 +133,7 @@ public class CombatMessageBuilder {
         final CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("percentage", percentage);
+        combatMessage.addData("icon", "trigger");
         combatMessage.addData("message", MANA_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(MANA_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
 
         return combatMessage;
@@ -138,6 +143,7 @@ public class CombatMessageBuilder {
          final CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("spell", spell);
+        combatMessage.addData("icon", "spell");
         combatMessage.addData("message", USE_SPELL_MESSAGE_LIST[random.nextInt(USE_SPELL_MESSAGE_LIST.length)]);
 
         return combatMessage;
@@ -147,6 +153,7 @@ public class CombatMessageBuilder {
          final CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("item", item);
+        combatMessage.addData("icon", "potion");
         combatMessage.addData("message", USE_ITEM_MESSAGE_LIST[random.nextInt(USE_ITEM_MESSAGE_LIST.length)]);
 
         return combatMessage;
@@ -156,6 +163,7 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("percentage", percentage);
+        combatMessage.addData("icon", "trigger");
         combatMessage.addData("message", HEALTH_SETTING_TRIGGERED_MESSAGE_LIST[random.nextInt(HEALTH_SETTING_TRIGGERED_MESSAGE_LIST.length)]);
 
         return combatMessage;
@@ -165,6 +173,7 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("monster", monster);
+        combatMessage.addData("icon", "start");
         combatMessage.addData("message", FIGHT_INITIAL_MESSANGE_LIST[random.nextInt(FIGHT_INITIAL_MESSANGE_LIST.length)]);
 
         return combatMessage;
@@ -301,6 +310,7 @@ public class CombatMessageBuilder {
 
         combatMessage.addData("item", itemName);
         combatMessage.addData("amount", amount);
+        combatMessage.addData("icon", "item");
         combatMessage.addData("message", DROP_MESSANGE_LIST[random.nextInt(DROP_MESSANGE_LIST.length)]);
 
         return combatMessage;
@@ -310,6 +320,7 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("turn", turn);
+        combatMessage.addData("icon", "turn");
         combatMessage.addData("message", NEW_TURN_LIST[random.nextInt(NEW_TURN_LIST.length)]);
 
         return combatMessage;
@@ -320,6 +331,7 @@ public class CombatMessageBuilder {
 
         combatMessage.addData("skill", WordUtils.capitalize(skillName.replace("_", " ").toLowerCase()));
         combatMessage.addData("amount", amount);
+        combatMessage.addData("icon", "experience");
         combatMessage.addData("message", REWARD_XP_LIST[random.nextInt(REWARD_XP_LIST.length)]);
 
         return combatMessage;
@@ -330,6 +342,7 @@ public class CombatMessageBuilder {
 
         combatMessage.addData("item", itemName);
         combatMessage.addData("amount", amount);
+        combatMessage.addData("icon", "item");
         combatMessage.addData("message", SCAVENGING_ITEM_MESSANGE_LIST[random.nextInt(SCAVENGING_ITEM_MESSANGE_LIST.length)]);
 
         return combatMessage;
@@ -339,6 +352,7 @@ public class CombatMessageBuilder {
         CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("amount", amount);
+        combatMessage.addData("icon", "experience");
         combatMessage.addData("message", SCAVENGING_XP_MESSANGE_LIST[random.nextInt(SCAVENGING_XP_MESSANGE_LIST.length)]);
 
         return combatMessage;
