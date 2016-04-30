@@ -65,7 +65,7 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
                                 .content("On the other side, you notice clusters of clay pots and urns with bronze coins scattered around them. However, you are not alone. A Goblin Piker sits crisscross in the middle of the room and seems to be meditating. His formidable pike rests across his lap with his green fingers clasped tightly around it. You debate on returning whence you came though an urn rests only a few feet away. As you pick it up, it slips straight from your grasp due to a thick coating of slime. The urn shatters and alerts the Goblin Piker. He snarls at you and raises his sharp pike.")
                                 .build(),
                         CombatExplorationEventEntry.builder()
-                                .monsterDefinition(monsterDefinitionCache.getMonsterDefinition(2))
+                                .monsterDefinition(monsterDefinitionCache.getMonsterDefinition(1))
                                 .combatCalculator(combatCalculator)
                                 .build(),
                         TextExplorationEventEntry.builder()

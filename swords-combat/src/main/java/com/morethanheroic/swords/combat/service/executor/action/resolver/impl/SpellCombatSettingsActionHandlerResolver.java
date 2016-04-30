@@ -28,7 +28,7 @@ public class SpellCombatSettingsActionHandlerResolver implements CombatSettingsA
 
         combatResult.addMessage(combatMessageBuilder.buildUseSpellMessage(spellToUse.getName()));
 
-        useSpellService.useSpell(userEntity, spellToUse, combatEffectDataHolder);
+        useSpellService.useSpell(userEntity, combatResult, spellToUse, combatEffectDataHolder);
     }
 
     @Override
