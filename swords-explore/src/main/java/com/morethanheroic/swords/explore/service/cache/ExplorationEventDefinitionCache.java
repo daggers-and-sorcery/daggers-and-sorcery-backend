@@ -75,6 +75,47 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
                 )
                 .build()
         );
+        explorationEventDefinitions.put(3, ExplorationEventDefinition.builder()
+                .explorationEventEntries(Lists.newArrayList(
+                        TextExplorationEventEntry.builder()
+                                .content("From Sevgard's mighty walls, you relax after a long day of adventuring to watch the sunset. The wind blows the wheat lazily and transforms the field into a sea of shimmering gold. You lean forward and feel at ease until something catches your eye. A straw hat meanders through the fields and disrupts the flowing wheat. It must belong to Pete the Farmer, the elderly man who toils in his fields day in and day out. You frown as you realize that Pete the Farmer has no farmhands and struggles to maintain his crops. You ponder this until the stars appear and the lanterns flicker to life. The firelight illuminates the straw hat shuffling haggardly to his home.")
+                                .build(),
+                        TextExplorationEventEntry.builder()
+                                .content("In the morning, you pack a bag with sufficient supplies and leave Sevgard. You approach Farmfields and recall the path to Pete the Farmer's home. You plan on offering your services to the farmer, and hopefully, he would lower his pride and accept your offer. You daydream about fresh vegetables and meats but halt when you notice a dark figure ahead of you. A Bandit Brigand wearing all black leans against a wooden post and tosses a dagger up and down, catching it perfectly by the hilt. He notices you and snickers beneath a crimson bandana. He sprints toward you, giving you barely enough time to react.")
+                                .build(),
+                        CombatExplorationEventEntry.builder()
+                                .monsterDefinition(monsterDefinitionCache.getMonsterDefinition(6))
+                                .combatCalculator(combatCalculator)
+                                .build(),
+                        TextExplorationEventEntry.builder()
+                                .content("As soon as the Bandit Brigand falls, you hear a rush of feathers. Massive, black crows descend upon the body, and you run away as their caws reach a fever pitch. You burst into Pete the Farmer's home and struggle to catch your breath. As you recover, you search for Pete the Farmer, but he is nowhere to be found. He must be out in the fields. You debate on waiting for him but decide against it. You write the farmer a concerned note and place it on the kitchen table. You linger in the doorway before leaving Pete the Farmer's house. You take a different path back to Sevgard. ")
+                                .build()
+                        )
+                )
+                .build()
+        );
+        explorationEventDefinitions.put(4, ExplorationEventDefinition.builder()
+                .explorationEventEntries(Lists.newArrayList(
+                        TextExplorationEventEntry.builder()
+                                .content("You follow a cobblestone path to a wooden bridge and cross to the center of it. You lean against the guardrail and spot a mill upstream. A gigantic waterwheel directs the Hister River in your direction, and you wonder if it is a part of the Farmfields irrigation system. The river's flow is tranquil beneath the bridge without any rapids or rock clusters, so you close your eyes to listen. A breeze blows by you and carries a sweet scent upon it. Where is that coming from? A cloud of smoke forms beneath the bridge and rises through the cracks in the wood. You step back as the smoke grows darker and floats away.")
+                                .build(),
+                        TextExplorationEventEntry.builder()
+                                .content("Instantly, you are curious and cross off of the bridge. You stop at the edge of a muddy slope and kneel down. As soon as your boots touch the mud, you slide all the way to the bottom. You catch yourself and release a relieved sigh. An outcopping of grey rock blocks the way, so you enter the river to travel around. You walk until you are knee high in the water, and that's when you spot the Goblin Guard.")
+                                .build(),
+                        TextExplorationEventEntry.builder()
+                                .content("The Goblin Guard crouches next to a cook fire, and he turns a crudely constructed spit. A skinned rat spins slowly with its long tail dipping into the flames. The rat tail burns off, and with gnashing teeth, the Goblin Guard snatches it from the embers and shoves it into his mouth. He struggles to eat the rubbery tail but seems to be enjoying the taste. The Goblin Guard turns to prep another rat when he notices you standing in the river. He shrieks furiously and attacks you.")
+                                .build(),
+                        CombatExplorationEventEntry.builder()
+                                .monsterDefinition(monsterDefinitionCache.getMonsterDefinition(2))
+                                .combatCalculator(combatCalculator)
+                                .build(),
+                        TextExplorationEventEntry.builder()
+                                .content("While the Goblin Guard's body washes away, you are drawn to his cookfire. The rat is charred on one side, but the other side still appears fine. You remove the rat from the spit and eat the savory parts while you visit the nearby farms. Once you finish, you throw the charred bits into a pig trough. Not too bad. Rats taste like chicken.")
+                                .build()
+                        )
+                )
+                .build()
+        );
     }
 
     @Override
