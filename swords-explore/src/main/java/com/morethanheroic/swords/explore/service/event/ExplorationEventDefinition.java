@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.explore.domain.event;
+package com.morethanheroic.swords.explore.service.event;
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
@@ -11,13 +11,13 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
-@Getter
-public class ExplorationEventDefinition {
+public abstract class ExplorationEventDefinition {
 
-    private final List<ExplorationEventEntry> explorationEventEntries;
+    public abstract int getId();
 
-    public ExplorationResult explore(UserEntity userEntity) {
+    //private final List<ExplorationEventEntry> explorationEventEntries = new ArrayList<>();
+
+    public abstract ExplorationResult explore(UserEntity userEntity); /*{
         final List<ExplorationEventEntryResult> result = new ArrayList<>();
 
         for (ExplorationEventEntry explorationEventEntry : explorationEventEntries) {
@@ -31,5 +31,5 @@ public class ExplorationEventDefinition {
         return ExplorationResult.builder()
                 .explorationEventEntryResults(result)
                 .build();
-    }
+    }*/
 }

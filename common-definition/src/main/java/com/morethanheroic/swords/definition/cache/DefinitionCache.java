@@ -10,4 +10,6 @@ package com.morethanheroic.swords.definition.cache;
 public interface DefinitionCache<K, T> {
 
     T getDefinition(K key);
+
+    //TODO: Add int getSize();
 }
