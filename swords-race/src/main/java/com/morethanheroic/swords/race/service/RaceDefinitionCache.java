@@ -44,4 +44,9 @@ public class RaceDefinitionCache implements DefinitionCache<Race, RaceDefinition
     public RaceDefinition getDefinition(Race race) {
         return raceEntityMap.get(race);
     }
+
+    @Override
+    public int getSize() {
+        return raceEntityMap.size();
+    }
 }

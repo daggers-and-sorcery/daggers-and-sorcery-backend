@@ -2,6 +2,7 @@ package com.morethanheroic.swords.explore.service.cache;
 
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class ExplorationEventDefinitionCache implements DefinitionCache<Integer, ExplorationEventDefinition> {
 
     @Autowired
@@ -23,6 +25,8 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
         for (ExplorationEventDefinition explorationEventDefinition : explorationEventDefinitionList) {
             explorationEventDefinitions.put(explorationEventDefinition.getId(), explorationEventDefinition);
         }
+
+        log.info("Loaded " + explorationEventDefinitions.size() + " exploration event definitions.");
     }
 
     @Override
@@ -30,7 +34,8 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
         return explorationEventDefinitions.get(key);
     }
 
-    public int size() {
+    @Override
+    public int getSize() {
         return explorationEventDefinitions.size();
     }
 }

@@ -44,4 +44,9 @@ public class MoneyDefinitionCache implements DefinitionCache<MoneyType, MoneyDef
     public MoneyDefinition getDefinition(MoneyType moneyType) {
         return moneyDefinitionMap.get(moneyType);
     }
+
+    @Override
+    public int getSize() {
+        return moneyDefinitionMap.size();
+    }
 }

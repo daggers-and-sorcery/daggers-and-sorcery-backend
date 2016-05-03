@@ -44,6 +44,11 @@ public class ItemDefinitionCache implements DefinitionCache<Integer, ItemDefinit
         return itemDefinitionMap.get(itemId);
     }
 
+    @Override
+    public int getSize() {
+        return itemDefinitionMap.size();
+    }
+
     public boolean isItemExists(int itemId) {
         return itemDefinitionMap.containsKey(itemId);
     }

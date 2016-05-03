@@ -11,5 +11,5 @@ public interface DefinitionCache<K, T> {
 
     T getDefinition(K key);
 
-    //TODO: Add int getSize();
+    int getSize();
 }

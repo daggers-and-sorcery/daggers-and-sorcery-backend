@@ -30,6 +30,6 @@ public class ExplorationFacade {
         }
 
         //TODO: make this random
-        return explorationEventDefinitionCache.getDefinition(random.nextInt(explorationEventDefinitionCache.size()) + 1).explore(userEntity);
+        return explorationEventDefinitionCache.getDefinition(random.nextInt(explorationEventDefinitionCache.getSize()) + 1).explore(userEntity);
     }
 }
