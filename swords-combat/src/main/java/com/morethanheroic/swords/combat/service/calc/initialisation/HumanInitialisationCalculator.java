@@ -1,10 +1,8 @@
 package com.morethanheroic.swords.combat.service.calc.initialisation;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
-import com.morethanheroic.swords.combat.service.DiceUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;

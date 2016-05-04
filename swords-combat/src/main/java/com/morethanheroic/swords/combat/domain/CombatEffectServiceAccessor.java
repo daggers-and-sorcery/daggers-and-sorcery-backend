@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.combat.domain;
 
 import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
-import com.morethanheroic.swords.combat.service.DiceUtil;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
@@ -34,9 +33,6 @@ public class CombatEffectServiceAccessor {
 
     @Autowired
     private ItemDefinitionCache itemDefinitionCache;
-
-    @Autowired
-    private DiceUtil diceUtil;
 
     @Autowired
     private DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
