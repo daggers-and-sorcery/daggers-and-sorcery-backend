@@ -17,7 +17,7 @@ public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
     public DamageOpponentEffectDefinition(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
         super(effectSettingDefinitionHolder);
 
-        DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
+        final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
 
         diceAttributeBuilder.setValue(Integer.parseInt(this.getEffectSetting("value").getValue()));
         diceAttributeBuilder.setD2(Integer.parseInt(this.getEffectSetting("d2").getValue()));
@@ -31,7 +31,7 @@ public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
 
     @Override
     public void apply(CombatEntity combatEntity, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
-        final int damage = combatEffectServiceAccessor.getDiceUtil().rollValueFromDiceAttribute(diceAttribute);
+        final int damage = combatEffectServiceAccessor.getDiceRollCalculator().rollDices(combatEffectServiceAccessor.getDiceAttributeToDiceRollCalculationContextConverter().convert(diceAttribute));
 
         final CombatMessage combatMessage = new CombatMessage();
 
