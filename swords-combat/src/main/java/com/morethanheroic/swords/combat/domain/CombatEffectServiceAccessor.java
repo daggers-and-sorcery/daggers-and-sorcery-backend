@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.domain;
 
+import com.morethanheroic.swords.combat.service.DiceUtil;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -31,4 +32,7 @@ public class CombatEffectServiceAccessor {
 
     @Autowired
     private ItemDefinitionCache itemDefinitionCache;
+
+    @Autowired
+    private DiceUtil diceUtil;
 }
