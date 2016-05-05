@@ -16,6 +16,7 @@ public abstract class CombatEffectDefinition implements EffectDefinition {
         this.effectSettingDefinitionHolder = effectSettingDefinitionHolder;
     }
 
+    //TODO: Use optional for the settings
     public EffectSettingDefinition getEffectSetting(String name) {
         return effectSettingDefinitionHolder.getSetting(name);
     }

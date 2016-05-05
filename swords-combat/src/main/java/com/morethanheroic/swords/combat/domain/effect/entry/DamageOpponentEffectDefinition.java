@@ -19,12 +19,29 @@ public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
 
         final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
 
-        diceAttributeBuilder.setValue(Integer.parseInt(this.getEffectSetting("value").getValue()));
-        diceAttributeBuilder.setD2(Integer.parseInt(this.getEffectSetting("d2").getValue()));
-        diceAttributeBuilder.setD4(Integer.parseInt(this.getEffectSetting("d4").getValue()));
-        diceAttributeBuilder.setD6(Integer.parseInt(this.getEffectSetting("d6").getValue()));
-        diceAttributeBuilder.setD8(Integer.parseInt(this.getEffectSetting("d8").getValue()));
-        diceAttributeBuilder.setD10(Integer.parseInt(this.getEffectSetting("d10").getValue()));
+        if (this.getEffectSetting("value") != null) {
+            diceAttributeBuilder.setValue(Integer.parseInt(this.getEffectSetting("value").getValue()));
+        }
+
+        if (this.getEffectSetting("d2") != null) {
+            diceAttributeBuilder.setD2(Integer.parseInt(this.getEffectSetting("d2").getValue()));
+        }
+
+        if (this.getEffectSetting("d4") != null) {
+            diceAttributeBuilder.setD4(Integer.parseInt(this.getEffectSetting("d4").getValue()));
+        }
+
+        if (this.getEffectSetting("d6") != null) {
+            diceAttributeBuilder.setD6(Integer.parseInt(this.getEffectSetting("d6").getValue()));
+        }
+
+        if (this.getEffectSetting("d8") != null) {
+            diceAttributeBuilder.setD8(Integer.parseInt(this.getEffectSetting("d8").getValue()));
+        }
+
+        if (this.getEffectSetting("d10") != null) {
+            diceAttributeBuilder.setD10(Integer.parseInt(this.getEffectSetting("d10").getValue()));
+        }
 
         diceAttribute = diceAttributeBuilder.build();
     }
