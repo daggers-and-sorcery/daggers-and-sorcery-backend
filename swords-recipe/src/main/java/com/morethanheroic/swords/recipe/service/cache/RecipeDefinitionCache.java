@@ -44,6 +44,11 @@ public class RecipeDefinitionCache implements DefinitionCache<Integer, RecipeDef
         return recipeDefinitionMap.get(id);
     }
 
+    @Override
+    public int getSize() {
+        return recipeDefinitionMap.size();
+    }
+
     public boolean hasDefinition(Integer id) {
         return recipeDefinitionMap.containsKey(id);
     }

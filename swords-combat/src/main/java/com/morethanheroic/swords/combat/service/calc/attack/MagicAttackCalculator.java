@@ -5,22 +5,23 @@ import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
-import com.morethanheroic.swords.combat.service.DiceUtil;
+import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.dice.service.DiceRollCalculator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class MagicAttackCalculator extends GeneralAttackCalculator {
 
-    @Autowired
-    private DiceUtil diceUtil;
-
-    @Autowired
-    private CombatMessageBuilder combatMessageBuilder;
+    private final CombatMessageBuilder combatMessageBuilder;
+    private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
+    private final DiceRollCalculator diceRollCalculator;
 
     @Override
     public void calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        if (diceUtil.rollValueFromDiceAttribute(attacker.getMagicAttack()) > opponent.getSpellResistance().getValue()) {
+        if (diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getMagicAttack())) > opponent.getSpellResistance().getValue()) {
             dealDamage(attacker, opponent, result);
 
             if (opponent.getActualHealth() <= 0) {
@@ -32,7 +33,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
     }
 
     private void dealDamage(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        int damage = diceUtil.rollValueFromDiceAttribute(attacker.getMagicDamage());
+        final int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getMagicDamage()));
 
         opponent.decreaseActualHealth(damage);
 

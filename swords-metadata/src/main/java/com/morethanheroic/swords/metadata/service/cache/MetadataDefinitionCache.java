@@ -39,4 +39,9 @@ public class MetadataDefinitionCache implements DefinitionCache<String, Metadata
     public MetadataDefinition getDefinition(String key) {
         return metadataDefinitionsMap.get(key);
     }
+
+    @Override
+    public int getSize() {
+        return metadataDefinitionsMap.size();
+    }
 }

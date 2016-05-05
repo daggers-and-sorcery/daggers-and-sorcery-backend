@@ -2,6 +2,7 @@ package com.morethanheroic.swords.combat.domain.effect;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectDefinition;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinition;
@@ -19,5 +20,5 @@ public abstract class CombatEffectDefinition implements EffectDefinition {
         return effectSettingDefinitionHolder.getSetting(name);
     }
 
-    public abstract void apply(CombatEntity combatEntity, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor);
+    public abstract void apply(CombatEntity combatEntity, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor);
 }

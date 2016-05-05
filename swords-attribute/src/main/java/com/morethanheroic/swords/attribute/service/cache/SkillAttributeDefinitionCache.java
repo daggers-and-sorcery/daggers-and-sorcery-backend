@@ -41,4 +41,9 @@ public class SkillAttributeDefinitionCache implements DefinitionCache<SkillAttri
     public SkillAttributeDefinition getDefinition(SkillAttribute key) {
         return skillAttributeDefinitionMap.get(key);
     }
+
+    @Override
+    public int getSize() {
+        return skillAttributeDefinitionMap.size();
+    }
 }
