@@ -1,8 +1,9 @@
 package com.morethanheroic.swords.explore.web;
 
 import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.service.ExplorationFacade;
+import com.morethanheroic.swords.explore.service.ExplorationExecutor;
 import com.morethanheroic.swords.explore.service.response.ExplorationResponseBuilder;
 import com.morethanheroic.swords.explore.service.response.domain.ExplorationResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExplorationController {
 
     @Autowired
-    private ExplorationFacade explorationFacade;
+    private ExplorationExecutor explorationEventExecutor;
 
     @Autowired
     private ExplorationResponseBuilder explorationResponseBuilder;
 
     @RequestMapping(value = "/explore/", method = RequestMethod.GET)
-    public Response explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationFacade.explore(userEntity);
+    public Response explore(UserEntity userEntity, SessionEntity sessionEntity) {
+        final ExplorationResult explorationResult = explorationEventExecutor.explore(userEntity, sessionEntity);
 
         return explorationResponseBuilder.build(ExplorationResponseBuilderConfiguration.builder()
                 .userEntity(userEntity)
