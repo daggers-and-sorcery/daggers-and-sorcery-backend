@@ -4,9 +4,11 @@ import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.response.domain.CombatExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.service.response.domain.ExplorationResponseBuilderConfiguration;
+import com.morethanheroic.swords.explore.service.response.domain.OptionExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.service.response.domain.TextExplorationEventPartialResponse;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,9 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
         final List<PartialResponse> result = new ArrayList<>();
 
         for (ExplorationEventEntryResult explorationEventEntryResult : explorationResponseBuilderConfiguration.getExplorationEventEntryResults().getExplorationEventEntryResults()) {
+            //TODO: Refactor this!
             if (explorationEventEntryResult instanceof TextExplorationEventEntryResult) {
-                TextExplorationEventEntryResult textExplorationEventEntryResult = (TextExplorationEventEntryResult) explorationEventEntryResult;
+                final TextExplorationEventEntryResult textExplorationEventEntryResult = (TextExplorationEventEntryResult) explorationEventEntryResult;
 
                 result.add(
                         TextExplorationEventPartialResponse.builder()
@@ -31,11 +34,19 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                                 .build()
                 );
             } else if (explorationEventEntryResult instanceof CombatExplorationEventEntryResult) {
-                CombatExplorationEventEntryResult combatExplorationEventEntryResult = (CombatExplorationEventEntryResult) explorationEventEntryResult;
+                final CombatExplorationEventEntryResult combatExplorationEventEntryResult = (CombatExplorationEventEntryResult) explorationEventEntryResult;
 
                 result.add(
                         CombatExplorationEventPartialResponse.builder()
                                 .combatMessages(combatExplorationEventEntryResult.getCombatMessages())
+                                .build()
+                );
+            } else if (explorationEventEntryResult instanceof OptionExplorationEventEntryResult) {
+                final OptionExplorationEventEntryResult optionExplorationEventEntryResult = (OptionExplorationEventEntryResult) explorationEventEntryResult;
+
+                result.add(
+                        OptionExplorationEventPartialResponse.builder()
+                                .eventOptions(optionExplorationEventEntryResult.getOptions())
                                 .build()
                 );
             }

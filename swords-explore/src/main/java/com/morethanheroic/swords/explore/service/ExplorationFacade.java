@@ -29,7 +29,11 @@ public class ExplorationFacade {
             return explorationResultFactory.newExplorationResult();
         }
 
-        //TODO: make this random
-        return explorationEventDefinitionCache.getDefinition(random.nextInt(explorationEventDefinitionCache.getSize()) + 1).explore(userEntity);
+        return explorationEventDefinitionCache.getDefinition(getRandomExplorationEventId()).explore(userEntity);
+    }
+
+    //TODO: Create a filter that we can use in development to change the possible exploration events.
+    private int getRandomExplorationEventId() {
+        return random.nextInt(explorationEventDefinitionCache.getSize()) + 1;
     }
 }
