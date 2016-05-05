@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 @Profile({"development"})
 public class SessionBasedExplorationContextFactory implements ExplorationContextFactory {
@@ -18,11 +20,22 @@ public class SessionBasedExplorationContextFactory implements ExplorationContext
     @Autowired
     private ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
+    @Autowired
+    private Random random;
+
     @Override
-    public ExplorationContext newExplorationContext(UserEntity userEntity, SessionEntity sessionEntity) {
+    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity) {
         return ExplorationContext.builder()
-                .event(explorationEventDefinitionCache.getDefinition((Integer) sessionEntity.getAttribute(EXPLORATION_EVENT_OVERRIDE_SESSION_ENTRY_KEY)))
+                .event(explorationEventDefinitionCache.getDefinition(getEventId(sessionEntity)))
                 .stage(0)
                 .build();
+    }
+
+    private int getEventId(final SessionEntity sessionEntity) {
+        if (sessionEntity.isAttributeSet(EXPLORATION_EVENT_OVERRIDE_SESSION_ENTRY_KEY)) {
+            return (Integer) sessionEntity.getAttribute(EXPLORATION_EVENT_OVERRIDE_SESSION_ENTRY_KEY);
+        }
+
+        return random.nextInt(explorationEventDefinitionCache.getSize()) + 1;
     }
 }
