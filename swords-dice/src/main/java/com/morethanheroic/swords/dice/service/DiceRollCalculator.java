@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
+/**
+ * Evaluate a {@link DiceRollCalculationContext}. Rolling the necessary dies as stated in the context then returning
+ * the result as an integer.
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class DiceRollCalculator {
