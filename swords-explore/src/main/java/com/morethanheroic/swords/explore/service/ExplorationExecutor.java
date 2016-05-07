@@ -3,7 +3,7 @@ package com.morethanheroic.swords.explore.service;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
-import com.morethanheroic.swords.explore.service.context.impl.DefaultExplorationContextFactory;
+import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class ExplorationExecutor {
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private DefaultExplorationContextFactory defaultExplorationContextFactory;
+    private ExplorationContextFactory explorationContextFactory;
 
     @Transactional
     public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity) {
@@ -27,7 +27,16 @@ public class ExplorationExecutor {
             return buildFailedExplorationResult();
         }
 
-        return buildSuccessfulExplorationResult(userEntity, defaultExplorationContextFactory.newExplorationContext(userEntity, sessionEntity));
+        return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity));
+    }
+
+    @Transactional
+    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final int state) {
+        if (canExplore(userEntity)) {
+            return buildFailedExplorationResult();
+        }
+
+        return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity));
     }
 
     private boolean canExplore(final UserEntity userEntity) {

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Random;
 
 @Service
-@Profile({"development"})
+@Profile("development")
 public class SessionBasedExplorationContextFactory implements ExplorationContextFactory {
 
     private static final String EXPLORATION_EVENT_OVERRIDE_SESSION_ENTRY_KEY = "EXPLORATION_EVENT_OVERRIDE";

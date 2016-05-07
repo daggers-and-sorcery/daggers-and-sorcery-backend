@@ -10,6 +10,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,6 +25,17 @@ public class ExplorationController {
     @RequestMapping(value = "/explore/", method = RequestMethod.GET)
     public Response explore(UserEntity userEntity, SessionEntity sessionEntity) {
         final ExplorationResult explorationResult = explorationEventExecutor.explore(userEntity, sessionEntity);
+
+        return explorationResponseBuilder.build(ExplorationResponseBuilderConfiguration.builder()
+                .userEntity(userEntity)
+                .explorationEventEntryResults(explorationResult)
+                .build()
+        );
+    }
+
+    @RequestMapping(value = "/explore/{state}", method = RequestMethod.GET)
+    public Response explore(UserEntity userEntity, SessionEntity sessionEntity, @RequestParam int state) {
+        final ExplorationResult explorationResult = explorationEventExecutor.explore(userEntity, sessionEntity, state);
 
         return explorationResponseBuilder.build(ExplorationResponseBuilderConfiguration.builder()
                 .userEntity(userEntity)
