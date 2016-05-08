@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class NewsEntity {
 
     private final int id;
-    private final LocalDate releaseDate;
+    private final long releaseDate;
     private final String title;
     private final String message;
     private final String icon;
