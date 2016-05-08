@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 @Profile("production")
 public class DefaultExplorationContextFactory implements ExplorationContextFactory {
 
+    private static final int NO_EVENT = 0;
+
     @Autowired
     private ExplorationEventChooser explorationEventChooser;
 
@@ -24,10 +26,10 @@ public class DefaultExplorationContextFactory implements ExplorationContextFacto
     public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, final int nextStage) {
         ExplorationEventDefinition explorationEvent;
 
-        if (userEntity.getActiveExplorationEvent() > 0) {
-            explorationEvent = explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent());
-        } else {
+        if (userEntity.getActiveExplorationEvent() == NO_EVENT) {
             explorationEvent = explorationEventChooser.getEvent();
+        } else {
+            explorationEvent = explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent());
         }
 
         return ExplorationContext.builder()

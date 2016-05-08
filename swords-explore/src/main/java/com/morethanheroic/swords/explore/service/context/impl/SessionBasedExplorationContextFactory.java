@@ -16,6 +16,8 @@ import java.util.Random;
 @Profile("development")
 public class SessionBasedExplorationContextFactory implements ExplorationContextFactory {
 
+    private static final int NO_EVENT = 0;
+
     private static final String EXPLORATION_EVENT_OVERRIDE_SESSION_ENTRY_KEY = "EXPLORATION_EVENT_OVERRIDE";
 
     @Autowired
@@ -28,10 +30,10 @@ public class SessionBasedExplorationContextFactory implements ExplorationContext
     public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, int nextStage) {
         ExplorationEventDefinition explorationEvent;
 
-        if (userEntity.getActiveExplorationEvent() > 0) {
-            explorationEvent = explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent());
-        } else {
+        if (userEntity.getActiveExplorationEvent() == NO_EVENT) {
             explorationEvent = explorationEventDefinitionCache.getDefinition(getEventId(sessionEntity));
+        } else {
+            explorationEvent = explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent());
         }
 
         return ExplorationContext.builder()
