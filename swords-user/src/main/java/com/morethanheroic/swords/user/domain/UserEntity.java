@@ -69,6 +69,25 @@ public class UserEntity {
         userMapper.updateBasicCombatStats(userDatabaseEntity.getId(), health, mana, movement);
     }
 
+    public int getActiveExplorationEvent() {
+        return userDatabaseEntity.getExplorationEvent();
+    }
+
+    public int getActiveExplorationState() {
+        return userDatabaseEntity.getExplorationState();
+    }
+
+    public void resetActiveExploration() {
+        setActiveExploration(0, 0);
+    }
+
+    public void setActiveExploration(int event, int state) {
+        userDatabaseEntity.setExplorationEvent(event);
+        userDatabaseEntity.setExplorationState(state);
+
+        userMapper.updateExploration(event, state, userDatabaseEntity.getId());
+    }
+
     //TODO: Remove this! This is only here for now! Should refactor it soon! Things that accessed in
     //userDatabaseEntity should be accessed via this class.
     public UserDatabaseEntity getUserDatabaseEntity() {

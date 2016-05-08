@@ -1,6 +1,8 @@
 package com.morethanheroic.swords.user.repository.dao;
 
 import com.morethanheroic.swords.race.model.Race;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 
@@ -21,6 +23,14 @@ public class UserDatabaseEntity {
     private int mana;
     private int movement;
     private int scavengingPoint;
+
+    @Getter
+    @Setter
+    private int explorationEvent;
+
+    @Getter
+    @Setter
+    private int explorationState;
 
     public UserDatabaseEntity() {
     }
