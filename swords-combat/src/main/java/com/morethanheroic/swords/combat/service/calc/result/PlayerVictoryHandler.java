@@ -29,6 +29,6 @@ public class PlayerVictoryHandler {
         experienceAwarder.addXpToUserFromMonsterDefinition(combatResult, userEntity);
 
         final UserCombatEntity userCombatEntity = combat.getUserCombatEntity();
-        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints() - 1);
+        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
     }
 }

@@ -38,6 +38,8 @@ public class ExplorationEventExplorer {
             return buildFailedExplorationResult();
         }
 
+        userEntity.setMovementPoints(userEntity.getMovementPoints() - 1);
+
         return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity, nextState));
     }
 
