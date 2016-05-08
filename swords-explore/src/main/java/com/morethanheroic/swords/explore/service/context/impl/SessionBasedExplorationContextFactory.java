@@ -4,6 +4,7 @@ import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -24,10 +25,18 @@ public class SessionBasedExplorationContextFactory implements ExplorationContext
     private Random random;
 
     @Override
-    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity) {
+    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, int nextStage) {
+        ExplorationEventDefinition explorationEvent;
+
+        if (userEntity.getActiveExplorationEvent() > 0) {
+            explorationEvent = explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent());
+        } else {
+            explorationEvent = explorationEventDefinitionCache.getDefinition(getEventId(sessionEntity));
+        }
+
         return ExplorationContext.builder()
-                .event(explorationEventDefinitionCache.getDefinition(getEventId(sessionEntity)))
-                .stage(0)
+                .event(explorationEvent)
+                .stage(nextStage)
                 .build();
     }
 

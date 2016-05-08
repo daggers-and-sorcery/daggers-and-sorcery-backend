@@ -6,5 +6,5 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 
 public interface ExplorationContextFactory {
 
-    ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity);
+    ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, int nextStage);
 }
