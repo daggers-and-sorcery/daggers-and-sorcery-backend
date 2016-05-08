@@ -3,8 +3,6 @@ package com.morethanheroic.swords.news.domain;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 /**
  * Contains the data of a news entry.
  */
