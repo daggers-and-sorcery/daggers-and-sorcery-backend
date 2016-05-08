@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160508-2">
+        <insert tableName="news">
+            <column name="title" value="Welcome on Swords &amp; Sorcery!"/>
+            <column name="release_date" value="2016-05-09 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message" value="
+                Welcome, Wanderer!
+
+                I am pleased to introduce you to a new fantasy, roleplaying game called Daggers &amp; Sorcery. When you create your character, you can select from eight different races. For example, there are elves, dwarves, gnomes, and draconics.
+
+                This is an early beta release of the game. However, the game is stable enough that your character will not be deleted after the open beta period has ended.
+
+                We are a very small indie studio which consists of two people. We try our best, but mistakes can happen. If you find a bug, please report it directly to laxika91@gmail.com.
+
+                If you have any ideas that could improve the game, contact us through the game's official subreddit at https://www.reddit.com/r/DaggersAndSorcery/
+
+                Stay tuned for further updates. We plan on releasing an update per week. The next planned update is highscores, and a detailed development road map will be posted shortly afterward.
+
+                Thanks,
+                The Daggers &amp; Sorcery Team
+            "/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
