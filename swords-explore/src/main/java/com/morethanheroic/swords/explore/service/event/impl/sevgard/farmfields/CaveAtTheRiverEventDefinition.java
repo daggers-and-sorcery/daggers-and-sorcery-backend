@@ -43,7 +43,7 @@ public class CaveAtTheRiverEventDefinition extends ExplorationEventDefinition {
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("You explore the fields and walk through rows of tomatoes, carrots, lettuce, and corn. You feel the urge to pick a few vegetables but restrain yourself. Shouldering your pack, you exit the fields before any of the farmers catch you trespassing. There is a slight chance that you trampled some of the crops a few yards back, and you do not wish to incite the farmers' anger. You hurry along until you come across the Hister River and follow it downstream. You feel calmer as you distance yourself from the fields.")
+                        .content("You explore the fields and walk through rows of tomatoes, carrots, lettuce and corn. You feel the urge to pick a few vegetables but restrain yourself. Shouldering your pack, you exit the fields before any of the farmers catch you trespassing. There is a slight chance that you trampled some of the crops a few yards back, and you do not wish to incite the farmers' anger. You hurry along until you come across the Hister River and follow it downstream. You feel calmer as you distance yourself from the fields.")
                         .build()
         ).addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -51,7 +51,7 @@ public class CaveAtTheRiverEventDefinition extends ExplorationEventDefinition {
                         .build()
         ).addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("A rock formation rests to your left, and you notice an opening to a large den. Upon closer inspection, there are piles of small animal bones scattered around the entrance along with pawprints. You stiffen as you hear a muffled growl from behind you. You turn slowly and see a " + opponent.getName() + " with a silver fish clenched in its jaws. The OPPONENT NAME drops the fish and charges you aggressively. ")
+                        .content("A rock formation rests to your left, and you notice an opening to a large den. Upon closer inspection, there are piles of small animal bones scattered around the entrance along with pawprints. You stiffen as you hear a muffled growl from behind you. You turn slowly and see a " + opponent.getName() + " with a silver fish clenched in its jaws. The " + opponent.getName() + " drops the fish and charges you aggressively. ")
                         .build()
         ).addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
