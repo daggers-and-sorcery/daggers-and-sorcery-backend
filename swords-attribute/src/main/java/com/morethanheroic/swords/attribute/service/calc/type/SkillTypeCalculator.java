@@ -24,7 +24,7 @@ public class SkillTypeCalculator {
             case LONGSWORDS:
                 return SkillType.LONGBOWS;
             case SHORTSWORDS:
-                return SkillType.SHORTBOWS;
+                return SkillType.SHORTSWORDS;
             case POLEARMS:
                 return SkillType.POLEARMS;
             case DAGGERS:
@@ -69,7 +69,7 @@ public class SkillTypeCalculator {
             case LONGSWORDS:
                 return SkillType.LONGBOWS;
             case SHORTSWORDS:
-                return SkillType.SHORTBOWS;
+                return SkillType.SHORTSWORDS;
             case POLEARMS:
                 return SkillType.POLEARMS;
             case DAGGERS:
