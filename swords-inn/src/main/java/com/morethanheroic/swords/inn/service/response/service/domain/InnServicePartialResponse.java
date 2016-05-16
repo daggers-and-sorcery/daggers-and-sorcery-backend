@@ -11,7 +11,4 @@ public class InnServicePartialResponse extends PartialResponse {
 
     private final String id;
     private final String name;
-    private final int movement;
-    private final int money;
-    private final MoneyType moneyType;
 }

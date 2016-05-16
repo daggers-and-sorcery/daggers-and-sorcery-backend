@@ -21,11 +21,8 @@ public class InnServicesPartialResponseBuilder implements PartialResponseCollect
         for (ServiceType serviceType : explorationResponseBuilderConfiguration.getServices()) {
             result.add(
                     InnServicePartialResponse.builder()
-                            .id(serviceType.getId())
+                            .id(serviceType.name())
                             .name(serviceType.getName())
-                            .money(serviceType.getPriceDefinition().getAmount())
-                            .moneyType(serviceType.getPriceDefinition().getType())
-                            .movement(serviceType.getMovement())
                             .build()
             );
         }
