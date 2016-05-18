@@ -17,10 +17,10 @@ public class InnServiceAvailabilityResponseBuilder implements ResponseBuilder<In
     private InnServicesPartialResponseBuilder innServicesPartialResponseBuilder;
 
     @Override
-    public Response build(InnServiceAvailabilityResponseBuilderConfiguration explorationResponseBuilderConfiguration) {
-        final Response response = responseFactory.newResponse(explorationResponseBuilderConfiguration.getUserEntity());
+    public Response build(InnServiceAvailabilityResponseBuilderConfiguration innServiceAvailabilityResponseBuilderConfiguration) {
+        final Response response = responseFactory.newResponse(innServiceAvailabilityResponseBuilderConfiguration.getUserEntity());
 
-        response.setData("services", innServicesPartialResponseBuilder.build(explorationResponseBuilderConfiguration));
+        response.setData("services", innServicesPartialResponseBuilder.build(innServiceAvailabilityResponseBuilderConfiguration));
 
         return response;
     }

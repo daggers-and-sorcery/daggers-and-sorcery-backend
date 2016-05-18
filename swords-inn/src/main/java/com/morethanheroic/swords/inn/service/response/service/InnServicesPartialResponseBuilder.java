@@ -15,10 +15,10 @@ import java.util.List;
 public class InnServicesPartialResponseBuilder implements PartialResponseCollectionBuilder<InnServiceAvailabilityResponseBuilderConfiguration> {
 
     @Override
-    public Collection<? extends PartialResponse> build(InnServiceAvailabilityResponseBuilderConfiguration explorationResponseBuilderConfiguration) {
+    public Collection<? extends PartialResponse> build(InnServiceAvailabilityResponseBuilderConfiguration innServiceAvailabilityResponseBuilderConfiguration) {
         final List<PartialResponse> result = new ArrayList<>();
 
-        for (ServiceType serviceType : explorationResponseBuilderConfiguration.getServices()) {
+        for (ServiceType serviceType : innServiceAvailabilityResponseBuilderConfiguration.getServices()) {
             result.add(
                     InnServicePartialResponse.builder()
                             .id(serviceType.name())
