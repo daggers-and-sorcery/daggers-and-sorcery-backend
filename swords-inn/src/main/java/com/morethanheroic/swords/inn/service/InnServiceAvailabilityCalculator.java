@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.inn.service;
 
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.inn.domain.ServiceType;
+import com.morethanheroic.swords.inn.domain.service.ServiceType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

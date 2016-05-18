@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.inn.service.server;
 
-import com.morethanheroic.swords.inn.domain.ServiceType;
+import com.morethanheroic.swords.inn.domain.service.ServiceType;
 import com.morethanheroic.swords.inn.service.server.context.ServingContext;
 import com.morethanheroic.swords.inn.service.server.executor.ServingExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class InnServiceServer {
 
     @Autowired
-    private List<ServingExecutor<ServingContext>> servingExecutors;
+    private List<ServingExecutor> servingExecutors;
 
     private Map<ServiceType, ServingExecutor<ServingContext>> executorMap;
 

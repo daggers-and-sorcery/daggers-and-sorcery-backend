@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.inn.domain;
+package com.morethanheroic.swords.inn.domain.service;
 
 import com.morethanheroic.swords.money.domain.MoneyType;
 import lombok.Builder;

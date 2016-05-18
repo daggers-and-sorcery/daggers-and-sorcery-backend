@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.inn.web;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.inn.domain.ServiceType;
+import com.morethanheroic.swords.inn.domain.service.ServiceType;
 import com.morethanheroic.swords.inn.service.response.order.InnServiceOrderResponseBuilder;
 import com.morethanheroic.swords.inn.service.response.order.domain.InnServiceOrderResponseBuilderConfiguration;
 import com.morethanheroic.swords.inn.service.server.InnServiceServer;

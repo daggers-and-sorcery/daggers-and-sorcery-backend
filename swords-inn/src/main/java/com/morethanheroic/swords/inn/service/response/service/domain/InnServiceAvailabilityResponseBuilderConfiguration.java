@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.inn.service.response.service.domain;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
-import com.morethanheroic.swords.inn.domain.ServiceType;
+import com.morethanheroic.swords.inn.domain.service.ServiceType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.Builder;
 import lombok.Getter;

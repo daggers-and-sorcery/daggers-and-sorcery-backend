@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.inn.domain;
+package com.morethanheroic.swords.inn.domain.service;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

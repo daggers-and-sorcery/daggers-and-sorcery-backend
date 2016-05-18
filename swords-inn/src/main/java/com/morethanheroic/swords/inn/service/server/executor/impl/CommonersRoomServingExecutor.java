@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.inn.service.server.executor.impl;
 
-import com.morethanheroic.swords.inn.domain.ServiceType;
+import com.morethanheroic.swords.inn.domain.service.ServiceType;
 import com.morethanheroic.swords.inn.service.server.context.impl.DefaultServingContext;
 import com.morethanheroic.swords.inn.service.server.executor.ServingExecutor;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -24,7 +24,7 @@ public class CommonersRoomServingExecutor implements ServingExecutor<DefaultServ
     public boolean canExecute(final DefaultServingContext servingContext) {
         final UserEntity userEntity = servingContext.getUserEntity();
 
-        return inventoryFacade.getInventory(userEntity).getMoneyAmount(REQUIRED_MONEY_TYPE) > REQUIRED_MONEY_AMOUNT && userEntity.getMovementPoints() >= REQUIRED_MOVEMENT_POINT_AMOUNT;
+        return inventoryFacade.getInventory(userEntity).getMoneyAmount(REQUIRED_MONEY_TYPE) >= REQUIRED_MONEY_AMOUNT && userEntity.getMovementPoints() >= REQUIRED_MOVEMENT_POINT_AMOUNT;
     }
 
     @Override
