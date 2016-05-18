@@ -23,6 +23,12 @@ public class UserEntity {
         return userDatabaseEntity.getHealth();
     }
 
+    public void setHealthPoints(int value) {
+        userDatabaseEntity.setHealth(value);
+
+        userMapper.updateHealth(userDatabaseEntity.getId(), value);
+    }
+
     public int getManaPoints() {
         return userDatabaseEntity.getMana();
     }
