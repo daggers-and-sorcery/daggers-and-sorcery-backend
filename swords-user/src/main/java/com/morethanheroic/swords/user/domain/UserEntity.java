@@ -7,7 +7,10 @@ import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import java.time.Instant;
 
 /**
- * Contains the data of an user.
+ * Contains the data of an user. These methods doesn't take the attribute modifications and maximum/minimum values
+ * into account, this class only represent the raw user data in the database. If you need the maximum/minimum values or
+ * want to change these attributes use the classes that contains the logic for the changings and don't use this class
+ * directly!
  */
 public class UserEntity {
 
@@ -23,7 +26,7 @@ public class UserEntity {
         return userDatabaseEntity.getHealth();
     }
 
-    public void setHealthPoints(int value) {
+    public void setHealthPoints(final int value) {
         userDatabaseEntity.setHealth(value);
 
         userMapper.updateHealth(userDatabaseEntity.getId(), value);
@@ -31,6 +34,12 @@ public class UserEntity {
 
     public int getManaPoints() {
         return userDatabaseEntity.getMana();
+    }
+
+    public void setManaPoints(final int value) {
+        userDatabaseEntity.setMana(value);
+
+        userMapper.updateMana(userDatabaseEntity.getId(), value);
     }
 
     public int getMovementPoints() {
@@ -94,9 +103,9 @@ public class UserEntity {
         userMapper.updateExploration(event, state, userDatabaseEntity.getId());
     }
 
-    //TODO: Remove this! This is only here for now! Should refactor it soon! Things that accessed in
-    //userDatabaseEntity should be accessed via this class.
-    public UserDatabaseEntity getUserDatabaseEntity() {
-        return userDatabaseEntity;
+    public void updateLastRegenerationDate(Instant date) {
+        userDatabaseEntity.setLastRegenerationDate(date);
+
+        userMapper.updateRegenerationDate(userDatabaseEntity.getId(), date);
     }
 }

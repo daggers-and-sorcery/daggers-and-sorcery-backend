@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.regeneration.service;
 
-import com.morethanheroic.swords.regeneration.domain.RegenerationEntity;
 import com.morethanheroic.swords.regeneration.service.calc.HealthRegenerationCalculator;
 import com.morethanheroic.swords.regeneration.service.calc.ManaRegenerationCalculator;
 import com.morethanheroic.swords.regeneration.service.calc.MovementRegenerationCalculator;
@@ -26,23 +25,14 @@ public class RegenerationFacade {
     @Autowired
     private RegenerationDateCalculator regenerationDateCalculator;
 
-    @Autowired
-    private UserMapper userMapper;
-
-    public RegenerationEntity getEntity(UserEntity userEntity) {
-        return new RegenerationEntity(userEntity.getUserDatabaseEntity(), userMapper);
-    }
-
-    public void regenerate(UserEntity user) {
-        int durationToRegenerate = calculateTheDurationToRegenerate(user);
+    public void regenerate(UserEntity userEntity) {
+        final int durationToRegenerate = calculateTheDurationToRegenerate(userEntity);
 
         if (durationToRegenerate > 0) {
-            getEntity(user).regenerate(
-                    healthRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
-                    manaRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
-                    movementRegenerationCalculator.calculateRegeneration(user, durationToRegenerate),
-                    regenerationDateCalculator.calculateNewRegenerationDate(user, durationToRegenerate)
-            );
+            userEntity.setHealthPoints(healthRegenerationCalculator.calculateRegeneration(userEntity, durationToRegenerate));
+            userEntity.setManaPoints(manaRegenerationCalculator.calculateRegeneration(userEntity, durationToRegenerate));
+            userEntity.setMovementPoints(movementRegenerationCalculator.calculateRegeneration(userEntity, durationToRegenerate));
+            userEntity.updateLastRegenerationDate(regenerationDateCalculator.calculateNewRegenerationDate(userEntity, durationToRegenerate));
         }
     }
 

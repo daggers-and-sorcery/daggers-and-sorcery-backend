@@ -35,6 +35,9 @@ public interface UserMapper {
     @Update("UPDATE users SET health = #{health} WHERE id = #{userId}")
     void updateHealth(@Param("userId") int userId, @Param("health") int health);
 
+    @Update("UPDATE users SET mana = #{mana} WHERE id = #{userId}")
+    void updateMana(@Param("userId") int userId, @Param("health") int mana);
+
     @Update("UPDATE users SET exploration_event = #{explorationEvent}, exploration_state = #{explorationState} WHERE id = #{userId}")
     void updateExploration(@Param("explorationEvent") int explorationEvent, @Param("explorationState") int explorationState,
                            @Param("userId") int userId);
@@ -42,9 +45,8 @@ public interface UserMapper {
     @Update("UPDATE users SET health = #{health}, mana = #{mana}, movement = #{movement} WHERE id = #{userId}")
     void updateBasicCombatStats(@Param("userId") int userId, @Param("health") int health, @Param("mana") int mana, @Param("movement") int movement);
 
-    @Update("UPDATE users SET last_regeneration_date = #{date}, health = #{health}, mana = #{mana}, movement = #{movement} WHERE id = #{userId}")
-    void updateRegeneration(@Param("userId") int userId, @Param("health") int health, @Param("mana") int mana,
-                            @Param("movement") int movement, @Param("date") Instant date);
+    @Update("UPDATE users SET last_regeneration_date = #{date} WHERE id = #{userId}")
+    void updateRegenerationDate(@Param("userId") int userId, @Param("date") Instant date);
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     @Insert("INSERT INTO users SET username = #{username}, email = #{email}, password = #{password}, race = #{race}, "

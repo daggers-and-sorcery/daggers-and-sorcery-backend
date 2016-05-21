@@ -10,10 +10,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Provides an easy to access API to the skill user.
+ * Provides an easy to access to the users.
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -39,7 +38,6 @@ public class UserFacade {
         return user != null ? new UserEntity(user.getId(), userMapper) : null;
     }
 
-    @Transactional
     public UserEntity createUser(String username, String password, String email, Race race) {
         final UserDatabaseEntity userDatabaseEntity = userCreator.createUser(username, password, email, race);
 
