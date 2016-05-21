@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.inn.service.server.executor.impl;
 
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inn.domain.service.ServiceType;
 import com.morethanheroic.swords.inn.service.server.context.impl.DefaultServingContext;
 import com.morethanheroic.swords.inn.service.server.executor.ServingExecutor;
@@ -20,6 +21,9 @@ public class SmallFoodServingExecutor implements ServingExecutor<DefaultServingC
     @Autowired
     private InventoryFacade inventoryFacade;
 
+    @Autowired
+    private UserBasicAttributeManipulator userBasicAttributeManipulator;
+
     @Override
     public boolean canExecute(final DefaultServingContext servingContext) {
         final UserEntity userEntity = servingContext.getUserEntity();
@@ -31,8 +35,8 @@ public class SmallFoodServingExecutor implements ServingExecutor<DefaultServingC
     public void executeServing(final DefaultServingContext servingContext) {
         final UserEntity userEntity = servingContext.getUserEntity();
 
-        userEntity.setMovementPoints(userEntity.getMovementPoints() - REQUIRED_MOVEMENT_POINT_AMOUNT);
-        userEntity.setHealthPoints(userEntity.getHealthPoints() + HEALED_AMOUNT);
+        userBasicAttributeManipulator.decreaseMovement(userEntity, REQUIRED_MOVEMENT_POINT_AMOUNT);
+        userBasicAttributeManipulator.increaseHealth(userEntity, HEALED_AMOUNT);
 
         inventoryFacade.getInventory(userEntity).decreaseMoneyAmount(MoneyType.MONEY, REQUIRED_MONEY_AMOUNT);
     }
