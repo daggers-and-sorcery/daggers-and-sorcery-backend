@@ -36,7 +36,7 @@ public interface UserMapper {
     void updateHealth(@Param("userId") int userId, @Param("health") int health);
 
     @Update("UPDATE users SET mana = #{mana} WHERE id = #{userId}")
-    void updateMana(@Param("userId") int userId, @Param("health") int mana);
+    void updateMana(@Param("userId") int userId, @Param("mana") int mana);
 
     @Update("UPDATE users SET exploration_event = #{explorationEvent}, exploration_state = #{explorationState} WHERE id = #{userId}")
     void updateExploration(@Param("explorationEvent") int explorationEvent, @Param("explorationState") int explorationState,
