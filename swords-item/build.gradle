@@ -1,5 +1,4 @@
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
@@ -16,9 +15,8 @@ dependencies {
 
 apply plugin: 'spring-boot'
 
-//TODO: re add this asap!
-//apply plugin: 'checkstyle'
-//checkstyle checkstyle_config
+apply plugin: 'checkstyle'
+checkstyle checkstyle_config
 
-//apply plugin: 'findbugs'
-//findbugs findbugs_config
+apply plugin: 'findbugs'
+findbugs findbugs_config
