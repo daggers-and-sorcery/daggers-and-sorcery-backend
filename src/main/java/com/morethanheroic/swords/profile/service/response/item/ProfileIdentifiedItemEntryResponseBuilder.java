@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ProfileIdentifiedItemEntryResponseBuilder {
@@ -13,8 +14,8 @@ public class ProfileIdentifiedItemEntryResponseBuilder {
     @Autowired
     private ItemEntryResponseBuilder itemEntryResponseBuilder;
 
-    public HashMap<String, Object> buildItemEntry(ItemDefinition itemDefinition) {
-        HashMap<String, Object> result = itemEntryResponseBuilder.buildItemEntry(itemDefinition);
+    public Map<String, Object> buildItemEntry(ItemDefinition itemDefinition) {
+        final Map<String, Object> result = itemEntryResponseBuilder.buildItemEntry(itemDefinition);
 
         result.put("id", itemDefinition.getId());
 
