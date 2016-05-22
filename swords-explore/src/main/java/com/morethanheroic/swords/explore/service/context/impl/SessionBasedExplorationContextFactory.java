@@ -28,7 +28,7 @@ public class SessionBasedExplorationContextFactory implements ExplorationContext
 
     @Override
     public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, int nextStage) {
-        ExplorationEventDefinition explorationEvent;
+        final ExplorationEventDefinition explorationEvent;
 
         if (userEntity.getActiveExplorationEvent() == NO_EVENT) {
             explorationEvent = explorationEventDefinitionCache.getDefinition(getEventId(sessionEntity));

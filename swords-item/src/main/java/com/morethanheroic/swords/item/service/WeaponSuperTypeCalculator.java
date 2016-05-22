@@ -12,6 +12,7 @@ import java.util.Optional;
 @Service
 public class WeaponSuperTypeCalculator {
 
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     public Optional<WeaponSuperType> calculateWeaponSuperType(final ItemType itemType) {
         if (itemType == null) {
             return Optional.empty();
