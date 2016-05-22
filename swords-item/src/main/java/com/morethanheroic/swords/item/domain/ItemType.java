@@ -5,6 +5,7 @@ package com.morethanheroic.swords.item.domain;
  * equiped etc.
  */
 public enum ItemType {
+
     TWO_HANDED_CRUSHING_WEAPONS,
     ONE_HANDED_CRUSHING_WEAPONS,
     TWO_HANDED_AXES,
@@ -38,5 +39,5 @@ public enum ItemType {
     GLOVES,
     BOOTS,
     HELM,
-    LIQUID
+    LIQUID;
 }

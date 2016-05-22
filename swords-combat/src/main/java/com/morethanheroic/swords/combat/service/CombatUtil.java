@@ -4,6 +4,8 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.WeaponSuperType;
+import com.morethanheroic.swords.item.service.WeaponSuperTypeCalculator;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
@@ -11,18 +13,22 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CombatUtil {
 
     private final SkillFacade skillFacade;
     private final SkillTypeCalculator skillTypeCalculator;
     private final EquipmentFacade equipmentFacade;
+    private final WeaponSuperTypeCalculator weaponSuperTypeCalculator;
 
     @Autowired
-    public CombatUtil(SkillFacade skillFacade, SkillTypeCalculator skillTypeCalculator, EquipmentFacade equipmentFacade) {
+    public CombatUtil(SkillFacade skillFacade, SkillTypeCalculator skillTypeCalculator, EquipmentFacade equipmentFacade, WeaponSuperTypeCalculator weaponSuperTypeCalculator) {
         this.skillFacade = skillFacade;
         this.skillTypeCalculator = skillTypeCalculator;
         this.equipmentFacade = equipmentFacade;
+        this.weaponSuperTypeCalculator = weaponSuperTypeCalculator;
     }
 
     public int getUserWeaponSkillLevel(UserEntity user) {
@@ -73,6 +79,10 @@ public class CombatUtil {
         }
 
         return itemDefinition.getType();
+    }
+
+    public Optional<WeaponSuperType> getUserWeaponSuperType(final UserEntity userEntity) {
+        return weaponSuperTypeCalculator.calculateWeaponSuperType(getUserWeaponType(userEntity));
     }
 
     public ItemType getUserArmorType(UserEntity user) {
