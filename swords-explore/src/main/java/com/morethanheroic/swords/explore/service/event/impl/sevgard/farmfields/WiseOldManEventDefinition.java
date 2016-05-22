@@ -110,6 +110,8 @@ public class WiseOldManEventDefinition extends MultiStageExplorationEventDefinit
                                 .build()
                 );
 
+                userEntity.resetActiveExploration();
+
                 return explorationResult;
             }
 
@@ -121,20 +123,18 @@ public class WiseOldManEventDefinition extends MultiStageExplorationEventDefinit
                             .build()
             ).addEventEntryResult(
                     TextExplorationEventEntryResult.builder()
-                            .content("\"Of course.\" You fumble for your belt and remove a coin pouch. You cross over and kneel before the man. You count out a few copper coins and drop them kindly into his outstretched hand. The man smiles and reveals that he is missing a few teeth.")
+                            .content("\"Of course.\" You fumble for your belt and remove a coin pouch. You cross over and kneel before the man. You count out a few copper coins and drop them kindly into his outstretched hand. The man smiles and reveals that he is missing a few teeth. Without warning, the man becomes a grey blur and snatches your weapon.")
                             .build()
             );
 
             final Optional<WeaponSuperType> weaponSuperType = combatUtil.getUserWeaponSuperType(userEntity);
             if (!weaponSuperType.isPresent()) {
-                //TODO: Fistfight!
-            } else {
                 explorationResult.addEventEntryResult(
                         TextExplorationEventEntryResult.builder()
-                                .content("Without warning, the man becomes a grey blur and snatches your weapon.")
+                                .content("However, you have no weapon to snatch. The old man seems puzzled for a moment before receiving an idea. He steps back, says an incantation, and a ball of fire appears in his palm. Your eyes widen as the fire flickers yet never burns the man. The man presses his palms together and snuffs out the flame. Only smoke remains. You are speechless for a few moments. \"That...that was amazing!\" you exclaim.")
                                 .build()
                 );
-
+            } else {
                 switch (weaponSuperType.get()) {
                     case MEELE:
                         explorationResult.addEventEntryResult(

@@ -24,7 +24,7 @@ public class DefaultExplorationContextFactory implements ExplorationContextFacto
     private ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
     public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, final int nextStage) {
-        ExplorationEventDefinition explorationEvent;
+        final ExplorationEventDefinition explorationEvent;
 
         if (userEntity.getActiveExplorationEvent() == NO_EVENT) {
             explorationEvent = explorationEventChooser.getEvent();
