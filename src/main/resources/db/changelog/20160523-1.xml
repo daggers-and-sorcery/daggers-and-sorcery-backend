@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160523-1">
+        <insert tableName="news">
+            <column name="title" value="More bugfixes!"/>
+            <column name="release_date" value="2016-05-23 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome, Wanderers!
+
+We are rolling out another bunch of updates today.
+
+Improvements:
+
+- Added a new event to Farmfields.
+- Added a race emblem for every race on the registration screen.
+- Added an image for Farmfields and the Whispering Woods on the exploration screen.
+- The buttons on the right menu got a nice set of icons.
+
+Bugfixes:
+
+- While resting in the inn, you are able to regenerate your health above your maximum health. This has been fixed.
+- The Bronze axe had its name incorrectly capitalized.
+- Some more rebalancing was done on monsters and items. The Bronze axe, Bronze pickaxe and the Bronze swords were buffed a bit while the Jackal, Fox, Wolf and Goblin Guard monsters were nerfed.
+- The shop was unavailable for some players, and this was fixed.
+
+Our next priorities are that some of the races (especially the ones that start with minus x percent of dexterity) always miss in combat. We are planning to fix this (at least for now) by setting up an absolute minimum (20 for the combat stats) for each attribute. We may revert this later when magic and ranged combat will be fully supported, and every race will receive one weapon (magic/ranged/melee) according to his primary stats.
+
+We are planning on adding the smithing skill to let the melee characters advance to the next environment (Whispering Woods).
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -21,10 +21,11 @@ public class CombatAttributeModifierCalculator implements AttributeModifierCalcu
     private CombatAttributeCalculator combatAttributeCalculator;
 
     @Override
-    public List<AttributeModifierEntry> calculate(UserEntity user, CombatAttribute attribute) {
+    public List<AttributeModifierEntry> calculate(UserEntity userEntity, CombatAttribute attribute) {
         return Lists.newArrayList(
-                new AttributeModifierEntry(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(user, attribute))),
-                new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue(attribute.getInitialValue()))
+                new AttributeModifierEntry(AttributeModifierType.GENERAL_ATTRIBUTE, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue(combatAttributeCalculator.calculateAllBonusByGeneralAttributes(userEntity, attribute))),
+                new AttributeModifierEntry(AttributeModifierType.INITIAL, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue(attribute.getInitialValue())),
+                new AttributeModifierEntry(AttributeModifierType.MINIMUM, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue(combatAttributeCalculator.calculateMinimumAttributeBonuses(userEntity, attribute)))
         );
     }
 }
