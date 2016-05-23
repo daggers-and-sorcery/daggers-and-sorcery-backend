@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.attribute.domain;
 
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.WordUtils;
 
@@ -15,22 +16,25 @@ import java.util.List;
 public enum CombatAttribute implements Attribute {
 
     //TODO: Load these values from an xml file and use an CombatAttributeDefinition class.
-    MANA(0, false, new GeneralAttribute[]{GeneralAttribute.INTELLIGENCE, GeneralAttribute.WISDOM, GeneralAttribute.WILLPOWER}, 0.5),
-    LIFE(15, false, new GeneralAttribute[]{GeneralAttribute.VITALITY, GeneralAttribute.ENDURANCE}, 0.5),
-    INITIATION(10, true, new GeneralAttribute[]{GeneralAttribute.SWIFTNESS, GeneralAttribute.PERCEPTION}, 0.5),
-    ATTACK(10, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY, GeneralAttribute.SWIFTNESS}, 0.5),
-    MAGIC_ATTACK(10, true, new GeneralAttribute[]{GeneralAttribute.INTELLIGENCE, GeneralAttribute.WISDOM}, 0.5),
-    MAGIC_DAMAGE(10, true, new GeneralAttribute[]{GeneralAttribute.WILLPOWER}, 0.25),
-    AIMING(10, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY, GeneralAttribute.PERCEPTION}, 0.5),
-    DEFENSE(10, true, new GeneralAttribute[]{GeneralAttribute.ENDURANCE, GeneralAttribute.DEXTERITY}, 0.5),
-    SPELL_RESISTANCE(10, true, new GeneralAttribute[]{GeneralAttribute.WILLPOWER, GeneralAttribute.WISDOM}, 0.5),
-    DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.STRENGTH}, 0.25),
-    RANGED_DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY}, 0.25);
+    MANA(0, false, new GeneralAttribute[]{GeneralAttribute.INTELLIGENCE, GeneralAttribute.WISDOM, GeneralAttribute.WILLPOWER}, 0.5, 0),
+    LIFE(15, false, new GeneralAttribute[]{GeneralAttribute.VITALITY, GeneralAttribute.ENDURANCE}, 0.5, 0),
+    INITIATION(10, true, new GeneralAttribute[]{GeneralAttribute.SWIFTNESS, GeneralAttribute.PERCEPTION}, 0.5, 20),
+    ATTACK(10, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY, GeneralAttribute.SWIFTNESS}, 0.5, 20),
+    MAGIC_ATTACK(10, true, new GeneralAttribute[]{GeneralAttribute.INTELLIGENCE, GeneralAttribute.WISDOM}, 0.5, 20),
+    MAGIC_DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.WILLPOWER}, 0.25, 3),
+    AIMING(10, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY, GeneralAttribute.PERCEPTION}, 0.5, 20),
+    DEFENSE(10, true, new GeneralAttribute[]{GeneralAttribute.ENDURANCE, GeneralAttribute.DEXTERITY}, 0.5, 20),
+    SPELL_RESISTANCE(10, true, new GeneralAttribute[]{GeneralAttribute.WILLPOWER, GeneralAttribute.WISDOM}, 0.5, 20),
+    DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.STRENGTH}, 0.25, 3),
+    RANGED_DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY}, 0.25, 3);
 
     private final int initialValue;
     private final boolean unlimited;
     private final GeneralAttribute[] bonusAttributes;
     private final double bonusPercentage;
+
+    @Getter
+    private final int minimalValue;
 
     @Override
     public AttributeType getAttributeType() {

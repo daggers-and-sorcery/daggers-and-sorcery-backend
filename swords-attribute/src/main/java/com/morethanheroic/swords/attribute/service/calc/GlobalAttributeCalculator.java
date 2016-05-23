@@ -31,6 +31,8 @@ import java.util.List;
 @Service
 public class GlobalAttributeCalculator {
 
+    private static final int MINIMUM_COMBAT_ATTRIBUTE_VALUE = 20;
+
     @Autowired
     private GeneralAttributeCalculator generalAttributeCalculator;
 
@@ -61,7 +63,8 @@ public class GlobalAttributeCalculator {
     }
 
     public AttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
-        AttributeCalculationResult result;
+        final AttributeCalculationResult result;
+
         if (attribute instanceof CombatAttribute) {
             result = new CombatAttributeCalculationResult((CombatAttribute) attribute);
         } else {
@@ -88,6 +91,10 @@ public class GlobalAttributeCalculator {
     }
 
     public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
+        return calculateActualValue(user, attribute, true);
+    }
+
+    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shoulcCheckMinimum) {
         if (attribute == CombatAttribute.LIFE) {
             return new CombatAttributeCalculationResult(user.getHealthPoints(), (CombatAttribute) attribute);
         } else if (attribute == CombatAttribute.MANA) {
@@ -96,12 +103,15 @@ public class GlobalAttributeCalculator {
             return new AttributeCalculationResult(user.getMovementPoints(), attribute);
         }
 
-        int racialModifier = 0;
-        if (attribute instanceof GeneralAttribute) {
-            racialModifier = getRacialModifierValue(user.getRace(), (GeneralAttribute) attribute);
+        final int racialModifier = calculatePercentageModification(user, attribute);
+
+        final AttributeCalculationResult percentageResult = calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifier);
+
+        if (shoulcCheckMinimum) {
+            checkMinimumValue(attribute, percentageResult);
         }
 
-        return calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifier);
+        return percentageResult;
     }
 
     public int getRacialModifierValue(Race race, GeneralAttribute attribute) {
@@ -121,10 +131,7 @@ public class GlobalAttributeCalculator {
             return new UnlimitedAttributeCalculationResult(attribute);
         }
 
-        int racialModifier = 0;
-        if (attribute instanceof GeneralAttribute) {
-            racialModifier = getRacialModifierValue(user.getRace(), (GeneralAttribute) attribute);
-        }
+        final int racialModifier = calculatePercentageModification(user, attribute);
 
         return calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), racialModifier);
     }
@@ -148,5 +155,27 @@ public class GlobalAttributeCalculator {
         attributeValue.setValue((int) (attributeValue.getValue() * ((double) percentage / 100 + 1)));
 
         return attributeValue;
+    }
+
+    private int calculatePercentageModification(UserEntity userEntity, Attribute attribute) {
+        if (attribute instanceof GeneralAttribute) {
+            return getRacialModifierValue(userEntity.getRace(), (GeneralAttribute) attribute);
+        }
+
+        return 0;
+    }
+
+    private void checkMinimumValue(final Attribute attribute, final AttributeCalculationResult attributeCalculationResult) {
+        if (attribute instanceof CombatAttribute) {
+            final CombatAttribute combatAttribute = (CombatAttribute) attribute;
+
+            if (combatAttribute.getMinimalValue() == 0) {
+                return;
+            }
+
+            if (attributeCalculationResult.getValue() < combatAttribute.getMinimalValue()) {
+                attributeCalculationResult.setValue(combatAttribute.getMinimalValue());
+            }
+        }
     }
 }

@@ -12,7 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @deprecated Use the appropriate classes directly instead.
+ */
 @Service
+@Deprecated
 public class AttributeFacade {
 
     @Autowired
@@ -20,10 +24,6 @@ public class AttributeFacade {
 
     @Autowired
     private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
-
-    public AttributeData calculateAttributeData(UserEntity userEntity, Attribute attribute) {
-        return globalAttributeCalculator.calculateAttributeValue(userEntity, attribute);
-    }
 
     public AttributeCalculationResult calculateAttributeValue(UserEntity userEntity, Attribute attribute) {
         return globalAttributeCalculator.calculateActualValue(userEntity, attribute);

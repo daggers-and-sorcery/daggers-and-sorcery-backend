@@ -50,7 +50,7 @@ public class GlobalAttributeModifierCalculator {
 
     @SuppressWarnings("unchecked")
     public List<AttributeModifierEntry> calculateModifierData(UserEntity user, Attribute attribute) {
-        ArrayList<AttributeModifierEntry> attributeModifierEntryList = new ArrayList<>();
+        final ArrayList<AttributeModifierEntry> attributeModifierEntryList = new ArrayList<>();
 
         attributeModifierEntryList.addAll(modifierCalculatorMap.get(attribute.getClass()).calculate(user, attribute));
         attributeModifierEntryList.addAll(equipmentAttributeModifierCalculator.calculate(user, attribute));

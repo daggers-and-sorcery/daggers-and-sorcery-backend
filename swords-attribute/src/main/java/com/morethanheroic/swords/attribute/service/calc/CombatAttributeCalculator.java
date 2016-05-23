@@ -2,8 +2,9 @@ package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.service.AttributeFacade;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
+import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +16,18 @@ import org.springframework.stereotype.Service;
 public class CombatAttributeCalculator implements AttributeCalculator<CombatAttribute> {
 
     @Autowired
-    private AttributeFacade attributeFacade;
+    private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
 
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, CombatAttribute attribute) {
         return AttributeData.attributeDataBuilder()
                 .attribute(attribute)
-                .actual(attributeFacade.calculateAttributeValue(user, attribute))
-                .maximum(attributeFacade.calculateAttributeMaximumValue(user, attribute))
-                .modifierData(attributeFacade.calculateAttributeModifierData(user, attribute))
+                .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
+                .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))
+                .modifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute))
                 .build();
     }
 
@@ -43,6 +47,20 @@ public class CombatAttributeCalculator implements AttributeCalculator<CombatAttr
     }
 
     public int calculateBonusByGeneralAttribute(UserEntity user, GeneralAttribute attribute, double bonusPercentage) {
-        return (int) Math.floor(attributeFacade.calculateAttributeValue(user, attribute).getValue() * bonusPercentage);
+        return (int) Math.floor(globalAttributeCalculator.calculateActualValue(user, attribute).getValue() * bonusPercentage);
+    }
+
+    public int calculateMinimumAttributeBonuses(UserEntity userEntity, CombatAttribute attribute) {
+        if (attribute.getMinimalValue() == 0) {
+            return 0;
+        }
+
+        final AttributeCalculationResult originalAttributeValue = globalAttributeCalculator.calculateActualValue(userEntity, attribute, false);
+
+        if (originalAttributeValue.getValue() < attribute.getMinimalValue()) {
+            return attribute.getMinimalValue() - originalAttributeValue.getValue();
+        }
+
+        return 0;
     }
 }
