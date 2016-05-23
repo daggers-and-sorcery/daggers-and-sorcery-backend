@@ -8,32 +8,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StaffsSkillHandler implements SkillHandler {
+public class LeatherworkingSkillHandler implements SkillHandler {
 
     @Autowired
     private SkillMapper skillMapper;
 
     @Override
     public void increaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value) {
-        skillDatabaseEntity.setStaffsXp(skillDatabaseEntity.getStaffsXp() + value);
+        skillDatabaseEntity.setLeatherworkingXp(skillDatabaseEntity.getLeatherworkingXp() + value);
 
-        skillMapper.increaseStaffsXp(skillDatabaseEntity.getUserId(), value);
+        skillMapper.increaseLeatherworkingXp(skillDatabaseEntity.getUserId(), value);
     }
 
     @Override
     public void decreaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value) {
-        skillDatabaseEntity.setStaffsXp(skillDatabaseEntity.getStaffsXp() - value);
+        skillDatabaseEntity.setLeatherworkingXp(skillDatabaseEntity.getLeatherworkingXp() - value);
 
-        skillMapper.decreaseStaffsXp(skillDatabaseEntity.getUserId(), value);
+        skillMapper.decreaseLeatherworkingXp(skillDatabaseEntity.getUserId(), value);
     }
 
     @Override
     public int getExperience(SkillDatabaseEntity skillDatabaseEntity) {
-        return skillDatabaseEntity.getStaffsXp();
+        return skillDatabaseEntity.getLeatherworkingXp();
     }
 
     @Override
     public SkillType getSupportedSkillType() {
-        return SkillType.STAFF;
+        return SkillType.LEATHERWORKING;
     }
 }
