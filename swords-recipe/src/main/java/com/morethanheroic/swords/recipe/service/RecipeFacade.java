@@ -1,9 +1,10 @@
 package com.morethanheroic.swords.recipe.service;
 
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
-import com.morethanheroic.swords.recipe.domain.RecipeEntity;
-import com.morethanheroic.swords.recipe.repository.domain.RecipeMapper;
+import com.morethanheroic.swords.recipe.domain.RecipeType;
 import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.learn.DefaultLearnedRecipeEvaluator;
+import com.morethanheroic.swords.recipe.service.learn.RecipeLearnerService;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Provides an easy to use api to the recipe module.
+ *
+ * @deprecated Use the specific classes instead.
  */
 @Service
+@Deprecated
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RecipeFacade {
 
@@ -24,26 +27,23 @@ public class RecipeFacade {
     private final RecipeDefinitionCache recipeDefinitionCache;
 
     @NonNull
-    private final RecipeMapper recipeMapper;
+    private final RecipeLearnerService recipeLearnerService;
 
+    @NonNull
+    private final DefaultLearnedRecipeEvaluator learnedRecipeEvaluator;
+
+    @Deprecated
     public RecipeDefinition getDefinition(int recipeId) {
         return recipeDefinitionCache.getDefinition(recipeId);
     }
 
-    public RecipeEntity getEntity(UserEntity userEntity, int recipeId) {
-        return new RecipeEntity(recipeDefinitionCache.getDefinition(recipeId), recipeMapper.findRecipe(userEntity.getId(), recipeId));
-    }
-
-    public List<RecipeEntity> getAllLearnedRecipes(UserEntity userEntity) {
-        return recipeMapper.findRecipes(userEntity.getId()).stream().map(recipeDatabaseEntity -> new RecipeEntity(getDefinition(
-                recipeDatabaseEntity.getRecipeId()), recipeDatabaseEntity)).collect(Collectors.toList());
-    }
-
+    @Deprecated
     public void learnRecipe(UserEntity userEntity, RecipeDefinition recipeDefinition) {
-        recipeMapper.insertRecipe(userEntity.getId(), recipeDefinition.getId());
+        recipeLearnerService.learnRecipe(userEntity, recipeDefinition);
     }
 
+    @Deprecated
     public boolean hasRecipeLearned(UserEntity userEntity, RecipeDefinition recipeDefinition) {
-        return recipeMapper.findRecipe(userEntity.getId(), recipeDefinition.getId()) != null;
+        return learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition);
     }
 }
