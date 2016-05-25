@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class CookingRecipeSkillRequirementPartialResponse extends CookingRecipeRequirementPartialResponse {
+public class RecipeItemRequirementPartialResponse extends RecipeRequirementPartialResponse {
 
-    private final String skill;
+    private final String itemName;
     private final int amount;
 }

@@ -2,9 +2,9 @@ package com.morethanheroic.swords.recipe.service.response.experience;
 
 import com.morethanheroic.swords.recipe.domain.RecipeExperience;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
-import com.morethanheroic.swords.recipe.service.response.experience.domain.CookingRecipeExperienceListPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.recipe.service.response.experience.domain.CookingRecipeExperiencePartialResponse;
-import com.morethanheroic.swords.recipe.service.response.experience.domain.CookingRecipeExperiencePartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.recipe.service.response.experience.domain.RecipeExperienceListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.recipe.service.response.experience.domain.RecipeExperiencePartialResponse;
+import com.morethanheroic.swords.recipe.service.response.experience.domain.RecipeExperiencePartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,19 +15,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CookingRecipeExperienceListPartialResponseBuilder
-        implements PartialResponseCollectionBuilder<CookingRecipeExperienceListPartialResponseBuilderConfiguration> {
+        implements PartialResponseCollectionBuilder<RecipeExperienceListPartialResponseBuilderConfiguration> {
 
-    private final CookingRecipeExperiencePartialResponseBuilder cookingRecipeExperiencePartialResponseBuilder;
+    private final RecipeExperiencePartialResponseBuilder recipeExperiencePartialResponseBuilder;
 
     @Override
-    public List<CookingRecipeExperiencePartialResponse> build(CookingRecipeExperienceListPartialResponseBuilderConfiguration responseBuilderConfiguration) {
-        final List<CookingRecipeExperiencePartialResponse> result = new ArrayList<>();
+    public List<RecipeExperiencePartialResponse> build(RecipeExperienceListPartialResponseBuilderConfiguration responseBuilderConfiguration) {
+        final List<RecipeExperiencePartialResponse> result = new ArrayList<>();
 
         final List<RecipeExperience> recipeExperiences = responseBuilderConfiguration.getRecipeExperiences();
         for (RecipeExperience recipeExperience : recipeExperiences) {
             result.add(
-                    cookingRecipeExperiencePartialResponseBuilder.build(
-                            CookingRecipeExperiencePartialResponseBuilderConfiguration.builder()
+                    recipeExperiencePartialResponseBuilder.build(
+                            RecipeExperiencePartialResponseBuilderConfiguration.builder()
                                     .recipeExperience(recipeExperience)
                                     .build()
                     )

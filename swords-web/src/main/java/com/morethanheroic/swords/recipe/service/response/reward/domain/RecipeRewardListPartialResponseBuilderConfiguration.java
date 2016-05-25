@@ -5,9 +5,11 @@ import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Builder
 @Getter
-public class CookingRecipeRewardPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
+public class RecipeRewardListPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
-    private final RecipeReward recipeReward;
+    private final List<RecipeReward> recipeRewards;
 }

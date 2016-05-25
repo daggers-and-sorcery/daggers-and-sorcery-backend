@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class CookingRecipeExperiencePartialResponse extends PartialResponse {
+public class RecipeExperiencePartialResponse extends PartialResponse {
 
     private final String skill;
     private final int amount;

@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class CookingRecipeExperiencePartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
+public class RecipeExperiencePartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final RecipeExperience recipeExperience;
 }

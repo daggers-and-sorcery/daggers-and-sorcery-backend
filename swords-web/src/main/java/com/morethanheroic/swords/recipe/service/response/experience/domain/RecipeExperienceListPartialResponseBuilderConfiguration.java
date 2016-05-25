@@ -9,7 +9,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class CookingRecipeExperienceListPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
+public class RecipeExperienceListPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final List<RecipeExperience> recipeExperiences;
 }
