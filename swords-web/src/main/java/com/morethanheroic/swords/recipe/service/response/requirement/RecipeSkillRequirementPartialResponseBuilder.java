@@ -15,7 +15,7 @@ public class RecipeSkillRequirementPartialResponseBuilder implements PartialResp
         final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirementPartialResponseBuilderConfiguration.getRecipeRequirement();
 
         return RecipeSkillRequirementPartialResponse.builder()
-                .skill(recipeSkillRequirement.getSkill().name().toLowerCase())
+                .skill(recipeSkillRequirement.getSkill().getName())
                 .amount(recipeSkillRequirement.getAmount())
                 .build();
     }
