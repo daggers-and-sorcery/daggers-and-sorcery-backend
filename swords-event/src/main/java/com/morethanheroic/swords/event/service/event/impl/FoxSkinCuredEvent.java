@@ -21,7 +21,7 @@ public class FoxSkinCuredEvent implements Event {
 
     @Override
     public int getId() {
-        return 3 * 60 * 1000;
+        return 1;
     }
 
     @Override
@@ -31,6 +31,6 @@ public class FoxSkinCuredEvent implements Event {
 
     @Override
     public int getLength() {
-        return 0;
+        return 3 * 60 * 1000;
     }
 }

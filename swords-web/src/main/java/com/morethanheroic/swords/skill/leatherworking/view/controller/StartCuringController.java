@@ -14,6 +14,7 @@ public class StartCuringController {
     @Autowired
     private EventRegistry eventRegistry;
 
+    //TODO: use post
     @RequestMapping(value = "/skill/leatherworking/curing/start", method = RequestMethod.POST)
     public void startCuring(UserEntity userEntity) {
         //TODO: Check that the user has more places for curing

@@ -21,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -46,6 +47,7 @@ import java.util.Random;
         "com.morethanheroic.math"
 })
 @EnableWebMvc
+@EnableScheduling
 @EnableTransactionManagement
 @EnableSessionManagement(
         sessionProtectedUrls = {

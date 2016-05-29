@@ -46,6 +46,8 @@ public class EventProcessor {
 
         for (EventDatabaseEntity eventDatabaseEntity : endingEvents) {
             eventMap.get(eventDatabaseEntity.getEventId()).processEvent(userFacade.getUser(eventDatabaseEntity.getUserId()));
+
+            eventMapper.deleteEvent(eventDatabaseEntity.getId());
         }
     }
 }

@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 public class EventDatabaseEntity {
 
+    private int id;
     private int userId;
     private int eventId;
     private EventType eventType;
