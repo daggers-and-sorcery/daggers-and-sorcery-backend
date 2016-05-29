@@ -1,0 +1,14 @@
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+
+    compile project(':swords-user')
+    compile project(':swords-inventory')
+    compile project(':swords-skill')
+}
+
+apply plugin: 'spring-boot'
