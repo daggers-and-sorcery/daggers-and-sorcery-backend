@@ -30,6 +30,11 @@ public class FoxSkinCuredEvent implements Event {
     }
 
     @Override
+    public String getName() {
+        return "Fox skin (cured)";
+    }
+
+    @Override
     public int getLength() {
         return 3 * 60 * 1000;
     }

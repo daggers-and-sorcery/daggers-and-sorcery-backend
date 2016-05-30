@@ -12,5 +12,5 @@ public class EventDatabaseEntity {
     private int userId;
     private int eventId;
     private EventType eventType;
-    private Date ending;
+    private Date endingDate;
 }

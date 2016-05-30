@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.event.domain;
 
+import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,7 +10,7 @@ import java.util.Date;
 @Builder
 public class EventEntity {
 
-    private int userId;
     private int eventId;
+    private UserEntity user;
     private Date ending;
 }

@@ -22,22 +22,10 @@ public class EventProcessor {
     private EventMapper eventMapper;
 
     @Autowired
-    private List<Event> events;
+    private EventProvider eventProvider;
 
     @Autowired
     private UserFacade userFacade;
-
-    private Map<Integer, Event> eventMap;
-
-    @PostConstruct
-    public void initialize() {
-        final Map<Integer, Event> mappedEvents = new HashMap<>();
-        for (Event event : events) {
-            mappedEvents.put(event.getId(), event);
-        }
-
-        eventMap = Collections.unmodifiableMap(mappedEvents);
-    }
 
     @Transactional
     @Scheduled(fixedRate = 100)
@@ -45,7 +33,7 @@ public class EventProcessor {
         final List<EventDatabaseEntity> endingEvents = eventMapper.getEndingEvents();
 
         for (EventDatabaseEntity eventDatabaseEntity : endingEvents) {
-            eventMap.get(eventDatabaseEntity.getEventId()).processEvent(userFacade.getUser(eventDatabaseEntity.getUserId()));
+            eventProvider.getEvent(eventDatabaseEntity.getEventId()).processEvent(userFacade.getUser(eventDatabaseEntity.getUserId()));
 
             eventMapper.deleteEvent(eventDatabaseEntity.getId());
         }

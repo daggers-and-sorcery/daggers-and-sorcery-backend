@@ -7,9 +7,12 @@ public interface Event {
 
     void processEvent(UserEntity userEntity);
 
+    //TODO: these should come from a definition!
     int getId();
 
     EventType getType();
+
+    String getName();
 
     int getLength();
 }

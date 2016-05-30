@@ -14,12 +14,14 @@ public class CuringInfoResponseBuilder implements ResponseBuilder<CuringInfoResp
 
     private final ResponseFactory responseFactory;
     private final CuringRecipeListPartialResponseBuilder curingRecipeListPartialResponseBuilder;
+    private final CuringListPartialResponseBuilder curingListPartialResponseBuilder;
 
     @Override
     public Response build(CuringInfoResponseBuilderConfiguration responseBuilderConfiguration) {
         final Response response = responseFactory.newResponse(responseBuilderConfiguration.getUserEntity());
 
         response.setData("recipes", curingRecipeListPartialResponseBuilder.build(responseBuilderConfiguration));
+        response.setData("curing_list", curingListPartialResponseBuilder.build(responseBuilderConfiguration));
 
         return response;
     }
