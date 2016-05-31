@@ -1,11 +1,11 @@
-package com.morethanheroic.swords.skill.leatherworking.service.response;
+package com.morethanheroic.swords.skill.leatherworking.view.response;
 
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.event.domain.EventEntity;
 import com.morethanheroic.swords.event.service.EventProvider;
 import com.morethanheroic.swords.event.service.event.Event;
-import com.morethanheroic.swords.skill.leatherworking.service.response.domain.configuration.CuringInfoResponseBuilderConfiguration;
-import com.morethanheroic.swords.skill.leatherworking.service.response.domain.configuration.CuringListPartialResponse;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringListPartialResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

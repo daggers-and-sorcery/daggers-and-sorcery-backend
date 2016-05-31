@@ -1,9 +1,9 @@
-package com.morethanheroic.swords.skill.leatherworking.service.response;
+package com.morethanheroic.swords.skill.leatherworking.view.response;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.skill.leatherworking.service.response.domain.configuration.CuringInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringInfoResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,7 @@ public class CuringInfoResponseBuilder implements ResponseBuilder<CuringInfoResp
     public Response build(CuringInfoResponseBuilderConfiguration responseBuilderConfiguration) {
         final Response response = responseFactory.newResponse(responseBuilderConfiguration.getUserEntity());
 
+        //TODO: add the level too
         response.setData("recipes", curingRecipeListPartialResponseBuilder.build(responseBuilderConfiguration));
         response.setData("curing_list", curingListPartialResponseBuilder.build(responseBuilderConfiguration));
 

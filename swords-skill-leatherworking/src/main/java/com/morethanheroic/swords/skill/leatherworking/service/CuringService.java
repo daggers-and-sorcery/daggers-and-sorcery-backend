@@ -2,8 +2,12 @@ package com.morethanheroic.swords.skill.leatherworking.service;
 
 import com.morethanheroic.swords.event.domain.EventEntity;
 import com.morethanheroic.swords.event.domain.EventType;
-import com.morethanheroic.swords.event.service.EventProvider;
 import com.morethanheroic.swords.event.service.EventRegistry;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
+import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
+import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
+import com.morethanheroic.swords.recipe.service.result.RecipeIngredientsRemover;
 import com.morethanheroic.swords.skill.leatherworking.domain.CuringResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +20,26 @@ public class CuringService {
     private static final int MAXIMUM_CURING_QUEUE_COUNT = 10;
 
     @Autowired
-    private EventProvider eventProvider;
-
-    @Autowired
     private EventRegistry eventRegistry;
 
+    @Autowired
+    private RecipeIngredientEvaluator recipeIngredientEvaluator;
+
+    @Autowired
+    private RecipeRequirementEvaluator recipeRequirementEvaluator;
+
+    @Autowired
+    private RecipeDefinitionToCuringEventIdConverter recipeDefinitionToCuringEventConverter;
+
+    @Autowired
+    private RecipeIngredientsRemover recipeIngredientsRemover;
+
+    @Autowired
+    private InventoryFacade inventoryFacade;
+
     @Transactional
-    public CuringResult cure(final UserEntity userEntity, final int eventId) {
-        if (!eventProvider.eventExists(eventId)) {
+    public CuringResult cure(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
+        if (recipeDefinition == null) {
             return CuringResult.INVALID_EVENT;
         }
 
@@ -31,16 +47,26 @@ public class CuringService {
             return CuringResult.QUEUE_FULL;
         }
 
-        //TODO: Grab the recipe id/definition from the event's id.
-        //TODO: check that the user has the items
-        //TODO: Remove the items
-        //TODO: Add the event correctly
+        if (!recipeIngredientEvaluator.hasIngredients(userEntity, recipeDefinition)) {
+            return CuringResult.MISSING_INGREDIENTS;
+        }
 
-        eventRegistry.registerEvent(EventEntity.builder()
-                .eventId(1)
+        if (!recipeRequirementEvaluator.hasRequirements(userEntity, recipeDefinition)) {
+            return CuringResult.MISSING_REQUIREMENTS;
+        }
+
+        if (userEntity.getMovementPoints() <= 0) {
+            return CuringResult.NOT_ENOUGH_MOVEMENT;
+        }
+
+        recipeIngredientsRemover.removeIngredients(inventoryFacade.getInventory(userEntity), recipeDefinition);
+
+        final EventEntity eventEntity = EventEntity.builder()
+                .eventId(recipeDefinitionToCuringEventConverter.convert(recipeDefinition))
                 .user(userEntity)
-                .build()
-        );
+                .build();
+
+        eventRegistry.registerEvent(eventEntity);
 
         return CuringResult.SUCCESSFUL;
     }

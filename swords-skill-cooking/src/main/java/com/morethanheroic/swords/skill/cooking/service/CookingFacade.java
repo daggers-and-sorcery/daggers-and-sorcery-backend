@@ -3,12 +3,10 @@ package com.morethanheroic.swords.skill.cooking.service;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
-import com.morethanheroic.swords.recipe.domain.RecipeExperience;
-import com.morethanheroic.swords.recipe.domain.RecipeIngredient;
-import com.morethanheroic.swords.recipe.domain.RecipeReward;
 import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
 import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
 import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
+import com.morethanheroic.swords.recipe.service.result.RecipeEvaluator;
 import com.morethanheroic.swords.skill.cooking.domain.CookingResult;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
@@ -30,6 +28,7 @@ public class CookingFacade {
     private final RecipeIngredientEvaluator recipeIngredientEvaluator;
     private final RecipeRequirementEvaluator recipeRequirementEvaluator;
     private final LearnedRecipeEvaluator learnedRecipeEvaluator;
+    private final RecipeEvaluator recipeEvaluator;
 
     @Transactional
     public CookingResult cook(UserEntity userEntity, RecipeDefinition recipeDefinition) {
@@ -56,30 +55,8 @@ public class CookingFacade {
     private CookingResult doCooking(InventoryEntity inventoryEntity, SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
         final boolean isSuccessfulAttempt = isSuccessful(recipeDefinition);
 
-        removeIngredients(inventoryEntity, recipeDefinition);
-        if (isSuccessfulAttempt) {
-            awardRewards(inventoryEntity, recipeDefinition);
-        }
-        awardExperience(skillEntity, recipeDefinition);
+        recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition, isSuccessfulAttempt);
 
         return isSuccessfulAttempt ? CookingResult.SUCCESSFUL : CookingResult.UNSUCCESSFUL;
-    }
-
-    private void removeIngredients(InventoryEntity inventoryEntity, RecipeDefinition recipeDefinition) {
-        for (RecipeIngredient recipeIngredient : recipeDefinition.getRecipeIngredients()) {
-            inventoryEntity.removeItem(recipeIngredient.getId(), recipeIngredient.getAmount());
-        }
-    }
-
-    private void awardRewards(InventoryEntity inventoryEntity, RecipeDefinition recipeDefinition) {
-        for (RecipeReward recipeReward : recipeDefinition.getRecipeRewards()) {
-            inventoryEntity.addItem(recipeReward.getId(), recipeReward.getAmount());
-        }
-    }
-
-    private void awardExperience(SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
-        for (RecipeExperience recipeExperience : recipeDefinition.getRecipeExperiences()) {
-            skillEntity.increaseExperience(recipeExperience.getSkill(), recipeExperience.getAmount());
-        }
     }
 }

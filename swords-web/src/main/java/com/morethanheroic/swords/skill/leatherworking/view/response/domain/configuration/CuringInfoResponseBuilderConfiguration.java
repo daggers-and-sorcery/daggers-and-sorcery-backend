@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.leatherworking.service.response.domain.configuration;
+package com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.event.domain.EventEntity;
