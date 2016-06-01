@@ -24,7 +24,7 @@ public class StaffsSkillHandler implements SkillHandler {
     public void decreaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value) {
         skillDatabaseEntity.setStaffsXp(skillDatabaseEntity.getStaffsXp() - value);
 
-        skillMapper.decreaseDaggersXp(skillDatabaseEntity.getUserId(), value);
+        skillMapper.decreaseStaffsXp(skillDatabaseEntity.getUserId(), value);
     }
 
     @Override

@@ -29,7 +29,8 @@ public enum SkillAttribute implements Attribute {
     WAND,
     SPECTRE,
     SCAVENGING,
-    COOKING;
+    COOKING,
+    LEATHERWORKING;
 
     @Override
     public AttributeType getAttributeType() {

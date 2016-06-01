@@ -2,6 +2,7 @@ package com.morethanheroic.swords.recipe.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  */
 @Getter
 @Builder
+@ToString
 public class RecipeDefinition {
 
     private final int id;

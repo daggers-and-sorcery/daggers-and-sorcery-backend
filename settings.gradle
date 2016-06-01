@@ -34,4 +34,6 @@ include 'swords-metadata'
 include 'swords-explore'
 include 'swords-dice'
 include 'swords-inn'
+include 'swords-skill-leatherworking'
+include 'swords-event'
 

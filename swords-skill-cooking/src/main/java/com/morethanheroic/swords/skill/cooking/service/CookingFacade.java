@@ -3,16 +3,13 @@ package com.morethanheroic.swords.skill.cooking.service;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
-import com.morethanheroic.swords.recipe.domain.RecipeExperience;
-import com.morethanheroic.swords.recipe.domain.RecipeIngredient;
-import com.morethanheroic.swords.recipe.domain.RecipeItemRequirement;
-import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
-import com.morethanheroic.swords.recipe.domain.RecipeReward;
-import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
-import com.morethanheroic.swords.recipe.service.RecipeFacade;
+import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
+import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
+import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
+import com.morethanheroic.swords.recipe.service.result.RecipeEvaluator;
 import com.morethanheroic.swords.skill.cooking.domain.CookingResult;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
-import com.morethanheroic.swords.skill.service.SkillFacade;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +22,13 @@ import java.util.Random;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CookingFacade {
 
-    private final RecipeFacade recipeFacade;
     private final InventoryFacade inventoryFacade;
-    private final SkillFacade skillFacade;
+    private final SkillEntityFactory skillEntityFactory;
     private final Random random;
+    private final RecipeIngredientEvaluator recipeIngredientEvaluator;
+    private final RecipeRequirementEvaluator recipeRequirementEvaluator;
+    private final LearnedRecipeEvaluator learnedRecipeEvaluator;
+    private final RecipeEvaluator recipeEvaluator;
 
     @Transactional
     public CookingResult cook(UserEntity userEntity, RecipeDefinition recipeDefinition) {
@@ -38,36 +38,14 @@ public class CookingFacade {
 
         userEntity.setMovementPoints(userEntity.getMovementPoints() - 1);
 
-        return doCooking(inventoryFacade.getInventory(userEntity), skillFacade.getSkills(userEntity), recipeDefinition);
+        return doCooking(inventoryFacade.getInventory(userEntity), skillEntityFactory.getSkillEntity(userEntity), recipeDefinition);
     }
 
-    //TODO: move this to a separate service object
     private boolean canCook(UserEntity userEntity, RecipeDefinition recipeDefinition) {
-        for (RecipeRequirement recipeRequirement : recipeDefinition.getRecipeRequirements()) {
-            if (recipeRequirement instanceof RecipeSkillRequirement) {
-                final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;
-
-                if (skillFacade.getSkills(userEntity).getLevel(recipeSkillRequirement.getSkill()) < recipeSkillRequirement.getAmount()) {
-                    return false;
-                }
-            } else if (recipeRequirement instanceof RecipeItemRequirement) {
-                final RecipeItemRequirement recipeItemRequirement = (RecipeItemRequirement) recipeRequirement;
-
-                if (!inventoryFacade.getInventory(userEntity).hasItemAmount(recipeItemRequirement.getItem(), recipeItemRequirement.getAmount())) {
-                    return false;
-                }
-            }
-        }
-
-        //Has the ingredients
-        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
-        for (RecipeIngredient recipeIngredient : recipeDefinition.getRecipeIngredients()) {
-            if (inventoryEntity.getItemAmount(recipeIngredient.getId()) < recipeIngredient.getAmount()) {
-                return false;
-            }
-        }
-
-        return userEntity.getMovementPoints() > 0 && recipeFacade.hasRecipeLearned(userEntity, recipeDefinition);
+        return recipeRequirementEvaluator.hasRequirements(userEntity, recipeDefinition)
+                && recipeIngredientEvaluator.hasIngredients(userEntity, recipeDefinition)
+                && learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)
+                && userEntity.getMovementPoints() > 0;
     }
 
     private boolean isSuccessful(RecipeDefinition recipeDefinition) {
@@ -77,30 +55,8 @@ public class CookingFacade {
     private CookingResult doCooking(InventoryEntity inventoryEntity, SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
         final boolean isSuccessfulAttempt = isSuccessful(recipeDefinition);
 
-        removeIngredients(inventoryEntity, recipeDefinition);
-        if (isSuccessfulAttempt) {
-            awardRewards(inventoryEntity, recipeDefinition);
-        }
-        awardExperience(skillEntity, recipeDefinition);
+        recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition, isSuccessfulAttempt);
 
         return isSuccessfulAttempt ? CookingResult.SUCCESSFUL : CookingResult.UNSUCCESSFUL;
-    }
-
-    private void removeIngredients(InventoryEntity inventoryEntity, RecipeDefinition recipeDefinition) {
-        for (RecipeIngredient recipeIngredient : recipeDefinition.getRecipeIngredients()) {
-            inventoryEntity.removeItem(recipeIngredient.getId(), recipeIngredient.getAmount());
-        }
-    }
-
-    private void awardRewards(InventoryEntity inventoryEntity, RecipeDefinition recipeDefinition) {
-        for (RecipeReward recipeReward : recipeDefinition.getRecipeRewards()) {
-            inventoryEntity.addItem(recipeReward.getId(), recipeReward.getAmount());
-        }
-    }
-
-    private void awardExperience(SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
-        for (RecipeExperience recipeExperience : recipeDefinition.getRecipeExperiences()) {
-            skillEntity.increaseExperience(recipeExperience.getSkill(), recipeExperience.getAmount());
-        }
     }
 }

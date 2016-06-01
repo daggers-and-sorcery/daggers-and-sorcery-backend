@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
 
 /**
  * This aspect is used to create the memoize functionality with the {@link com.morethanheroic.swords.memoize.Memoize} annotation.
@@ -25,6 +26,10 @@ public class MemoizeAspect {
     @Around("@annotation(com.morethanheroic.swords.memoize.Memoize)")
     @SuppressWarnings("checkstyle:illegalthrows")
     public Object memoize(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        if (!isRequestContext()) {
+            return proceedingJoinPoint.proceed();
+        }
+
         final InvocationContext invocationContext = buildInvocationContext(proceedingJoinPoint);
 
         Object result = requestScopeCache.get(invocationContext);
@@ -47,5 +52,9 @@ public class MemoizeAspect {
                 proceedingJoinPoint.getSignature().getName(),
                 proceedingJoinPoint.getArgs()
         );
+    }
+
+    private boolean isRequestContext() {
+        return RequestContextHolder.getRequestAttributes() != null;
     }
 }

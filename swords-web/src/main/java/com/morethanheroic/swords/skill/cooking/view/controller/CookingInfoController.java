@@ -17,7 +17,7 @@ public class CookingInfoController {
     private final CookingInfoResponseBuilder cookingInfoResponseBuilder;
 
     @RequestMapping(value = "/skill/cooking/info", method = RequestMethod.GET)
-    public Response scavengingInfo(UserEntity userEntity) {
+    public Response cookingInfo(UserEntity userEntity) {
         return cookingInfoResponseBuilder.build(
                 CookingInfoResponseBuilderConfiguration.builder()
                 .userEntity(userEntity)

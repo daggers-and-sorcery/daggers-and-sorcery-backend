@@ -1,12 +1,13 @@
 package com.morethanheroic.swords.skill.cooking.service.response;
 
-import com.morethanheroic.swords.recipe.domain.RecipeEntity;
-import com.morethanheroic.swords.recipe.domain.RecipeType;
-import com.morethanheroic.swords.recipe.service.RecipeFacade;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
+import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
+import com.morethanheroic.swords.recipe.domain.RecipeType;
+import com.morethanheroic.swords.recipe.service.learn.DefaultLearnedRecipeEvaluator;
+import com.morethanheroic.swords.recipe.service.response.RecipePartialResponseBuilder;
+import com.morethanheroic.swords.recipe.service.response.domain.RecipePartialResponse;
 import com.morethanheroic.swords.skill.cooking.service.response.domain.configuration.CookingInfoResponseBuilderConfiguration;
-import com.morethanheroic.swords.skill.cooking.service.response.domain.CookingRecipePartialResponse;
-import com.morethanheroic.swords.skill.cooking.service.response.domain.configuration.CookingRecipePartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.recipe.service.response.domain.configuration.RecipePartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,22 +19,21 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CookingRecipeListPartialResponseBuilder implements PartialResponseCollectionBuilder<CookingInfoResponseBuilderConfiguration> {
 
-    private final RecipeFacade recipeFacade;
-    private final CookingRecipePartialResponseBuilder cookingRecipePartialResponseBuilder;
+    private final DefaultLearnedRecipeEvaluator defaultLearnedRecipeEvaluator;
+    private final RecipePartialResponseBuilder recipePartialResponseBuilder;
 
     @Override
-    public List<CookingRecipePartialResponse> build(CookingInfoResponseBuilderConfiguration responseBuilderConfiguration) {
-        final List<CookingRecipePartialResponse> result = new ArrayList<>();
+    public List<RecipePartialResponse> build(CookingInfoResponseBuilderConfiguration responseBuilderConfiguration) {
+        final List<RecipePartialResponse> result = new ArrayList<>();
 
-        final List<RecipeEntity> recipeEntities = recipeFacade.getAllLearnedRecipes(responseBuilderConfiguration.getUserEntity());
-        for (RecipeEntity recipeEntity : recipeEntities) {
-            if (recipeEntity.getRecipeDefinition().getType() == RecipeType.COOKING) {
-                result.add(cookingRecipePartialResponseBuilder.build(
-                        CookingRecipePartialResponseBuilderConfiguration.builder()
-                                .recipeDefinition(recipeEntity.getRecipeDefinition())
-                                .build()
-                ));
-            }
+        //TODO: This informacion should come from the config! Not directly queried here.
+        final List<RecipeDefinition> recipeEntities = defaultLearnedRecipeEvaluator.getLearnedRecipes(responseBuilderConfiguration.getUserEntity(), RecipeType.COOKING);
+        for (RecipeDefinition recipeDefinition : recipeEntities) {
+            result.add(recipePartialResponseBuilder.build(
+                    RecipePartialResponseBuilderConfiguration.builder()
+                            .recipeDefinition(recipeDefinition)
+                            .build()
+            ));
         }
 
         return result;
