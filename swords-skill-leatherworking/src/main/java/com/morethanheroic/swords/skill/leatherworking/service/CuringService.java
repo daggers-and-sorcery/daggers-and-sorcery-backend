@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.skill.leatherworking.service;
 
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.event.domain.EventEntity;
 import com.morethanheroic.swords.event.domain.EventType;
 import com.morethanheroic.swords.event.service.EventRegistry;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CuringService {
 
     private static final int MAXIMUM_CURING_QUEUE_COUNT = 10;
+    private static final int CURING_MOVEMENT_POINT_COST = 1;
 
     @Autowired
     private EventRegistry eventRegistry;
@@ -36,6 +38,9 @@ public class CuringService {
 
     @Autowired
     private InventoryFacade inventoryFacade;
+
+    @Autowired
+    private UserBasicAttributeManipulator userBasicAttributeManipulator;
 
     @Transactional
     public CuringResult cure(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
@@ -67,6 +72,8 @@ public class CuringService {
                 .build();
 
         eventRegistry.registerEvent(eventEntity);
+
+        userBasicAttributeManipulator.decreaseMovement(userEntity, CURING_MOVEMENT_POINT_COST);
 
         return CuringResult.SUCCESSFUL;
     }
