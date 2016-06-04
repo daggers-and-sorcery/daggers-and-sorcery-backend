@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160604-1">
+        <insert tableName="news">
+            <column name="title" value="First part of Leatherworking is here!"/>
+            <column name="release_date" value="2016-06-04 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome, Wanderers!
+
+We are happy to announce that the first part of leatherworking is out. Leatherworking is a new skill you can use to create leather equipment from raw hides and skins. At the moment only the first part of the skill is implemented, the next part is work in progress and will be added to the game very soon. We added leatherworking before Smithing because you will need some leather materials for the equipments provided by the skill.
+
+Improvements:
+- Added Curing, the first step of Leatherworking.
+- Goblins are dropping Salt that's required for Leatherworking.
+- Added two new exploration events for Farmfields.
+
+Bugfixes:
+- Added a minimum value for combat statistics. The combat stats can't go under this threshold. It fixed that some characters was always missing in combat.
+- You can no longer explore with 0 movement points and go bellow 0 movement while exploring.
+- There is an error message shown when the player trying to explore but can't for some reason (lack of movement points etc).
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
