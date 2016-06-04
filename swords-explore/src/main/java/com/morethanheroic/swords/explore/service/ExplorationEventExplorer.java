@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.explore.service;
 
 import com.morethanheroic.session.domain.SessionEntity;
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventDefinitionCache;
@@ -32,19 +33,22 @@ public class ExplorationEventExplorer {
     @Autowired
     private ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
+    @Autowired
+    private UserBasicAttributeManipulator basicAttributeManipulator;
+
     @Transactional
     public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final int nextState) {
         if (!canExplore(userEntity, nextState)) {
             return buildFailedExplorationResult();
         }
 
-        userEntity.setMovementPoints(userEntity.getMovementPoints() - 1);
+        basicAttributeManipulator.decreaseMovement(userEntity, 1);
 
         return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity, nextState));
     }
 
     private boolean canExplore(final UserEntity userEntity, int nextState) {
-        if (userEntity.getMovementPoints() < MINIMUM_MOVEMENT_POINTS) {
+        if (userEntity.getMovementPoints() <= MINIMUM_MOVEMENT_POINTS) {
             return false;
         }
 
