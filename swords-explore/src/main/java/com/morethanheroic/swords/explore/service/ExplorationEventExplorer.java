@@ -4,6 +4,7 @@ import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
+import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
@@ -63,9 +64,13 @@ public class ExplorationEventExplorer {
         return true;
     }
 
-    //TODO: Do a better response than this!
     private ExplorationResult buildFailedExplorationResult() {
-        return explorationResultFactory.newExplorationResult();
+        return explorationResultFactory.newExplorationResult()
+                .addEventEntryResult(
+                        TextExplorationEventEntryResult.builder()
+                                .content("You feel too tired to explore, you need more than zero movement points.")
+                                .build()
+                );
     }
 
     private ExplorationResult buildSuccessfulExplorationResult(final UserEntity userEntity, final ExplorationContext explorationContext) {
