@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TheBridgeEventDefinition extends ExplorationEventDefinition {
+public class TheBridgeExplorationEventDefinition extends ExplorationEventDefinition {
 
     private static final int GOBLIN_GUARD_MONSTER_ID = 2;
 

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class WiseOldManEventDefinition extends MultiStageExplorationEventDefinition {
+public class WiseOldManExplorationEventDefinition extends MultiStageExplorationEventDefinition {
 
     private static final int WELCOME_STAGE = 1;
     private static final int GIVE_COIN_STAGE = 2;

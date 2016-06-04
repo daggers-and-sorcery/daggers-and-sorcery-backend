@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class CaveAtTheRiverEventDefinition extends ExplorationEventDefinition {
+public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDefinition {
 
     private static final int[] POSSIBLE_OPPONENTS = new int[] {7, 8, 9};
 
