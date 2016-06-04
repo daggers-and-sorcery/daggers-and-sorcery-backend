@@ -1,8 +1,10 @@
 package com.morethanheroic.swords.explore.service;
 
 import com.morethanheroic.session.domain.SessionEntity;
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
+import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
@@ -32,19 +34,22 @@ public class ExplorationEventExplorer {
     @Autowired
     private ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
+    @Autowired
+    private UserBasicAttributeManipulator basicAttributeManipulator;
+
     @Transactional
     public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final int nextState) {
         if (!canExplore(userEntity, nextState)) {
             return buildFailedExplorationResult();
         }
 
-        userEntity.setMovementPoints(userEntity.getMovementPoints() - 1);
+        basicAttributeManipulator.decreaseMovement(userEntity, 1);
 
         return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity, nextState));
     }
 
     private boolean canExplore(final UserEntity userEntity, int nextState) {
-        if (userEntity.getMovementPoints() < MINIMUM_MOVEMENT_POINTS) {
+        if (userEntity.getMovementPoints() <= MINIMUM_MOVEMENT_POINTS) {
             return false;
         }
 
@@ -59,9 +64,13 @@ public class ExplorationEventExplorer {
         return true;
     }
 
-    //TODO: Do a better response than this!
     private ExplorationResult buildFailedExplorationResult() {
-        return explorationResultFactory.newExplorationResult();
+        return explorationResultFactory.newExplorationResult()
+                .addEventEntryResult(
+                        TextExplorationEventEntryResult.builder()
+                                .content("You feel too tired to explore, you need more than zero movement points.")
+                                .build()
+                );
     }
 
     private ExplorationResult buildSuccessfulExplorationResult(final UserEntity userEntity, final ExplorationContext explorationContext) {
