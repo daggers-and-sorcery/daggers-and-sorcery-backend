@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.skill.leatherworking.service;
 
-import com.morethanheroic.swords.recipe.domain.*;
+import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
+import com.morethanheroic.swords.recipe.domain.RecipeType;
 import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * A special learned recipe evaluator for curing.
+ * A special learned recipe evaluator for tanning.
  */
 @Service
-public class LeatherworkingCuringLearnedRecipeEvaluator extends LeatherworkingBaseLearnedRecipeEvaluator {
+public class LeatherworkingTanningLearnedRecipeEvaluator extends LeatherworkingBaseLearnedRecipeEvaluator {
 
     @Autowired
     private RecipeDefinitionCache recipeDefinitionCache;
@@ -26,7 +27,7 @@ public class LeatherworkingCuringLearnedRecipeEvaluator extends LeatherworkingBa
         for (int i = 1; i <= recipeDefinitionCache.getSize(); i++) {
             final RecipeDefinition recipeDefinition = recipeDefinitionCache.getDefinition(i);
 
-            if (recipeDefinition.getType() == RecipeType.LEATHERWORKING_CURING) {
+            if (recipeDefinition.getType() == RecipeType.LEATHERWORKING_TANNING) {
                 result.add(recipeDefinition);
             }
         }

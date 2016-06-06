@@ -1,10 +1,10 @@
-package com.morethanheroic.swords.skill.leatherworking.view.response;
+package com.morethanheroic.swords.skill.leatherworking.view.response.service.curing;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing.CuringInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.skill.view.response.SkillLevelPartialResponseBuilder;
 import com.morethanheroic.swords.skill.view.response.domain.configuration.SkillLevelPartialResponseBuilderConfiguration;
@@ -27,7 +27,7 @@ public class CuringInfoResponseBuilder implements ResponseBuilder<CuringInfoResp
     public Response build(CuringInfoResponseBuilderConfiguration responseBuilderConfiguration) {
         final Response response = responseFactory.newResponse(responseBuilderConfiguration.getUserEntity());
 
-        response.setData("recipes", curingRecipeListPartialResponseBuilder.build(responseBuilderConfiguration));
+        response.setData("curing_recipes", curingRecipeListPartialResponseBuilder.build(responseBuilderConfiguration));
         response.setData("curing_list", curingListPartialResponseBuilder.build(responseBuilderConfiguration));
         response.setData("skill", skillLevelPartialResponseBuilder.build(SkillLevelPartialResponseBuilderConfiguration.builder()
                         .skillLevel(getLeatherworkingLevel(responseBuilderConfiguration.getUserEntity()))
