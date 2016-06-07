@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.leatherworking.service;
+package com.morethanheroic.swords.skill.leatherworking.service.recipe;
 
 import com.morethanheroic.swords.recipe.domain.*;
 import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
