@@ -7,7 +7,7 @@ import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
 import com.morethanheroic.swords.recipe.service.response.RecipePartialResponseBuilder;
 import com.morethanheroic.swords.recipe.service.response.domain.RecipePartialResponse;
 import com.morethanheroic.swords.recipe.service.response.domain.configuration.RecipePartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.leatherworking.TanningInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.tanning.TanningInfoResponseBuilderConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

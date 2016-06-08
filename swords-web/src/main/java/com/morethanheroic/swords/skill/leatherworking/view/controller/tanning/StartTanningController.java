@@ -5,7 +5,7 @@ import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.leatherworking.domain.TanningResult;
 import com.morethanheroic.swords.skill.leatherworking.service.TanningService;
 import com.morethanheroic.swords.skill.leatherworking.view.request.domain.tanning.TanningCreateRequest;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.leatherworking.TanningStartResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.tanning.TanningStartResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.leatherworking.view.response.service.tanning.TanningStartResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

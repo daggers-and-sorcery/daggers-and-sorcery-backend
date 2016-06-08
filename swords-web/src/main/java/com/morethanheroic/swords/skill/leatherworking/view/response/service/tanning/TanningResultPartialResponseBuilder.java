@@ -2,8 +2,8 @@ package com.morethanheroic.swords.skill.leatherworking.view.response.service.tan
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.leatherworking.TanningResultPartialResponse;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.leatherworking.TanningStartResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.tanning.TanningResultPartialResponse;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.tanning.TanningStartResponseBuilderConfiguration;
 import org.springframework.stereotype.Service;
 
 @Service
