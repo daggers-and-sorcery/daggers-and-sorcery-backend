@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Random;
-
 @Service
 public class TanningService {
 
@@ -40,9 +38,6 @@ public class TanningService {
     @Autowired
     private UserBasicAttributeManipulator userBasicAttributeManipulator;
 
-    @Autowired
-    private Random random;
-
     @Transactional
     public TanningResult tan(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null) {
@@ -64,17 +59,10 @@ public class TanningService {
         final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
         final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
 
-        final boolean isSuccessful = isSuccessful(recipeDefinition);
-
-        recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition, isSuccessful);
+        final boolean isSuccessful = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
 
         userBasicAttributeManipulator.decreaseMovement(userEntity, TANNING_MOVEMENT_POINT_COST);
 
         return isSuccessful ? TanningResult.SUCCESSFUL : TanningResult.UNSUCCESSFUL;
-    }
-
-    //TODO: rework this to a common recipe evaluator and use the same for cooking too!
-    private boolean isSuccessful(RecipeDefinition recipeDefinition) {
-        return random.nextInt(100) + 1 >= 100 - recipeDefinition.getChance();
     }
 }
