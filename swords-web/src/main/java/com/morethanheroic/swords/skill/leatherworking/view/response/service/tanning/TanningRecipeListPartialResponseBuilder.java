@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.leatherworking.view.response;
+package com.morethanheroic.swords.skill.leatherworking.view.response.service.tanning;
 
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
@@ -7,7 +7,7 @@ import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
 import com.morethanheroic.swords.recipe.service.response.RecipePartialResponseBuilder;
 import com.morethanheroic.swords.recipe.service.response.domain.RecipePartialResponse;
 import com.morethanheroic.swords.recipe.service.response.domain.configuration.RecipePartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.leatherworking.TanningInfoResponseBuilderConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,20 +16,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CuringRecipeListPartialResponseBuilder implements PartialResponseCollectionBuilder<CuringInfoResponseBuilderConfiguration> {
+public class TanningRecipeListPartialResponseBuilder implements PartialResponseCollectionBuilder<TanningInfoResponseBuilderConfiguration> {
 
     @Autowired
-    @Qualifier("leatherworkingCuringLearnedRecipeEvaluator")
+    @Qualifier("leatherworkingTanningLearnedRecipeEvaluator")
     private LearnedRecipeEvaluator learnedRecipeEvaluator;
 
     @Autowired
     private RecipePartialResponseBuilder recipePartialResponseBuilder;
 
     @Override
-    public List<RecipePartialResponse> build(CuringInfoResponseBuilderConfiguration responseBuilderConfiguration) {
+    public List<RecipePartialResponse> build(TanningInfoResponseBuilderConfiguration responseBuilderConfiguration) {
         final List<RecipePartialResponse> result = new ArrayList<>();
 
-        final List<RecipeDefinition> recipeEntities = learnedRecipeEvaluator.getLearnedRecipes(responseBuilderConfiguration.getUserEntity(), RecipeType.LEATHERWORKING_CURING);
+        final List<RecipeDefinition> recipeEntities = learnedRecipeEvaluator.getLearnedRecipes(responseBuilderConfiguration.getUserEntity(), RecipeType.LEATHERWORKING_TANNING);
         for (RecipeDefinition recipeDefinition : recipeEntities) {
             result.add(recipePartialResponseBuilder.build(
                     RecipePartialResponseBuilderConfiguration.builder()

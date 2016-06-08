@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.skill.cooking.service;
 
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
@@ -16,19 +17,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Random;
-
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CookingFacade {
 
+    private static final int COOKING_MOVEMENT_POINT_COST = 1;
+
     private final InventoryFacade inventoryFacade;
     private final SkillEntityFactory skillEntityFactory;
-    private final Random random;
     private final RecipeIngredientEvaluator recipeIngredientEvaluator;
     private final RecipeRequirementEvaluator recipeRequirementEvaluator;
     private final LearnedRecipeEvaluator learnedRecipeEvaluator;
     private final RecipeEvaluator recipeEvaluator;
+    private final UserBasicAttributeManipulator userBasicAttributeManipulator;
 
     @Transactional
     public CookingResult cook(UserEntity userEntity, RecipeDefinition recipeDefinition) {
@@ -36,7 +37,7 @@ public class CookingFacade {
             return CookingResult.UNABLE_TO_COOK;
         }
 
-        userEntity.setMovementPoints(userEntity.getMovementPoints() - 1);
+        userBasicAttributeManipulator.decreaseMovement(userEntity, 1);
 
         return doCooking(inventoryFacade.getInventory(userEntity), skillEntityFactory.getSkillEntity(userEntity), recipeDefinition);
     }
@@ -48,14 +49,8 @@ public class CookingFacade {
                 && userEntity.getMovementPoints() > 0;
     }
 
-    private boolean isSuccessful(RecipeDefinition recipeDefinition) {
-        return random.nextInt(100) + 1 >= 100 - recipeDefinition.getChance();
-    }
-
     private CookingResult doCooking(InventoryEntity inventoryEntity, SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
-        final boolean isSuccessfulAttempt = isSuccessful(recipeDefinition);
-
-        recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition, isSuccessfulAttempt);
+        final boolean isSuccessfulAttempt = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
 
         return isSuccessfulAttempt ? CookingResult.SUCCESSFUL : CookingResult.UNSUCCESSFUL;
     }

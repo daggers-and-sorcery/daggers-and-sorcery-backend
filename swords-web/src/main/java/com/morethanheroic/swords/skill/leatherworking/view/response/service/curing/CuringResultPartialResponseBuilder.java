@@ -1,9 +1,9 @@
-package com.morethanheroic.swords.skill.leatherworking.view.response;
+package com.morethanheroic.swords.skill.leatherworking.view.response.service.curing;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringResultPartialResponse;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringStartResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing.CuringResultPartialResponse;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing.CuringStartResponseBuilderConfiguration;
 import org.springframework.stereotype.Service;
 
 @Service

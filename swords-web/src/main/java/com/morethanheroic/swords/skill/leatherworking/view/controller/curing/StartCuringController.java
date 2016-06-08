@@ -1,12 +1,12 @@
-package com.morethanheroic.swords.skill.leatherworking.view.controller;
+package com.morethanheroic.swords.skill.leatherworking.view.controller.curing;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.leatherworking.domain.CuringResult;
 import com.morethanheroic.swords.skill.leatherworking.service.CuringService;
-import com.morethanheroic.swords.skill.leatherworking.view.request.domain.CuringCreateRequest;
-import com.morethanheroic.swords.skill.leatherworking.view.response.CuringStartResponseBuilder;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringStartResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.request.domain.curing.CuringCreateRequest;
+import com.morethanheroic.swords.skill.leatherworking.view.response.service.curing.CuringStartResponseBuilder;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing.CuringStartResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

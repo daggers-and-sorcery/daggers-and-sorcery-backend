@@ -1,10 +1,10 @@
-package com.morethanheroic.swords.skill.leatherworking.view.controller;
+package com.morethanheroic.swords.skill.leatherworking.view.controller.curing;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.event.domain.EventType;
 import com.morethanheroic.swords.event.service.EventRegistry;
-import com.morethanheroic.swords.skill.leatherworking.view.response.CuringInfoResponseBuilder;
-import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.CuringInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.service.curing.CuringInfoResponseBuilder;
+import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing.CuringInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,7 +1,9 @@
-package com.morethanheroic.swords.skill.leatherworking.service;
+package com.morethanheroic.swords.skill.leatherworking.service.recipe;
 
-import com.morethanheroic.swords.recipe.domain.*;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
+import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
+import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
+import com.morethanheroic.swords.recipe.domain.RecipeType;
 import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
@@ -10,46 +12,23 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-/**
- * A special learned recipe evaluator for leatherworking.
- */
 @Service
-public class LeatherworkingCuringLearnedRecipeEvaluator implements LearnedRecipeEvaluator {
+public class LeatherworkingBaseLearnedRecipeEvaluator implements LearnedRecipeEvaluator {
 
-    @Autowired
-    private RecipeDefinitionCache recipeDefinitionCache;
+    protected List<RecipeDefinition> recipeDefinitions;
 
     @Autowired
     private SkillEntityFactory skillEntityFactory;
-
-    private List<RecipeDefinition> curingRecipes;
-
-    @PostConstruct
-    private void initialize() {
-        final List<RecipeDefinition> result = new ArrayList<>();
-
-        for (int i = 1; i <= recipeDefinitionCache.getSize(); i++) {
-            final RecipeDefinition recipeDefinition = recipeDefinitionCache.getDefinition(i);
-
-            if (recipeDefinition.getType() == RecipeType.LEATHERWORKING_CURING) {
-                result.add(recipeDefinition);
-            }
-        }
-
-        curingRecipes = Collections.unmodifiableList(result);
-    }
 
     @Override
     public List<RecipeDefinition> getLearnedRecipes(UserEntity userEntity, RecipeType recipeType) {
         final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
 
         final List<RecipeDefinition> result = new ArrayList<>();
-        for (RecipeDefinition recipeDefinition : curingRecipes) {
+        for (RecipeDefinition recipeDefinition : recipeDefinitions) {
             for (RecipeRequirement recipeRequirement : recipeDefinition.getRecipeRequirements()) {
                 if (recipeRequirement instanceof RecipeSkillRequirement) {
                     final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;

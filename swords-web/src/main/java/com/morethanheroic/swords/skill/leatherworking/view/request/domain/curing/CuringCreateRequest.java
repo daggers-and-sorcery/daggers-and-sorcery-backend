@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.leatherworking.view.request.domain;
+package com.morethanheroic.swords.skill.leatherworking.view.request.domain.curing;
 
 import lombok.Data;
 

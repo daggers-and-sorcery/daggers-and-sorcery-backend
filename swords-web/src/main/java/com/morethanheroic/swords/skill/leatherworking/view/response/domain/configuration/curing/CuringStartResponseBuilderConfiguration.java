@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration;
+package com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.leatherworking.domain.CuringResult;
