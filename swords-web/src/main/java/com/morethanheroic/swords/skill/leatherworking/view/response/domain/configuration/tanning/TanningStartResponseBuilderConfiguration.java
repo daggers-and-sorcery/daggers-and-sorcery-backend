@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.leatherworking;
+package com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.tanning;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.leatherworking.domain.TanningResult;
