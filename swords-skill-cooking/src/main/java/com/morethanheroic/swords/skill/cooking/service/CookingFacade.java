@@ -37,7 +37,7 @@ public class CookingFacade {
             return CookingResult.UNABLE_TO_COOK;
         }
 
-        userBasicAttributeManipulator.decreaseMovement(userEntity, 1);
+        userBasicAttributeManipulator.decreaseMovement(userEntity, COOKING_MOVEMENT_POINT_COST);
 
         return doCooking(inventoryFacade.getInventory(userEntity), skillEntityFactory.getSkillEntity(userEntity), recipeDefinition);
     }
