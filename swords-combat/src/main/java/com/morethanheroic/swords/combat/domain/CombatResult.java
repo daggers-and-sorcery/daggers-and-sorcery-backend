@@ -31,6 +31,10 @@ public class CombatResult {
         this.winner = winner;
     }
 
+    public boolean isPlayerVictory() {
+        return winner == Winner.PLAYER;
+    }
+
     public void addRewardXp(SkillType skill, int amount) {
         if (rewardXp.containsKey(skill)) {
             rewardXp.put(skill, rewardXp.get(skill) + amount);

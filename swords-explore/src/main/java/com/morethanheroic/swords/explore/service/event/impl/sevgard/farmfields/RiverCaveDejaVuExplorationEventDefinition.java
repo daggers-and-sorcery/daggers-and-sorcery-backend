@@ -1,15 +1,18 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class RiverCaveDejaVuExplorationEventDefinition extends ExplorationEventDefinition {
@@ -20,10 +23,14 @@ public class RiverCaveDejaVuExplorationEventDefinition extends ExplorationEventD
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private MonsterDefinitionCache monsterDefinitionCache;
+    private CombatEvaluator combatEvaluator;
 
-    @Autowired
-    private CombatCalculator combatCalculator;
+    private MonsterDefinition opponent;
+
+    @PostConstruct
+    private void initialize() {
+        opponent = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_PIKER_MONSTER_ID);
+    }
 
     @Override
     public int getId() {
@@ -46,13 +53,23 @@ public class RiverCaveDejaVuExplorationEventDefinition extends ExplorationEventD
                 TextExplorationEventEntryResult.builder()
                         .content("On the other side, you notice clusters of clay pots and urns with bronze coins scattered around them. However, you are not alone. A Goblin Piker sits crisscross in the middle of the room and seems to be meditating. His formidable pike rests across his lap with his green fingers clasped tightly around it. You debate on returning whence you came though an urn rests only a few feet away. As you pick it up, it slips straight from your grasp due to a thick coating of slime. The urn shatters and alerts the Goblin Piker. He snarls at you and raises his sharp pike.")
                         .build()
-        ).addEventEntryResult(
+        );
+
+        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+
+        explorationResult.addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatCalculator.doFight(userEntity, monsterDefinitionCache.getMonsterDefinition(GOBLIN_PIKER_MONSTER_ID)).getCombatMessages())
+                        .combatMessages(combatResult.getCombatMessages())
                         .build()
-        ).addEventEntryResult(
+        );
+
+        if (!combatResult.isPlayerVictory()) {
+            return explorationResult;
+        }
+
+        explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("The Goblin Piker's body tumbles into the slow-moving river and washes downstream. You study the multitude of pots and urns and sense a foreboding presence. You no longer wish to meddle with this vile place. You leave the cavern and rejoice as the sun shines from behind the clouds. Your deja vu disappears.")
+                        .content("The " + opponent.getName() + "'s body tumbles into the slow-moving river and washes downstream. You study the multitude of pots and urns and sense a foreboding presence. You no longer wish to meddle with this vile place. You leave the cavern and rejoice as the sun shines from behind the clouds. Your deja vu disappears.")
                         .build()
         );
 

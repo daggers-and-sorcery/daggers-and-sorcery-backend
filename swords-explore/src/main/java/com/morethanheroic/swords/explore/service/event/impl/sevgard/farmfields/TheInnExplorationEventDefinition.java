@@ -1,15 +1,18 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class TheInnExplorationEventDefinition extends ExplorationEventDefinition {
@@ -20,10 +23,14 @@ public class TheInnExplorationEventDefinition extends ExplorationEventDefinition
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private MonsterDefinitionCache monsterDefinitionCache;
+    private CombatEvaluator combatEvaluator;
 
-    @Autowired
-    private CombatCalculator combatCalculator;
+    private MonsterDefinition opponent;
+
+    @PostConstruct
+    private void initialize() {
+        opponent = combatEvaluator.convertMonsterIdToDefinition(ORC_BRIGAND_MONSTER_ID);
+    }
 
     @Override
     public int getId() {
@@ -50,11 +57,21 @@ public class TheInnExplorationEventDefinition extends ExplorationEventDefinition
                 TextExplorationEventEntryResult.builder()
                         .content("You stand up and draw the attention of a pale green Orc Brigand. He sneers at you with his crooked teeth and removes a sharp dagger from his leather belt. You return his glare and prepare yourself for a fight.")
                         .build()
-        ).addEventEntryResult(
+        );
+
+        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+
+        explorationResult.addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatCalculator.doFight(userEntity, monsterDefinitionCache.getMonsterDefinition(ORC_BRIGAND_MONSTER_ID)).getCombatMessages())
+                        .combatMessages(combatResult.getCombatMessages())
                         .build()
-        ).addEventEntryResult(
+        );
+
+        if (!combatResult.isPlayerVictory()) {
+            return explorationResult;
+        }
+
+        explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
                         .content("The Orc Brigand squeaks faintly, his body twitching, as he stumbles into a table and collapses face first. In the chaos, you turn tail and sprint straight for the exit. You reach the door undetected and escape into the night.")
                         .build()

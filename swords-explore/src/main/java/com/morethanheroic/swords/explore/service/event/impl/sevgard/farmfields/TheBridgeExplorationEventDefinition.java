@@ -1,15 +1,18 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class TheBridgeExplorationEventDefinition extends ExplorationEventDefinition {
@@ -20,10 +23,14 @@ public class TheBridgeExplorationEventDefinition extends ExplorationEventDefinit
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private MonsterDefinitionCache monsterDefinitionCache;
+    private CombatEvaluator combatEvaluator;
 
-    @Autowired
-    private CombatCalculator combatCalculator;
+    private MonsterDefinition opponent;
+
+    @PostConstruct
+    private void initialize() {
+        opponent = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_GUARD_MONSTER_ID);
+    }
 
     @Override
     public int getId() {
@@ -46,11 +53,21 @@ public class TheBridgeExplorationEventDefinition extends ExplorationEventDefinit
                 TextExplorationEventEntryResult.builder()
                         .content("The Goblin Guard crouches next to a cook fire, and he turns a crudely constructed spit. A skinned rat spins slowly with its long tail dipping into the flames. The rat tail burns off, and with gnashing teeth, the Goblin Guard snatches it from the embers and shoves it into his mouth. He struggles to eat the rubbery tail but seems to be enjoying the taste. The Goblin Guard turns to prep another rat when he notices you standing in the river. He shrieks furiously and attacks you.")
                         .build()
-        ).addEventEntryResult(
+        );
+
+        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+
+        explorationResult .addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatCalculator.doFight(userEntity, monsterDefinitionCache.getMonsterDefinition(GOBLIN_GUARD_MONSTER_ID)).getCombatMessages())
+                        .combatMessages(combatResult.getCombatMessages())
                         .build()
-        ).addEventEntryResult(
+        );
+
+        if (!combatResult.isPlayerVictory()) {
+            return explorationResult;
+        }
+
+        explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
                         .content("While the Goblin Guard's body washes away, you are drawn to his cookfire. The rat is charred on one side, but the other side still appears fine. You remove the rat from the spit and eat the savory parts while you visit the nearby farms. Once you finish, you throw the charred bits into a pig trough. Not too bad. Rats taste like chicken.")
                         .build()

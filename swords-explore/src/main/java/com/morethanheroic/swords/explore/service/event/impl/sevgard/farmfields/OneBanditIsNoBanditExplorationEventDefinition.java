@@ -1,15 +1,18 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEventDefinition {
@@ -20,10 +23,14 @@ public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEv
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private MonsterDefinitionCache monsterDefinitionCache;
+    private CombatEvaluator combatEvaluator;
 
-    @Autowired
-    private CombatCalculator combatCalculator;
+    private MonsterDefinition opponent;
+
+    @PostConstruct
+    private void initialize() {
+        opponent = combatEvaluator.convertMonsterIdToDefinition(BANDIT_BRIGAND_MONSTER_ID);
+    }
 
     @Override
     public int getId() {
@@ -42,11 +49,21 @@ public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEv
                 TextExplorationEventEntryResult.builder()
                         .content("In the morning, you pack a bag with sufficient supplies and leave Sevgard. You approach Farmfields and recall the path to Pete the Farmer's home. You plan on offering your services to the farmer, and hopefully, he would lower his pride and accept your offer. You daydream about fresh vegetables and meats but halt when you notice a dark figure ahead of you. A Bandit Brigand wearing all black leans against a wooden post and tosses a dagger up and down, catching it perfectly by the hilt. He notices you and snickers beneath a crimson bandana. He sprints toward you, giving you barely enough time to react.")
                         .build()
-        ).addEventEntryResult(
+        );
+
+        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+
+        explorationResult.addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatCalculator.doFight(userEntity, monsterDefinitionCache.getMonsterDefinition(BANDIT_BRIGAND_MONSTER_ID)).getCombatMessages())
+                        .combatMessages(combatResult.getCombatMessages())
                         .build()
-        ).addEventEntryResult(
+        );
+
+        if (!combatResult.isPlayerVictory()) {
+            return explorationResult;
+        }
+
+        explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
                         .content("As soon as the Bandit Brigand falls, you hear a rush of feathers. Massive, black crows descend upon the body, and you run away as their caws reach a fever pitch. You burst into Pete the Farmer's home and struggle to catch your breath. As you recover, you search for Pete the Farmer, but he is nowhere to be found. He must be out in the fields. You debate on waiting for him but decide against it. You write the farmer a concerned note and place it on the kitchen table. You linger in the doorway before leaving Pete the Farmer's house. You take a different path back to Sevgard.")
                         .build()

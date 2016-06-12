@@ -1,35 +1,38 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
+import com.google.common.collect.Lists;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
-import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Component
 public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDefinition {
 
-    private static final int[] POSSIBLE_OPPONENTS = new int[] {7, 8, 9};
+    private static final List<Integer> POSSIBLE_OPPONENTS = Lists.newArrayList(7, 8, 9);
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private MonsterDefinitionCache monsterDefinitionCache;
+    private CombatEvaluator combatEvaluator;
 
-    @Autowired
-    private CombatCalculator combatCalculator;
+    private List<MonsterDefinition> possibleOpponents;
 
-    @Autowired
-    private Random random;
+    @PostConstruct
+    private void initialize() {
+        possibleOpponents = combatEvaluator.convertMonsterIdToDefinition(POSSIBLE_OPPONENTS);
+    }
 
     @Override
     public int getId() {
@@ -39,7 +42,7 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
         final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
-        final MonsterDefinition opponent = calculateOpponent();
+        final MonsterDefinition opponent = combatEvaluator.calculateOpponent(possibleOpponents);
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -53,20 +56,26 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
                 TextExplorationEventEntryResult.builder()
                         .content("A rock formation rests to your left, and you notice an opening to a large den. Upon closer inspection, there are piles of small animal bones scattered around the entrance along with pawprints. You stiffen as you hear a muffled growl from behind you. You turn slowly and see a " + opponent.getName() + " with a silver fish clenched in its jaws. The " + opponent.getName() + " drops the fish and charges you aggressively. ")
                         .build()
-        ).addEventEntryResult(
+        );
+
+        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+
+        explorationResult.addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatCalculator.doFight(userEntity, opponent).getCombatMessages())
+                        .combatMessages(combatResult.getCombatMessages())
                         .build()
-        ).addEventEntryResult(
+        );
+
+        if (!combatResult.isPlayerVictory()) {
+            return explorationResult;
+        }
+
+        explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
                         .content("You glance to the den and sense there might be more " + opponent.getName() + " nearby. You retreat to the river and follow a dirt path back to the fields. You return to Sevgard safely. ")
                         .build()
         );
 
         return explorationResult;
-    }
-
-    private MonsterDefinition calculateOpponent() {
-        return monsterDefinitionCache.getMonsterDefinition(POSSIBLE_OPPONENTS[random.nextInt(POSSIBLE_OPPONENTS.length)]);
     }
 }

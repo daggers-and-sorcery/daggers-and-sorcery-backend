@@ -1,15 +1,18 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEventDefinition {
@@ -20,10 +23,14 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private MonsterDefinitionCache monsterDefinitionCache;
+    private CombatEvaluator combatEvaluator;
 
-    @Autowired
-    private CombatCalculator combatCalculator;
+    private MonsterDefinition opponent;
+
+    @PostConstruct
+    private void initialize() {
+        opponent = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_PIKEMAN_MONSTER_ID);
+    }
 
     @Override
     public int getId() {
@@ -46,19 +53,39 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
                 TextExplorationEventEntryResult.builder()
                         .content("You promise the goblins will be dead by nightfall and leave the farm promptly. The hills are a stone throw away, and you even see smoke rising from a cook fire. These goblins have become arrogant. It is the middle of the day! You trek up a slope and notice a goblin encampment with bones strewn everywhere. It seems like they have been gorging themselves. With an enraged cry, you charge down the hill and attack a Goblin Pikeman.")
                         .build()
-        ).addEventEntryResult(
+        );
+
+        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+
+        explorationResult.addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatCalculator.doFight(userEntity, monsterDefinitionCache.getMonsterDefinition(GOBLIN_PIKEMAN_MONSTER_ID)).getCombatMessages())
+                        .combatMessages(combatResult.getCombatMessages())
                         .build()
-        ).addEventEntryResult(
+        );
+
+        if (!combatResult.isPlayerVictory()) {
+            return explorationResult;
+        }
+
+        explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
                         .content("The Goblin Pikeman falls to the ground, and you whirl around. You caught the first Goblin Pikemen off guard, but the rest of them are ready.")
                         .build()
-        ).addEventEntryResult(
+        );
+
+        final CombatResult secondCombatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+
+        explorationResult.addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatCalculator.doFight(userEntity, monsterDefinitionCache.getMonsterDefinition(GOBLIN_PIKEMAN_MONSTER_ID)).getCombatMessages())
+                        .combatMessages(secondCombatResult.getCombatMessages())
                         .build()
-        ).addEventEntryResult(
+        );
+
+        if (!combatResult.isPlayerVictory()) {
+            return explorationResult;
+        }
+
+        explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
                         .content("Another Goblin Pikemen falls to the ground. You glare at the remainder. You are about to attack when you realize the goblins are running away. Cowards! You sprint after them, but they have a head start. The goblins disappear into the woods like rats, and it is impossible to follow them. You retreat to the farmer and describe the situation. You insist on staying the night in case the goblins return, and for your trouble, the farmer gives you a pouch of bronze coins.")
                         .build()

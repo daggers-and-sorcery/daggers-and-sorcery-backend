@@ -4,7 +4,7 @@ import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.ExplorationHelper;
+import com.morethanheroic.swords.explore.service.event.AttributeAttemptEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -22,7 +22,7 @@ public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDef
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private ExplorationHelper explorationHelper;
+    private AttributeAttemptEvaluator attributeAttemptEvaluator;
 
     @Autowired
     private InventoryFacade inventoryFacade;
@@ -53,7 +53,7 @@ public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDef
                         .build()
         );
 
-        final boolean attemptResult = explorationHelper.attributeAttempt(userEntity, explorationResult, GeneralAttribute.STRENGTH, 8);
+        final boolean attemptResult = attributeAttemptEvaluator.attributeAttempt(userEntity, explorationResult, GeneralAttribute.STRENGTH, 8);
 
         int resultCoins = random.nextInt(6) + 3;
 
