@@ -92,6 +92,12 @@ public class EquipmentEntity {
 
                 equipmentMapper.equipOffhand(userEntity.getId(), item.getId(), identified);
                 break;
+            case GLOVES:
+                equipmentDatabaseEntity.setGloves(item.getId());
+                equipmentDatabaseEntity.setGlovesIdentified(identified);
+
+                equipmentMapper.equipGloves(userEntity.getId(), item.getId(), identified);
+                break;
             default:
                 throw new IllegalArgumentException();
         }
@@ -127,6 +133,19 @@ public class EquipmentEntity {
                 }
 
                 return previousOffhand;
+            case GLOVES:
+                final int previousGloves = equipmentDatabaseEntity.getGloves();
+
+                if (previousGloves != 0) {
+                    inventoryEntity.addItem(previousGloves, 1, equipmentDatabaseEntity.isGlovesIdentified());
+
+                    equipmentDatabaseEntity.setGloves(0);
+                    equipmentDatabaseEntity.setGlovesIdentified(true);
+
+                    equipmentMapper.equipGloves(userEntity.getId(), 0, true);
+                }
+
+                return previousGloves;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
