@@ -78,8 +78,9 @@ public class EquipmentEntity {
 
     private void equipWithoutCheck(ItemDefinition item, boolean identified) {
         final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
+        final EquipmentSlot slot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
 
-        switch (equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType())) {
+        switch (slot) {
             case WEAPON:
                 equipmentDatabaseEntity.setWeapon(item.getId());
                 equipmentDatabaseEntity.setWeaponIdentified(identified);
@@ -92,8 +93,20 @@ public class EquipmentEntity {
 
                 equipmentMapper.equipOffhand(userEntity.getId(), item.getId(), identified);
                 break;
+            case GLOVES:
+                equipmentDatabaseEntity.setGloves(item.getId());
+                equipmentDatabaseEntity.setGlovesIdentified(identified);
+
+                equipmentMapper.equipGloves(userEntity.getId(), item.getId(), identified);
+                break;
+            case BOOTS:
+                equipmentDatabaseEntity.setBoots(item.getId());
+                equipmentDatabaseEntity.setBootsIdentified(identified);
+
+                equipmentMapper.equipBoots(userEntity.getId(), item.getId(), identified);
+                break;
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
         }
     }
 
@@ -127,6 +140,32 @@ public class EquipmentEntity {
                 }
 
                 return previousOffhand;
+            case GLOVES:
+                final int previousGloves = equipmentDatabaseEntity.getGloves();
+
+                if (previousGloves != 0) {
+                    inventoryEntity.addItem(previousGloves, 1, equipmentDatabaseEntity.isGlovesIdentified());
+
+                    equipmentDatabaseEntity.setGloves(0);
+                    equipmentDatabaseEntity.setGlovesIdentified(true);
+
+                    equipmentMapper.equipGloves(userEntity.getId(), 0, true);
+                }
+
+                return previousGloves;
+            case BOOTS:
+                final int previousBoots = equipmentDatabaseEntity.getBoots();
+
+                if (previousBoots != 0) {
+                    inventoryEntity.addItem(previousBoots, 1, equipmentDatabaseEntity.isBootsIdentified());
+
+                    equipmentDatabaseEntity.setBoots(0);
+                    equipmentDatabaseEntity.setBootsIdentified(true);
+
+                    equipmentMapper.equipBoots(userEntity.getId(), 0, true);
+                }
+
+                return previousBoots;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }

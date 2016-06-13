@@ -19,6 +19,12 @@ public interface EquipmentMapper {
     @Update("UPDATE equipment SET offhand = #{itemId}, offhand_identified = #{identified} WHERE user_id = #{userId}")
     void equipOffhand(@Param("userId") int userId, @Param("itemId") int itemId, @Param("identified") boolean identified);
 
+    @Update("UPDATE equipment SET gloves = #{itemId}, gloves_identified = #{identified} WHERE user_id = #{userId}")
+    void equipGloves(@Param("userId") int userId, @Param("itemId") int itemId, @Param("identified") boolean identified);
+
+    @Update("UPDATE equipment SET boots = #{itemId}, boots_identified = #{identified} WHERE user_id = #{userId}")
+    void equipBoots(@Param("userId") int userId, @Param("itemId") int itemId, @Param("identified") boolean identified);
+
     @Insert("INSERT INTO equipment SET user_id = #{userId}")
     void insert(@Param("userId") int userId);
 }

@@ -27,6 +27,10 @@ public class EquipmentSlotMapper {
             case HEAVY_ARMOR:
             case ROBE_ARMOR:
                 return EquipmentSlot.CHEST;
+            case GLOVES:
+                return EquipmentSlot.GLOVES;
+            case BOOTS:
+                return EquipmentSlot.BOOTS;
             default:
                 throw new IllegalArgumentException();
         }
