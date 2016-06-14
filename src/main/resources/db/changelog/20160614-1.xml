@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160614-1">
+        <insert tableName="news">
+            <column name="title" value="Leatherworking is finally here!"/>
+            <column name="release_date" value="2016-06-14 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome, Wanderers!
+
+We are happy to announce that finally the leatherworking skill is complete! We will soon add skinning but until then keep chopping those Goblins and Orks for some materials. Items required for leatherworking are added as drops for monsters in the Farmfields region. You can access leatherworking on the character screen by clicking under the experience bar of the leatherworking skill.
+
+Improvements:
+- Added tanning for leatherworking.
+- Finished leatherworking, you can now craft leather equipment.
+- Added 3 leatherworking recipes and the items belonging to them.
+- Monsters drop Fox skin and Deer skin (to enable players to start leatherworking) as long as Skinning is not added to the game.
+- Added descriptions to the inn.
+
+Bugfixes:
+- Fixed that exploration events successfully finished even if the player died in combat in the event.
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
