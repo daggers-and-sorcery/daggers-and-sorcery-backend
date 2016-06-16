@@ -162,4 +162,10 @@ public interface SkillMapper {
 
     @Update("UPDATE skills SET leatherworking_xp = leatherworking_xp - #{value} WHERE user_id = #{userId}")
     void decreaseLeatherworkingXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET smithing_xp = smithing_xp + #{value} WHERE user_id = #{userId}")
+    void increaseSmithingXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET smithing_xp = smithing_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseSmithingXp(@Param("userId") int userId, @Param("value") long value);
 }

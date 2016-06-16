@@ -8,33 +8,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShortswordsSkillHandler implements SkillHandler {
+public class SmithingSkillHandler implements SkillHandler {
 
     @Autowired
     private SkillMapper skillMapper;
 
     @Override
     public void increaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value) {
-        skillDatabaseEntity.setShortswordsXp(skillDatabaseEntity.getShortswordsXp() + value);
+        skillDatabaseEntity.setSmithingXp(skillDatabaseEntity.getSmithingXp() + value);
 
-        skillMapper.increaseShortswordsXp(skillDatabaseEntity.getUserId(), value);
+        skillMapper.increaseSmithingXp(skillDatabaseEntity.getUserId(), value);
     }
 
     @Override
     public void decreaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value) {
-        skillDatabaseEntity.setShortswordsXp(skillDatabaseEntity.getShortswordsXp() - value);
+        skillDatabaseEntity.setSmithingXp(skillDatabaseEntity.getSmithingXp() - value);
 
-        skillMapper.decreaseShortswordsXp(skillDatabaseEntity.getUserId(), value);
+        skillMapper.decreaseSmithingXp(skillDatabaseEntity.getUserId(), value);
     }
 
     @Override
     public int getExperience(SkillDatabaseEntity skillDatabaseEntity) {
-        return skillDatabaseEntity.getShortswordsXp();
+        return skillDatabaseEntity.getSmithingXp();
     }
 
     @Override
     public SkillType getSupportedSkillType() {
-        return SkillType.SHORTSWORDS;
+        return SkillType.SMITHING;
     }
 }
-
