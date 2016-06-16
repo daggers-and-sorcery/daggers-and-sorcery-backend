@@ -11,5 +11,5 @@ import java.util.List;
 public interface LadderMapper {
 
     @Select("SELECT * FROM skills ORDER BY #{skill} LIMIT 20")
-    List<SkillDatabaseEntity> getLadderData(@Param("skill")String skill);
+    List<SkillDatabaseEntity> getLadderData(@Param("skill") String skill);
 }

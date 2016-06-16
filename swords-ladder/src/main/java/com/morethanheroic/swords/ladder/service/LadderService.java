@@ -32,7 +32,7 @@ public class LadderService {
 
     public List<LadderEntry> getLadderData(UserEntity userEntity, SkillType skillType) {
         final SkillHandler skillHandler = skillHandlerProvider.getSkillHandler(skillType);
-        final List<SkillDatabaseEntity> skillDatabaseEntities = ladderMapper.getLadderData("two_handed_axes_xp");
+        final List<SkillDatabaseEntity> skillDatabaseEntities = ladderMapper.getLadderData(getSkillColumnName(skillType));
 
         final List<LadderEntry> result = new ArrayList<>();
         for (SkillDatabaseEntity skillDatabaseEntity : skillDatabaseEntities) {
@@ -46,5 +46,10 @@ public class LadderService {
         }
 
         return result;
+    }
+
+    //TODO: We seriously need to do something better than this. I just have no better idea for it at the moment. :S
+    private String getSkillColumnName(SkillType skillType) {
+        return skillType.name().toLowerCase() + "_xp";
     }
 }

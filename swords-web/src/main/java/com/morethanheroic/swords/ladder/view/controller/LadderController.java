@@ -1,7 +1,9 @@
 package com.morethanheroic.swords.ladder.view.controller;
 
-import com.morethanheroic.swords.ladder.domain.LadderEntry;
+import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.ladder.service.LadderService;
+import com.morethanheroic.swords.ladder.view.response.domain.configuration.LadderResponseBuilderConfiguration;
+import com.morethanheroic.swords.ladder.view.response.service.LadderResponseBuilder;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 public class LadderController {
 
     @Autowired
     private LadderService ladderService;
 
-    //TODO: USE RESPONSE!!!
+    @Autowired
+    private LadderResponseBuilder ladderResponseBuilder;
+
     @RequestMapping(value = "/ladder/skill/{skill}", method = RequestMethod.GET)
-    public List<LadderEntry> ladderInfo(UserEntity userEntity, @PathVariable SkillType skill) {
-        //TODO: validate skill
-        return ladderService.getLadderData(userEntity, skill);
+    public Response ladderInfo(UserEntity userEntity, @PathVariable SkillType skill) {
+        return ladderResponseBuilder.build(
+                LadderResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .ladderEntries(ladderService.getLadderData(userEntity, skill))
+                        .build()
+        );
     }
 }

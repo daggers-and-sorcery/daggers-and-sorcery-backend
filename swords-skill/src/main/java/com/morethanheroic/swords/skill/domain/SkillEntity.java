@@ -53,32 +53,14 @@ public class SkillEntity {
     }
 
     public int getLevel(SkillType attribute) {
-        return getLevelFromExperience(getExperience(attribute));
+        return skillLevelCalculator.getLevelFromExperience(getExperience(attribute));
     }
 
     public int getExperienceToNextLevel(SkillType attribute) {
-        return getExperienceFromLevel(getLevel(attribute) + 1);
+        return skillLevelCalculator.getExperienceFromLevel(getLevel(attribute) + 1);
     }
 
     public int getExperienceBetweenNextLevel(SkillType attribute) {
-        return getExperienceFromLevel(getLevel(attribute) + 1) - getExperienceFromLevel(getLevel(attribute));
-    }
-
-    /**
-     * @deprecated  Use {@link SkillLevelCalculator#getExperienceFromLevel(int)} instead.
-     */
-    @Deprecated
-    @SuppressWarnings("checkstyle:magicnumber")
-    public int getExperienceFromLevel(int level) {
-        return skillLevelCalculator.getExperienceFromLevel(level);
-    }
-
-    /**
-     * @deprecated  Use {@link SkillLevelCalculator#getLevelFromExperience(long)} instead.
-     */
-    @Deprecated
-    @SuppressWarnings("checkstyle:magicnumber")
-    public int getLevelFromExperience(long xp) {
-        return skillLevelCalculator.getLevelFromExperience(xp);
+        return skillLevelCalculator.getExperienceFromLevel(getLevel(attribute) + 1) - skillLevelCalculator.getExperienceFromLevel(getLevel(attribute));
     }
 }
