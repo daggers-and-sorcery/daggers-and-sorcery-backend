@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.leatherworking.service;
+package com.morethanheroic.swords.skill.smithing.service;
 
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
@@ -9,17 +9,16 @@ import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
 import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
 import com.morethanheroic.swords.recipe.service.result.RecipeEvaluator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
-import com.morethanheroic.swords.skill.leatherworking.domain.LeatherworkingResult;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
+import com.morethanheroic.swords.skill.smithing.domain.SmithingResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class LeatherworkingService {
+public class SmithingService {
 
-    private static final int LEATHERWORKING_MOVEMENT_POINT_COST = 1;
+    private static final int SMITHING_MOVEMENT_POINT_COST = 1;
 
     @Autowired
     private RecipeEvaluator recipeEvaluator;
@@ -42,30 +41,29 @@ public class LeatherworkingService {
     @Autowired
     private LearnedRecipeEvaluator learnedRecipeEvaluator;
 
-    @Transactional
-    public LeatherworkingResult work(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
+    public SmithingResult smith(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null || !learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)) {
-            return LeatherworkingResult.INVALID_EVENT;
+            return SmithingResult.INVALID_EVENT;
         }
 
         if (!recipeIngredientEvaluator.hasIngredients(userEntity, recipeDefinition)) {
-            return LeatherworkingResult.MISSING_INGREDIENTS;
+            return SmithingResult.MISSING_INGREDIENTS;
         }
 
         if (!recipeRequirementEvaluator.hasRequirements(userEntity, recipeDefinition)) {
-            return LeatherworkingResult.MISSING_REQUIREMENTS;
+            return SmithingResult.MISSING_REQUIREMENTS;
         }
 
         if (userEntity.getMovementPoints() <= 0) {
-            return LeatherworkingResult.NOT_ENOUGH_MOVEMENT;
+            return SmithingResult.NOT_ENOUGH_MOVEMENT;
         }
 
-        userBasicAttributeManipulator.decreaseMovement(userEntity, LEATHERWORKING_MOVEMENT_POINT_COST);
+        userBasicAttributeManipulator.decreaseMovement(userEntity, SMITHING_MOVEMENT_POINT_COST);
 
         final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
         final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
         final boolean isSuccessfulAttempt = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
 
-        return isSuccessfulAttempt ? LeatherworkingResult.SUCCESSFUL : LeatherworkingResult.UNSUCCESSFUL;
+        return isSuccessfulAttempt ? SmithingResult.SUCCESSFUL : SmithingResult.UNSUCCESSFUL;
     }
 }
