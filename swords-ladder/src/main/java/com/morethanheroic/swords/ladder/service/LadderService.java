@@ -63,6 +63,12 @@ public class LadderService {
         if (skillType == SkillType.STAFF) {
             return "staffs_xp";
         }
+        if (skillType == SkillType.SPECTRE) {
+            return "spectres_xp";
+        }
+        if (skillType == SkillType.WAND) {
+            return "wands_xp";
+        }
 
         return skillType.name().toLowerCase() + "_xp";
     }
