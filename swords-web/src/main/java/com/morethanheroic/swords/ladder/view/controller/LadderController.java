@@ -21,12 +21,13 @@ public class LadderController {
     @Autowired
     private LadderResponseBuilder ladderResponseBuilder;
 
-    @RequestMapping(value = "/ladder/skill/{skill}", method = RequestMethod.GET)
-    public Response ladderInfo(UserEntity userEntity, @PathVariable SkillType skill) {
+    @RequestMapping(value = "/ladder/skill/{skill}/{page}", method = RequestMethod.GET)
+    public Response ladderInfo(UserEntity userEntity, @PathVariable SkillType skill, @PathVariable int page) {
         return ladderResponseBuilder.build(
                 LadderResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
-                        .ladderEntries(ladderService.getLadderData(userEntity, skill))
+                        .ladderEntries(ladderService.getLadderData(userEntity, skill, page))
+                        .pageCount(ladderService.pageCount(skill))
                         .build()
         );
     }

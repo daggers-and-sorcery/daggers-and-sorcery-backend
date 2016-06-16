@@ -30,7 +30,7 @@ public class LadderService {
     @Autowired
     private SkillLevelCalculator skillLevelCalculator;
 
-    public List<LadderEntry> getLadderData(UserEntity userEntity, SkillType skillType) {
+    public List<LadderEntry> getLadderData(UserEntity userEntity, SkillType skillType, int page) {
         final SkillHandler skillHandler = skillHandlerProvider.getSkillHandler(skillType);
         final List<SkillDatabaseEntity> skillDatabaseEntities = ladderMapper.getLadderData(getSkillColumnName(skillType));
 
@@ -48,8 +48,13 @@ public class LadderService {
         return result;
     }
 
+    public int pageCount(final SkillType skillType) {
+        //TODO: get this from somewhere (LadderMapper?)
+        return 50;
+    }
+
     //TODO: We seriously need to do something better than this. I just have no better idea for it at the moment. :S
-    private String getSkillColumnName(SkillType skillType) {
+    private String getSkillColumnName(final SkillType skillType) {
         return skillType.name().toLowerCase() + "_xp";
     }
 }

@@ -14,4 +14,5 @@ public class LadderResponseBuilderConfiguration implements ResponseBuilderConfig
 
     private final UserEntity userEntity;
     private final List<LadderEntry> ladderEntries;
+    private final int pageCount;
 }
