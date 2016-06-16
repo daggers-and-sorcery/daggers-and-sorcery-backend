@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160614-1">
+        <insert tableName="news">
+            <column name="title" value="Small skilling improvements"/>
+            <column name="release_date" value="2016-06-16 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are releasing a small patch to address some of the problems with the crafting skills.
+
+Improvements:
+- Added Fox skin as a drop for the Goblin Piker and Goblin Guard with 3% chance to make leatherworking a little easier to start.
+- Added Frying pan as a drop for the Goblin Piker and Goblin Guard with 2% chance. This item was required by cooking but nothing dropped it.
+
+Bugfixes:
+- Fixed the name of the recipes in the Leatherworking Recipe screen for Leather boots and Leather gloves. Both was incorrectly named as Leather strap.
+
+We also working on a ladder system to enhance the community and improve the player interaction a little bit and also on smithing that will be released soon hopefully.
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
