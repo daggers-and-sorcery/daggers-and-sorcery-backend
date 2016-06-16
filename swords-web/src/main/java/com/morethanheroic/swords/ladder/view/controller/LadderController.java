@@ -27,7 +27,7 @@ public class LadderController {
                 LadderResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
                         .ladderEntries(ladderService.getLadderData(userEntity, skill, page))
-                        .pageCount(ladderService.pageCount(skill))
+                        .pageCount(ladderService.pageCount())
                         .build()
         );
     }

@@ -18,6 +18,8 @@ import java.util.List;
 @Service
 public class LadderService {
 
+    private static final int USER_PER_PAGE = 20;
+
     @Autowired
     private LadderMapper ladderMapper;
 
@@ -31,8 +33,12 @@ public class LadderService {
     private SkillLevelCalculator skillLevelCalculator;
 
     public List<LadderEntry> getLadderData(UserEntity userEntity, SkillType skillType, int page) {
+        if (page < 1) {
+            throw new IllegalArgumentException("Page should be minimum 1!");
+        }
+
         final SkillHandler skillHandler = skillHandlerProvider.getSkillHandler(skillType);
-        final List<SkillDatabaseEntity> skillDatabaseEntities = ladderMapper.getLadderData(getSkillColumnName(skillType));
+        final List<SkillDatabaseEntity> skillDatabaseEntities = ladderMapper.getLadderData(getSkillColumnName(skillType), page * USER_PER_PAGE - USER_PER_PAGE, page * USER_PER_PAGE);
 
         final List<LadderEntry> result = new ArrayList<>();
         for (SkillDatabaseEntity skillDatabaseEntity : skillDatabaseEntities) {
@@ -48,13 +54,16 @@ public class LadderService {
         return result;
     }
 
-    public int pageCount(final SkillType skillType) {
-        //TODO: get this from somewhere (LadderMapper?)
-        return 50;
+    public int pageCount() {
+        return ladderMapper.getSkillCount() / USER_PER_PAGE;
     }
 
     //TODO: We seriously need to do something better than this. I just have no better idea for it at the moment. :S
     private String getSkillColumnName(final SkillType skillType) {
+        if (skillType == SkillType.STAFF) {
+            return "staffs_xp";
+        }
+
         return skillType.name().toLowerCase() + "_xp";
     }
 }
