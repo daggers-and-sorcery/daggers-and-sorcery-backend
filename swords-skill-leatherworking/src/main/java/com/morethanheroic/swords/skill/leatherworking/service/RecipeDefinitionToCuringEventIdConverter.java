@@ -10,6 +10,10 @@ public class RecipeDefinitionToCuringEventIdConverter {
         switch (recipeDefinition.getId()) {
             case 13:
                 return 1;
+            case 14:
+                return 2;
+            case 15:
+                return 3;
             default:
                 throw new IllegalArgumentException("The recipe: " + recipeDefinition + " doesn't have an event definition!");
         }
