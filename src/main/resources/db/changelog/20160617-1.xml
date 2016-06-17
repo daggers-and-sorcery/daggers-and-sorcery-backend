@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160617-1">
+        <insert tableName="news">
+            <column name="title" value="The Ladder is here"/>
+            <column name="release_date" value="2016-06-17 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are happy to announce that our hiscore system, the Ladder is finally here. It's a really simple implementation at the moment but we think it's enough for now. We hope that this will enhance the community/multiplayer part of the game a bit.
+
+Also after looking into the player feedback we decided to change our priorities a bit and delay smithing until we do some combat rebalancing. We are aware that some of the monsters are too hard to kill especially for non-melee races (Draconic, Elfs, Gnomes) mostly because magic is not implemented yet. This is our next priority to fix. After these problems are fixed we will add smithing and also a very basic tutorial menu/screen that will help new players to get into the game faster and easier.
+
+We have a small ongoing facebook campaign to find new players. Sadly the budget is really tight but we are trying to get a small initial player base.
+
+You can find our facebook page [here](https://www.facebook.com/DaggersAndSorcery/). If you have any problems or remarks about the game please feel free to write a comment/message either on the Facebook page or in the Inn's chatroom.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
