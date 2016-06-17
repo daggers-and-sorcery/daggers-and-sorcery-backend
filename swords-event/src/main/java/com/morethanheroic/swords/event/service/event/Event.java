@@ -8,6 +8,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
  *
  * 1 - Fox skin (curing)
  * 2 - Deer skin (curing)
+ * 3 - Wolf skin (curing)
  */
 public interface Event {
 
