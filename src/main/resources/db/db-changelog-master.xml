@@ -50,4 +50,8 @@
     <include file="changelog/20160604-1.xml" relativeToChangelogFile="true"/>
 
     <include file="changelog/20160614-1.xml" relativeToChangelogFile="true"/>
+    
+    <include file="changelog/20160616-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160617-1.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
