@@ -30,7 +30,8 @@ public enum SkillAttribute implements Attribute {
     SPECTRE,
     SCAVENGING,
     COOKING,
-    LEATHERWORKING;
+    LEATHERWORKING,
+    SMITHING;
 
     @Override
     public AttributeType getAttributeType() {

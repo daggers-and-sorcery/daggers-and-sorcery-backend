@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<skill-attribute:skill-attribute xmlns:skill-attribute="http://www.swordsandsorcery.com/skill-attribute" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                 xsi:schemaLocation="http://www.swordsandsorcery.com/skill-attribute ../schema.xsd">
+    <skill-attribute:name>Smithing</skill-attribute:name>
+    <skill-attribute:incremented-attribute>STRENGTH</skill-attribute:incremented-attribute>
+    <skill-attribute:has-page>true</skill-attribute:has-page>
+</skill-attribute:skill-attribute>

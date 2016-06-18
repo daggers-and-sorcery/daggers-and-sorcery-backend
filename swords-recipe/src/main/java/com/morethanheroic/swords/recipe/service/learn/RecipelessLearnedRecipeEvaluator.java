@@ -1,32 +1,53 @@
-package com.morethanheroic.swords.skill.leatherworking.service.recipe;
+package com.morethanheroic.swords.recipe.service.learn;
 
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
-import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
-import com.morethanheroic.swords.recipe.service.learn.RecipelessLearnedRecipeEvaluator;
+import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-/**
- * @deprecated Should be replaced with {@link RecipelessLearnedRecipeEvaluator}.
- */
-@Service
-@Deprecated
-public class LeatherworkingBaseLearnedRecipeEvaluator implements LearnedRecipeEvaluator {
-
-    protected List<RecipeDefinition> recipeDefinitions;
+public class RecipelessLearnedRecipeEvaluator implements LearnedRecipeEvaluator {
 
     @Autowired
     private SkillEntityFactory skillEntityFactory;
+
+    @Autowired
+    private RecipeDefinitionCache recipeDefinitionCache;
+
+    private final SkillType skillType;
+    private final RecipeType recipeType;
+
+    private List<RecipeDefinition> recipeDefinitions;
+
+    public RecipelessLearnedRecipeEvaluator(SkillType skillType, RecipeType recipeType) {
+        this.skillType = skillType;
+        this.recipeType = recipeType;
+    }
+
+    @PostConstruct
+    private void initialize() {
+        final List<RecipeDefinition> result = new ArrayList<>();
+
+        for (int i = 1; i <= recipeDefinitionCache.getSize(); i++) {
+            final RecipeDefinition recipeDefinition = recipeDefinitionCache.getDefinition(i);
+
+            if (recipeDefinition.getType() == recipeType) {
+                result.add(recipeDefinition);
+            }
+        }
+
+        recipeDefinitions = Collections.unmodifiableList(result);
+    }
 
     @Override
     public List<RecipeDefinition> getLearnedRecipes(UserEntity userEntity, RecipeType recipeType) {
@@ -38,8 +59,8 @@ public class LeatherworkingBaseLearnedRecipeEvaluator implements LearnedRecipeEv
                 if (recipeRequirement instanceof RecipeSkillRequirement) {
                     final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;
 
-                    if (recipeSkillRequirement.getSkill() == SkillType.LEATHERWORKING
-                            && skillEntity.getLevel(SkillType.LEATHERWORKING) >= ((RecipeSkillRequirement) recipeRequirement).getAmount()) {
+                    if (recipeSkillRequirement.getSkill() == skillType
+                            && skillEntity.getLevel(skillType) >= ((RecipeSkillRequirement) recipeRequirement).getAmount()) {
                         result.add(recipeDefinition);
                     }
                 }
@@ -57,8 +78,8 @@ public class LeatherworkingBaseLearnedRecipeEvaluator implements LearnedRecipeEv
             if (recipeRequirement instanceof RecipeSkillRequirement) {
                 final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;
 
-                if (recipeSkillRequirement.getSkill() == SkillType.LEATHERWORKING
-                        && skillEntity.getLevel(SkillType.LEATHERWORKING) >= ((RecipeSkillRequirement) recipeRequirement).getAmount()) {
+                if (recipeSkillRequirement.getSkill() == skillType
+                        && skillEntity.getLevel(skillType) >= ((RecipeSkillRequirement) recipeRequirement).getAmount()) {
                     return true;
                 }
             }

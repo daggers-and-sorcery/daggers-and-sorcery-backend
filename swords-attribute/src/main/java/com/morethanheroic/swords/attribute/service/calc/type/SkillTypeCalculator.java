@@ -104,6 +104,8 @@ public class SkillTypeCalculator {
                 return SkillType.SCAVENGING;
             case LEATHERWORKING:
                 return SkillType.LEATHERWORKING;
+            case SMITHING:
+                return SkillType.SMITHING;
             default:
                 throw new IllegalArgumentException("No skill found for skill attribute type: " + skillAttribute);
         }
