@@ -28,16 +28,11 @@ public class SmeltingInfoResponseBuilder implements ResponseBuilder<SmeltingInfo
 
         response.setData("smelting_recipes", smeltingRecipeListPartialResponseBuilder.build(smeltingInfoResponseBuilderConfiguration));
         response.setData("skill", skillLevelPartialResponseBuilder.build(SkillLevelPartialResponseBuilderConfiguration.builder()
-                        .skillLevel(getSmithingLevel(smeltingInfoResponseBuilderConfiguration.getUserEntity()))
+                        .skillLevel(smeltingInfoResponseBuilderConfiguration.getSmithingLevel())
                         .build()
                 )
         );
 
         return response;
-    }
-
-    //TODO: This shouldn't be here! This should come from the config.
-    private int getSmithingLevel(final UserEntity userEntity) {
-        return skillEntityFactory.getSkillEntity(userEntity).getLevel(SkillType.SMITHING);
     }
 }

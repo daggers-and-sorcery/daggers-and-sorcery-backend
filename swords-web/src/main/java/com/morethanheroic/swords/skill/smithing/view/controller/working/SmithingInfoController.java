@@ -1,10 +1,10 @@
-package com.morethanheroic.swords.skill.smithing.view.controller.smelting;
+package com.morethanheroic.swords.skill.smithing.view.controller.working;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
-import com.morethanheroic.swords.skill.smithing.view.response.domain.configuration.smelting.SmeltingInfoResponseBuilderConfiguration;
-import com.morethanheroic.swords.skill.smithing.view.response.service.smelting.SmeltingInfoResponseBuilder;
+import com.morethanheroic.swords.skill.smithing.view.response.domain.configuration.working.SmithingInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.smithing.view.response.service.working.SmithingInfoResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SmeltingInfoController {
+public class SmithingInfoController {
 
     @Autowired
-    private SmeltingInfoResponseBuilder smeltingInfoResponseBuilder;
+    private SmithingInfoResponseBuilder smithingInfoResponseBuilder;
 
     @Autowired
     private SkillEntityFactory skillEntityFactory;
 
-    @RequestMapping(value = "/skill/smithing/smelting/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/skill/smithing/working/info", method = RequestMethod.GET)
     public Response smeltingInfo(UserEntity userEntity) {
-        return smeltingInfoResponseBuilder.build(
-                SmeltingInfoResponseBuilderConfiguration.builder()
+        return smithingInfoResponseBuilder.build(
+                SmithingInfoResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
                         .smithingLevel(skillEntityFactory.getSkillEntity(userEntity).getLevel(SkillType.SMITHING))
                         .build()
