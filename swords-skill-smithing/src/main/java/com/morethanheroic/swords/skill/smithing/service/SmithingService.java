@@ -14,6 +14,7 @@ import com.morethanheroic.swords.skill.smithing.domain.SmithingResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SmithingService {
@@ -41,6 +42,7 @@ public class SmithingService {
     @Autowired
     private LearnedRecipeEvaluator learnedRecipeEvaluator;
 
+    @Transactional
     public SmithingResult smith(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null || !learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)) {
             return SmithingResult.INVALID_EVENT;
