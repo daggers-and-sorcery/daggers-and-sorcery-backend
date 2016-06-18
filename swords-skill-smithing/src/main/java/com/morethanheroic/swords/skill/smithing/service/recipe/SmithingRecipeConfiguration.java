@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SmithingRecipeConfiguration {
 
-    @Bean
+    @Bean(name = "smithingSmeltingLearnedRecipeEvaluator")
     public LearnedRecipeEvaluator smithingSmeltingLearnedRecipeEvaluator() {
         return new RecipelessLearnedRecipeEvaluator(SkillType.SMITHING, RecipeType.SMITHING_SMELTING);
     }
