@@ -13,6 +13,7 @@ import com.morethanheroic.swords.skill.smithing.domain.SmeltingResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SmeltingService {
@@ -37,6 +38,7 @@ public class SmeltingService {
     @Autowired
     private UserBasicAttributeManipulator userBasicAttributeManipulator;
 
+    @Transactional
     public SmeltingResult smelt(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null) {
             return SmeltingResult.INVALID_EVENT;

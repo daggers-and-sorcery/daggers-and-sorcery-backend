@@ -125,7 +125,6 @@ dependencies {
     compile project(':swords-response')
     compile project(':swords-skill')
     compile project(':swords-skill-scavenging')
-    compile project(':swords-skill-smithing')
     compile project(':swords-race')
     compile project(':swords-effect')
     compile project(':swords-web')

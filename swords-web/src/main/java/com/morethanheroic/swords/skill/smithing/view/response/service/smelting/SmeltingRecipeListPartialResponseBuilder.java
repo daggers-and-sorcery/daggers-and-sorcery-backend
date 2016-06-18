@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.smithing.view.response.domain.configuration.smelting;
+package com.morethanheroic.swords.skill.smithing.view.response.service.smelting;
 
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
@@ -7,6 +7,7 @@ import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
 import com.morethanheroic.swords.recipe.service.response.RecipePartialResponseBuilder;
 import com.morethanheroic.swords.recipe.service.response.domain.RecipePartialResponse;
 import com.morethanheroic.swords.recipe.service.response.domain.configuration.RecipePartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.smithing.view.response.domain.configuration.smelting.SmeltingInfoResponseBuilderConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
