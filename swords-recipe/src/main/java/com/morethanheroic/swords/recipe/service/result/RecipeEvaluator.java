@@ -6,6 +6,8 @@ import com.morethanheroic.swords.skill.domain.SkillEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
@@ -18,6 +20,7 @@ public class RecipeEvaluator {
     private final RecipeExperienceAwarder recipeExperienceAwarder;
     private final Random random;
 
+    @Transactional(propagation = Propagation.MANDATORY)
     public boolean evaluateResult(InventoryEntity inventoryEntity, SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
         final boolean isSuccessfulAttempt = isSuccessful(recipeDefinition);
 

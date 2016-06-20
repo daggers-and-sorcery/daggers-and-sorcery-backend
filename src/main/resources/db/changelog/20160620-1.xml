@@ -1,0 +1,40 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160620-1">
+        <insert tableName="news">
+            <column name="title" value="Smithing, a new tradeskill is released!"/>
+            <column name="release_date" value="2016-06-20 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers,
+
+We are happy to announce that a new skill, Smithing is arrived to the game. This skill will let you create various metal armors and weapons and also some supply equipment.
+
+We also lowered the drop chances and prices of some items to make smithing more significant.
+
+Improvements:
+- Smithing as a new tradeskill is added to the game.
+- Added 11 new recipes and 17 new items to the game. The recipes added are all for the new smithing skill and some of them have very low (less than 1%) drop rate. New item and armor types are also released in this batch of items like shield, dagger etc.
+- Daggers are added to the game. They are balanced to have high damage and low attack to be a good fit for races with high Dexterity (eg Dark elf, Lizardmen).
+- Shields are added to the game. We released two shields, a small one for rogue classes and a heavy duty kite shield for more tanky ones.
+- Lowered the drop chances of 'Recipe: Leather gloves' and 'Recipe: Leather boots' by 0.5% from 1.5% to 1%.
+- Lowered the drop chances of 'Bronze pickaxe' and 'Bronze axe' from 3% to 1% because we added a recipe for them to the Smithing skill.
+- Lowered the drop chance of 'Frying pan' from 2% to 0.5% on all monsters because we added a recipe for it to the Smithing skill.
+- Lowered the price of 'Tin ore' and 'Copper ore' from 5 to 3.
+- Lowered the price of the 'Bronze bar' from 10 to 7.
+- Increased the 'Salt' required for curing 'Deer skin' from 1 to 2.
+
+Bugfixes:
+- Fixed a bug that prevented the curing of Deer skin.
+- Fixed that cooking the Apple pie recipe resulted in a 'Recipe: Apple pie' item instead of an 'Apple pie'.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

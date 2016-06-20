@@ -37,3 +37,4 @@ public class ShortswordsSkillHandler implements SkillHandler {
         return SkillType.SHORTSWORDS;
     }
 }
+

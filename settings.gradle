@@ -36,5 +36,5 @@ include 'swords-dice'
 include 'swords-inn'
 include 'swords-skill-leatherworking'
 include 'swords-event'
+include 'swords-skill-smithing'
 include 'swords-ladder'
-

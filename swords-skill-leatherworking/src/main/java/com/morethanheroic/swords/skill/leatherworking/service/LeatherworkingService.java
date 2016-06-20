@@ -6,6 +6,7 @@ import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
 import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
+import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
 import com.morethanheroic.swords.recipe.service.result.RecipeEvaluator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.leatherworking.domain.LeatherworkingResult;
@@ -38,9 +39,12 @@ public class LeatherworkingService {
     @Autowired
     private UserBasicAttributeManipulator userBasicAttributeManipulator;
 
+    @Autowired
+    private LearnedRecipeEvaluator learnedRecipeEvaluator;
+
     @Transactional
-    public LeatherworkingResult work(UserEntity userEntity, RecipeDefinition recipeDefinition) {
-        if (recipeDefinition == null) {
+    public LeatherworkingResult work(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
+        if (recipeDefinition == null || !learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)) {
             return LeatherworkingResult.INVALID_EVENT;
         }
 

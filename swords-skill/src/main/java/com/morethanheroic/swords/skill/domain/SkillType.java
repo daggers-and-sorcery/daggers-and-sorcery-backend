@@ -31,7 +31,8 @@ public enum SkillType {
     SPECTRE,
     SCAVENGING,
     COOKING,
-    LEATHERWORKING;
+    LEATHERWORKING,
+    SMITHING;
 
     public String getName() {
         //TODO: Get this from definition if definition handling is exist.

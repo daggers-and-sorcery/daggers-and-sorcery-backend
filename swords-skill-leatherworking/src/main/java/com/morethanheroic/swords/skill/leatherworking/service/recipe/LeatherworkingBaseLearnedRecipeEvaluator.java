@@ -5,6 +5,7 @@ import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
 import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
+import com.morethanheroic.swords.recipe.service.learn.RecipelessLearnedRecipeEvaluator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
@@ -15,7 +16,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @deprecated Should be replaced with {@link RecipelessLearnedRecipeEvaluator}.
+ */
 @Service
+@Deprecated
 public class LeatherworkingBaseLearnedRecipeEvaluator implements LearnedRecipeEvaluator {
 
     protected List<RecipeDefinition> recipeDefinitions;

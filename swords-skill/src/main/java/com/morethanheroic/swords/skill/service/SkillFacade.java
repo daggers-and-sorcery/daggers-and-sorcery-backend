@@ -19,7 +19,7 @@ public class SkillFacade {
     private final SkillEntityFactory skillEntityFactory;
 
     /**
-     * @deprecated Use {@link SkillEntityFactory} instead.
+     * @deprecated Use {@link SkillEntityFactory#getSkillEntity(UserEntity)} instead.
      */
     public SkillEntity getSkills(UserEntity userEntity) {
         return skillEntityFactory.getSkillEntity(userEntity);
