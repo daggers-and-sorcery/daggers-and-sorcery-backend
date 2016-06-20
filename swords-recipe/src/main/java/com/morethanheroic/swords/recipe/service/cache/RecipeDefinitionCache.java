@@ -2,6 +2,7 @@ package com.morethanheroic.swords.recipe.service.cache;
 
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
+import com.morethanheroic.swords.recipe.service.exception.MissingRecipeException;
 import com.morethanheroic.swords.recipe.service.loader.RecipeDefinitionLoader;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,12 @@ public class RecipeDefinitionCache implements DefinitionCache<Integer, RecipeDef
     }
 
     @Override
-    public RecipeDefinition getDefinition(Integer id) {
-        return recipeDefinitionMap.get(id);
+    public RecipeDefinition getDefinition(final Integer recipeId) {
+        if (hasDefinition(recipeId)) {
+            return recipeDefinitionMap.get(recipeId);
+        }
+
+        throw new MissingRecipeException(recipeId);
     }
 
     @Override
