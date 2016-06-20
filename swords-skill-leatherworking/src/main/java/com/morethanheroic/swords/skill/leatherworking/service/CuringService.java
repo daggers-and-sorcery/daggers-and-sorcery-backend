@@ -64,14 +64,14 @@ public class CuringService {
             return CuringResult.NOT_ENOUGH_MOVEMENT;
         }
 
-        recipeIngredientsRemover.removeIngredients(inventoryFacade.getInventory(userEntity), recipeDefinition);
-
         final EventEntity eventEntity = EventEntity.builder()
                 .eventId(recipeDefinitionToCuringEventConverter.convert(recipeDefinition))
                 .user(userEntity)
                 .build();
 
         eventRegistry.registerEvent(eventEntity);
+
+        recipeIngredientsRemover.removeIngredients(inventoryFacade.getInventory(userEntity), recipeDefinition);
 
         userBasicAttributeManipulator.decreaseMovement(userEntity, CURING_MOVEMENT_POINT_COST);
 

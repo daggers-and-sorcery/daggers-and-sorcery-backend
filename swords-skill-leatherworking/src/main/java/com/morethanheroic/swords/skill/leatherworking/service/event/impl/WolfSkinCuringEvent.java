@@ -10,29 +10,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FoxSkinCuredEvent implements Event {
+public class WolfSkinCuringEvent implements Event {
 
-    private static final int FOX_SKIN_CURING_RECIPE_ID = 13;
-    private static final int FOX_SKIN_EVENT_ID = 1;
+    private static final int WOLF_SKIN_CURING_RECIPE_ID = 15;
+    private static final int WOLF_SKIN_EVENT_ID = 3;
 
     @Autowired
     private CuringEventExecutor curingEventExecutor;
 
-    private final RecipeDefinition foxSkinCuringRecipe;
+    private final RecipeDefinition wolfSkinCuringRecipe;
 
     @Autowired
-    public FoxSkinCuredEvent(final RecipeDefinitionCache recipeDefinitionCache) {
-        foxSkinCuringRecipe = recipeDefinitionCache.getDefinition(FOX_SKIN_CURING_RECIPE_ID);
+    public WolfSkinCuringEvent(final RecipeDefinitionCache recipeDefinitionCache) {
+        wolfSkinCuringRecipe = recipeDefinitionCache.getDefinition(WOLF_SKIN_CURING_RECIPE_ID);
     }
 
     @Override
-    public void processEvent(UserEntity userEntity) {
-        curingEventExecutor.evaluateEvent(userEntity, foxSkinCuringRecipe);
+    public void processEvent(final UserEntity userEntity) {
+        curingEventExecutor.evaluateEvent(userEntity, wolfSkinCuringRecipe);
     }
 
     @Override
     public int getId() {
-        return FOX_SKIN_EVENT_ID;
+        return WOLF_SKIN_EVENT_ID;
     }
 
     @Override
