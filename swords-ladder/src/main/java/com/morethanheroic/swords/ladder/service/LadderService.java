@@ -38,7 +38,7 @@ public class LadderService {
         }
 
         final SkillHandler skillHandler = skillHandlerProvider.getSkillHandler(skillType);
-        final List<SkillDatabaseEntity> skillDatabaseEntities = ladderMapper.getLadderData(getSkillColumnName(skillType), page * USER_PER_PAGE - USER_PER_PAGE, page * USER_PER_PAGE);
+        final List<SkillDatabaseEntity> skillDatabaseEntities = ladderMapper.getLadderData(getSkillColumnName(skillType), calculateStartingEntry(page), USER_PER_PAGE);
 
         final List<LadderEntry> result = new ArrayList<>();
         for (SkillDatabaseEntity skillDatabaseEntity : skillDatabaseEntities) {
@@ -56,6 +56,10 @@ public class LadderService {
 
     public int pageCount() {
         return ladderMapper.getSkillCount() / USER_PER_PAGE;
+    }
+
+    private int calculateStartingEntry(final int page) {
+        return page * USER_PER_PAGE - USER_PER_PAGE;
     }
 
     //TODO: We seriously need to do something better than this. I just have no better idea for it at the moment. :S
