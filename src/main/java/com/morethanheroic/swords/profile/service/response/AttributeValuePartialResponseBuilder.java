@@ -106,6 +106,7 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
                     ));
         }
 
+        //TODO: remove skill from the flow once its got refactored out! - Possibly this already happened!???
         if (attribute.getAttributeType() == AttributeType.SKILL) {
             final SkillAttributeData skillAttributeData = (SkillAttributeData) attributeData;
 

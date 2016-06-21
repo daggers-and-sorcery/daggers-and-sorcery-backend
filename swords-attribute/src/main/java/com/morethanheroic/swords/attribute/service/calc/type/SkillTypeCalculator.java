@@ -2,12 +2,42 @@ package com.morethanheroic.swords.attribute.service.calc.type;
 
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.item.domain.ItemType;
+import com.morethanheroic.swords.skill.domain.SkillGroup;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 //TODO: load these maps from config xml files.
 @Service
 public class SkillTypeCalculator {
+
+    private final List<SkillType> tradeSkills;
+    private final List<SkillType> combatSkills;
+
+    public SkillTypeCalculator() {
+        final List<SkillType> temporaryTradeSkills = new ArrayList<>();
+        final List<SkillType> temporaryCombatSkills = new ArrayList<>();
+        for (SkillType skillType : SkillType.values()) {
+            if (skillType.getSkillGroup() == SkillGroup.TRADE) {
+                temporaryTradeSkills.add(skillType);
+            } else {
+                temporaryCombatSkills.add(skillType);
+            }
+        }
+        this.tradeSkills = Collections.unmodifiableList(temporaryTradeSkills);
+        this.combatSkills = Collections.unmodifiableList(temporaryCombatSkills);
+    }
+
+    public List<SkillType> getTradeSkills() {
+        return tradeSkills;
+    }
+
+    public List<SkillType> getCombatSkills() {
+        return combatSkills;
+    }
 
     public SkillType getSkillFromItemType(ItemType itemType) {
         switch (itemType) {
@@ -108,6 +138,63 @@ public class SkillTypeCalculator {
                 return SkillType.SMITHING;
             default:
                 throw new IllegalArgumentException("No skill found for skill attribute type: " + skillAttribute);
+        }
+    }
+
+    public SkillAttribute getSkillAttributeFromSkillType(SkillType skillType) {
+        switch (skillType) {
+            case TWO_HANDED_CRUSHING_WEAPONS:
+                return SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS;
+            case ONE_HANDED_CRUSHING_WEAPONS:
+                return SkillAttribute.ONE_HANDED_CRUSHING_WEAPONS;
+            case TWO_HANDED_AXES:
+                return SkillAttribute.TWO_HANDED_AXES;
+            case ONE_HANDED_AXES:
+                return SkillAttribute.ONE_HANDED_AXES;
+            case THROWING_WEAPONS:
+                return SkillAttribute.THROWING_WEAPONS;
+            case LONGSWORDS:
+                return SkillAttribute.LONGBOWS;
+            case SHORTSWORDS:
+                return SkillAttribute.SHORTSWORDS;
+            case POLEARMS:
+                return SkillAttribute.POLEARMS;
+            case DAGGERS:
+                return SkillAttribute.DAGGERS;
+            case LONGBOWS:
+                return SkillAttribute.LONGBOWS;
+            case SHORTBOWS:
+                return SkillAttribute.SHORTBOWS;
+            case CROSSBOWS:
+                return SkillAttribute.CROSSBOWS;
+            case LIGHT_ARMOR:
+                return SkillAttribute.LIGHT_ARMOR;
+            case HEAVY_ARMOR:
+                return SkillAttribute.HEAVY_ARMOR;
+            case ROBE_ARMOR:
+                return SkillAttribute.ROBE_ARMOR;
+            case SHIELD_DEFENSE:
+                return SkillAttribute.SHIELD_DEFENSE;
+            case STAFF:
+                return SkillAttribute.STAFF;
+            case WAND:
+                return SkillAttribute.WAND;
+            case SPECTRE:
+                return SkillAttribute.SPECTRE;
+            case ARMORLESS_DEFENSE:
+                return SkillAttribute.ARMORLESS_DEFENSE;
+            case COOKING:
+                return SkillAttribute.COOKING;
+            case FISTFIGHT:
+                return SkillAttribute.FISTFIGHT;
+            case SCAVENGING:
+                return SkillAttribute.SCAVENGING;
+            case LEATHERWORKING:
+                return SkillAttribute.LEATHERWORKING;
+            case SMITHING:
+                return SkillAttribute.SMITHING;
+            default:
+                throw new IllegalArgumentException("No skill type found for attribute type: " + skillType);
         }
     }
 }
