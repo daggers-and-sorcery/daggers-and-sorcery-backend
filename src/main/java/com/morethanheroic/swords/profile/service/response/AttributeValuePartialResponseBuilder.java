@@ -3,15 +3,13 @@ package com.morethanheroic.swords.profile.service.response;
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
-import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -55,9 +53,13 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
 
     @Override
     public Collection<PartialResponse> build(ProfileInfoResponseBuilderConfiguration responseBuilderConfiguration) {
-        //Do NOT convert this to streams! That will modify the ordering!
         final LinkedList<PartialResponse> result = new LinkedList<>();
         for (Attribute attribute : attributes) {
+            //Skipping skill attributes because they are already refactored from this mess.
+            if (attribute instanceof SkillAttribute) {
+                continue;
+            }
+
             result.add(buildAttributeResponse(responseBuilderConfiguration.getUserEntity(), attribute));
         }
 
@@ -104,30 +106,6 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
                                     .attributeCalculationResult(attributeData.getActual())
                                     .build()
                     ));
-        }
-
-        //TODO: remove skill from the flow once its got refactored out! - Possibly this already happened!???
-        if (attribute.getAttributeType() == AttributeType.SKILL) {
-            final SkillAttributeData skillAttributeData = (SkillAttributeData) attributeData;
-
-            attributeValuePartialResponseBuilder
-                    .actualXp(skillAttributeData.getActualXp())
-                    .nextLevelXp(skillAttributeData.getNextLevelXp())
-                    .xpBetweenLevels(skillAttributeData.getXpBetweenLevels());
-
-            int baseValue = 0;
-            int bonusValue = 0;
-            for (AttributeModifierEntry attributeModifierEntry : skillAttributeData.getModifierData()) {
-                if (attributeModifierEntry.getAttributeModifierType() == AttributeModifierType.LEVEL) {
-                    baseValue += attributeModifierEntry.getAttributeModifierValue().getValue();
-                } else {
-                    bonusValue += attributeModifierEntry.getAttributeModifierValue().getValue();
-                }
-            }
-
-            attributeValuePartialResponseBuilder
-                    .baseValue(baseValue)
-                    .bonusValue(bonusValue);
         }
 
         if (attribute.getAttributeType() == AttributeType.GENERAL) {
