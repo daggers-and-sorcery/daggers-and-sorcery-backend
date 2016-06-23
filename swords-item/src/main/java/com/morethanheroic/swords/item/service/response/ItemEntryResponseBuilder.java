@@ -29,6 +29,12 @@ public class ItemEntryResponseBuilder {
         result.put("weight", (double) itemDefinition.getWeight() / WEIGHT_DIVIDER);
         result.put("equipment", itemDefinition.isEquipment());
         result.put("usable", itemDefinition.isUsable());
+        if (itemDefinition.getFlavour() != null) {
+            result.put("flavour", itemDefinition.getFlavour());
+        }
+        if (itemDefinition.getDescription() != null) {
+            result.put("description", itemDefinition.getDescription());
+        }
 
         final ArrayList<Map<String, Object>> modifiers = new ArrayList<>();
         result.put("modifiers", modifiers);
