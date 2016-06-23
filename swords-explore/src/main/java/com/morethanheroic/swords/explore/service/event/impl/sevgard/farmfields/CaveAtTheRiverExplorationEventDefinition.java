@@ -54,7 +54,7 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
                         .build()
         ).addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("A rock formation rests to your left, and you notice an opening to a large den. Upon closer inspection, there are piles of small animal bones scattered around the entrance along with pawprints. You stiffen as you hear a muffled growl from behind you. You turn slowly and see a " + opponent.getName() + " with a silver fish clenched in its jaws. The " + opponent.getName() + " drops the fish and charges you aggressively. ")
+                        .content("A rock formation rests to your left, and you notice an opening to a large den. Upon closer inspection, there are piles of small animal bones scattered around the entrance along with pawprints. You stiffen as you hear a muffled growl from behind you. You turn slowly and see a " + opponent.getName() + " with a silver fish clenched in its jaws. The " + opponent.getName() + " drops the fish and charges you aggressively.")
                         .build()
         );
 
@@ -72,7 +72,7 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("You glance to the den and sense there might be more " + opponent.getName() + " nearby. You retreat to the river and follow a dirt path back to the fields. You return to Sevgard safely. ")
+                        .content("You glance to the den and sense that there might be more wild animals nearby. You retreat to the river and follow a dirt path back to the fields. You return to Sevgard safely.")
                         .build()
         );
 

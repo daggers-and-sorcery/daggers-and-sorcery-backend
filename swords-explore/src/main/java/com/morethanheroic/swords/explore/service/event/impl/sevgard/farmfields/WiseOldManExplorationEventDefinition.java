@@ -73,7 +73,7 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
                 OptionExplorationEventEntryResult.builder()
                         .options(Lists.newArrayList(
                                 EventOption.builder()
-                                        .text("Give the man 2 copper coins.")
+                                        .text("Give the man 2 bronze coins.")
                                         .optionId(GIVE_COIN_STAGE)
                                         .build(),
                                 EventOption.builder()
@@ -98,7 +98,7 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
             if (inventoryEntity.getMoneyAmount(MoneyType.MONEY) < MONEY_TO_PAY) {
                 explorationResult.addEventEntryResult(
                         TextExplorationEventEntryResult.builder()
-                                .content("You don't have 2 copper to pay. Maybe next time.")
+                                .content("You don't have 2 bronze to pay. Maybe next time.")
                                 .build()
                 ).addEventEntryResult(
                         TextExplorationEventEntryResult.builder()
@@ -119,11 +119,11 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
 
             explorationResult.addEventEntryResult(
                     TextExplorationEventEntryResult.builder()
-                            .content("***Two copper coins is removed from your pouch.***")
+                            .content("***Two bronze coins is removed from your pouch.***")
                             .build()
             ).addEventEntryResult(
                     TextExplorationEventEntryResult.builder()
-                            .content("\"Of course.\" You fumble for your belt and remove a coin pouch. You cross over and kneel before the man. You count out a few copper coins and drop them kindly into his outstretched hand. The man smiles and reveals that he is missing a few teeth. Without warning, the man becomes a grey blur and snatches your weapon.")
+                            .content("\"Of course.\" You fumble for your belt and remove a coin pouch. You cross over and kneel before the man. You count out a few bronze coins and drop them kindly into his outstretched hand. The man smiles and reveals that he is missing a few teeth. Without warning, the man becomes a grey blur and snatches your weapon.")
                             .build()
             );
 
@@ -222,7 +222,7 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
                     OptionExplorationEventEntryResult.builder()
                             .options(Lists.newArrayList(
                                     EventOption.builder()
-                                            .text("Give the man 2 copper coins.")
+                                            .text("Give the man 2 bronze coins.")
                                             .optionId(GIVE_COIN_STAGE)
                                             .build(),
                                     EventOption.builder()
