@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RegenerationDateCalculator {
 
-    private static final int REGENERATION_INTERVAL = 5;
+    private static final int REGENERATION_INTERVAL = 3;
 
     public int calculatePassedDurationSinceLastRegeneration(Instant lastRegenerationTime) {
         long durationSinceLastRegeneration = Instant.now().toEpochMilli() - lastRegenerationTime.toEpochMilli();
@@ -19,6 +19,6 @@ public class RegenerationDateCalculator {
     }
 
     public Instant calculateNewRegenerationDate(UserEntity user, int duration) {
-        return Instant.ofEpochMilli(Instant.from(user.getLastRegenerationDate()).toEpochMilli() + TimeUnit.MINUTES.toMillis(duration * 5));
+        return Instant.ofEpochMilli(Instant.from(user.getLastRegenerationDate()).toEpochMilli() + TimeUnit.MINUTES.toMillis(duration * REGENERATION_INTERVAL));
     }
 }
