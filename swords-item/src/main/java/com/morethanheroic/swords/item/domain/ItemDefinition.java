@@ -22,6 +22,8 @@ public class ItemDefinition {
     private final List<EffectDefinition> combatEffects;
     private final boolean equipment;
     private final List<ItemPriceDefinition> priceDefinitions;
+    private String description;
+    private String flavour;
 
     private final List<ItemModifierDefinition> modifiers;
     private final List<ItemRequirementDefinition> requirements;

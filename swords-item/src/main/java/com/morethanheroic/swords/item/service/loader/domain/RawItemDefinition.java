@@ -25,6 +25,12 @@ public class RawItemDefinition {
     private int weight;
     private boolean equipment;
 
+    @Getter
+    private String description;
+
+    @Getter
+    private String flavour;
+
     @XmlElementWrapper(name = "price")
     @XmlElement(name = "price-entry")
     @Getter
