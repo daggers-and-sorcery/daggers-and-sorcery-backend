@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class EquipmentSlotMapper {
 
-    public EquipmentSlot getEquipmentSlotFromItemType(ItemType itemType) {
+    public EquipmentSlot getEquipmentSlotFromItemType(final ItemType itemType) {
         switch (itemType) {
             case TWO_HANDED_CRUSHING_WEAPONS:
             case ONE_HANDED_CRUSHING_WEAPONS:
@@ -20,8 +20,11 @@ public class EquipmentSlotMapper {
             case LONGBOWS:
             case SHORTBOWS:
             case CROSSBOWS:
+            case STAFF:
+            case WAND:
                 return EquipmentSlot.WEAPON;
             case SHIELD:
+            case FOCUS:
                 return EquipmentSlot.OFFHAND;
             case LIGHT_ARMOR:
             case HEAVY_ARMOR:
@@ -31,6 +34,33 @@ public class EquipmentSlotMapper {
                 return EquipmentSlot.GLOVES;
             case BOOTS:
                 return EquipmentSlot.BOOTS;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    public boolean isTwoHandedWeapon(final ItemType itemType) {
+        if (getEquipmentSlotFromItemType(itemType) != EquipmentSlot.WEAPON) {
+            return false;
+        }
+
+        switch (itemType) {
+            case TWO_HANDED_CRUSHING_WEAPONS:
+            case TWO_HANDED_AXES:
+            case POLEARMS:
+            case LONGBOWS:
+            case SHORTBOWS:
+            case CROSSBOWS:
+            case STAFF:
+                return true;
+            case ONE_HANDED_CRUSHING_WEAPONS:
+            case ONE_HANDED_AXES:
+            case THROWING_WEAPONS:
+            case LONGSWORDS:
+            case SHORTSWORDS:
+            case DAGGERS:
+            case WAND:
+                return false;
             default:
                 throw new IllegalArgumentException();
         }

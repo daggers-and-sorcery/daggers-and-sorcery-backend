@@ -32,7 +32,8 @@ public enum SkillType {
     SCAVENGING(SkillGroup.TRADE),
     COOKING(SkillGroup.TRADE),
     LEATHERWORKING(SkillGroup.TRADE),
-    SMITHING(SkillGroup.TRADE);
+    SMITHING(SkillGroup.TRADE),
+    FOCUS(SkillGroup.COMBAT);
 
     private final SkillGroup skillGroup;
 

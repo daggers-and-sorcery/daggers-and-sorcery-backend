@@ -20,7 +20,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
     private final DiceRollCalculator diceRollCalculator;
 
     @Override
-    public void calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
+    public void calculateAttack(final CombatEntity attacker, final CombatEntity opponent, final CombatResult result) {
         if (diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getMagicAttack())) > opponent.getSpellResistance().getValue()) {
             dealDamage(attacker, opponent, result);
 
@@ -32,7 +32,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
         }
     }
 
-    private void dealDamage(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
+    private void dealDamage(final CombatEntity attacker, final CombatEntity opponent, final CombatResult result) {
         final int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getMagicDamage()));
 
         opponent.decreaseActualHealth(damage);
@@ -43,6 +43,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
             result.addMessage(combatMessageBuilder.buildMagicDamageToPlayerMessage(attacker.getName(), damage));
         } else {
             addAttackXp(result, (UserCombatEntity) attacker, damage * 2);
+            addOffhandXp(result, (UserCombatEntity) attacker, damage * 2);
 
             result.addMessage(combatMessageBuilder.buildMagicDamageToPlayerMessage(opponent.getName(), damage));
         }
