@@ -55,11 +55,11 @@ public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
         combatMessage.addData("damage", damage);
         combatMessage.addData("icon", "blood");
         combatMessage.addData("icon_color", "blue");
-        combatMessage.addData("message", "You have been healed for ${damage} health!");
+        combatMessage.addData("message", "Your opponent is damaged for ${damage} health!");
 
         combatResult.addMessage(combatMessage);
 
         //TODO: take care that the opponent is damaged not the player.
-        combatEntity.decreaseActualHealth(damage);
+        //combatEntity.decreaseActualHealth(damage);
     }
 }

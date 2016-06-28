@@ -28,7 +28,7 @@ public class EventProcessor {
     private UserFacade userFacade;
 
     @Transactional
-    @Scheduled(fixedRate = 100)
+    //@Scheduled(fixedRate = 100)
     public void processEvents() {
         final List<EventDatabaseEntity> endingEvents = eventMapper.getEndingEvents();
 

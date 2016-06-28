@@ -31,28 +31,8 @@ public class CombatUtil {
         this.weaponSuperTypeCalculator = weaponSuperTypeCalculator;
     }
 
-    public int getUserWeaponSkillLevel(UserEntity user) {
-        SkillType skill = getUserWeaponSkillType(user);
-
-        if (skill == null) {
-            return skillFacade.getSkills(user).getLevel(SkillType.FISTFIGHT);
-        }
-
-        return skillFacade.getSkills(user).getLevel(getUserWeaponSkillType(user));
-    }
-
-    public int getUserArmorSkillLevel(UserEntity user) {
-        SkillType skill = getUserArmorSkillType(user);
-
-        if (skill == null) {
-            return skillFacade.getSkills(user).getLevel(SkillType.ARMORLESS_DEFENSE);
-        }
-
-        return skillFacade.getSkills(user).getLevel(getUserArmorSkillType(user));
-    }
-
     public SkillType getUserArmorSkillType(UserEntity user) {
-        ItemType itemType = getUserArmorType(user);
+        final ItemType itemType = getUserArmorType(user);
 
         if (itemType == null) {
             return null;
@@ -62,7 +42,7 @@ public class CombatUtil {
     }
 
     public SkillType getUserWeaponSkillType(UserEntity user) {
-        ItemType itemType = getUserWeaponType(user);
+        final ItemType itemType = getUserWeaponType(user);
 
         if (itemType == null) {
             return null;
@@ -72,7 +52,7 @@ public class CombatUtil {
     }
 
     public ItemType getUserWeaponType(UserEntity user) {
-        ItemDefinition itemDefinition = equipmentFacade.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
+        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
 
         if (itemDefinition == null) {
             return null;
@@ -95,9 +75,29 @@ public class CombatUtil {
         return itemDefinition.getType();
     }
 
-    public boolean hasShield(final UserEntity userEntity) {
-        final ItemDefinition offhandItemDefinition = equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.OFFHAND);
+    public Optional<ItemType> getUserOffhandType(final UserEntity userEntity) {
+        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
 
-        return offhandItemDefinition != null && offhandItemDefinition.getType() == ItemType.SHIELD;
+        if (itemDefinition == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(itemDefinition.getType());
+    }
+
+    public Optional<SkillType> getUserOffhandSkillType(final UserEntity userEntity) {
+        final Optional<ItemType> itemType = getUserOffhandType(userEntity);
+
+        if (!itemType.isPresent()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(skillTypeCalculator.getSkillFromItemType(itemType.get()));
+    }
+
+    public boolean hasShield(final UserEntity userEntity) {
+        final Optional<ItemType> itemType = getUserOffhandType(userEntity);
+
+        return itemType.isPresent() && itemType.get() == ItemType.SHIELD;
     }
 }

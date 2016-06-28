@@ -54,11 +54,25 @@ public class EquipmentEntity {
     }
 
     public boolean equipItem(ItemDefinition item, boolean identified) {
-        EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
-        int previousEquipment = getEquipmentIdOnSlot(equipmentSlot);
+        final EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
+
+        if (equipmentSlot == EquipmentSlot.OFFHAND) {
+            final ItemDefinition weapon = itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(EquipmentSlot.WEAPON));
+
+            if (equipmentSlotMapper.isTwoHandedWeapon(weapon.getType())) {
+                //TODO: unequip the weapon and equip the offhand item
+                return false;
+            }
+        }
+
+        final int previousEquipment = getEquipmentIdOnSlot(equipmentSlot);
+        final int previousOffhandEquipment = getEquipmentIdOnSlot(EquipmentSlot.OFFHAND);
 
         //Unequip the previous equipment first because the calculation should be good without it
         unequipItem(equipmentSlot);
+        if (equipmentSlotMapper.isTwoHandedWeapon(item.getType())) {
+            unequipItem(EquipmentSlot.OFFHAND);
+        }
 
         if (canEquip(item)) {
             equipWithoutCheck(item, identified);
@@ -70,6 +84,11 @@ public class EquipmentEntity {
             if (previousEquipment != 0) {
                 equipWithoutCheck(itemDefinitionCache.getDefinition(previousEquipment), identified);
                 inventoryEntity.removeItem(previousEquipment, 1, identified);
+
+                if (previousOffhandEquipment != 0) {
+                    equipWithoutCheck(itemDefinitionCache.getDefinition(previousOffhandEquipment), identified);
+                    inventoryEntity.removeItem(previousOffhandEquipment, 1, identified);
+                }
             }
         }
 

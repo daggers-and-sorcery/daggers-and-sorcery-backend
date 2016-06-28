@@ -31,7 +31,8 @@ public enum SkillAttribute implements Attribute {
     SCAVENGING,
     COOKING,
     LEATHERWORKING,
-    SMITHING;
+    SMITHING,
+    FOCUS;
 
     @Override
     public AttributeType getAttributeType() {

@@ -27,6 +27,11 @@ public class PlayerDefeatHandler {
     private final CombatMessageBuilder combatMessageBuilder;
 
     public void handleDefeat(Combat combat, CombatResult combatResult) {
+        //Combat timeout happened...
+        if (!combatResult.isPlayerDied()) {
+            return;
+        }
+
         final UserEntity userEntity = combat.getUserCombatEntity().getUserEntity();
 
         handleDeath(userEntity, combatResult);
