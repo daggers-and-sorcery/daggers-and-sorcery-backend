@@ -5,14 +5,12 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
-import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculator;
-import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
-import com.morethanheroic.swords.combat.service.calc.attack.MeleeAttackCalculator;
-import com.morethanheroic.swords.combat.service.calc.attack.RangedAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.attack.*;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
 import com.morethanheroic.swords.combat.service.executor.CombatSettingsExecutor;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
+import com.morethanheroic.swords.monster.domain.MonsterAttackType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +36,9 @@ public class SimpleTurnCalculator implements TurnCalculator {
 
     @Autowired
     private MeleeAttackCalculator meleeAttackCalculator;
+
+    @Autowired
+    private MagicAttackCalculator magicAttackCalculator;
 
     @Autowired
     private RangedAttackCalculator rangedAttackCalculator;
@@ -70,13 +71,25 @@ public class SimpleTurnCalculator implements TurnCalculator {
     private AttackCalculator getAttackCalculatorForAttackType(AttackType attackType) {
         if (attackType == AttackType.MELEE) {
             return meleeAttackCalculator;
+        } else if (attackType == AttackType.MAGIC) {
+            return magicAttackCalculator;
+        } else {
+            return rangedAttackCalculator;
+        }
+    }
+
+    private AttackCalculator getAttackCalculatorForAttackType(MonsterAttackType monsterAttackType) {
+        if (monsterAttackType == MonsterAttackType.MELEE) {
+            return meleeAttackCalculator;
+        } else if (monsterAttackType == MonsterAttackType.MAGIC) {
+            return magicAttackCalculator;
         } else {
             return rangedAttackCalculator;
         }
     }
 
     private void monsterAttackFirst(Combat combat, CombatResult result) {
-        getAttackCalculatorForAttackType(calculateUserAttackType(combat.getUserCombatEntity().getUserEntity())).calculateAttack(combat.getMonsterCombatEntity(), combat.getUserCombatEntity(), result);
+        getAttackCalculatorForAttackType(combat.getMonsterCombatEntity().getAttackType()).calculateAttack(combat.getMonsterCombatEntity(), combat.getUserCombatEntity(), result);
 
         if (combat.getUserCombatEntity().getActualHealth() > 0) {
             getAttackCalculatorForAttackType(calculateUserAttackType(combat.getUserCombatEntity().getUserEntity())).calculateAttack(combat.getUserCombatEntity(), combat.getMonsterCombatEntity(), result);
@@ -87,7 +100,7 @@ public class SimpleTurnCalculator implements TurnCalculator {
         getAttackCalculatorForAttackType(calculateUserAttackType(combat.getUserCombatEntity().getUserEntity())).calculateAttack(combat.getUserCombatEntity(), combat.getMonsterCombatEntity(), result);
 
         if (combat.getMonsterCombatEntity().getActualHealth() > 0) {
-            getAttackCalculatorForAttackType(calculateUserAttackType(combat.getUserCombatEntity().getUserEntity())).calculateAttack(combat.getMonsterCombatEntity(), combat.getUserCombatEntity(), result);
+            getAttackCalculatorForAttackType(combat.getMonsterCombatEntity().getAttackType()).calculateAttack(combat.getMonsterCombatEntity(), combat.getUserCombatEntity(), result);
         }
     }
 

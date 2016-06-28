@@ -66,6 +66,7 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         if (attacker instanceof MonsterCombatEntity) {
             result.addMessage(combatMessageBuilder.buildPlayerKilledMessage(attacker.getName()));
             result.setWinner(Winner.MONSTER);
+            result.setPlayerDied(true);
         } else {
             result.addMessage(combatMessageBuilder.buildMonsterKilledMessage(opponent.getName()));
             result.setWinner(Winner.PLAYER);

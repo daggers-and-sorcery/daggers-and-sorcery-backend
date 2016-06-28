@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.domain.entity;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
+import com.morethanheroic.swords.monster.domain.MonsterAttackType;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 
 public class MonsterCombatEntity extends CombatEntity {
@@ -25,6 +26,10 @@ public class MonsterCombatEntity extends CombatEntity {
         return monsterDefinition.getLevel();
     }
 
+    public MonsterAttackType getAttackType() {
+        return monsterDefinition.getAttackType();
+    }
+
     @Override
     public DiceAttribute getAttack() {
         return monsterDefinition.getAttack();
@@ -32,7 +37,7 @@ public class MonsterCombatEntity extends CombatEntity {
 
     @Override
     public DiceAttribute getDefense() {
-        DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
+        final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
 
         diceAttributeBuilder.setValue(monsterDefinition.getDefense());
 
@@ -61,12 +66,12 @@ public class MonsterCombatEntity extends CombatEntity {
 
     @Override
     public DiceAttribute getMagicDamage() {
-        return monsterDefinition.getRangedDamage();
+        return monsterDefinition.getMagicDamage();
     }
 
     @Override
     public DiceAttribute getSpellResistance() {
-        DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
+        final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
 
         diceAttributeBuilder.setValue(monsterDefinition.getSpellResistance());
 

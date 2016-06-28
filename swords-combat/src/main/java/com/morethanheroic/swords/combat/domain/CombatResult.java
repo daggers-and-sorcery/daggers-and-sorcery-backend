@@ -1,6 +1,8 @@
 package com.morethanheroic.swords.combat.domain;
 
 import com.morethanheroic.swords.skill.domain.SkillType;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -14,6 +16,10 @@ public class CombatResult {
     private EnumMap<SkillType, Integer> rewardXp = new EnumMap<>(SkillType.class);
 
     private Winner winner;
+
+    @Getter
+    @Setter
+    private boolean playerDied;
 
     public void addMessage(CombatMessage message) {
         combatMessages.add(message);

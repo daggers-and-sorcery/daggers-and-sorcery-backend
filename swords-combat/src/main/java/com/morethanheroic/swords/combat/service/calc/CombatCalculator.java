@@ -7,6 +7,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -18,7 +19,7 @@ public class CombatCalculator {
     private final CombatFightCalculator combatFightCalculator;
     private final CombatTerminator combatTerminator;
 
-    @Transactional
+    @Transactional(propagation = Propagation.MANDATORY)
     public CombatResult doFight(UserEntity userEntity, MonsterDefinition monsterDefinition) {
         Combat combat = combatFactory.getCombat(userEntity, monsterDefinition);
         CombatResult combatResult = new CombatResult();
