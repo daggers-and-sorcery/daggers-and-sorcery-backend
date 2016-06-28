@@ -54,7 +54,8 @@ public class ItemEntryResponseBuilder {
 
         for (ItemRequirementDefinition requirementDefinition : itemDefinition.getRequirements()) {
             requirements.add(new ItemRequirementResponseEntry(
-                    WordUtils.capitalize(requirementDefinition.getRequirement().name().toLowerCase().replace("_", " ")), requirementDefinition.getAmount())
+                    WordUtils.capitalize(requirementDefinition.getRequirement().name().toLowerCase().replace("_", " ")),
+                    requirementDefinition.getAmount())
             );
         }
 
