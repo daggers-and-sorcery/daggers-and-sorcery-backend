@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEventDefinition {
 
     private static final int GOBLIN_PIKEMAN_MONSTER_ID = 1;
+    private static final int GOBLIN_SHAMAN_MONSTER_ID = 3;
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
@@ -25,11 +26,13 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
     @Autowired
     private CombatEvaluator combatEvaluator;
 
-    private MonsterDefinition opponent;
+    private MonsterDefinition goblinPikeman;
+    private MonsterDefinition goblinShaman;
 
     @PostConstruct
     private void initialize() {
-        opponent = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_PIKEMAN_MONSTER_ID);
+        goblinPikeman = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_PIKEMAN_MONSTER_ID);
+        goblinShaman = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_SHAMAN_MONSTER_ID);
     }
 
     @Override
@@ -55,7 +58,7 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
                         .build()
         );
 
-        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, goblinPikeman);
 
         explorationResult.addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
@@ -73,7 +76,7 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
                         .build()
         );
 
-        final CombatResult secondCombatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+        final CombatResult secondCombatResult = combatEvaluator.calculateCombat(userEntity, goblinShaman);
 
         explorationResult.addEventEntryResult(
                 CombatExplorationEventEntryResult.builder()
@@ -87,7 +90,7 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("Another Goblin Pikemen falls to the ground. You glare at the remainder. You are about to attack when you realize the goblins are running away. Cowards! You sprint after them, but they have a head start. The goblins disappear into the woods like rats, and it is impossible to follow them. You retreat to the farmer and describe the situation. You insist on staying the night in case the goblins return, and for your trouble, the farmer gives you a pouch of bronze coins.")
+                        .content("The Goblin Shaman falls to the ground. You glare at the remainder. You are about to attack when you realize the goblins are running away. Cowards! You sprint after them, but they have a head start. The goblins disappear into the woods like rats, and it is impossible to follow them. You retreat to the farmer and describe the situation. You insist on staying the night in case the goblins return, and for your trouble, the farmer gives you a pouch of bronze coins.")
                         .build()
         );
 
