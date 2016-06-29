@@ -1,11 +1,13 @@
 package com.morethanheroic.swords.combat.domain;
 
+import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.recipe.service.RecipeFacade;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.spell.service.SpellLearningService;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import lombok.Getter;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Service;
 @Getter
 @Service
 public class CombatEffectServiceAccessor {
+
+    @Autowired
+    private CombatMessageBuilder combatMessageBuilder;
 
     @Autowired
     private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
@@ -39,4 +44,7 @@ public class CombatEffectServiceAccessor {
 
     @Autowired
     private DiceRollCalculator diceRollCalculator;
+
+    @Autowired
+    private SkillEntityFactory skillEntityFactory;
 }

@@ -35,4 +35,7 @@ public class SkillDatabaseEntity {
     private int leatherworkingXp;
     private int smithingXp;
     private int focusXp;
+    private int alterationXp;
+    private int restorationXp;
+    private int destructionXp;
 }

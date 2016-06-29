@@ -30,28 +30,27 @@ public class SpellDefinitionTransformer {
     private SpellCostTransformer spellCostTransformer;
 
     public SpellDefinition transform(RawSpellDefinition rawSpellDefinition) {
-        SpellDefinition.SpellDefinitionBuilder spellDefinitionBuilder = new SpellDefinition.SpellDefinitionBuilder();
-
-        spellDefinitionBuilder.setId(rawSpellDefinition.getId());
-        spellDefinitionBuilder.setName(rawSpellDefinition.getName());
-        spellDefinitionBuilder.setCombatEffects(transformCombatEffects(rawSpellDefinition.getEffectList()));
-        spellDefinitionBuilder.setCombatSpell(rawSpellDefinition.isCombatSpell());
-        spellDefinitionBuilder.setOpenPage(rawSpellDefinition.isOpenPage());
-        spellDefinitionBuilder.setSkillRequirements(transformSkillRequirements(rawSpellDefinition.getSkillRequirements()));
-        spellDefinitionBuilder.setSpellCosts(transformSpellCosts(rawSpellDefinition.getCostList()));
-        spellDefinitionBuilder.setType(rawSpellDefinition.getType());
-        spellDefinitionBuilder.setDescription(rawSpellDefinition.getDescription());
-
-        return spellDefinitionBuilder.build();
+        return SpellDefinition.builder()
+                .id(rawSpellDefinition.getId())
+                .name(rawSpellDefinition.getName())
+                .combatEffects(transformCombatEffects(rawSpellDefinition.getEffectList()))
+                .combatSpell(rawSpellDefinition.isCombatSpell())
+                .openPage(rawSpellDefinition.isOpenPage())
+                .skillRequirements(transformSkillRequirements(rawSpellDefinition.getSkillRequirements()))
+                .spellCosts(transformSpellCosts(rawSpellDefinition.getCostList()))
+                .type(rawSpellDefinition.getType())
+                .description(rawSpellDefinition.getDescription())
+                .spellTarget(rawSpellDefinition.getSpellTarget())
+                .build();
     }
 
     private List<CombatEffectDefinition> transformCombatEffects(List<RawSpellEffectDefinition> effectList) {
-        List<CombatEffectDefinition> result = new ArrayList<>();
+        final List<CombatEffectDefinition> result = new ArrayList<>();
 
         try {
             if (effectList != null) {
                 for (RawSpellEffectDefinition effect : effectList) {
-                    //TODO: Latr this can't only be a combat effect! Be careful with that
+                    //TODO: Later this can't only be a combat effect! Be careful with that
                     result.add((CombatEffectDefinition) combatEffectDefinitionTransformer.transform(effect));
                 }
             }

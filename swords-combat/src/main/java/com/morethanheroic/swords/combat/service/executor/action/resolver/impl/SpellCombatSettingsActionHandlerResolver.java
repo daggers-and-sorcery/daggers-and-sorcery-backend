@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.service.executor.action.resolver.impl;
 
+import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
@@ -23,12 +24,12 @@ public class SpellCombatSettingsActionHandlerResolver implements CombatSettingsA
     private final CombatMessageBuilder combatMessageBuilder;
 
     @Override
-    public void handleSettings(UserCombatEntity userEntity, CombatResult combatResult, CombatSettingsEntity combatSettingsEntity, CombatEffectDataHolder combatEffectDataHolder) {
+    public void handleSettings(Combat combat, CombatResult combatResult, CombatSettingsEntity combatSettingsEntity, CombatEffectDataHolder combatEffectDataHolder) {
         final SpellDefinition spellToUse = spellDefinitionCache.getSpellDefinition(combatSettingsEntity.getSettingsId());
 
         combatResult.addMessage(combatMessageBuilder.buildUseSpellMessage(spellToUse.getName()));
 
-        useSpellService.useSpell(userEntity, combatResult, spellToUse, combatEffectDataHolder);
+        useSpellService.useSpell(combat, combatResult, spellToUse, combatEffectDataHolder);
     }
 
     @Override

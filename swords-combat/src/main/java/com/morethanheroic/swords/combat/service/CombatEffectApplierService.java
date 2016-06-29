@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.service;
 
+import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.CombatResult;
@@ -16,13 +17,13 @@ public class CombatEffectApplierService {
     @Autowired
     private CombatEffectServiceAccessor combatEffectServiceAccessor;
 
-    public void applyEffects(CombatEntity combatEntity, CombatResult combatResult, List<CombatEffectDefinition> combatEffects, CombatEffectDataHolder combatEffectDataHolder) {
+    public void applyEffects(CombatEntity combatEntity, Combat combat, CombatResult combatResult, List<CombatEffectDefinition> combatEffects, CombatEffectDataHolder combatEffectDataHolder) {
         for (CombatEffectDefinition combatEffect : combatEffects) {
-            applyEffect(combatEntity, combatResult, combatEffect, combatEffectDataHolder);
+            applyEffect(combatEntity, combat, combatResult, combatEffect, combatEffectDataHolder);
         }
     }
 
-    public void applyEffect(CombatEntity combatEntity, CombatResult combatResult, CombatEffectDefinition combatEffect, CombatEffectDataHolder combatEffectDataHolder) {
-        combatEffect.apply(combatEntity, combatResult, combatEffectDataHolder, combatEffectServiceAccessor);
+    public void applyEffect(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDefinition combatEffect, CombatEffectDataHolder combatEffectDataHolder) {
+        combatEffect.apply(combatEntity, combat, combatResult, combatEffectDataHolder, combatEffectServiceAccessor);
     }
 }

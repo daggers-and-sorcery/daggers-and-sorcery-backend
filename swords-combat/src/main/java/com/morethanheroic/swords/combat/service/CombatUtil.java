@@ -1,14 +1,13 @@
 package com.morethanheroic.swords.combat.service;
 
+import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
-import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.domain.WeaponSuperType;
 import com.morethanheroic.swords.item.service.WeaponSuperTypeCalculator;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import com.morethanheroic.swords.skill.service.SkillFacade;
-import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +17,12 @@ import java.util.Optional;
 @Service
 public class CombatUtil {
 
-    private final SkillFacade skillFacade;
     private final SkillTypeCalculator skillTypeCalculator;
     private final EquipmentFacade equipmentFacade;
     private final WeaponSuperTypeCalculator weaponSuperTypeCalculator;
 
     @Autowired
-    public CombatUtil(SkillFacade skillFacade, SkillTypeCalculator skillTypeCalculator, EquipmentFacade equipmentFacade, WeaponSuperTypeCalculator weaponSuperTypeCalculator) {
-        this.skillFacade = skillFacade;
+    public CombatUtil(SkillTypeCalculator skillTypeCalculator, EquipmentFacade equipmentFacade, WeaponSuperTypeCalculator weaponSuperTypeCalculator) {
         this.skillTypeCalculator = skillTypeCalculator;
         this.equipmentFacade = equipmentFacade;
         this.weaponSuperTypeCalculator = weaponSuperTypeCalculator;
@@ -76,7 +73,7 @@ public class CombatUtil {
     }
 
     public Optional<ItemType> getUserOffhandType(final UserEntity userEntity) {
-        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
+        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.OFFHAND);
 
         if (itemDefinition == null) {
             return Optional.empty();

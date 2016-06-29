@@ -1,20 +1,17 @@
 package com.morethanheroic.swords.combat.domain.effect.entry;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
-import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
-import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.domain.*;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 
-public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
+public class DamageCombatEffectDefinition extends CombatEffectDefinition {
 
     //TODO: create a DiceCalculationContext instead of directly tieing everything to DiceAttribute.
     private final DiceAttribute diceAttribute;
 
-    public DamageOpponentEffectDefinition(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
+    public DamageCombatEffectDefinition(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
         super(effectSettingDefinitionHolder);
 
         final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
@@ -47,7 +44,7 @@ public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
     }
 
     @Override
-    public void apply(CombatEntity combatEntity, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
+    public void apply(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
         final int damage = combatEffectServiceAccessor.getDiceRollCalculator().rollDices(combatEffectServiceAccessor.getDiceAttributeToDiceRollCalculationContextConverter().convert(diceAttribute));
 
         final CombatMessage combatMessage = new CombatMessage();
@@ -59,7 +56,6 @@ public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
 
         combatResult.addMessage(combatMessage);
 
-        //TODO: take care that the opponent is damaged not the player.
-        //combatEntity.decreaseActualHealth(damage);
+        combatEntity.decreaseActualHealth(damage);
     }
 }
