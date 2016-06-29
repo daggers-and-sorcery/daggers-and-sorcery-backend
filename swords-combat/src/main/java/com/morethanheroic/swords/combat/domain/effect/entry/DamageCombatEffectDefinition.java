@@ -9,12 +9,12 @@ import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 
-public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
+public class DamageCombatEffectDefinition extends CombatEffectDefinition {
 
     //TODO: create a DiceCalculationContext instead of directly tieing everything to DiceAttribute.
     private final DiceAttribute diceAttribute;
 
-    public DamageOpponentEffectDefinition(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
+    public DamageCombatEffectDefinition(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
         super(effectSettingDefinitionHolder);
 
         final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
@@ -59,7 +59,6 @@ public class DamageOpponentEffectDefinition extends CombatEffectDefinition {
 
         combatResult.addMessage(combatMessage);
 
-        //TODO: take care that the opponent is damaged not the player.
-        //combatEntity.decreaseActualHealth(damage);
+        combatEntity.decreaseActualHealth(damage);
     }
 }

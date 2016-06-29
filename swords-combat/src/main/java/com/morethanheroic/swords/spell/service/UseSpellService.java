@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.spell.service;
 
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -11,12 +12,14 @@ import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.spell.domain.CostType;
 import com.morethanheroic.swords.spell.domain.SpellCost;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
+import com.morethanheroic.swords.spell.domain.SpellTarget;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+//TODO: make monsters able to use combat spells too!
 public class UseSpellService {
 
     private final CombatEffectApplierService combatEffectApplierService;
@@ -75,26 +78,30 @@ public class UseSpellService {
         }
     }
 
-    public void useSpell(UserCombatEntity combatEntity, CombatResult combatResult, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
-        if (canUseSpell(combatEntity, spell)) {
-            applySpell(combatEntity, combatResult, spell, combatEffectDataHolder);
+    public void useSpell(Combat combat, CombatResult combatResult, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
+        if (canUseSpell(combat.getUserCombatEntity(), spell)) {
+            applySpell(combat, combatResult, spell, combatEffectDataHolder);
         }
     }
 
-    private void applySpell(CombatEntity combatEntity, CombatResult combatResult, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
+    private void applySpell(Combat combat, CombatResult combatResult, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
+        final UserCombatEntity combatEntity = combat.getUserCombatEntity();
+
         for (SpellCost spellCost : spellDefinition.getSpellCosts()) {
             if (spellCost.getType() == CostType.ITEM) {
-                if (combatEntity instanceof UserCombatEntity) {
-                    final UserEntity userEntity = ((UserCombatEntity) combatEntity).getUserEntity();
+                final UserEntity userEntity = combatEntity.getUserEntity();
 
-                    inventoryFacade.getInventory(userEntity).removeItem(spellCost.getId(), spellCost.getAmount());
-                }
+                inventoryFacade.getInventory(userEntity).removeItem(spellCost.getId(), spellCost.getAmount());
             } else if (spellCost.getType() == CostType.MANA) {
                 combatEntity.decreaseActualMana(spellCost.getAmount());
             }
         }
 
-        combatEffectApplierService.applyEffects(combatEntity, combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+        if (spellDefinition.getSpellTarget() == SpellTarget.SELF) {
+            combatEffectApplierService.applyEffects(combat.getUserCombatEntity(), combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+        } else {
+            combatEffectApplierService.applyEffects(combat.getMonsterCombatEntity(), combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+        }
     }
 
     private void applySpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {

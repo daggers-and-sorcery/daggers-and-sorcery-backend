@@ -34,7 +34,7 @@ public class ManaCombatSettingsActionHandler extends CombatSettingsActionHandler
         if (percentageCalculator.calculatePercentage(combat.getUserCombatEntity().getActualMana(), combat.getUserCombatEntity().getMaximumMana()) < combatSettingsEntity.getTarget()) {
             combatResult.addMessage(combatMessageBuilder.buildManaSettingTriggeredMessage(combatSettingsEntity.getTarget()));
 
-            executeCombatSettings(combat.getUserCombatEntity(), combatResult, combatSettingsEntity);
+            executeCombatSettings(combat, combatResult, combatSettingsEntity);
         }
     }
 
