@@ -76,7 +76,7 @@ public class CombatUtil {
     }
 
     public Optional<ItemType> getUserOffhandType(final UserEntity userEntity) {
-        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
+        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.OFFHAND);
 
         if (itemDefinition == null) {
             return Optional.empty();
