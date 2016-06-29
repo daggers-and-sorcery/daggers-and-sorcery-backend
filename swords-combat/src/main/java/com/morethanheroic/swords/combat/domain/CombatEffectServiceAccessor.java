@@ -6,6 +6,7 @@ import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.recipe.service.RecipeFacade;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.spell.service.SpellLearningService;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import lombok.Getter;
@@ -39,4 +40,7 @@ public class CombatEffectServiceAccessor {
 
     @Autowired
     private DiceRollCalculator diceRollCalculator;
+
+    @Autowired
+    private SkillEntityFactory skillEntityFactory;
 }

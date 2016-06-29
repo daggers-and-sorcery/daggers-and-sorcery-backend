@@ -33,7 +33,10 @@ public enum SkillType {
     COOKING(SkillGroup.TRADE),
     LEATHERWORKING(SkillGroup.TRADE),
     SMITHING(SkillGroup.TRADE),
-    FOCUS(SkillGroup.COMBAT);
+    FOCUS(SkillGroup.COMBAT),
+    DESTRUCTION(SkillGroup.COMBAT),
+    RESTORATION(SkillGroup.COMBAT),
+    ALTERATION(SkillGroup.COMBAT);
 
     private final SkillGroup skillGroup;
 

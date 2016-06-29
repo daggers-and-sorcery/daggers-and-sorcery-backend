@@ -8,6 +8,9 @@ import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 
+/**
+ * Heal the user for a given amount of health points.
+ */
 public class HealCombatEffectDefinition extends CombatEffectDefinition {
 
     private final int amount;

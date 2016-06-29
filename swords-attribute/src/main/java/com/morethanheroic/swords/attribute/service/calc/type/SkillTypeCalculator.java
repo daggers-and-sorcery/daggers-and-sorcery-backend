@@ -140,6 +140,12 @@ public class SkillTypeCalculator {
                 return SkillType.SMITHING;
             case FOCUS:
                 return SkillType.FOCUS;
+            case DESTRUCTION:
+                return SkillType.DESTRUCTION;
+            case RESTORATION:
+                return SkillType.RESTORATION;
+            case ALTERATION:
+                return SkillType.ALTERATION;
             default:
                 throw new IllegalArgumentException("No skill found for skill attribute type: " + skillAttribute);
         }
@@ -199,6 +205,12 @@ public class SkillTypeCalculator {
                 return SkillAttribute.SMITHING;
             case FOCUS:
                 return SkillAttribute.FOCUS;
+            case DESTRUCTION:
+                return SkillAttribute.DESTRUCTION;
+            case RESTORATION:
+                return SkillAttribute.RESTORATION;
+            case ALTERATION:
+                return SkillAttribute.ALTERATION;
             default:
                 throw new IllegalArgumentException("No skill type found for attribute type: " + skillType);
         }
