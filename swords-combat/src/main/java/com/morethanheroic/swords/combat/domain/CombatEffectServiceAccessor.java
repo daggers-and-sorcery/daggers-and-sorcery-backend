@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.domain;
 
+import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -16,6 +17,9 @@ import org.springframework.stereotype.Service;
 @Getter
 @Service
 public class CombatEffectServiceAccessor {
+
+    @Autowired
+    private CombatMessageBuilder combatMessageBuilder;
 
     @Autowired
     private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;

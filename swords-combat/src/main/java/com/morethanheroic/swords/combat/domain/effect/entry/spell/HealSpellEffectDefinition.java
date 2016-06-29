@@ -1,9 +1,6 @@
 package com.morethanheroic.swords.combat.domain.effect.entry.spell;
 
-import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
-import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.domain.*;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
@@ -28,7 +25,7 @@ public class HealSpellEffectDefinition extends CombatEffectDefinition {
     }
 
     @Override
-    public void apply(CombatEntity combatEntity, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
+    public void apply(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
         if (combatEntity instanceof UserCombatEntity) {
             final SkillEntity skillEntity = combatEffectServiceAccessor.getSkillEntityFactory().getSkillEntity(((UserCombatEntity) combatEntity).getUserEntity());
 
@@ -43,6 +40,8 @@ public class HealSpellEffectDefinition extends CombatEffectDefinition {
             combatResult.addMessage(combatMessage);
 
             combatEntity.increaseActualHealth(restorationAmount);
+
+            combatResult.addMessage(combatEffectServiceAccessor.getCombatMessageBuilder().buildXpRewardMessage(SkillType.RESTORATION.name(), xp));
 
             skillEntity.increaseExperience(SkillType.RESTORATION, xp);
         } else {

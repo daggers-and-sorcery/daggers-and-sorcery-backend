@@ -16,6 +16,7 @@ public class RawSpellDefinition {
     private SpellType type;
 
     @Getter
+    @XmlElement(name = "spell-target")
     private SpellTarget spellTarget;
 
     @Getter

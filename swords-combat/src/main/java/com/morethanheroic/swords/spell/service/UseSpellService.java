@@ -3,6 +3,7 @@ package com.morethanheroic.swords.spell.service;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
@@ -81,6 +82,13 @@ public class UseSpellService {
     public void useSpell(Combat combat, CombatResult combatResult, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
         if (canUseSpell(combat.getUserCombatEntity(), spell)) {
             applySpell(combat, combatResult, spell, combatEffectDataHolder);
+        } else {
+            final CombatMessage combatMessage = new CombatMessage();
+
+            combatMessage.addData("icon", "spell");
+            combatMessage.addData("message", "Using the spell was failed! You don't have enough mana.");
+
+            combatResult.addMessage(combatMessage);
         }
     }
 
@@ -98,17 +106,18 @@ public class UseSpellService {
         }
 
         if (spellDefinition.getSpellTarget() == SpellTarget.SELF) {
-            combatEffectApplierService.applyEffects(combat.getUserCombatEntity(), combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+            combatEffectApplierService.applyEffects(combat.getUserCombatEntity(), combat, combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
         } else {
-            combatEffectApplierService.applyEffects(combat.getMonsterCombatEntity(), combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+            combatEffectApplierService.applyEffects(combat.getMonsterCombatEntity(), combat, combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
         }
     }
 
     private void applySpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
         final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
         final CombatResult combatResult = new CombatResult();
+        final Combat combat = new Combat(userEntity, null, globalAttributeCalculator);
 
-        combatEffectApplierService.applyEffects(userCombatEntity, combatResult, spell.getCombatEffects(), combatEffectDataHolder);
+        combatEffectApplierService.applyEffects(userCombatEntity, combat, combatResult, spell.getCombatEffects(), combatEffectDataHolder);
 
         userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
     }

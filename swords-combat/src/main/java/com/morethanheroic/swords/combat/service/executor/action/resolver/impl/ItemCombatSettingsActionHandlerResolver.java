@@ -29,7 +29,7 @@ public class ItemCombatSettingsActionHandlerResolver implements CombatSettingsAc
 
         combatResult.addMessage(combatMessageBuilder.buildUseItemMessage(itemToUse.getName()));
 
-        useItemService.useItem(combat.getUserCombatEntity(), combatResult, itemToUse, combatEffectDataHolder);
+        useItemService.useItem(combat.getUserCombatEntity(), combat, combatResult, itemToUse, combatEffectDataHolder);
     }
 
     @Override

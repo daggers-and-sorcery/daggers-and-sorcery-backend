@@ -1,12 +1,11 @@
 package com.morethanheroic.swords.combat.domain.effect.entry;
 
+import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
@@ -24,13 +23,11 @@ public class AwardExperienceEffectDefinition extends CombatEffectDefinition {
     }
 
     @Override
-    public void apply(CombatEntity combatEntity, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
-        if (combatEntity instanceof UserCombatEntity) {
-            final SkillEntity skillEntity = combatEffectServiceAccessor.getSkillEntityFactory().getSkillEntity(((UserCombatEntity) combatEntity).getUserEntity());
+    public void apply(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
+        final SkillEntity skillEntity = combatEffectServiceAccessor.getSkillEntityFactory().getSkillEntity((combat.getUserCombatEntity()).getUserEntity());
 
-            skillEntity.increaseExperience(skillType, amount);
-        } else {
-            throw new IllegalArgumentException("Only users supported to cast this spell (yet).");
-        }
+        combatResult.addMessage(combatEffectServiceAccessor.getCombatMessageBuilder().buildXpRewardMessage(skillType.name(), amount));
+
+        skillEntity.increaseExperience(skillType, amount);
     }
 }
