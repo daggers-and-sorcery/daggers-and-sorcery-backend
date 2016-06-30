@@ -8,6 +8,8 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
+import com.morethanheroic.swords.combat.service.effect.CombatEntityEffectTarget;
+import com.morethanheroic.swords.effect.domain.EffectApplyingContext;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.spell.domain.CostType;
@@ -92,6 +94,7 @@ public class UseSpellService {
         }
     }
 
+    //TODO: somehow merge the two usespell together?
     private void applySpell(Combat combat, CombatResult combatResult, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
         final UserCombatEntity combatEntity = combat.getUserCombatEntity();
 
@@ -106,9 +109,19 @@ public class UseSpellService {
         }
 
         if (spellDefinition.getSpellTarget() == SpellTarget.SELF) {
-            combatEffectApplierService.applyEffects(combat.getUserCombatEntity(), combat, combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+            final EffectApplyingContext effectApplyingContext = EffectApplyingContext.builder()
+                .source(new CombatEntityEffectTarget(combat.getUserCombatEntity()))
+                .destination(new CombatEntityEffectTarget(combat.getUserCombatEntity()))
+                .build();
+
+            combatEffectApplierService.applyEffects(effectApplyingContext, combat.getUserCombatEntity(), combat, combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
         } else {
-            combatEffectApplierService.applyEffects(combat.getMonsterCombatEntity(), combat, combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+            final EffectApplyingContext effectApplyingContext = EffectApplyingContext.builder()
+                .source(new CombatEntityEffectTarget(combat.getUserCombatEntity()))
+                .destination(new CombatEntityEffectTarget(combat.getMonsterCombatEntity()))
+                .build();
+
+            combatEffectApplierService.applyEffects(effectApplyingContext, combat.getMonsterCombatEntity(), combat, combatResult, spellDefinition.getCombatEffects(), combatEffectDataHolder);
         }
     }
 
@@ -116,8 +129,12 @@ public class UseSpellService {
         final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
         final CombatResult combatResult = new CombatResult();
         final Combat combat = new Combat(userEntity, null, globalAttributeCalculator);
+        final EffectApplyingContext effectApplyingContext = EffectApplyingContext.builder()
+            .source(new CombatEntityEffectTarget(userCombatEntity))
+            .destination(new CombatEntityEffectTarget(userCombatEntity))
+            .build();
 
-        combatEffectApplierService.applyEffects(userCombatEntity, combat, combatResult, spell.getCombatEffects(), combatEffectDataHolder);
+        combatEffectApplierService.applyEffects(effectApplyingContext, userCombatEntity, combat, combatResult, spell.getCombatEffects(), combatEffectDataHolder);
 
         userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
     }
