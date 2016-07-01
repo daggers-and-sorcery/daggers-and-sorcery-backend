@@ -1,9 +1,12 @@
 package com.morethanheroic.swords.combat.domain.effect.entry.spell;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
-import com.morethanheroic.swords.combat.domain.*;
+import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
+import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
+import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
@@ -46,26 +49,33 @@ public class FireballSpellEffectDefinition extends CombatEffectDefinition {
     }
 
     @Override
-    public void apply(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
-        int damage = combatEffectServiceAccessor.getDiceRollCalculator().rollDices(combatEffectServiceAccessor.getDiceAttributeToDiceRollCalculationContextConverter().convert(diceAttribute));
+    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder,
+            CombatEffectServiceAccessor combatEffectServiceAccessor) {
+        int damage = combatEffectServiceAccessor.getDiceRollCalculator()
+                .rollDices(combatEffectServiceAccessor.getDiceAttributeToDiceRollCalculationContextConverter().convert(diceAttribute));
 
-        final SkillEntity skillEntity = combatEffectServiceAccessor.getSkillEntityFactory().getSkillEntity(combat.getUserCombatEntity().getUserEntity());
+        if (effectApplyingContext.getSource().isUser()) {
+            final SkillEntity skillEntity = combatEffectServiceAccessor.getSkillEntityFactory()
+                    .getSkillEntity(((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity());
 
-        if (skillEntity.getLevel(SkillType.DESTRUCTION) < 5) {
-            damage += skillEntity.getLevel(SkillType.DESTRUCTION);
+            if (skillEntity.getLevel(SkillType.DESTRUCTION) < 5) {
+                damage += skillEntity.getLevel(SkillType.DESTRUCTION);
+            } else {
+                damage += 5;
+            }
+
+            final CombatMessage combatMessage = new CombatMessage();
+
+            combatMessage.addData("damage", damage);
+            combatMessage.addData("icon", "blood");
+            combatMessage.addData("icon_color", "blue");
+            combatMessage.addData("message", "Your opponent is damaged for ${damage} health!");
+
+            effectApplyingContext.getCombatResult().addMessage(combatMessage);
+
+            effectApplyingContext.getSource().getCombatEntity().decreaseActualHealth(damage);
         } else {
-            damage += 5;
+            throw new IllegalArgumentException("Caster as a monster is not supported for fileball.");
         }
-
-        final CombatMessage combatMessage = new CombatMessage();
-
-        combatMessage.addData("damage", damage);
-        combatMessage.addData("icon", "blood");
-        combatMessage.addData("icon_color", "blue");
-        combatMessage.addData("message", "Your opponent is damaged for ${damage} health!");
-
-        combatResult.addMessage(combatMessage);
-
-        combatEntity.decreaseActualHealth(damage);
     }
 }

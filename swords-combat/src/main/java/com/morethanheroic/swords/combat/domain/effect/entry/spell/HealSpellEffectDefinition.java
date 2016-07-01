@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.combat.domain.effect.entry.spell;
 
 import com.morethanheroic.swords.combat.domain.*;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
@@ -25,11 +25,11 @@ public class HealSpellEffectDefinition extends CombatEffectDefinition {
     }
 
     @Override
-    public void apply(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
-        if (combatEntity instanceof UserCombatEntity) {
-            final SkillEntity skillEntity = combatEffectServiceAccessor.getSkillEntityFactory().getSkillEntity(((UserCombatEntity) combatEntity).getUserEntity());
+    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
+        if (effectApplyingContext.getSource().isUser()) {
+            final SkillEntity skillEntity = combatEffectServiceAccessor.getSkillEntityFactory().getSkillEntity(((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity());
 
-            final int restorationAmount = calculeteRestorationAmount(skillEntity);
+            final int restorationAmount = calculateRestorationAmount(skillEntity);
 
             final CombatMessage combatMessage = new CombatMessage();
 
@@ -37,11 +37,11 @@ public class HealSpellEffectDefinition extends CombatEffectDefinition {
             combatMessage.addData("icon", "heal");
             combatMessage.addData("message", "You have been healed for ${amount} health!");
 
-            combatResult.addMessage(combatMessage);
+            effectApplyingContext.getCombatResult().addMessage(combatMessage);
 
-            combatEntity.increaseActualHealth(restorationAmount);
+            effectApplyingContext.getSource().getCombatEntity().increaseActualHealth(restorationAmount);
 
-            combatResult.addMessage(combatEffectServiceAccessor.getCombatMessageBuilder().buildXpRewardMessage(SkillType.RESTORATION.name(), xp));
+            effectApplyingContext.getCombatResult().addRewardXp(SkillType.RESTORATION, xp);
 
             skillEntity.increaseExperience(SkillType.RESTORATION, xp);
         } else {
@@ -49,7 +49,7 @@ public class HealSpellEffectDefinition extends CombatEffectDefinition {
         }
     }
 
-    private int calculeteRestorationAmount(SkillEntity skillEntity) {
+    private int calculateRestorationAmount(SkillEntity skillEntity) {
         int restorationBonus = skillEntity.getLevel(SkillType.RESTORATION) / 2;
 
         if (restorationBonus > 5) {

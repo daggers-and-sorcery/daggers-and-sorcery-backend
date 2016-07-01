@@ -1,15 +1,14 @@
 package com.morethanheroic.swords.effect.domain;
 
-import lombok.Builder;
-import lombok.Getter;
+import com.morethanheroic.swords.effect.domain.target.EffectTarget;
 
 /**
- * Context used when applying an effect.
+ *
+ *
+ * @author Gyula_Lakatos
  */
-@Builder
-@Getter
-public class EffectApplyingContext {
+public interface EffectApplyingContext {
 
-    private EffectTarget source;
-    private EffectTarget destination;
+    EffectTarget getSource();
+    EffectTarget getDestination();
 }

@@ -2,8 +2,8 @@ package com.morethanheroic.swords.combat.domain.effect.entry;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.combat.domain.*;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 
 public class DamageCombatEffectDefinition extends CombatEffectDefinition {
@@ -44,7 +44,7 @@ public class DamageCombatEffectDefinition extends CombatEffectDefinition {
     }
 
     @Override
-    public void apply(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
+    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
         final int damage = combatEffectServiceAccessor.getDiceRollCalculator().rollDices(combatEffectServiceAccessor.getDiceAttributeToDiceRollCalculationContextConverter().convert(diceAttribute));
 
         final CombatMessage combatMessage = new CombatMessage();
@@ -54,8 +54,7 @@ public class DamageCombatEffectDefinition extends CombatEffectDefinition {
         combatMessage.addData("icon_color", "blue");
         combatMessage.addData("message", "Your opponent is damaged for ${damage} health!");
 
-        combatResult.addMessage(combatMessage);
-
-        combatEntity.decreaseActualHealth(damage);
+        effectApplyingContext.getCombatResult().addMessage(combatMessage);
+        effectApplyingContext.getDestination().getCombatEntity().decreaseActualHealth(damage);
     }
 }

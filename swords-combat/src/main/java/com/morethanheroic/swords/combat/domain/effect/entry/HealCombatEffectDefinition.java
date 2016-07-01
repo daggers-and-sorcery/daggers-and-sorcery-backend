@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.domain.effect.entry;
 
 import com.morethanheroic.swords.combat.domain.*;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
@@ -19,15 +20,15 @@ public class HealCombatEffectDefinition extends CombatEffectDefinition {
     }
 
     @Override
-    public void apply(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
+    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
         final CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("amount", amount);
         combatMessage.addData("icon", "heal");
         combatMessage.addData("message", "You have been healed for ${amount} health!");
 
-        combatResult.addMessage(combatMessage);
+        effectApplyingContext.getCombatResult().addMessage(combatMessage);
 
-        combatEntity.increaseActualHealth(amount);
+        effectApplyingContext.getDestination().getCombatEntity().increaseActualHealth(amount);
     }
 }

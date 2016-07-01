@@ -1,11 +1,9 @@
 package com.morethanheroic.swords.combat.domain.effect.entry;
 
-import com.morethanheroic.swords.combat.domain.Combat;
-import com.morethanheroic.swords.combat.domain.CombatResult;
-import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
@@ -17,8 +15,8 @@ public class LesserIdentifyEffectDefinition extends CombatEffectDefinition {
     }
 
     @Override
-    public void apply(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
-        final InventoryEntity inventoryEntity = combatEffectServiceAccessor.getInventoryFacade().getInventory(((UserCombatEntity) combatEntity).getUserEntity());
+    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
+        final InventoryEntity inventoryEntity = combatEffectServiceAccessor.getInventoryFacade().getInventory(((UserCombatEntity) effectApplyingContext.getDestination().getCombatEntity()).getUserEntity());
 
         final int realItem = combatEffectServiceAccessor.getUnidentifiedItemIdCalculator().getRealItemId(combatEffectDataHolder.getSessionEntity(), Integer.parseInt((String) combatEffectDataHolder.getParameters().get("itemId")));
 
