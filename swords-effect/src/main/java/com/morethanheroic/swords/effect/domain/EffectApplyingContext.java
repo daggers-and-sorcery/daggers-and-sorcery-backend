@@ -9,6 +9,7 @@ import com.morethanheroic.swords.effect.domain.target.EffectTarget;
  */
 public interface EffectApplyingContext {
 
+    EffectSettingDefinitionHolder getEffectSettings();
     EffectTarget getSource();
     EffectTarget getDestination();
 }

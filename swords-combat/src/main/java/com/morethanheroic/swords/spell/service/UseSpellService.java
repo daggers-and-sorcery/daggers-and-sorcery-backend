@@ -1,5 +1,9 @@
 package com.morethanheroic.swords.spell.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
@@ -9,6 +13,7 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
+import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.spell.domain.CostType;
@@ -108,35 +113,51 @@ public class UseSpellService {
         }
 
         if (spellDefinition.getSpellTarget() == SpellTarget.SELF) {
-            final CombatEffectApplyingContext effectApplyingContext = CombatEffectApplyingContext.builder()
-                                                                                                 .source(new CombatEffectTarget(combat.getUserCombatEntity()))
-                                                                                                 .destination(new CombatEffectTarget(combat.getUserCombatEntity()))
-                                                                                                 .combatResult(combatResult)
-                                                                                                 .build();
+            final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
+            for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
+                contexts.add(CombatEffectApplyingContext.builder()
+                    .source(new CombatEffectTarget(combat.getUserCombatEntity()))
+                    .destination(new CombatEffectTarget(combat.getUserCombatEntity()))
+                    .combatResult(combatResult)
+                    .effectSettings(effectSettingDefinitionHolder)
+                    .build()
+                );
+            }
 
-            combatEffectApplierService.applyEffects(effectApplyingContext, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+            combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
         } else {
-            final CombatEffectApplyingContext effectApplyingContext = CombatEffectApplyingContext.builder()
-                                                                                                 .source(new CombatEffectTarget(combat.getUserCombatEntity()))
-                                                                                                 .destination(new CombatEffectTarget(combat.getMonsterCombatEntity()))
-                                                                                                 .combatResult(combatResult)
-                                                                                                 .build();
+            //Here the target is the monster. This should be however refactored somehow.
+            final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
+            for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
+                contexts.add(CombatEffectApplyingContext.builder()
+                    .source(new CombatEffectTarget(combat.getUserCombatEntity()))
+                    .destination(new CombatEffectTarget(combat.getMonsterCombatEntity()))
+                    .combatResult(combatResult)
+                    .effectSettings(effectSettingDefinitionHolder)
+                    .build()
+                );
+            }
 
-            combatEffectApplierService.applyEffects(effectApplyingContext, spellDefinition.getCombatEffects(), combatEffectDataHolder);
+            combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
         }
     }
 
     private void applySpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
         final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
         final CombatResult combatResult = new CombatResult();
-        final Combat combat = new Combat(userEntity, null, globalAttributeCalculator);
-        final CombatEffectApplyingContext effectApplyingContext = CombatEffectApplyingContext.builder()
-                                                                                             .source(new CombatEffectTarget(userCombatEntity))
-                                                                                             .destination(new CombatEffectTarget(userCombatEntity))
-                                                                                             .combatResult(combatResult)
-                                                                                             .build();
 
-        combatEffectApplierService.applyEffects(effectApplyingContext, spell.getCombatEffects(), combatEffectDataHolder);
+        final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
+
+        for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spell.getCombatEffects()) {
+            final CombatEffectApplyingContext effectApplyingContext = CombatEffectApplyingContext.builder()
+                 .source(new CombatEffectTarget(userCombatEntity))
+                 .destination(new CombatEffectTarget(userCombatEntity))
+                 .combatResult(combatResult)
+                 .effectSettings(effectSettingDefinitionHolder)
+                 .build();
+        }
+
+        combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
 
         userMapper.updateBasicCombatStats(userEntity.getId(), userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
     }

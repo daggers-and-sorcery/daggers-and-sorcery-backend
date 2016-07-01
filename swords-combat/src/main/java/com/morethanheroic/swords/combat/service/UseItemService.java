@@ -44,19 +44,21 @@ public class UseItemService {
 
     //TODO: merge the two applyItem together somehow!
     private void applyItem(CombatEntity combatEntity, Combat combat, CombatResult combatResult, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
+        //TODO: create a list form the effectsettings and pass em as a list
         final CombatEffectApplyingContext effectApplyingContext = CombatEffectApplyingContext.builder()
                                                                                              .source(new CombatEffectTarget(combatEntity))
                                                                                              .destination(new CombatEffectTarget(combatEntity))
                                                                                              .combatResult(combatResult)
+                                                                                             .effectSettings(item.getCombatEffects())
                                                                                              .build();
 
+        //TODO like in UseSpellService
         combatEffectApplierService.applyEffects(effectApplyingContext,(List) item.getCombatEffects(), combatEffectDataHolder);
     }
 
     private void applyItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
         final CombatResult combatResult = new CombatResult();
-        final Combat combat = new Combat(userEntity, new MonsterDefinition.MonsterDefinitionBuilder().build(), globalAttributeCalculator);
 
         final CombatEffectApplyingContext effectApplyingContext = CombatEffectApplyingContext.builder()
                                                                                              .source(new CombatEffectTarget(userCombatEntity))

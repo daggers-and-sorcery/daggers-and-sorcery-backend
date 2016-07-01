@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
-import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 
 @Service
 public class CombatEffectApplierService {
@@ -16,13 +15,16 @@ public class CombatEffectApplierService {
     @Autowired
     private CombatEffectServiceAccessor combatEffectServiceAccessor;
 
-    public void applyEffects(CombatEffectApplyingContext effectApplyingContext, List<CombatEffectDefinition> combatEffects, CombatEffectDataHolder combatEffectDataHolder) {
-        for (CombatEffectDefinition combatEffect : combatEffects) {
-            applyEffect(effectApplyingContext, combatEffect, combatEffectDataHolder);
+    @Autowired
+    private CombatEffectDefinitionCache combatEffectDefinitionCache;
+
+    public void applyEffects(List<CombatEffectApplyingContext> effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
+        for (CombatEffectApplyingContext combatEffect : effectApplyingContext) {
+            applyEffect(combatEffect, combatEffectDataHolder);
         }
     }
 
-    public void applyEffect(CombatEffectApplyingContext effectApplyingContext, CombatEffectDefinition combatEffect, CombatEffectDataHolder combatEffectDataHolder) {
-        combatEffect.apply(effectApplyingContext, combatEffectDataHolder, combatEffectServiceAccessor);
+    public void applyEffect(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
+        combatEffectDefinitionCache.getDefinition(effectApplyingContext.getEffectSettings().getEffectId()).apply(effectApplyingContext, combatEffectDataHolder, combatEffectServiceAccessor);
     }
 }
