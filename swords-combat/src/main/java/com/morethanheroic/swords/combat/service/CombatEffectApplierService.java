@@ -16,7 +16,7 @@ public class CombatEffectApplierService {
     private CombatEffectServiceAccessor combatEffectServiceAccessor;
 
     @Autowired
-    private CombatEffectDefinitionCache combatEffectDefinitionCache;
+    private CombatEffectDefinitionRegistry combatEffectDefinitionRegistry;
 
     public void applyEffects(List<CombatEffectApplyingContext> effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
         for (CombatEffectApplyingContext combatEffect : effectApplyingContext) {
@@ -25,6 +25,6 @@ public class CombatEffectApplierService {
     }
 
     public void applyEffect(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
-        combatEffectDefinitionCache.getDefinition(effectApplyingContext.getEffectSettings().getEffectId()).apply(effectApplyingContext, combatEffectDataHolder, combatEffectServiceAccessor);
+        combatEffectDefinitionRegistry.getDefinition(effectApplyingContext.getEffectSettings().getEffectId()).apply(effectApplyingContext, combatEffectDataHolder, combatEffectServiceAccessor);
     }
 }

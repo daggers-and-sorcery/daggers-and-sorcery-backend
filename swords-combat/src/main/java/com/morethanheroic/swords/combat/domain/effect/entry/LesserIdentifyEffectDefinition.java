@@ -25,4 +25,9 @@ public class LesserIdentifyEffectDefinition extends CombatEffectDefinition {
             inventoryEntity.addItem(realItem, 1, true);
         }
     }
+
+    @Override
+    public String getId() {
+        return "lesser_identify";
+    }
 }

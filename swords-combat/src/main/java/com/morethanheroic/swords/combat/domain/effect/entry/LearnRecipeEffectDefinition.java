@@ -34,4 +34,9 @@ public class LearnRecipeEffectDefinition extends CombatEffectDefinition {
             combatEffectServiceAccessor.getInventoryFacade().getInventory(userEntity).removeItem(recipeItemId, 1);
         }
     }
+
+    @Override
+    public String getId() {
+        return "learn_recipe";
+    }
 }

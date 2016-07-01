@@ -23,4 +23,9 @@ public class RemoveItemAmountEffectDefinition extends CombatEffectDefinition {
     public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
         combatEffectServiceAccessor.getInventoryFacade().getInventory(((UserCombatEntity) effectApplyingContext.getDestination().getCombatEntity()).getUserEntity()).removeItem(item, amount);
     }
+
+    @Override
+    public String getId() {
+        return "remove_item";
+    }
 }

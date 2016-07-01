@@ -58,4 +58,9 @@ public class HealSpellEffectDefinition extends CombatEffectDefinition {
 
         return amount + restorationBonus;
     }
+
+    @Override
+    public String getId() {
+        return "heal";
+    }
 }

@@ -32,4 +32,9 @@ public class LearnSpellEffectDefinition extends CombatEffectDefinition {
             combatEffectServiceAccessor.getInventoryFacade().getInventory(userEntity).removeItem(spellItemId, 1);
         }
     }
+
+    @Override
+    public String getId() {
+        return "learn_spell";
+    }
 }

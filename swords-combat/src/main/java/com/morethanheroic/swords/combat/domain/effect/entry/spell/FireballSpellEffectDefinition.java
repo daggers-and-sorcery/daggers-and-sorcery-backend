@@ -78,4 +78,9 @@ public class FireballSpellEffectDefinition extends CombatEffectDefinition {
             throw new IllegalArgumentException("Caster as a monster is not supported for fileball.");
         }
     }
+
+    @Override
+    public String getId() {
+        return "fireball";
+    }
 }

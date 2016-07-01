@@ -57,4 +57,9 @@ public class DamageCombatEffectDefinition extends CombatEffectDefinition {
         effectApplyingContext.getCombatResult().addMessage(combatMessage);
         effectApplyingContext.getDestination().getCombatEntity().decreaseActualHealth(damage);
     }
+
+    @Override
+    public String getId() {
+        return "damage_combat";
+    }
 }

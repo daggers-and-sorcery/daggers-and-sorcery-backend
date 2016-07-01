@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.item.domain;
 
 import com.morethanheroic.swords.effect.domain.EffectDefinition;
+import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class ItemDefinition {
     private final ItemType type;
     private final boolean usable;
     private final int weight;
-    private final List<EffectDefinition> combatEffects;
+    private final List<EffectSettingDefinitionHolder> combatEffects;
     private final boolean equipment;
     private final List<ItemPriceDefinition> priceDefinitions;
     private String description;

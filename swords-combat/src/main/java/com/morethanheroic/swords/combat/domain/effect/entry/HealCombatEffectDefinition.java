@@ -31,4 +31,9 @@ public class HealCombatEffectDefinition extends CombatEffectDefinition {
 
         effectApplyingContext.getDestination().getCombatEntity().increaseActualHealth(amount);
     }
+
+    @Override
+    public String getId() {
+        return "heal_combat";
+    }
 }

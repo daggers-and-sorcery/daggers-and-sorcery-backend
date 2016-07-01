@@ -41,4 +41,9 @@ public class AwardExperienceEffectDefinition extends CombatEffectDefinition {
     private UserEntity getUserEntity(final CombatEffectTarget combatEffectTarget) {
         return ((UserCombatEntity) combatEffectTarget.getCombatEntity()).getUserEntity();
     }
+
+    @Override
+    public String getId() {
+        return "award_experience";
+    }
 }
