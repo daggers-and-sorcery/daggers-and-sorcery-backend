@@ -1,61 +1,37 @@
 package com.morethanheroic.swords.combat.domain.effect.entry.spell;
 
-import com.morethanheroic.swords.attribute.domain.DiceAttribute;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
+import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 
+@Service
 public class FireballSpellEffectDefinition extends CombatEffectDefinition {
 
-    //TODO: create a DiceCalculationContext instead of directly tieing everything to DiceAttribute.
-    private final DiceAttribute diceAttribute;
+    @Autowired
+    private DiceRollCalculator diceRollCalculator;
 
-    public FireballSpellEffectDefinition(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
-        super(effectSettingDefinitionHolder);
-
-        final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
-
-        if (this.getEffectSetting("value") != null) {
-            diceAttributeBuilder.setValue(Integer.parseInt(this.getEffectSetting("value").getValue()));
-        }
-
-        if (this.getEffectSetting("d2") != null) {
-            diceAttributeBuilder.setD2(Integer.parseInt(this.getEffectSetting("d2").getValue()));
-        }
-
-        if (this.getEffectSetting("d4") != null) {
-            diceAttributeBuilder.setD4(Integer.parseInt(this.getEffectSetting("d4").getValue()));
-        }
-
-        if (this.getEffectSetting("d6") != null) {
-            diceAttributeBuilder.setD6(Integer.parseInt(this.getEffectSetting("d6").getValue()));
-        }
-
-        if (this.getEffectSetting("d8") != null) {
-            diceAttributeBuilder.setD8(Integer.parseInt(this.getEffectSetting("d8").getValue()));
-        }
-
-        if (this.getEffectSetting("d10") != null) {
-            diceAttributeBuilder.setD10(Integer.parseInt(this.getEffectSetting("d10").getValue()));
-        }
-
-        diceAttribute = diceAttributeBuilder.build();
-    }
+    @Autowired
+    private SkillEntityFactory skillEntityFactory;
 
     @Override
-    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder,
-            CombatEffectServiceAccessor combatEffectServiceAccessor) {
-        int damage = combatEffectServiceAccessor.getDiceRollCalculator()
-                .rollDices(combatEffectServiceAccessor.getDiceAttributeToDiceRollCalculationContextConverter().convert(diceAttribute));
+    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
+        final DiceRollCalculationContext diceRollCalculationContext = buildDiceRollCalculationContext(effectApplyingContext.getEffectSettings());
+
+        int damage = diceRollCalculator.rollDices(diceRollCalculationContext);
 
         if (effectApplyingContext.getSource().isUser()) {
-            final SkillEntity skillEntity = combatEffectServiceAccessor.getSkillEntityFactory()
+            final SkillEntity skillEntity = skillEntityFactory
                     .getSkillEntity(((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity());
 
             if (skillEntity.getLevel(SkillType.DESTRUCTION) < 5) {
@@ -79,8 +55,19 @@ public class FireballSpellEffectDefinition extends CombatEffectDefinition {
         }
     }
 
+    private DiceRollCalculationContext buildDiceRollCalculationContext(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
+        return DiceRollCalculationContext.builder()
+            .value(effectSettingDefinitionHolder.getSetting("value") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("value").getValue()))
+            .d2(effectSettingDefinitionHolder.getSetting("d2") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d2").getValue()))
+            .d4(effectSettingDefinitionHolder.getSetting("d4") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d4").getValue()))
+            .d6(effectSettingDefinitionHolder.getSetting("d6") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d6").getValue()))
+            .d8(effectSettingDefinitionHolder.getSetting("d8") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d8").getValue()))
+            .d10(effectSettingDefinitionHolder.getSetting("d10") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d10").getValue()))
+            .build();
+    }
+
     @Override
     public String getId() {
-        return "fireball";
+        return "fireball_spell";
     }
 }

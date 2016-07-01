@@ -6,14 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 
 @Service
 public class CombatEffectApplierService {
-
-    @Autowired
-    private CombatEffectServiceAccessor combatEffectServiceAccessor;
 
     @Autowired
     private CombatEffectDefinitionRegistry combatEffectDefinitionRegistry;
@@ -25,6 +21,6 @@ public class CombatEffectApplierService {
     }
 
     public void applyEffect(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
-        combatEffectDefinitionRegistry.getDefinition(effectApplyingContext.getEffectSettings().getEffectId()).apply(effectApplyingContext, combatEffectDataHolder, combatEffectServiceAccessor);
+        combatEffectDefinitionRegistry.getDefinition(effectApplyingContext.getEffectSettings().getEffectId()).apply(effectApplyingContext, combatEffectDataHolder);
     }
 }

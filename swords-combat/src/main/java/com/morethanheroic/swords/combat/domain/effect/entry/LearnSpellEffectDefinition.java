@@ -1,35 +1,42 @@
 package com.morethanheroic.swords.combat.domain.effect.entry;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
-import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
+import com.morethanheroic.swords.spell.service.SpellLearningService;
+import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
+@Service
 public class LearnSpellEffectDefinition extends CombatEffectDefinition {
 
-    private final int spellItemId;
-    private final int spellId;
+    @Autowired
+    private SpellDefinitionCache spellDefinitionCache;
 
-    public LearnSpellEffectDefinition(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
-        super(effectSettingDefinitionHolder);
+    @Autowired
+    private SpellLearningService spellLearningService;
 
-        spellItemId = Integer.parseInt(this.getEffectSetting("spell-item-id").getValue());
-        spellId = Integer.parseInt(this.getEffectSetting("spell-id").getValue());
-    }
+    @Autowired
+    private InventoryFacade inventoryFacade;
 
     @Override
-    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder, CombatEffectServiceAccessor combatEffectServiceAccessor) {
+    public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
+        final int spellItemId = Integer.parseInt(effectApplyingContext.getEffectSettings().getSetting("spell-item-id").getValue());
+        final int spellId = Integer.parseInt(effectApplyingContext.getEffectSettings().getSetting("spell-id").getValue());
+
         final UserEntity userEntity = ((UserCombatEntity) effectApplyingContext.getDestination().getCombatEntity()).getUserEntity();
-        final SpellDefinition spellDefinition = combatEffectServiceAccessor.getSpellDefinitionCache().getSpellDefinition(spellId);
+        final SpellDefinition spellDefinition = spellDefinitionCache.getSpellDefinition(spellId);
 
-        if(!combatEffectServiceAccessor.getSpellLearningService().hasSpellLearned(userEntity, spellDefinition)) {
-            combatEffectServiceAccessor.getSpellLearningService().learnSpell(userEntity, spellDefinition);
+        if(!spellLearningService.hasSpellLearned(userEntity, spellDefinition)) {
+            spellLearningService.learnSpell(userEntity, spellDefinition);
 
-            combatEffectServiceAccessor.getInventoryFacade().getInventory(userEntity).removeItem(spellItemId, 1);
+            inventoryFacade.getInventory(userEntity).removeItem(spellItemId, 1);
         }
     }
 
