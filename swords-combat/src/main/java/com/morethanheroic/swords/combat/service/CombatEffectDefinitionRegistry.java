@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.combat.service;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +17,11 @@ public class CombatEffectDefinitionRegistry {
 
     @Autowired
     public CombatEffectDefinitionRegistry(List<CombatEffectDefinition> combatEffectDefinitions) {
-        for(CombatEffectDefinition combatEffectDefinition : combatEffectDefinitions) {
-            combatEffectDefinitionMap.put(combatEffectDefinition.getId(), combatEffectDefinition);
+        final Map<String, CombatEffectDefinition> result = new HashMap<>();
+        for (CombatEffectDefinition combatEffectDefinition : combatEffectDefinitions) {
+            result.put(combatEffectDefinition.getId(), combatEffectDefinition);
         }
+        combatEffectDefinitionMap = Collections.unmodifiableMap(result);
     }
 
     public CombatEffectDefinition getDefinition(String id) {

@@ -50,6 +50,10 @@ public class FireballSpellEffectDefinition extends CombatEffectDefinition {
             effectApplyingContext.getCombatResult().addMessage(combatMessage);
 
             effectApplyingContext.getSource().getCombatEntity().decreaseActualHealth(damage);
+
+            effectApplyingContext.getCombatResult().addRewardXp(SkillType.DESTRUCTION, 20);
+
+            skillEntity.increaseExperience(SkillType.DESTRUCTION, 20);
         } else {
             throw new IllegalArgumentException("Caster as a monster is not supported for fileball.");
         }
