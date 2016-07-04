@@ -59,7 +59,7 @@ public class EquipmentEntity {
         if (equipmentSlot == EquipmentSlot.OFFHAND) {
             final ItemDefinition weapon = itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(EquipmentSlot.WEAPON));
 
-            if (equipmentSlotMapper.isTwoHandedWeapon(weapon.getType())) {
+            if (getEquipmentIdOnSlot(EquipmentSlot.WEAPON) != 0 && equipmentSlotMapper.isTwoHandedWeapon(weapon.getType())) {
                 //TODO: unequip the weapon and equip the offhand item
                 return false;
             }
