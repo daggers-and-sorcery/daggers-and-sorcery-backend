@@ -3,12 +3,14 @@ package com.morethanheroic.swords.effect.service.transformer;
 import com.google.common.collect.ImmutableList;
 import com.morethanheroic.swords.definition.transformer.DefinitionListTransformer;
 import com.morethanheroic.swords.effect.domain.EffectDefinition;
+import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.effect.service.domain.RawEffectDefinition;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,13 +22,13 @@ import static java.util.stream.Collectors.toList;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class EffectDefinitionListTransformer implements DefinitionListTransformer<List<EffectDefinition>, List<RawEffectDefinition>> {
+public class EffectDefinitionListTransformer implements DefinitionListTransformer<List<EffectSettingDefinitionHolder>, List<RawEffectDefinition>> {
 
     @NonNull
     private final EffectDefinitionTransformer effectDefinitionTransformer;
 
     @Override
-    public List<EffectDefinition> transform(List<RawEffectDefinition> rawDefinition) {
+    public List<EffectSettingDefinitionHolder> transform(List<RawEffectDefinition> rawDefinition) {
         if (rawDefinition == null) {
             return Collections.emptyList();
         }

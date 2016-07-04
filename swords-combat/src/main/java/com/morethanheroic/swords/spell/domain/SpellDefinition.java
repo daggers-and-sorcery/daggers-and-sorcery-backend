@@ -1,12 +1,11 @@
 package com.morethanheroic.swords.spell.domain;
 
-import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
+import java.util.List;
+
+import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
+
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Builder
 @Getter
@@ -19,7 +18,7 @@ public class SpellDefinition {
     private SpellType type;
     private boolean combatSpell;
     private boolean openPage;
-    private List<CombatEffectDefinition> combatEffects;
+    private List<EffectSettingDefinitionHolder> combatEffects;
     private List<SpellCost> spellCosts;
     private List<SkillAttributeRequirementDefinition> skillRequirements;
 }

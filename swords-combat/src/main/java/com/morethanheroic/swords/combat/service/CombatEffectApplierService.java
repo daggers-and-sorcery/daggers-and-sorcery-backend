@@ -1,29 +1,26 @@
 package com.morethanheroic.swords.combat.service;
 
-import com.morethanheroic.swords.combat.domain.Combat;
-import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatEffectServiceAccessor;
-import com.morethanheroic.swords.combat.domain.CombatResult;
-import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 
 @Service
 public class CombatEffectApplierService {
 
     @Autowired
-    private CombatEffectServiceAccessor combatEffectServiceAccessor;
+    private CombatEffectDefinitionRegistry combatEffectDefinitionRegistry;
 
-    public void applyEffects(CombatEntity combatEntity, Combat combat, CombatResult combatResult, List<CombatEffectDefinition> combatEffects, CombatEffectDataHolder combatEffectDataHolder) {
-        for (CombatEffectDefinition combatEffect : combatEffects) {
-            applyEffect(combatEntity, combat, combatResult, combatEffect, combatEffectDataHolder);
+    public void applyEffects(List<CombatEffectApplyingContext> effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
+        for (CombatEffectApplyingContext combatEffect : effectApplyingContext) {
+            applyEffect(combatEffect, combatEffectDataHolder);
         }
     }
 
-    public void applyEffect(CombatEntity combatEntity, Combat combat, CombatResult combatResult, CombatEffectDefinition combatEffect, CombatEffectDataHolder combatEffectDataHolder) {
-        combatEffect.apply(combatEntity, combat, combatResult, combatEffectDataHolder, combatEffectServiceAccessor);
+    public void applyEffect(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
+        combatEffectDefinitionRegistry.getDefinition(effectApplyingContext.getEffectSettings().getEffectId()).apply(effectApplyingContext, combatEffectDataHolder);
     }
 }
