@@ -49,7 +49,7 @@ public class FireballSpellEffectDefinition extends CombatEffectDefinition {
 
             effectApplyingContext.getCombatResult().addMessage(combatMessage);
 
-            effectApplyingContext.getSource().getCombatEntity().decreaseActualHealth(damage);
+            effectApplyingContext.getDestination().getCombatEntity().decreaseActualHealth(damage);
 
             effectApplyingContext.getCombatResult().addRewardXp(SkillType.DESTRUCTION, 20);
 
@@ -61,13 +61,19 @@ public class FireballSpellEffectDefinition extends CombatEffectDefinition {
 
     private DiceRollCalculationContext buildDiceRollCalculationContext(EffectSettingDefinitionHolder effectSettingDefinitionHolder) {
         return DiceRollCalculationContext.builder()
-            .value(effectSettingDefinitionHolder.getSetting("value") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("value").getValue()))
-            .d2(effectSettingDefinitionHolder.getSetting("d2") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d2").getValue()))
-            .d4(effectSettingDefinitionHolder.getSetting("d4") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d4").getValue()))
-            .d6(effectSettingDefinitionHolder.getSetting("d6") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d6").getValue()))
-            .d8(effectSettingDefinitionHolder.getSetting("d8") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d8").getValue()))
-            .d10(effectSettingDefinitionHolder.getSetting("d10") == null ? 0 : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d10").getValue()))
-            .build();
+                .value(effectSettingDefinitionHolder.getSetting("value") == null ? 0
+                        : Integer.parseInt(effectSettingDefinitionHolder.getSetting("value").getValue()))
+                .d2(effectSettingDefinitionHolder.getSetting("d2") == null ? 0
+                        : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d2").getValue()))
+                .d4(effectSettingDefinitionHolder.getSetting("d4") == null ? 0
+                        : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d4").getValue()))
+                .d6(effectSettingDefinitionHolder.getSetting("d6") == null ? 0
+                        : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d6").getValue()))
+                .d8(effectSettingDefinitionHolder.getSetting("d8") == null ? 0
+                        : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d8").getValue()))
+                .d10(effectSettingDefinitionHolder.getSetting("d10") == null ? 0
+                        : Integer.parseInt(effectSettingDefinitionHolder.getSetting("d10").getValue()))
+                .build();
     }
 
     @Override
