@@ -149,12 +149,14 @@ public class UseSpellService {
         final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
 
         for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spell.getCombatEffects()) {
-            final CombatEffectApplyingContext effectApplyingContext = CombatEffectApplyingContext.builder()
-                 .source(new CombatEffectTarget(userCombatEntity))
-                 .destination(new CombatEffectTarget(userCombatEntity))
-                 .combatResult(combatResult)
-                 .effectSettings(effectSettingDefinitionHolder)
-                 .build();
+            contexts.add(
+                CombatEffectApplyingContext.builder()
+                    .source(new CombatEffectTarget(userCombatEntity))
+                    .destination(new CombatEffectTarget(userCombatEntity))
+                    .combatResult(combatResult)
+                    .effectSettings(effectSettingDefinitionHolder)
+                    .build()
+            );
         }
 
         combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
