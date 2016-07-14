@@ -72,6 +72,7 @@ public class SwordsorceryServerApplication extends Application {
         SpringApplication.run(SwordsorceryServerApplication.class, args);
     }
 
+    //TODO: Move these beans a separate config files!
     @Bean
     public ShaPasswordEncoder shaPasswordEncoder() {
         return new ShaPasswordEncoder(256);
