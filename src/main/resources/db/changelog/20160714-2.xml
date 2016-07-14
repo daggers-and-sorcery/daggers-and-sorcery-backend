@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160714-2">
+        <insert tableName="news">
+            <column name="title" value="First steps towards the Whispering woods!"/>
+            <column name="release_date" value="2016-07-15 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+Today we are releasing the first step towards the 'Whispering fields'. The exploration screen was almost entirely rewritten behind the scenes to make adding new exploration areas and cities easier.
+
+Improvements:
+- The buttons on the right menu is organized into two groups. One related to the actual city you are in the others are buttons that will be available in every cities.
+- Reworked the exploration screen. The descriptions for the exploration places are collapsed by default and can be opened by clicking on the 'Read more...' links.
+- Added description for the 'Whispering woods'.
+- Added description for the 'Smithing' skill.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
