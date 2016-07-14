@@ -26,7 +26,7 @@ public class ShopFacade {
     private ShopMapper shopMapper;
 
     public ShopEntity getShopEntity(int shopId) {
-        ShopDefinition shopDefinition = shopDefinitionCache.getShopDefinition(shopId);
+        final ShopDefinition shopDefinition = shopDefinitionCache.getShopDefinition(shopId);
 
         return ShopEntity.builder()
                 .id(shopDefinition.getId())
@@ -48,7 +48,7 @@ public class ShopFacade {
     }
 
     public void removeItemFromShop(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
-        ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
+        final ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
 
         if (shopItemDatabaseEntity.getItemAmount() - amount <= 0) {
             shopMapper.deleteStock(shopDefinition.getId(), itemDefinition.getId());
@@ -58,7 +58,7 @@ public class ShopFacade {
     }
 
     public boolean shopHasItem(ShopDefinition shopDefinition, ItemDefinition itemDefinition, int amount) {
-        ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
+        final ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
 
         return shopItemDatabaseEntity.getItemAmount() >= amount;
     }
