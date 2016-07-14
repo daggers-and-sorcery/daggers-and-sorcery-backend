@@ -21,7 +21,7 @@ public class ShopDefinitionCache {
 
     @PostConstruct
     public void init() throws IOException {
-        List<ShopDefinition> rawShopDefinition = shopDefinitionLoader.loadShopDefinitions();
+        final List<ShopDefinition> rawShopDefinition = shopDefinitionLoader.loadShopDefinitions();
 
         for (ShopDefinition shopDefinition : rawShopDefinition) {
             shopDefinitionMap.put(shopDefinition.getId(), shopDefinition);

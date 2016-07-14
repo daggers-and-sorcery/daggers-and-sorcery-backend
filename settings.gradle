@@ -38,3 +38,5 @@ include 'swords-skill-leatherworking'
 include 'swords-event'
 include 'swords-skill-smithing'
 include 'swords-ladder'
+include 'swords-shop'
+
