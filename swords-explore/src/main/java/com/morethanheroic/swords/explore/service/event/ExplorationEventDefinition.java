@@ -7,5 +7,7 @@ public abstract class ExplorationEventDefinition {
 
     public abstract int getId();
 
+    public abstract ExplorationEventLocationType getLocation();
+
     public abstract ExplorationResult explore(UserEntity userEntity);
 }

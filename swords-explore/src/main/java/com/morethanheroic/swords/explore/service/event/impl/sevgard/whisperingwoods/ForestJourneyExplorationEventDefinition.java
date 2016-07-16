@@ -2,6 +2,7 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingw
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
@@ -96,5 +97,10 @@ public class ForestJourneyExplorationEventDefinition extends ExplorationEventDef
         }
 
         return explorationResult;
+    }
+
+    @Override
+    public ExplorationEventLocationType getLocation() {
+        return ExplorationEventLocationType.WHISPERING_WOODS;
     }
 }
