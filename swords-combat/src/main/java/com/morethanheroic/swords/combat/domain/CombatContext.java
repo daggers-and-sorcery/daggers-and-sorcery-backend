@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.EnumMap;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -28,5 +30,9 @@ public class CombatContext {
         } else {
             rewardXp.put(skill, amount);
         }
+    }
+
+    public Map<SkillType, Integer> getRewardXpMap() {
+        return Collections.unmodifiableMap(rewardXp);
     }
 }

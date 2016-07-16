@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,15 +26,19 @@ public class PlayerVictoryHandler {
     private final ScavengingAwarder scavengingAwarder;
 
     public List<CombatStep> handleVictory(CombatContext combatContext) {
+        final List<CombatStep> result = new ArrayList<>();
+
         final UserEntity userEntity = combatContext.getUser().getUserEntity();
         final MonsterDefinition monster = combatContext.getOpponent().getMonsterDefinition();
 
-        dropAwarder.addDropsToUserFromMonsterDefinition(userEntity, monster);
-        scavengingAwarder.addScavengingDropsToUserFromMonsterDefinition(combatResult, userEntity, monster);
-        experienceAwarder.addXpToUserFromMonsterDefinition(combatResult, userEntity);
+        result.addAll(dropAwarder.addDropsToUserFromMonsterDefinition(userEntity, monster));
+        result.addAll(scavengingAwarder.addScavengingDropsToUserFromMonsterDefinition(userEntity, monster));
+        result.addAll(experienceAwarder.addXpToUserFromMonsterDefinition(combatContext, userEntity));
 
         final UserCombatEntity userCombatEntity = combatContext.getUser();
         userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
+
+        return result;
     }
 
     @Deprecated
