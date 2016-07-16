@@ -27,7 +27,7 @@ public class SessionBasedExplorationContextFactory implements ExplorationContext
     private Random random;
 
     @Override
-    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, int nextStage) {
+    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, int location, int nextStage) {
         final ExplorationEventDefinition explorationEvent;
 
         if (userEntity.getActiveExplorationEvent() == NO_EVENT) {

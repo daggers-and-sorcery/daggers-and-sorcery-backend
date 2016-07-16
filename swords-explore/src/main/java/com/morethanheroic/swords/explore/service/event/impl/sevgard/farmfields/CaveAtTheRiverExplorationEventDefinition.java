@@ -5,18 +5,19 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-@Component
+@ExplorationEvent
 public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDefinition {
 
     private static final List<Integer> POSSIBLE_OPPONENTS = Lists.newArrayList(7, 8, 9);
@@ -25,13 +26,13 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private CombatEvaluator combatEvaluator;
+    private CombatEventEntryEvaluator combatEventEntryEvaluator;
 
     private List<MonsterDefinition> possibleOpponents;
 
     @PostConstruct
     private void initialize() {
-        possibleOpponents = combatEvaluator.convertMonsterIdToDefinition(POSSIBLE_OPPONENTS);
+        possibleOpponents = combatEventEntryEvaluator.convertMonsterIdToDefinition(POSSIBLE_OPPONENTS);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
         final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
-        final MonsterDefinition opponent = combatEvaluator.calculateOpponent(possibleOpponents);
+        final MonsterDefinition opponent = combatEventEntryEvaluator.calculateOpponent(possibleOpponents);
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -58,15 +59,11 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
                         .build()
         );
 
-        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
 
-        explorationResult.addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatResult.getCombatMessages())
-                        .build()
-        );
+        explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if (!combatResult.isPlayerVictory()) {
+        if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
 

@@ -38,14 +38,14 @@ public class ExplorationEventExplorer {
     private UserBasicAttributeManipulator basicAttributeManipulator;
 
     @Transactional
-    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final int nextState) {
+    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final int location, final int nextState) {
         if (!canExplore(userEntity, nextState)) {
             return buildFailedExplorationResult();
         }
 
         basicAttributeManipulator.decreaseMovement(userEntity, 1);
 
-        return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity, nextState));
+        return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity, location, nextState));
     }
 
     private boolean canExplore(final UserEntity userEntity, int nextState) {

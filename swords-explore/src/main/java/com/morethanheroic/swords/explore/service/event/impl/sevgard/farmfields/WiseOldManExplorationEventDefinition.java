@@ -6,6 +6,7 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
@@ -17,11 +18,10 @@ import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component
+@ExplorationEvent
 public class WiseOldManExplorationEventDefinition extends MultiStageExplorationEventDefinition {
 
     private static final int WELCOME_STAGE = 1;

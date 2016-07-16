@@ -22,9 +22,9 @@ public class ExplorationExploreController {
     @Autowired
     private ExplorationResponseBuilder explorationResponseBuilder;
 
-    @RequestMapping(value = "/explore/{state}", method = RequestMethod.GET)
-    public Response explore(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable int state) {
-        final ExplorationResult explorationResult = explorationEventExecutor.explore(userEntity, sessionEntity, state);
+    @RequestMapping(value = "/explore/{place}/{state}", method = RequestMethod.GET)
+    public Response explore(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable int location, @PathVariable int state) {
+        final ExplorationResult explorationResult = explorationEventExecutor.explore(userEntity, sessionEntity, location, state);
 
         return explorationResponseBuilder.build(ExplorationResponseBuilderConfiguration.builder()
                 .userEntity(userEntity)
