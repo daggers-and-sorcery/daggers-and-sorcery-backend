@@ -1,8 +1,10 @@
 package com.morethanheroic.swords.combat.service.calc.result;
 
 import com.morethanheroic.swords.combat.domain.Combat;
+import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.service.awarder.DropAwarder;
 import com.morethanheroic.swords.combat.service.awarder.ExperienceAwarder;
 import com.morethanheroic.swords.combat.service.awarder.ScavengingAwarder;
@@ -12,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class PlayerVictoryHandler {
@@ -20,6 +24,19 @@ public class PlayerVictoryHandler {
     private final ExperienceAwarder experienceAwarder;
     private final ScavengingAwarder scavengingAwarder;
 
+    public List<CombatStep> handleVictory(CombatContext combatContext) {
+        final UserEntity userEntity = combatContext.getUser().getUserEntity();
+        final MonsterDefinition monster = combatContext.getOpponent().getMonsterDefinition();
+
+        dropAwarder.addDropsToUserFromMonsterDefinition(userEntity, monster);
+        scavengingAwarder.addScavengingDropsToUserFromMonsterDefinition(combatResult, userEntity, monster);
+        experienceAwarder.addXpToUserFromMonsterDefinition(combatResult, userEntity);
+
+        final UserCombatEntity userCombatEntity = combatContext.getUser();
+        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
+    }
+
+    @Deprecated
     public void handleVictory(Combat combat, CombatResult combatResult) {
         final UserEntity userEntity = combat.getUserCombatEntity().getUserEntity();
         final MonsterDefinition monster = combat.getMonsterCombatEntity().getMonsterDefinition();

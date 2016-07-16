@@ -10,6 +10,7 @@ import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.CombatInitializer;
+import com.morethanheroic.swords.combat.service.calc.CombatTerminator;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
 import com.morethanheroic.swords.combat.service.calc.attack.MeleeAttackCalculator;
@@ -46,6 +47,9 @@ public class CombatCalculator {
     @Autowired
     private EquipmentFacade equipmentFacade;
 
+    @Autowired
+    private CombatTerminator combatTerminator;
+
     //TODO: remove these
     @Autowired
     private MeleeAttackCalculator meleeAttackCalculator;
@@ -69,13 +73,39 @@ public class CombatCalculator {
                         .build()
         );
 
-        //The monster attack firt if it can
+        //The monster attack first if it can
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
             //TODO: use the monsters attack type here like in the newer app
             combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity())).calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
         }
 
-        //TODO: save to db
+        if (combatContext.getWinner() == null) {
+            //TODO: save to db
+        }
+
+        return combatSteps;
+    }
+
+    public List<CombatStep> attack(final UserEntity userEntity) {
+        //TODO: create correct context
+        final CombatContext combatContext = CombatContext.builder().build();
+
+        final List<CombatStep> combatSteps = new ArrayList<>();
+
+        //TODO: load and create a combat entity
+
+        //Who attack next == monster
+        if (true) {
+            combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity())).calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
+        }
+
+        combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity())).calculateAttack(combatContext.getUser(), combatContext.getOpponent(), combatContext));
+
+        if (combatContext.getWinner() != null) {
+            combatTerminator.terminate(combatContext);
+
+            //TODO: remove from db
+        }
 
         return combatSteps;
     }
