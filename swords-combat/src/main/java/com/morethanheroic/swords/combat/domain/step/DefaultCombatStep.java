@@ -4,9 +4,9 @@ import com.morethanheroic.swords.combat.domain.CombatMessage;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
-public class InitializationCombatStep implements CombatStep {
+@Builder
+public class DefaultCombatStep implements CombatStep {
 
     private CombatMessage message;
 

@@ -6,6 +6,8 @@ import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.InitializationCombatStep;
+import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.CombatInitializer;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculator;
@@ -13,6 +15,8 @@ import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
 import com.morethanheroic.swords.combat.service.calc.attack.MeleeAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.attack.RangedAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
+import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
+import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +37,15 @@ public class CombatCalculator {
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
 
+    @Autowired
+    private CombatMessageBuilder combatMessageBuilder;
+
+    @Autowired
+    private AttackTypeCalculator attackTypeCalculator;
+
+    @Autowired
+    private EquipmentFacade equipmentFacade;
+
     //TODO: remove these
     @Autowired
     private MeleeAttackCalculator meleeAttackCalculator;
@@ -52,13 +65,14 @@ public class CombatCalculator {
 
         combatSteps.add(
                 InitializationCombatStep.builder()
-                        .message("You are attacked by a " + monsterDefinition.getName() + "!")
+                        .message(combatMessageBuilder.buildFightInitialisationMessage(monsterDefinition.getName()))
                         .build()
         );
 
-
+        //The monster attack firt if it can
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
-            //TODO: monster attack here...
+            //TODO: use the monsters attack type here like in the newer app
+            combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity())).calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
         }
 
         //TODO: save to db
@@ -66,12 +80,16 @@ public class CombatCalculator {
         return combatSteps;
     }
 
-    //TODO: there is a provider for these in the newer sites
+    //TODO: there is a provider for these in the newer app
     private AttackCalculator getAttackCalculatorForAttackType(AttackType attackType) {
         if (attackType == AttackType.MELEE) {
             return meleeAttackCalculator;
         } else {
             return rangedAttackCalculator;
         }
+    }
+
+    private AttackType calculateUserAttackType(UserEntity userEntity) {
+        return attackTypeCalculator.calculateAttackType(equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON));
     }
 }
