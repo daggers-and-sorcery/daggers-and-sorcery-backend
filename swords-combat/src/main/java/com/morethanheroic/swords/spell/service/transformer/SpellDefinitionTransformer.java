@@ -1,6 +1,14 @@
 package com.morethanheroic.swords.spell.service.transformer;
 
-import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionTransformer;
 import com.morethanheroic.swords.spell.domain.SkillAttributeRequirementDefinition;
 import com.morethanheroic.swords.spell.domain.SpellCost;
@@ -9,13 +17,6 @@ import com.morethanheroic.swords.spell.service.loader.domain.RawSkillAttributeRe
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellCost;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellEffectDefinition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SpellDefinitionTransformer {
@@ -30,29 +31,27 @@ public class SpellDefinitionTransformer {
     private SpellCostTransformer spellCostTransformer;
 
     public SpellDefinition transform(RawSpellDefinition rawSpellDefinition) {
-        SpellDefinition.SpellDefinitionBuilder spellDefinitionBuilder = new SpellDefinition.SpellDefinitionBuilder();
-
-        spellDefinitionBuilder.setId(rawSpellDefinition.getId());
-        spellDefinitionBuilder.setName(rawSpellDefinition.getName());
-        spellDefinitionBuilder.setCombatEffects(transformCombatEffects(rawSpellDefinition.getEffectList()));
-        spellDefinitionBuilder.setCombatSpell(rawSpellDefinition.isCombatSpell());
-        spellDefinitionBuilder.setOpenPage(rawSpellDefinition.isOpenPage());
-        spellDefinitionBuilder.setSkillRequirements(transformSkillRequirements(rawSpellDefinition.getSkillRequirements()));
-        spellDefinitionBuilder.setSpellCosts(transformSpellCosts(rawSpellDefinition.getCostList()));
-        spellDefinitionBuilder.setType(rawSpellDefinition.getType());
-        spellDefinitionBuilder.setDescription(rawSpellDefinition.getDescription());
-
-        return spellDefinitionBuilder.build();
+        return SpellDefinition.builder()
+                .id(rawSpellDefinition.getId())
+                .name(rawSpellDefinition.getName())
+                .combatEffects(transformCombatEffects(rawSpellDefinition.getEffectList()))
+                .combatSpell(rawSpellDefinition.isCombatSpell())
+                .openPage(rawSpellDefinition.isOpenPage())
+                .skillRequirements(transformSkillRequirements(rawSpellDefinition.getSkillRequirements()))
+                .spellCosts(transformSpellCosts(rawSpellDefinition.getCostList()))
+                .type(rawSpellDefinition.getType())
+                .description(rawSpellDefinition.getDescription())
+                .spellTarget(rawSpellDefinition.getSpellTarget())
+                .build();
     }
 
-    private List<CombatEffectDefinition> transformCombatEffects(List<RawSpellEffectDefinition> effectList) {
-        List<CombatEffectDefinition> result = new ArrayList<>();
+    private List<EffectSettingDefinitionHolder> transformCombatEffects(List<RawSpellEffectDefinition> effectList) {
+        final List<EffectSettingDefinitionHolder> result = new ArrayList<>();
 
         try {
             if (effectList != null) {
                 for (RawSpellEffectDefinition effect : effectList) {
-                    //TODO: Latr this can't only be a combat effect! Be careful with that
-                    result.add((CombatEffectDefinition) combatEffectDefinitionTransformer.transform(effect));
+                    result.add(combatEffectDefinitionTransformer.transform(effect));
                 }
             }
         } catch (Exception e) {

@@ -34,7 +34,7 @@ public class MonsterCombatSettingsActionHandler extends CombatSettingsActionHand
         if (monsterDefinition.getId() == combatSettingsEntity.getTarget()) {
             combatResult.addMessage(combatMessageBuilder.buildMonsterSettingTriggeredMessage(monsterDefinition.getName()));
 
-            executeCombatSettings(combat.getUserCombatEntity(), combatResult, combatSettingsEntity);
+            executeCombatSettings(combat, combatResult, combatSettingsEntity);
         }
     }
 

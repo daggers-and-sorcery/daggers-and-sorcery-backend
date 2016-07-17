@@ -6,6 +6,4 @@ package com.morethanheroic.swords.effect.domain;
  * an effect, so does "Gain +5 attack fro 20 minutes."
  */
 public interface EffectDefinition {
-
-    EffectSettingDefinition getEffectSetting(String name);
 }

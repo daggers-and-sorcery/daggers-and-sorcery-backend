@@ -1,19 +1,15 @@
 package com.morethanheroic.swords.event.service;
 
-import com.morethanheroic.swords.event.repository.dao.EventDatabaseEntity;
-import com.morethanheroic.swords.event.repository.domain.EventMapper;
-import com.morethanheroic.swords.event.service.event.Event;
-import com.morethanheroic.swords.user.service.UserFacade;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.morethanheroic.swords.event.repository.dao.EventDatabaseEntity;
+import com.morethanheroic.swords.event.repository.domain.EventMapper;
+import com.morethanheroic.swords.user.service.UserFacade;
 
 @Service
 public class EventProcessor {

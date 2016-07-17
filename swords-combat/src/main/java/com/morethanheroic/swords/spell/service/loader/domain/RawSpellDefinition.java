@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.spell.service.loader.domain;
 
+import com.morethanheroic.swords.spell.domain.SpellTarget;
 import com.morethanheroic.swords.spell.domain.SpellType;
 import lombok.Getter;
 
@@ -13,6 +14,10 @@ public class RawSpellDefinition {
     private int id;
     private String name;
     private SpellType type;
+
+    @Getter
+    @XmlElement(name = "spell-target")
+    private SpellTarget spellTarget;
 
     @Getter
     private String description;

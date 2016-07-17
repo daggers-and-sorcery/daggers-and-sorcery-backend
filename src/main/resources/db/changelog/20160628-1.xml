@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160628-1">
+        <insert tableName="news">
+            <column name="title" value="Magic is finally here!"/>
+            <column name="release_date" value="2016-06-28 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are happy to announce that magic is finally here! We added a new monster that will drop the magic equipment until a way for crafting them is added to the game. Also we added the very first spell to the game that you can use via the Settings menu after acquiring it from the new monster.
+
+Improvements:
+- Magic is arrived. We added a new monster with new drops related to magic like staff, wand and spells. This is only the first part of the magic content update. More magic skills related to spells will come soon.
+- Added the first offhand weapon and the first two handed weapon. For this we had to improve our equipping routine so you can't equip an offhand and a two handed weapon at the same time. After this we can release offhand weapons/two handed weapons easily.
+- Added item descriptions and flavor texts for some of the usable items like foods and recipes. We will add more and more to the existing items.
+- One new spells were added to the page. You can use them in the settings menu after learning them. You can learn them from scrolls dropped by monsters. New spells will come later this week.
+
+Bugfixes:
+- Fixed that Longbows was shown on the character page in the combat skill section instead of Longswords.
+- Fixed that a fight was able to go on infinitely and crash the server if none of the opponents was able to kill the other one. This happened when the player and the monster had very low attack and high defense.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

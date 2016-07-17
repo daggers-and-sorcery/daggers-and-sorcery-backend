@@ -52,7 +52,7 @@ public class SkillTypeCalculator {
             case THROWING_WEAPONS:
                 return SkillType.THROWING_WEAPONS;
             case LONGSWORDS:
-                return SkillType.LONGBOWS;
+                return SkillType.LONGSWORDS;
             case SHORTSWORDS:
                 return SkillType.SHORTSWORDS;
             case POLEARMS:
@@ -79,6 +79,8 @@ public class SkillTypeCalculator {
                 return SkillType.WAND;
             case SPECTRE:
                 return SkillType.SPECTRE;
+            case FOCUS:
+                return SkillType.FOCUS;
             default:
                 throw new IllegalArgumentException("No skill found for item type: " + itemType);
         }
@@ -97,7 +99,7 @@ public class SkillTypeCalculator {
             case THROWING_WEAPONS:
                 return SkillType.THROWING_WEAPONS;
             case LONGSWORDS:
-                return SkillType.LONGBOWS;
+                return SkillType.LONGSWORDS;
             case SHORTSWORDS:
                 return SkillType.SHORTSWORDS;
             case POLEARMS:
@@ -136,6 +138,14 @@ public class SkillTypeCalculator {
                 return SkillType.LEATHERWORKING;
             case SMITHING:
                 return SkillType.SMITHING;
+            case FOCUS:
+                return SkillType.FOCUS;
+            case DESTRUCTION:
+                return SkillType.DESTRUCTION;
+            case RESTORATION:
+                return SkillType.RESTORATION;
+            case ALTERATION:
+                return SkillType.ALTERATION;
             default:
                 throw new IllegalArgumentException("No skill found for skill attribute type: " + skillAttribute);
         }
@@ -154,7 +164,7 @@ public class SkillTypeCalculator {
             case THROWING_WEAPONS:
                 return SkillAttribute.THROWING_WEAPONS;
             case LONGSWORDS:
-                return SkillAttribute.LONGBOWS;
+                return SkillAttribute.LONGSWORDS;
             case SHORTSWORDS:
                 return SkillAttribute.SHORTSWORDS;
             case POLEARMS:
@@ -193,6 +203,14 @@ public class SkillTypeCalculator {
                 return SkillAttribute.LEATHERWORKING;
             case SMITHING:
                 return SkillAttribute.SMITHING;
+            case FOCUS:
+                return SkillAttribute.FOCUS;
+            case DESTRUCTION:
+                return SkillAttribute.DESTRUCTION;
+            case RESTORATION:
+                return SkillAttribute.RESTORATION;
+            case ALTERATION:
+                return SkillAttribute.ALTERATION;
             default:
                 throw new IllegalArgumentException("No skill type found for attribute type: " + skillType);
         }

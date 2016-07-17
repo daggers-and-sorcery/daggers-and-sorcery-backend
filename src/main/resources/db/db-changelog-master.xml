@@ -50,7 +50,7 @@
     <include file="changelog/20160604-1.xml" relativeToChangelogFile="true"/>
 
     <include file="changelog/20160614-1.xml" relativeToChangelogFile="true"/>
-    
+
     <include file="changelog/20160616-1.xml" relativeToChangelogFile="true"/>
 
     <include file="changelog/20160617-1.xml" relativeToChangelogFile="true"/>
@@ -64,4 +64,13 @@
     <include file="changelog/20160622-1.xml" relativeToChangelogFile="true"/>
 
     <include file="changelog/20160623-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160628-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160629-1.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20160629-2.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20160629-3.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160714-1.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20160714-2.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

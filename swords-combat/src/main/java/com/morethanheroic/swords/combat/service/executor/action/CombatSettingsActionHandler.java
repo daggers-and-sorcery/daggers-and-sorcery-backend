@@ -19,9 +19,9 @@ public abstract class CombatSettingsActionHandler {
 
     public abstract TriggerType getTriggerType();
 
-    protected void executeCombatSettings(UserCombatEntity userEntity, CombatResult combatResult, CombatSettingsEntity combatSettingsEntity) {
+    protected void executeCombatSettings(Combat combat, CombatResult combatResult, CombatSettingsEntity combatSettingsEntity) {
         log.debug("Running combat settings: " + combatSettingsEntity);
 
-        combatSettingsActionHandlerResolverProvider.getResolver(combatSettingsEntity.getType()).handleSettings(userEntity, combatResult, combatSettingsEntity, null);
+        combatSettingsActionHandlerResolverProvider.getResolver(combatSettingsEntity.getType()).handleSettings(combat, combatResult, combatSettingsEntity, null);
     }
 }

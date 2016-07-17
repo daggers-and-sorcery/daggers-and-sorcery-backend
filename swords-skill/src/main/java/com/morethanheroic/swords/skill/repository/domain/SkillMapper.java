@@ -168,4 +168,28 @@ public interface SkillMapper {
 
     @Update("UPDATE skills SET smithing_xp = smithing_xp - #{value} WHERE user_id = #{userId}")
     void decreaseSmithingXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET focus_xp = focus_xp + #{value} WHERE user_id = #{userId}")
+    void increaseFocusXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET focus_xp = focus_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseFocusXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET alteration_xp = alteration_xp + #{value} WHERE user_id = #{userId}")
+    void increaseAlterationXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET alteration_xp = alteration_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseAlterationXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET destruction_xp = destruction_xp + #{value} WHERE user_id = #{userId}")
+    void increaseDestructionXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET destruction_xp = destruction_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseDestructionXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET restoration_xp = restoration_xp + #{value} WHERE user_id = #{userId}")
+    void increaseRestorationXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET restoration_xp = restoration_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseRestorationXp(@Param("userId") int userId, @Param("value") long value);
 }

@@ -31,7 +31,7 @@ public class TurnCombatSettingsActionHandler extends CombatSettingsActionHandler
         if (combat.getTurn() == combatSettingsEntity.getTarget()) {
             combatResult.addMessage(combatMessageBuilder.buildTurnSettingTriggeredMessage(combatSettingsEntity.getTarget()));
 
-            executeCombatSettings(combat.getUserCombatEntity(), combatResult, combatSettingsEntity);
+            executeCombatSettings(combat, combatResult, combatSettingsEntity);
         }
     }
 

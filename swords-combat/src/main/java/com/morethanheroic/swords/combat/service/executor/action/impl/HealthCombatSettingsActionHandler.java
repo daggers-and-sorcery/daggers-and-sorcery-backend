@@ -30,7 +30,7 @@ public class HealthCombatSettingsActionHandler extends CombatSettingsActionHandl
         if (percentageCalculator.calculatePercentage(combat.getUserCombatEntity().getActualHealth(), combat.getUserCombatEntity().getMaximumHealth()) < combatSettingsEntity.getTarget()) {
             combatResult.addMessage(combatMessageBuilder.buildHealthSettingTriggeredMessage(combatSettingsEntity.getTarget()));
 
-            executeCombatSettings(combat.getUserCombatEntity(), combatResult, combatSettingsEntity);
+            executeCombatSettings(combat, combatResult, combatSettingsEntity);
         }
     }
 

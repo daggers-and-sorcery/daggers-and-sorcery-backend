@@ -58,5 +58,6 @@ public enum ItemRequirement {
     WAND,
     SPECTRE,
     SCAVENGING,
-    COOKING
+    COOKING,
+    FOCUS
 }

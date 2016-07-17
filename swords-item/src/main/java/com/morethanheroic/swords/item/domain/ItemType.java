@@ -39,5 +39,6 @@ public enum ItemType {
     GLOVES,
     BOOTS,
     HELM,
-    LIQUID;
+    LIQUID,
+    FOCUS;
 }

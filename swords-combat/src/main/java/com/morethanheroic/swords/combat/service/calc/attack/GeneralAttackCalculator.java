@@ -14,6 +14,9 @@ import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+import java.util.function.Consumer;
+
 public abstract class GeneralAttackCalculator implements AttackCalculator {
 
     @Autowired
@@ -51,6 +54,7 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         }
     }
 
+<<<<<<< HEAD
     protected void addAttackXp(final CombatContext combatContext, final UserCombatEntity userCombatEntity, final int amount) {
         final UserEntity userEntity = userCombatEntity.getUserEntity();
 
@@ -62,11 +66,13 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
     }
 
     @Deprecated
-    protected void addAttackXp(CombatResult result, UserCombatEntity userCombatEntity, int amount) {
-        if (combatUtil.getUserWeaponType(userCombatEntity.getUserEntity()) != null) {
-            result.addRewardXp(combatUtil.getUserWeaponSkillType(userCombatEntity.getUserEntity()), amount);
+    protected void addAttackXp(CombatResult combatResult, UserCombatEntity userCombatEntity, int amount) {
+        final UserEntity userEntity = userCombatEntity.getUserEntity();
+
+        if (combatUtil.getUserWeaponType(userEntity) != null) {
+            combatResult.addRewardXp(combatUtil.getUserWeaponSkillType(userEntity), amount);
         } else {
-            result.addRewardXp(SkillType.FISTFIGHT, amount);
+            combatResult.addRewardXp(SkillType.FISTFIGHT, amount);
         }
     }
 
@@ -86,6 +92,14 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
     }
 
     @Deprecated
+=======
+    protected void addOffhandXp(final CombatResult combatResult, final UserCombatEntity userCombatEntity, final int amount) {
+        final UserEntity userEntity = userCombatEntity.getUserEntity();
+
+        combatUtil.getUserOffhandSkillType(userEntity).ifPresent((skillType) -> combatResult.addRewardXp(skillType, amount));
+    }
+
+>>>>>>> origin/master
     protected void dealMiss(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
         if (attacker instanceof MonsterCombatEntity) {
             addDefenseXp(result, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
@@ -117,6 +131,7 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         if (attacker instanceof MonsterCombatEntity) {
             result.addMessage(combatMessageBuilder.buildPlayerKilledMessage(attacker.getName()));
             result.setWinner(Winner.MONSTER);
+            result.setPlayerDied(true);
         } else {
             result.addMessage(combatMessageBuilder.buildMonsterKilledMessage(opponent.getName()));
             result.setWinner(Winner.PLAYER);
