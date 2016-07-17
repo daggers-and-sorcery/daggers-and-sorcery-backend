@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.explore.filter;
+package com.morethanheroic.swords.explore.view.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;

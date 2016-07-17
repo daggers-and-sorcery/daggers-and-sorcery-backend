@@ -1,31 +1,32 @@
 package com.morethanheroic.swords.explore.service;
 
-import com.morethanheroic.swords.explore.service.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Service
 public class ExplorationEventChooser {
 
     @Autowired
-    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
-
-    @Autowired
     private Random random;
 
-    private final Map<ExplorationEventLocationType, Set<ExplorationEventDefinition>> locationMap;
+    private final Map<ExplorationEventLocationType, List<ExplorationEventDefinition>> locationMap;
 
     @Autowired
     private ExplorationEventChooser(final List<ExplorationEventDefinition> explorationEventDefinitions) {
-        final Map<ExplorationEventLocationType, Set<ExplorationEventDefinition>> result = new HashMap<>();
+        final Map<ExplorationEventLocationType, List<ExplorationEventDefinition>> result = new HashMap<>();
 
-        for(ExplorationEventLocationType explorationEventLocationType
-                )
+        for (ExplorationEventLocationType explorationEventLocationType : ExplorationEventLocationType.values()) {
+            result.put(explorationEventLocationType, new ArrayList<>());
+        }
 
         for (ExplorationEventDefinition explorationEventDefinition : explorationEventDefinitions) {
             result.get(explorationEventDefinition.getLocation()).add(explorationEventDefinition);
@@ -34,11 +35,9 @@ public class ExplorationEventChooser {
         locationMap = Collections.unmodifiableMap(result);
     }
 
-    public ExplorationEventDefinition getEvent(ExplorationEventLocationType locationType) {
-        return explorationEventDefinitionCache.getDefinition(getRandomExplorationEventId());
-    }
+    public ExplorationEventDefinition getEvent(final ExplorationEventLocationType locationType) {
+        final List<ExplorationEventDefinition> locationDefinitionInfo = locationMap.get(locationType);
 
-    private int getRandomExplorationEventId() {
-        return random.nextInt(explorationEventDefinitionCache.getSize()) + 1;
+        return locationDefinitionInfo.get(random.nextInt(locationDefinitionInfo.size()));
     }
 }

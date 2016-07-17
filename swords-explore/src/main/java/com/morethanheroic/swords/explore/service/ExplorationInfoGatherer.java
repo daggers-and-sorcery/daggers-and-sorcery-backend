@@ -36,7 +36,7 @@ public class ExplorationInfoGatherer {
     }
 
     private ExplorationContext createExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity) {
-        return explorationContextFactory.newExplorationContext(userEntity, sessionEntity, userEntity.getActiveExplorationState());
+        return explorationContextFactory.newExplorationContext(userEntity, sessionEntity, null, userEntity.getActiveExplorationState());
     }
 
     private boolean hasInfo(final UserEntity userEntity) {
