@@ -124,6 +124,12 @@ public class EquipmentEntity {
 
                 equipmentMapper.equipBoots(userEntity.getId(), item.getId(), identified);
                 break;
+            case AMULET:
+                equipmentDatabaseEntity.setAmulet(item.getId());
+                equipmentDatabaseEntity.setAmuletIdentified(identified);
+
+                equipmentMapper.equipAmulet(userEntity.getId(), item.getId(), identified);
+                break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
         }
@@ -185,6 +191,19 @@ public class EquipmentEntity {
                 }
 
                 return previousBoots;
+            case AMULET:
+                final int previousAmulet = equipmentDatabaseEntity.getAmulet();
+
+                if (previousAmulet != 0) {
+                    inventoryEntity.addItem(previousAmulet, 1, equipmentDatabaseEntity.isAmuletIdentified());
+
+                    equipmentDatabaseEntity.setAmulet(0);
+                    equipmentDatabaseEntity.setAmuletIdentified(true);
+
+                    equipmentMapper.equipAmulet(userEntity.getId(), 0, true);
+                }
+
+                return previousAmulet;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }

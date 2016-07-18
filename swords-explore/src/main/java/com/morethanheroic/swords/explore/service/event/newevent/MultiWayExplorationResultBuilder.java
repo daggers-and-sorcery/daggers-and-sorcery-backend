@@ -14,7 +14,7 @@ public class MultiWayExplorationResultBuilder {
     }
 
     public MultiWayExplorationResultBuilder isSuccess(ExplorationResultRuntime runnable) {
-        if(!isSuccess) {
+        if (!isSuccess) {
             return this;
         }
 
@@ -24,7 +24,7 @@ public class MultiWayExplorationResultBuilder {
     }
 
     public MultiWayExplorationResultBuilder isFailure(ExplorationResultRuntime runnable) {
-        if(isSuccess) {
+        if (isSuccess) {
             return this;
         }
 

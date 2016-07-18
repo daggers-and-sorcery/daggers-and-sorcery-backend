@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -29,7 +30,7 @@ public class DropAwarder {
     private final InventoryFacade inventoryFacade;
 
     public void addDropsToUserFromMonsterDefinition(CombatResult result, UserEntity userEntity, MonsterDefinition monster) {
-        final ArrayList<Drop> drops = dropCalculator.calculateDrop(monster);
+        final List<Drop> drops = dropCalculator.calculateDropsForMonster(monster);
 
         final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
 

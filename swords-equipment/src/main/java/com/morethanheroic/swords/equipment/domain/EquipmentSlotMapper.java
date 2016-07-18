@@ -34,6 +34,8 @@ public class EquipmentSlotMapper {
                 return EquipmentSlot.GLOVES;
             case BOOTS:
                 return EquipmentSlot.BOOTS;
+            case AMULET:
+                return EquipmentSlot.AMULET;
             default:
                 throw new IllegalArgumentException();
         }

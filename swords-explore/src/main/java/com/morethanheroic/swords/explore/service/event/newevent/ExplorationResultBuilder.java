@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.newevent;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.evaluator.AttributeAttemptEventEntryEvaluator;
@@ -35,14 +34,14 @@ public class ExplorationResultBuilder {
     private UserEntity userEntity;
     private boolean shouldStop;
 
-    public ExplorationResultBuilder initialize(final UserEntity userEntity) {
+    public synchronized ExplorationResultBuilder initialize(final UserEntity userEntity) {
         this.userEntity = userEntity;
         this.explorationResult = explorationResultFactory.newExplorationResult();
 
         return this;
     }
 
-    public ExplorationResultBuilder newMessageEntry(final String messageId, final Object... args) {
+    public synchronized ExplorationResultBuilder newMessageEntry(final String messageId, final Object... args) {
         if (shouldStop) {
             return this;
         }
@@ -54,7 +53,7 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public ExplorationResultBuilder newCombatEntry(final int opponentId) {
+    public synchronized ExplorationResultBuilder newCombatEntry(final int opponentId) {
         if (shouldStop) {
             return this;
         }
@@ -70,7 +69,7 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public MultiWayExplorationResultBuilder newAttributeProbeEntry(final Attribute attribute, final int valueToHit) {
+    public synchronized MultiWayExplorationResultBuilder newAttributeProbeEntry(final Attribute attribute, final int valueToHit) {
         final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, attribute, valueToHit);
 
         explorationResult.addEventEntryResult(attemptResult.getResult());
@@ -78,13 +77,13 @@ public class ExplorationResultBuilder {
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
     }
 
-    public ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {
+    public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {
         runnable.run();
 
         return this;
     }
 
-    public ExplorationResult build() {
+    public synchronized ExplorationResult build() {
         return explorationResult;
     }
 }

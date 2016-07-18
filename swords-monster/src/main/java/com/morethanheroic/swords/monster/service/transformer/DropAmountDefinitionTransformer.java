@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 public class DropAmountDefinitionTransformer {
 
     public DropAmountDefinition transform(RawDropAmountDefinition rawDropAmountDefinition) {
-        DropAmountDefinition.DropAmountDefinitionBuilder dropAmountDefinitionBuilder = new DropAmountDefinition.DropAmountDefinitionBuilder();
-
-        dropAmountDefinitionBuilder.setMinimumAmount(rawDropAmountDefinition.getMin());
-        dropAmountDefinitionBuilder.setMaximumAmount(rawDropAmountDefinition.getMax());
-
-        return dropAmountDefinitionBuilder.build();
+        return DropAmountDefinition.builder()
+                .minimumAmount(rawDropAmountDefinition.getMin())
+                .maximumAmount(rawDropAmountDefinition.getMax())
+                .build();
     }
 }

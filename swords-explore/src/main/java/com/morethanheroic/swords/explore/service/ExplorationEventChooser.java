@@ -2,6 +2,7 @@ package com.morethanheroic.swords.explore.service;
 
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
+@Log4j
 public class ExplorationEventChooser {
 
     @Autowired
@@ -37,7 +39,10 @@ public class ExplorationEventChooser {
 
     public ExplorationEventDefinition getEvent(final ExplorationEventLocationType locationType) {
         final List<ExplorationEventDefinition> locationDefinitionInfo = locationMap.get(locationType);
+        final ExplorationEventDefinition result = locationDefinitionInfo.get(random.nextInt(locationDefinitionInfo.size()));
 
-        return locationDefinitionInfo.get(random.nextInt(locationDefinitionInfo.size()));
+        log.info("Choosen exploration event is " + result.getId());
+
+        return result;
     }
 }
