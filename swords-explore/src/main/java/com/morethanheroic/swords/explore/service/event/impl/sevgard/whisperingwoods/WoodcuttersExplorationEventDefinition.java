@@ -4,19 +4,27 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilder;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Random;
 
 @ExplorationEvent
 public class WoodcuttersExplorationEventDefinition extends ExplorationEventDefinition {
 
-    @Autowired
-    private ExplorationResultFactory explorationResultFactory;
+    private static final int BRONZE_COIN_ID = 1;
 
     @Autowired
-    private MessageEventEntryEvaluator messageEventEntryEvaluator;
+    private ExplorationResultBuilder explorationResultBuilder;
+
+    @Autowired
+    private Random random;
+
+    @Autowired
+    private InventoryFacade inventoryFacade;
 
     @Override
     public int getId() {
@@ -30,24 +38,24 @@ public class WoodcuttersExplorationEventDefinition extends ExplorationEventDefin
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final int coinCount = rollRandomCoinReward();
 
-        explorationResult.addEventEntryResult(
-                messageEventEntryEvaluator.messageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_1")
-        ).addEventEntryResult(
-                messageEventEntryEvaluator.messageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_2")
-        ).addEventEntryResult(
-                messageEventEntryEvaluator.messageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")
-        );
+        return explorationResultBuilder.initialize(userEntity)
+                .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_1")
+                .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_2")
+                .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_3")
+                .newCustomLogicEntry(() -> {
+                    final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
 
-        //TODO: add coins
+                    inventoryEntity.addItem(BRONZE_COIN_ID, coinCount);
+                })
+                .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_4")
+                .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_5", coinCount)
+                .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_6", coinCount)
+                .build();
+    }
 
-        explorationResult.addEventEntryResult(
-                messageEventEntryEvaluator.messageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_4")
-        ).addEventEntryResult(
-                messageEventEntryEvaluator.messageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_5")
-        );
-
-        return explorationResult;
+    private int rollRandomCoinReward() {
+        return random.nextInt(8) + 6;
     }
 }
