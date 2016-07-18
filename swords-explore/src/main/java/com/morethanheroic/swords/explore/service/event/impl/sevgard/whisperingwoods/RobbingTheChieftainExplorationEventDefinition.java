@@ -71,6 +71,7 @@ public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEv
                 return explorationResult;
             }
 
+            //TODO: add event drops to the chest!
             explorationResult.addEventEntryResult(
                     messageEventEntryEvaluator.messageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_5")
             );
