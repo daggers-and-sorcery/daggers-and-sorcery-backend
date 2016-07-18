@@ -40,3 +40,5 @@ include 'swords-skill-smithing'
 include 'swords-ladder'
 include 'swords-shop'
 
+include 'swords-forum'
+

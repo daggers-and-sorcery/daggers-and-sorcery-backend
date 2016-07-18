@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20160716-1" author="andras">
+        <createTable tableName="forum_categories">
+
+            <column name="id" type="int unsigned" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(256)"/>
+
+            <column name="post_count" type="mediumint unsigned"/>
+
+            <column name="icon" type="varchar(64)"/>
+
+            <column name="last_post_date" type="datetime"/>
+
+            <column name="last_post_user" type="mediumint unsigned"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
+
+<!--
+ forum_categories:
+name (varchar [256])
+post_count (mediumint unsigned)
+icon (varchar [64])
+last_post_date (datetime)
+last_post_user (mediumint unsigned)
+ -->
