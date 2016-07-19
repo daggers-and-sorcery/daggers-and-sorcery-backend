@@ -11,6 +11,7 @@ dependencies {
 }
 
 apply plugin: 'spring-boot'
+bootRepackage.enabled = false
 
 apply plugin: 'checkstyle'
 checkstyle checkstyle_config

@@ -84,6 +84,11 @@ allprojects {
 
         compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.61'
     }
+
+    compileJava {
+        sourceCompatibility=1.8
+        targetCompatibility=1.8
+    }
 }
 
 dependencies {

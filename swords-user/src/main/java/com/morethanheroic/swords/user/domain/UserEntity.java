@@ -3,6 +3,8 @@ package com.morethanheroic.swords.user.domain;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import java.time.Instant;
 
@@ -12,14 +14,16 @@ import java.time.Instant;
  * want to change these attributes use the classes that contains the logic for the changings and don't use this class
  * directly!
  */
+@Configurable
 public class UserEntity {
 
-    private final UserDatabaseEntity userDatabaseEntity;
-    private final UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-    public UserEntity(int userId, UserMapper userMapper) {
-        this.userDatabaseEntity = userMapper.findById(userId);
-        this.userMapper = userMapper;
+    private final UserDatabaseEntity userDatabaseEntity;
+
+    public UserEntity(final UserDatabaseEntity userDatabaseEntity) {
+        this.userDatabaseEntity = userDatabaseEntity;
     }
 
     public int getHealthPoints() {
@@ -74,6 +78,10 @@ public class UserEntity {
 
     public Instant getLastLoginDate() {
         return userDatabaseEntity.getLastLoginDate();
+    }
+
+    public void setLastLoginDateToNow() {
+        userMapper.updateLastLoginDate(getId());
     }
 
     public void setBasicStats(int health, int mana, int movement) {

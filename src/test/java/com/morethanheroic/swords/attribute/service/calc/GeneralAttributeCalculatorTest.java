@@ -37,7 +37,7 @@ public class GeneralAttributeCalculatorTest {
         user.setRace(Race.ORC);
         //user.getSkills().increaseExperience(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
-        UserEntity userEntity = new UserEntity(user.getId(), null);
+        UserEntity userEntity = new UserEntity(user);
 
         when(globalAttributeCalculator.calculateActualValue(userEntity, GeneralAttribute.STRENGTH)).then(invocation -> 12);
         when(globalAttributeCalculator.calculateMaximumValue(userEntity, GeneralAttribute.STRENGTH)).then(invocation -> 0);
@@ -57,7 +57,7 @@ public class GeneralAttributeCalculatorTest {
         user.setRace(Race.ORC);
         //user.getSkills().increaseExperience(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 1000);
 
-        UserEntity userEntity = new UserEntity(user.getId(), null);
+        UserEntity userEntity = new UserEntity(user);
 
         assertEquals(generalAttributeCalculator.calculatePointsToAttributeLevel(userEntity, GeneralAttribute.STRENGTH), 8);
     }
@@ -68,7 +68,7 @@ public class GeneralAttributeCalculatorTest {
         user.setRace(Race.ORC);
         //user.getSkills().increaseExperience(SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS, 100000);
 
-        UserEntity userEntity = new UserEntity(user.getId(), null);
+        UserEntity userEntity = new UserEntity(user);
 
         assertEquals(generalAttributeCalculator.calculatePointsBonusBySkills(userEntity, GeneralAttribute.STRENGTH), 2);
     }
