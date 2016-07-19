@@ -27,6 +27,7 @@ public class UserEntityFactory {
         return new UserEntity(userMapper.findById(userId));
     }
 
+    @InjectAtReturn
     public UserEntity getUser(String username, String password) {
         final UserDatabaseEntity userDatabaseEntity = userMapper.findByUsernameAndPassword(username, passwordEncoder.encodePassword(password));
 
