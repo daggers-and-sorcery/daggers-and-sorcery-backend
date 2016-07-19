@@ -37,7 +37,7 @@ public class EquipmentSlotMapper {
             case AMULET:
                 return EquipmentSlot.AMULET;
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Unsupported item type: " + itemType);
         }
     }
 
