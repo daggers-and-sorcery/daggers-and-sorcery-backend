@@ -1,20 +1,20 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component
+@ExplorationEvent
 public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEventDefinition {
 
     private static final int GOBLIN_PIKEMAN_MONSTER_ID = 1;
@@ -24,15 +24,15 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private CombatEvaluator combatEvaluator;
+    private CombatEventEntryEvaluator combatEventEntryEvaluator;
 
     private MonsterDefinition goblinPikeman;
     private MonsterDefinition goblinShaman;
 
     @PostConstruct
     private void initialize() {
-        goblinPikeman = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_PIKEMAN_MONSTER_ID);
-        goblinShaman = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_SHAMAN_MONSTER_ID);
+        goblinPikeman = combatEventEntryEvaluator.convertMonsterIdToDefinition(GOBLIN_PIKEMAN_MONSTER_ID);
+        goblinShaman = combatEventEntryEvaluator.convertMonsterIdToDefinition(GOBLIN_SHAMAN_MONSTER_ID);
     }
 
     @Override
@@ -58,15 +58,11 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
                         .build()
         );
 
-        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, goblinPikeman);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, goblinPikeman);
 
-        explorationResult.addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatResult.getCombatMessages())
-                        .build()
-        );
+        explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if (!combatResult.isPlayerVictory()) {
+        if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
 
@@ -76,15 +72,11 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
                         .build()
         );
 
-        final CombatResult secondCombatResult = combatEvaluator.calculateCombat(userEntity, goblinShaman);
+        final CombatEventEntryEvaluatorResult secondCombatResult = combatEventEntryEvaluator.calculateCombat(userEntity, goblinShaman);
 
-        explorationResult.addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(secondCombatResult.getCombatMessages())
-                        .build()
-        );
+        explorationResult.addEventEntryResult(secondCombatResult.getResult());
 
-        if (!combatResult.isPlayerVictory()) {
+        if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
 
@@ -95,5 +87,10 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
         );
 
         return explorationResult;
+    }
+
+    @Override
+    public ExplorationEventLocationType getLocation() {
+        return ExplorationEventLocationType.FARMFIELDS;
     }
 }

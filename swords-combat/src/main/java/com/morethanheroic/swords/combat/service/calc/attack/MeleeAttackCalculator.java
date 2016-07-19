@@ -32,7 +32,11 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
     }
 
     private void dealDamage(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        final int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getDamage()));
+        int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getDamage()));
+
+        if (damage > opponent.getActualHealth()) {
+            damage = opponent.getActualHealth();
+        }
 
         opponent.decreaseActualHealth(damage);
 

@@ -33,6 +33,7 @@ dependencies {
 }
 
 apply plugin: 'spring-boot'
+bootRepackage.enabled = false
 
 //TODO: re-enable these asap!
 //apply plugin: 'checkstyle'

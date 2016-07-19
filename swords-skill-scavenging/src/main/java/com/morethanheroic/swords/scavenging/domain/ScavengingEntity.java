@@ -14,7 +14,7 @@ public class ScavengingEntity {
     }
 
     public int getScavengingPoint() {
-        return userMapper.findById(userEntity.getId()).getScaveningPoint();
+        return userMapper.findById(userEntity.getId()).getScavengingPoint();
     }
 
     public void setScavengingPoint(int value) {

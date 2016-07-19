@@ -1,7 +1,7 @@
-package com.morethanheroic.swords.explore.configuration;
+package com.morethanheroic.swords.explore.view.configuration;
 
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.explore.filter.ExplorationEventOverrideFilter;
+import com.morethanheroic.swords.explore.view.filter.ExplorationEventOverrideFilter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

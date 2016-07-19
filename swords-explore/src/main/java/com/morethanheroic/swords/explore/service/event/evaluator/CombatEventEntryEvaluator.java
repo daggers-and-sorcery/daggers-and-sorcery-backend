@@ -1,7 +1,9 @@
-package com.morethanheroic.swords.explore.service.event;
+package com.morethanheroic.swords.explore.service.event.evaluator;
 
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
+import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -14,7 +16,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
-public class CombatEvaluator {
+public class CombatEventEntryEvaluator {
 
     @Autowired
     private CombatCalculator combatCalculator;
@@ -33,8 +35,16 @@ public class CombatEvaluator {
         return possibleOpponents.get(random.nextInt(possibleOpponents.size()));
     }
 
-    public CombatResult calculateCombat(final UserEntity userEntity, final MonsterDefinition opponent) {
-        return combatCalculator.doFight(userEntity, opponent);
+    public CombatEventEntryEvaluatorResult calculateCombat(final UserEntity userEntity, final MonsterDefinition opponent) {
+        final CombatResult combatResult = combatCalculator.doFight(userEntity, opponent);
+
+        return CombatEventEntryEvaluatorResult.builder()
+                .result(
+                        CombatExplorationEventEntryResult.builder()
+                                .combatMessages(combatResult.getCombatMessages())
+                                .build())
+                .combatResult(combatResult)
+                .build();
     }
 
     public List<MonsterDefinition> convertMonsterIdToDefinition(final List<Integer> ids) {

@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.user.service;
 
 import com.morethanheroic.swords.race.model.Race;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,24 +15,24 @@ import java.time.Instant;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserCreator {
+public class NewUserCreator {
 
     private static final int STARTING_MOVEMENT_POINTS_AMOUNT = 30;
     private static final int STARTING_HEALTH_POINTS_AMOUNT = 15;
     private static final int STARTING_MANA_POINTS_AMOUNT = 15;
 
-    @NonNull
     private final UserMapper userMapper;
+    private final UserEntityFactory userEntityFactory;
 
-    public UserDatabaseEntity createUser(String username, String password, String email, Race race) {
-        final UserDatabaseEntity user = createNewUserEntity(username, password, email, race);
+    public UserEntity createUser(String username, String password, String email, Race race) {
+        final UserDatabaseEntity user = createNewUserDatabaseEntity(username, password, email, race);
 
         userMapper.insert(user);
 
-        return user;
+        return userEntityFactory.getUser(user.getId());
     }
 
-    private UserDatabaseEntity createNewUserEntity(String username, String password, String email, Race race) {
+    private UserDatabaseEntity createNewUserDatabaseEntity(String username, String password, String email, Race race) {
         final UserDatabaseEntity user = new UserDatabaseEntity(username, password);
 
         final Instant now = Instant.now();

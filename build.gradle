@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.3.3.RELEASE'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.3.6.RELEASE'
     }
 }
 
@@ -82,7 +82,12 @@ allprojects {
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
         compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.60'
+        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.61'
+    }
+
+    compileJava {
+        sourceCompatibility=1.8
+        targetCompatibility=1.8
     }
 }
 

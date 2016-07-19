@@ -3,26 +3,28 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.evaluator.AttributeAttemptEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.AttributeAttemptEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-@Component
+@ExplorationEvent
 public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDefinition {
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private AttributeAttemptEvaluator attributeAttemptEvaluator;
+    private AttributeAttemptEventEntryEvaluator attributeAttemptEventEntryEvaluator;
 
     @Autowired
     private InventoryFacade inventoryFacade;
@@ -53,11 +55,13 @@ public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDef
                         .build()
         );
 
-        final boolean attemptResult = attributeAttemptEvaluator.attributeAttempt(userEntity, explorationResult, GeneralAttribute.STRENGTH, 8);
+        final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, GeneralAttribute.STRENGTH, 8);
+
+        explorationResult.addEventEntryResult(attemptResult.getResult());
 
         int resultCoins = random.nextInt(6) + 3;
 
-        if (attemptResult) {
+        if (attemptResult.isSuccessful()) {
             explorationResult.addEventEntryResult(
                     TextExplorationEventEntryResult.builder()
                             .content("You grasp the crate tightly and heave. To your relief, the crate lifts off the ground, and you raise it successfully to your chest. You walk slowly out of the shed despite the burning sensation in your shoulders and legs. You reach the cart and place it sharply on the back. You gasp for breath and lean against the cart, wiping sweat from your brow. The farmer appears and is very pleased with your work, and as promised, he gives you a pouch of copper coins.")
@@ -84,5 +88,10 @@ public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDef
         );
 
         return explorationResult;
+    }
+
+    @Override
+    public ExplorationEventLocationType getLocation() {
+        return ExplorationEventLocationType.FARMFIELDS;
     }
 }

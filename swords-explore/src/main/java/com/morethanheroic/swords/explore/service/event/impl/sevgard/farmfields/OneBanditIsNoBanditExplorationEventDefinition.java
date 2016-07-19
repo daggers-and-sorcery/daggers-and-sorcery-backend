@@ -1,20 +1,20 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component
+@ExplorationEvent
 public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEventDefinition {
 
     private static final int BANDIT_BRIGAND_MONSTER_ID = 10;
@@ -23,13 +23,13 @@ public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEv
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private CombatEvaluator combatEvaluator;
+    private CombatEventEntryEvaluator combatEventEntryEvaluator;
 
     private MonsterDefinition opponent;
 
     @PostConstruct
     private void initialize() {
-        opponent = combatEvaluator.convertMonsterIdToDefinition(BANDIT_BRIGAND_MONSTER_ID);
+        opponent = combatEventEntryEvaluator.convertMonsterIdToDefinition(BANDIT_BRIGAND_MONSTER_ID);
     }
 
     @Override
@@ -51,15 +51,11 @@ public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEv
                         .build()
         );
 
-        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
 
-        explorationResult.addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatResult.getCombatMessages())
-                        .build()
-        );
+        explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if (!combatResult.isPlayerVictory()) {
+        if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
 
@@ -70,5 +66,10 @@ public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEv
         );
 
         return explorationResult;
+    }
+
+    @Override
+    public ExplorationEventLocationType getLocation() {
+        return ExplorationEventLocationType.FARMFIELDS;
     }
 }

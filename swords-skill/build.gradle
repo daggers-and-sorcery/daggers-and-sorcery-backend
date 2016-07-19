@@ -16,6 +16,7 @@ dependencies {
 }
 
 apply plugin: 'spring-boot'
+bootRepackage.enabled = false
 
 apply plugin: 'findbugs'
 findbugs findbugs_config
