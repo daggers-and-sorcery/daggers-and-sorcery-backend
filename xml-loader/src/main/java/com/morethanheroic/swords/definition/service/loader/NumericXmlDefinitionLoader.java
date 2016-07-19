@@ -36,7 +36,7 @@ public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> 
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "checkstyle:IllegalCatch"})
     private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath, int maximumFileCount) throws JAXBException, IOException {
         final List list = new ArrayList<>();
 
