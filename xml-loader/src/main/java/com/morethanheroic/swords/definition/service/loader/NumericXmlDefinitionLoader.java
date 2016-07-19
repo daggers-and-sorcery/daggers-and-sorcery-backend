@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.definition.service.loader;
 
+import com.morethanheroic.swords.definition.service.loader.exception.DefinitionLoaderException;
 import com.morethanheroic.swords.definition.service.loader.unmarshaller.UnmarshallerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -40,13 +41,17 @@ public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> 
         final List list = new ArrayList<>();
 
         for (int i = 1; i < maximumFileCount; i++) {
-            final Resource resource = applicationContext.getResource(resourcePath + i + ".xml");
+            try {
+                final Resource resource = applicationContext.getResource(resourcePath + i + ".xml");
 
-            if (!resource.exists()) {
-                return list;
+                if (!resource.exists()) {
+                    return list;
+                }
+
+                list.add(unmarshaller.unmarshal(applicationContext.getResource(resourcePath + i + ".xml").getInputStream()));
+            } catch (Exception e) {
+                throw new DefinitionLoaderException("Error happened while trying to load definition: " + resourcePath + " with id: " + i, e);
             }
-
-            list.add(unmarshaller.unmarshal(applicationContext.getResource(resourcePath + i + ".xml").getInputStream()));
         }
 
         throw new IllegalStateException("Should be here! There is more items to read than the actual maxvalue!");

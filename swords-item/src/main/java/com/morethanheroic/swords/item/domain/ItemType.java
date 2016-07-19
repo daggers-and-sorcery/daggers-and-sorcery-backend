@@ -40,5 +40,6 @@ public enum ItemType {
     BOOTS,
     HELM,
     LIQUID,
+    PLATELEGS,
     FOCUS;
 }
