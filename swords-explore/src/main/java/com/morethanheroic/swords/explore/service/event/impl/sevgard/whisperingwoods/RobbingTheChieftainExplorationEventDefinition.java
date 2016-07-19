@@ -50,7 +50,7 @@ public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEv
                                         .build()
                         )
                         .chance(100)
-                        .identified(false)
+                        .identified(true)
                         .build()
         );
     }
