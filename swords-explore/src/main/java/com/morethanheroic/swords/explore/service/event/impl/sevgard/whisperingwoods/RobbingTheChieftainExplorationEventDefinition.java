@@ -8,7 +8,7 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilder;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -55,8 +55,9 @@ public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEv
         );
     }
 
+
     @Autowired
-    private ExplorationResultBuilder explorationResultBuilder;
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
     @Autowired
     private DropCalculator dropCalculator;
@@ -78,7 +79,8 @@ public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEv
     public ExplorationResult explore(UserEntity userEntity) {
         final StringBuilder stringBuilder = new StringBuilder();
 
-        return explorationResultBuilder.initialize(userEntity)
+        return explorationResultBuilderFactory
+                .newExplorationResultBuilder(userEntity)
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_3")

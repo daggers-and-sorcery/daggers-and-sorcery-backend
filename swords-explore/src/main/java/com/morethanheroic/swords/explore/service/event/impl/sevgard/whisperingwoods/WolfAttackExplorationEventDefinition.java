@@ -4,7 +4,7 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilder;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,7 +14,7 @@ public class WolfAttackExplorationEventDefinition extends ExplorationEventDefini
     private static final int WOLF_MONSTER_ID = 7;
 
     @Autowired
-    private ExplorationResultBuilder explorationResultBuilder;
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
     @Override
     public int getId() {
@@ -28,7 +28,8 @@ public class WolfAttackExplorationEventDefinition extends ExplorationEventDefini
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        return explorationResultBuilder.initialize(userEntity)
+        return explorationResultBuilderFactory
+                .newExplorationResultBuilder(userEntity)
                 .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")
