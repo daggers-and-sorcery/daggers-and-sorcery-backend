@@ -2,7 +2,6 @@ package com.morethanheroic.swords.explore.service.event.newevent;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.evaluator.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
@@ -25,23 +24,21 @@ public class ExplorationResultBuilder {
     private CombatEventEntryEvaluator combatEventEntryEvaluator;
 
     @Autowired
-    private ExplorationResultFactory explorationResultFactory;
-
-    @Autowired
     private AttributeAttemptEventEntryEvaluator attributeAttemptEventEntryEvaluator;
 
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
+
     private boolean shouldStop;
 
-    public synchronized ExplorationResultBuilder initialize(final UserEntity userEntity) {
+    public ExplorationResultBuilder initialize(final UserEntity userEntity, final ExplorationResult explorationResult) {
         this.userEntity = userEntity;
-        this.explorationResult = explorationResultFactory.newExplorationResult();
+        this.explorationResult = explorationResult;
 
         return this;
     }
 
-    public synchronized ExplorationResultBuilder newMessageEntry(final String messageId, final Object... args) {
+    public ExplorationResultBuilder newMessageEntry(final String messageId, final Object... args) {
         if (shouldStop) {
             return this;
         }
@@ -53,7 +50,7 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public synchronized ExplorationResultBuilder newCombatEntry(final int opponentId) {
+    public ExplorationResultBuilder newCombatEntry(final int opponentId) {
         if (shouldStop) {
             return this;
         }
@@ -69,7 +66,11 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public synchronized MultiWayExplorationResultBuilder newAttributeProbeEntry(final Attribute attribute, final int valueToHit) {
+    public MultiWayExplorationResultBuilder newAttributeProbeEntry(final Attribute attribute, final int valueToHit) {
+        if (shouldStop) {
+            return new MultiWayExplorationResultBuilder(this, false);
+        }
+
         final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, attribute, valueToHit);
 
         explorationResult.addEventEntryResult(attemptResult.getResult());
@@ -78,6 +79,10 @@ public class ExplorationResultBuilder {
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {
+        if (shouldStop) {
+            return this;
+        }
+
         runnable.run();
 
         return this;

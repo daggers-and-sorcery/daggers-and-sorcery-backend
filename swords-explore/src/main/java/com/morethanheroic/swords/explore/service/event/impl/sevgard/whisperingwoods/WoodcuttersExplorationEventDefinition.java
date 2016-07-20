@@ -4,7 +4,7 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilder;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -18,7 +18,7 @@ public class WoodcuttersExplorationEventDefinition extends ExplorationEventDefin
     private static final int BRONZE_COIN_ID = 1;
 
     @Autowired
-    private ExplorationResultBuilder explorationResultBuilder;
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
     @Autowired
     private Random random;
@@ -40,7 +40,8 @@ public class WoodcuttersExplorationEventDefinition extends ExplorationEventDefin
     public ExplorationResult explore(UserEntity userEntity) {
         final int coinCount = rollRandomCoinReward();
 
-        return explorationResultBuilder.initialize(userEntity)
+        return explorationResultBuilderFactory
+                .newExplorationResultBuilder(userEntity)
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_3")
