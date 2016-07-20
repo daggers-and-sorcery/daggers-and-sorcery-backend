@@ -51,6 +51,28 @@ public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEv
                         )
                         .chance(100)
                         .identified(true)
+                        .build(),
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(36))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(1)
+                        .identified(true)
+                        .build(),
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(95))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(1)
+                        .identified(true)
                         .build()
         );
     }
