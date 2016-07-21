@@ -28,6 +28,12 @@ public interface EquipmentMapper {
     @Update("UPDATE equipment SET amulet = #{itemId}, amulet_identified = #{identified} WHERE user_id = #{userId}")
     void equipAmulet(@Param("userId") int userId, @Param("itemId") int itemId, @Param("identified") boolean identified);
 
+    @Update("UPDATE equipment SET chest = #{itemId}, chest_identified = #{identified} WHERE user_id = #{userId}")
+    void equipChest(@Param("userId") int userId, @Param("itemId") int itemId, @Param("identified") boolean identified);
+
+    @Update("UPDATE equipment SET legs = #{itemId}, legs_identified = #{identified} WHERE user_id = #{userId}")
+    void equipLegs(@Param("userId") int userId, @Param("itemId") int itemId, @Param("identified") boolean identified);
+
     @Insert("INSERT INTO equipment SET user_id = #{userId}")
     void insert(@Param("userId") int userId);
 }

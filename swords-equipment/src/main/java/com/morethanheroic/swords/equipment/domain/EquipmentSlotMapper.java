@@ -36,6 +36,8 @@ public class EquipmentSlotMapper {
                 return EquipmentSlot.BOOTS;
             case AMULET:
                 return EquipmentSlot.AMULET;
+            case PLATELEGS:
+                return EquipmentSlot.LEGS;
             default:
                 throw new IllegalArgumentException("Unsupported item type: " + itemType);
         }

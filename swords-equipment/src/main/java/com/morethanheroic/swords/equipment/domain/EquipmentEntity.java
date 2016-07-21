@@ -130,6 +130,18 @@ public class EquipmentEntity {
 
                 equipmentMapper.equipAmulet(userEntity.getId(), item.getId(), identified);
                 break;
+            case CHEST:
+                equipmentDatabaseEntity.setChest(item.getId());
+                equipmentDatabaseEntity.setChestIdentified(identified);
+
+                equipmentMapper.equipChest(userEntity.getId(), item.getId(), identified);
+                break;
+            case LEGS:
+                equipmentDatabaseEntity.setLegs(item.getId());
+                equipmentDatabaseEntity.setLegsIdentified(identified);
+
+                equipmentMapper.equipLegs(userEntity.getId(), item.getId(), identified);
+                break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
         }
@@ -204,6 +216,32 @@ public class EquipmentEntity {
                 }
 
                 return previousAmulet;
+            case CHEST:
+                final int previousChest = equipmentDatabaseEntity.getChest();
+
+                if (previousChest != 0) {
+                    inventoryEntity.addItem(previousChest, 1, equipmentDatabaseEntity.isChestIdentified());
+
+                    equipmentDatabaseEntity.setChest(0);
+                    equipmentDatabaseEntity.setChestIdentified(true);
+
+                    equipmentMapper.equipChest(userEntity.getId(), 0, true);
+                }
+
+                return previousChest;
+            case LEGS:
+                final int previousLegs = equipmentDatabaseEntity.getLegs();
+
+                if (previousLegs != 0) {
+                    inventoryEntity.addItem(previousLegs, 1, equipmentDatabaseEntity.isLegsIdentified());
+
+                    equipmentDatabaseEntity.setLegs(0);
+                    equipmentDatabaseEntity.setLegsIdentified(true);
+
+                    equipmentMapper.equipLegs(userEntity.getId(), 0, true);
+                }
+
+                return previousLegs;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
