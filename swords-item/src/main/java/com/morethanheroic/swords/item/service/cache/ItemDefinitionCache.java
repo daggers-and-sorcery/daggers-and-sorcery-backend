@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,10 @@ public class ItemDefinitionCache implements DefinitionCache<Integer, ItemDefinit
     @Override
     public ItemDefinition getDefinition(Integer itemId) {
         return itemDefinitionMap.get(itemId);
+    }
+
+    public List<ItemDefinition> getDefinitions() {
+        return Collections.unmodifiableList(new ArrayList<>(itemDefinitionMap.values()));
     }
 
     @Override

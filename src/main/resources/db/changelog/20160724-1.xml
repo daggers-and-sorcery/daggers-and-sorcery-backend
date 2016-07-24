@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160720-1">
+        <insert tableName="news">
+            <column name="title" value="Upcoming combat rework"/>
+            <column name="release_date" value="2016-07-24 00:00:00"/>
+            <column name="icon" value="community"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We got a lot of feedback about the combat system. Most of it was positive, but we got some negative ones too. We plan to address almost all of it, especially the ones that come up most. For fixing these however we need even more feedback from you, the players. That's why he release this news entry about our plans with the combat system.
+
+We plan on recreating the combat to be more interactive by moving away from the settings based combat model to an interaction based one. What does this mean? We plan on getting away with the settings menu almost altogether. The combat will be very similar as it's now except that there will be an attack, use spell, use item and flee buttons under the combat result interface. The player will do one interaction for example attack or cast a spell, then the result will be shown with a response from the monster and the player can act again until either he/she or the monster dies.
+
+After some careful investigations, we found that this is hard but possible to do so. It will require a considerable amount (1-3 weeks) of development time. The reason why we post this information is to get feedback from the community as early as possible. We want to know that this new combat system is considered by the community to be a better one than the one we have now.
+
+Please provide feedback for us on the game's facebook page or email to daggersandsorcery@gmail.com.
+
+Thanks, the Daggers & Sorcery Development Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
