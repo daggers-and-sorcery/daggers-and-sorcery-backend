@@ -7,6 +7,7 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
     compile project(':common-memoize')
+    compile project(':common-entity')
     compile project(':common-security')
     compile project(':common-dependency-injection')
 

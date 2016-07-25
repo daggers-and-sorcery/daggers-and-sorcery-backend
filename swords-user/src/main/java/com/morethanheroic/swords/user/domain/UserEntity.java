@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.user.domain;
 
+import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
@@ -15,7 +16,7 @@ import java.time.Instant;
  * directly!
  */
 @Configurable
-public class UserEntity {
+public class UserEntity implements Entity {
 
     @Autowired
     private UserMapper userMapper;
@@ -60,6 +61,7 @@ public class UserEntity {
         return userDatabaseEntity.getLastRegenerationDate();
     }
 
+    @Override
     public int getId() {
         return userDatabaseEntity.getId();
     }

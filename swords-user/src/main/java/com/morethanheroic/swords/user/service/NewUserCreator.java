@@ -29,7 +29,7 @@ public class NewUserCreator {
 
         userMapper.insert(user);
 
-        return userEntityFactory.getUser(user.getId());
+        return userEntityFactory.getEntity(user.getId());
     }
 
     private UserDatabaseEntity createNewUserDatabaseEntity(String username, String password, String email, Race race) {
