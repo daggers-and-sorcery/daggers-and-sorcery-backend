@@ -68,7 +68,7 @@ public class InventoryEntity implements Entity {
      * @deprecated Use {@link #hasItemAmount(int, int, IdentificationType)} instead.
      */
     public boolean hasItemAmount(ItemDefinition item, int amount, boolean identified) {
-        return identified ? hasItemAmount(item, amount, IdentificationType.IDENTIFIED) : hasItemAmount(item, amount, IdentificationType.UNIDENTIFIED);
+        return hasItemAmount(item, amount, identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED);
     }
 
     public boolean hasItemAmount(ItemDefinition item, int amount, IdentificationType identified) {
@@ -90,7 +90,7 @@ public class InventoryEntity implements Entity {
      * @deprecated Use {@link #hasItemAmount(ItemDefinition, int, IdentificationType)} instead.
      */
     public boolean hasItemAmount(int itemId, int amount, boolean identified) {
-        return identified ? hasItemAmount(itemId, amount, IdentificationType.IDENTIFIED) : hasItemAmount(itemId, amount, IdentificationType.UNIDENTIFIED);
+        return hasItemAmount(itemId, amount, identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED);
     }
 
     /**
@@ -108,25 +108,24 @@ public class InventoryEntity implements Entity {
      * @deprecated Use {@link #getItemAmount(int, IdentificationType)} instead.
      */
     public int getItemAmount(int itemId, boolean identified) {
-        return identified ? getItemAmount(itemId, IdentificationType.IDENTIFIED) : getItemAmount(itemId, IdentificationType.UNIDENTIFIED);
+        return getItemAmount(itemDefinitionCache.getDefinition(itemId), identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED);
     }
 
     /**
      * @deprecated Use {@link #getItemAmount(ItemDefinition, IdentificationType)}.
      */
     public int getItemAmount(int itemId, IdentificationType identified) {
-        final ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), itemId, identified.getId());
+        return getItemAmount(itemDefinitionCache.getDefinition(itemId), identified);
+    }
+
+    public int getItemAmount(ItemDefinition item, IdentificationType identified) {
+        final ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), item.getId(), identified.getId());
 
         if (dbEntity != null) {
             return dbEntity.getAmount();
         }
 
         return 0;
-    }
-
-    public int getItemAmount(ItemDefinition item, IdentificationType identified) {
-        //TODO: Once #getItemAmount(int, IdentificationType) functionality is removed from everywhere, move the body of that method here.
-        return getItemAmount(item.getId(), identified);
     }
 
     public void addItem(ItemDefinition item, int amount) {
@@ -201,11 +200,11 @@ public class InventoryEntity implements Entity {
         removeItem(itemDefinitionCache.getDefinition(itemId), amount, identified ? IdentificationType.IDENTIFIED : IdentificationType.IDENTIFIED);
     }
 
-    public void setItem(int itemId, int amount, boolean identified) {
+    public void setItem(ItemDefinition item, int amount, IdentificationType identified) {
         if (amount == 0) {
-            inventoryMapper.deleteItem(userEntity.getId(), itemId, identified);
+            inventoryMapper.deleteItem(userEntity.getId(), item.getId(), identified.getId());
         } else {
-            inventoryMapper.setItem(userEntity.getId(), itemId, amount, identified);
+            inventoryMapper.setItem(userEntity.getId(), item.getId(), amount, identified.getId());
         }
     }
 
@@ -213,8 +212,8 @@ public class InventoryEntity implements Entity {
         return inventoryMapper.getAllItems(userEntity.getId());
     }
 
-    public List<ItemDatabaseEntity> getItems(boolean identified) {
-        return inventoryMapper.getItems(userEntity.getId(), identified);
+    public List<ItemDatabaseEntity> getItems(IdentificationType identified) {
+        return inventoryMapper.getItems(userEntity.getId(), identified.getId());
     }
 
     public int getMoneyAmount(final MoneyType moneyType) {
@@ -250,7 +249,7 @@ public class InventoryEntity implements Entity {
 
     private void applyMoneyCalculationResult(final MoneyDefinition moneyDefinition, final MoneyCalculationResult moneyCalculationResult) {
         for (Conversion conversion : moneyDefinition.getConversions()) {
-            setItem(conversion.getTargetId(), moneyCalculationResult.getCurrency(conversion.getTargetId()), true);
+            setItem(itemDefinitionCache.getDefinition(conversion.getTargetId()), moneyCalculationResult.getCurrency(conversion.getTargetId()), IdentificationType.IDENTIFIED);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.spell.service.page.entry;
 
 import com.morethanheroic.session.domain.SessionEntity;
+import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -38,7 +39,7 @@ public class LesserIdentificationPageEntry extends SpellPageEntry {
     public CharacterRefreshResponse build(PageEntryDataContainer pageEntryDataContainer) {
         CharacterRefreshResponse response = responseFactory.newResponse(pageEntryDataContainer.getUserEntity());
         InventoryEntity inventory = inventoryFacade.getInventory(pageEntryDataContainer.getUserEntity());
-        List<ItemDatabaseEntity> unidentifiedItems = inventory.getItems(false);
+        List<ItemDatabaseEntity> unidentifiedItems = inventory.getItems(IdentificationType.UNIDENTIFIED);
 
         response.setData("itemlist", convertToResponseItem(pageEntryDataContainer.getSessionEntity(), unidentifiedItems));
 
