@@ -7,7 +7,7 @@ import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
-import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
+import com.morethanheroic.swords.inventory.domain.InventoryItem;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -25,7 +25,11 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoResponseBuilderConfiguration> {
@@ -118,18 +122,18 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         return equipmentHolder;
     }
 
-    private ArrayList<HashMap<String, Object>> buildInventoryResponse(List<ItemDatabaseEntity> items, SessionEntity sessionEntity) {
-        ArrayList<HashMap<String, Object>> inventoryData = new ArrayList<>();
+    private List<Map<String, Object>> buildInventoryResponse(List<InventoryItem> items, SessionEntity sessionEntity) {
+        final List<Map<String, Object>> inventoryData = new ArrayList<>();
 
-        for (ItemDatabaseEntity item : items) {
-            HashMap<String, Object> itemData = new HashMap<>();
+        for (InventoryItem item : items) {
+            final Map<String, Object> itemData = new HashMap<>();
 
-            itemData.put("item", convertItemDatabaseEntityToSendableObject(item));
+            itemData.put("item", convertInventoryItemToSendableObject(item));
 
             if (item.isIdentified()) {
-                itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId())));
+                itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(item.getItem()));
             } else {
-                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(item.getItemId()), unidentifiedItemIdCalculator.getUnidentifiedItemId(sessionEntity, item.getItemId())));
+                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(item.getItem(), unidentifiedItemIdCalculator.getUnidentifiedItemId(sessionEntity, item.getItemId())));
             }
 
             inventoryData.add(itemData);
@@ -138,10 +142,10 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         return inventoryData;
     }
 
-    private Map<String, Object> convertItemDatabaseEntityToSendableObject(ItemDatabaseEntity itemDatabaseEntity) {
-        Map<String, Object> result = new HashMap<>();
+    private Map<String, Object> convertInventoryItemToSendableObject(InventoryItem itemDatabaseEntity) {
+        final Map<String, Object> result = new HashMap<>();
 
-        result.put("itemId", itemDatabaseEntity.getItemId());
+        result.put("itemId", itemDatabaseEntity.getItem().getId());
         result.put("amount", itemDatabaseEntity.getAmount());
 
         return result;

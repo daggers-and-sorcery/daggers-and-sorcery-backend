@@ -13,7 +13,6 @@ import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.spell.service.page.PageEntryDataContainer;
 import com.morethanheroic.swords.spell.service.page.SpellPageEntry;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +38,7 @@ public class LesserIdentificationPageEntry extends SpellPageEntry {
     public CharacterRefreshResponse build(PageEntryDataContainer pageEntryDataContainer) {
         CharacterRefreshResponse response = responseFactory.newResponse(pageEntryDataContainer.getUserEntity());
         InventoryEntity inventory = inventoryFacade.getInventory(pageEntryDataContainer.getUserEntity());
-        List<ItemDatabaseEntity> unidentifiedItems = inventory.getItems(IdentificationType.UNIDENTIFIED);
+        List<ItemDatabaseEntity> unidentifiedItems = inventory.getItemsLegacy(IdentificationType.UNIDENTIFIED);
 
         response.setData("itemlist", convertToResponseItem(pageEntryDataContainer.getSessionEntity(), unidentifiedItems));
 

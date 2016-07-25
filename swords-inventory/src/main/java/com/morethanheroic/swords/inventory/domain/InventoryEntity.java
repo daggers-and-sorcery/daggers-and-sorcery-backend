@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Configurable
@@ -208,11 +210,27 @@ public class InventoryEntity implements Entity {
         }
     }
 
-    public List<ItemDatabaseEntity> getItems() {
+    public List<InventoryItem> getItems() {
+        final List<ItemDatabaseEntity> itemDatabaseEntities = inventoryMapper.getAllItems(userEntity.getId());
+
+        final List<InventoryItem> result = new ArrayList<>();
+        for (ItemDatabaseEntity itemDatabaseEntity : itemDatabaseEntities) {
+            result.add(InventoryItem.builder()
+                    .item(itemDefinitionCache.getDefinition(itemDatabaseEntity.getItemId()))
+                    .amount(itemDatabaseEntity.getAmount())
+                    .identified(itemDatabaseEntity.isIdentified() ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED)
+                    .build()
+            );
+        }
+
+        return Collections.unmodifiableList(result);
+    }
+
+    public List<ItemDatabaseEntity> getItemsLegacy() {
         return inventoryMapper.getAllItems(userEntity.getId());
     }
 
-    public List<ItemDatabaseEntity> getItems(IdentificationType identified) {
+    public List<ItemDatabaseEntity> getItemsLegacy(IdentificationType identified) {
         return inventoryMapper.getItems(userEntity.getId(), identified.getId());
     }
 
