@@ -92,7 +92,7 @@ public class UseSpellService {
             final CombatMessage combatMessage = new CombatMessage();
 
             combatMessage.addData("icon", "spell");
-            combatMessage.addData("message", "Using the spell was failed! You don't have enough mana.");
+            combatMessage.addData("message", "Using the spell has failed! You don't have enough mana.");
 
             combatResult.addMessage(combatMessage);
         }
