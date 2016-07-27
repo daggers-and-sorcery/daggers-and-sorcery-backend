@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.inventory.service;
 
-import com.morethanheroic.swords.inventory.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,9 +8,14 @@ import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryItemTypeSorter;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
+import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.profile.service.response.inventory.InventoryPartialResponseBuilder;
+import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.skill.SkillPartialResponseBuilder;
@@ -61,6 +66,15 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     private SkillTypeCalculator skillTypeCalculator;
 
     @Autowired
+    private InventoryPartialResponseBuilder inventoryPartialResponseBuilder;
+
+    @Autowired
+    private InventoryItemTypeSorter inventoryItemTypeSorter;
+
+    @Autowired
+    private InventoryEntityFactory inventoryEntityFactory;
+
+    @Autowired
     public ProfileInfoResponseBuilder(ItemDefinitionCache itemDefinitionCache, InventoryFacade inventoryFacade, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
         this.itemDefinitionCache = itemDefinitionCache;
         this.inventoryFacade = inventoryFacade;
@@ -89,11 +103,21 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         response.setData("race", raceDefinitionCache.getDefinition(userEntity.getRace()).getName());
         response.setData("registrationDate", userEntity.getRegistrationDate().getEpochSecond() * 1000);
         response.setData("lastLoginDate", userEntity.getLastLoginDate().getEpochSecond() * 1000);
+        response.setData("inventory", inventoryPartialResponseBuilder.build(
+                InventoryPartialResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .inventoryItems(getSortedItems(userEntity))
+                        .build()
+        ));
         response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(userEntity).getItems(), sessionEntity));
         response.setData("equipment", buildEquipmentResponse(userEntity, sessionEntity));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(userEntity.getId())));
 
         return response;
+    }
+
+    private Map<ItemType, List<InventoryItem>> getSortedItems(final UserEntity userEntity) {
+        return inventoryItemTypeSorter.sortByType(inventoryEntityFactory.getEntity(userEntity.getId()).getItems());
     }
 
     private Map<String, Map<String, Object>> buildEquipmentResponse(UserEntity userEntity, SessionEntity sessionEntity) {

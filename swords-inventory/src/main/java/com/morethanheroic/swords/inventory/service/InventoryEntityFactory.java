@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.inventory;
+package com.morethanheroic.swords.inventory.service;
 
 import com.morethanheroic.entity.service.factory.EntityFactory;
 import com.morethanheroic.swords.dependency.InjectAtReturn;

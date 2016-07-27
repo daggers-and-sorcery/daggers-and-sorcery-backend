@@ -226,6 +226,9 @@ public class InventoryEntity implements Entity {
         return Collections.unmodifiableList(result);
     }
 
+    /**
+     * @deprecated Use {@link #getItems()} instead.
+     */
     public List<ItemDatabaseEntity> getItemsLegacy() {
         return inventoryMapper.getAllItems(userEntity.getId());
     }
