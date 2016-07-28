@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.item.domain;
 
+import org.apache.commons.lang.WordUtils;
+
 /**
  * Contains the types of the modifier an item can have. The modifiers are modify the attribute of the user somehow
  * (eg. giving the more strength or reducing it's attack by a given amount or percentage).
@@ -58,5 +60,9 @@ public enum ItemModifier {
     WAND,
     SPECTRE,
     SCAVENGING,
-    COOKING
+    COOKING;
+
+    public String getName() {
+        return WordUtils.capitalize(name().toLowerCase().replace("_", " "));
+    }
 }

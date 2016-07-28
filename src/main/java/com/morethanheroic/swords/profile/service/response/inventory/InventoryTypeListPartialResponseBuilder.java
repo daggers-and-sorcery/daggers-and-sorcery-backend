@@ -23,6 +23,7 @@ public class InventoryTypeListPartialResponseBuilder implements PartialResponseB
                         .stream()
                         .map(item -> inventoryItemPartialResponseBuilder.build(
                                 InventoryItemPartialResponseBuilderConfiguration.builder()
+                                        .sessionEntity(responseBuilderConfiguration.getSessionEntity())
                                         .item(item)
                                         .build()
                                 )

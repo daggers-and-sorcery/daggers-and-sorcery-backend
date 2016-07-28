@@ -2,9 +2,9 @@ package com.morethanheroic.swords.profile.service.response.inventory;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
-import com.morethanheroic.swords.profile.service.response.inventory.domain.response.InventoryPartialResponse;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryTypeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.profile.service.response.inventory.domain.response.InventoryPartialResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,7 @@ public class InventoryPartialResponseBuilder implements PartialResponseBuilder<I
                         .map(itemTypeListEntry -> inventoryTypeListPartialResponseBuilder.build(
                                 InventoryTypeListPartialResponseBuilderConfiguration.builder()
                                         .itemType(itemTypeListEntry.getKey())
+                                        .sessionEntity(responseBuilderConfiguration.getSessionEntity())
                                         .items(itemTypeListEntry.getValue())
                                         .build())
                         ).collect(Collectors.toList()))

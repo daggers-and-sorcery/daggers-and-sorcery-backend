@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.item.domain;
 
+import org.apache.commons.lang.WordUtils;
+
 /**
  * Contains the available types of an item. the type decides for example which equipment spot does the item go on when
  * equiped etc.
@@ -42,4 +44,8 @@ public enum ItemType {
     LIQUID,
     PLATELEGS,
     FOCUS;
+
+    public String getName() {
+        return WordUtils.capitalize(name().toLowerCase().replace("_", " "));
+    }
 }
