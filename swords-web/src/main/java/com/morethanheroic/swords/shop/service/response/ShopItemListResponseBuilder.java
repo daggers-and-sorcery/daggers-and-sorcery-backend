@@ -86,10 +86,10 @@ public class ShopItemListResponseBuilder {
     private List<Map<String, Object>> buildInventoryItemList(ShopEntity shopEntity, SessionEntity sessionEntity, InventoryEntity inventoryEntity) {
         List<Map<String, Object>> result = new ArrayList<>();
 
-        for (ItemDatabaseEntity shopItem : inventoryEntity.getItems()) {
+        for (ItemDatabaseEntity shopItem : inventoryEntity.getItemsLegacy()) {
             ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(shopItem.getItemId());
 
-            if (itemDefinition.getType() == ItemType.COIN) {
+            if (itemDefinition.getType() == ItemType.MONEY) {
                 continue;
             }
 

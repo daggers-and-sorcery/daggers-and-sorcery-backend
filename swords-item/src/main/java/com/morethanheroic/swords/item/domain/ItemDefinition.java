@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.item.domain;
 
-import com.morethanheroic.swords.effect.domain.EffectDefinition;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import lombok.Builder;
@@ -30,7 +29,7 @@ public class ItemDefinition {
     private final List<ItemRequirementDefinition> requirements;
 
     public boolean isTradeable() {
-        return priceDefinitions.size() > 0 || type == ItemType.COIN;
+        return priceDefinitions.size() > 0 || type == ItemType.MONEY;
     }
 
     public boolean hasPriceDefinitionFor(MoneyType moneyType) {

@@ -38,7 +38,8 @@ public class InventoryItemPartialResponseBuilder implements PartialResponseBuild
         if (inventoryItem.isIdentified()) {
             return IdentifiedInventoryItemPartialResponse.builder()
                     .id(itemDefinition.getId())
-                    .name(UNIDENTIFIED_ITEM_NAME)
+                    .amount(responseBuilderConfiguration.getAmount())
+                    .name(itemDefinition.getName())
                     .equipment(itemDefinition.isEquipment())
                     .usable(itemDefinition.isUsable())
                     .weight((double) itemDefinition.getWeight() / WEIGHT_DIVIDER)
@@ -72,6 +73,7 @@ public class InventoryItemPartialResponseBuilder implements PartialResponseBuild
         } else {
             return UnidentifiedInventoryItemPartialResponse.builder()
                     .id(unidentifiedItemIdCalculator.getRealItemId(responseBuilderConfiguration.getSessionEntity(), itemDefinition.getId()))
+                    .amount(responseBuilderConfiguration.getAmount())
                     .name(UNIDENTIFIED_ITEM_NAME)
                     .equipment(itemDefinition.isEquipment())
                     .usable(itemDefinition.isUsable())

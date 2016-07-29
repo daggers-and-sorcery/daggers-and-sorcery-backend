@@ -68,7 +68,7 @@ public class ShopSellStockController {
 
         ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(itemId);
 
-        if(itemDefinition.getType() == ItemType.COIN) {
+        if(itemDefinition.getType() == ItemType.MONEY) {
             throw new ConflictException();
         }
 

@@ -8,6 +8,7 @@ import lombok.Getter;
 public class UnidentifiedInventoryItemPartialResponse extends InventoryItemPartialResponse {
 
     private final int id;
+    private final int amount;
     private final String name;
     private final String type;
     private final double weight;

@@ -10,6 +10,7 @@ import java.util.List;
 public class IdentifiedInventoryItemPartialResponse extends InventoryItemPartialResponse {
 
     private final int id;
+    private final int amount;
     private final String name;
     private final String type;
     private final double weight;

@@ -18,12 +18,13 @@ public class InventoryTypeListPartialResponseBuilder implements PartialResponseB
     @Override
     public InventoryTypeListPartialResponse build(InventoryTypeListPartialResponseBuilderConfiguration responseBuilderConfiguration) {
         return InventoryTypeListPartialResponse.builder()
-                .typeName(responseBuilderConfiguration.getItemType().name())
+                .typeName(responseBuilderConfiguration.getItemType().getName())
                 .items(responseBuilderConfiguration.getItems()
                         .stream()
                         .map(item -> inventoryItemPartialResponseBuilder.build(
                                 InventoryItemPartialResponseBuilderConfiguration.builder()
                                         .sessionEntity(responseBuilderConfiguration.getSessionEntity())
+                                        .amount(item.getAmount())
                                         .item(item)
                                         .build()
                                 )

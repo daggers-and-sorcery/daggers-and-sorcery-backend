@@ -30,7 +30,6 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -106,10 +105,11 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         response.setData("inventory", inventoryPartialResponseBuilder.build(
                 InventoryPartialResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
+                        .sessionEntity(profileInfoResponseBuilderConfiguration.getSessionEntity())
                         .inventoryItems(getSortedItems(userEntity))
                         .build()
-        ));
-        response.setData("inventory", buildInventoryResponse(inventoryFacade.getInventory(userEntity).getItems(), sessionEntity));
+                )
+        );
         response.setData("equipment", buildEquipmentResponse(userEntity, sessionEntity));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(userEntity.getId())));
 
@@ -144,26 +144,6 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         }
 
         return equipmentHolder;
-    }
-
-    private List<Map<String, Object>> buildInventoryResponse(List<InventoryItem> items, SessionEntity sessionEntity) {
-        final List<Map<String, Object>> inventoryData = new ArrayList<>();
-
-        for (InventoryItem item : items) {
-            final Map<String, Object> itemData = new HashMap<>();
-
-            itemData.put("item", convertInventoryItemToSendableObject(item));
-
-            if (item.isIdentified()) {
-                itemData.put("definition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(item.getItem()));
-            } else {
-                itemData.put("definition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(item.getItem(), unidentifiedItemIdCalculator.getUnidentifiedItemId(sessionEntity, item.getItemId())));
-            }
-
-            inventoryData.add(itemData);
-        }
-
-        return inventoryData;
     }
 
     private Map<String, Object> convertInventoryItemToSendableObject(InventoryItem itemDatabaseEntity) {

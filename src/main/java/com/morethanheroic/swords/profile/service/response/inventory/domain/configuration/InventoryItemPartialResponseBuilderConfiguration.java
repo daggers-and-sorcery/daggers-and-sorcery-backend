@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 public class InventoryItemPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
-    private SessionEntity sessionEntity;
-    private InventoryItem item;
+    private final SessionEntity sessionEntity;
+    private final int amount;
+    private final InventoryItem item;
 }
