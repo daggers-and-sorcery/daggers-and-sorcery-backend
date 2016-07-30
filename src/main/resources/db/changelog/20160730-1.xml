@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160730-1">
+        <insert tableName="news">
+            <column name="title" value="Inventory rework!"/>
+            <column name="release_date" value="2016-07-30 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+Finally, we had some time to work on the inventory page. We got a lot of feedback about it but and we are trying to fix the problems you had with it. From now it will be a lot easier to find your items.
+
+Improvements:
+- Added new recipes and weapons for five new skills. These new weapons are dropped by the monsters in the whispering woods.
+- Replaced the 'Coin' item type with 'Money'.
+- Replaced the 'Ore' and 'Bar' item type with 'Material'.
+- Added subtype for items. This was quite a big change, we had to rewise every item in the game to decide about it's type and subtype again.
+- Reworked the inventory portion on the character page. The items in your inventory are sorted by type from now. This way it's a lot easier to find anything in your inventory. We have more plans to make it even easier but we want feedback on this new system before proceeding any further.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
