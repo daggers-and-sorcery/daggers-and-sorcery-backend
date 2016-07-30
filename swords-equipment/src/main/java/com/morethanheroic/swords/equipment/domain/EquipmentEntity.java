@@ -143,6 +143,12 @@ public class EquipmentEntity {
 
                 equipmentMapper.equipLegs(userEntity.getId(), item.getId(), identified);
                 break;
+            case QUIVER:
+                equipmentDatabaseEntity.setQuiver(item.getId());
+                equipmentDatabaseEntity.setQuiverIdentified(identified);
+
+                equipmentMapper.equipQuiver(userEntity.getId(), item.getId(), identified);
+                break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
         }
