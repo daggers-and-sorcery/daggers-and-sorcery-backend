@@ -11,11 +11,16 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
+import org.springframework.boot.autoconfigure.web.WebMvcProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -67,6 +72,10 @@ import java.util.Random;
 )
 @MapperScan(value = "com.morethanheroic.swords", annotationClass = Repository.class)
 public class SwordsorceryServerApplication extends Application {
+
+    public SwordsorceryServerApplication(ResourceProperties resourceProperties, WebMvcProperties mvcProperties, ListableBeanFactory beanFactory, HttpMessageConverters messageConverters, ObjectProvider resourceHandlerRegistrationCustomizerProvider) {
+        super(resourceProperties, mvcProperties, beanFactory, messageConverters, resourceHandlerRegistrationCustomizerProvider);
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(SwordsorceryServerApplication.class, args);
