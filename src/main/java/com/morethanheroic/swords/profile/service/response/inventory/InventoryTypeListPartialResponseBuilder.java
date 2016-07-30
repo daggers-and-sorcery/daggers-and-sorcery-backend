@@ -2,8 +2,8 @@ package com.morethanheroic.swords.profile.service.response.inventory;
 
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryItemPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.profile.service.response.inventory.domain.response.InventoryTypeListPartialResponse;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryTypeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.profile.service.response.inventory.domain.response.InventoryTypeListPartialResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

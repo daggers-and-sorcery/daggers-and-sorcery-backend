@@ -40,7 +40,11 @@ public enum ItemType {
     HELM,
     LIQUID,
     PLATELEGS,
-    FOCUS;
+    FOCUS,
+    ARMOR,
+    WEAPON,
+    PROJECTILE,
+    JEWELRY;
 
     public String getName() {
         return WordUtils.capitalize(name().toLowerCase().replace("_", " "));

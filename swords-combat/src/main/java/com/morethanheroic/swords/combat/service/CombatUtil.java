@@ -55,7 +55,7 @@ public class CombatUtil {
             return null;
         }
 
-        return itemDefinition.getType();
+        return itemDefinition.getSubtype();
     }
 
     public Optional<WeaponSuperType> getUserWeaponSuperType(final UserEntity userEntity) {
@@ -69,7 +69,7 @@ public class CombatUtil {
             return null;
         }
 
-        return itemDefinition.getType();
+        return itemDefinition.getSubtype();
     }
 
     public Optional<ItemType> getUserOffhandType(final UserEntity userEntity) {
@@ -79,7 +79,7 @@ public class CombatUtil {
             return Optional.empty();
         }
 
-        return Optional.of(itemDefinition.getType());
+        return Optional.of(itemDefinition.getSubtype());
     }
 
     public Optional<SkillType> getUserOffhandSkillType(final UserEntity userEntity) {

@@ -17,6 +17,7 @@ public class ItemDefinition {
     private final int id;
     private final String name;
     private final ItemType type;
+    private final ItemType subtype;
     private final boolean usable;
     private final int weight;
     private final List<EffectSettingDefinitionHolder> combatEffects;

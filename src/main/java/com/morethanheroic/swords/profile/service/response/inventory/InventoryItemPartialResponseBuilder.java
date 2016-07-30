@@ -44,6 +44,7 @@ public class InventoryItemPartialResponseBuilder implements PartialResponseBuild
                     .usable(itemDefinition.isUsable())
                     .weight((double) itemDefinition.getWeight() / WEIGHT_DIVIDER)
                     .type(itemDefinition.getType().getName())
+                    .subtype(itemDefinition.getSubtype() != null ? itemDefinition.getSubtype().getName() : null)
                     .requirements(
                             itemDefinition.getRequirements().stream()
                                     .map(itemRequirementDefinition -> inventoryItemRequirementPartialResponseBuilder.build(
@@ -79,6 +80,7 @@ public class InventoryItemPartialResponseBuilder implements PartialResponseBuild
                     .usable(itemDefinition.isUsable())
                     .weight((double) itemDefinition.getWeight() / WEIGHT_DIVIDER)
                     .type(itemDefinition.getType().getName())
+                    .subtype(itemDefinition.getSubtype() != null ? itemDefinition.getSubtype().getName() : null)
                     .build();
         }
     }

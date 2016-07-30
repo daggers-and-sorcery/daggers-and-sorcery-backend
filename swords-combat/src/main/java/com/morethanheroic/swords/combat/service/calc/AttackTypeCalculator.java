@@ -12,7 +12,7 @@ public class AttackTypeCalculator {
             return AttackType.MELEE;
         }
 
-        switch (item.getType()) {
+        switch (item.getSubtype()) {
             case TWO_HANDED_CRUSHING_WEAPONS:
             case ONE_HANDED_CRUSHING_WEAPONS:
             case TWO_HANDED_AXES:
@@ -32,7 +32,7 @@ public class AttackTypeCalculator {
             case SPECTRE:
                 return AttackType.MAGIC;
             default:
-                throw new IllegalArgumentException("No attack type found for type: " + item.getType() + " on item: " + item.getId());
+                throw new IllegalArgumentException("No attack type found for type: " + item.getSubtype() + " on item: " + item.getId());
         }
     }
 }

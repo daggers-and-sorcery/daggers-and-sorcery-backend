@@ -13,6 +13,7 @@ public class IdentifiedInventoryItemPartialResponse extends InventoryItemPartial
     private final int amount;
     private final String name;
     private final String type;
+    private final String subtype;
     private final double weight;
     private final boolean usable;
     private final boolean equipment;
