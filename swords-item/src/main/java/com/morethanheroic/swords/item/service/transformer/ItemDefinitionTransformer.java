@@ -36,6 +36,7 @@ public class ItemDefinitionTransformer implements DefinitionTransformer<ItemDefi
                 .id(rawItemDefinition.getId())
                 .name(rawItemDefinition.getName())
                 .type(rawItemDefinition.getType())
+                .subtype(rawItemDefinition.getSubtype())
                 .usable(rawItemDefinition.isUsable())
                 .weight(rawItemDefinition.getWeight())
                 .equipment(rawItemDefinition.isEquipment())

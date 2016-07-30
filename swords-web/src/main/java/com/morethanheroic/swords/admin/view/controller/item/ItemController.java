@@ -1,24 +1,23 @@
-package com.morethanheroic.swords.admin.view.controller;
+package com.morethanheroic.swords.admin.view.controller.item;
 
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @Profile("development")
-public class ItemListController {
+public class ItemController {
 
     @Autowired
     private ItemDefinitionCache itemDefinitionCache;
 
-    @RequestMapping(path = "/admin/item/list", method = RequestMethod.GET)
-    public List<ItemDefinition> listItems() {
-        return itemDefinitionCache.getDefinitions();
+    @RequestMapping(path = "/admin/item/{id}", method = RequestMethod.GET)
+    public ItemDefinition getItem(@PathVariable int id) {
+        return itemDefinitionCache.getDefinition(id);
     }
 }

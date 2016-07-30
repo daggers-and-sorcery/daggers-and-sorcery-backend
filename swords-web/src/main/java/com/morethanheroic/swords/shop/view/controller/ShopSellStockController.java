@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
-
 @RestController
 public class ShopSellStockController {
 
@@ -68,7 +66,7 @@ public class ShopSellStockController {
 
         ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(itemId);
 
-        if(itemDefinition.getType() == ItemType.COIN) {
+        if(itemDefinition.getType() == ItemType.MONEY) {
             throw new ConflictException();
         }
 

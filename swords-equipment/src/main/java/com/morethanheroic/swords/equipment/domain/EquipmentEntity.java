@@ -54,12 +54,12 @@ public class EquipmentEntity {
     }
 
     public boolean equipItem(ItemDefinition item, boolean identified) {
-        final EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
+        final EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());
 
         if (equipmentSlot == EquipmentSlot.OFFHAND) {
             final ItemDefinition weapon = itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(EquipmentSlot.WEAPON));
 
-            if (getEquipmentIdOnSlot(EquipmentSlot.WEAPON) != 0 && equipmentSlotMapper.isTwoHandedWeapon(weapon.getType())) {
+            if (getEquipmentIdOnSlot(EquipmentSlot.WEAPON) != 0 && equipmentSlotMapper.isTwoHandedWeapon(weapon.getSubtype())) {
                 //TODO: unequip the weapon and equip the offhand item
                 return false;
             }
@@ -70,7 +70,7 @@ public class EquipmentEntity {
 
         //Unequip the previous equipment first because the calculation should be good without it
         unequipItem(equipmentSlot);
-        if (equipmentSlotMapper.isTwoHandedWeapon(item.getType())) {
+        if (equipmentSlotMapper.isTwoHandedWeapon(item.getSubtype())) {
             unequipItem(EquipmentSlot.OFFHAND);
         }
 
@@ -97,7 +97,7 @@ public class EquipmentEntity {
 
     private void equipWithoutCheck(ItemDefinition item, boolean identified) {
         final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
-        final EquipmentSlot slot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
+        final EquipmentSlot slot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());
 
         switch (slot) {
             case WEAPON:

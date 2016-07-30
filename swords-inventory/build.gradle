@@ -5,6 +5,8 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-session', version: '1.4.12'
 
+    compile project(':common-entity')
+
     compile project(':swords-journal')
     compile project(':swords-money')
     compile project(':swords-user')

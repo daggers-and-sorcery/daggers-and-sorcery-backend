@@ -32,19 +32,19 @@ public class UserFacade {
     private final UserEntityFactory userEntityFactory;
 
     /**
-     * @deprecated Use {@link UserEntityFactory#getUser(int)} instead.
+     * @deprecated Use {@link UserEntityFactory#getEntity(int)} instead.
      */
     @Deprecated
     public UserEntity getUser(int id) {
-        return userEntityFactory.getUser(id);
+        return userEntityFactory.getEntity(id);
     }
 
     /**
-     * @deprecated Use {@link UserEntityFactory#getUser(String, String)} instead.
+     * @deprecated Use {@link UserEntityFactory#getEntity(String, String)} instead.
      */
     @Deprecated
     public UserEntity getUser(String username, String password) {
-        return userEntityFactory.getUser(username, password);
+        return userEntityFactory.getEntity(username, password);
     }
 
     /**
