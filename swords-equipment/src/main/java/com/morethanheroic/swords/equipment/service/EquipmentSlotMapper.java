@@ -1,5 +1,6 @@
-package com.morethanheroic.swords.equipment.domain;
+package com.morethanheroic.swords.equipment.service;
 
+import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.item.domain.ItemType;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,8 @@ public class EquipmentSlotMapper {
                 return EquipmentSlot.AMULET;
             case PLATELEGS:
                 return EquipmentSlot.LEGS;
+            case ARROW:
+                return EquipmentSlot.QUIVER;
             default:
                 throw new IllegalArgumentException("Unsupported item type: " + itemType);
         }

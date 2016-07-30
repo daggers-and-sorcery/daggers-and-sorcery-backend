@@ -5,6 +5,7 @@ import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculato
 import com.morethanheroic.swords.cache.value.ValueCache;
 import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
+import com.morethanheroic.swords.equipment.service.EquipmentSlotMapper;
 import com.morethanheroic.swords.equipment.service.EquipmentValueCacheProvider;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -242,6 +243,19 @@ public class EquipmentEntity {
                 }
 
                 return previousLegs;
+            case QUIVER:
+                final int previousQuiver = equipmentDatabaseEntity.getQuiver();
+
+                if (previousQuiver != 0) {
+                    inventoryEntity.addItem(previousQuiver, 1, equipmentDatabaseEntity.isQuiverIdentified());
+
+                    equipmentDatabaseEntity.setQuiver(0);
+                    equipmentDatabaseEntity.setQuiverIdentified(true);
+
+                    equipmentMapper.equipQuiver(userEntity.getId(), 0, true);
+                }
+
+                return previousQuiver;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
@@ -286,6 +300,8 @@ public class EquipmentEntity {
                 return equipmentDatabaseEntity.getChest();
             case LEGS:
                 return equipmentDatabaseEntity.getLegs();
+            case QUIVER:
+                return equipmentDatabaseEntity.getQuiver();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
         }
@@ -316,6 +332,8 @@ public class EquipmentEntity {
                 return equipmentDatabaseEntity.isChestIdentified();
             case LEGS:
                 return equipmentDatabaseEntity.isLegsIdentified();
+            case QUIVER:
+                return equipmentDatabaseEntity.isQuiverIdentified();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
         }
