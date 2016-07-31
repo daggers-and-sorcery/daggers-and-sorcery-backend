@@ -21,6 +21,8 @@ public class EquipmentDatabaseEntity {
     private int legs;
     private int quiver;
 
+    private int quiverAmount;
+
     private boolean weaponIdentified;
     private boolean offhandIdentified;
     private boolean helmIdentified;

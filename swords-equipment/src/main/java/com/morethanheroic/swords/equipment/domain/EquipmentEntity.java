@@ -7,7 +7,9 @@ import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntit
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
 import com.morethanheroic.swords.equipment.service.EquipmentSlotMapper;
 import com.morethanheroic.swords.equipment.service.EquipmentValueCacheProvider;
+import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemRequirementDefinition;
@@ -38,6 +40,9 @@ public class EquipmentEntity {
 
     @Autowired
     private InventoryFacade inventoryFacade;
+
+    @Autowired
+    private InventoryEntityFactory inventoryEntityFactory;
 
     @Autowired
     private EquipmentValueCacheProvider cacheableEquipmentProvider;
@@ -77,7 +82,13 @@ public class EquipmentEntity {
 
         if (canEquip(item)) {
             equipWithoutCheck(item, identified);
-            inventoryEntity.removeItem(item.getId(), 1, identified);
+
+            final IdentificationType identificationType = identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED;
+            if (equipmentSlot != EquipmentSlot.QUIVER) {
+                inventoryEntity.removeItem(item, 1, identificationType);
+            } else {
+                inventoryEntity.removeItem(item, inventoryEntity.getItemAmount(item, identificationType), identificationType);
+            }
 
             return true;
         } else {
@@ -144,10 +155,13 @@ public class EquipmentEntity {
                 equipmentMapper.equipLegs(userEntity.getId(), item.getId(), identified);
                 break;
             case QUIVER:
+                final int quiverAmount = inventoryEntityFactory.getEntity(userEntity.getId()).getItemAmount(item, identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED);
+
                 equipmentDatabaseEntity.setQuiver(item.getId());
                 equipmentDatabaseEntity.setQuiverIdentified(identified);
+                equipmentDatabaseEntity.setQuiverAmount(quiverAmount);
 
-                equipmentMapper.equipQuiver(userEntity.getId(), item.getId(), identified);
+                equipmentMapper.equipQuiver(userEntity.getId(), item.getId(), identified, quiverAmount);
                 break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
@@ -253,12 +267,13 @@ public class EquipmentEntity {
                 final int previousQuiver = equipmentDatabaseEntity.getQuiver();
 
                 if (previousQuiver != 0) {
-                    inventoryEntity.addItem(previousQuiver, 1, equipmentDatabaseEntity.isQuiverIdentified());
+                    inventoryEntity.addItem(previousQuiver, equipmentDatabaseEntity.getQuiverAmount(), equipmentDatabaseEntity.isQuiverIdentified());
 
                     equipmentDatabaseEntity.setQuiver(0);
                     equipmentDatabaseEntity.setQuiverIdentified(true);
+                    equipmentDatabaseEntity.setQuiverAmount(0);
 
-                    equipmentMapper.equipQuiver(userEntity.getId(), 0, true);
+                    equipmentMapper.equipQuiver(userEntity.getId(), 0, true, 0);
                 }
 
                 return previousQuiver;
@@ -342,6 +357,24 @@ public class EquipmentEntity {
                 return equipmentDatabaseEntity.isQuiverIdentified();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
+        }
+    }
+
+    public int getAmountOnSlot(EquipmentSlot equipmentSlot) {
+        if (equipmentSlot == EquipmentSlot.QUIVER) {
+            return equipmentProviderIntegerValueCache.getEntity().getQuiverAmount();
+        }
+
+        return 1;
+    }
+
+    public void decreaseAmmunition(final int amount) {
+        final int equippedAmount = getAmountOnSlot(EquipmentSlot.QUIVER);
+
+        if (equippedAmount - amount <= 0) {
+            equipmentMapper.equipQuiver(userEntity.getId(), 0, true, 0);
+        } else {
+            equipmentMapper.equipQuiver(userEntity.getId(), getEquipmentIdOnSlot(EquipmentSlot.QUIVER), isEquipmentIdentifiedOnSlot(EquipmentSlot.QUIVER), equippedAmount - amount);
         }
     }
 }

@@ -133,6 +133,10 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
             if (equipment == 0) {
                 slotData.put("empty", true);
             } else {
+                if(slot == EquipmentSlot.QUIVER) {
+                    slotData.put("amount", equipmentEntity.getAmountOnSlot(slot));
+                }
+
                 if (equipmentEntity.isEquipmentIdentifiedOnSlot(slot)) {
                     slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment)));
                 } else {

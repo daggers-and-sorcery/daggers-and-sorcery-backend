@@ -1,13 +1,17 @@
 package com.morethanheroic.swords.combat.service.calc;
 
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
+import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
+import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AttackTypeCalculator {
 
-    public AttackType calculateAttackType(ItemDefinition item) {
+    public AttackType calculateAttackType(final EquipmentEntity equipmentEntity) {
+        final ItemDefinition item = equipmentEntity.getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
+
         if (item == null) {
             return AttackType.MELEE;
         }
@@ -26,6 +30,10 @@ public class AttackTypeCalculator {
             case LONGBOWS:
             case SHORTBOWS:
             case CROSSBOWS:
+                if (equipmentEntity.getAmountOnSlot(EquipmentSlot.QUIVER) == 0) {
+                    return AttackType.MELEE;
+                }
+
                 return AttackType.RANGED;
             case WAND:
             case STAFF:
