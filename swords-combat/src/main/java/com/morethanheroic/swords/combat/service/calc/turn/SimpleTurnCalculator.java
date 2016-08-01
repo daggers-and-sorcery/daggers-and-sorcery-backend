@@ -105,6 +105,6 @@ public class SimpleTurnCalculator implements TurnCalculator {
     }
 
     private AttackType calculateUserAttackType(UserEntity userEntity) {
-        return attackTypeCalculator.calculateAttackType(equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON));
+        return attackTypeCalculator.calculateAttackType(equipmentFacade.getEquipment(userEntity));
     }
 }

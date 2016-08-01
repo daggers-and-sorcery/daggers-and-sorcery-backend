@@ -15,6 +15,11 @@ public class CombatResult {
 
     private EnumMap<SkillType, Integer> rewardXp = new EnumMap<>(SkillType.class);
 
+    @Getter
+    private int lostAmmunition;
+
+    @Getter
+    @Setter
     private Winner winner;
 
     @Getter
@@ -29,14 +34,6 @@ public class CombatResult {
         return combatMessages;
     }
 
-    public Winner getWinner() {
-        return winner;
-    }
-
-    public void setWinner(Winner winner) {
-        this.winner = winner;
-    }
-
     public boolean isPlayerVictory() {
         return winner == Winner.PLAYER;
     }
@@ -47,6 +44,10 @@ public class CombatResult {
         } else {
             rewardXp.put(skill, amount);
         }
+    }
+
+    public void increaseLostAmmunition() {
+        lostAmmunition++;
     }
 
     public Map<SkillType, Integer> getRewardXpMap() {
