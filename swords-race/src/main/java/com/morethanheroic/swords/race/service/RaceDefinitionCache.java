@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Store the {@link RaceDefinition}es in a cached manner.
@@ -41,12 +39,22 @@ public class RaceDefinitionCache implements DefinitionCache<Race, RaceDefinition
     }
 
     @Override
-    public RaceDefinition getDefinition(Race race) {
+    public RaceDefinition getDefinition(final Race race) {
         return raceEntityMap.get(race);
     }
 
     @Override
     public int getSize() {
         return raceEntityMap.size();
+    }
+
+    @Override
+    public List<RaceDefinition> getDefinitions() {
+        return Collections.unmodifiableList(new ArrayList<>(raceEntityMap.values()));
+    }
+
+    @Override
+    public boolean isDefinitionExists(final Race key) {
+        return raceEntityMap.containsKey(key);
     }
 }

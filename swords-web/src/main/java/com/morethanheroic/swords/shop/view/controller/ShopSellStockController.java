@@ -13,7 +13,8 @@ import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
-import com.morethanheroic.swords.shop.service.ShopFacade;
+import com.morethanheroic.swords.shop.service.ShopEntityFactory;
+import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShopSellStockController {
 
     @Autowired
-    private ShopFacade shopFacade;
-
-    @Autowired
     private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
 
     @Autowired
@@ -37,11 +35,17 @@ public class ShopSellStockController {
     private ResponseFactory responseFactory;
 
     @Autowired
+    private ShopDefinitionCache shopDefinitionCache;
+
+    @Autowired
+    private ShopEntityFactory shopEntityFactory;
+
+    @Autowired
     private InventoryFacade inventoryFacade;
 
     @RequestMapping(value = "/shop/{shopId}/sell/{itemId}", method = RequestMethod.GET)
     public CharacterRefreshResponse sellStock(UserEntity user, SessionEntity sessionEntity, @PathVariable int shopId, @PathVariable int itemId) {
-        if (!shopFacade.isShopExists(shopId)) {
+        if (!shopDefinitionCache.isDefinitionExists(shopId)) {
             throw new NotFoundException();
         }
 
@@ -51,7 +55,7 @@ public class ShopSellStockController {
             itemId = unidentifiedItemIdCalculator.getRealItemId(sessionEntity, itemId);
         }
 
-        if (!itemDefinitionCache.isItemExists(itemId)) {
+        if (!itemDefinitionCache.isDefinitionExists(itemId)) {
             throw new NotFoundException();
         }
 
@@ -66,11 +70,11 @@ public class ShopSellStockController {
 
         ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(itemId);
 
-        if(itemDefinition.getType() == ItemType.MONEY) {
+        if (itemDefinition.getType() == ItemType.MONEY) {
             throw new ConflictException();
         }
 
-        ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
+        ShopEntity shopEntity = shopEntityFactory.getEntity(shopId);
 
         inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, shopEntity.getShopBuyPrice(itemDefinition));
         inventoryEntity.removeItem(itemId, 1, isIdentifiedItem);
