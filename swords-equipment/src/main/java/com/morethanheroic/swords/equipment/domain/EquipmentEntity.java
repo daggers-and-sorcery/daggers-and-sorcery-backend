@@ -163,6 +163,12 @@ public class EquipmentEntity {
 
                 equipmentMapper.equipQuiver(userEntity.getId(), item.getId(), identified, quiverAmount);
                 break;
+            case HELM:
+                equipmentDatabaseEntity.setHelm(item.getId());
+                equipmentDatabaseEntity.setHelmIdentified(identified);
+
+                equipmentMapper.equipHelm(userEntity.getId(), item.getId(), identified);
+                break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
         }
@@ -277,6 +283,32 @@ public class EquipmentEntity {
                 }
 
                 return previousQuiver;
+            case HELM:
+                final int previousHelm = equipmentDatabaseEntity.getHelm();
+
+                if (previousHelm != 0) {
+                    inventoryEntity.addItem(previousHelm, 1, equipmentDatabaseEntity.isHelmIdentified());
+
+                    equipmentDatabaseEntity.setHelm(0);
+                    equipmentDatabaseEntity.setHelmIdentified(true);
+
+                    equipmentMapper.equipHelm(userEntity.getId(), 0, true);
+                }
+
+                return previousHelm;
+            case BRACER:
+                final int previousBracer = equipmentDatabaseEntity.getBracer();
+
+                if (previousBracer != 0) {
+                    inventoryEntity.addItem(previousBracer, 1, equipmentDatabaseEntity.isBracerIdentified());
+
+                    equipmentDatabaseEntity.setBracer(0);
+                    equipmentDatabaseEntity.setBracerIdentified(true);
+
+                    equipmentMapper.equipBracer(userEntity.getId(), 0, true);
+                }
+
+                return previousBracer;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
