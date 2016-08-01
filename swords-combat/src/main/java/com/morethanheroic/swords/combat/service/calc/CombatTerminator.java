@@ -28,7 +28,7 @@ public class CombatTerminator {
 
         if (combatResult.getLostAmmunition() > 0) {
             combatResult.addMessage(
-                    combatMessageFactory.newMessage("item", "COMBAT_MESSAGE_ARROW_LOST", combatResult.getLostAmmunition())
+                    combatMessageFactory.newMessage("ammunition", "COMBAT_MESSAGE_ARROW_LOST", combatResult.getLostAmmunition())
             );
 
             equipmentFacade.getEquipment(combat.getUserCombatEntity().getUserEntity()).decreaseAmmunition(combatResult.getLostAmmunition());

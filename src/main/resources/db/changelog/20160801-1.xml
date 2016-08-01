@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160801-1">
+        <insert tableName="news">
+            <column name="title" value="Ranging, the last combat style"/>
+            <column name="release_date" value="2016-08-01 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are releasing the last combat style, ranging to the game. You can get ranged equipment from the monsters in the 'Whispering Fields' region. Be careful however, you not only need a ranged weapon but also ammunition. If you go on exploring with a ranged weapon in your hand but without any ammunition then you will end up fighting with your fists and that can be lethal if you not well equipped.
+
+Improvements:
+- The ranged combat is available in the game.
+
+Bugfixes:
+- The 'Leather hood' and 'Bronze helmet' items were not equippable because of a bug. This has been fixed.
+
+Thanks, the Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
