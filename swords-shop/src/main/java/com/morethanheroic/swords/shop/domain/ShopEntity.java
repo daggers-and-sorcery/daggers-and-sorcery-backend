@@ -2,7 +2,6 @@ package com.morethanheroic.swords.shop.domain;
 
 import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.shop.repository.dao.ShopItemDatabaseEntity;
 import com.morethanheroic.swords.shop.repository.domain.ShopMapper;
 import com.morethanheroic.swords.shop.service.transformer.ShopItemTransformer;
@@ -35,7 +34,7 @@ public class ShopEntity implements Entity {
         return shopDefinition.getId();
     }
 
-    public List<ShopItem> getAllItemsInShop() {
+    public List<ShopItem> getAllItems() {
         return shopItemTransformer.transform(shopMapper.getItemsInShop(shopDefinition.getId()));
     }
 
@@ -57,13 +56,5 @@ public class ShopEntity implements Entity {
         final ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
 
         return shopItemDatabaseEntity.getItemAmount() >= amount;
-    }
-
-    public int getShopSellPrice(ItemDefinition itemDefinition) {
-        return itemDefinition.getPriceDefinitionFor(MoneyType.MONEY).getAmount();
-    }
-
-    public int getShopBuyPrice(ItemDefinition itemDefinition) {
-        return Math.max(MINIMUM_BUY_PRICE, itemDefinition.getPriceDefinitionFor(MoneyType.MONEY).getAmount() / 2);
     }
 }

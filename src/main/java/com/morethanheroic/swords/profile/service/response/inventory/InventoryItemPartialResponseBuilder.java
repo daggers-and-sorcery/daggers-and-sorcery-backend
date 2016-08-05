@@ -4,9 +4,11 @@ import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryItemModifierPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.item.view.response.service.ItemModifierPartialResponseBuilder;
+import com.morethanheroic.swords.item.view.response.service.ItemRequirementPartialResponseBuilder;
+import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemModifierPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryItemPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryItemRequirementPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemRequirementPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.response.IdentifiedInventoryItemPartialResponse;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.response.InventoryItemPartialResponse;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.response.UnidentifiedInventoryItemPartialResponse;
@@ -25,10 +27,10 @@ public class InventoryItemPartialResponseBuilder implements PartialResponseBuild
     private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
 
     @Autowired
-    private InventoryItemRequirementPartialResponseBuilder inventoryItemRequirementPartialResponseBuilder;
+    private ItemRequirementPartialResponseBuilder itemRequirementPartialResponseBuilder;
 
     @Autowired
-    private InventoryItemModifierPartialResponseBuilder inventoryItemModifierPartialResponseBuilder;
+    private ItemModifierPartialResponseBuilder itemModifierPartialResponseBuilder;
 
     @Override
     public InventoryItemPartialResponse build(InventoryItemPartialResponseBuilderConfiguration responseBuilderConfiguration) {
@@ -47,8 +49,8 @@ public class InventoryItemPartialResponseBuilder implements PartialResponseBuild
                     .subtype(itemDefinition.getSubtype() != null ? itemDefinition.getSubtype().getName() : null)
                     .requirements(
                             itemDefinition.getRequirements().stream()
-                                    .map(itemRequirementDefinition -> inventoryItemRequirementPartialResponseBuilder.build(
-                                            InventoryItemRequirementPartialResponseBuilderConfiguration.builder()
+                                    .map(itemRequirementDefinition -> itemRequirementPartialResponseBuilder.build(
+                                            ItemRequirementPartialResponseBuilderConfiguration.builder()
                                                     .amount(itemRequirementDefinition.getAmount())
                                                     .itemRequirement(itemRequirementDefinition.getRequirement())
                                                     .build()
@@ -57,8 +59,8 @@ public class InventoryItemPartialResponseBuilder implements PartialResponseBuild
                     )
                     .modifiers(
                             itemDefinition.getModifiers().stream()
-                                    .map(itemModifierDefinition -> inventoryItemModifierPartialResponseBuilder.build(
-                                            InventoryItemModifierPartialResponseBuilderConfiguration.builder()
+                                    .map(itemModifierDefinition -> itemModifierPartialResponseBuilder.build(
+                                            ItemModifierPartialResponseBuilderConfiguration.builder()
                                                     .amount(itemModifierDefinition.getAmount())
                                                     .d2(itemModifierDefinition.getD2())
                                                     .d4(itemModifierDefinition.getD4())

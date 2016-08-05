@@ -13,6 +13,7 @@ import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
+import com.morethanheroic.swords.shop.service.ItemPriceCalculator;
 import com.morethanheroic.swords.shop.service.ShopEntityFactory;
 import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -39,6 +40,9 @@ public class ShopSellStockController {
 
     @Autowired
     private ShopEntityFactory shopEntityFactory;
+
+    @Autowired
+    private ItemPriceCalculator itemPriceCalculator;
 
     @Autowired
     private InventoryFacade inventoryFacade;
@@ -76,7 +80,7 @@ public class ShopSellStockController {
 
         ShopEntity shopEntity = shopEntityFactory.getEntity(shopId);
 
-        inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, shopEntity.getShopBuyPrice(itemDefinition));
+        inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getBuyPrice(itemDefinition));
         inventoryEntity.removeItem(itemId, 1, isIdentifiedItem);
 
         shopEntity.buyItem(itemDefinition, 1);

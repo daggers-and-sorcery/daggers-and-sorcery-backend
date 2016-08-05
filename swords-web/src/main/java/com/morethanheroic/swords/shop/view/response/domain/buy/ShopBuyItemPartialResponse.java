@@ -1,5 +1,6 @@
-package com.morethanheroic.swords.profile.service.response.inventory.domain.response;
+package com.morethanheroic.swords.shop.view.response.domain.buy;
 
+import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.swords.item.view.response.service.domain.response.ItemModifierPartialResponse;
 import com.morethanheroic.swords.item.view.response.service.domain.response.ItemRequirementPartialResponse;
 import lombok.Builder;
@@ -7,11 +8,12 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Getter
 @Builder
-public class IdentifiedInventoryItemPartialResponse extends InventoryItemPartialResponse {
+@Getter
+public class ShopBuyItemPartialResponse extends PartialResponse {
 
     private final int id;
+    private final int price;
     private final int amount;
     private final String name;
     private final String type;
@@ -21,6 +23,6 @@ public class IdentifiedInventoryItemPartialResponse extends InventoryItemPartial
     private final boolean equipment;
     private final String flavour;
     private final String description;
-    private final List<ItemModifierPartialResponse> modifiers;
-    private final List<ItemRequirementPartialResponse> requirements;
+    private final List<? extends ItemModifierPartialResponse> modifiers;
+    private final List<? extends ItemRequirementPartialResponse> requirements;
 }

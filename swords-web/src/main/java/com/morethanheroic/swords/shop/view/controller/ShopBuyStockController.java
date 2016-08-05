@@ -12,6 +12,7 @@ import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
+import com.morethanheroic.swords.shop.service.ItemPriceCalculator;
 import com.morethanheroic.swords.shop.service.ShopEntityFactory;
 import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -38,6 +39,9 @@ public class ShopBuyStockController {
 
     @Autowired
     private InventoryFacade inventoryFacade;
+
+    @Autowired
+    private ItemPriceCalculator itemPriceCalculator;
 
     @Autowired
     private ShopEntityFactory shopEntityFactory;
@@ -71,8 +75,8 @@ public class ShopBuyStockController {
         final InventoryEntity inventoryEntity = inventoryFacade.getInventory(user);
 
         //ATM we only use money as money, no support for special trades
-        if (shopEntity.getShopSellPrice(itemDefinition) <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
-            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, shopEntity.getShopSellPrice(itemDefinition));
+        if (itemPriceCalculator.getSellPrice(itemDefinition) <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
+            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getSellPrice(itemDefinition));
 
             inventoryEntity.addItem(itemDefinition, 1);
 

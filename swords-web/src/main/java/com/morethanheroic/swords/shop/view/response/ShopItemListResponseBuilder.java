@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.shop.service.response;
+package com.morethanheroic.swords.shop.view.response;
 
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
@@ -70,12 +70,12 @@ public class ShopItemListResponseBuilder {
     private List<Map<String, Object>> buildItemList(ShopEntity shopEntity) {
         List<Map<String, Object>> result = new ArrayList<>();
 
-        for (ShopItem shopItem : shopEntity.getAllItemsInShop()) {
+        for (ShopItem shopItem : shopEntity.getAllItems()) {
             Map<String, Object> item = new HashMap<>();
 
             item.put("itemDefinition", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(shopItem.getItem()));
-            item.put("itemPrice", shopEntity.getShopSellPrice(shopItem.getItem()));
-            item.put("itemAmount", shopItem.getItemAmount());
+            //item.put("itemPrice", shopEntity.getShopSellPrice(shopItem.getItem()));
+            item.put("itemAmount", shopItem.getAmount());
 
             result.add(item);
         }
@@ -100,7 +100,7 @@ public class ShopItemListResponseBuilder {
             } else {
                 item.put("itemDefinition", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinition, unidentifiedItemIdCalculator.getUnidentifiedItemId(sessionEntity, itemDefinition.getId())));
             }
-            item.put("itemPrice", shopEntity.getShopBuyPrice(itemDefinition));
+            //item.put("itemPrice", shopEntity.getShopBuyPrice(itemDefinition));
             item.put("itemAmount", shopItem.getAmount());
 
             result.add(item);

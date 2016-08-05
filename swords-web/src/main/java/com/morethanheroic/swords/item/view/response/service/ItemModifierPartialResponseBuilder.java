@@ -1,18 +1,18 @@
-package com.morethanheroic.swords.profile.service.response.inventory;
+package com.morethanheroic.swords.item.view.response.service;
 
 import com.morethanheroic.response.service.PartialResponseBuilder;
-import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryItemModifierPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.profile.service.response.inventory.domain.response.InventoryItemModifierPartialResponse;
+import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemModifierPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.item.view.response.service.domain.response.ItemModifierPartialResponse;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InventoryItemModifierPartialResponseBuilder implements PartialResponseBuilder<InventoryItemModifierPartialResponseBuilderConfiguration> {
+public class ItemModifierPartialResponseBuilder implements PartialResponseBuilder<ItemModifierPartialResponseBuilderConfiguration> {
 
     private static final String POSITIVE_MODIFIER_PREFIX = "+";
 
     @Override
-    public InventoryItemModifierPartialResponse build(InventoryItemModifierPartialResponseBuilderConfiguration responseBuilderConfiguration) {
-        final InventoryItemModifierPartialResponse.InventoryItemModifierPartialResponseBuilder inventoryItemModifierPartialResponseBuilder = InventoryItemModifierPartialResponse.builder()
+    public ItemModifierPartialResponse build(ItemModifierPartialResponseBuilderConfiguration responseBuilderConfiguration) {
+        final ItemModifierPartialResponse.ItemModifierPartialResponseBuilder inventoryItemModifierPartialResponseBuilder = ItemModifierPartialResponse.builder()
                 .attribute(responseBuilderConfiguration.getItemModifier().getName());
 
         if (responseBuilderConfiguration.getAmount() > 0) {
