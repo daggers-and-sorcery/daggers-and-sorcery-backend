@@ -5,25 +5,23 @@ import com.morethanheroic.response.exception.NotFoundException;
 import com.morethanheroic.swords.shop.service.ShopEntityFactory;
 import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.shop.view.response.domain.buy.configuration.ShopBuyListResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.service.ShopItemTypeSorter;
 import com.morethanheroic.swords.shop.view.response.service.buy.ShopBuyListResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class BuyFromShopStockListController {
 
-    @Autowired
-    private ShopDefinitionCache shopDefinitionCache;
-
-    @Autowired
-    private ShopEntityFactory shopEntityFactory;
-
-    @Autowired
-    private ShopBuyListResponseBuilder shopBuyListResponseBuilder;
+    private final ShopDefinitionCache shopDefinitionCache;
+    private final ShopEntityFactory shopEntityFactory;
+    private final ShopBuyListResponseBuilder shopBuyListResponseBuilder;
+    private final ShopItemTypeSorter shopItemTypeSorter;
 
     @RequestMapping(value = "/shop/buylist/{shopId}", method = RequestMethod.GET)
     public Response listStock(UserEntity userEntity, @PathVariable int shopId) {
@@ -37,7 +35,7 @@ public class BuyFromShopStockListController {
                 ShopBuyListResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
                         .shopDefinition(shopDefinitionCache.getDefinition(shopId))
-                        .items(shopEntityFactory.getEntity(shopId).getAllItems())
+                        .items(shopItemTypeSorter.sortByType(shopEntityFactory.getEntity(shopId).getAllItems()))
                         .build()
         );
     }

@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.shop.view.response.service.buy;
 
-import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.view.response.service.ItemModifierPartialResponseBuilder;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +24,7 @@ public class ShopBuyListItemPartialResponseBuilder implements PartialResponseCol
     private final ItemRequirementPartialResponseBuilder itemRequirementPartialResponseBuilder;
 
     @Override
-    public Collection<? extends PartialResponse> build(ShopBuyListItemPartialResponseBuilderConfiguration buyListItemPartialResponseBuilderConfiguration) {
+    public List<ShopBuyItemPartialResponse> build(ShopBuyListItemPartialResponseBuilderConfiguration buyListItemPartialResponseBuilderConfiguration) {
         final List<ShopBuyItemPartialResponse> result = new ArrayList<>();
 
         for (ShopItem shopItem : buyListItemPartialResponseBuilderConfiguration.getShopItems()) {
