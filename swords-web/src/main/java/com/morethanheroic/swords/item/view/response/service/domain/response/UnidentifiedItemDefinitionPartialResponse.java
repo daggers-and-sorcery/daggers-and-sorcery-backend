@@ -1,14 +1,13 @@
-package com.morethanheroic.swords.profile.service.response.inventory.domain.response;
+package com.morethanheroic.swords.item.view.response.service.domain.response;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
-public class UnidentifiedInventoryItemPartialResponse extends InventoryItemPartialResponse {
+public class UnidentifiedItemDefinitionPartialResponse extends ItemDefinitionPartialResponse {
 
     private final int id;
-    private final int amount;
     private final String name;
     private final String type;
     private final String subtype;

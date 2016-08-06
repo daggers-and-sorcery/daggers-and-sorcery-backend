@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ShopBuyTypeListPartialResponseBuilder implements PartialResponseBuilder<ShopBuyTypeListPartialResponseBuilderConfiguration> {
 
-    private final ShopBuyListItemPartialResponseBuilder shopBuyListItemPartialResponseBuilder;
+    private final ShopBuyListItemPartialResponseCollectionBuilder shopBuyListItemPartialResponseCollectionBuilder;
 
     @Override
     public PartialResponse build(ShopBuyTypeListPartialResponseBuilderConfiguration responseBuilderConfiguration) {
         return ShopBuyTypeListPartialResponse.builder()
                 .typeName(responseBuilderConfiguration.getItemType().getName())
-                .items(shopBuyListItemPartialResponseBuilder.build(
+                .items(shopBuyListItemPartialResponseCollectionBuilder.build(
                         ShopBuyListItemPartialResponseBuilderConfiguration.builder()
                                 .shopItems(responseBuilderConfiguration.getItems())
                                 .build()

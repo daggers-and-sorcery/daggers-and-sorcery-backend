@@ -5,11 +5,9 @@ import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.view.response.domain.ShopDefinitionPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.shop.view.response.domain.buy.ShopDefinitionPartialResponse;
-import lombok.Builder;
-import lombok.Getter;
+import org.springframework.stereotype.Service;
 
-@Getter
-@Builder
+@Service
 public class ShopDefinitionPartialResponseBuilder implements PartialResponseBuilder<ShopDefinitionPartialResponseBuilderConfiguration> {
 
     @Override

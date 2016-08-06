@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.profile.service.response.inventory.domain.response;
 
+import com.morethanheroic.swords.item.view.response.service.domain.response.ItemDefinitionPartialResponse;
 import com.morethanheroic.swords.item.view.response.service.domain.response.ItemModifierPartialResponse;
 import com.morethanheroic.swords.item.view.response.service.domain.response.ItemRequirementPartialResponse;
 import lombok.Builder;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Builder
-public class IdentifiedInventoryItemPartialResponse extends InventoryItemPartialResponse {
+public class IdentifiedItemDefinitionPartialResponse extends ItemDefinitionPartialResponse {
 
     private final int id;
     private final int amount;

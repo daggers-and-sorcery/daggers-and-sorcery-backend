@@ -1,36 +1,27 @@
 package com.morethanheroic.swords.profile.service.response.inventory;
 
+import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
-import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.view.response.service.ItemModifierPartialResponseBuilder;
-import com.morethanheroic.swords.item.view.response.service.ItemRequirementPartialResponseBuilder;
-import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemModifierPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.item.view.response.service.IdentifiedItemPartialResponseBuilder;
+import com.morethanheroic.swords.item.view.response.service.UnidentifiedItemPartialResponseBuilder;
+import com.morethanheroic.swords.item.view.response.service.domain.configuration.IdentifiedItemPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.item.view.response.service.domain.configuration.UnidentifiedItemPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.configuration.InventoryItemPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemRequirementPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.profile.service.response.inventory.domain.response.IdentifiedInventoryItemPartialResponse;
 import com.morethanheroic.swords.profile.service.response.inventory.domain.response.InventoryItemPartialResponse;
-import com.morethanheroic.swords.profile.service.response.inventory.domain.response.UnidentifiedInventoryItemPartialResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
 @Service
+@RequiredArgsConstructor
 public class InventoryItemPartialResponseBuilder implements PartialResponseBuilder<InventoryItemPartialResponseBuilderConfiguration> {
 
     private static final int WEIGHT_DIVIDER = 100;
     private static final String UNIDENTIFIED_ITEM_NAME = "Unidentified item";
 
-    @Autowired
-    private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
-
-    @Autowired
-    private ItemRequirementPartialResponseBuilder itemRequirementPartialResponseBuilder;
-
-    @Autowired
-    private ItemModifierPartialResponseBuilder itemModifierPartialResponseBuilder;
+    private final IdentifiedItemPartialResponseBuilder identifiedItemPartialResponseBuilder;
+    private final UnidentifiedItemPartialResponseBuilder unidentifiedItemPartialResponseBuilder;
 
     @Override
     public InventoryItemPartialResponse build(InventoryItemPartialResponseBuilderConfiguration responseBuilderConfiguration) {
@@ -38,51 +29,23 @@ public class InventoryItemPartialResponseBuilder implements PartialResponseBuild
         final ItemDefinition itemDefinition = inventoryItem.getItem();
 
         if (inventoryItem.isIdentified()) {
-            return IdentifiedInventoryItemPartialResponse.builder()
-                    .id(itemDefinition.getId())
+            return InventoryItemPartialResponse.builder()
                     .amount(responseBuilderConfiguration.getAmount())
-                    .name(itemDefinition.getName())
-                    .equipment(itemDefinition.isEquipment())
-                    .usable(itemDefinition.isUsable())
-                    .weight((double) itemDefinition.getWeight() / WEIGHT_DIVIDER)
-                    .type(itemDefinition.getType().getName())
-                    .subtype(itemDefinition.getSubtype() != null ? itemDefinition.getSubtype().getName() : null)
-                    .requirements(
-                            itemDefinition.getRequirements().stream()
-                                    .map(itemRequirementDefinition -> itemRequirementPartialResponseBuilder.build(
-                                            ItemRequirementPartialResponseBuilderConfiguration.builder()
-                                                    .amount(itemRequirementDefinition.getAmount())
-                                                    .itemRequirement(itemRequirementDefinition.getRequirement())
-                                                    .build()
-                                            )
-                                    ).collect(Collectors.toList())
-                    )
-                    .modifiers(
-                            itemDefinition.getModifiers().stream()
-                                    .map(itemModifierDefinition -> itemModifierPartialResponseBuilder.build(
-                                            ItemModifierPartialResponseBuilderConfiguration.builder()
-                                                    .amount(itemModifierDefinition.getAmount())
-                                                    .d2(itemModifierDefinition.getD2())
-                                                    .d4(itemModifierDefinition.getD4())
-                                                    .d6(itemModifierDefinition.getD6())
-                                                    .d8(itemModifierDefinition.getD8())
-                                                    .d10(itemModifierDefinition.getD10())
-                                                    .itemModifier(itemModifierDefinition.getModifier())
-                                                    .build()
-                                            )
-                                    ).collect(Collectors.toList())
-                    )
+                    .definition(identifiedItemPartialResponseBuilder.build(
+                            IdentifiedItemPartialResponseBuilderConfiguration.builder()
+                                    .item(itemDefinition)
+                                    .build()
+                    ))
                     .build();
         } else {
-            return UnidentifiedInventoryItemPartialResponse.builder()
-                    .id(unidentifiedItemIdCalculator.getRealItemId(responseBuilderConfiguration.getSessionEntity(), itemDefinition.getId()))
+            return InventoryItemPartialResponse.builder()
                     .amount(responseBuilderConfiguration.getAmount())
-                    .name(UNIDENTIFIED_ITEM_NAME)
-                    .equipment(itemDefinition.isEquipment())
-                    .usable(itemDefinition.isUsable())
-                    .weight((double) itemDefinition.getWeight() / WEIGHT_DIVIDER)
-                    .type(itemDefinition.getType().getName())
-                    .subtype(itemDefinition.getSubtype() != null ? itemDefinition.getSubtype().getName() : null)
+                    .definition(unidentifiedItemPartialResponseBuilder.build(
+                            UnidentifiedItemPartialResponseBuilderConfiguration.builder()
+                                    .item(itemDefinition)
+                                    .sessionEntity(responseBuilderConfiguration.getSessionEntity())
+                                    .build()
+                    ))
                     .build();
         }
     }
