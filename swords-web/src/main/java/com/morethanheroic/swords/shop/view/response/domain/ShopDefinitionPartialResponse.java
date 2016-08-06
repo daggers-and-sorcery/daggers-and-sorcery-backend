@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.shop.view.response.domain.buy;
+package com.morethanheroic.swords.shop.view.response.domain;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import lombok.Builder;

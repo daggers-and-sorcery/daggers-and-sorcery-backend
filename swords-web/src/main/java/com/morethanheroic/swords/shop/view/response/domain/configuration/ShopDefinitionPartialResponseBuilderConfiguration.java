@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.shop.view.response.domain;
+package com.morethanheroic.swords.shop.view.response.domain.configuration;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;

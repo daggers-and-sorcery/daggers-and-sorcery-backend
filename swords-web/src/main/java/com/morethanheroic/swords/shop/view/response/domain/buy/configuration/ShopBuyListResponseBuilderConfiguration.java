@@ -16,6 +16,9 @@ import java.util.Map;
 public class ShopBuyListResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final UserEntity userEntity;
+    private final int bronze;
+    private final int silver;
+    private final int gold;
     private final ShopDefinition shopDefinition;
     private final Map<ItemType, List<ShopItem>> items;
 }

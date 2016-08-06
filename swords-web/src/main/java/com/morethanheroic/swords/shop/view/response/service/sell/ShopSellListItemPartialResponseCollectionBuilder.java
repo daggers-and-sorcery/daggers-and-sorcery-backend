@@ -7,7 +7,7 @@ import com.morethanheroic.swords.item.view.response.service.UnidentifiedItemPart
 import com.morethanheroic.swords.item.view.response.service.domain.configuration.IdentifiedItemPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.view.response.service.domain.configuration.UnidentifiedItemPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.shop.view.response.domain.sell.ShopSellItemPartialResponse;
-import com.morethanheroic.swords.shop.view.response.domain.sell.ShopSellListItemPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.sell.configuration.ShopSellListItemPartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

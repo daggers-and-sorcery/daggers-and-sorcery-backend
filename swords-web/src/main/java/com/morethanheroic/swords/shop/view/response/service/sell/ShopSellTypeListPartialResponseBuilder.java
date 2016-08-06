@@ -2,9 +2,9 @@ package com.morethanheroic.swords.shop.view.response.service.sell;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
-import com.morethanheroic.swords.shop.view.response.domain.sell.ShopSellListItemPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.sell.configuration.ShopSellListItemPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.shop.view.response.domain.sell.ShopSellTypeListPartialResponse;
-import com.morethanheroic.swords.shop.view.response.domain.sell.ShopSellTypeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.sell.configuration.ShopSellTypeListPartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

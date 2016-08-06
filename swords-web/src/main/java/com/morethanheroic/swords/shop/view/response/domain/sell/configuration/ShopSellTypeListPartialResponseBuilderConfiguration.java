@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.shop.view.response.domain.sell;
+package com.morethanheroic.swords.shop.view.response.domain.sell.configuration;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.domain.ItemType;

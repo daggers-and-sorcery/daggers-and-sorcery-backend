@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.shop.view.response.domain.sell;
+package com.morethanheroic.swords.shop.view.response.domain.sell.configuration;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.domain.ItemType;
@@ -16,6 +16,9 @@ import java.util.Map;
 public class ShopSellListResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final UserEntity userEntity;
+    private final int bronze;
+    private final int silver;
+    private final int gold;
     private final ShopDefinition shopDefinition;
     private final Map<ItemType, List<ShopSellItem>> items;
 }

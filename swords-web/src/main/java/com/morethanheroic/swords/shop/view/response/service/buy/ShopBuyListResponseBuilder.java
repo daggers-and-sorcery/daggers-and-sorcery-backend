@@ -3,9 +3,11 @@ package com.morethanheroic.swords.shop.view.response.service.buy;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.shop.view.response.domain.ShopDefinitionPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.configuration.PlayerMoneyPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.configuration.ShopDefinitionPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.shop.view.response.domain.buy.configuration.ShopBuyListResponseBuilderConfiguration;
 import com.morethanheroic.swords.shop.view.response.domain.buy.configuration.ShopBuyTypeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.service.PlayerMoneyPartialResponseBuilder;
 import com.morethanheroic.swords.shop.view.response.service.ShopDefinitionPartialResponseBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class ShopBuyListResponseBuilder implements ResponseBuilder<ShopBuyListRe
     private final ShopBuyListItemPartialResponseCollectionBuilder shopBuyListItemPartialResponseCollectionBuilder;
     private final ShopDefinitionPartialResponseBuilder shopDefinitionPartialResponseBuilder;
     private final ShopBuyTypeListPartialResponseBuilder shopBuyTypeListPartialResponseBuilder;
+    private final PlayerMoneyPartialResponseBuilder playerMoneyPartialResponseBuilder;
 
     @Override
     public Response build(ShopBuyListResponseBuilderConfiguration responseBuilderConfiguration) {
@@ -44,6 +47,14 @@ public class ShopBuyListResponseBuilder implements ResponseBuilder<ShopBuyListRe
                         .build()
                 )
         );
+
+        response.setData("money", playerMoneyPartialResponseBuilder.build(
+                PlayerMoneyPartialResponseBuilderConfiguration.builder()
+                        .bronze(responseBuilderConfiguration.getBronze())
+                        .silver(responseBuilderConfiguration.getSilver())
+                        .gold(responseBuilderConfiguration.getGold())
+                        .build()
+        ));
 
         return response;
     }

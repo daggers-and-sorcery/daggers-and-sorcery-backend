@@ -2,6 +2,9 @@ package com.morethanheroic.swords.shop.view.controller.list;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.exception.NotFoundException;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.shop.service.ShopEntityFactory;
 import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.shop.view.response.domain.buy.configuration.ShopBuyListResponseBuilderConfiguration;
@@ -20,6 +23,7 @@ public class BuyFromShopStockListController {
 
     private final ShopDefinitionCache shopDefinitionCache;
     private final ShopEntityFactory shopEntityFactory;
+    private final InventoryEntityFactory inventoryEntityFactory;
     private final ShopBuyListResponseBuilder shopBuyListResponseBuilder;
     private final ShopItemTypeSorter shopItemTypeSorter;
 
@@ -31,9 +35,15 @@ public class BuyFromShopStockListController {
 
         //TODO: Check that the user is in the same city as the shop.
 
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
+        final int moneyAmount = inventoryEntity.getMoneyAmount(MoneyType.MONEY);
+
         return shopBuyListResponseBuilder.build(
                 ShopBuyListResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
+                        .bronze(moneyAmount % 100)
+                        .silver((moneyAmount / 100) % 100)
+                        .gold(moneyAmount / 10000)
                         .shopDefinition(shopDefinitionCache.getDefinition(shopId))
                         .items(shopItemTypeSorter.sortByType(shopEntityFactory.getEntity(shopId).getAllItems()))
                         .build()

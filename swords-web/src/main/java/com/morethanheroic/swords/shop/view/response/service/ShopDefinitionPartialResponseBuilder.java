@@ -3,8 +3,8 @@ package com.morethanheroic.swords.shop.view.response.service;
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
-import com.morethanheroic.swords.shop.view.response.domain.ShopDefinitionPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.shop.view.response.domain.buy.ShopDefinitionPartialResponse;
+import com.morethanheroic.swords.shop.view.response.domain.configuration.ShopDefinitionPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.ShopDefinitionPartialResponse;
 import org.springframework.stereotype.Service;
 
 @Service

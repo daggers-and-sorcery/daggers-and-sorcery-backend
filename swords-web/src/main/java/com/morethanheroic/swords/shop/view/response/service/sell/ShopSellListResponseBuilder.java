@@ -3,9 +3,11 @@ package com.morethanheroic.swords.shop.view.response.service.sell;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
-import com.morethanheroic.swords.shop.view.response.domain.ShopDefinitionPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.shop.view.response.domain.sell.ShopSellListResponseBuilderConfiguration;
-import com.morethanheroic.swords.shop.view.response.domain.sell.ShopSellTypeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.configuration.PlayerMoneyPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.configuration.ShopDefinitionPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.sell.configuration.ShopSellListResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.domain.sell.configuration.ShopSellTypeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.shop.view.response.service.PlayerMoneyPartialResponseBuilder;
 import com.morethanheroic.swords.shop.view.response.service.ShopDefinitionPartialResponseBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class ShopSellListResponseBuilder implements ResponseBuilder<ShopSellList
     private final ResponseFactory responseFactory;
     private final ShopDefinitionPartialResponseBuilder shopDefinitionPartialResponseBuilder;
     private final ShopSellTypeListPartialResponseBuilder shopSellTypeListPartialResponseBuilder;
+    private final PlayerMoneyPartialResponseBuilder playerMoneyPartialResponseBuilder;
 
     @Override
     public Response build(ShopSellListResponseBuilderConfiguration responseBuilderConfiguration) {
@@ -43,6 +46,14 @@ public class ShopSellListResponseBuilder implements ResponseBuilder<ShopSellList
                         .build()
                 )
         );
+
+        response.setData("money", playerMoneyPartialResponseBuilder.build(
+                PlayerMoneyPartialResponseBuilderConfiguration.builder()
+                        .bronze(responseBuilderConfiguration.getBronze())
+                        .silver(responseBuilderConfiguration.getSilver())
+                        .gold(responseBuilderConfiguration.getGold())
+                        .build()
+        ));
 
         return response;
     }
