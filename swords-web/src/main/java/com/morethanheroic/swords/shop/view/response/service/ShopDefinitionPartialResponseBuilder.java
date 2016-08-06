@@ -15,6 +15,7 @@ public class ShopDefinitionPartialResponseBuilder implements PartialResponseBuil
         final ShopDefinition shopDefinition = shopDefinitionPartialResponseBuilderConfiguration.getShopDefinition();
 
         return ShopDefinitionPartialResponse.builder()
+                .id(shopDefinition.getId())
                 .name(shopDefinition.getName())
                 .build();
     }

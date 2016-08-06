@@ -80,7 +80,7 @@ public class ShopSellStockController {
 
         ShopEntity shopEntity = shopEntityFactory.getEntity(shopId);
 
-        inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getBuyPrice(itemDefinition));
+        inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getSellPrice(itemDefinition));
         inventoryEntity.removeItem(itemId, 1, isIdentifiedItem);
 
         shopEntity.buyItem(itemDefinition, 1);

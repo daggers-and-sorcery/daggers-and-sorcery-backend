@@ -75,8 +75,8 @@ public class ShopBuyStockController {
         final InventoryEntity inventoryEntity = inventoryFacade.getInventory(user);
 
         //ATM we only use money as money, no support for special trades
-        if (itemPriceCalculator.getSellPrice(itemDefinition) <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
-            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getSellPrice(itemDefinition));
+        if (itemPriceCalculator.getBuyPrice(itemDefinition) <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
+            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getBuyPrice(itemDefinition));
 
             inventoryEntity.addItem(itemDefinition, 1);
 

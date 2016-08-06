@@ -8,5 +8,6 @@ import lombok.Getter;
 @Getter
 public class ShopDefinitionPartialResponse extends PartialResponse {
 
+    private final int id;
     private final String name;
 }

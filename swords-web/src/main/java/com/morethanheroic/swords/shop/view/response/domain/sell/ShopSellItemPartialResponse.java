@@ -11,5 +11,5 @@ public class ShopSellItemPartialResponse extends PartialResponse {
 
     private final int price;
     private final int amount;
-    private final ItemDefinitionPartialResponse item;
+    private final ItemDefinitionPartialResponse definition;
 }

@@ -32,7 +32,7 @@ public class ShopBuyListItemPartialResponseCollectionBuilder implements PartialR
                     ShopBuyItemPartialResponse.builder()
                             .price(shopItem.getBuyPrice())
                             .amount(shopItem.getAmount())
-                            .item(identifiedItemPartialResponseBuilder.build(
+                            .definition(identifiedItemPartialResponseBuilder.build(
                                     IdentifiedItemPartialResponseBuilderConfiguration.builder()
                                             .item(shopItem.getItem())
                                             .build()

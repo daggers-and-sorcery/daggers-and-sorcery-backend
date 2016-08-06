@@ -27,12 +27,17 @@ public class ShopSellListItemPartialResponseCollectionBuilder implements Partial
 
         for (ShopSellItem shopSellItem : shopSellListItemPartialResponseBuilderConfiguration.getShopItems()) {
             final InventoryItem inventoryItem = shopSellItem.getInventoryItem();
+            final int sellPrice = shopSellItem.getSellPrice();
+
+            if (sellPrice == 0) {
+                continue;
+            }
 
             if (inventoryItem.isIdentified()) {
                 result.add(ShopSellItemPartialResponse.builder()
                         .amount(inventoryItem.getAmount())
                         .price(shopSellItem.getSellPrice())
-                        .item(
+                        .definition(
                                 identifiedItemPartialResponseBuilder.build(
                                         IdentifiedItemPartialResponseBuilderConfiguration.builder()
                                                 .item(inventoryItem.getItem())
@@ -44,7 +49,7 @@ public class ShopSellListItemPartialResponseCollectionBuilder implements Partial
                 result.add(ShopSellItemPartialResponse.builder()
                         .amount(inventoryItem.getAmount())
                         .price(shopSellItem.getSellPrice())
-                        .item(
+                        .definition(
                                 unidentifiedItemPartialResponseBuilder.build(
                                         UnidentifiedItemPartialResponseBuilderConfiguration.builder()
                                                 .item(inventoryItem.getItem())
