@@ -2,6 +2,7 @@ package com.morethanheroic.swords.shop.view.controller.list;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.exception.NotFoundException;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
@@ -37,7 +38,7 @@ public class SellToShopStockListController {
     private final ItemPriceCalculator itemPriceCalculator;
 
     @RequestMapping(value = "/shop/selllist/{shopId}", method = RequestMethod.GET)
-    public Response listStock(UserEntity userEntity, @PathVariable int shopId) {
+    public Response listStock(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable int shopId) {
         if (!shopDefinitionCache.isDefinitionExists(shopId)) {
             throw new NotFoundException();
         }
@@ -50,6 +51,7 @@ public class SellToShopStockListController {
         return shopSellListResponseBuilder.build(
                 ShopSellListResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
+                        .sessionEntity(sessionEntity)
                         .bronze(moneyAmount % 100)
                         .silver((moneyAmount / 100) % 100)
                         .gold(moneyAmount / 10000)
