@@ -20,6 +20,7 @@ public class ShopSellTypeListPartialResponseBuilder implements PartialResponseBu
                 .typeName(responseBuilderConfiguration.getItemType().getName())
                 .items(shopSellListItemPartialResponseBuilder.build(
                         ShopSellListItemPartialResponseBuilderConfiguration.builder()
+                                .sessionEntity(responseBuilderConfiguration.getSessionEntity())
                                 .shopItems(responseBuilderConfiguration.getItems())
                                 .build()
                         )
