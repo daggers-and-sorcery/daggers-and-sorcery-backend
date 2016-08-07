@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160807-1">
+        <insert tableName="news">
+            <column name="title" value="The shop rework is here"/>
+            <column name="release_date" value="2016-08-07 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are happy to announce that the long awaited rework of the shop is finally here. The rework took more time than expected but the whole shop was redesigned.
+
+Improvements:
+- The items in the shop are grouped by type for easier searching.
+- Added icons for the prices and prices are not shown in only bronze coins anymore.
+- The player's money are shown on the shop screen.
+- You are able to see the properties of an item before buying it, not just its name.
+
+Thanks, the Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
