@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.definition.cache;
 
+import java.util.List;
+
 /**
  * Show the public API of a standardized definition cache. The definition caches can be used to query
  * cached definitions from it.
@@ -12,4 +14,8 @@ public interface DefinitionCache<K, T> {
     T getDefinition(K key);
 
     int getSize();
+
+    List<T> getDefinitions();
+
+    boolean isDefinitionExists(K key);
 }

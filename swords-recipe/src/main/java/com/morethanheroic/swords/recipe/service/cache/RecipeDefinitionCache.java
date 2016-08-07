@@ -51,8 +51,14 @@ public class RecipeDefinitionCache implements DefinitionCache<Integer, RecipeDef
         throw new MissingRecipeException(recipeId);
     }
 
+    @Override
     public List<RecipeDefinition> getDefinitions() {
         return Collections.unmodifiableList(new ArrayList<>(recipeDefinitionMap.values()));
+    }
+
+    @Override
+    public boolean isDefinitionExists(Integer key) {
+        return recipeDefinitionMap.containsKey(key);
     }
 
     @Override

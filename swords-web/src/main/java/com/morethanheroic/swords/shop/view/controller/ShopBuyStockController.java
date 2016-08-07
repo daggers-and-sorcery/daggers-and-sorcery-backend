@@ -12,7 +12,9 @@ import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
-import com.morethanheroic.swords.shop.service.ShopFacade;
+import com.morethanheroic.swords.shop.service.ItemPriceCalculator;
+import com.morethanheroic.swords.shop.service.ShopEntityFactory;
+import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,13 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
-
 @RestController
 public class ShopBuyStockController {
-
-    @Autowired
-    private ShopFacade shopFacade;
 
     @Autowired
     private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
@@ -38,11 +35,20 @@ public class ShopBuyStockController {
     private ResponseFactory responseFactory;
 
     @Autowired
+    private ShopDefinitionCache shopDefinitionCache;
+
+    @Autowired
     private InventoryFacade inventoryFacade;
+
+    @Autowired
+    private ItemPriceCalculator itemPriceCalculator;
+
+    @Autowired
+    private ShopEntityFactory shopEntityFactory;
 
     @RequestMapping(value = "/shop/{shopId}/buy/{itemId}", method = RequestMethod.GET)
     public CharacterRefreshResponse buyStock(UserEntity user, SessionEntity sessionEntity, @PathVariable int shopId, @PathVariable int itemId) {
-        if (!shopFacade.isShopExists(shopId)) {
+        if (!shopDefinitionCache.isDefinitionExists(shopId)) {
             throw new NotFoundException();
         }
 
@@ -52,11 +58,11 @@ public class ShopBuyStockController {
             itemId = unidentifiedItemIdCalculator.getRealItemId(sessionEntity, itemId);
         }
 
-        if (!itemDefinitionCache.isItemExists(itemId)) {
+        if (!itemDefinitionCache.isDefinitionExists(itemId)) {
             throw new NotFoundException();
         }
 
-        ShopEntity shopEntity = shopFacade.getShopEntity(shopId);
+        ShopEntity shopEntity = shopEntityFactory.getEntity(shopId);
         ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(itemId);
 
         if (!shopEntity.hasItem(itemDefinition, 1)) {
@@ -69,8 +75,8 @@ public class ShopBuyStockController {
         final InventoryEntity inventoryEntity = inventoryFacade.getInventory(user);
 
         //ATM we only use money as money, no support for special trades
-        if (shopEntity.getShopSellPrice(itemDefinition) <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
-            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, shopEntity.getShopSellPrice(itemDefinition));
+        if (itemPriceCalculator.getBuyPrice(itemDefinition) <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
+            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getBuyPrice(itemDefinition));
 
             inventoryEntity.addItem(itemDefinition, 1);
 

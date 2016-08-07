@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.profile.service.response.inventory.domain.configuration;
+package com.morethanheroic.swords.item.view.response.service.domain.configuration;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.domain.ItemRequirement;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class InventoryItemRequirementPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
+public class ItemRequirementPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final int amount;
     private final ItemRequirement itemRequirement;

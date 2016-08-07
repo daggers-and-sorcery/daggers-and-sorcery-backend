@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -37,5 +35,15 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
     @Override
     public int getSize() {
         return explorationEventDefinitions.size();
+    }
+
+    @Override
+    public List<ExplorationEventDefinition> getDefinitions() {
+        return Collections.unmodifiableList(new ArrayList<>(explorationEventDefinitions.values()));
+    }
+
+    @Override
+    public boolean isDefinitionExists(Integer key) {
+        return explorationEventDefinitions.containsKey(key);
     }
 }
