@@ -1,18 +1,18 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
+import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatUtil;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
-import java.util.function.Consumer;
 
 public abstract class GeneralAttackCalculator implements AttackCalculator {
 
@@ -22,6 +22,21 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
     @Autowired
     private CombatMessageBuilder combatMessageBuilder;
 
+    protected void addDefenseXp(final CombatContext combatContext, final UserCombatEntity userCombatEntity, final int amount) {
+        final UserEntity userEntity = userCombatEntity.getUserEntity();
+
+        if (combatUtil.getUserArmorType(userEntity) != null) {
+            combatContext.addRewardXp(combatUtil.getUserArmorSkillType(userEntity), amount);
+        } else {
+            combatContext.addRewardXp(SkillType.ARMORLESS_DEFENSE, amount);
+        }
+
+        if (combatUtil.hasShield(userEntity)) {
+            combatContext.addRewardXp(SkillType.SHIELD_DEFENSE, amount);
+        }
+    }
+
+    @Deprecated
     protected void addDefenseXp(CombatResult result, UserCombatEntity userCombatEntity, int amount) {
         final UserEntity userEntity = userCombatEntity.getUserEntity();
 
@@ -36,6 +51,17 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         }
     }
 
+    protected void addAttackXp(final CombatContext combatContext, final UserCombatEntity userCombatEntity, final int amount) {
+        final UserEntity userEntity = userCombatEntity.getUserEntity();
+
+        if (combatUtil.getUserWeaponType(userEntity) != null) {
+            combatContext.addRewardXp(combatUtil.getUserWeaponSkillType(userEntity), amount);
+        } else {
+            combatContext.addRewardXp(SkillType.FISTFIGHT, amount);
+        }
+    }
+
+    @Deprecated
     protected void addAttackXp(CombatResult combatResult, UserCombatEntity userCombatEntity, int amount) {
         final UserEntity userEntity = userCombatEntity.getUserEntity();
 
@@ -46,12 +72,22 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         }
     }
 
-    protected void addOffhandXp(final CombatResult combatResult, final UserCombatEntity userCombatEntity, final int amount) {
-        final UserEntity userEntity = userCombatEntity.getUserEntity();
+    //TODO: Why buildMonsterRangedMissMessage why ranged?????
+    protected CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
+        if (attacker instanceof MonsterCombatEntity) {
+            addDefenseXp(combatContext, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
 
-        combatUtil.getUserOffhandSkillType(userEntity).ifPresent((skillType) -> combatResult.addRewardXp(skillType, amount));
+            return DefaultCombatStep.builder()
+                    .message(combatMessageBuilder.buildMonsterRangedMissMessage(attacker.getName()))
+                    .build();
+        } else {
+            return DefaultCombatStep.builder()
+                    .message(combatMessageBuilder.buildPlayerRangedMissMessage(opponent.getName()))
+                    .build();
+        }
     }
 
+    @Deprecated
     protected void dealMiss(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
         if (attacker instanceof MonsterCombatEntity) {
             addDefenseXp(result, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
@@ -62,6 +98,36 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         }
     }
 
+    protected void addOffhandXp(final CombatContext combatContext, final UserCombatEntity userCombatEntity, final int amount) {
+        final UserEntity userEntity = userCombatEntity.getUserEntity();
+
+        combatUtil.getUserOffhandSkillType(userEntity).ifPresent((skillType) -> combatContext.addRewardXp(skillType, amount));
+    }
+
+    @Deprecated
+    protected void addOffhandXp(final CombatResult combatResult, final UserCombatEntity userCombatEntity, final int amount) {
+        final UserEntity userEntity = userCombatEntity.getUserEntity();
+
+        combatUtil.getUserOffhandSkillType(userEntity).ifPresent((skillType) -> combatResult.addRewardXp(skillType, amount));
+    }
+
+    protected CombatStep handleDeath(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
+        if (attacker instanceof MonsterCombatEntity) {
+            combatContext.setWinner(Winner.MONSTER);
+
+            return DefaultCombatStep.builder()
+                    .message(combatMessageBuilder.buildPlayerKilledMessage(attacker.getName()))
+                    .build();
+        } else {
+            combatContext.setWinner(Winner.PLAYER);
+
+            return DefaultCombatStep.builder()
+                    .message(combatMessageBuilder.buildMonsterKilledMessage(opponent.getName()))
+                    .build();
+        }
+    }
+
+    @Deprecated
     protected void handleDeath(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
         if (attacker instanceof MonsterCombatEntity) {
             result.addMessage(combatMessageBuilder.buildPlayerKilledMessage(attacker.getName()));
