@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CombatCalculator {
+public class LegacyCombatCalculator {
 
     private final CombatFactory combatFactory;
     private final CombatInitializer combatInitializer;

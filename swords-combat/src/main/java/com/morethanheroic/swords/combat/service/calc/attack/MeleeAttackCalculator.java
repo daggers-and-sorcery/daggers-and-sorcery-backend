@@ -8,6 +8,7 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
+@RequiredArgsConstructor
 public class MeleeAttackCalculator extends GeneralAttackCalculator {
 
     private final CombatMessageBuilder combatMessageBuilder;
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
+    private final CombatMessageFactory combatMessageFactory;
 
     @Override
     public List<CombatStep> calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
@@ -54,7 +56,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageBuilder.buildDamageToPlayerMessage(attacker.getName(), damage))
+                            .message(combatMessageFactory.newMessage("blood", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_PLAYER", attacker.getName(), damage))
                             .build()
             );
         } else {
@@ -62,7 +64,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageBuilder.buildDamageToMonsterMessage(opponent.getName(), damage))
+                            .message(combatMessageFactory.newMessage("blood", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_MONSTER", opponent.getName(), damage))
                             .build()
             );
         }

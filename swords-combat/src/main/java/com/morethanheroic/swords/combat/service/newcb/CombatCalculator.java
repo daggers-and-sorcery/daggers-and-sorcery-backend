@@ -7,6 +7,7 @@ import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.InitializationCombatStep;
+import com.morethanheroic.swords.combat.repository.dao.CombatDatabaseEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
@@ -19,12 +20,14 @@ import com.morethanheroic.swords.combat.service.calc.attack.MagicAttackCalculato
 import com.morethanheroic.swords.combat.service.calc.attack.MeleeAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.attack.RangedAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
-import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
+import com.morethanheroic.swords.monster.domain.MonsterAttackType;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +58,9 @@ public class CombatCalculator {
 
     @Autowired
     private CombatMapper combatMapper;
+
+    @Autowired
+    private MonsterDefinitionCache monsterDefinitionCache;
 
     //TODO: remove these
     @Autowired
@@ -97,9 +103,21 @@ public class CombatCalculator {
         return combatSteps;
     }
 
+    @Transactional
     public List<CombatStep> attack(final UserEntity userEntity) {
+        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
+
+        if(combatDatabaseEntity == null) {
+            //TODO: do this normally
+            throw new IllegalStateException();
+        }
+
         //TODO: create correct context
-        final CombatContext combatContext = CombatContext.builder().build();
+        final CombatContext combatContext = CombatContext.builder()
+                                                         .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
+                                                         //TODO: initialize with hp and mana from db
+                                                         .opponent(new MonsterCombatEntity(monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId())))
+                                                         .build();
 
         final List<CombatStep> combatSteps = new ArrayList<>();
 
@@ -110,14 +128,15 @@ public class CombatCalculator {
             combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity())).calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
         }
 
-        combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity())).calculateAttack(combatContext.getUser(), combatContext.getOpponent(), combatContext));
+        combatSteps.addAll(getAttackCalculatorForAttackType(combatContext.getOpponent().getAttackType()).calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
 
         if (combatContext.getWinner() != null) {
             combatTerminator.terminate(combatContext);
 
-            //TODO: remove from db
+            combatMapper.removeCombat(combatDatabaseEntity.getId());
         } else {
-            //TODO: Update in db
+            //TODO: normal update with real data
+            combatMapper.updateCombat(combatDatabaseEntity.getId(), 10, 10,AttackerType.MONSTER);
         }
 
         return combatSteps;
@@ -127,6 +146,16 @@ public class CombatCalculator {
         if (attackType == AttackType.MELEE) {
             return meleeAttackCalculator;
         } else if (attackType == AttackType.MAGIC) {
+            return magicAttackCalculator;
+        } else {
+            return rangedAttackCalculator;
+        }
+    }
+
+    private AttackCalculator getAttackCalculatorForAttackType(MonsterAttackType monsterAttackType) {
+        if (monsterAttackType == MonsterAttackType.MELEE) {
+            return meleeAttackCalculator;
+        } else if (monsterAttackType == MonsterAttackType.MAGIC) {
             return magicAttackCalculator;
         } else {
             return rangedAttackCalculator;

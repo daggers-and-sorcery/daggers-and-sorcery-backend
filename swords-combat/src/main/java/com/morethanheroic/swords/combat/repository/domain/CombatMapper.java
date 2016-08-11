@@ -1,10 +1,11 @@
 package com.morethanheroic.swords.combat.repository.domain;
 
 import com.morethanheroic.swords.combat.domain.AttackerType;
-import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
+import com.morethanheroic.swords.combat.repository.dao.CombatDatabaseEntity;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,7 @@ public interface CombatMapper {
 
     @Delete("DELETE combat WHERE id = #{id}")
     void removeCombat(@Param("id") int id);
+
+    @Select("SELECT * FROM combat WHERE user_id = #{userId}")
+    CombatDatabaseEntity getRunningCombat(@Param("userId") int userId);
 }
