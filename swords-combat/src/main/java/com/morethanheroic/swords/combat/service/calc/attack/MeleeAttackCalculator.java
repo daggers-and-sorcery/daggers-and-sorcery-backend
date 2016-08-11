@@ -56,7 +56,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("blood", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_PLAYER", attacker.getName(), damage))
+                            .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_PLAYER", attacker.getName(), damage))
                             .build()
             );
         } else {
@@ -64,7 +64,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("blood", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_MONSTER", opponent.getName(), damage))
+                            .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_MONSTER", opponent.getName(), damage))
                             .build()
             );
         }

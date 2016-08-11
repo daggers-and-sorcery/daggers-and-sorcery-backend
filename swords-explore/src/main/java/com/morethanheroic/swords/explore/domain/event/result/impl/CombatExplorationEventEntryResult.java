@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.domain.event.result.impl;
 
-import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,5 +11,5 @@ import java.util.List;
 @Getter
 public class CombatExplorationEventEntryResult implements ExplorationEventEntryResult {
 
-    private final List<CombatMessage> combatMessages;
+    private final List<CombatStep> combatSteps;
 }

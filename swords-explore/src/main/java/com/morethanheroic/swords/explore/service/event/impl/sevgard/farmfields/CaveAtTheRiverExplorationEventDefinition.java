@@ -67,9 +67,11 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
+        /*
         if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
+        */
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()

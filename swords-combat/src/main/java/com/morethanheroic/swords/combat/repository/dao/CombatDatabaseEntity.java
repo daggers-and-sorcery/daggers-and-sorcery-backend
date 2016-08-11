@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.combat.repository.dao;
 
-import com.morethanheroic.swords.combat.domain.AttackerType;
 import lombok.Getter;
 
 @Getter
@@ -11,5 +10,4 @@ public class CombatDatabaseEntity {
     private int monsterId;
     private int monsterHealth;
     private int monsterMana;
-    private AttackerType nextAttacker;
 }

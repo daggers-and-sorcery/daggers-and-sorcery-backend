@@ -15,4 +15,5 @@ public class CombatAttackResponseBuilderConfiguration implements ResponseBuilder
 
     private final UserEntity userEntity;
     private final List<CombatStep> combatSteps;
+    private final boolean combatEnded;
 }

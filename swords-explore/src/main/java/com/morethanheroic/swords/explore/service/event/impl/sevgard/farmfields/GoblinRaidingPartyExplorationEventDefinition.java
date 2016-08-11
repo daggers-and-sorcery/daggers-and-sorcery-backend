@@ -62,9 +62,11 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
+        /*
         if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
+        */
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -76,9 +78,11 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
 
         explorationResult.addEventEntryResult(secondCombatResult.getResult());
 
+        /*
         if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
+        */
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()

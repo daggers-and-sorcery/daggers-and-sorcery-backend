@@ -59,9 +59,11 @@ public class TheBridgeExplorationEventDefinition extends ExplorationEventDefinit
 
         explorationResult .addEventEntryResult(combatResult.getResult());
 
+        /*
         if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
+        */
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()

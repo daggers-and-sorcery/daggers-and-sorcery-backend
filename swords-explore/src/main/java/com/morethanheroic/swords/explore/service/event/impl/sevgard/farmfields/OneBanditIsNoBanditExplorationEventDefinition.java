@@ -55,9 +55,11 @@ public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEv
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
+        /*
         if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
+        */
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()

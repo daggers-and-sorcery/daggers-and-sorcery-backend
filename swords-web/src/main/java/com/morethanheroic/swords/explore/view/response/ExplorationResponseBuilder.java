@@ -1,8 +1,8 @@
-package com.morethanheroic.swords.explore.service.response;
+package com.morethanheroic.swords.explore.view.response;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
-import com.morethanheroic.swords.explore.service.response.domain.ExplorationResponseBuilderConfiguration;
+import com.morethanheroic.swords.explore.view.response.domain.ExplorationResponseBuilderConfiguration;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

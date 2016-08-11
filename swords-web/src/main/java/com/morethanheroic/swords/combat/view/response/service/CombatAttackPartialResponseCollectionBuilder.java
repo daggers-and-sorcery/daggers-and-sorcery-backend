@@ -14,16 +14,18 @@ import com.morethanheroic.swords.combat.view.response.service.domain.CombatStepP
 
 @Service
 public class CombatAttackPartialResponseCollectionBuilder
-    implements PartialResponseCollectionBuilder<CombatAttackPartialResponseCollectionBuilderConfiguration> {
+        implements PartialResponseCollectionBuilder<CombatAttackPartialResponseCollectionBuilderConfiguration> {
 
     @Override
-    public Collection<? extends PartialResponse> build(
-            final CombatAttackPartialResponseCollectionBuilderConfiguration responseCollectionBuilderConfiguration) {
+    public Collection<? extends PartialResponse> build(final CombatAttackPartialResponseCollectionBuilderConfiguration responseCollectionBuilderConfiguration) {
         final List<CombatStepPartialResponse> result = new ArrayList<>();
 
         for (CombatStep combatStep : responseCollectionBuilderConfiguration.getCombatSteps()) {
-            result.add(CombatStepPartialResponse.builder().icon((String) combatStep.getMessage().getMessageData().get("icon"))
-                    .message((String) combatStep.getMessage().getMessageData().get("message")).build());
+            result.add(
+                    CombatStepPartialResponse.builder()
+                            .icon((String) combatStep.getMessage().getMessageData().get("icon"))
+                            .message((String) combatStep.getMessage().getMessageData().get("message"))
+                            .build());
         }
 
         return result;

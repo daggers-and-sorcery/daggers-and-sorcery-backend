@@ -59,9 +59,11 @@ public class RiverCaveDejaVuExplorationEventDefinition extends ExplorationEventD
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
+        /*
         if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
+        */
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()

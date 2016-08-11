@@ -59,9 +59,11 @@ public class ExplorationResultBuilder {
 
         explorationResult.addEventEntryResult(secondCombatEventEntryEvaluatorResult.getResult());
 
+        /*
         if (!secondCombatEventEntryEvaluatorResult.getCombatResult().isPlayerVictory()) {
             shouldStop = true;
         }
+        */
 
         return this;
     }

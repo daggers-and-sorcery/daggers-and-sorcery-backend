@@ -3,12 +3,13 @@ package com.morethanheroic.swords.combat.service.newcb;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.combat.domain.AttackerType;
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
@@ -67,6 +68,9 @@ public class CombatCalculator {
     @Autowired
     private MonsterCombatEntityFactory monsterCombatEntityFactory;
 
+    @Autowired
+    private CombatMessageFactory combatMessageFactory;
+
     //TODO: remove these
     @Autowired
     private MeleeAttackCalculator meleeAttackCalculator;
@@ -77,37 +81,52 @@ public class CombatCalculator {
     @Autowired
     private MagicAttackCalculator magicAttackCalculator;
 
+    @Transactional
     public List<CombatStep> createCombat(final UserEntity userEntity, final MonsterDefinition monsterDefinition) {
-        final CombatContext combatContext = CombatContext.builder().user(new UserCombatEntity(userEntity, globalAttributeCalculator))
-                .opponent(new MonsterCombatEntity(monsterDefinition)).build();
+        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
+
+        if (combatDatabaseEntity != null) {
+            //TODO: do this normally
+            throw new IllegalStateException();
+        }
+
+        final CombatContext combatContext = CombatContext.builder()
+                .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
+                .opponent(new MonsterCombatEntity(monsterDefinition))
+                .build();
 
         combatInitializer.initialize(userEntity, monsterDefinition);
 
         final List<CombatStep> combatSteps = new ArrayList<>();
 
-        combatSteps.add(InitializationCombatStep.builder().message(combatMessageBuilder.buildFightInitialisationMessage(monsterDefinition.getName()))
-                .build());
+        combatSteps.add(
+                InitializationCombatStep.builder()
+                        .message(combatMessageFactory.newMessage("start", "COMBAT_MESSAGE_NEW_FIGHT", monsterDefinition.getName()))
+                        .build()
+        );
 
-        //The monster attack first if it can
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
-            //TODO: use the monsters attack type here like in the newer app
-            combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity()))
-                    .calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
+            combatSteps.addAll(monsterAttack(combatContext));
+            combatSteps.addAll(playerAttack(combatContext));
+        } else {
+            combatSteps.addAll(playerAttack(combatContext));
+            combatSteps.addAll(monsterAttack(combatContext));
         }
 
         if (combatContext.getWinner() == null) {
             final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
 
             combatMapper.createCombat(userEntity.getId(), monsterDefinition.getId(), monsterCombatEntity.getActualHealth(),
-                    monsterCombatEntity.getActualMana(), AttackerType.PLAYER);
+                    monsterCombatEntity.getActualMana());
+        } else {
+            combatSteps.addAll(combatTerminator.terminate(combatContext));
         }
 
         return combatSteps;
     }
 
     @Transactional
-    public List<CombatStep> attack(final UserEntity userEntity) {
-        //TODO: delete nextAttacker from the schema
+    public AttackResult attack(final UserEntity userEntity) {
         final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
 
         if (combatDatabaseEntity == null) {
@@ -115,13 +134,12 @@ public class CombatCalculator {
             throw new IllegalStateException();
         }
 
-        //TODO: create correct context
         final CombatContext combatContext = CombatContext.builder()
                 .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
                 .opponent(monsterCombatEntityFactory.newMonsterCombatEntity(
-                    monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId()),
-                    combatDatabaseEntity.getMonsterHealth(),
-                    combatDatabaseEntity.getMonsterMana())
+                        monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId()),
+                        combatDatabaseEntity.getMonsterHealth(),
+                        combatDatabaseEntity.getMonsterMana())
                 )
                 .build();
 
@@ -137,26 +155,29 @@ public class CombatCalculator {
         }
 
         if (combatContext.getWinner() != null) {
-            combatTerminator.terminate(combatContext);
+            combatSteps.addAll(combatTerminator.terminate(combatContext));
 
             combatMapper.removeCombat(combatDatabaseEntity.getId());
         } else {
             final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
 
-            combatMapper.updateCombat(combatDatabaseEntity.getId(), monsterCombatEntity.getActualHealth(), monsterCombatEntity.getActualMana(), AttackerType.MONSTER);
+            combatMapper.updateCombat(combatDatabaseEntity.getId(), monsterCombatEntity.getActualHealth(), monsterCombatEntity.getActualMana());
         }
 
-        return combatSteps;
+        return AttackResult.builder()
+                .attackResult(combatSteps)
+                .combatEnded(combatContext.getWinner() != null)
+                .build();
     }
 
     private List<CombatStep> playerAttack(final CombatContext combatContext) {
         return getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity()))
-            .calculateAttack(combatContext.getUser(), combatContext.getOpponent(), combatContext);
+                .calculateAttack(combatContext.getUser(), combatContext.getOpponent(), combatContext);
     }
 
     private List<CombatStep> monsterAttack(final CombatContext combatContext) {
         return getAttackCalculatorForAttackType(combatContext.getOpponent().getAttackType())
-            .calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext);
+                .calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext);
     }
 
     private AttackCalculator getAttackCalculatorForAttackType(AttackType attackType) {

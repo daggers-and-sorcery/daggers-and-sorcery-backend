@@ -2,11 +2,8 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.*;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
-import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -15,9 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @ExplorationEvent
-public class TheInnExplorationEventDefinition extends ExplorationEventDefinition {
+public class TheInnExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+
+    private static final int EVENT_ID = 1;
 
     private static final int ORC_BRIGAND_MONSTER_ID = 6;
+
+    private static final int INITIAL_STAGE = 1;
+    private static final int COMBAT_STAGE = 2;
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
@@ -34,7 +36,7 @@ public class TheInnExplorationEventDefinition extends ExplorationEventDefinition
 
     @Override
     public int getId() {
-        return 1;
+        return EVENT_ID;
     }
 
     @Override
@@ -63,15 +65,21 @@ public class TheInnExplorationEventDefinition extends ExplorationEventDefinition
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
+        userEntity.setActiveExploration(EVENT_ID, INITIAL_STAGE);
+
+        /*
         if (!combatResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
+        */
 
+        /*
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
                         .content("The Orc Brigand squeaks faintly, his body twitching, as he stumbles into a table and collapses face first. In the chaos, you turn tail and sprint straight for the exit. You reach the door undetected and escape into the night.")
                         .build()
         );
+        */
 
         return explorationResult;
     }
@@ -79,5 +87,35 @@ public class TheInnExplorationEventDefinition extends ExplorationEventDefinition
     @Override
     public ExplorationEventLocationType getLocation() {
         return ExplorationEventLocationType.FARMFIELDS;
+    }
+
+    @Override
+    public ExplorationResult explore(UserEntity userEntity, int stage) {
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+
+        if (stage == COMBAT_STAGE) {
+            explorationResult.addEventEntryResult(
+                    TextExplorationEventEntryResult.builder()
+                            .content("The Orc Brigand squeaks faintly, his body twitching, as he stumbles into a table and collapses face first. In the chaos, you turn tail and sprint straight for the exit. You reach the door undetected and escape into the night.")
+                            .build()
+            );
+
+            userEntity.resetActiveExploration();
+        }
+
+        return explorationResult;
+    }
+
+    @Override
+    public ExplorationResult info(UserEntity userEntity, int stage) {
+        //TODO: the actual combat interface
+        //TODO: rework, this is just a dummy for testinfg
+        userEntity.resetActiveExploration();
+        return explorationResultFactory.newExplorationResult();
+    }
+
+    @Override
+    public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        return true;
     }
 }

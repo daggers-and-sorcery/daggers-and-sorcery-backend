@@ -62,9 +62,11 @@ public class ForestJourneyExplorationEventDefinition extends ExplorationEventDef
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
 
+        /*
         if (!combatEventEntryEvaluatorResult.getCombatResult().isPlayerVictory()) {
             return explorationResult;
         }
+        */
 
         explorationResult.addEventEntryResult(
                 messageEventEntryEvaluator.messageEntry("FOREST_JOURNEY_EXPLORATION_EVENT_ENTRY_4")
@@ -83,9 +85,11 @@ public class ForestJourneyExplorationEventDefinition extends ExplorationEventDef
 
             explorationResult.addEventEntryResult(secondCombatEventEntryEvaluatorResult.getResult());
 
+            /*
             if (!secondCombatEventEntryEvaluatorResult.getCombatResult().isPlayerVictory()) {
                 return explorationResult;
             }
+            */
 
             explorationResult.addEventEntryResult(
                     messageEventEntryEvaluator.messageEntry("FOREST_JOURNEY_EXPLORATION_EVENT_ENTRY_6")
