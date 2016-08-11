@@ -1,5 +1,12 @@
 package com.morethanheroic.swords.combat.service.newcb;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.AttackerType;
 import com.morethanheroic.swords.combat.domain.CombatContext;
@@ -10,6 +17,7 @@ import com.morethanheroic.swords.combat.domain.step.InitializationCombatStep;
 import com.morethanheroic.swords.combat.repository.dao.CombatDatabaseEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.MonsterCombatEntityFactory;
 import com.morethanheroic.swords.combat.service.calc.AttackTypeCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.CombatInitializer;
@@ -25,12 +33,6 @@ import com.morethanheroic.swords.monster.domain.MonsterAttackType;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CombatCalculator {
@@ -62,6 +64,9 @@ public class CombatCalculator {
     @Autowired
     private MonsterDefinitionCache monsterDefinitionCache;
 
+    @Autowired
+    private MonsterCombatEntityFactory monsterCombatEntityFactory;
+
     //TODO: remove these
     @Autowired
     private MeleeAttackCalculator meleeAttackCalculator;
@@ -73,31 +78,28 @@ public class CombatCalculator {
     private MagicAttackCalculator magicAttackCalculator;
 
     public List<CombatStep> createCombat(final UserEntity userEntity, final MonsterDefinition monsterDefinition) {
-        final CombatContext combatContext = CombatContext.builder()
-                .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
-                .opponent(new MonsterCombatEntity(monsterDefinition))
-                .build();
+        final CombatContext combatContext = CombatContext.builder().user(new UserCombatEntity(userEntity, globalAttributeCalculator))
+                .opponent(new MonsterCombatEntity(monsterDefinition)).build();
 
         combatInitializer.initialize(userEntity, monsterDefinition);
 
         final List<CombatStep> combatSteps = new ArrayList<>();
 
-        combatSteps.add(
-                InitializationCombatStep.builder()
-                        .message(combatMessageBuilder.buildFightInitialisationMessage(monsterDefinition.getName()))
-                        .build()
-        );
+        combatSteps.add(InitializationCombatStep.builder().message(combatMessageBuilder.buildFightInitialisationMessage(monsterDefinition.getName()))
+                .build());
 
         //The monster attack first if it can
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
             //TODO: use the monsters attack type here like in the newer app
-            combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity())).calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
+            combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity()))
+                    .calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
         }
 
         if (combatContext.getWinner() == null) {
             final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
 
-            combatMapper.createCombat(userEntity.getId(), monsterDefinition.getId(), monsterCombatEntity.getActualHealth(), monsterCombatEntity.getActualMana(), AttackerType.PLAYER);
+            combatMapper.createCombat(userEntity.getId(), monsterDefinition.getId(), monsterCombatEntity.getActualHealth(),
+                    monsterCombatEntity.getActualMana(), AttackerType.PLAYER);
         }
 
         return combatSteps;
@@ -105,41 +107,56 @@ public class CombatCalculator {
 
     @Transactional
     public List<CombatStep> attack(final UserEntity userEntity) {
+        //TODO: delete nextAttacker from the schema
         final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
 
-        if(combatDatabaseEntity == null) {
+        if (combatDatabaseEntity == null) {
             //TODO: do this normally
             throw new IllegalStateException();
         }
 
         //TODO: create correct context
         final CombatContext combatContext = CombatContext.builder()
-                                                         .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
-                                                         //TODO: initialize with hp and mana from db
-                                                         .opponent(new MonsterCombatEntity(monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId())))
-                                                         .build();
+                .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
+                .opponent(monsterCombatEntityFactory.newMonsterCombatEntity(
+                    monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId()),
+                    combatDatabaseEntity.getMonsterHealth(),
+                    combatDatabaseEntity.getMonsterMana())
+                )
+                .build();
 
         final List<CombatStep> combatSteps = new ArrayList<>();
 
-        //TODO: load and create a combat entity
-
-        //Who attack next == monster
-        if (true) {
-            combatSteps.addAll(getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity())).calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
+        //TODO: should handle giving xp differently. It should be saved to the db while in combat and printed on terminate.
+        if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
+            combatSteps.addAll(monsterAttack(combatContext));
+            combatSteps.addAll(playerAttack(combatContext));
+        } else {
+            combatSteps.addAll(playerAttack(combatContext));
+            combatSteps.addAll(monsterAttack(combatContext));
         }
-
-        combatSteps.addAll(getAttackCalculatorForAttackType(combatContext.getOpponent().getAttackType()).calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext));
 
         if (combatContext.getWinner() != null) {
             combatTerminator.terminate(combatContext);
 
             combatMapper.removeCombat(combatDatabaseEntity.getId());
         } else {
-            //TODO: normal update with real data
-            combatMapper.updateCombat(combatDatabaseEntity.getId(), 10, 10,AttackerType.MONSTER);
+            final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
+
+            combatMapper.updateCombat(combatDatabaseEntity.getId(), monsterCombatEntity.getActualHealth(), monsterCombatEntity.getActualMana(), AttackerType.MONSTER);
         }
 
         return combatSteps;
+    }
+
+    private List<CombatStep> playerAttack(final CombatContext combatContext) {
+        return getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity()))
+            .calculateAttack(combatContext.getUser(), combatContext.getOpponent(), combatContext);
+    }
+
+    private List<CombatStep> monsterAttack(final CombatContext combatContext) {
+        return getAttackCalculatorForAttackType(combatContext.getOpponent().getAttackType())
+            .calculateAttack(combatContext.getOpponent(), combatContext.getUser(), combatContext);
     }
 
     private AttackCalculator getAttackCalculatorForAttackType(AttackType attackType) {

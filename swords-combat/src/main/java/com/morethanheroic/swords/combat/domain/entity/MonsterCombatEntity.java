@@ -18,6 +18,16 @@ public class MonsterCombatEntity extends CombatEntity {
         this.setActualMana(monsterDefinition.getMana());
     }
 
+    public MonsterCombatEntity(MonsterDefinition monsterDefinition, int actualHealth, int actualMana) {
+        this.monsterDefinition = monsterDefinition;
+
+        this.setMaximumHealth(monsterDefinition.getHealth());
+        this.setActualHealth(actualHealth);
+
+        this.setMaximumMana(monsterDefinition.getMana());
+        this.setActualMana(actualMana);
+    }
+
     public MonsterDefinition getMonsterDefinition() {
         return monsterDefinition;
     }

@@ -18,7 +18,7 @@ public interface CombatMapper {
     @Update("UPDATE combat SET monster_health = #{monsterHealth}, monster_mana = #{monsterMana}, next_attacker = #{nextAttacker} WHERE id = #{id}")
     void updateCombat(@Param("id") int id, @Param("monsterHealth") int monsterHealth, @Param("monsterMana") int monsterMana, @Param("nextAttacker") AttackerType nextAttacker);
 
-    @Delete("DELETE combat WHERE id = #{id}")
+    @Delete("DELETE FROM combat WHERE id = #{id}")
     void removeCombat(@Param("id") int id);
 
     @Select("SELECT * FROM combat WHERE user_id = #{userId}")
