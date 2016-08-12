@@ -16,6 +16,7 @@ import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
@@ -26,14 +27,16 @@ public class TheInnExplorationEventDefinition extends MultiStageExplorationEvent
 
     private static final int ORC_BRIGAND_MONSTER_ID = 6;
 
-    private static final int INITIAL_STAGE = 1;
-    private static final int COMBAT_STAGE = 2;
+    private static final int COMBAT_STAGE = 1;
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
     private CombatEventEntryEvaluator combatEventEntryEvaluator;
+
+    @Autowired
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
     private MonsterDefinition opponent;
 
@@ -73,7 +76,7 @@ public class TheInnExplorationEventDefinition extends MultiStageExplorationEvent
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
-        userEntity.setActiveExploration(EVENT_ID, INITIAL_STAGE);
+        userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
 
         return explorationResult;
     }
@@ -87,7 +90,7 @@ public class TheInnExplorationEventDefinition extends MultiStageExplorationEvent
     public ExplorationResult explore(UserEntity userEntity, int stage) {
         final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
 
-        if (stage == INITIAL_STAGE) {
+        if (stage == COMBAT_STAGE) {
             explorationResult.addEventEntryResult(
                     TextExplorationEventEntryResult.builder()
                             .content("The Orc Brigand squeaks faintly, his body twitching, as he stumbles into a table and collapses face first. In the chaos, you turn tail and sprint straight for the exit. You reach the door undetected and escape into the night.")
@@ -102,33 +105,15 @@ public class TheInnExplorationEventDefinition extends MultiStageExplorationEvent
 
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
-
-        if (stage == INITIAL_STAGE) {
-            explorationResult.addEventEntryResult(
-                TextExplorationEventEntryResult.builder()
-                                               .content("You stand up and draw the attention of a pale green Orc Brigand. He sneers at you with his crooked teeth and removes a sharp dagger from his leather belt. You return his glare and prepare yourself for a fight.")
-                                               .build()
-            );
-
-            final CombatMessage combatMessage = new CombatMessage();
-            combatMessage.addData("message", "Continue fighting.");
-            combatMessage.addData("icon", "drop");
-
-            explorationResult.addEventEntryResult(CombatEventEntryEvaluatorResult.builder()
-                                           .result(
-                                               CombatExplorationEventEntryResult.builder()
-                                                                                    .combatSteps(Lists.newArrayList(
-                                                                                        DefaultCombatStep.builder()
-                                                                                        .message(combatMessage)
-                                                                                        .build()
-                                                                                    ))
-                                                                                    .build()
-                                           )
-                    .build().getResult());
+        if (stage == COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                .newExplorationResultBuilder(userEntity)
+                .newMessageEntry("THE_INN_EXPLORATION_EVENT_ENTRY_1")
+                .continueCombatEntry()
+                .build();
         }
 
-        return explorationResult;
+        return explorationResultFactory.newExplorationResult();
     }
 
     @Override

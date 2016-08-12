@@ -5,25 +5,26 @@ import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ExperienceAwarder {
 
-    @Autowired
-    private SkillEntityFactory skillEntityFactory;
-
-    @Autowired
-    private CombatMessageBuilder combatMessageBuilder;
+    private final SkillEntityFactory skillEntityFactory;
+    private final CombatMessageBuilder combatMessageBuilder;
+    private final CombatMessageFactory combatMessageFactory;
 
     public List<CombatStep> addXpToUserFromMonsterDefinition(CombatContext combatContext, UserEntity user) {
         final List<CombatStep> stepResult = new ArrayList<>();
@@ -35,8 +36,8 @@ public class ExperienceAwarder {
         for (Map.Entry<SkillType, Integer> rewardEntity : rewardXpMap.entrySet()) {
             stepResult.add(
                     DefaultCombatStep.builder()
-                    .message(combatMessageBuilder.buildXpRewardMessage(rewardEntity.getKey().name(), rewardEntity.getValue()))
-                    .build()
+                        .message(combatMessageFactory.newMessage("experience", "COMBAT_MESSAGE_XP", rewardEntity.getValue(), rewardEntity.getKey().getName()))
+                        .build()
             );
 
             skillEntity.increaseExperience(rewardEntity.getKey(), rewardEntity.getValue());

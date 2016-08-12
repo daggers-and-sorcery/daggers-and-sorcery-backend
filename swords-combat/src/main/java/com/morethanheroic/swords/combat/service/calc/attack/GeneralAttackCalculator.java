@@ -9,6 +9,7 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.CombatUtil;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -21,6 +22,9 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
 
     @Autowired
     private CombatMessageBuilder combatMessageBuilder;
+
+    @Autowired
+    private CombatMessageFactory combatMessageFactory;
 
     protected void addDefenseXp(final CombatContext combatContext, final UserCombatEntity userCombatEntity, final int amount) {
         final UserEntity userEntity = userCombatEntity.getUserEntity();
@@ -116,13 +120,13 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
             combatContext.setWinner(Winner.MONSTER);
 
             return DefaultCombatStep.builder()
-                    .message(combatMessageBuilder.buildPlayerKilledMessage(attacker.getName()))
+                    .message(combatMessageFactory.newMessage("monster_death", "COMBAT_MESSAGE_PLAYER_DEAD", attacker.getName()))
                     .build();
         } else {
             combatContext.setWinner(Winner.PLAYER);
 
             return DefaultCombatStep.builder()
-                    .message(combatMessageBuilder.buildMonsterKilledMessage(opponent.getName()))
+                    .message(combatMessageFactory.newMessage("monster_death", "COMBAT_MESSAGE_MONSTER_DEAD", opponent.getName()))
                     .build();
         }
     }

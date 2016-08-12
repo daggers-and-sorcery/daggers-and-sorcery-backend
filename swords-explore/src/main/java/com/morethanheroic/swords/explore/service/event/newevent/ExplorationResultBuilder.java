@@ -1,7 +1,11 @@
 package com.morethanheroic.swords.explore.service.event.newevent;
 
+import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
@@ -64,6 +68,31 @@ public class ExplorationResultBuilder {
             shouldStop = true;
         }
         */
+
+        return this;
+    }
+
+    public ExplorationResultBuilder continueCombatEntry() {
+        if (shouldStop) {
+            return this;
+        }
+
+        final CombatMessage combatMessage = new CombatMessage();
+        combatMessage.addData("message", "Continue fighting.");
+
+        explorationResult.addEventEntryResult(
+            CombatEventEntryEvaluatorResult.builder()
+                .result(
+                    CombatExplorationEventEntryResult.builder()
+                        .combatSteps(Lists.newArrayList(
+                            DefaultCombatStep.builder()
+                                .message(combatMessage)
+                                .build()
+                        ))
+                        .build()
+                )
+            .build().getResult()
+        );
 
         return this;
     }

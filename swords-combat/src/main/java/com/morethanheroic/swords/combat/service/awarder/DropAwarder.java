@@ -5,6 +5,7 @@ import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
@@ -22,6 +23,7 @@ public class DropAwarder {
 
     private final DropCalculator dropCalculator;
     private final CombatMessageBuilder combatMessageBuilder;
+    private final CombatMessageFactory combatMessageFactory;
     private final InventoryEntityFactory inventoryEntityFactory;
 
     public List<CombatStep> addDropsToUserFromMonsterDefinition(final UserEntity userEntity, final MonsterDefinition monster) {
@@ -35,13 +37,13 @@ public class DropAwarder {
             if (drop.isIdentified()) {
                 result.add(
                         DefaultCombatStep.builder()
-                                .message(combatMessageBuilder.buildDropMessage(drop.getItem().getName(), drop.getAmount()))
+                                .message(combatMessageFactory.newMessage("item", "COMBAT_MESSAGE_DROP", drop.getAmount(), drop.getItem().getName()))
                                 .build()
                 );
             } else {
                 result.add(
                         DefaultCombatStep.builder()
-                                .message(combatMessageBuilder.buildDropMessage("Unidentified item", drop.getAmount()))
+                                .message(combatMessageFactory.newMessage("item", "COMBAT_MESSAGE_DROP", drop.getAmount(), "Unidentified item"))
                                 .build()
                 );
             }
