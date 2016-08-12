@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.evaluator;
 
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.service.newcb.AttackResult;
 import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
@@ -32,12 +32,13 @@ public class CombatEventEntryEvaluator {
     }
 
     public CombatEventEntryEvaluatorResult calculateCombat(final UserEntity userEntity, final MonsterDefinition opponent) {
-        final List<CombatStep> combatResult = combatCalculator.createCombat(userEntity, opponent);
+        final AttackResult combatResult = combatCalculator.createCombat(userEntity, opponent);
 
         return CombatEventEntryEvaluatorResult.builder()
                 .result(
                         CombatExplorationEventEntryResult.builder()
-                                .combatSteps(combatResult)
+                                .combatSteps(combatResult.getAttackResult())
+                                .combatEnded(combatResult.isCombatEnded())
                                 .build())
                 .build();
     }

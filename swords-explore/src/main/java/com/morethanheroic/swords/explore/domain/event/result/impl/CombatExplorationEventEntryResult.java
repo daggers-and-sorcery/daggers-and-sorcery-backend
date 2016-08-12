@@ -12,4 +12,5 @@ import java.util.List;
 public class CombatExplorationEventEntryResult implements ExplorationEventEntryResult {
 
     private final List<CombatStep> combatSteps;
+    private final boolean combatEnded;
 }

@@ -82,7 +82,7 @@ public class CombatCalculator {
     private MagicAttackCalculator magicAttackCalculator;
 
     @Transactional
-    public List<CombatStep> createCombat(final UserEntity userEntity, final MonsterDefinition monsterDefinition) {
+    public AttackResult createCombat(final UserEntity userEntity, final MonsterDefinition monsterDefinition) {
         final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
 
         if (combatDatabaseEntity != null) {
@@ -122,7 +122,10 @@ public class CombatCalculator {
             combatSteps.addAll(combatTerminator.terminate(combatContext));
         }
 
-        return combatSteps;
+        return AttackResult.builder()
+                           .attackResult(combatSteps)
+                           .combatEnded(combatContext.getWinner() != null)
+                           .build();
     }
 
     @Transactional
@@ -168,6 +171,11 @@ public class CombatCalculator {
                 .attackResult(combatSteps)
                 .combatEnded(combatContext.getWinner() != null)
                 .build();
+    }
+
+    @Transactional
+    public boolean isCombatRunning(final UserEntity userEntity) {
+        return combatMapper.getRunningCombat(userEntity.getId()) != null;
     }
 
     private List<CombatStep> playerAttack(final CombatContext combatContext) {

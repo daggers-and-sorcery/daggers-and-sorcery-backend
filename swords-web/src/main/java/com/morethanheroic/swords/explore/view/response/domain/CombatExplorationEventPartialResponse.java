@@ -15,4 +15,6 @@ public class CombatExplorationEventPartialResponse extends PartialResponse {
     private final ExplorationEventResponseType eventType = ExplorationEventResponseType.COMBAT;
 
     private final Collection<? extends PartialResponse> combatMessages;
+
+    private final PartialResponse status;
 }
