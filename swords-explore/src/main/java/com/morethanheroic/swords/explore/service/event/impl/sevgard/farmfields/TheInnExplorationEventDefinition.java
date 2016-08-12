@@ -1,15 +1,23 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.collect.Lists;
+import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.*;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.PostConstruct;
 
 @ExplorationEvent
 public class TheInnExplorationEventDefinition extends MultiStageExplorationEventDefinition {
@@ -67,20 +75,6 @@ public class TheInnExplorationEventDefinition extends MultiStageExplorationEvent
 
         userEntity.setActiveExploration(EVENT_ID, INITIAL_STAGE);
 
-        /*
-        if (!combatResult.getCombatResult().isPlayerVictory()) {
-            return explorationResult;
-        }
-        */
-
-        /*
-        explorationResult.addEventEntryResult(
-                TextExplorationEventEntryResult.builder()
-                        .content("The Orc Brigand squeaks faintly, his body twitching, as he stumbles into a table and collapses face first. In the chaos, you turn tail and sprint straight for the exit. You reach the door undetected and escape into the night.")
-                        .build()
-        );
-        */
-
         return explorationResult;
     }
 
@@ -93,7 +87,7 @@ public class TheInnExplorationEventDefinition extends MultiStageExplorationEvent
     public ExplorationResult explore(UserEntity userEntity, int stage) {
         final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
 
-        if (stage == COMBAT_STAGE) {
+        if (stage == INITIAL_STAGE) {
             explorationResult.addEventEntryResult(
                     TextExplorationEventEntryResult.builder()
                             .content("The Orc Brigand squeaks faintly, his body twitching, as he stumbles into a table and collapses face first. In the chaos, you turn tail and sprint straight for the exit. You reach the door undetected and escape into the night.")
@@ -108,10 +102,33 @@ public class TheInnExplorationEventDefinition extends MultiStageExplorationEvent
 
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
-        //TODO: the actual combat interface
-        //TODO: rework, this is just a dummy for testinfg
-        userEntity.resetActiveExploration();
-        return explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+
+        if (stage == INITIAL_STAGE) {
+            explorationResult.addEventEntryResult(
+                TextExplorationEventEntryResult.builder()
+                                               .content("You stand up and draw the attention of a pale green Orc Brigand. He sneers at you with his crooked teeth and removes a sharp dagger from his leather belt. You return his glare and prepare yourself for a fight.")
+                                               .build()
+            );
+
+            final CombatMessage combatMessage = new CombatMessage();
+            combatMessage.addData("message", "Continue fighting.");
+            combatMessage.addData("icon", "drop");
+
+            explorationResult.addEventEntryResult(CombatEventEntryEvaluatorResult.builder()
+                                           .result(
+                                               CombatExplorationEventEntryResult.builder()
+                                                                                    .combatSteps(Lists.newArrayList(
+                                                                                        DefaultCombatStep.builder()
+                                                                                        .message(combatMessage)
+                                                                                        .build()
+                                                                                    ))
+                                                                                    .build()
+                                           )
+                    .build().getResult());
+        }
+
+        return explorationResult;
     }
 
     @Override
