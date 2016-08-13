@@ -199,7 +199,7 @@ public class InventoryEntity implements Entity {
      * @deprecated Use {@link #removeItem(ItemDefinition, int, IdentificationType)} instead.
      */
     public void removeItem(int itemId, int amount, boolean identified) {
-        removeItem(itemDefinitionCache.getDefinition(itemId), amount, identified ? IdentificationType.IDENTIFIED : IdentificationType.IDENTIFIED);
+        removeItem(itemDefinitionCache.getDefinition(itemId), amount, identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED);
     }
 
     public void setItem(ItemDefinition item, int amount, IdentificationType identified) {
