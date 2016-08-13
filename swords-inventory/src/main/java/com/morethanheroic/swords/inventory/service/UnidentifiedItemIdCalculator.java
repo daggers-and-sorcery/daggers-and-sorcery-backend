@@ -24,7 +24,6 @@ public class UnidentifiedItemIdCalculator {
         return itemId > Short.MAX_VALUE;
     }
 
-    //TODO: Move HttpSession out of this! It's a service, shouldn't know about sessions and shit like that!
     @SuppressWarnings("unchecked")
     public int getUnidentifiedItemId(SessionEntity sessionEntity, int itemId) {
         HashMap<Integer, Integer> unidentifiedItemMap = (HashMap<Integer, Integer>) sessionEntity.getAttribute(SessionAttributeType.UNIDENTIFIED_ITEM_ID_MAP.name());
