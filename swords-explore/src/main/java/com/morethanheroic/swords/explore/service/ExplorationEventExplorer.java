@@ -38,6 +38,7 @@ public class ExplorationEventExplorer {
     @Autowired
     private UserBasicAttributeManipulator basicAttributeManipulator;
 
+    @Transactional
     public ExplorationResult exploreNext(final UserEntity userEntity, final SessionEntity sessionEntity) {
         return explore(userEntity, sessionEntity, explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent()).getLocation(), userEntity.getActiveExplorationState());
     }
@@ -46,6 +47,10 @@ public class ExplorationEventExplorer {
     public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationEventLocationType location, final int nextState) {
         if (!canExplore(userEntity, nextState)) {
             return buildFailedExplorationResult();
+        }
+
+        if (nextState == 0) {
+            basicAttributeManipulator.decreaseMovement(userEntity, 1);
         }
 
         return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity, location, nextState));
