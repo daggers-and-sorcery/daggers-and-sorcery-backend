@@ -172,7 +172,9 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
         if (stage == COMBAT_STAGE) {
             final StringBuilder stringBuilder = new StringBuilder();
 
-            explorationResultBuilderFactory
+            userEntity.resetActiveExploration();
+
+            return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
                     .newCustomLogicEntry(() -> {
                         List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
@@ -196,6 +198,8 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
                     .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_8", stringBuilder)
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
+            userEntity.resetActiveExploration();
+
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
                     .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_7")

@@ -33,7 +33,7 @@ public class PlayerVictoryHandler {
 
         result.addAll(dropAwarder.addDropsToUserFromMonsterDefinition(userEntity, monster));
         result.addAll(scavengingAwarder.addScavengingDropsToUserFromMonsterDefinition(userEntity, monster));
-        result.addAll(experienceAwarder.addXpToUserFromMonsterDefinition(combatContext, userEntity));
+        result.addAll(experienceAwarder.addXpToUserFromMonsterDefinition(userEntity));
 
         final UserCombatEntity userCombatEntity = combatContext.getUser();
         userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());

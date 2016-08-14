@@ -59,6 +59,8 @@ public class WolfAttackExplorationEventDefinition extends MultiStageExplorationE
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
+            userEntity.resetActiveExploration();
+
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
                     .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")

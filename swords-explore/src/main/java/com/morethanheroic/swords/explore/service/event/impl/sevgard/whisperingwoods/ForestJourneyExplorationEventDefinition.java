@@ -143,7 +143,9 @@ public class ForestJourneyExplorationEventDefinition extends MultiStageExplorati
 
     @Override
     public boolean isValidNextStageAtStage(int stage, int nextStage) {
-        if (stage == COMBAT_STAGE && nextStage == SECOND_COMBAT_STAGE) {
+        if (stage == SECOND_COMBAT_STAGE && nextStage == SECOND_COMBAT_STAGE) {
+            return true;
+        } else if (stage == COMBAT_STAGE && nextStage == COMBAT_STAGE) {
             return true;
         }
 

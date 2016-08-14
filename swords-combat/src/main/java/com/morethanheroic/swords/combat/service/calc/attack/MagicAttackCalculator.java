@@ -39,7 +39,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
                 result.add(handleDeath(attacker, opponent, combatContext));
             }
         } else {
-            result.add(dealMiss(attacker, opponent, combatContext));
+            result.add(dealMiss(attacker, opponent));
         }
 
         return result;
@@ -68,7 +68,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
         opponent.decreaseActualHealth(damage);
 
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(combatContext, (UserCombatEntity) opponent, damage * 2);
+            addDefenseXp((UserCombatEntity) opponent, damage * 2);
 
             result.add(
                     AttackCombatStep.builder()
@@ -76,8 +76,8 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
                             .build()
             );
         } else {
-            addAttackXp(combatContext, (UserCombatEntity) attacker, damage * 2);
-            addOffhandXp(combatContext, (UserCombatEntity) attacker, damage * 2);
+            addAttackXp((UserCombatEntity) attacker, damage * 2);
+            addOffhandXp((UserCombatEntity) attacker, damage * 2);
 
             result.add(
                     AttackCombatStep.builder()
@@ -107,9 +107,9 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
         }
     }
 
-    private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
+    private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent) {
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(combatContext, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
+            addDefenseXp((UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
 
             return DefaultCombatStep.builder()
                     .message(combatMessageFactory.newMessage("monster_miss", "COMBAT_MESSAGE_MAGIC_MISS_BY_MONSTER", attacker.getName()))

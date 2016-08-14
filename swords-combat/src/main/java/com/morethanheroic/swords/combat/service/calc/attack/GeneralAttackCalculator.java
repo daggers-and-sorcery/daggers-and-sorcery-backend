@@ -8,6 +8,7 @@ import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.CombatUtil;
@@ -26,17 +27,20 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
     @Autowired
     private CombatMessageFactory combatMessageFactory;
 
-    protected void addDefenseXp(final CombatContext combatContext, final UserCombatEntity userCombatEntity, final int amount) {
+    @Autowired
+    private CombatExperienceMapper combatExperienceMapper;
+
+    protected void addDefenseXp(final UserCombatEntity userCombatEntity, final int amount) {
         final UserEntity userEntity = userCombatEntity.getUserEntity();
 
         if (combatUtil.getUserArmorType(userEntity) != null) {
-            combatContext.addRewardXp(combatUtil.getUserArmorSkillType(userEntity), amount);
+            combatExperienceMapper.addExperience(userEntity.getId(), combatUtil.getUserArmorSkillType(userEntity), amount);
         } else {
-            combatContext.addRewardXp(SkillType.ARMORLESS_DEFENSE, amount);
+            combatExperienceMapper.addExperience(userEntity.getId(), SkillType.ARMORLESS_DEFENSE, amount);
         }
 
         if (combatUtil.hasShield(userEntity)) {
-            combatContext.addRewardXp(SkillType.SHIELD_DEFENSE, amount);
+            combatExperienceMapper.addExperience(userEntity.getId(), SkillType.SHIELD_DEFENSE, amount);
         }
     }
 
@@ -55,13 +59,13 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         }
     }
 
-    protected void addAttackXp(final CombatContext combatContext, final UserCombatEntity userCombatEntity, final int amount) {
+    protected void addAttackXp(final UserCombatEntity userCombatEntity, final int amount) {
         final UserEntity userEntity = userCombatEntity.getUserEntity();
 
         if (combatUtil.getUserWeaponType(userEntity) != null) {
-            combatContext.addRewardXp(combatUtil.getUserWeaponSkillType(userEntity), amount);
+            combatExperienceMapper.addExperience(userEntity.getId(), combatUtil.getUserWeaponSkillType(userEntity), amount);
         } else {
-            combatContext.addRewardXp(SkillType.FISTFIGHT, amount);
+            combatExperienceMapper.addExperience(userEntity.getId(), SkillType.FISTFIGHT, amount);
         }
     }
 
@@ -87,10 +91,12 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         }
     }
 
-    protected void addOffhandXp(final CombatContext combatContext, final UserCombatEntity userCombatEntity, final int amount) {
+    protected void addOffhandXp(final UserCombatEntity userCombatEntity, final int amount) {
         final UserEntity userEntity = userCombatEntity.getUserEntity();
 
-        combatUtil.getUserOffhandSkillType(userEntity).ifPresent((skillType) -> combatContext.addRewardXp(skillType, amount));
+        combatUtil.getUserOffhandSkillType(userEntity).ifPresent((skillType) ->
+                combatExperienceMapper.addExperience(userEntity.getId(), skillType, amount)
+        );
     }
 
     @Deprecated

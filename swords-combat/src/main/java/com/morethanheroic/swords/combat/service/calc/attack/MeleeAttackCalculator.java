@@ -53,7 +53,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
         opponent.decreaseActualHealth(damage);
 
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(combatContext, (UserCombatEntity) opponent, damage * 2);
+            addDefenseXp((UserCombatEntity) opponent, damage * 2);
 
             result.add(
                     AttackCombatStep.builder()
@@ -61,7 +61,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
                             .build()
             );
         } else {
-            addAttackXp(combatContext, (UserCombatEntity) attacker, damage * 2);
+            addAttackXp((UserCombatEntity) attacker, damage * 2);
 
             result.add(
                     AttackCombatStep.builder()
@@ -75,7 +75,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
 
     private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(combatContext, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
+            addDefenseXp((UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
 
             return DefaultCombatStep.builder()
                     .message(combatMessageFactory.newMessage("monster_miss", "COMBAT_MESSAGE_MELEE_MISS_BY_MONSTER", attacker.getName()))
