@@ -7,6 +7,7 @@ import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
@@ -117,6 +118,20 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
             addAttackXp(result, (UserCombatEntity) attacker, damage * 2);
 
             result.addMessage(combatMessageBuilder.buildRangedDamageToMonsterMessage(opponent.getName(), damage));
+        }
+    }
+
+    private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
+        if (attacker instanceof MonsterCombatEntity) {
+            addDefenseXp(combatContext, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
+
+            return DefaultCombatStep.builder()
+                    .message(combatMessageFactory.newMessage("monster_miss", "COMBAT_MESSAGE_RANGED_MISS_BY_MONSTER", attacker.getName()))
+                    .build();
+        } else {
+            return DefaultCombatStep.builder()
+                    .message(combatMessageFactory.newMessage("player_miss", "COMBAT_MESSAGE_MELEE_MISS_BY_PLAYER", opponent.getName()))
+                    .build();
         }
     }
 }

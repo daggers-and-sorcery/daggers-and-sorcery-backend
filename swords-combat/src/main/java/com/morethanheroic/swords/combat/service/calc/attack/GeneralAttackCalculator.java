@@ -76,21 +76,6 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
         }
     }
 
-    //TODO: Why buildMonsterRangedMissMessage why ranged?????
-    protected CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
-        if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(combatContext, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
-
-            return DefaultCombatStep.builder()
-                    .message(combatMessageBuilder.buildMonsterRangedMissMessage(attacker.getName()))
-                    .build();
-        } else {
-            return DefaultCombatStep.builder()
-                    .message(combatMessageBuilder.buildPlayerRangedMissMessage(opponent.getName()))
-                    .build();
-        }
-    }
-
     @Deprecated
     protected void dealMiss(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
         if (attacker instanceof MonsterCombatEntity) {

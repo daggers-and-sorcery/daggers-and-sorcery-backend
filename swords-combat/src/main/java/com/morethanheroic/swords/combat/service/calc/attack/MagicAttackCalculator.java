@@ -7,7 +7,9 @@ import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
     private final CombatMessageBuilder combatMessageBuilder;
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
+    private final CombatMessageFactory combatMessageFactory;
 
     @Override
     public List<CombatStep> calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
@@ -89,6 +92,20 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
             addOffhandXp(result, (UserCombatEntity) attacker, damage * 2);
 
             result.addMessage(combatMessageBuilder.buildMagicDamageToPlayerMessage(opponent.getName(), damage));
+        }
+    }
+
+    private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
+        if (attacker instanceof MonsterCombatEntity) {
+            addDefenseXp(combatContext, (UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
+
+            return DefaultCombatStep.builder()
+                    .message(combatMessageFactory.newMessage("monster_miss", "COMBAT_MESSAGE_MAGIC_MISS_BY_MONSTER", attacker.getName()))
+                    .build();
+        } else {
+            return DefaultCombatStep.builder()
+                    .message(combatMessageFactory.newMessage("player_miss", "COMBAT_MESSAGE_MELEE_MISS_BY_PLAYER", opponent.getName()))
+                    .build();
         }
     }
 }

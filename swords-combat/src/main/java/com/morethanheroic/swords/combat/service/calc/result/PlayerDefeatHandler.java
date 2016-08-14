@@ -7,6 +7,7 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.HighestSkillCalculator;
@@ -28,6 +29,7 @@ public class PlayerDefeatHandler {
     private final SkillEntityFactory skillEntityFactory;
     private final HighestSkillCalculator highestSkillCalculator;
     private final CombatMessageBuilder combatMessageBuilder;
+    private final CombatMessageFactory combatMessageFactory;
 
     public List<CombatStep> handleDefeat(CombatContext combatContext) {
         final List<CombatStep> result = new ArrayList<>();
@@ -54,6 +56,8 @@ public class PlayerDefeatHandler {
     }
 
     private List<CombatStep> handleDeath(UserEntity userEntity) {
+        restartRunningEvent(userEntity);
+
         final List<CombatStep> result = new ArrayList<>();
 
         final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
@@ -64,7 +68,7 @@ public class PlayerDefeatHandler {
 
             result.add(
                     DefaultCombatStep.builder()
-                            .message(combatMessageBuilder.buildExperienceLossByDeathMessage(skillType, experienceToRemove))
+                            .message(combatMessageFactory.newMessage("xploss", "COMBAT_MESSAGE_DYING_EXPERIENCE_LOSS", experienceToRemove, skillType.getName()))
                             .build()
             );
 
@@ -72,6 +76,10 @@ public class PlayerDefeatHandler {
         }
 
         return result;
+    }
+
+    private void restartRunningEvent(final UserEntity userEntity) {
+        userEntity.resetActiveExploration();
     }
 
     @Deprecated

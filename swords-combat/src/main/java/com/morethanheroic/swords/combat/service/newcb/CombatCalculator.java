@@ -178,6 +178,12 @@ public class CombatCalculator {
         return combatMapper.getRunningCombat(userEntity.getId()) != null;
     }
 
+    //TODO: move this somewhere else
+    @Transactional
+    public MonsterDefinition getOpponentInRunningCombat(UserEntity userEntity) {
+        return monsterDefinitionCache.getMonsterDefinition(combatMapper.getRunningCombat(userEntity.getId()).getMonsterId());
+    }
+
     private List<CombatStep> playerAttack(final CombatContext combatContext) {
         return getAttackCalculatorForAttackType(calculateUserAttackType(combatContext.getUser().getUserEntity()))
                 .calculateAttack(combatContext.getUser(), combatContext.getOpponent(), combatContext);
@@ -189,22 +195,22 @@ public class CombatCalculator {
     }
 
     private AttackCalculator getAttackCalculatorForAttackType(AttackType attackType) {
-        if (attackType == AttackType.MELEE) {
-            return meleeAttackCalculator;
+        if (attackType == AttackType.RANGED) {
+            return rangedAttackCalculator;
         } else if (attackType == AttackType.MAGIC) {
             return magicAttackCalculator;
         } else {
-            return rangedAttackCalculator;
+            return meleeAttackCalculator;
         }
     }
 
     private AttackCalculator getAttackCalculatorForAttackType(MonsterAttackType monsterAttackType) {
-        if (monsterAttackType == MonsterAttackType.MELEE) {
-            return meleeAttackCalculator;
+        if (monsterAttackType == MonsterAttackType.RANGED) {
+            return rangedAttackCalculator;
         } else if (monsterAttackType == MonsterAttackType.MAGIC) {
             return magicAttackCalculator;
         } else {
-            return rangedAttackCalculator;
+            return meleeAttackCalculator;
         }
     }
 
