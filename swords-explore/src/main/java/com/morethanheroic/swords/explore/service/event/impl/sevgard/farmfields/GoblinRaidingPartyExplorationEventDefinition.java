@@ -87,6 +87,7 @@ public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExpl
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
                     .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_1")
+                    .newCombatEntry(goblinShaman.getId(), EVENT_ID, SECOND_COMBAT_STAGE)
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
             userEntity.resetActiveExploration();

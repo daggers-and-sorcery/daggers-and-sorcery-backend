@@ -30,7 +30,19 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
 
     @Override
     public List<CombatStep> calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
-        return null;
+        final List<CombatStep> result = new ArrayList<>();
+
+        if (diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getMagicAttack())) > opponent.getSpellResistance().getValue()) {
+            result.addAll(dealDamage(attacker, opponent, combatContext));
+
+            if (opponent.getActualHealth() <= 0) {
+                result.add(handleDeath(attacker, opponent, combatContext));
+            }
+        } else {
+            result.add(dealMiss(attacker, opponent, combatContext));
+        }
+
+        return result;
     }
 
     @Deprecated
@@ -60,7 +72,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageBuilder.buildMagicDamageToPlayerMessage(attacker.getName(), damage))
+                            .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_PLAYER", attacker.getName(), damage))
                             .build()
             );
         } else {
@@ -69,7 +81,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageBuilder.buildMagicDamageToMonsterMessage(attacker.getName(), damage))
+                            .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_MONSTER", attacker.getName(), damage))
                             .build()
             );
         }

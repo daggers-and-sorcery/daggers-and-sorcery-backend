@@ -6,8 +6,8 @@ import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -20,10 +20,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @ExplorationEvent
-public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEventDefinition {
+public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+
+    private static final int EVENT_ID = 10;
 
     private static final int GOBLIN_GUARD_MONSTER_ID = 2;
     private static final int GOBLIN_CHIEFTAIN_MONSTER_ID = 5;
+
+    private static final int COMBAT_STAGE = 1;
+    private static final int SECOND_COMBAT_STAGE = 2;
 
     private final List<DropDefinition> chestDropDefinitions;
 
@@ -133,7 +138,7 @@ public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEv
 
     @Override
     public int getId() {
-        return 10;
+        return EVENT_ID;
     }
 
     @Override
@@ -143,8 +148,6 @@ public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEv
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final StringBuilder stringBuilder = new StringBuilder();
-
         return explorationResultBuilderFactory
                 .newExplorationResultBuilder(userEntity)
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_1")
@@ -153,34 +156,80 @@ public class RobbingTheChieftainExplorationEventDefinition extends ExplorationEv
                 .newAttributeProbeEntry(GeneralAttribute.DEXTERITY, 8)
                 .isSuccess((explorationResultBuilder) -> explorationResultBuilder
                         .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_4")
-                        .newCombatEntry(GOBLIN_CHIEFTAIN_MONSTER_ID)
-                        .newCustomLogicEntry(() -> {
-                            List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
-
-                            final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
-
-                            boolean first = true;
-                            for (Drop drop : chestDrops) {
-                                if (!first) {
-                                    stringBuilder.append(", ");
-                                } else {
-                                    first = false;
-                                }
-
-                                stringBuilder.append(drop.getAmount()).append(" ").append(drop.getItem().getName());
-
-                                inventoryEntity.addItem(drop.getItem(), drop.getAmount(), drop.isIdentified());
-                            }
-                        })
-                        .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_5", stringBuilder)
-                        .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_8", stringBuilder)
-                        .build())
+                        .newCombatEntry(GOBLIN_CHIEFTAIN_MONSTER_ID, EVENT_ID, COMBAT_STAGE)
+                        .build()
+                )
                 .isFailure((explorationResultBuilder) -> explorationResultBuilder
                         .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_6")
-                        .newCombatEntry(GOBLIN_GUARD_MONSTER_ID)
-                        .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_7")
+                        .newCombatEntry(GOBLIN_GUARD_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)
                         .build()
                 )
                 .build();
+    }
+
+    @Override
+    public ExplorationResult explore(UserEntity userEntity, int stage) {
+        if (stage == COMBAT_STAGE) {
+            final StringBuilder stringBuilder = new StringBuilder();
+
+            explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newCustomLogicEntry(() -> {
+                        List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
+
+                        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
+
+                        boolean first = true;
+                        for (Drop drop : chestDrops) {
+                            if (!first) {
+                                stringBuilder.append(", ");
+                            } else {
+                                first = false;
+                            }
+
+                            stringBuilder.append(drop.getAmount()).append(" ").append(drop.getItem().getName());
+
+                            inventoryEntity.addItem(drop.getItem(), drop.getAmount(), drop.isIdentified());
+                        }
+                    })
+                    .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_5", stringBuilder)
+                    .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_8", stringBuilder)
+                    .build();
+        } else if (stage == SECOND_COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_7")
+                    .build();
+        }
+
+        return explorationResultBuilderFactory
+                .newExplorationResultBuilder(userEntity)
+                .build();
+    }
+
+    @Override
+    public ExplorationResult info(UserEntity userEntity, int stage) {
+        if (stage == COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_4")
+                    .continueCombatEntry()
+                    .build();
+        } else if (stage == SECOND_COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_6")
+                    .continueCombatEntry()
+                    .build();
+        }
+
+        return explorationResultBuilderFactory
+                .newExplorationResultBuilder(userEntity)
+                .build();
+    }
+
+    @Override
+    public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        return true;
     }
 }

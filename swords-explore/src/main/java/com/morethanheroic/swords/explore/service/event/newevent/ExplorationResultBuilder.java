@@ -58,7 +58,7 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public ExplorationResultBuilder newCombatEntry(final int opponentId) {
+    public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage) {
         if (shouldStop) {
             return this;
         }
@@ -67,12 +67,7 @@ public class ExplorationResultBuilder {
 
         explorationResult.addEventEntryResult(secondCombatEventEntryEvaluatorResult.getResult());
 
-        /*
-        if (!secondCombatEventEntryEvaluatorResult.getCombatResult().isPlayerVictory()) {
-            shouldStop = true;
-        }
-        */
-
+        userEntity.setActiveExploration(eventId, stage);
         return this;
     }
 
