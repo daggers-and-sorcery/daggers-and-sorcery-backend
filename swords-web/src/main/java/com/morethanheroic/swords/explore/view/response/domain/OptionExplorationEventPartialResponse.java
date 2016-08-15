@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.explore.service.response.domain;
+package com.morethanheroic.swords.explore.view.response.domain;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;

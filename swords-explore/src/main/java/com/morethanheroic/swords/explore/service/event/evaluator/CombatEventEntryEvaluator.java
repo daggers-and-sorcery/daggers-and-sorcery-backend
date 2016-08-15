@@ -1,7 +1,8 @@
 package com.morethanheroic.swords.explore.service.event.evaluator;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
-import com.morethanheroic.swords.combat.service.calc.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.Winner;
+import com.morethanheroic.swords.combat.service.newcb.AttackResult;
+import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -27,23 +28,20 @@ public class CombatEventEntryEvaluator {
     @Autowired
     private Random random;
 
-    public CombatResult calculateCombatWithRandomOpponent(final UserEntity userEntity, final List<MonsterDefinition> opponent) {
-        return combatCalculator.doFight(userEntity, calculateOpponent(opponent));
-    }
-
     public MonsterDefinition calculateOpponent(final List<MonsterDefinition> possibleOpponents) {
         return possibleOpponents.get(random.nextInt(possibleOpponents.size()));
     }
 
     public CombatEventEntryEvaluatorResult calculateCombat(final UserEntity userEntity, final MonsterDefinition opponent) {
-        final CombatResult combatResult = combatCalculator.doFight(userEntity, opponent);
+        final AttackResult combatResult = combatCalculator.createCombat(userEntity, opponent);
 
         return CombatEventEntryEvaluatorResult.builder()
                 .result(
                         CombatExplorationEventEntryResult.builder()
-                                .combatMessages(combatResult.getCombatMessages())
+                                .combatSteps(combatResult.getAttackResult())
+                                .combatEnded(combatResult.isCombatEnded())
+                                .playerDead(combatResult.getWinner() == Winner.MONSTER)
                                 .build())
-                .combatResult(combatResult)
                 .build();
     }
 

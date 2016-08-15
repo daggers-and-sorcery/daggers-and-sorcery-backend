@@ -23,7 +23,7 @@ public class CombatMessageFactory {
         return combatMessage;
     }
 
-    public CombatMessage newMessage(final String messageCode, final Object... data) {
+    private CombatMessage newMessage(final String messageCode, final Object... data) {
         final CombatMessage combatMessage = new CombatMessage();
 
         combatMessage.addData("message", messageSource.getMessage(messageCode, data, DEFAULT_LOCALE));

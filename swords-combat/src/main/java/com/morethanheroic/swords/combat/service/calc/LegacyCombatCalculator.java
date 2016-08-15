@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
-public class CombatCalculator {
+@RequiredArgsConstructor
+public class LegacyCombatCalculator {
 
     private final CombatFactory combatFactory;
     private final CombatInitializer combatInitializer;

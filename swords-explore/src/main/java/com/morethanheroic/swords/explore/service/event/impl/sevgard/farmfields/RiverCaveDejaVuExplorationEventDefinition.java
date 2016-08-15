@@ -3,11 +3,13 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +17,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @ExplorationEvent
-public class RiverCaveDejaVuExplorationEventDefinition extends ExplorationEventDefinition {
+public class RiverCaveDejaVuExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+
+    private static final int EVENT_ID = 2;
 
     private static final int GOBLIN_PIKER_MONSTER_ID = 1;
+
+    private static final int COMBAT_STAGE = 1;
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
     private CombatEventEntryEvaluator combatEventEntryEvaluator;
+
+    @Autowired
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
     private MonsterDefinition opponent;
 
@@ -34,7 +43,7 @@ public class RiverCaveDejaVuExplorationEventDefinition extends ExplorationEventD
 
     @Override
     public int getId() {
-        return 2;
+        return EVENT_ID;
     }
 
     @Override
@@ -59,15 +68,9 @@ public class RiverCaveDejaVuExplorationEventDefinition extends ExplorationEventD
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if (!combatResult.getCombatResult().isPlayerVictory()) {
-            return explorationResult;
+        if(!combatResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
-
-        explorationResult.addEventEntryResult(
-                TextExplorationEventEntryResult.builder()
-                        .content("The " + opponent.getName() + "'s body tumbles into the slow-moving river and washes downstream. You study the multitude of pots and urns and sense a foreboding presence. You no longer wish to meddle with this vile place. You leave the cavern and rejoice as the sun shines from behind the clouds. Your deja vu disappears.")
-                        .build()
-        );
 
         return explorationResult;
     }
@@ -75,5 +78,40 @@ public class RiverCaveDejaVuExplorationEventDefinition extends ExplorationEventD
     @Override
     public ExplorationEventLocationType getLocation() {
         return ExplorationEventLocationType.FARMFIELDS;
+    }
+
+    @Override
+    public ExplorationResult explore(UserEntity userEntity, int stage) {
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+
+        if (stage == COMBAT_STAGE) {
+            explorationResult.addEventEntryResult(
+                    TextExplorationEventEntryResult.builder()
+                            .content("The " + opponent.getName() + "'s body tumbles into the slow-moving river and washes downstream. You study the multitude of pots and urns and sense a foreboding presence. You no longer wish to meddle with this vile place. You leave the cavern and rejoice as the sun shines from behind the clouds. Your deja vu disappears.")
+                            .build()
+            );
+
+            userEntity.resetActiveExploration();
+        }
+
+        return explorationResult;
+    }
+
+    @Override
+    public ExplorationResult info(UserEntity userEntity, int stage) {
+        if (stage == COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("RIVER_CAVE_DEJA_VU_EXPLORATION_EVENT_ENTRY_1")
+                    .continueCombatEntry()
+                    .build();
+        }
+
+        return explorationResultFactory.newExplorationResult();
+    }
+
+    @Override
+    public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        return true;
     }
 }
