@@ -32,6 +32,7 @@ public class CombatAttackResponseBuilder implements ResponseBuilder<CombatAttack
         response.setData("status", combatAttackStatusPartialResponseBuilder.build(
                 CombatAttackStatusPartialResponseBuilderConfiguration.builder()
                         .combatEnded(responseBuilderConfiguration.isCombatEnded())
+                        .playerDead(responseBuilderConfiguration.isPlayerDead())
                         .build()
         ));
 

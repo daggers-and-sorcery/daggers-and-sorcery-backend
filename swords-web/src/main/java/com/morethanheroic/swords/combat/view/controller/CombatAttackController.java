@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.view.controller;
 
 import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.newcb.AttackResult;
 import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
 import com.morethanheroic.swords.combat.view.response.service.CombatAttackResponseBuilder;
@@ -26,6 +27,7 @@ public class CombatAttackController {
                 .userEntity(userEntity)
                 .combatSteps(attackResult.getAttackResult())
                 .combatEnded(attackResult.isCombatEnded())
+                .playerDead(attackResult.getWinner() == Winner.MONSTER)
                 .build());
     }
 }

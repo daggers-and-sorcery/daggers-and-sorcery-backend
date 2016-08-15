@@ -71,7 +71,9 @@ public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExpl
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
-        userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
+        if(!combatResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
+        }
 
         return explorationResult;
     }

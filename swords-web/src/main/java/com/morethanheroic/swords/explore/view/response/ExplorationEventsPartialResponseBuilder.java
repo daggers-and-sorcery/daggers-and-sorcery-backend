@@ -55,11 +55,12 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                                         )
                                 )
                                 .status(
-                                    combatAttackStatusPartialResponseBuilder.build(
-                                        CombatAttackStatusPartialResponseBuilderConfiguration.builder()
-                                            .combatEnded(combatExplorationEventEntryResult.isCombatEnded())
-                                            .build()
-                                    )
+                                        combatAttackStatusPartialResponseBuilder.build(
+                                                CombatAttackStatusPartialResponseBuilderConfiguration.builder()
+                                                        .combatEnded(combatExplorationEventEntryResult.isCombatEnded())
+                                                        .playerDead(combatExplorationEventEntryResult.isPlayerDead())
+                                                        .build()
+                                        )
                                 )
                                 .build()
                 );

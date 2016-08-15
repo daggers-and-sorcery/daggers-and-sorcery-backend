@@ -13,4 +13,5 @@ public class CombatExplorationEventEntryResult implements ExplorationEventEntryR
 
     private final List<CombatStep> combatSteps;
     private final boolean combatEnded;
+    private final boolean playerDead;
 }
