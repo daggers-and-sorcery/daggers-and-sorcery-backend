@@ -28,7 +28,7 @@ public class DamageCombatEffectDefinition extends CombatEffectDefinition {
 
         effectApplyingContext.addCombatStep(
             DefaultCombatStep.builder()
-                             .message(combatMessageFactory.newMessage("damage_given", "DAMAGE_SPELL_DAMAGE_DONE", damage))
+                             .message(combatMessageFactory.newMessage("damage_done", "DAMAGE_SPELL_DAMAGE_DONE", damage))
                              .build()
         );
 

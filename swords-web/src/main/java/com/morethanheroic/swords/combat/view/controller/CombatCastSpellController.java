@@ -28,7 +28,6 @@ public class CombatCastSpellController {
     @RequestMapping(value = "/combat/cast/{spellId}", method = RequestMethod.GET)
     public Response castSpell(final UserEntity userEntity, final SessionEntity sessionEntity, @PathVariable final int spellId) {
         final AttackResult attackResult = combatCalculator.useSpell(userEntity, sessionEntity, spellDefinitionCache.getSpellDefinition(spellId));
-        
 
         return combatAttackResponseBuilder.build(CombatAttackResponseBuilderConfiguration.builder()
              .userEntity(userEntity)

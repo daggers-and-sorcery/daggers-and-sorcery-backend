@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.settings.service;
 
+import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
@@ -7,6 +8,7 @@ import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +17,16 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UsableSpellsResponseBuilder {
 
     private final ResponseFactory responseFactory;
     private final SpellMapper spellMapper;
     private final SpellDefinitionCache spellDefinitionCache;
 
-    @Autowired
-    public UsableSpellsResponseBuilder(ResponseFactory responseFactory, SpellMapper spellMapper, SpellDefinitionCache spellDefinitionCache) {
-        this.responseFactory = responseFactory;
-        this.spellMapper = spellMapper;
-        this.spellDefinitionCache = spellDefinitionCache;
-    }
-
-    public CharacterRefreshResponse build(UserEntity userEntity) {
-        CharacterRefreshResponse response =  responseFactory.newResponse(userEntity);
-        ArrayList<HashMap<String, Object>> spelllist = new ArrayList<>();
+    public Response build(UserEntity userEntity) {
+        final Response response =  responseFactory.newResponse(userEntity);
+        final List<HashMap<String, Object>> spelllist = new ArrayList<>();
 
         List<SpellDatabaseEntity> spells = spellMapper.getAllSpellsForUser(userEntity.getId());
 

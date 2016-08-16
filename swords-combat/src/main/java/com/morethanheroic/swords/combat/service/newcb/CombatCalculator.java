@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,10 +123,16 @@ public class CombatCalculator {
 
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
             combatSteps.addAll(monsterAttack(combatContext));
-            combatSteps.addAll(playerAttack(combatContext));
+
+            if (combatContext.getUser().getActualHealth() > 0) {
+                combatSteps.addAll(playerAttack(combatContext));
+            }
         } else {
             combatSteps.addAll(playerAttack(combatContext));
-            combatSteps.addAll(monsterAttack(combatContext));
+
+            if (combatContext.getOpponent().getActualHealth() > 0) {
+                combatSteps.addAll(monsterAttack(combatContext));
+            }
         }
 
         if (combatContext.getWinner() == null) {
@@ -204,13 +212,13 @@ public class CombatCalculator {
         }
 
         final CombatContext combatContext = CombatContext.builder()
-                                                         .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
-                                                         .opponent(monsterCombatEntityFactory.newMonsterCombatEntity(
-                                                             monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId()),
-                                                             combatDatabaseEntity.getMonsterHealth(),
-                                                             combatDatabaseEntity.getMonsterMana())
-                                                         )
-                                                         .build();
+                .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
+                .opponent(monsterCombatEntityFactory.newMonsterCombatEntity(
+                        monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId()),
+                        combatDatabaseEntity.getMonsterHealth(),
+                        combatDatabaseEntity.getMonsterMana())
+                )
+                .build();
 
         final CombatEffectDataHolder combatEffectDataHolder = new CombatEffectDataHolder(new HashMap<>(), sessionEntity);
 
@@ -221,17 +229,31 @@ public class CombatCalculator {
 
             if (combatContext.getUser().getActualHealth() > 0) {
                 combatSteps.addAll(
-                    useSpellService.useSpell(combatContext,  spellDefinition, combatEffectDataHolder)
+                        useSpellService.useSpell(combatContext, spellDefinition, combatEffectDataHolder)
                 );
             }
         } else {
             combatSteps.addAll(
-                useSpellService.useSpell(combatContext,  spellDefinition, combatEffectDataHolder)
+                    useSpellService.useSpell(combatContext, spellDefinition, combatEffectDataHolder)
             );
 
             if (combatContext.getOpponent().getActualHealth() > 0) {
                 combatSteps.addAll(monsterAttack(combatContext));
             }
+        }
+
+        if (combatContext.getUser().getActualHealth() <= 0) {
+            combatContext.setWinner(Winner.MONSTER);
+
+            combatSteps.add(DefaultCombatStep.builder()
+                    .message(combatMessageFactory.newMessage("monster_death", "COMBAT_MESSAGE_PLAYER_DEAD", combatContext.getOpponent().getName()))
+                    .build());
+        } else if (combatContext.getOpponent().getActualHealth() <= 0) {
+            combatContext.setWinner(Winner.PLAYER);
+
+            combatSteps.add(DefaultCombatStep.builder()
+                    .message(combatMessageFactory.newMessage("monster_death", "COMBAT_MESSAGE_MONSTER_DEAD", combatContext.getOpponent().getName()))
+                    .build());
         }
 
         if (combatContext.getWinner() != null) {
@@ -245,10 +267,10 @@ public class CombatCalculator {
         }
 
         return AttackResult.builder()
-                           .attackResult(combatSteps)
-                           .combatEnded(combatContext.getWinner() != null)
-                           .winner(combatContext.getWinner())
-                           .build();
+                .attackResult(combatSteps)
+                .combatEnded(combatContext.getWinner() != null)
+                .winner(combatContext.getWinner())
+                .build();
     }
 
     @Transactional

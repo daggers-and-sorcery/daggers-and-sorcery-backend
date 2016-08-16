@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.settings.view.controller;
 
+import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,12 +43,15 @@ public class CombatSettingsController {
     @Autowired
     private SettingsMapper settingsMapper;
 
+    @Autowired
+    private InventoryEntityFactory inventoryEntityFactory;
+
     //TODO: move these to a new spot for the new combat system
     //TODO: Create two separate controller, one for spells and one for items because this method does too much...
     @RequestMapping(value = "/combat/settings/usable/{type}", method = RequestMethod.GET)
-    public CharacterRefreshResponse usableItems(UserEntity userEntity, @PathVariable SettingType type) {
+    public Response usableItems(UserEntity userEntity, @PathVariable SettingType type) {
         if (type == SettingType.ITEM) {
-            return usableItemsResponseBuilder.build(userEntity, journalManager.getJournalEntryListByType(userEntity, JournalType.ITEM));
+            return usableItemsResponseBuilder.build(userEntity, inventoryEntityFactory.getEntity(userEntity.getId()).getItems());
         } else if (type == SettingType.SPELL) {
             return usableSpellsResponseBuilder.build(userEntity);
         } else {

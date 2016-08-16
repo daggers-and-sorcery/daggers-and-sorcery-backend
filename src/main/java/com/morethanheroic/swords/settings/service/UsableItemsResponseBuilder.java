@@ -1,11 +1,16 @@
 package com.morethanheroic.swords.settings.service;
 
+import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.domain.InventoryItem;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,23 +20,17 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class UsableItemsResponseBuilder {
 
     private final ResponseFactory responseFactory;
-    private final ItemDefinitionCache itemDefinitionCache;
 
-    @Autowired
-    public UsableItemsResponseBuilder(ResponseFactory responseFactory, ItemDefinitionCache itemDefinitionCache) {
-        this.responseFactory = responseFactory;
-        this.itemDefinitionCache = itemDefinitionCache;
-    }
-
-    public CharacterRefreshResponse build(UserEntity userEntity, List<JournalDatabaseEntity> journalItems) {
-        final CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
+    public Response build(UserEntity userEntity, List<InventoryItem> inventoryItems) {
+        final Response response = responseFactory.newResponse(userEntity);
 
         final List<Map<String, Object>> itemsResult = new ArrayList<>();
-        for (JournalDatabaseEntity journalEntry : journalItems) {
-            final ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(journalEntry.getJournalId());
+        for (InventoryItem inventoryItem : inventoryItems) {
+            final ItemDefinition itemDefinition = inventoryItem.getItem();
 
             if (itemDefinition.isUsable()) {
                 final Map<String, Object> itemData = new HashMap<>();

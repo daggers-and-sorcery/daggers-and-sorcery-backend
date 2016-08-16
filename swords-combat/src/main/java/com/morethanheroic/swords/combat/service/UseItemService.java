@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.service;
 
+import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
@@ -35,7 +36,7 @@ public class UseItemService {
      * @deprecated Use {@link UseItemService#useItem(UserCombatEntity, CombatResult, ItemDefinition, CombatEffectDataHolder)} instead.
      */
     public void useItem(UserCombatEntity combatEntity, Combat combat, CombatResult combatResult, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
-        useItem(combatEntity,combatResult,item,combatEffectDataHolder);
+        useItem(combatEntity, combatResult, item, combatEffectDataHolder);
     }
 
     public void useItem(UserCombatEntity combatEntity, CombatResult combatResult, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
@@ -55,11 +56,11 @@ public class UseItemService {
         final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
         for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : item.getCombatEffects()) {
             contexts.add(CombatEffectApplyingContext.builder()
-                .source(new CombatEffectTarget(combatEntity))
-                .destination(new CombatEffectTarget(combatEntity))
-                .combatResult(combatResult)
-                .effectSettings(effectSettingDefinitionHolder)
-                .build()
+                    .source(new CombatEffectTarget(combatEntity))
+                    .destination(new CombatEffectTarget(combatEntity))
+                    .combatSteps(Lists.newArrayList())
+                    .effectSettings(effectSettingDefinitionHolder)
+                    .build()
             );
         }
 
@@ -73,11 +74,11 @@ public class UseItemService {
         final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
         for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : item.getCombatEffects()) {
             contexts.add(CombatEffectApplyingContext.builder()
-                                                    .source(new CombatEffectTarget(userCombatEntity))
-                                                    .destination(new CombatEffectTarget(userCombatEntity))
-                                                    .combatResult(combatResult)
-                                                    .effectSettings(effectSettingDefinitionHolder)
-                                                    .build()
+                    .source(new CombatEffectTarget(userCombatEntity))
+                    .destination(new CombatEffectTarget(userCombatEntity))
+                    .combatSteps(Lists.newArrayList())
+                    .effectSettings(effectSettingDefinitionHolder)
+                    .build()
             );
         }
 

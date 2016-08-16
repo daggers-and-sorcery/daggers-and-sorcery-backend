@@ -3,6 +3,7 @@ package com.morethanheroic.swords.spell.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
@@ -85,12 +86,12 @@ public class UseSpellService {
         final List<CombatStep> combatSteps = new ArrayList<>();
 
         if (canUseSpell(combatContext.getUser(), spell)) {
-            combatSteps.addAll(applySpell(combatContext,  spell, combatEffectDataHolder));
+            combatSteps.addAll(applySpell(combatContext, spell, combatEffectDataHolder));
         } else {
             combatSteps.add(
-                DefaultCombatStep.builder()
-                .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST_NOT_ENOUGH_MANA"))
-                .build()
+                    DefaultCombatStep.builder()
+                            .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST_NOT_ENOUGH_MANA"))
+                            .build()
             );
         }
 
@@ -117,12 +118,11 @@ public class UseSpellService {
             final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
             for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
                 contexts.add(CombatEffectApplyingContext.builder()
-                    .source(new CombatEffectTarget(combat.getUser()))
-                    .destination(new CombatEffectTarget(combat.getUser()))
-                                       .combatSteps(combatSteps)
-                    .combatResult(null)
-                    .effectSettings(effectSettingDefinitionHolder)
-                    .build()
+                        .source(new CombatEffectTarget(combat.getUser()))
+                        .destination(new CombatEffectTarget(combat.getUser()))
+                        .combatSteps(combatSteps)
+                        .effectSettings(effectSettingDefinitionHolder)
+                        .build()
                 );
             }
 
@@ -132,35 +132,35 @@ public class UseSpellService {
             final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
             for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
                 contexts.add(CombatEffectApplyingContext.builder()
-                    .source(new CombatEffectTarget(combat.getUser()))
-                    .destination(new CombatEffectTarget(combat.getOpponent()))
-                                                        .combatSteps(combatSteps)
-                                                        .combatResult(null)
-                    .effectSettings(effectSettingDefinitionHolder)
-                    .build()
+                        .source(new CombatEffectTarget(combat.getUser()))
+                        .destination(new CombatEffectTarget(combat.getOpponent()))
+                        .combatSteps(combatSteps)
+                        .effectSettings(effectSettingDefinitionHolder)
+                        .build()
                 );
             }
 
             combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
         }
 
+        combatEntity.getUserEntity().setBasicStats(combatEntity.getActualHealth(), combatEntity.getActualMana(), combatEntity.getUserEntity().getMovementPoints());
+
         return combatSteps;
     }
 
     private void applySpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
         final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
-        final CombatResult combatResult = new CombatResult();
 
         final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
 
         for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spell.getCombatEffects()) {
             contexts.add(
-                CombatEffectApplyingContext.builder()
-                    .source(new CombatEffectTarget(userCombatEntity))
-                    .destination(new CombatEffectTarget(userCombatEntity))
-                    .combatResult(combatResult)
-                    .effectSettings(effectSettingDefinitionHolder)
-                    .build()
+                    CombatEffectApplyingContext.builder()
+                            .source(new CombatEffectTarget(userCombatEntity))
+                            .destination(new CombatEffectTarget(userCombatEntity))
+                            .combatSteps(Lists.newArrayList())
+                            .effectSettings(effectSettingDefinitionHolder)
+                            .build()
             );
         }
 
