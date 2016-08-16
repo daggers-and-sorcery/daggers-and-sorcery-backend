@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Deprecated
 @Service
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class ItemCombatSettingsActionHandlerResolver implements CombatSettingsActionHandlerResolver {
@@ -29,7 +30,7 @@ public class ItemCombatSettingsActionHandlerResolver implements CombatSettingsAc
 
         combatResult.addMessage(combatMessageBuilder.buildUseItemMessage(itemToUse.getName()));
 
-        useItemService.useItem(combat.getUserCombatEntity(), combat, combatResult, itemToUse, combatEffectDataHolder);
+        //useItemService.useItem(combat.getUserCombatEntity(), combat, combatResult, itemToUse, combatEffectDataHolder);
     }
 
     @Override

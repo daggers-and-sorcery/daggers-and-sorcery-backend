@@ -9,7 +9,9 @@ import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
+import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -26,23 +28,24 @@ public class UseItemService {
 
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final CombatEffectApplierService combatEffectApplierService;
-    private final InventoryFacade inventoryFacade;
+    private final InventoryEntityFactory inventoryEntityFactory;
 
     public boolean canUseItem(UserEntity userEntity, ItemDefinition item) {
-        return inventoryFacade.getInventory(userEntity).hasItem(item.getId());
+        return inventoryEntityFactory.getEntity(userEntity.getId()).hasItem(item);
     }
 
-    /**
-     * @deprecated Use {@link UseItemService#useItem(UserCombatEntity, CombatResult, ItemDefinition, CombatEffectDataHolder)} instead.
-     */
-    public void useItem(UserCombatEntity combatEntity, Combat combat, CombatResult combatResult, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
-        useItem(combatEntity, combatResult, item, combatEffectDataHolder);
-    }
+    public List<CombatStep> useItem(UserCombatEntity combatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
+        final List<CombatStep> combatSteps = new ArrayList<>();
 
-    public void useItem(UserCombatEntity combatEntity, CombatResult combatResult, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         if (canUseItem(combatEntity.getUserEntity(), item)) {
-            applyItem(combatEntity, combatResult, item, combatEffectDataHolder);
+            applyItem(combatEntity, item, combatEffectDataHolder);
+
+            //TODO: add item used combat steps
+        } else {
+            //TODO: add can't use item combat steps
         }
+
+        return combatSteps;
     }
 
     public void useItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
@@ -52,7 +55,7 @@ public class UseItemService {
     }
 
     //TODO: merge the two applyItem together somehow!
-    private void applyItem(CombatEntity combatEntity, CombatResult combatResult, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
+    private void applyItem(CombatEntity combatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
         for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : item.getCombatEffects()) {
             contexts.add(CombatEffectApplyingContext.builder()
@@ -69,7 +72,6 @@ public class UseItemService {
 
     private void applyItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
-        final CombatResult combatResult = new CombatResult();
 
         final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
         for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : item.getCombatEffects()) {

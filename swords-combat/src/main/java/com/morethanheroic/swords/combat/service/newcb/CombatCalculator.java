@@ -11,6 +11,8 @@ import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.UseItemService;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -96,6 +98,9 @@ public class CombatCalculator {
 
     @Autowired
     private UseSpellService useSpellService;
+
+    @Autowired
+    private UseItemService useItemService;
 
     @Transactional
     public AttackResult createCombat(final UserEntity userEntity, final MonsterDefinition monsterDefinition) {
@@ -241,6 +246,76 @@ public class CombatCalculator {
                 combatSteps.addAll(monsterAttack(combatContext));
             }
         }
+
+        if (combatContext.getUser().getActualHealth() <= 0) {
+            combatContext.setWinner(Winner.MONSTER);
+
+            combatSteps.add(DefaultCombatStep.builder()
+                    .message(combatMessageFactory.newMessage("monster_death", "COMBAT_MESSAGE_PLAYER_DEAD", combatContext.getOpponent().getName()))
+                    .build());
+        } else if (combatContext.getOpponent().getActualHealth() <= 0) {
+            combatContext.setWinner(Winner.PLAYER);
+
+            combatSteps.add(DefaultCombatStep.builder()
+                    .message(combatMessageFactory.newMessage("monster_death", "COMBAT_MESSAGE_MONSTER_DEAD", combatContext.getOpponent().getName()))
+                    .build());
+        }
+
+        if (combatContext.getWinner() != null) {
+            combatSteps.addAll(combatTerminator.terminate(combatContext));
+
+            combatMapper.removeCombat(combatDatabaseEntity.getId());
+        } else {
+            final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
+
+            combatMapper.updateCombat(combatDatabaseEntity.getId(), monsterCombatEntity.getActualHealth(), monsterCombatEntity.getActualMana());
+        }
+
+        return AttackResult.builder()
+                .attackResult(combatSteps)
+                .combatEnded(combatContext.getWinner() != null)
+                .winner(combatContext.getWinner())
+                .build();
+    }
+
+    @Transactional
+    public AttackResult useItem(final UserEntity userEntity, final SessionEntity sessionEntity, final ItemDefinition itemDefinition) {
+        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
+
+        if (combatDatabaseEntity == null) {
+            //TODO: do this normally
+            throw new IllegalStateException();
+        }
+
+        final CombatContext combatContext = CombatContext.builder()
+                .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
+                .opponent(monsterCombatEntityFactory.newMonsterCombatEntity(
+                        monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId()),
+                        combatDatabaseEntity.getMonsterHealth(),
+                        combatDatabaseEntity.getMonsterMana())
+                )
+                .build();
+
+        final CombatEffectDataHolder combatEffectDataHolder = new CombatEffectDataHolder(new HashMap<>(), sessionEntity);
+
+        final List<CombatStep> combatSteps = new ArrayList<>();
+            if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
+                combatSteps.addAll(monsterAttack(combatContext));
+
+                if (combatContext.getUser().getActualHealth() > 0) {
+                    combatSteps.addAll(
+                            useItemService.useItem(combatContext.getUser(), itemDefinition, combatEffectDataHolder)
+                    );
+                }
+            } else {
+                combatSteps.addAll(
+                        useItemService.useItem(combatContext.getUser(), itemDefinition, combatEffectDataHolder)
+                );
+
+                if (combatContext.getOpponent().getActualHealth() > 0) {
+                    combatSteps.addAll(monsterAttack(combatContext));
+                }
+            }
 
         if (combatContext.getUser().getActualHealth() <= 0) {
             combatContext.setWinner(Winner.MONSTER);
