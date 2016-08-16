@@ -1,15 +1,23 @@
 package com.morethanheroic.swords.settings.view.controller;
 
-import com.morethanheroic.swords.settings.model.SettingType;
-import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
-import com.morethanheroic.swords.settings.service.*;
-import com.morethanheroic.swords.settings.view.request.SaveOtherSettingsRequest;
-import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
+import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
+import com.morethanheroic.swords.settings.model.SettingType;
+import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
+import com.morethanheroic.swords.settings.service.SaveOtherSettingsResponseBuilder;
+import com.morethanheroic.swords.settings.service.SpecificMonstersResponseBuilder;
+import com.morethanheroic.swords.settings.service.UsableItemsResponseBuilder;
+import com.morethanheroic.swords.settings.service.UsableSpellsResponseBuilder;
+import com.morethanheroic.swords.settings.view.request.SaveOtherSettingsRequest;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 //TODO: Refactor this, move the controllers into separate files
 @RestController
@@ -33,6 +41,7 @@ public class CombatSettingsController {
     @Autowired
     private SettingsMapper settingsMapper;
 
+    //TODO: move these to a new spot for the new combat system
     //TODO: Create two separate controller, one for spells and one for items because this method does too much...
     @RequestMapping(value = "/combat/settings/usable/{type}", method = RequestMethod.GET)
     public CharacterRefreshResponse usableItems(UserEntity userEntity, @PathVariable SettingType type) {

@@ -15,8 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+//TODO: remove
 @Service
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
+@Deprecated
 public class SpellCombatSettingsActionHandlerResolver implements CombatSettingsActionHandlerResolver {
 
     private final UseSpellService useSpellService;
@@ -29,7 +31,7 @@ public class SpellCombatSettingsActionHandlerResolver implements CombatSettingsA
 
         combatResult.addMessage(combatMessageBuilder.buildUseSpellMessage(spellToUse.getName()));
 
-        useSpellService.useSpell(combat, combatResult, spellToUse, combatEffectDataHolder);
+        //useSpellService.useSpell(combat, combatResult, spellToUse, combatEffectDataHolder);
     }
 
     @Override

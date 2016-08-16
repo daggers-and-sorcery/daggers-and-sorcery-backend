@@ -3,16 +3,17 @@ package com.morethanheroic.swords.spell.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.combat.domain.Combat;
+import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -22,26 +23,20 @@ import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.domain.SpellTarget;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+import lombok.RequiredArgsConstructor;
+
 //TODO: make monsters able to use combat spells too!
+@Service
+@RequiredArgsConstructor
 public class UseSpellService {
 
     private final CombatEffectApplierService combatEffectApplierService;
     private final InventoryFacade inventoryFacade;
     private final UserMapper userMapper;
-
-    @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
-
-    @Autowired
-    public UseSpellService(CombatEffectApplierService combatEffectApplierService, InventoryFacade inventoryFacade, UserMapper userMapper) {
-        this.combatEffectApplierService = combatEffectApplierService;
-        this.inventoryFacade = inventoryFacade;
-        this.userMapper = userMapper;
-    }
+    private final GlobalAttributeCalculator globalAttributeCalculator;
+    private final CombatMessageFactory combatMessageFactory;
 
     public boolean canUseSpell(UserEntity userEntity, SpellDefinition spell) {
         InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
@@ -85,22 +80,28 @@ public class UseSpellService {
         }
     }
 
-    public void useSpell(Combat combat, CombatResult combatResult, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
-        if (canUseSpell(combat.getUserCombatEntity(), spell)) {
-            applySpell(combat, combatResult, spell, combatEffectDataHolder);
+    //TODO: move combat stuff out of this
+    public List<CombatStep> useSpell(CombatContext combatContext, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
+        final List<CombatStep> combatSteps = new ArrayList<>();
+
+        if (canUseSpell(combatContext.getUser(), spell)) {
+            combatSteps.addAll(applySpell(combatContext,  spell, combatEffectDataHolder));
         } else {
-            final CombatMessage combatMessage = new CombatMessage();
-
-            combatMessage.addData("icon", "spell");
-            combatMessage.addData("message", "Using the spell has failed! You don't have enough mana.");
-
-            combatResult.addMessage(combatMessage);
+            combatSteps.add(
+                DefaultCombatStep.builder()
+                .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST_NOT_ENOUGH_MANA"))
+                .build()
+            );
         }
+
+        return combatSteps;
     }
 
     //TODO: somehow merge the two usespell together?
-    private void applySpell(Combat combat, CombatResult combatResult, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
-        final UserCombatEntity combatEntity = combat.getUserCombatEntity();
+    private List<CombatStep> applySpell(CombatContext combat, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
+        final List<CombatStep> combatSteps = new ArrayList<>();
+
+        final UserCombatEntity combatEntity = combat.getUser();
 
         for (SpellCost spellCost : spellDefinition.getSpellCosts()) {
             if (spellCost.getType() == CostType.ITEM) {
@@ -116,9 +117,10 @@ public class UseSpellService {
             final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
             for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
                 contexts.add(CombatEffectApplyingContext.builder()
-                    .source(new CombatEffectTarget(combat.getUserCombatEntity()))
-                    .destination(new CombatEffectTarget(combat.getUserCombatEntity()))
-                    .combatResult(combatResult)
+                    .source(new CombatEffectTarget(combat.getUser()))
+                    .destination(new CombatEffectTarget(combat.getUser()))
+                                       .combatSteps(combatSteps)
+                    .combatResult(null)
                     .effectSettings(effectSettingDefinitionHolder)
                     .build()
                 );
@@ -130,9 +132,10 @@ public class UseSpellService {
             final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
             for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
                 contexts.add(CombatEffectApplyingContext.builder()
-                    .source(new CombatEffectTarget(combat.getUserCombatEntity()))
-                    .destination(new CombatEffectTarget(combat.getMonsterCombatEntity()))
-                    .combatResult(combatResult)
+                    .source(new CombatEffectTarget(combat.getUser()))
+                    .destination(new CombatEffectTarget(combat.getOpponent()))
+                                                        .combatSteps(combatSteps)
+                                                        .combatResult(null)
                     .effectSettings(effectSettingDefinitionHolder)
                     .build()
                 );
@@ -140,6 +143,8 @@ public class UseSpellService {
 
             combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
         }
+
+        return combatSteps;
     }
 
     private void applySpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {

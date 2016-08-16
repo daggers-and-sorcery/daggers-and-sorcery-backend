@@ -1,21 +1,24 @@
 package com.morethanheroic.swords.combat.domain.effect.entry;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.combat.domain.*;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class DamageCombatEffectDefinition extends CombatEffectDefinition {
 
-    @Autowired
-    private DiceRollCalculator diceRollCalculator;
+    private final DiceRollCalculator diceRollCalculator;
+    private final CombatMessageFactory combatMessageFactory;
 
     @Override
     public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
@@ -23,14 +26,12 @@ public class DamageCombatEffectDefinition extends CombatEffectDefinition {
 
         int damage = diceRollCalculator.rollDices(diceRollCalculationContext);
 
-        final CombatMessage combatMessage = new CombatMessage();
+        effectApplyingContext.addCombatStep(
+            DefaultCombatStep.builder()
+                             .message(combatMessageFactory.newMessage("damage_given", "DAMAGE_SPELL_DAMAGE_DONE", damage))
+                             .build()
+        );
 
-        combatMessage.addData("damage", damage);
-        combatMessage.addData("icon", "blood");
-        combatMessage.addData("icon_color", "blue");
-        combatMessage.addData("message", "Your opponent is damaged for ${damage} health!");
-
-        effectApplyingContext.getCombatResult().addMessage(combatMessage);
         effectApplyingContext.getDestination().getCombatEntity().decreaseActualHealth(damage);
     }
 

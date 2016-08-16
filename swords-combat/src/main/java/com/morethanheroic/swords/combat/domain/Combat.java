@@ -6,6 +6,7 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
+@Deprecated
 public class Combat {
 
     private final UserCombatEntity userCombatEntity;

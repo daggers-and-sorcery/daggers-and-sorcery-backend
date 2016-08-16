@@ -9,6 +9,7 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+@Deprecated
 public class CombatResult {
 
     private LinkedList<CombatMessage> combatMessages = new LinkedList<>();
