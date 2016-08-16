@@ -13,6 +13,7 @@ public class CombatAttackStatusPartialResponseBuilder implements PartialResponse
     public PartialResponse build(CombatAttackStatusPartialResponseBuilderConfiguration responseBuilderConfiguration) {
         return CombatAttackStatusPartialResponse.builder()
                 .combatEnded(responseBuilderConfiguration.isCombatEnded())
+                .playerDead(responseBuilderConfiguration.isPlayerDead())
                 .build();
     }
 }

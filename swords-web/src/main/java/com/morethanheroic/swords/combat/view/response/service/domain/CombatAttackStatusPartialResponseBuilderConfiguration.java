@@ -9,4 +9,5 @@ import lombok.Getter;
 public class CombatAttackStatusPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final boolean combatEnded;
+    private final boolean playerDead;
 }

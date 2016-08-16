@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.evaluator.domain;
 
-import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,5 +8,5 @@ import lombok.Getter;
 @Getter
 public class CombatEventEntryEvaluatorResult {
 
-    private ExplorationEventEntryResult result;
+    private CombatExplorationEventEntryResult result;
 }

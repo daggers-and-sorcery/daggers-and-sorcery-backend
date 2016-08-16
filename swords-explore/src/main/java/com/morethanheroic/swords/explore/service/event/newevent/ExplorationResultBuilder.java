@@ -37,8 +37,6 @@ public class ExplorationResultBuilder {
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
 
-    private boolean shouldStop;
-
     public ExplorationResultBuilder initialize(final UserEntity userEntity, final ExplorationResult explorationResult) {
         this.userEntity = userEntity;
         this.explorationResult = explorationResult;
@@ -47,10 +45,6 @@ public class ExplorationResultBuilder {
     }
 
     public ExplorationResultBuilder newMessageEntry(final String messageId, final Object... args) {
-        if (shouldStop) {
-            return this;
-        }
-
         explorationResult.addEventEntryResult(
                 messageEventEntryEvaluator.messageEntry(messageId, args)
         );
@@ -59,49 +53,41 @@ public class ExplorationResultBuilder {
     }
 
     public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage) {
-        if (shouldStop) {
-            return this;
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId));
+
+        explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
+
+        if (!combatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(eventId, stage);
         }
 
-        final CombatEventEntryEvaluatorResult secondCombatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId));
-
-        explorationResult.addEventEntryResult(secondCombatEventEntryEvaluatorResult.getResult());
-
-        userEntity.setActiveExploration(eventId, stage);
         return this;
     }
 
     public ExplorationResultBuilder continueCombatEntry() {
-        if (shouldStop) {
-            return this;
-        }
-
         final CombatMessage combatMessage = new CombatMessage();
         combatMessage.addData("message", "Continue fighting.");
 
         explorationResult.addEventEntryResult(
-            CombatEventEntryEvaluatorResult.builder()
-                .result(
-                    CombatExplorationEventEntryResult.builder()
-                        .combatSteps(Lists.newArrayList(
-                            DefaultCombatStep.builder()
-                                .message(combatMessage)
-                                .build()
-                        ))
-                        .combatEnded(!combatCalculator.isCombatRunning(userEntity))
-                        .build()
-                )
-            .build().getResult()
+                CombatEventEntryEvaluatorResult.builder()
+                        .result(
+                                CombatExplorationEventEntryResult.builder()
+                                        .combatSteps(Lists.newArrayList(
+                                                DefaultCombatStep.builder()
+                                                        .message(combatMessage)
+                                                        .build()
+                                        ))
+                                        .combatEnded(!combatCalculator.isCombatRunning(userEntity))
+                                        .playerDead(false)
+                                        .build()
+                        )
+                        .build().getResult()
         );
 
         return this;
     }
 
     public MultiWayExplorationResultBuilder newAttributeProbeEntry(final Attribute attribute, final int valueToHit) {
-        if (shouldStop) {
-            return new MultiWayExplorationResultBuilder(this, false);
-        }
-
         final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, attribute, valueToHit);
 
         explorationResult.addEventEntryResult(attemptResult.getResult());
@@ -110,10 +96,6 @@ public class ExplorationResultBuilder {
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {
-        if (shouldStop) {
-            return this;
-        }
-
         runnable.run();
 
         return this;

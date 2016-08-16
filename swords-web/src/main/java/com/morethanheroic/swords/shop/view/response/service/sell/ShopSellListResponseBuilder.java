@@ -33,6 +33,7 @@ public class ShopSellListResponseBuilder implements ResponseBuilder<ShopSellList
                         .map(itemTypeListEntry ->
                                 shopSellTypeListPartialResponseBuilder.build(
                                         ShopSellTypeListPartialResponseBuilderConfiguration.builder()
+                                                .sessionEntity(responseBuilderConfiguration.getSessionEntity())
                                                 .itemType(itemTypeListEntry.getKey())
                                                 .items(itemTypeListEntry.getValue())
                                                 .build()

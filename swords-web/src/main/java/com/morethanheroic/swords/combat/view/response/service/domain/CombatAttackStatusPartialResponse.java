@@ -9,4 +9,5 @@ import lombok.Getter;
 public class CombatAttackStatusPartialResponse extends PartialResponse {
 
     private final boolean combatEnded;
+    private final boolean playerDead;
 }

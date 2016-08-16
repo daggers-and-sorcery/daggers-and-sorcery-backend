@@ -123,9 +123,10 @@ public class CombatCalculator {
         }
 
         return AttackResult.builder()
-                           .attackResult(combatSteps)
-                           .combatEnded(combatContext.getWinner() != null)
-                           .build();
+                .attackResult(combatSteps)
+                .combatEnded(combatContext.getWinner() != null)
+                .winner(combatContext.getWinner())
+                .build();
     }
 
     @Transactional
@@ -148,13 +149,18 @@ public class CombatCalculator {
 
         final List<CombatStep> combatSteps = new ArrayList<>();
 
-        //TODO: should handle giving xp differently. It should be saved to the db while in combat and printed on terminate.
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
             combatSteps.addAll(monsterAttack(combatContext));
-            combatSteps.addAll(playerAttack(combatContext));
+
+            if (combatContext.getUser().getActualHealth() > 0) {
+                combatSteps.addAll(playerAttack(combatContext));
+            }
         } else {
             combatSteps.addAll(playerAttack(combatContext));
-            combatSteps.addAll(monsterAttack(combatContext));
+
+            if (combatContext.getOpponent().getActualHealth() > 0) {
+                combatSteps.addAll(monsterAttack(combatContext));
+            }
         }
 
         if (combatContext.getWinner() != null) {
@@ -170,6 +176,7 @@ public class CombatCalculator {
         return AttackResult.builder()
                 .attackResult(combatSteps)
                 .combatEnded(combatContext.getWinner() != null)
+                .winner(combatContext.getWinner())
                 .build();
     }
 

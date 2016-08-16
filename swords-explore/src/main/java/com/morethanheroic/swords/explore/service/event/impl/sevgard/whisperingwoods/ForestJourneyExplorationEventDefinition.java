@@ -71,7 +71,9 @@ public class ForestJourneyExplorationEventDefinition extends MultiStageExplorati
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
 
-        userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
+        if(!combatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
+        }
 
         return explorationResult;
     }
@@ -103,7 +105,9 @@ public class ForestJourneyExplorationEventDefinition extends MultiStageExplorati
 
                 explorationResult.addEventEntryResult(secondCombatEventEntryEvaluatorResult.getResult());
 
-                userEntity.setActiveExploration(EVENT_ID, SECOND_COMBAT_STAGE);
+                if(!secondCombatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
+                    userEntity.setActiveExploration(EVENT_ID, SECOND_COMBAT_STAGE);
+                }
             } else {
                 explorationResult.addEventEntryResult(
                         messageEventEntryEvaluator.messageEntry("FOREST_JOURNEY_EXPLORATION_EVENT_ENTRY_7")

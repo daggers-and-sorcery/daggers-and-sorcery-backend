@@ -4,11 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.common.collect.Lists;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
-import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
@@ -76,7 +72,9 @@ public class TheInnExplorationEventDefinition extends MultiStageExplorationEvent
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
-        userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
+        if(!combatResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
+        }
 
         return explorationResult;
     }
