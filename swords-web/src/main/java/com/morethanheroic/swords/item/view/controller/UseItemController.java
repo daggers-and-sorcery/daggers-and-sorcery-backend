@@ -14,19 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class UseItemController {
 
     private final UseItemService useItemService;
     private final ItemDefinitionCache itemDefinitionCache;
     private final UseItemResponseBuilder useItemResponseBuilder;
-
-    @Autowired
-    public UseItemController(UseItemService useItemService, ItemDefinitionCache itemDefinitionCache, UseItemResponseBuilder useItemResponseBuilder) {
-        this.useItemService = useItemService;
-        this.itemDefinitionCache = itemDefinitionCache;
-        this.useItemResponseBuilder = useItemResponseBuilder;
-    }
 
     @Transactional
     @RequestMapping(value = "/item/use/{itemId}", method = RequestMethod.GET)
