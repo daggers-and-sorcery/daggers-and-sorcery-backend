@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.settings.service;
+package com.morethanheroic.swords.combat.view.response.service.usable;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
