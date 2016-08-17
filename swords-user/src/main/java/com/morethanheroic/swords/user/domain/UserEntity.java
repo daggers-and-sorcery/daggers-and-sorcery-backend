@@ -4,12 +4,10 @@ import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-
 import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
-
 import lombok.ToString;
 
 /**
