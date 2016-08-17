@@ -7,7 +7,6 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
@@ -24,7 +23,6 @@ import java.util.Random;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class RangedAttackCalculator extends GeneralAttackCalculator {
 
-    private final CombatMessageBuilder combatMessageBuilder;
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
     private final EquipmentFacade equipmentFacade;
@@ -59,9 +57,9 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
             addDefenseXp((UserCombatEntity) opponent, damage * 2);
 
             result.add(
-                    AttackCombatStep.builder()
-                            .message(combatMessageBuilder.buildRangedDamageToPlayerMessage(attacker.getName(), damage))
-                            .build()
+                AttackCombatStep.builder()
+                                .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_PLAYER", attacker.getName(), damage))
+                                .build()
             );
         } else {
             if (random.nextInt(100) > 75) {
@@ -77,9 +75,9 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
             addAttackXp((UserCombatEntity) attacker, damage * 2);
 
             result.add(
-                    AttackCombatStep.builder()
-                            .message(combatMessageBuilder.buildRangedDamageToMonsterMessage(attacker.getName(), damage))
-                            .build()
+                AttackCombatStep.builder()
+                                .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_MONSTER", attacker.getName(), damage))
+                                .build()
             );
         }
 

@@ -4,7 +4,6 @@ import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
@@ -26,7 +25,6 @@ public class PlayerDefeatHandler {
 
     private final SkillEntityFactory skillEntityFactory;
     private final HighestSkillCalculator highestSkillCalculator;
-    private final CombatMessageBuilder combatMessageBuilder;
     private final CombatMessageFactory combatMessageFactory;
 
     public List<CombatStep> handleDefeat(CombatContext combatContext) {
@@ -71,8 +69,8 @@ public class PlayerDefeatHandler {
         userEntity.setBasicStats(userCombatEntity.getMaximumHealth(), userCombatEntity.getMaximumMana(), userEntity.getMovementPoints());
 
         return DefaultCombatStep.builder()
-                .message(combatMessageBuilder.buildResurrectionMessage())
-                .build();
+             .message(combatMessageFactory.newMessage("resurrection", "COMBAT_MESSAGE_RESURRECTION"))
+             .build();
     }
 
     private int calculateExperienceToRemove(SkillType skillType, SkillEntity skillEntity) {

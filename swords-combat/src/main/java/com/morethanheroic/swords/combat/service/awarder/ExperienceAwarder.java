@@ -4,7 +4,6 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.dao.CombatExperienceDatabaseEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
-import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
@@ -20,7 +19,6 @@ import java.util.List;
 public class ExperienceAwarder {
 
     private final SkillEntityFactory skillEntityFactory;
-    private final CombatMessageBuilder combatMessageBuilder;
     private final CombatMessageFactory combatMessageFactory;
     private final CombatExperienceMapper combatExperienceMapper;
 

@@ -38,9 +38,6 @@ public class CombatCalculator {
     private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
-    private CombatMessageBuilder combatMessageBuilder;
-
-    @Autowired
     private AttackTypeCalculator attackTypeCalculator;
 
     @Autowired
