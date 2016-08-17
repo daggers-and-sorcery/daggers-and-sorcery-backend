@@ -1,16 +1,14 @@
 package com.morethanheroic.swords.combat.domain.effect.entry.spell;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
-import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
+import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;

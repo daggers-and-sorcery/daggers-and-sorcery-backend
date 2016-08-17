@@ -8,7 +8,7 @@ import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
-import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.service.calc.initialisation;
 
-import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import lombok.RequiredArgsConstructor;

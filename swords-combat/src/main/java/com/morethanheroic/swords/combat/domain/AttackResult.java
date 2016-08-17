@@ -1,6 +1,5 @@
-package com.morethanheroic.swords.combat.service.newcb;
+package com.morethanheroic.swords.combat.domain;
 
-import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import lombok.Builder;
 import lombok.Getter;

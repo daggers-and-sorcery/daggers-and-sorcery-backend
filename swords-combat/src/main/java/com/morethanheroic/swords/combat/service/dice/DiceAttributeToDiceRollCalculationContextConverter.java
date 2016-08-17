@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service;
+package com.morethanheroic.swords.combat.service.dice;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;

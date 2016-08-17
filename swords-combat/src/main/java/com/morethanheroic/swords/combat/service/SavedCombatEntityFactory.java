@@ -1,0 +1,44 @@
+package com.morethanheroic.swords.combat.service;
+
+import org.springframework.stereotype.Service;
+
+import com.morethanheroic.entity.service.factory.EntityFactory;
+import com.morethanheroic.swords.combat.domain.SavedCombatEntity;
+import com.morethanheroic.swords.combat.repository.dao.CombatDatabaseEntity;
+import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
+import com.morethanheroic.swords.combat.service.exception.IllegalCombatStateException;
+import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
+import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.service.UserEntityFactory;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class SavedCombatEntityFactory implements EntityFactory<SavedCombatEntity>{
+
+    private final CombatMapper combatMapper;
+    private final UserEntityFactory userEntityFactory;
+    private final MonsterDefinitionCache monsterDefinitionCache;
+
+    @Override
+    public SavedCombatEntity getEntity(final int id) {
+        final UserEntity userEntity = userEntityFactory.getEntity(id);
+
+        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(id);
+
+        if (combatDatabaseEntity == null) {
+            throw new IllegalCombatStateException(
+                "Error while creating SavedCombatEntity for user " + userEntity + ". His event data is event: "
+                    + userEntity.getActiveExplorationEvent() + " state: " + userEntity.getActiveExplorationState() + ".");
+        }
+
+        return SavedCombatEntity.builder()
+            .id(combatDatabaseEntity.getId())
+            .user(userEntity)
+            .monster(monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId()))
+            .monsterHealth(combatDatabaseEntity.getMonsterHealth())
+            .monsterMana(combatDatabaseEntity.getMonsterMana())
+            .build();
+    }
+}

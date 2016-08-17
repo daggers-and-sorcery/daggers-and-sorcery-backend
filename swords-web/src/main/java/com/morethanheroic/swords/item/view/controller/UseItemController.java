@@ -2,16 +2,15 @@ package com.morethanheroic.swords.item.view.controller;
 
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.service.UseItemService;
+import com.morethanheroic.swords.combat.service.item.UseItemService;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.service.response.UseItemResponseBuilder;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;

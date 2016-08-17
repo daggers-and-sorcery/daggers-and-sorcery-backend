@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.combat.domain.Winner;
-import com.morethanheroic.swords.combat.service.newcb.AttackResult;
-import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.AttackResult;
+import com.morethanheroic.swords.combat.service.spell.UseSpellCombatCalculator;
 import com.morethanheroic.swords.combat.view.response.service.CombatAttackResponseBuilder;
 import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttackResponseBuilderConfiguration;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
@@ -21,13 +21,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CombatCastSpellController {
 
-    private final CombatCalculator combatCalculator;
     private final SpellDefinitionCache spellDefinitionCache;
     private final CombatAttackResponseBuilder combatAttackResponseBuilder;
+    private final UseSpellCombatCalculator useSpellCombatCalculator;
 
     @RequestMapping(value = "/combat/cast/{spellId}", method = RequestMethod.GET)
     public Response castSpell(final UserEntity userEntity, final SessionEntity sessionEntity, @PathVariable final int spellId) {
-        final AttackResult attackResult = combatCalculator.useSpell(userEntity, sessionEntity, spellDefinitionCache.getSpellDefinition(spellId));
+        final AttackResult attackResult = useSpellCombatCalculator.useSpell(userEntity, sessionEntity, spellDefinitionCache.getSpellDefinition(spellId));
 
         return combatAttackResponseBuilder.build(CombatAttackResponseBuilderConfiguration.builder()
              .userEntity(userEntity)

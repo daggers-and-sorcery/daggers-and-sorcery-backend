@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
+import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.AttributeAttemptEventEntryEvaluator;
