@@ -8,7 +8,9 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -27,6 +29,7 @@ public class UseItemService {
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final CombatEffectApplierService combatEffectApplierService;
     private final InventoryEntityFactory inventoryEntityFactory;
+    private final CombatMessageFactory combatMessageFactory;
 
     public boolean canUseItem(UserEntity userEntity, ItemDefinition item) {
         return inventoryEntityFactory.getEntity(userEntity.getId()).hasItem(item);
@@ -36,11 +39,21 @@ public class UseItemService {
         final List<CombatStep> combatSteps = new ArrayList<>();
 
         if (canUseItem(combatEntity.getUserEntity(), item)) {
+            combatSteps.add(
+                    DefaultCombatStep.builder()
+                            .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_ITEM_USED", item.getName()))
+                            .build()
+            );
+
             applyItem(combatEntity, item, combatEffectDataHolder);
 
-            //TODO: add item used combat steps
+            combatEntity.getUserEntity().setBasicStats(combatEntity.getActualHealth(), combatEntity.getActualMana(), combatEntity.getUserEntity().getMovementPoints());
         } else {
-            //TODO: add can't use item combat steps
+            combatSteps.add(
+                    DefaultCombatStep.builder()
+                            .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_CANT_USE_ITEM", item.getName()))
+                            .build()
+            );
         }
 
         return combatSteps;
