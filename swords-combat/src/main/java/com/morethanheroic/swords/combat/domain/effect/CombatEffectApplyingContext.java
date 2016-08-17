@@ -2,7 +2,6 @@ package com.morethanheroic.swords.combat.domain.effect;
 
 import java.util.List;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.effect.domain.EffectApplyingContext;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;

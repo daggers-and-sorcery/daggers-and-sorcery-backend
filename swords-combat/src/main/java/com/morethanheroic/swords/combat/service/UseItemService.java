@@ -2,9 +2,7 @@ package com.morethanheroic.swords.combat.service;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
@@ -12,7 +10,6 @@ import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContex
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;

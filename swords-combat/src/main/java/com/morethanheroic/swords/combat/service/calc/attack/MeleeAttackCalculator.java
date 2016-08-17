@@ -1,19 +1,16 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,7 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeleeAttackCalculator extends GeneralAttackCalculator {
 
-    private final CombatMessageBuilder combatMessageBuilder;
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
     private final CombatMessageFactory combatMessageFactory;
@@ -84,41 +80,6 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
             return DefaultCombatStep.builder()
                     .message(combatMessageFactory.newMessage("player_miss", "COMBAT_MESSAGE_MELEE_MISS_BY_PLAYER", opponent.getName()))
                     .build();
-        }
-    }
-
-    @Deprecated
-    @Override
-    public void calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        if (diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getAttack())) > opponent.getDefense().getValue()) {
-            dealDamage(attacker, opponent, result);
-
-            if (opponent.getActualHealth() <= 0) {
-                handleDeath(attacker, opponent, result);
-            }
-        } else {
-            dealMiss(attacker, opponent, result);
-        }
-    }
-
-    @Deprecated
-    private void dealDamage(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getDamage()));
-
-        if (damage > opponent.getActualHealth()) {
-            damage = opponent.getActualHealth();
-        }
-
-        opponent.decreaseActualHealth(damage);
-
-        if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(result, (UserCombatEntity) opponent, damage * 2);
-
-            result.addMessage(combatMessageBuilder.buildDamageToPlayerMessage(attacker.getName(), damage));
-        } else {
-            addAttackXp(result, (UserCombatEntity) attacker, damage * 2);
-
-            result.addMessage(combatMessageBuilder.buildDamageToMonsterMessage(opponent.getName(), damage));
         }
     }
 }
