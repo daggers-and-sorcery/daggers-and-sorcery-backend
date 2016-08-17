@@ -1,16 +1,14 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
-import com.morethanheroic.swords.combat.service.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +23,6 @@ import java.util.Random;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class RangedAttackCalculator extends GeneralAttackCalculator {
 
-    private final CombatMessageBuilder combatMessageBuilder;
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
     private final EquipmentFacade equipmentFacade;
@@ -49,19 +46,6 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
         return result;
     }
 
-    @Deprecated
-    public void calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        if (diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getAiming())) > opponent.getDefense().getValue()) {
-            dealDamage(attacker, opponent, result);
-
-            if (opponent.getActualHealth() <= 0) {
-                handleDeath(attacker, opponent, result);
-            }
-        } else {
-            dealMiss(attacker, opponent, result);
-        }
-    }
-
     private List<CombatStep> dealDamage(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
         final List<CombatStep> result = new ArrayList<>();
 
@@ -73,9 +57,9 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
             addDefenseXp((UserCombatEntity) opponent, damage * 2);
 
             result.add(
-                    AttackCombatStep.builder()
-                            .message(combatMessageBuilder.buildRangedDamageToPlayerMessage(attacker.getName(), damage))
-                            .build()
+                AttackCombatStep.builder()
+                                .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_PLAYER", attacker.getName(), damage))
+                                .build()
             );
         } else {
             if (random.nextInt(100) > 75) {
@@ -91,34 +75,13 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
             addAttackXp((UserCombatEntity) attacker, damage * 2);
 
             result.add(
-                    AttackCombatStep.builder()
-                            .message(combatMessageBuilder.buildRangedDamageToMonsterMessage(attacker.getName(), damage))
-                            .build()
+                AttackCombatStep.builder()
+                                .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_MONSTER", attacker.getName(), damage))
+                                .build()
             );
         }
 
         return result;
-    }
-
-    @Deprecated
-    private void dealDamage(CombatEntity attacker, CombatEntity opponent, CombatResult result) {
-        final int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getRangedDamage()));
-
-        opponent.decreaseActualHealth(damage);
-
-        if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(result, (UserCombatEntity) opponent, damage * 2);
-
-            result.addMessage(combatMessageBuilder.buildRangedDamageToPlayerMessage(attacker.getName(), damage));
-        } else {
-            if (random.nextInt(100) > 50) {
-                result.increaseLostAmmunition();
-            }
-
-            addAttackXp(result, (UserCombatEntity) attacker, damage * 2);
-
-            result.addMessage(combatMessageBuilder.buildRangedDamageToMonsterMessage(opponent.getName(), damage));
-        }
     }
 
     private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {

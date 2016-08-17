@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.explore.service.event.evaluator;
 
 import com.morethanheroic.swords.combat.domain.Winner;
-import com.morethanheroic.swords.combat.service.newcb.AttackResult;
-import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.AttackResult;
+import com.morethanheroic.swords.combat.service.create.CreateCombatCalculator;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -20,20 +20,20 @@ import java.util.stream.Collectors;
 public class CombatEventEntryEvaluator {
 
     @Autowired
-    private CombatCalculator combatCalculator;
-
-    @Autowired
     private MonsterDefinitionCache monsterDefinitionCache;
 
     @Autowired
     private Random random;
+
+    @Autowired
+    private CreateCombatCalculator createCombatCalculator;
 
     public MonsterDefinition calculateOpponent(final List<MonsterDefinition> possibleOpponents) {
         return possibleOpponents.get(random.nextInt(possibleOpponents.size()));
     }
 
     public CombatEventEntryEvaluatorResult calculateCombat(final UserEntity userEntity, final MonsterDefinition opponent) {
-        final AttackResult combatResult = combatCalculator.createCombat(userEntity, opponent);
+        final AttackResult combatResult = createCombatCalculator.createCombat(userEntity, opponent);
 
         return CombatEventEntryEvaluatorResult.builder()
                 .result(

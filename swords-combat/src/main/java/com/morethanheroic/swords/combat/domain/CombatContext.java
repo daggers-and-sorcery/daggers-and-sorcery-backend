@@ -10,7 +10,9 @@ import lombok.Setter;
 @Builder
 public class CombatContext {
 
-    //TODO: later if we introduce pvp use CombatEntity here only
+    private int combatId;
+
+    //TODO: later if we introduce pvp use SavedCombatEntity here only
     private final UserCombatEntity user;
     private final MonsterCombatEntity opponent;
 

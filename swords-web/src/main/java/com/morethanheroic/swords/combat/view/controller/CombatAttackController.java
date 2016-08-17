@@ -2,8 +2,8 @@ package com.morethanheroic.swords.combat.view.controller;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.combat.domain.Winner;
-import com.morethanheroic.swords.combat.service.newcb.AttackResult;
-import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
+import com.morethanheroic.swords.combat.domain.AttackResult;
+import com.morethanheroic.swords.combat.service.attack.AttackCombatCalculator;
 import com.morethanheroic.swords.combat.view.response.service.CombatAttackResponseBuilder;
 import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttackResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CombatAttackController {
 
-    private final CombatCalculator combatCalculator;
+    private final AttackCombatCalculator attackCombatCalculator;
     private final CombatAttackResponseBuilder combatAttackResponseBuilder;
 
     @RequestMapping(value = "/combat/attack", method = RequestMethod.GET)
     public Response attack(final UserEntity userEntity) {
-        final AttackResult attackResult = combatCalculator.attack(userEntity);
+        final AttackResult attackResult = attackCombatCalculator.attack(userEntity);
 
         return combatAttackResponseBuilder.build(CombatAttackResponseBuilderConfiguration.builder()
                 .userEntity(userEntity)

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.combat.service.newcb.CombatCalculator;
+import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;

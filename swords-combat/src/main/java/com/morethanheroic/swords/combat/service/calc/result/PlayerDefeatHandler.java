@@ -1,12 +1,9 @@
 package com.morethanheroic.swords.combat.service.calc.result;
 
-import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatContext;
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatMessageBuilder;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
@@ -28,7 +25,6 @@ public class PlayerDefeatHandler {
 
     private final SkillEntityFactory skillEntityFactory;
     private final HighestSkillCalculator highestSkillCalculator;
-    private final CombatMessageBuilder combatMessageBuilder;
     private final CombatMessageFactory combatMessageFactory;
 
     public List<CombatStep> handleDefeat(CombatContext combatContext) {
@@ -40,19 +36,6 @@ public class PlayerDefeatHandler {
         result.add(handleResurrection(userEntity, combatContext.getUser()));
 
         return result;
-    }
-
-    @Deprecated
-    public void handleDefeat(Combat combat, CombatResult combatResult) {
-        //Combat timeout happened...
-        if (!combatResult.isPlayerDied()) {
-            return;
-        }
-
-        final UserEntity userEntity = combat.getUserCombatEntity().getUserEntity();
-
-        handleDeath(userEntity, combatResult);
-        handleResurrection(userEntity, combat.getUserCombatEntity(), combatResult);
     }
 
     private List<CombatStep> handleDeath(UserEntity userEntity) {
@@ -82,33 +65,12 @@ public class PlayerDefeatHandler {
         userEntity.resetActiveExploration();
     }
 
-    @Deprecated
-    private void handleDeath(UserEntity userEntity, CombatResult combatResult) {
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
-
-        final List<SkillType> highestTreeSkill = highestSkillCalculator.getHighestSkills(skillEntity);
-        for (SkillType skillType : highestTreeSkill) {
-            final int experienceToRemove = calculateExperienceToRemove(skillType, skillEntity);
-
-            combatResult.addMessage(combatMessageBuilder.buildExperienceLossByDeathMessage(skillType, experienceToRemove));
-
-            skillEntity.decreaseExperience(skillType, experienceToRemove);
-        }
-    }
-
     private CombatStep handleResurrection(UserEntity userEntity, UserCombatEntity userCombatEntity) {
         userEntity.setBasicStats(userCombatEntity.getMaximumHealth(), userCombatEntity.getMaximumMana(), userEntity.getMovementPoints());
 
         return DefaultCombatStep.builder()
-                .message(combatMessageBuilder.buildResurrectionMessage())
-                .build();
-    }
-
-    @Deprecated
-    private void handleResurrection(UserEntity userEntity, UserCombatEntity userCombatEntity, CombatResult combatResult) {
-        combatResult.addMessage(combatMessageBuilder.buildResurrectionMessage());
-
-        userEntity.setBasicStats(userCombatEntity.getMaximumHealth(), userCombatEntity.getMaximumMana(), userEntity.getMovementPoints());
+             .message(combatMessageFactory.newMessage("resurrection", "COMBAT_MESSAGE_RESURRECTION"))
+             .build();
     }
 
     private int calculateExperienceToRemove(SkillType skillType, SkillEntity skillEntity) {
