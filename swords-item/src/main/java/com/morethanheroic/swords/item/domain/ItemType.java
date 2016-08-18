@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.item.domain;
 
+import org.apache.commons.lang.WordUtils;
+
 /**
  * Contains the available types of an item. the type decides for example which equipment spot does the item go on when
  * equiped etc.
@@ -25,10 +27,7 @@ public enum ItemType {
     STAFF,
     WAND,
     SPECTRE,
-    COIN,
-    NUT,
-    ORE,
-    BAR,
+    MONEY,
     ARROW,
     MATERIAL,
     TOOL,
@@ -40,5 +39,14 @@ public enum ItemType {
     BOOTS,
     HELM,
     LIQUID,
-    FOCUS;
+    PLATELEGS,
+    FOCUS,
+    ARMOR,
+    WEAPON,
+    PROJECTILE,
+    JEWELRY;
+
+    public String getName() {
+        return WordUtils.capitalize(name().toLowerCase().replace("_", " "));
+    }
 }

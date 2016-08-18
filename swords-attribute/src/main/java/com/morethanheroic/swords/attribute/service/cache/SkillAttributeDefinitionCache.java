@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -45,5 +43,15 @@ public class SkillAttributeDefinitionCache implements DefinitionCache<SkillAttri
     @Override
     public int getSize() {
         return skillAttributeDefinitionMap.size();
+    }
+
+    @Override
+    public List<SkillAttributeDefinition> getDefinitions() {
+        return Collections.unmodifiableList(new ArrayList<>(skillAttributeDefinitionMap.values()));
+    }
+
+    @Override
+    public boolean isDefinitionExists(SkillAttribute key) {
+        return skillAttributeDefinitionMap.containsKey(key);
     }
 }

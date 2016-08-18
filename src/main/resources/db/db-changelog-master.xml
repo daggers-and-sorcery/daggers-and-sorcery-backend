@@ -71,7 +71,33 @@
     <include file="changelog/20160629-2.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20160629-3.xml" relativeToChangelogFile="true"/>
 
-    <include file="changelog/20160714-1.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20160716-1.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20160714-2.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160719-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160720-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160721-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160724-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160730-1.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20160730-2.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160731-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160801-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160807-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160810-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160811-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160814-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160815-1.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20160804-1.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20160714-1.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

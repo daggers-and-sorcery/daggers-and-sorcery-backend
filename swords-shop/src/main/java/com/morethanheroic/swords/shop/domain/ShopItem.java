@@ -11,6 +11,8 @@ import lombok.ToString;
 public class ShopItem {
 
     private int shopId;
-    private int itemAmount;
+    private int amount;
+    private int buyPrice;
+    private int sellPrice;
     private ItemDefinition item;
 }

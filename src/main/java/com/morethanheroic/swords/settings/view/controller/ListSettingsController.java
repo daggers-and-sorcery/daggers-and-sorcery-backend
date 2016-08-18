@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.settings.view.controller;
 
-import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
-import com.morethanheroic.swords.settings.repository.domain.CombatSettingsMapper;
+import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
 import com.morethanheroic.swords.settings.service.SettingsListResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -17,13 +16,10 @@ public class ListSettingsController {
     private SettingsListResponseBuilder settingsListResponseBuilder;
 
     @Autowired
-    private CombatSettingsMapper combatSettingsMapper;
-
-    @Autowired
     private SettingsMapper settingsMapper;
 
     @RequestMapping(value = "/combat/settings/list", method = RequestMethod.GET)
-    public CharacterRefreshResponse getSettings(UserEntity userEntity) {
-        return settingsListResponseBuilder.build(userEntity, combatSettingsMapper.getAll(userEntity.getId()), settingsMapper.getSettings(userEntity.getId()));
+    public Response getSettings(UserEntity userEntity) {
+        return settingsListResponseBuilder.build(userEntity, settingsMapper.getSettings(userEntity.getId()));
     }
 }

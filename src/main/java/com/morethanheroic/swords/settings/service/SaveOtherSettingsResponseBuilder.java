@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.settings.service;
 
-import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
+import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,8 @@ public class SaveOtherSettingsResponseBuilder {
     @Autowired
     private ResponseFactory responseFactory;
 
-    public CharacterRefreshResponse build(UserEntity userEntity, String result) {
-        CharacterRefreshResponse response = responseFactory.newResponse(userEntity);
+    public Response build(UserEntity userEntity, String result) {
+        Response response = responseFactory.newResponse(userEntity);
 
         response.setData("result", result);
 

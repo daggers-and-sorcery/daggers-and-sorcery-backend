@@ -24,6 +24,10 @@ public class InjectAtReturnAspect {
     public Object injectAtReturn(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final Object result = proceedingJoinPoint.proceed();
 
+        if (result == null) {
+            return null;
+        }
+
         log.debug("Autowiring: " + result);
 
         autowireBeanFactory.autowireBean(result);

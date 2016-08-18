@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Getter
 @XmlRootElement(name = "shop")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Getter
 public class RawShopDefinition {
 
     private int id;

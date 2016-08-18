@@ -1,10 +1,11 @@
 package com.morethanheroic.swords.shop.service.loader;
 
+import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.service.loader.domain.RawShopDefinition;
 import com.morethanheroic.swords.shop.service.transformer.ShopDefinitionTransformer;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,15 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ShopDefinitionLoader {
+@RequiredArgsConstructor
+public class ShopDefinitionLoader implements DefinitionLoader<ShopDefinition> {
 
-    @Autowired
-    private NumericXmlDefinitionLoader numericXmlDefinitionLoader;
+    private final NumericXmlDefinitionLoader numericXmlDefinitionLoader;
+    private final ShopDefinitionTransformer shopDefinitionTransformer;
 
-    @Autowired
-    private ShopDefinitionTransformer shopDefinitionTransformer;
-
-    public List<ShopDefinition> loadShopDefinitions() throws IOException {
+    @Override
+    public List<ShopDefinition> loadDefinitions() throws IOException {
         return loadRawShopDefinitions().stream().map(shopDefinitionTransformer::transform).collect(Collectors.toList());
     }
 

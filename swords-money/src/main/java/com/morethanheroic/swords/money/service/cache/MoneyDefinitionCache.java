@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -48,5 +50,15 @@ public class MoneyDefinitionCache implements DefinitionCache<MoneyType, MoneyDef
     @Override
     public int getSize() {
         return moneyDefinitionMap.size();
+    }
+
+    @Override
+    public List<MoneyDefinition> getDefinitions() {
+        return Collections.unmodifiableList(new ArrayList<>(moneyDefinitionMap.values()));
+    }
+
+    @Override
+    public boolean isDefinitionExists(final MoneyType key) {
+        return moneyDefinitionMap.containsKey(key);
     }
 }

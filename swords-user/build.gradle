@@ -7,16 +7,12 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
     compile project(':common-memoize')
+    compile project(':common-entity')
     compile project(':common-security')
+    compile project(':common-dependency-injection')
 
     compile project(':swords-race')
 }
 
 apply plugin: 'spring-boot'
-
-apply plugin: 'checkstyle'
-checkstyle checkstyle_config
-
-//TODO: Re-enable
-//apply plugin: 'findbugs'
-//findbugs findbugs_config
+bootRepackage.enabled = false

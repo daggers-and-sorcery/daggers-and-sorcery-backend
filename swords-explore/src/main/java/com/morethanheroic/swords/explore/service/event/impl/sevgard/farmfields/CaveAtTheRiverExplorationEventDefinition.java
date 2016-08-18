@@ -1,48 +1,65 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-@Component
-public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDefinition {
+@ExplorationEvent
+public class CaveAtTheRiverExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+
+    private static final int EVENT_ID = 5;
 
     private static final List<Integer> POSSIBLE_OPPONENTS = Lists.newArrayList(7, 8, 9);
+
+    private static final int COMBAT_STAGE = 1;
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private CombatEvaluator combatEvaluator;
+    private CombatEventEntryEvaluator combatEventEntryEvaluator;
+
+    @Autowired
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
+
+    @Autowired
+    private CombatCalculator combatCalculator;
 
     private List<MonsterDefinition> possibleOpponents;
 
     @PostConstruct
     private void initialize() {
-        possibleOpponents = combatEvaluator.convertMonsterIdToDefinition(POSSIBLE_OPPONENTS);
+        possibleOpponents = combatEventEntryEvaluator.convertMonsterIdToDefinition(POSSIBLE_OPPONENTS);
     }
 
     @Override
     public int getId() {
-        return 5;
+        return EVENT_ID;
+    }
+
+    @Override
+    public ExplorationEventLocationType getLocation() {
+        return ExplorationEventLocationType.FARMFIELDS;
     }
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
         final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
-        final MonsterDefinition opponent = combatEvaluator.calculateOpponent(possibleOpponents);
+        final MonsterDefinition opponent = combatEventEntryEvaluator.calculateOpponent(possibleOpponents);
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -58,24 +75,56 @@ public class CaveAtTheRiverExplorationEventDefinition extends ExplorationEventDe
                         .build()
         );
 
-        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
 
-        explorationResult.addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatResult.getCombatMessages())
-                        .build()
-        );
+        explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if (!combatResult.isPlayerVictory()) {
-            return explorationResult;
+        if(!combatResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
 
-        explorationResult.addEventEntryResult(
-                TextExplorationEventEntryResult.builder()
-                        .content("You glance to the den and sense that there might be more wild animals nearby. You retreat to the river and follow a dirt path back to the fields. You return to Sevgard safely.")
-                        .build()
-        );
+        return explorationResult;
+    }
+
+    @Override
+    public ExplorationResult explore(UserEntity userEntity, int stage) {
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+
+        if (stage == COMBAT_STAGE) {
+            explorationResult.addEventEntryResult(
+                    TextExplorationEventEntryResult.builder()
+                            .content("You glance to the den and sense that there might be more wild animals nearby. You retreat to the river and follow a dirt path back to the fields. You return to Sevgard safely.")
+                            .build()
+            );
+
+            userEntity.resetActiveExploration();
+        }
 
         return explorationResult;
+    }
+
+    @Override
+    public ExplorationResult info(UserEntity userEntity, int stage) {
+        if (stage == COMBAT_STAGE) {
+            if (combatCalculator.isCombatRunning(userEntity)) {
+                return explorationResultBuilderFactory
+                        .newExplorationResultBuilder(userEntity)
+                        .newMessageEntry("CAVE_AT_THE_RIVER_EXPLORATION_EVENT_ENTRY_1", combatCalculator.getOpponentInRunningCombat(userEntity).getName())
+                        .continueCombatEntry()
+                        .build();
+            } else {
+                return explorationResultBuilderFactory
+                        .newExplorationResultBuilder(userEntity)
+                        .continueCombatEntry()
+                        .build();
+            }
+        }
+
+        return explorationResultFactory.newExplorationResult();
+    }
+
+    @Override
+    public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        return true;
     }
 }

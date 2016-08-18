@@ -1,43 +1,52 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component
-public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEventDefinition {
+@ExplorationEvent
+public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+
+    private static final int EVENT_ID = 7;
 
     private static final int GOBLIN_PIKEMAN_MONSTER_ID = 1;
     private static final int GOBLIN_SHAMAN_MONSTER_ID = 3;
+
+    private static final int COMBAT_STAGE = 1;
+    private static final int SECOND_COMBAT_STAGE = 2;
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private CombatEvaluator combatEvaluator;
+    private CombatEventEntryEvaluator combatEventEntryEvaluator;
+
+    @Autowired
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
     private MonsterDefinition goblinPikeman;
     private MonsterDefinition goblinShaman;
 
     @PostConstruct
     private void initialize() {
-        goblinPikeman = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_PIKEMAN_MONSTER_ID);
-        goblinShaman = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_SHAMAN_MONSTER_ID);
+        goblinPikeman = combatEventEntryEvaluator.convertMonsterIdToDefinition(GOBLIN_PIKEMAN_MONSTER_ID);
+        goblinShaman = combatEventEntryEvaluator.convertMonsterIdToDefinition(GOBLIN_SHAMAN_MONSTER_ID);
     }
 
     @Override
     public int getId() {
-        return 7;
+        return EVENT_ID;
     }
 
     @Override
@@ -58,42 +67,63 @@ public class GoblinRaidingPartyExplorationEventDefinition extends ExplorationEve
                         .build()
         );
 
-        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, goblinPikeman);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, goblinPikeman);
 
-        explorationResult.addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatResult.getCombatMessages())
-                        .build()
-        );
+        explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if (!combatResult.isPlayerVictory()) {
-            return explorationResult;
+        if(!combatResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
-
-        explorationResult.addEventEntryResult(
-                TextExplorationEventEntryResult.builder()
-                        .content("The Goblin Pikeman falls to the ground, and you whirl around. You caught the first Goblin Pikemen off guard, but the rest of them are ready.")
-                        .build()
-        );
-
-        final CombatResult secondCombatResult = combatEvaluator.calculateCombat(userEntity, goblinShaman);
-
-        explorationResult.addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(secondCombatResult.getCombatMessages())
-                        .build()
-        );
-
-        if (!combatResult.isPlayerVictory()) {
-            return explorationResult;
-        }
-
-        explorationResult.addEventEntryResult(
-                TextExplorationEventEntryResult.builder()
-                        .content("The Goblin Shaman falls to the ground. You glare at the remainder. You are about to attack when you realize the goblins are running away. Cowards! You sprint after them, but they have a head start. The goblins disappear into the woods like rats, and it is impossible to follow them. You retreat to the farmer and describe the situation. You insist on staying the night in case the goblins return, and for your trouble, the farmer gives you a pouch of bronze coins.")
-                        .build()
-        );
 
         return explorationResult;
+    }
+
+    @Override
+    public ExplorationEventLocationType getLocation() {
+        return ExplorationEventLocationType.FARMFIELDS;
+    }
+
+    @Override
+    public ExplorationResult explore(UserEntity userEntity, int stage) {
+        if (stage == COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_1")
+                    .newCombatEntry(goblinShaman.getId(), EVENT_ID, SECOND_COMBAT_STAGE)
+                    .build();
+        } else if (stage == SECOND_COMBAT_STAGE) {
+            userEntity.resetActiveExploration();
+
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_2")
+                    .build();
+        }
+
+        return explorationResultFactory.newExplorationResult();
+    }
+
+    @Override
+    public ExplorationResult info(UserEntity userEntity, int stage) {
+        if (stage == COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_3")
+                    .continueCombatEntry()
+                    .build();
+        } else if (stage == SECOND_COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_1")
+                    .continueCombatEntry()
+                    .build();
+        }
+
+        return explorationResultFactory.newExplorationResult();
+    }
+
+    @Override
+    public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        return true;
     }
 }

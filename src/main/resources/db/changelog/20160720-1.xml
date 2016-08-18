@@ -1,0 +1,33 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160720-1">
+        <insert tableName="news">
+            <column name="title" value="Scavenging rework and bugfixes!"/>
+            <column name="release_date" value="2016-07-20 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are happy to announce that by popular demand we improved the scavenging interface.
+
+Improvements:
+- Added description to the scavenging skill.
+- Fully redesigned the scavenging interface to make it easier to use and more in line with the graphical quality of the site. We got a lot of feedback from players that they don't know what is scavenging and how to use it. Hopefully, this redesign helps a bit on this problem.
+
+Bugfixes:
+- Fixed the inconsistencies in the descriptions of the combat attributes on the character page.
+- The Goblin Chieftain's reward chest dropped 'Bronze coins' as unidentified items. The event was fixed and the unidentified coins were deleted. The gained alteration experience was removed from characters who abused the bug. Big thanks to 'Sidewalk' for the bugreport.
+- Fixed that sometimes when players explored they got an empty exploration results in the Whispering Woods region.
+
+Next time we are focusing on more bugfixes (sadly we have a few more bugs to fix still) and improvements on the new equipment released by the Whispering Woods update. The long awaited 'Bronze chestplate' is soon coming to the game.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

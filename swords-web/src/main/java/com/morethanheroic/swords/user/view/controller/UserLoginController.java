@@ -57,7 +57,7 @@ public class UserLoginController {
                 metadataEntity.setValue("ALREADY_SHOWN");
             }
 
-            userFacade.updateLastLoginTime(userEntity);
+            userEntity.setLastLoginDateToNow();
         } else {
             response.setData("success", "false");
             response.setData("error", "Wrong username or password!");

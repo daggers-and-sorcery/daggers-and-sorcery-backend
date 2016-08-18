@@ -16,13 +16,11 @@ public class DropDefinitionTransformer {
     private DropAmountDefinitionTransformer dropAmountDefinitionTransformer;
 
     public DropDefinition transform(RawDropDefinition rawDropDefinition) {
-        DropDefinition.DropDefinitionBuilder dropDefinitionBuilder = new DropDefinition.DropDefinitionBuilder();
-
-        dropDefinitionBuilder.setAmount(dropAmountDefinitionTransformer.transform(rawDropDefinition.getAmount()));
-        dropDefinitionBuilder.setItem(itemDefinitionCache.getDefinition(rawDropDefinition.getItem()));
-        dropDefinitionBuilder.setChance(rawDropDefinition.getChance());
-        dropDefinitionBuilder.setIdentified(rawDropDefinition.isIdentified());
-
-        return dropDefinitionBuilder.build();
+        return DropDefinition.builder()
+                .amount(dropAmountDefinitionTransformer.transform(rawDropDefinition.getAmount()))
+                .item(itemDefinitionCache.getDefinition(rawDropDefinition.getItem()))
+                .chance(rawDropDefinition.getChance())
+                .identified(rawDropDefinition.isIdentified())
+                .build();
     }
 }

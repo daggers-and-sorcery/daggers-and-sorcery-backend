@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -36,12 +34,22 @@ public class MetadataDefinitionCache implements DefinitionCache<String, Metadata
     }
 
     @Override
-    public MetadataDefinition getDefinition(String key) {
+    public MetadataDefinition getDefinition(final String key) {
         return metadataDefinitionsMap.get(key);
     }
 
     @Override
     public int getSize() {
         return metadataDefinitionsMap.size();
+    }
+
+    @Override
+    public List<MetadataDefinition> getDefinitions() {
+        return Collections.unmodifiableList(new ArrayList<>(metadataDefinitionsMap.values()));
+    }
+
+    @Override
+    public boolean isDefinitionExists(final String key) {
+        return metadataDefinitionsMap.containsKey(key);
     }
 }

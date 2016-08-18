@@ -5,8 +5,11 @@ import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculato
 import com.morethanheroic.swords.cache.value.ValueCache;
 import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
 import com.morethanheroic.swords.equipment.repository.domain.EquipmentMapper;
+import com.morethanheroic.swords.equipment.service.EquipmentSlotMapper;
 import com.morethanheroic.swords.equipment.service.EquipmentValueCacheProvider;
+import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemRequirementDefinition;
@@ -39,6 +42,9 @@ public class EquipmentEntity {
     private InventoryFacade inventoryFacade;
 
     @Autowired
+    private InventoryEntityFactory inventoryEntityFactory;
+
+    @Autowired
     private EquipmentValueCacheProvider cacheableEquipmentProvider;
 
     private final UserEntity userEntity;
@@ -54,12 +60,12 @@ public class EquipmentEntity {
     }
 
     public boolean equipItem(ItemDefinition item, boolean identified) {
-        final EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
+        final EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());
 
         if (equipmentSlot == EquipmentSlot.OFFHAND) {
             final ItemDefinition weapon = itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(EquipmentSlot.WEAPON));
 
-            if (getEquipmentIdOnSlot(EquipmentSlot.WEAPON) != 0 && equipmentSlotMapper.isTwoHandedWeapon(weapon.getType())) {
+            if (getEquipmentIdOnSlot(EquipmentSlot.WEAPON) != 0 && equipmentSlotMapper.isTwoHandedWeapon(weapon.getSubtype())) {
                 //TODO: unequip the weapon and equip the offhand item
                 return false;
             }
@@ -70,13 +76,19 @@ public class EquipmentEntity {
 
         //Unequip the previous equipment first because the calculation should be good without it
         unequipItem(equipmentSlot);
-        if (equipmentSlotMapper.isTwoHandedWeapon(item.getType())) {
+        if (equipmentSlotMapper.isTwoHandedWeapon(item.getSubtype())) {
             unequipItem(EquipmentSlot.OFFHAND);
         }
 
         if (canEquip(item)) {
             equipWithoutCheck(item, identified);
-            inventoryEntity.removeItem(item.getId(), 1, identified);
+
+            final IdentificationType identificationType = identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED;
+            if (equipmentSlot != EquipmentSlot.QUIVER) {
+                inventoryEntity.removeItem(item, 1, identificationType);
+            } else {
+                inventoryEntity.removeItem(item, inventoryEntity.getItemAmount(item, identificationType), identificationType);
+            }
 
             return true;
         } else {
@@ -97,7 +109,7 @@ public class EquipmentEntity {
 
     private void equipWithoutCheck(ItemDefinition item, boolean identified) {
         final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
-        final EquipmentSlot slot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getType());
+        final EquipmentSlot slot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());
 
         switch (slot) {
             case WEAPON:
@@ -123,6 +135,39 @@ public class EquipmentEntity {
                 equipmentDatabaseEntity.setBootsIdentified(identified);
 
                 equipmentMapper.equipBoots(userEntity.getId(), item.getId(), identified);
+                break;
+            case AMULET:
+                equipmentDatabaseEntity.setAmulet(item.getId());
+                equipmentDatabaseEntity.setAmuletIdentified(identified);
+
+                equipmentMapper.equipAmulet(userEntity.getId(), item.getId(), identified);
+                break;
+            case CHEST:
+                equipmentDatabaseEntity.setChest(item.getId());
+                equipmentDatabaseEntity.setChestIdentified(identified);
+
+                equipmentMapper.equipChest(userEntity.getId(), item.getId(), identified);
+                break;
+            case LEGS:
+                equipmentDatabaseEntity.setLegs(item.getId());
+                equipmentDatabaseEntity.setLegsIdentified(identified);
+
+                equipmentMapper.equipLegs(userEntity.getId(), item.getId(), identified);
+                break;
+            case QUIVER:
+                final int quiverAmount = inventoryEntityFactory.getEntity(userEntity.getId()).getItemAmount(item, identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED);
+
+                equipmentDatabaseEntity.setQuiver(item.getId());
+                equipmentDatabaseEntity.setQuiverIdentified(identified);
+                equipmentDatabaseEntity.setQuiverAmount(quiverAmount);
+
+                equipmentMapper.equipQuiver(userEntity.getId(), item.getId(), identified, quiverAmount);
+                break;
+            case HELM:
+                equipmentDatabaseEntity.setHelm(item.getId());
+                equipmentDatabaseEntity.setHelmIdentified(identified);
+
+                equipmentMapper.equipHelm(userEntity.getId(), item.getId(), identified);
                 break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
@@ -185,6 +230,85 @@ public class EquipmentEntity {
                 }
 
                 return previousBoots;
+            case AMULET:
+                final int previousAmulet = equipmentDatabaseEntity.getAmulet();
+
+                if (previousAmulet != 0) {
+                    inventoryEntity.addItem(previousAmulet, 1, equipmentDatabaseEntity.isAmuletIdentified());
+
+                    equipmentDatabaseEntity.setAmulet(0);
+                    equipmentDatabaseEntity.setAmuletIdentified(true);
+
+                    equipmentMapper.equipAmulet(userEntity.getId(), 0, true);
+                }
+
+                return previousAmulet;
+            case CHEST:
+                final int previousChest = equipmentDatabaseEntity.getChest();
+
+                if (previousChest != 0) {
+                    inventoryEntity.addItem(previousChest, 1, equipmentDatabaseEntity.isChestIdentified());
+
+                    equipmentDatabaseEntity.setChest(0);
+                    equipmentDatabaseEntity.setChestIdentified(true);
+
+                    equipmentMapper.equipChest(userEntity.getId(), 0, true);
+                }
+
+                return previousChest;
+            case LEGS:
+                final int previousLegs = equipmentDatabaseEntity.getLegs();
+
+                if (previousLegs != 0) {
+                    inventoryEntity.addItem(previousLegs, 1, equipmentDatabaseEntity.isLegsIdentified());
+
+                    equipmentDatabaseEntity.setLegs(0);
+                    equipmentDatabaseEntity.setLegsIdentified(true);
+
+                    equipmentMapper.equipLegs(userEntity.getId(), 0, true);
+                }
+
+                return previousLegs;
+            case QUIVER:
+                final int previousQuiver = equipmentDatabaseEntity.getQuiver();
+
+                if (previousQuiver != 0) {
+                    inventoryEntity.addItem(previousQuiver, equipmentDatabaseEntity.getQuiverAmount(), equipmentDatabaseEntity.isQuiverIdentified());
+
+                    equipmentDatabaseEntity.setQuiver(0);
+                    equipmentDatabaseEntity.setQuiverIdentified(true);
+                    equipmentDatabaseEntity.setQuiverAmount(0);
+
+                    equipmentMapper.equipQuiver(userEntity.getId(), 0, true, 0);
+                }
+
+                return previousQuiver;
+            case HELM:
+                final int previousHelm = equipmentDatabaseEntity.getHelm();
+
+                if (previousHelm != 0) {
+                    inventoryEntity.addItem(previousHelm, 1, equipmentDatabaseEntity.isHelmIdentified());
+
+                    equipmentDatabaseEntity.setHelm(0);
+                    equipmentDatabaseEntity.setHelmIdentified(true);
+
+                    equipmentMapper.equipHelm(userEntity.getId(), 0, true);
+                }
+
+                return previousHelm;
+            case BRACER:
+                final int previousBracer = equipmentDatabaseEntity.getBracer();
+
+                if (previousBracer != 0) {
+                    inventoryEntity.addItem(previousBracer, 1, equipmentDatabaseEntity.isBracerIdentified());
+
+                    equipmentDatabaseEntity.setBracer(0);
+                    equipmentDatabaseEntity.setBracerIdentified(true);
+
+                    equipmentMapper.equipBracer(userEntity.getId(), 0, true);
+                }
+
+                return previousBracer;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
@@ -229,6 +353,8 @@ public class EquipmentEntity {
                 return equipmentDatabaseEntity.getChest();
             case LEGS:
                 return equipmentDatabaseEntity.getLegs();
+            case QUIVER:
+                return equipmentDatabaseEntity.getQuiver();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
         }
@@ -259,8 +385,28 @@ public class EquipmentEntity {
                 return equipmentDatabaseEntity.isChestIdentified();
             case LEGS:
                 return equipmentDatabaseEntity.isLegsIdentified();
+            case QUIVER:
+                return equipmentDatabaseEntity.isQuiverIdentified();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
+        }
+    }
+
+    public int getAmountOnSlot(EquipmentSlot equipmentSlot) {
+        if (equipmentSlot == EquipmentSlot.QUIVER) {
+            return equipmentProviderIntegerValueCache.getEntity().getQuiverAmount();
+        }
+
+        return 1;
+    }
+
+    public void decreaseAmmunition(final int amount) {
+        final int equippedAmount = getAmountOnSlot(EquipmentSlot.QUIVER);
+
+        if (equippedAmount - amount <= 0) {
+            equipmentMapper.equipQuiver(userEntity.getId(), 0, true, 0);
+        } else {
+            equipmentMapper.equipQuiver(userEntity.getId(), getEquipmentIdOnSlot(EquipmentSlot.QUIVER), isEquipmentIdentifiedOnSlot(EquipmentSlot.QUIVER), equippedAmount - amount);
         }
     }
 }

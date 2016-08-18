@@ -21,6 +21,10 @@ public class RawItemDefinition {
     private int id;
     private String name;
     private ItemType type;
+
+    @Getter
+    private ItemType subtype;
+
     private boolean usable;
     private int weight;
     private boolean equipment;

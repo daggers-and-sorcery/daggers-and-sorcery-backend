@@ -39,6 +39,8 @@ include 'swords-event'
 include 'swords-skill-smithing'
 include 'swords-ladder'
 include 'swords-shop'
+include 'swords-admin'
+include 'common-entity'
 
 include 'swords-forum'
 include 'swords-forum'

@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160720-1">
+        <insert tableName="news">
+            <column name="title" value="New equipment!"/>
+            <column name="release_date" value="2016-07-21 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+Lots of new equipment is finally out. We are plan on releasing even more soon.
+
+Improvements:
+- Added more drops to the Goblin chieftain's reward chest.
+- The 'Bronze chestplate' and the 'Bronze platelegs' are made equipable and a recipe is released for both of them.
+- Using the 'Bronze chestplate' the players are able to get experience in the 'Heavy armor' skill.
+- Redesigned the 'Bronze gloves', 'Bronze boots', 'Leather gloves', 'Leather boots' items.
+- Added the 'Leather tunic' and 'Recipe: Leather tunic' to the game.
+- Using the 'Leather tunic' the players are able to get experience in the 'Light armor' skill.
+
+We are aware that until the ranging skills are released the bronze equipment is far superior to the leather one but this will be addressed once the ranging skills are out.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

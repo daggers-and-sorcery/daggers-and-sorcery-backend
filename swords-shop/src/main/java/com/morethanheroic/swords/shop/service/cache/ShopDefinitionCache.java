@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.shop.service.cache;
 
+import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.service.loader.ShopDefinitionLoader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
-public class ShopDefinitionCache {
+public class ShopDefinitionCache implements DefinitionCache<Integer, ShopDefinition> {
 
     @Autowired
     private ShopDefinitionLoader shopDefinitionLoader;
@@ -21,18 +21,30 @@ public class ShopDefinitionCache {
 
     @PostConstruct
     public void init() throws IOException {
-        final List<ShopDefinition> rawShopDefinition = shopDefinitionLoader.loadShopDefinitions();
+        final List<ShopDefinition> rawShopDefinition = shopDefinitionLoader.loadDefinitions();
 
         for (ShopDefinition shopDefinition : rawShopDefinition) {
             shopDefinitionMap.put(shopDefinition.getId(), shopDefinition);
         }
     }
 
-    public ShopDefinition getShopDefinition(int shopId) {
+    @Override
+    public ShopDefinition getDefinition(Integer shopId) {
         return shopDefinitionMap.get(shopId);
     }
 
-    public boolean isShopExists(int shopId) {
+    @Override
+    public int getSize() {
+        return shopDefinitionMap.size();
+    }
+
+    @Override
+    public List<ShopDefinition> getDefinitions() {
+        return Collections.unmodifiableList(new ArrayList<>(shopDefinitionMap.values()));
+    }
+
+    @Override
+    public boolean isDefinitionExists(Integer shopId) {
         return shopDefinitionMap.containsKey(shopId);
     }
 }

@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.3.3.RELEASE'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.4.0.RELEASE'
     }
 }
 
@@ -82,7 +82,12 @@ allprojects {
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
         compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.60'
+        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.79'
+    }
+
+    compileJava {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 
@@ -94,7 +99,6 @@ dependencies {
         exclude(module: 'commons-logging')
     }
     compile group: 'org.springframework.security', name: 'spring-security-core'
-    compile group: 'org.springframework.session', name: 'spring-session', version: '1.0.2.RELEASE'
 
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
         exclude(module: 'commons-logging')
@@ -110,7 +114,7 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-session', version: '1.4.13'
     compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.0'
-    compile group: 'com.morethanheroic', name: 'common-application', version: '1.0.3'
+    compile group: 'com.morethanheroic', name: 'common-application', version: '1.0.5'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'

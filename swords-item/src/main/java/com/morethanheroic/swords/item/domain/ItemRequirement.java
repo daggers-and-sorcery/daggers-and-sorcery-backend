@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.item.domain;
 
+import org.apache.commons.lang.WordUtils;
+
 /**
  * Contains the type of requirements an item can have. If all of the requirements not met then the user can't equip
  * the item (eg: 8 strength needed to equip or 30 attack to wear).
@@ -59,5 +61,9 @@ public enum ItemRequirement {
     SPECTRE,
     SCAVENGING,
     COOKING,
-    FOCUS
+    FOCUS;
+
+    public String getName() {
+        return WordUtils.capitalize(name().toLowerCase().replace("_", " "));
+    }
 }

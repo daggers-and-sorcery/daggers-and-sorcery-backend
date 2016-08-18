@@ -1,28 +1,32 @@
 package com.morethanheroic.swords.combat.domain.effect.entry.spell;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.service.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
+import com.morethanheroic.swords.user.domain.UserEntity;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class FireballSpellEffectDefinition extends CombatEffectDefinition {
 
-    @Autowired
-    private DiceRollCalculator diceRollCalculator;
-
-    @Autowired
-    private SkillEntityFactory skillEntityFactory;
+    private final DiceRollCalculator diceRollCalculator;
+    private final SkillEntityFactory skillEntityFactory;
+    private final CombatMessageFactory combatMessageFactory;
+    private final CombatCalculator combatCalculator;
 
     @Override
     public void apply(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
@@ -31,8 +35,9 @@ public class FireballSpellEffectDefinition extends CombatEffectDefinition {
         int damage = diceRollCalculator.rollDices(diceRollCalculationContext);
 
         if (effectApplyingContext.getSource().isUser()) {
-            final SkillEntity skillEntity = skillEntityFactory
-                    .getSkillEntity(((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity());
+            final UserEntity userEntity = ((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity();
+
+            final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
 
             if (skillEntity.getLevel(SkillType.DESTRUCTION) < 5) {
                 damage += skillEntity.getLevel(SkillType.DESTRUCTION);
@@ -40,18 +45,15 @@ public class FireballSpellEffectDefinition extends CombatEffectDefinition {
                 damage += 5;
             }
 
-            final CombatMessage combatMessage = new CombatMessage();
-
-            combatMessage.addData("damage", damage);
-            combatMessage.addData("icon", "blood");
-            combatMessage.addData("icon_color", "blue");
-            combatMessage.addData("message", "Your opponent is damaged for ${damage} health!");
-
-            effectApplyingContext.getCombatResult().addMessage(combatMessage);
+            effectApplyingContext.addCombatStep(
+                DefaultCombatStep.builder()
+                .message(combatMessageFactory.newMessage("damage_done", "FIREBALL_SPELL_DAMAGE_DONE", damage))
+                .build()
+            );
 
             effectApplyingContext.getDestination().getCombatEntity().decreaseActualHealth(damage);
 
-            effectApplyingContext.getCombatResult().addRewardXp(SkillType.DESTRUCTION, 20);
+            combatCalculator.addCombatExperience(userEntity,SkillType.DESTRUCTION, 20);
 
             skillEntity.increaseExperience(SkillType.DESTRUCTION, 20);
         } else {

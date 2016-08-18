@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,16 @@ public class RecipeDefinitionCache implements DefinitionCache<Integer, RecipeDef
         }
 
         throw new MissingRecipeException(recipeId);
+    }
+
+    @Override
+    public List<RecipeDefinition> getDefinitions() {
+        return Collections.unmodifiableList(new ArrayList<>(recipeDefinitionMap.values()));
+    }
+
+    @Override
+    public boolean isDefinitionExists(Integer key) {
+        return recipeDefinitionMap.containsKey(key);
     }
 
     @Override

@@ -1,10 +1,14 @@
 package com.morethanheroic.swords.user.domain;
 
+import java.time.Instant;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
-
-import java.time.Instant;
+import lombok.ToString;
 
 /**
  * Contains the data of an user. These methods doesn't take the attribute modifications and maximum/minimum values
@@ -12,14 +16,17 @@ import java.time.Instant;
  * want to change these attributes use the classes that contains the logic for the changings and don't use this class
  * directly!
  */
-public class UserEntity {
+@Configurable
+@ToString(of = {"id", "username"})
+public class UserEntity implements Entity {
+
+    @Autowired
+    private UserMapper userMapper;
 
     private final UserDatabaseEntity userDatabaseEntity;
-    private final UserMapper userMapper;
 
-    public UserEntity(int userId, UserMapper userMapper) {
-        this.userDatabaseEntity = userMapper.findById(userId);
-        this.userMapper = userMapper;
+    public UserEntity(final UserDatabaseEntity userDatabaseEntity) {
+        this.userDatabaseEntity = userDatabaseEntity;
     }
 
     public int getHealthPoints() {
@@ -56,6 +63,7 @@ public class UserEntity {
         return userDatabaseEntity.getLastRegenerationDate();
     }
 
+    @Override
     public int getId() {
         return userDatabaseEntity.getId();
     }
@@ -74,6 +82,10 @@ public class UserEntity {
 
     public Instant getLastLoginDate() {
         return userDatabaseEntity.getLastLoginDate();
+    }
+
+    public void setLastLoginDateToNow() {
+        userMapper.updateLastLoginDate(getId());
     }
 
     public void setBasicStats(int health, int mana, int movement) {

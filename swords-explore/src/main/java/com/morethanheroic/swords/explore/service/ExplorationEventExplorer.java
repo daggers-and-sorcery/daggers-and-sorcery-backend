@@ -7,6 +7,7 @@ import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -38,14 +39,21 @@ public class ExplorationEventExplorer {
     private UserBasicAttributeManipulator basicAttributeManipulator;
 
     @Transactional
-    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final int nextState) {
+    public ExplorationResult exploreNext(final UserEntity userEntity, final SessionEntity sessionEntity) {
+        return explore(userEntity, sessionEntity, explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent()).getLocation(), userEntity.getActiveExplorationState());
+    }
+
+    @Transactional
+    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationEventLocationType location, final int nextState) {
         if (!canExplore(userEntity, nextState)) {
             return buildFailedExplorationResult();
         }
 
-        basicAttributeManipulator.decreaseMovement(userEntity, 1);
+        if (nextState == 0) {
+            basicAttributeManipulator.decreaseMovement(userEntity, 1);
+        }
 
-        return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity, nextState));
+        return buildSuccessfulExplorationResult(userEntity, explorationContextFactory.newExplorationContext(userEntity, sessionEntity, location, nextState));
     }
 
     private boolean canExplore(final UserEntity userEntity, int nextState) {

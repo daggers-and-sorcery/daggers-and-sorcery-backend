@@ -1,40 +1,49 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component
-public class TheBridgeExplorationEventDefinition extends ExplorationEventDefinition {
+@ExplorationEvent
+public class TheBridgeExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+
+    private static final int EVENT_ID = 4;
 
     private static final int GOBLIN_GUARD_MONSTER_ID = 2;
+
+    private static final int COMBAT_STAGE = 1;
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private CombatEvaluator combatEvaluator;
+    private CombatEventEntryEvaluator combatEventEntryEvaluator;
+
+    @Autowired
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
     private MonsterDefinition opponent;
 
     @PostConstruct
     private void initialize() {
-        opponent = combatEvaluator.convertMonsterIdToDefinition(GOBLIN_GUARD_MONSTER_ID);
+        opponent = combatEventEntryEvaluator.convertMonsterIdToDefinition(GOBLIN_GUARD_MONSTER_ID);
     }
 
     @Override
     public int getId() {
-        return 4;
+        return EVENT_ID;
     }
 
     @Override
@@ -55,24 +64,54 @@ public class TheBridgeExplorationEventDefinition extends ExplorationEventDefinit
                         .build()
         );
 
-        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
 
-        explorationResult .addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatResult.getCombatMessages())
-                        .build()
-        );
+        explorationResult .addEventEntryResult(combatResult.getResult());
 
-        if (!combatResult.isPlayerVictory()) {
-            return explorationResult;
+        if(!combatResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
 
-        explorationResult.addEventEntryResult(
-                TextExplorationEventEntryResult.builder()
-                        .content("While the Goblin Guard's body washes away, you are drawn to his cookfire. The rat is charred on one side, but the other side still appears fine. You remove the rat from the spit and eat the savory parts while you visit the nearby farms. Once you finish, you throw the charred bits into a pig trough. Not too bad. Rats taste like chicken.")
-                        .build()
-        );
+        return explorationResult;
+    }
+
+    @Override
+    public ExplorationEventLocationType getLocation() {
+        return ExplorationEventLocationType.FARMFIELDS;
+    }
+
+    @Override
+    public ExplorationResult explore(UserEntity userEntity, int stage) {
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+
+        if (stage == COMBAT_STAGE) {
+            explorationResult.addEventEntryResult(
+                    TextExplorationEventEntryResult.builder()
+                            .content("While the Goblin Guard's body washes away, you are drawn to his cookfire. The rat is charred on one side, but the other side still appears fine. You remove the rat from the spit and eat the savory parts while you visit the nearby farms. Once you finish, you throw the charred bits into a pig trough. Not too bad. Rats taste like chicken.")
+                            .build()
+            );
+
+            userEntity.resetActiveExploration();
+        }
 
         return explorationResult;
+    }
+
+    @Override
+    public ExplorationResult info(UserEntity userEntity, int stage) {
+        if (stage == COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("THE_BRIDGE_EXPLORATION_EVENT_ENTRY_1")
+                    .continueCombatEntry()
+                    .build();
+        }
+
+        return explorationResultFactory.newExplorationResult();
+    }
+
+    @Override
+    public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        return true;
     }
 }

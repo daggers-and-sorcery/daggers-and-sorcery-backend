@@ -1,40 +1,49 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.CombatEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component
-public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEventDefinition {
+@ExplorationEvent
+public class OneBanditIsNoBanditExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+
+    private static final int EVENT_ID = 3;
 
     private static final int BANDIT_BRIGAND_MONSTER_ID = 10;
+
+    private static final int COMBAT_STAGE = 1;
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
 
     @Autowired
-    private CombatEvaluator combatEvaluator;
+    private CombatEventEntryEvaluator combatEventEntryEvaluator;
+
+    @Autowired
+    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
     private MonsterDefinition opponent;
 
     @PostConstruct
     private void initialize() {
-        opponent = combatEvaluator.convertMonsterIdToDefinition(BANDIT_BRIGAND_MONSTER_ID);
+        opponent = combatEventEntryEvaluator.convertMonsterIdToDefinition(BANDIT_BRIGAND_MONSTER_ID);
     }
 
     @Override
     public int getId() {
-        return 3;
+        return EVENT_ID;
     }
 
     @Override
@@ -51,24 +60,54 @@ public class OneBanditIsNoBanditExplorationEventDefinition extends ExplorationEv
                         .build()
         );
 
-        final CombatResult combatResult = combatEvaluator.calculateCombat(userEntity, opponent);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
 
-        explorationResult.addEventEntryResult(
-                CombatExplorationEventEntryResult.builder()
-                        .combatMessages(combatResult.getCombatMessages())
-                        .build()
-        );
+        explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if (!combatResult.isPlayerVictory()) {
-            return explorationResult;
+        if(!combatResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
 
-        explorationResult.addEventEntryResult(
-                TextExplorationEventEntryResult.builder()
-                        .content("As soon as the Bandit Brigand falls, you hear a rush of feathers. Massive, black crows descend upon the body, and you run away as their caws reach a fever pitch. You burst into Pete the Farmer's home and struggle to catch your breath. As you recover, you search for Pete the Farmer, but he is nowhere to be found. He must be out in the fields. You debate on waiting for him but decide against it. You write the farmer a concerned note and place it on the kitchen table. You linger in the doorway before leaving Pete the Farmer's house. You take a different path back to Sevgard.")
-                        .build()
-        );
+        return explorationResult;
+    }
+
+    @Override
+    public ExplorationEventLocationType getLocation() {
+        return ExplorationEventLocationType.FARMFIELDS;
+    }
+
+    @Override
+    public ExplorationResult explore(UserEntity userEntity, int stage) {
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+
+        if (stage == COMBAT_STAGE) {
+            explorationResult.addEventEntryResult(
+                    TextExplorationEventEntryResult.builder()
+                            .content("As soon as the Bandit Brigand falls, you hear a rush of feathers. Massive, black crows descend upon the body, and you run away as their caws reach a fever pitch. You burst into Pete the Farmer's home and struggle to catch your breath. As you recover, you search for Pete the Farmer, but he is nowhere to be found. He must be out in the fields. You debate on waiting for him but decide against it. You write the farmer a concerned note and place it on the kitchen table. You linger in the doorway before leaving Pete the Farmer's house. You take a different path back to Sevgard.")
+                            .build()
+            );
+
+            userEntity.resetActiveExploration();
+        }
 
         return explorationResult;
+    }
+
+    @Override
+    public ExplorationResult info(UserEntity userEntity, int stage) {
+        if (stage == COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("ONE_BANDIT_IS_NO_BANDIT_EXPLORATION_EVENT_ENTRY_1")
+                    .continueCombatEntry()
+                    .build();
+        }
+
+        return explorationResultFactory.newExplorationResult();
+    }
+
+    @Override
+    public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        return true;
     }
 }

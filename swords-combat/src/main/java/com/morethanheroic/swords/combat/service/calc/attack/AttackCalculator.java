@@ -1,9 +1,12 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
+import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
+import com.morethanheroic.swords.combat.domain.step.CombatStep;
+
+import java.util.List;
 
 public interface AttackCalculator {
 
-    void calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatResult result);
+    List<CombatStep> calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext);
 }

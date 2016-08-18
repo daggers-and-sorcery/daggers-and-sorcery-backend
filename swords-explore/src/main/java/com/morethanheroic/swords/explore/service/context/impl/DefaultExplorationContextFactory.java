@@ -6,6 +6,7 @@ import com.morethanheroic.swords.explore.service.ExplorationEventChooser;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -23,11 +24,11 @@ public class DefaultExplorationContextFactory implements ExplorationContextFacto
     @Autowired
     private ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
-    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, final int nextStage) {
+    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationEventLocationType location, final int nextStage) {
         final ExplorationEventDefinition explorationEvent;
 
         if (userEntity.getActiveExplorationEvent() == NO_EVENT) {
-            explorationEvent = explorationEventChooser.getEvent();
+            explorationEvent = explorationEventChooser.getEvent(location);
         } else {
             explorationEvent = explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent());
         }

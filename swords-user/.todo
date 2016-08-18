@@ -1,3 +1,0 @@
- [Refactor]:
-    - Remove getUserDatabaseEntity from UserEntity.
-    - Use AJP for and @Configurable on the UserEntity class to inject the UserMapper.

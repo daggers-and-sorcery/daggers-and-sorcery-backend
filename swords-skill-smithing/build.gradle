@@ -7,3 +7,4 @@ dependencies {
 }
 
 apply plugin: 'spring-boot'
+bootRepackage.enabled = false

@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160815-1">
+        <insert tableName="news">
+            <column name="title" value="First steps to the new combat system"/>
+            <column name="release_date" value="2016-08-15 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+After almost endless hours of work we are happy to present you the base of the new combat system. Finally, you don't only push the explore button and wait but also interact with the game in the combat scenarios. We hope that this will give you a better combat experience. Also, this change opens up an endless amount of possibilities for items and spells in the game. We are tried to mimic the good old tabletop role-playing games while created the new combat interface and we think that we made a pretty good job in doing so.
+
+Nothing is always happy however, we had to make cuts sadly to release this combat system for you. The spells and items are temporarily disabled until we implement them properly in the new combat system. This will be our next number one priority.
+
+Thanks, the Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
