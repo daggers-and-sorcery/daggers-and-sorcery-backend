@@ -2,17 +2,19 @@ package com.morethanheroic.swords.forum.repository.dao;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * Created by root on 2016.07.16..
  */
 
 @Data
-public class ForumCategoriesDatabaseEntry {
+public class ForumCategoriesDatabaseEntity {
 
     private String name;
     private int postCount;
     private String icon;
-    private String lastPostDate;
+    private Date lastPostDate;
     private int lastPostUser;
     /*
     * name (varchar [256])

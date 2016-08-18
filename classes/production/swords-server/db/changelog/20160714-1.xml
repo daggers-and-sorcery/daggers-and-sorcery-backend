@@ -1,0 +1,26 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160714-1">
+        <insert tableName="news">
+            <column name="title" value="Alteration is here!"/>
+            <column name="release_date" value="2016-07-14 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+Finally we are able to release the alteration skill. We are sorry for the slowdown of the updates but we moved to a new office and had no internet for days.
+
+Improvements:
+- New drops were added to the Goblin Shaman.
+- A new spell was added named 'Lesser identification'. This is the first Alteration spell.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

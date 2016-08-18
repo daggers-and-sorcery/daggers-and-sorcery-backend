@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160629-3">
+        <insert tableName="news">
+            <column name="title" value="The skills for magic are finally arrived!"/>
+            <column name="release_date" value="2016-06-29 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+More magic improvements have been released today with three new skills for the magic spells. We have also adjusted the existing spells to use the new skills. You can gain experience in the new skills by using the spells.
+
+Improvements:
+- Added 'Fireball' as a new spell to the game. The scroll to learn it is dropped by the 'Goblin Shaman'.
+- Added three new skills related to magic. 'Restoration', 'Alteration' and 'Destruction'. These skills will make the spells belonging to them better after each level.
+- The spells are adjusted to use the new skill system.
+
+Bugfixes:
+- Fixed multiple issues regarding to the focus skill.
+
+Thanks, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

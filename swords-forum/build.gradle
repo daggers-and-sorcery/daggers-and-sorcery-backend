@@ -2,9 +2,8 @@ dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
-
     compile project(':swords-user')
-    compile project(':swords-response')
 }
 
 apply plugin: 'spring-boot'
+bootRepackage.enabled = false

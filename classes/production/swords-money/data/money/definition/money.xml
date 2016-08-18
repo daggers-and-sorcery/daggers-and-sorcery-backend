@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<money:money xmlns:money="http://www.swordsandsorcery.com/money"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.swordsandsorcery.com/money ../schema.xsd">
+    <money:id>MONEY</money:id>
+    <money:conversion-list>
+        <money:conversion>
+            <money:target-id>1</money:target-id>
+            <money:conversion-rate>1</money:conversion-rate>
+        </money:conversion>
+        <money:conversion>
+            <money:target-id>49</money:target-id>
+            <money:conversion-rate>100</money:conversion-rate>
+        </money:conversion>
+        <money:conversion>
+            <money:target-id>50</money:target-id>
+            <money:conversion-rate>10000</money:conversion-rate>
+        </money:conversion>
+        <money:conversion>
+            <money:target-id>51</money:target-id>
+            <money:conversion-rate>1000000</money:conversion-rate>
+        </money:conversion>
+    </money:conversion-list>
+</money:money>

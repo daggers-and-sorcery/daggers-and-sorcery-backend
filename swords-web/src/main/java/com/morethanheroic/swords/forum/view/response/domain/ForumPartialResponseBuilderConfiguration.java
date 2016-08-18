@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.forum.view.response.service;
+package com.morethanheroic.swords.forum.view.response.domain;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.forum.domain.ForumCategoryEntity;
