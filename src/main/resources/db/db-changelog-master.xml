@@ -71,7 +71,7 @@
     <include file="changelog/20160629-2.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20160629-3.xml" relativeToChangelogFile="true"/>
 
-    <include file="changelog/20160716-1.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20160714-1.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20160714-2.xml" relativeToChangelogFile="true"/>
 
     <include file="changelog/20160719-1.xml" relativeToChangelogFile="true"/>
@@ -99,5 +99,5 @@
 
     <include file="changelog/20160815-1.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20160804-1.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/20160714-1.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20160716-1.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
