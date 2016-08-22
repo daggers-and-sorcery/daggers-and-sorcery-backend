@@ -87,7 +87,7 @@ public class UseSpellService {
         if (canUseSpell(combatContext.getUser(), spell)) {
             combatSteps.add(
                 DefaultCombatStep.builder()
-                                 .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST"))
+                                 .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST", spell.getName()))
                                  .build()
             );
 
