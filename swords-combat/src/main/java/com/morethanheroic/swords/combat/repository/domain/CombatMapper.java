@@ -20,6 +20,9 @@ public interface CombatMapper {
     @Delete("DELETE FROM combat WHERE id = #{id}")
     void removeCombat(@Param("id") int id);
 
+    @Delete("DELETE FROM combat WHERE user_id = #{userId}")
+    void removeCombatForUser(@Param("userId") int userId);
+
     @Select("SELECT * FROM combat WHERE user_id = #{userId}")
     CombatDatabaseEntity getRunningCombat(@Param("userId") int userId);
 }
