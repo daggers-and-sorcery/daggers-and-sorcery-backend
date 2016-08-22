@@ -4,11 +4,11 @@ import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+
 import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
-import lombok.ToString;
 
 /**
  * Contains the data of an user. These methods doesn't take the attribute modifications and maximum/minimum values
@@ -17,7 +17,6 @@ import lombok.ToString;
  * directly!
  */
 @Configurable
-@ToString(of = {"id", "username"})
 public class UserEntity implements Entity {
 
     @Autowired
@@ -119,5 +118,10 @@ public class UserEntity implements Entity {
         userDatabaseEntity.setLastRegenerationDate(date);
 
         userMapper.updateRegenerationDate(userDatabaseEntity.getId(), date);
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity(id=" + getId() + ", username=" + getUsername() + ")";
     }
 }
