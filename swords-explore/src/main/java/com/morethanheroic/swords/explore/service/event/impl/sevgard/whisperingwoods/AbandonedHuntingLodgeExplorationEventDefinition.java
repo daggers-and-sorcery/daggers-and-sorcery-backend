@@ -77,7 +77,7 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
                         )
                         .chance(100)
                         .identified(true)
-                        .build()
+                        .build(),
                 DropDefinition.builder()
                         .item(itemDefinitionCache.getDefinition(36))
                         .amount(
