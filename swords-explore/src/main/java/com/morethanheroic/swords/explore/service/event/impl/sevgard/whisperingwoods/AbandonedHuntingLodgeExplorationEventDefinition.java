@@ -1,6 +1,11 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingwoods;
 
+import com.google.common.collect.Lists;
+import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
+import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
+import com.morethanheroic.swords.combat.service.drop.DropAdder;
+import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
@@ -8,13 +13,16 @@ import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEven
 import com.morethanheroic.swords.explore.service.event.exception.IllegalExplorationEventStateException;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
+import com.morethanheroic.swords.monster.domain.DropDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 import static com.morethanheroic.swords.attribute.domain.GeneralAttribute.PERCEPTION;
 
 @ExplorationEvent
-@RequiredArgsConstructor
 public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageExplorationEventDefinition {
 
     private static final int EVENT_ID = 13;
@@ -27,8 +35,117 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
     private static final int SEARCH_THE_LODGE_STAGE = 3;
     private static final int SECOND_COMBAT_STAGE = 4;
 
+    private List<DropDefinition> chestDropDefinitions;
+
     private final ExplorationResultBuilderFactory explorationResultBuilderFactory;
     private final CombatCalculator combatCalculator;
+    private final DropCalculator dropCalculator;
+    private final DropAdder dropAdder;
+    private final DropTextCreator dropTextCreator;
+
+    public AbandonedHuntingLodgeExplorationEventDefinition(final CombatCalculator combatCalculator,
+                                                           final ExplorationResultBuilderFactory explorationResultBuilderFactory,
+                                                           final ItemDefinitionCache itemDefinitionCache,
+                                                           final DropCalculator dropCalculator,
+                                                           final DropAdder dropAdder,
+    final DropTextCreator dropTextCreator) {
+        this.combatCalculator = combatCalculator;
+        this.explorationResultBuilderFactory = explorationResultBuilderFactory;
+        this.dropCalculator = dropCalculator;
+        this.dropAdder = dropAdder;
+        this.dropTextCreator = dropTextCreator;
+
+        chestDropDefinitions = Lists.newArrayList(
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(99))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(0.5)
+                        .identified(false)
+                        .build(),
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(1))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(30)
+                                        .maximumAmount(70)
+                                        .build()
+                        )
+                        .chance(100)
+                        .identified(true)
+                        .build()
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(36))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(1)
+                        .identified(true)
+                        .build(),
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(95))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(1)
+                        .identified(true)
+                        .build(),
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(23))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(2)
+                        .identified(true)
+                        .build(),
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(22))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(2)
+                        .identified(true)
+                        .build(),
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(63))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(2)
+                        .identified(true)
+                        .build(),
+                DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(65))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(2)
+                        .identified(true)
+                        .build()
+        );
+    }
 
     @Override
     public int getId() {
@@ -78,23 +195,28 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newAttributeProbeEntry(PERCEPTION, 8)
+                    .newAttributeProbeEntry(PERCEPTION, 7)
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
-                            .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_5")
-                            .build()
-                    )
-                    .isFailure((explorationResultBuilder) -> explorationResultBuilder
                             .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_6")
                             .newCombatEntry(RAT_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)
                             .build()
                     )
+                    .isFailure((explorationResultBuilder) -> explorationResultBuilder
+                            .resetExploration(userEntity)
+                            .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_5")
+                            .build()
+                    )
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
-            userEntity.resetActiveExploration();
+            final List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_7")
+                    .newCustomLogicEntry(() -> {
+                        dropAdder.addDrops(userEntity, chestDrops);
+                    })
+                    .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
+                    .resetExploration(userEntity)
                     .build();
         }
 
@@ -139,11 +261,19 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
 
     @Override
     public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        if (stage == COMBAT_STAGE && nextStage == COMBAT_STAGE) {
+            return true;
+        }
+
         if (stage == COMBAT_STAGE && (nextStage == BACK_TO_THE_CITY_STAGE || nextStage == SEARCH_THE_LODGE_STAGE)) {
             return true;
         }
 
         if (stage == SEARCH_THE_LODGE_STAGE && nextStage == SECOND_COMBAT_STAGE) {
+            return true;
+        }
+
+        if (stage == SECOND_COMBAT_STAGE && nextStage == SECOND_COMBAT_STAGE) {
             return true;
         }
 

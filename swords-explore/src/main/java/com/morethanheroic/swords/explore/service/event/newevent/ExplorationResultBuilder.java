@@ -56,6 +56,12 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder resetExploration(final UserEntity userEntity) {
+        userEntity.resetActiveExploration();
+
+        return this;
+    }
+
     public ExplorationResultBuilder newMessageEntry(final String messageId, final Object... args) {
         explorationResult.addEventEntryResult(
                 messageEventEntryEvaluator.messageEntry(messageId, args)
