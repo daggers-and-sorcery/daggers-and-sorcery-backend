@@ -1,0 +1,39 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20160823-2">
+        <insert tableName="news">
+            <column name="title" value="New, reworked, combat system is here!"/>
+            <column name="release_date" value="2016-08-23 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Greetings adventurers!
+
+New update is here! Our team is working hard to bring you new updates, and we’re trying our very best to test them out before we release them, so you can enjoy a bug-free experience. But, some bugs may slip through, and you’re welcome to post the bugs you find here.
+
+The new combat system is available in all its glory, with items and spells available along with the “Flee” option. We’re very proud of progress we made, all thanks to your feedback!
+
+Also, this update is just one of several we intend to implement in a short period of time. The updates will introduce new encounters and bring some new elements to the game. We want to thank you all for your enormous support, and encourage you to invite your friends to play the game with you!
+
+Below are the update notes, feel free to comment your feedback!
+
+Improvements:
+- Added a new event to the 'Whispering woods' region.
+- Added two new monsters with the new exploration event.
+
+Bugfixes:
+- Fixed that if the player used a spell as the last move in combat then the experience and drop rewards were not shown on the combat screen.
+- Fixed that some players stuck in combat even after successfully killing the opponent. This blocked the exploration for some players.
+- Sometimes the monsters not damaged th player in combat. The damage was shown but not saved. This have been fixed.
+
+Once again, thank you for your support, we sincerely enjoy having community as awesome as you guys are!
+
+Daggers and Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
