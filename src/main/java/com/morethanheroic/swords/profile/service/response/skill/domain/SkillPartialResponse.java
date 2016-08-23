@@ -12,4 +12,6 @@ public class SkillPartialResponse extends PartialResponse {
 
     private List<SkillAttributePartialResponse> tradeSkills;
     private List<SkillAttributePartialResponse> combatSkills;
+    private List<SkillAttributePartialResponse> magicSkills;
+    private List<SkillAttributePartialResponse> shadowSkills;
 }

@@ -22,6 +22,7 @@ import com.morethanheroic.swords.profile.service.response.skill.SkillPartialResp
 import com.morethanheroic.swords.profile.service.response.skill.domain.SkillPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
 import com.morethanheroic.swords.response.service.ResponseFactory;
+import com.morethanheroic.swords.skill.domain.SkillGroup;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
@@ -92,8 +93,10 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         response.setData("skill", skillPartialResponseBuilder.build(
                 SkillPartialResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
-                        .tradeSkills(skillTypeCalculator.getTradeSkills())
-                        .combatSkills(skillTypeCalculator.getCombatSkills())
+                        .tradeSkills(skillTypeCalculator.getSkillsByGroup(SkillGroup.TRADE))
+                        .combatSkills(skillTypeCalculator.getSkillsByGroup(SkillGroup.COMBAT))
+                        .magicSkills(skillTypeCalculator.getSkillsByGroup(SkillGroup.MAGIC))
+                        .shadowSkills(skillTypeCalculator.getSkillsByGroup(SkillGroup.SHADOW))
                         .build()
         ));
         response.setData("username", userEntity.getUsername());
@@ -131,7 +134,7 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
             if (equipment == 0) {
                 slotData.put("empty", true);
             } else {
-                if(slot == EquipmentSlot.QUIVER) {
+                if (slot == EquipmentSlot.QUIVER) {
                     slotData.put("amount", equipmentEntity.getAmountOnSlot(slot));
                 }
 

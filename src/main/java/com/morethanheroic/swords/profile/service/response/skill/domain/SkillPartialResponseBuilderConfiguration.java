@@ -15,4 +15,6 @@ public class SkillPartialResponseBuilderConfiguration implements ResponseBuilder
     private UserEntity userEntity;
     private List<SkillType> combatSkills;
     private List<SkillType> tradeSkills;
+    private List<SkillType> magicSkills;
+    private List<SkillType> shadowSkills;
 }
