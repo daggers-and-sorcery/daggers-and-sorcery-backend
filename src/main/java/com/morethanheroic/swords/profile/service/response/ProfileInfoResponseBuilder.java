@@ -39,7 +39,6 @@ import java.util.Map;
 public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoResponseBuilderConfiguration> {
 
     private final ItemDefinitionCache itemDefinitionCache;
-    private final InventoryFacade inventoryFacade;
     private final EquipmentFacade equipmentFacade;
     private final ResponseFactory responseFactory;
     private final ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder;
@@ -74,9 +73,8 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     private InventoryEntityFactory inventoryEntityFactory;
 
     @Autowired
-    public ProfileInfoResponseBuilder(ItemDefinitionCache itemDefinitionCache, InventoryFacade inventoryFacade, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
+    public ProfileInfoResponseBuilder(ItemDefinitionCache itemDefinitionCache, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
         this.itemDefinitionCache = itemDefinitionCache;
-        this.inventoryFacade = inventoryFacade;
         this.equipmentFacade = equipmentFacade;
         this.responseFactory = responseFactory;
         this.profileIdentifiedItemEntryResponseBuilder = profileIdentifiedItemEntryResponseBuilder;
@@ -148,15 +146,6 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         }
 
         return equipmentHolder;
-    }
-
-    private Map<String, Object> convertInventoryItemToSendableObject(InventoryItem itemDatabaseEntity) {
-        final Map<String, Object> result = new HashMap<>();
-
-        result.put("itemId", itemDatabaseEntity.getItem().getId());
-        result.put("amount", itemDatabaseEntity.getAmount());
-
-        return result;
     }
 
     private LinkedList<HashMap<String, Object>> buildSpellResponse(List<SpellDatabaseEntity> spells) {

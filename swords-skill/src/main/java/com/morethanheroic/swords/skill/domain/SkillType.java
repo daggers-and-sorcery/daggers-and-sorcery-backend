@@ -36,7 +36,8 @@ public enum SkillType {
     FOCUS(SkillGroup.COMBAT),
     DESTRUCTION(SkillGroup.COMBAT),
     RESTORATION(SkillGroup.COMBAT),
-    ALTERATION(SkillGroup.COMBAT);
+    ALTERATION(SkillGroup.COMBAT),
+    LOCKPICKING(SkillGroup.TRADE);
 
     private final SkillGroup skillGroup;
 

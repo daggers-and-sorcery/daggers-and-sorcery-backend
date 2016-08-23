@@ -146,6 +146,8 @@ public class SkillTypeCalculator {
                 return SkillType.RESTORATION;
             case ALTERATION:
                 return SkillType.ALTERATION;
+            case LOCKPICKING:
+                return SkillType.LOCKPICKING;
             default:
                 throw new IllegalArgumentException("No skill found for skill attribute type: " + skillAttribute);
         }
@@ -211,6 +213,8 @@ public class SkillTypeCalculator {
                 return SkillAttribute.RESTORATION;
             case ALTERATION:
                 return SkillAttribute.ALTERATION;
+            case LOCKPICKING:
+                return SkillAttribute.LOCKPICKING;
             default:
                 throw new IllegalArgumentException("No skill type found for attribute type: " + skillType);
         }
