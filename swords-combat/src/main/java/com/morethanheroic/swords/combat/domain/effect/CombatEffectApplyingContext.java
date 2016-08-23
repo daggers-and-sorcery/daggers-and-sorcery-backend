@@ -1,6 +1,8 @@
 package com.morethanheroic.swords.combat.domain.effect;
 
-import com.morethanheroic.swords.combat.domain.CombatResult;
+import java.util.List;
+
+import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.effect.domain.EffectApplyingContext;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 
@@ -17,5 +19,9 @@ public class CombatEffectApplyingContext implements EffectApplyingContext {
     private EffectSettingDefinitionHolder effectSettings;
     private CombatEffectTarget source;
     private CombatEffectTarget destination;
-    private CombatResult combatResult;
+    private List<CombatStep> combatSteps;
+
+    public void addCombatStep(final CombatStep combatStep) {
+        combatSteps.add(combatStep);
+    }
 }

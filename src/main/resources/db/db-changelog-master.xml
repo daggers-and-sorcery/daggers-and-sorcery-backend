@@ -90,4 +90,12 @@
     <include file="changelog/20160801-1.xml" relativeToChangelogFile="true"/>
 
     <include file="changelog/20160807-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160810-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160811-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160814-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20160815-1.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

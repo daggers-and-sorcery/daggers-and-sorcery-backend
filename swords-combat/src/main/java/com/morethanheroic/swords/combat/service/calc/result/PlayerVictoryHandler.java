@@ -1,8 +1,6 @@
 package com.morethanheroic.swords.combat.service.calc.result;
 
-import com.morethanheroic.swords.combat.domain.Combat;
 import com.morethanheroic.swords.combat.domain.CombatContext;
-import com.morethanheroic.swords.combat.domain.CombatResult;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.service.awarder.DropAwarder;
@@ -33,24 +31,11 @@ public class PlayerVictoryHandler {
 
         result.addAll(dropAwarder.addDropsToUserFromMonsterDefinition(userEntity, monster));
         result.addAll(scavengingAwarder.addScavengingDropsToUserFromMonsterDefinition(userEntity, monster));
-        result.addAll(experienceAwarder.addXpToUserFromMonsterDefinition(combatContext, userEntity));
+        result.addAll(experienceAwarder.addXpToUserFromMonsterDefinition(userEntity));
 
         final UserCombatEntity userCombatEntity = combatContext.getUser();
         userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
 
         return result;
-    }
-
-    @Deprecated
-    public void handleVictory(Combat combat, CombatResult combatResult) {
-        final UserEntity userEntity = combat.getUserCombatEntity().getUserEntity();
-        final MonsterDefinition monster = combat.getMonsterCombatEntity().getMonsterDefinition();
-
-        dropAwarder.addDropsToUserFromMonsterDefinition(combatResult, userEntity, monster);
-        scavengingAwarder.addScavengingDropsToUserFromMonsterDefinition(combatResult, userEntity, monster);
-        experienceAwarder.addXpToUserFromMonsterDefinition(combatResult, userEntity);
-
-        final UserCombatEntity userCombatEntity = combat.getUserCombatEntity();
-        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
     }
 }
