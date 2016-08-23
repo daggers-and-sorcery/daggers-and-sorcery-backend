@@ -85,6 +85,12 @@ public class UseSpellService {
         final List<CombatStep> combatSteps = new ArrayList<>();
 
         if (canUseSpell(combatContext.getUser(), spell)) {
+            combatSteps.add(
+                DefaultCombatStep.builder()
+                                 .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST", spell.getName()))
+                                 .build()
+            );
+
             combatSteps.addAll(applySpell(combatContext, spell, combatEffectDataHolder));
         } else {
             combatSteps.add(

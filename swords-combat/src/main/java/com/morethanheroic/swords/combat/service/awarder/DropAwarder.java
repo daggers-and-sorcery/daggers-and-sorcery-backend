@@ -5,6 +5,7 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
+import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -31,7 +32,7 @@ public class DropAwarder {
         final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
 
         for (Drop drop : drops) {
-            if (drop.isIdentified()) {
+            if (drop.isIdentified() == IdentificationType.IDENTIFIED) {
                 result.add(
                         DefaultCombatStep.builder()
                                 .message(combatMessageFactory.newMessage("item", "COMBAT_MESSAGE_DROP", drop.getAmount(), drop.getItem().getName()))

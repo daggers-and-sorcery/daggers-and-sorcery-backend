@@ -7,6 +7,8 @@ import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
 import com.morethanheroic.swords.explore.service.event.evaluator.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
@@ -15,12 +17,19 @@ import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEv
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Service
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ExplorationResultBuilder {
+
+    private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
     @Autowired
     private MessageEventEntryEvaluator messageEventEntryEvaluator;
@@ -34,12 +43,21 @@ public class ExplorationResultBuilder {
     @Autowired
     private CombatCalculator combatCalculator;
 
+    @Autowired
+    private  MessageSource messageSource;
+
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
 
     public ExplorationResultBuilder initialize(final UserEntity userEntity, final ExplorationResult explorationResult) {
         this.userEntity = userEntity;
         this.explorationResult = explorationResult;
+
+        return this;
+    }
+
+    public ExplorationResultBuilder resetExploration(final UserEntity userEntity) {
+        userEntity.resetActiveExploration();
 
         return this;
     }
@@ -60,6 +78,26 @@ public class ExplorationResultBuilder {
         if (!combatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
             userEntity.setActiveExploration(eventId, stage);
         }
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newOptionEntry(final ReplyOption... replyOptions) {
+        explorationResult.addEventEntryResult(
+                OptionExplorationEventEntryResult.builder()
+                        .options(
+                                Arrays.stream(replyOptions)
+                                        .map(
+                                                option ->
+                                                        EventOption.builder()
+                                                                .text(messageSource.getMessage(option.getMessage(), new Object[]{}, DEFAULT_LOCALE))
+                                                                .optionId(option.getStage())
+                                                                .build()
+                                        )
+                                        .collect(Collectors.toList())
+                        )
+                        .build()
+        );
 
         return this;
     }
