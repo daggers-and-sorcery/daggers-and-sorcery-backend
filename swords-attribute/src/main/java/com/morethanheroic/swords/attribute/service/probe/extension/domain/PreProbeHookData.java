@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.attribute.service.probe.extension.domain;
 
+import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,5 +8,5 @@ import lombok.Getter;
 @Builder
 public class PreProbeHookData {
 
-    private final AttributeProbeCalculatorExtensionResult extensionResult;
+    private final UserEntity userEntity;
 }

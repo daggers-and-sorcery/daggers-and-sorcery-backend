@@ -9,5 +9,6 @@ import lombok.Getter;
 public class AttributeProbeCalculationResult {
 
     private final boolean successful;
+    private final int rolledValue;
     private final AttributeProbeCalculatorExtensionResult extensionResult;
 }

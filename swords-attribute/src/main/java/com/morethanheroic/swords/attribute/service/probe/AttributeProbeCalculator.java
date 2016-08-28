@@ -2,12 +2,12 @@ package com.morethanheroic.swords.attribute.service.probe;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.probe.domain.AttributeProbeCalculationResult;
 import com.morethanheroic.swords.attribute.service.probe.extension.AttributeProbeCalculatorExtension;
 import com.morethanheroic.swords.attribute.service.probe.extension.GlobalAttributeProbeCalculatorExtensionResultFactory;
 import com.morethanheroic.swords.attribute.service.probe.extension.domain.AttributeProbeCalculatorExtensionResult;
 import com.morethanheroic.swords.attribute.service.probe.extension.domain.PostProbeHookData;
 import com.morethanheroic.swords.attribute.service.probe.extension.domain.PreProbeHookData;
-import com.morethanheroic.swords.attribute.service.probe.extension.domain.RequirementsData;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,37 +24,42 @@ public class AttributeProbeCalculator {
     private final AttributeProbeCalculatorProvider attributeProbeCalculatorProvider;
     private final GlobalAttributeProbeCalculatorExtensionResultFactory globalAttributeProbeCalculatorExtensionResultFactory;
 
-    public boolean calculateAttributeProbe(final UserEntity userEntity, final Attribute attribute, final int target) {
-        final Optional<AttributeProbeCalculatorExtension> calculatorExtension = attributeProbeCalculatorProvider.getCalculatorExtension(attribute);
+    public AttributeProbeCalculationResult calculateAttributeProbe(final UserEntity userEntity, final Attribute attribute, final int target) {
+        final Optional<AttributeProbeCalculatorExtension<AttributeProbeCalculatorExtensionResult>> calculatorExtension = attributeProbeCalculatorProvider.getCalculatorExtension(attribute);
         final AttributeProbeCalculatorExtensionResult extensionResult = globalAttributeProbeCalculatorExtensionResultFactory.newExtensionResult(attribute);
 
         if (calculatorExtension.isPresent()) {
-            if (!calculatorExtension.get().checkRequirements(
-                    RequirementsData.builder()
-                            .userEntity(userEntity)
-                            .extensionResult(extensionResult)
-                            .build()
-            )) {
-                return false;
+            if (!calculatorExtension.get().checkRequirements(extensionResult, userEntity)) {
+                return AttributeProbeCalculationResult.builder()
+                        .extensionResult(extensionResult)
+                        .successful(false)
+                        .build();
             }
         }
 
         calculatorExtension.ifPresent((extension) -> extension.preProbeHook(
+                extensionResult,
                 PreProbeHookData.builder()
-                        .extensionResult(extensionResult)
+                        .userEntity(userEntity)
                         .build()
         ));
 
-        final boolean result = calculateProbeResult(calculateAttributeValue(userEntity, attribute)) >= target;
+        final int rolledValue = calculateAttributeValue(userEntity, attribute);
+        final boolean result = calculateProbeResult(rolledValue) >= target;
 
         calculatorExtension.ifPresent((extension) -> extension.postProbeHook(
+                extensionResult,
                 PostProbeHookData.builder()
+                        .userEntity(userEntity)
                         .successfulProbe(result)
-                        .extensionResult(extensionResult)
                         .build()
         ));
 
-        return result;
+        return AttributeProbeCalculationResult.builder()
+                .extensionResult(extensionResult)
+                .successful(result)
+                .rolledValue(rolledValue)
+                .build();
     }
 
     private int calculateAttributeValue(final UserEntity userEntity, final Attribute attribute) {

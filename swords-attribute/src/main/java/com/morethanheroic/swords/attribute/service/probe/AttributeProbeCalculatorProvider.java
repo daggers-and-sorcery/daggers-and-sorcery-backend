@@ -2,6 +2,7 @@ package com.morethanheroic.swords.attribute.service.probe;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.probe.extension.AttributeProbeCalculatorExtension;
+import com.morethanheroic.swords.attribute.service.probe.extension.domain.AttributeProbeCalculatorExtensionResult;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -23,7 +24,7 @@ public class AttributeProbeCalculatorProvider {
         calculatorExtensionMap = Collections.unmodifiableMap(temporaryCalculatorExtensionMap);
     }
 
-    public Optional<AttributeProbeCalculatorExtension> getCalculatorExtension(final Attribute attribute) {
+    public Optional<AttributeProbeCalculatorExtension<AttributeProbeCalculatorExtensionResult>> getCalculatorExtension(final Attribute attribute) {
         final AttributeProbeCalculatorExtension calculatorExtension = calculatorExtensionMap.get(attribute);
 
         if (calculatorExtension != null) {
