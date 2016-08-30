@@ -54,7 +54,7 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
         opponent.decreaseActualHealth(damage);
 
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp((UserCombatEntity) opponent, damage * 2);
+            addDefenseXp(combatContext, damage * 2);
 
             result.add(
                 AttackCombatStep.builder()
@@ -86,7 +86,7 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
 
     private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent) {
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp((UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
+            addDefenseXp(combatContext, ((MonsterCombatEntity) attacker).getLevel() * 8);
 
             return DefaultCombatStep.builder()
                     .message(combatMessageFactory.newMessage("monster_miss", "COMBAT_MESSAGE_RANGED_MISS_BY_MONSTER", attacker.getName()))

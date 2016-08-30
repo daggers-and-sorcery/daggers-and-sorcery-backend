@@ -32,7 +32,7 @@ public class CombatUtil {
         final ItemType itemType = getUserArmorType(user);
 
         if (itemType == null) {
-            return null;
+            return SkillType.ARMORLESS_DEFENSE;
         }
 
         return skillTypeCalculator.getSkillFromItemType(itemType);
