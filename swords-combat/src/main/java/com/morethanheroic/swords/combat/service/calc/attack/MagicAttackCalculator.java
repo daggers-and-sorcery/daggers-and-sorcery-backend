@@ -35,7 +35,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
                 result.add(handleDeath(attacker, opponent, combatContext));
             }
         } else {
-            result.add(dealMiss(attacker, opponent));
+            result.add(dealMiss(attacker, opponent, combatContext));
         }
 
         return result;
@@ -49,7 +49,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
         opponent.decreaseActualHealth(damage);
 
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp((UserCombatEntity) opponent, damage * 2);
+            addDefenseXp(combatContext, damage * 2);
 
             result.add(
                     AttackCombatStep.builder()
@@ -70,9 +70,9 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
         return result;
     }
 
-    private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent) {
+    private CombatStep dealMiss(final CombatEntity attacker, final CombatEntity opponent, final CombatContext combatContext) {
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp((UserCombatEntity) opponent, ((MonsterCombatEntity) attacker).getLevel() * 8);
+            addDefenseXp(combatContext, ((MonsterCombatEntity) attacker).getLevel() * 8);
 
             return DefaultCombatStep.builder()
                     .message(combatMessageFactory.newMessage("monster_miss", "COMBAT_MESSAGE_MAGIC_MISS_BY_MONSTER", attacker.getName()))
