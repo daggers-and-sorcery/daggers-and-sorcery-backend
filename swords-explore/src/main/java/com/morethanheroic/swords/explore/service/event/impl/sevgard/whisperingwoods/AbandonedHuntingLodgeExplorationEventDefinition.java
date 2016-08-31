@@ -212,9 +212,7 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newCustomLogicEntry(() -> {
-                        dropAdder.addDrops(userEntity, chestDrops);
-                    })
+                    .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, chestDrops))
                     .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
                     .resetExploration(userEntity)
                     .build();

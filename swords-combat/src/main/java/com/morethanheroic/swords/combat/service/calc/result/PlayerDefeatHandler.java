@@ -78,6 +78,10 @@ public class PlayerDefeatHandler {
     }
 
     private int calculateExperienceToRemove(SkillType skillType, SkillEntity skillEntity) {
+        if(skillEntity.getExperience(skillType) == 0) {
+            return 0;
+        }
+
         return (int) (skillEntity.getExperienceBetweenNextLevel(skillType) * PERCENTAGE_TO_REMOVE);
     }
 }

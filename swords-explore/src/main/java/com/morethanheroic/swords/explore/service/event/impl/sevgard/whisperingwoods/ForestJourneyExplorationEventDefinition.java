@@ -94,7 +94,7 @@ public class ForestJourneyExplorationEventDefinition extends MultiStageExplorati
 
             final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, GeneralAttribute.DEXTERITY, 8);
 
-            explorationResult.addEventEntryResult(attemptResult.getResult());
+            explorationResult.addEventEntryResults(attemptResult.getResult());
 
             if (attemptResult.isSuccessful()) {
                 explorationResult.addEventEntryResult(

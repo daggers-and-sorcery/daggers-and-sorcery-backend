@@ -49,7 +49,8 @@ import java.util.Random;
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 @ComponentScan({
         "com.morethanheroic.swords",
-        "com.morethanheroic.math"
+        "com.morethanheroic.math",
+        "com.morethanheroic.localization"
 })
 @EnableWebMvc
 @EnableScheduling

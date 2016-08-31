@@ -20,6 +20,6 @@ public class GlobalAttributeProbeCalculatorExtensionResultFactory {
             return resultFactoryOptional.get().newExtensionResult();
         }
 
-        throw new IllegalStateException("No extension factory registered for attribute: " + attribute);
+        return null;
     }
 }

@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.explore.service.event.evaluator.attempt.result.factory;
 
-import com.google.common.collect.Lists;
 import com.morethanheroic.localization.MessageResolver;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
 import com.morethanheroic.swords.attribute.service.probe.domain.AttributeProbeCalculationResult;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
@@ -19,6 +19,7 @@ import java.util.List;
 public class LockpickingAttributeAttemptEntryResultFactory implements AttributeAttemptEntryResultFactory {
 
     private final MessageResolver messageResolver;
+    private final SkillAttributeDefinitionCache skillAttributeDefinitionCache;
 
     @Override
     public List<ExplorationEventEntryResult> newResult(Attribute attribute, int valueToHit, AttributeProbeCalculationResult calculationResult) {
@@ -44,7 +45,7 @@ public class LockpickingAttributeAttemptEntryResultFactory implements AttributeA
 
         results.add(
                 TextExplorationEventEntryResult.builder()
-                        .content(messageResolver.resolveMessage(evaluateMessageIdFromResult(calculationResult.isSuccessful()), attribute.getName(), valueToHit, calculationResult.getRolledValue()))
+                        .content(messageResolver.resolveMessage(evaluateMessageIdFromResult(calculationResult.isSuccessful()), skillAttributeDefinitionCache.getDefinition((SkillAttribute) attribute).getName(), valueToHit, calculationResult.getRolledValue()))
                         .build()
         );
 
