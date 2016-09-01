@@ -125,7 +125,7 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public MultiWayExplorationResultBuilder newAttributeProbeEntry(final Attribute attribute, final int valueToHit) {
+    public MultiWayExplorationResultBuilder newAttributeAttemptEntry(final Attribute attribute, final int valueToHit) {
         final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, attribute, valueToHit);
 
         explorationResult.addEventEntryResults(attemptResult.getResult());

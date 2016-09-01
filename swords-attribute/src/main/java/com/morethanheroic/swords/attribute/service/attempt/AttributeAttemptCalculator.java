@@ -1,13 +1,13 @@
-package com.morethanheroic.swords.attribute.service.probe;
+package com.morethanheroic.swords.attribute.service.attempt;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.probe.domain.AttributeProbeCalculationResult;
-import com.morethanheroic.swords.attribute.service.probe.extension.AttributeProbeCalculatorExtension;
-import com.morethanheroic.swords.attribute.service.probe.extension.GlobalAttributeProbeCalculatorExtensionResultFactory;
-import com.morethanheroic.swords.attribute.service.probe.extension.domain.AttributeProbeCalculatorExtensionResult;
-import com.morethanheroic.swords.attribute.service.probe.extension.domain.PostProbeHookData;
-import com.morethanheroic.swords.attribute.service.probe.extension.domain.PreProbeHookData;
+import com.morethanheroic.swords.attribute.service.attempt.domain.AttributeAttemptCalculationResult;
+import com.morethanheroic.swords.attribute.service.attempt.extension.AttributeAttemptCalculatorExtension;
+import com.morethanheroic.swords.attribute.service.attempt.extension.GlobalAttributeAttemptCalculatorExtensionResultFactory;
+import com.morethanheroic.swords.attribute.service.attempt.extension.domain.AttributeAttemptCalculatorExtensionResult;
+import com.morethanheroic.swords.attribute.service.attempt.extension.domain.PostAttemptHookData;
+import com.morethanheroic.swords.attribute.service.attempt.extension.domain.PreAttemptHookData;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,20 +17,21 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class AttributeProbeCalculator {
+public class AttributeAttemptCalculator {
 
     private final Random random;
     private final GlobalAttributeCalculator globalAttributeCalculator;
-    private final AttributeProbeCalculatorProvider attributeProbeCalculatorProvider;
-    private final GlobalAttributeProbeCalculatorExtensionResultFactory globalAttributeProbeCalculatorExtensionResultFactory;
+    private final AttributeAttemptCalculatorProvider attributeAttemptCalculatorProvider;
+    private final GlobalAttributeAttemptCalculatorExtensionResultFactory globalAttributeAttemptCalculatorExtensionResultFactory;
 
-    public AttributeProbeCalculationResult calculateAttributeProbe(final UserEntity userEntity, final Attribute attribute, final int target) {
-        final Optional<AttributeProbeCalculatorExtension<AttributeProbeCalculatorExtensionResult>> calculatorExtension = attributeProbeCalculatorProvider.getCalculatorExtension(attribute);
-        final AttributeProbeCalculatorExtensionResult extensionResult = globalAttributeProbeCalculatorExtensionResultFactory.newExtensionResult(attribute);
+    public AttributeAttemptCalculationResult calculateAttributeAttempt(final UserEntity userEntity, final Attribute attribute, final int target) {
+        final Optional<AttributeAttemptCalculatorExtension<AttributeAttemptCalculatorExtensionResult>> calculatorExtension = attributeAttemptCalculatorProvider
+                .getCalculatorExtension(attribute);
+        final AttributeAttemptCalculatorExtensionResult extensionResult = globalAttributeAttemptCalculatorExtensionResultFactory.newExtensionResult(attribute);
 
         if (calculatorExtension.isPresent()) {
             if (!calculatorExtension.get().checkRequirements(extensionResult, userEntity)) {
-                return AttributeProbeCalculationResult.builder()
+                return AttributeAttemptCalculationResult.builder()
                         .extensionResult(extensionResult)
                         .successful(false)
                         .build();
@@ -39,7 +40,7 @@ public class AttributeProbeCalculator {
 
         calculatorExtension.ifPresent((extension) -> extension.preProbeHook(
                 extensionResult,
-                PreProbeHookData.builder()
+                PreAttemptHookData.builder()
                         .userEntity(userEntity)
                         .build()
         ));
@@ -49,14 +50,14 @@ public class AttributeProbeCalculator {
 
         calculatorExtension.ifPresent((extension) -> extension.postProbeHook(
                 extensionResult,
-                PostProbeHookData.builder()
+                PostAttemptHookData.builder()
                         .userEntity(userEntity)
                         .targetToHit(target)
                         .successfulProbe(result)
                         .build()
         ));
 
-        return AttributeProbeCalculationResult.builder()
+        return AttributeAttemptCalculationResult.builder()
                 .extensionResult(extensionResult)
                 .successful(result)
                 .rolledValue(rolledValue)

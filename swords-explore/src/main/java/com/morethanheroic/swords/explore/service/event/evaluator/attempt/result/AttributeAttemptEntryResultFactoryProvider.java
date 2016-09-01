@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.evaluator.attempt.result;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.service.probe.domain.AttributeProbeCalculationResult;
+import com.morethanheroic.swords.attribute.service.attempt.domain.AttributeAttemptCalculationResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.result.factory.AttributeAttemptEntryResultFactory;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +25,11 @@ public class AttributeAttemptEntryResultFactoryProvider {
         entryResultFactoryMap = Collections.unmodifiableMap(temporaryEntryResultFactoryMap);
     }
 
-    public AttributeAttemptEntryResultFactory getFactory(final AttributeProbeCalculationResult attributeProbeCalculationResult) {
-        if (attributeProbeCalculationResult.getExtensionResult() == null) {
+    public AttributeAttemptEntryResultFactory getFactory(final AttributeAttemptCalculationResult attributeAttemptCalculationResult) {
+        if (attributeAttemptCalculationResult.getExtensionResult() == null) {
             return entryResultFactoryMap.get(DEFAULT_RESULT_FACTORY_ID);
         }
 
-        return entryResultFactoryMap.get(attributeProbeCalculationResult.getExtensionResult().supportedAttribute());
+        return entryResultFactoryMap.get(attributeAttemptCalculationResult.getExtensionResult().supportedAttribute());
     }
 }

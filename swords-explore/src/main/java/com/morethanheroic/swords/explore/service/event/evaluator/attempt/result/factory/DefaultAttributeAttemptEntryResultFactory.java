@@ -3,7 +3,7 @@ package com.morethanheroic.swords.explore.service.event.evaluator.attempt.result
 import com.google.common.collect.Lists;
 import com.morethanheroic.localization.MessageResolver;
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.service.probe.domain.AttributeProbeCalculationResult;
+import com.morethanheroic.swords.attribute.service.attempt.domain.AttributeAttemptCalculationResult;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class DefaultAttributeAttemptEntryResultFactory implements AttributeAttem
     private final MessageResolver messageResolver;
 
     @Override
-    public List<ExplorationEventEntryResult> newResult(final Attribute attribute, final int valueToHit, AttributeProbeCalculationResult calculationResult) {
+    public List<ExplorationEventEntryResult> newResult(final Attribute attribute, final int valueToHit, AttributeAttemptCalculationResult calculationResult) {
         return Lists.newArrayList(
                 TextExplorationEventEntryResult.builder()
                         .content(messageResolver.resolveMessage(evaluateMessageIdFromResult(calculationResult.isSuccessful()), attribute.getName(), valueToHit, calculationResult.getRolledValue()))

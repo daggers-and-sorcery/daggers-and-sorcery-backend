@@ -2,20 +2,21 @@ package com.morethanheroic.swords.skill.lockpicking.service;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.service.probe.extension.AttributeProbeCalculatorExtension;
-import com.morethanheroic.swords.attribute.service.probe.extension.domain.PostProbeHookData;
-import com.morethanheroic.swords.attribute.service.probe.extension.domain.PreProbeHookData;
+import com.morethanheroic.swords.attribute.service.attempt.extension.AttributeAttemptCalculatorExtension;
+import com.morethanheroic.swords.attribute.service.attempt.extension.domain.PostAttemptHookData;
+import com.morethanheroic.swords.attribute.service.attempt.extension.domain.PreAttemptHookData;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import com.morethanheroic.swords.skill.lockpicking.service.domain.LockpickingAttributeProbeCalculatorExtensionResult;
+import com.morethanheroic.swords.skill.lockpicking.service.domain.LockpickingAttributeAttemptCalculatorExtensionResult;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LockpickingAttributeProbeCalculatorExtension implements AttributeProbeCalculatorExtension<LockpickingAttributeProbeCalculatorExtensionResult> {
+public class LockpickingAttributeAttemptCalculatorExtension
+    implements AttributeAttemptCalculatorExtension<LockpickingAttributeAttemptCalculatorExtensionResult> {
 
     private static final int LOCKPICK_ITEM_ID = 111;
 
@@ -25,7 +26,7 @@ public class LockpickingAttributeProbeCalculatorExtension implements AttributePr
 
     private final ItemDefinition lockpick;
 
-    public LockpickingAttributeProbeCalculatorExtension(final InventoryEntityFactory inventoryEntityFactory, final LockpickLossChanceCalculator lockpickLossChanceCalculator, final ItemDefinitionCache itemDefinitionCache, final SkillEntityFactory skillEntityFactory) {
+    public LockpickingAttributeAttemptCalculatorExtension(final InventoryEntityFactory inventoryEntityFactory, final LockpickLossChanceCalculator lockpickLossChanceCalculator, final ItemDefinitionCache itemDefinitionCache, final SkillEntityFactory skillEntityFactory) {
         this.inventoryEntityFactory = inventoryEntityFactory;
         this.lockpickLossChanceCalculator = lockpickLossChanceCalculator;
         this.skillEntityFactory = skillEntityFactory;
@@ -34,7 +35,7 @@ public class LockpickingAttributeProbeCalculatorExtension implements AttributePr
     }
 
     @Override
-    public boolean checkRequirements(final LockpickingAttributeProbeCalculatorExtensionResult lockpickingAttributeProbeCalculatorExtensionResult, final UserEntity userEntity) {
+    public boolean checkRequirements(final LockpickingAttributeAttemptCalculatorExtensionResult lockpickingAttributeProbeCalculatorExtensionResult, final UserEntity userEntity) {
         if (inventoryEntityFactory.getEntity(userEntity.getId()).hasItem(lockpick)) {
             lockpickingAttributeProbeCalculatorExtensionResult.setHadLockpick(true);
 
@@ -45,22 +46,22 @@ public class LockpickingAttributeProbeCalculatorExtension implements AttributePr
     }
 
     @Override
-    public void preProbeHook(final LockpickingAttributeProbeCalculatorExtensionResult lockpickingAttributeProbeCalculatorExtensionResult, final PreProbeHookData preProbeHookData) {
+    public void preProbeHook(final LockpickingAttributeAttemptCalculatorExtensionResult lockpickingAttributeProbeCalculatorExtensionResult, final PreAttemptHookData preAttemptHookData) {
     }
 
     @Override
-    public void postProbeHook(final LockpickingAttributeProbeCalculatorExtensionResult lockpickingAttributeProbeCalculatorExtensionResult, final PostProbeHookData postProbeHookData) {
-        final boolean isLostLockpick = lockpickLossChanceCalculator.isLoss(postProbeHookData.isSuccessfulProbe());
+    public void postProbeHook(final LockpickingAttributeAttemptCalculatorExtensionResult lockpickingAttributeProbeCalculatorExtensionResult, final PostAttemptHookData postAttemptHookData) {
+        final boolean isLostLockpick = lockpickLossChanceCalculator.isLoss(postAttemptHookData.isSuccessfulProbe());
         lockpickingAttributeProbeCalculatorExtensionResult.setLostLockpick(isLostLockpick);
 
         if (isLostLockpick) {
-            inventoryEntityFactory.getEntity(postProbeHookData.getUserEntity().getId()).removeItem(lockpick, 1);
+            inventoryEntityFactory.getEntity(postAttemptHookData.getUserEntity().getId()).removeItem(lockpick, 1);
         }
 
-        final int experienceReward = calculateExperienceReward(postProbeHookData.getTargetToHit(), postProbeHookData.isSuccessfulProbe());
+        final int experienceReward = calculateExperienceReward(postAttemptHookData.getTargetToHit(), postAttemptHookData.isSuccessfulProbe());
 
         lockpickingAttributeProbeCalculatorExtensionResult.setExperienceReward(experienceReward);
-        skillEntityFactory.getSkillEntity(postProbeHookData.getUserEntity()).increaseExperience(SkillType.LOCKPICKING, experienceReward);
+        skillEntityFactory.getSkillEntity(postAttemptHookData.getUserEntity()).increaseExperience(SkillType.LOCKPICKING, experienceReward);
     }
 
     @Override
