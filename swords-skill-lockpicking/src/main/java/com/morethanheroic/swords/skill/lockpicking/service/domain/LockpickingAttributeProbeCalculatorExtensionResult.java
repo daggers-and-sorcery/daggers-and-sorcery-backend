@@ -10,6 +10,7 @@ public class LockpickingAttributeProbeCalculatorExtensionResult implements Attri
 
     private boolean hadLockpick;
     private boolean lostLockpick;
+    private int experienceReward;
 
     @Override
     public Attribute supportedAttribute() {

@@ -9,5 +9,6 @@ import lombok.Getter;
 public class PostProbeHookData {
 
     private final UserEntity userEntity;
+    private final int targetToHit;
     private final boolean successfulProbe;
 }

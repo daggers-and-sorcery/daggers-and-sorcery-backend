@@ -27,25 +27,39 @@ public class LockpickingAttributeAttemptEntryResultFactory implements AttributeA
 
         final List<ExplorationEventEntryResult> results = new ArrayList<>();
 
+        results.add(
+                TextExplorationEventEntryResult.builder()
+                        .content("**Trying to lockpick.**")
+                        .build()
+        );
+
         if(!lockpickingAttributeProbeCalculationResult.isHadLockpick()) {
             results.add(
                     TextExplorationEventEntryResult.builder()
-                            .content("No lockpicks to use... damn!")
+                            .content("**No lockpicks to use... damn!**")
                             .build()
             );
+
+            return results;
         }
+
+        results.add(
+                TextExplorationEventEntryResult.builder()
+                        .content(messageResolver.resolveMessage(evaluateMessageIdFromResult(calculationResult.isSuccessful()), skillAttributeDefinitionCache.getDefinition((SkillAttribute) attribute).getName(), valueToHit, calculationResult.getRolledValue()))
+                        .build()
+        );
 
         if(lockpickingAttributeProbeCalculationResult.isLostLockpick()) {
             results.add(
                     TextExplorationEventEntryResult.builder()
-                            .content("Lost a lockpick... damn!")
+                            .content("**Lost a lockpick... damn!**")
                             .build()
             );
         }
 
         results.add(
                 TextExplorationEventEntryResult.builder()
-                        .content(messageResolver.resolveMessage(evaluateMessageIdFromResult(calculationResult.isSuccessful()), skillAttributeDefinitionCache.getDefinition((SkillAttribute) attribute).getName(), valueToHit, calculationResult.getRolledValue()))
+                        .content("**You gained "+lockpickingAttributeProbeCalculationResult.getExperienceReward()+" experience in the lockpicking skill.**")
                         .build()
         );
 

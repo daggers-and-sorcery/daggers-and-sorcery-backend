@@ -51,6 +51,7 @@ public class AttributeProbeCalculator {
                 extensionResult,
                 PostProbeHookData.builder()
                         .userEntity(userEntity)
+                        .targetToHit(target)
                         .successfulProbe(result)
                         .build()
         ));
@@ -67,6 +68,10 @@ public class AttributeProbeCalculator {
     }
 
     private int calculateProbeResult(int attributeValue) {
+        if(attributeValue <= 1) {
+            return 0;
+        }
+
         return (int) (random.nextInt((int) (attributeValue * 0.5)) + attributeValue * 0.5);
     }
 }

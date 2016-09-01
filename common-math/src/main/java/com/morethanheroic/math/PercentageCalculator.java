@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
+/**
+ * Methods to calculate percentages.
+ */
 @Service
 @RequiredArgsConstructor
 public class PercentageCalculator {
