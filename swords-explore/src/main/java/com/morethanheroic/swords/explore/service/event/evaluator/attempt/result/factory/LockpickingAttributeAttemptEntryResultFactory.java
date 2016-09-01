@@ -4,10 +4,10 @@ import com.morethanheroic.localization.MessageResolver;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
-import com.morethanheroic.swords.attribute.service.probe.domain.AttributeProbeCalculationResult;
+import com.morethanheroic.swords.attribute.service.attempt.domain.AttributeAttemptCalculationResult;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.skill.lockpicking.service.domain.LockpickingAttributeProbeCalculatorExtensionResult;
+import com.morethanheroic.swords.skill.lockpicking.service.domain.LockpickingAttributeAttemptCalculatorExtensionResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +22,8 @@ public class LockpickingAttributeAttemptEntryResultFactory implements AttributeA
     private final SkillAttributeDefinitionCache skillAttributeDefinitionCache;
 
     @Override
-    public List<ExplorationEventEntryResult> newResult(Attribute attribute, int valueToHit, AttributeProbeCalculationResult calculationResult) {
-        final LockpickingAttributeProbeCalculatorExtensionResult lockpickingAttributeProbeCalculationResult = (LockpickingAttributeProbeCalculatorExtensionResult) calculationResult.getExtensionResult();
+    public List<ExplorationEventEntryResult> newResult(Attribute attribute, int valueToHit, AttributeAttemptCalculationResult calculationResult) {
+        final LockpickingAttributeAttemptCalculatorExtensionResult lockpickingAttributeProbeCalculationResult = (LockpickingAttributeAttemptCalculatorExtensionResult) calculationResult.getExtensionResult();
 
         final List<ExplorationEventEntryResult> results = new ArrayList<>();
 
