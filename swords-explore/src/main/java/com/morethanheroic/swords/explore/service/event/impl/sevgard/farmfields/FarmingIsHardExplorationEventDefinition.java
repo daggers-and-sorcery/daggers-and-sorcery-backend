@@ -57,7 +57,7 @@ public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDef
 
         final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, GeneralAttribute.STRENGTH, 8);
 
-        explorationResult.addEventEntryResult(attemptResult.getResult());
+        explorationResult.addEventEntryResults(attemptResult.getResult());
 
         int resultCoins = random.nextInt(6) + 3;
 
