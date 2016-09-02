@@ -122,6 +122,7 @@ dependencies {
     compile project(':xml-loader')
     compile project(':common-memoize')
     compile project(':common-validator')
+    compile project(':common-sql')
     compile project(':common-dependency-injection')
 
     compile project(':swords-equipment')

@@ -12,7 +12,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 
 /**
- * Map Java 8 LocalTime &lt;-&gt; java.sql.Time
+ * Map Java 8 LocalTime to java.sql.Time
  */
 @MappedTypes(LocalTime.class)
 public class LocalTimeHandler extends BaseTypeHandler<LocalTime> {

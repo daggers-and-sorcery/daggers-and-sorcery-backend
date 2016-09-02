@@ -11,7 +11,7 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
 /**
- * Map Java 8 LocalDate &lt;-&gt; java.sql.Date
+ * Map Java 8 LocalDate to java.sql.Date
  */
 @MappedTypes(LocalDate.class)
 public class LocalDateHandler extends BaseTypeHandler<LocalDate> {

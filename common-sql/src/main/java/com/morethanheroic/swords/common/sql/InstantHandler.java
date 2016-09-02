@@ -11,7 +11,7 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
 /**
- * Map Java 8 Instant &lt;-&gt; java.sql.Timestamp
+ * Map Java 8 Instant to java.sql.Timestamp
  */
 @MappedTypes(Instant.class)
 public class InstantHandler extends BaseTypeHandler<Instant> {

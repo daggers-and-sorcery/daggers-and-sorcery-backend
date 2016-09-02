@@ -44,4 +44,5 @@ include 'common-entity'
 include 'swords-skill-lockpicking'
 include 'common-localization'
 include 'swords-regeneration'
+include 'common-sql'
 
