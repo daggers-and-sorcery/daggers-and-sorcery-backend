@@ -4,6 +4,7 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.attempt.AttributeAttemptCalculator;
 import com.morethanheroic.swords.attribute.service.attempt.domain.AttributeAttemptCalculationResult;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.result.AttributeAttemptEntryResultFactoryProvider;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -23,7 +24,7 @@ public class AttributeAttemptEventEntryEvaluator {
         final AttributeAttemptCalculationResult calculationResult = attributeAttemptCalculator
             .calculateAttributeAttempt(userEntity, attribute, valueToHit);
 
-        final List<ExplorationEventEntryResult> explorationResult = attributeAttemptEntryResultFactoryProvider.getFactory(calculationResult).newResult(attribute, valueToHit, calculationResult);
+        final List<TextExplorationEventEntryResult> explorationResult = attributeAttemptEntryResultFactoryProvider.getFactory(calculationResult).newResult(attribute, valueToHit, calculationResult);
 
         return AttributeAttemptEventEntryEvaluatorResult.builder()
                 .result(explorationResult)

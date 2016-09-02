@@ -17,7 +17,7 @@ public class ExplorationResult {
         return this;
     }
 
-    public ExplorationResult addEventEntryResults(List<ExplorationEventEntryResult> explorationEventEntryResult) {
+    public ExplorationResult addEventEntryResults(List<? extends ExplorationEventEntryResult> explorationEventEntryResult) {
         explorationEventEntryResults.addAll(explorationEventEntryResult);
 
         return this;

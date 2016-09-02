@@ -22,10 +22,10 @@ public class LockpickingAttributeAttemptEntryResultFactory implements AttributeA
     private final SkillAttributeDefinitionCache skillAttributeDefinitionCache;
 
     @Override
-    public List<ExplorationEventEntryResult> newResult(Attribute attribute, int valueToHit, AttributeAttemptCalculationResult calculationResult) {
+    public List<TextExplorationEventEntryResult> newResult(Attribute attribute, int valueToHit, AttributeAttemptCalculationResult calculationResult) {
         final LockpickingAttributeAttemptCalculatorExtensionResult lockpickingAttributeProbeCalculationResult = (LockpickingAttributeAttemptCalculatorExtensionResult) calculationResult.getExtensionResult();
 
-        final List<ExplorationEventEntryResult> results = new ArrayList<>();
+        final List<TextExplorationEventEntryResult> results = new ArrayList<>();
 
         results.add(
                 TextExplorationEventEntryResult.builder()

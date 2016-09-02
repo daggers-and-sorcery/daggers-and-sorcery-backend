@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain;
 
-import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,5 +11,5 @@ import java.util.List;
 public class AttributeAttemptEventEntryEvaluatorResult {
 
     private boolean successful;
-    private List<ExplorationEventEntryResult> result;
+    private List<TextExplorationEventEntryResult> result;
 }

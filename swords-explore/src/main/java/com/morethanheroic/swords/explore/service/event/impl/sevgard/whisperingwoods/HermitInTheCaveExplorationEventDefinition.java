@@ -179,7 +179,7 @@ public class HermitInTheCaveExplorationEventDefinition extends MultiStageExplora
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newAttributeProbeEntry(SkillAttribute.LOCKPICKING, 2)
+                    .newAttributeAttemptEntry(SkillAttribute.LOCKPICKING, 2)
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
                             .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
                             .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, chestDrops))

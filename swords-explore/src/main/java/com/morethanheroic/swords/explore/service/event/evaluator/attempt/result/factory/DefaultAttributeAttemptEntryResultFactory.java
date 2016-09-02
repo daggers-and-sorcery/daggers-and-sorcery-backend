@@ -20,7 +20,7 @@ public class DefaultAttributeAttemptEntryResultFactory implements AttributeAttem
     private final MessageResolver messageResolver;
 
     @Override
-    public List<ExplorationEventEntryResult> newResult(final Attribute attribute, final int valueToHit, AttributeAttemptCalculationResult calculationResult) {
+    public List<TextExplorationEventEntryResult> newResult(final Attribute attribute, final int valueToHit, AttributeAttemptCalculationResult calculationResult) {
         return Lists.newArrayList(
                 TextExplorationEventEntryResult.builder()
                         .content(messageResolver.resolveMessage(evaluateMessageIdFromResult(calculationResult.isSuccessful()), attribute.getName(), valueToHit, calculationResult.getRolledValue()))

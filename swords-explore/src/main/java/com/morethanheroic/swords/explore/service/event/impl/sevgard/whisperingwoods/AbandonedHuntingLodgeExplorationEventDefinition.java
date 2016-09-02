@@ -195,7 +195,7 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newAttributeProbeEntry(PERCEPTION, 7)
+                    .newAttributeAttemptEntry(PERCEPTION, 7)
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
                             .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_6")
                             .newCombatEntry(RAT_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)

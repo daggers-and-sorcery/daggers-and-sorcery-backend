@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.regeneration.interceptor;
 
-import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.regeneration.service.RegenerationFacade;
+import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
 import org.springframework.beans.factory.annotation.Autowired;
