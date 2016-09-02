@@ -29,14 +29,14 @@ public class LockpickingAttributeAttemptEntryResultFactory implements AttributeA
 
         results.add(
                 TextExplorationEventEntryResult.builder()
-                        .content("**Trying to lockpick.**")
+                        .content(messageResolver.resolveMessage("LOCKPICKING_ATTEMPT_TRYING_TO_LOCKPICK"))
                         .build()
         );
 
-        if(!lockpickingAttributeProbeCalculationResult.isHadLockpick()) {
+        if (!lockpickingAttributeProbeCalculationResult.isHadLockpick()) {
             results.add(
                     TextExplorationEventEntryResult.builder()
-                            .content("**No lockpicks to use... damn!**")
+                            .content(messageResolver.resolveMessage("LOCKPICKING_ATTEMPT_NO_LOCKPICK"))
                             .build()
             );
 
@@ -49,17 +49,17 @@ public class LockpickingAttributeAttemptEntryResultFactory implements AttributeA
                         .build()
         );
 
-        if(lockpickingAttributeProbeCalculationResult.isLostLockpick()) {
+        if (lockpickingAttributeProbeCalculationResult.isLostLockpick()) {
             results.add(
                     TextExplorationEventEntryResult.builder()
-                            .content("**Lost a lockpick... damn!**")
+                            .content(messageResolver.resolveMessage("LOCKPICKING_ATTEMPT_LOST_LOCKPICK"))
                             .build()
             );
         }
 
         results.add(
                 TextExplorationEventEntryResult.builder()
-                        .content("**You gained "+lockpickingAttributeProbeCalculationResult.getExperienceReward()+" experience in the lockpicking skill.**")
+                        .content(messageResolver.resolveMessage("LOCKPICKING_ATTEMPT_EXPERIENCE_GAINED", lockpickingAttributeProbeCalculationResult.getExperienceReward()))
                         .build()
         );
 
