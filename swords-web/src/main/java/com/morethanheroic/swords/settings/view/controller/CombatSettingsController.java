@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
-import com.morethanheroic.swords.settings.service.SaveOtherSettingsResponseBuilder;
+import com.morethanheroic.swords.settings.view.response.service.SaveOtherSettingsResponseBuilder;
 import com.morethanheroic.swords.settings.view.request.SaveOtherSettingsRequest;
 import com.morethanheroic.swords.user.domain.UserEntity;
 

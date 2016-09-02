@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.settings.service;
+package com.morethanheroic.swords.settings.view.response.service;
 
 import com.morethanheroic.swords.settings.repository.dao.SettingsDatabaseEntity;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;

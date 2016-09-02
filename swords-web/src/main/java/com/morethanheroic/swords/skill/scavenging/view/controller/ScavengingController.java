@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.scavenging.view.controller;
+package com.morethanheroic.swords.skill.scavenging.view.controller;
 
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;

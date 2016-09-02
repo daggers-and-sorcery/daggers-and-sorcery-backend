@@ -2,7 +2,7 @@ package com.morethanheroic.swords.settings.view.controller;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.settings.repository.domain.SettingsMapper;
-import com.morethanheroic.swords.settings.service.SettingsListResponseBuilder;
+import com.morethanheroic.swords.settings.view.response.service.SettingsListResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

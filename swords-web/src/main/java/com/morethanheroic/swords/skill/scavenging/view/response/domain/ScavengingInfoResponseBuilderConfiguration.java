@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.scavenging.service.domain;
+package com.morethanheroic.swords.skill.scavenging.view.response.domain;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;

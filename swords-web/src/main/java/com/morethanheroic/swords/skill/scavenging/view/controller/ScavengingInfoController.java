@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.skill.scavenging.view.controller;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.skill.scavenging.service.ScavengingInfoResponseBuilder;
-import com.morethanheroic.swords.skill.scavenging.service.domain.ScavengingInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.scavenging.view.response.service.ScavengingInfoResponseBuilder;
+import com.morethanheroic.swords.skill.scavenging.view.response.domain.ScavengingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.scavenging.service.domain;
+package com.morethanheroic.swords.skill.scavenging.view.response.domain;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import lombok.Builder;
