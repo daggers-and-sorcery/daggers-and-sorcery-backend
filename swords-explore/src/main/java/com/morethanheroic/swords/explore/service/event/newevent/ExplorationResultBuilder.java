@@ -6,12 +6,13 @@ import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
-import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -44,7 +45,7 @@ public class ExplorationResultBuilder {
     private CombatCalculator combatCalculator;
 
     @Autowired
-    private  MessageSource messageSource;
+    private MessageSource messageSource;
 
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
@@ -128,7 +129,11 @@ public class ExplorationResultBuilder {
     public MultiWayExplorationResultBuilder newAttributeAttemptEntry(final Attribute attribute, final int valueToHit) {
         final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, attribute, valueToHit);
 
-        explorationResult.addEventEntryResults(attemptResult.getResult());
+        explorationResult.addEventEntryResult(
+                AttributeExplorationEventEntryResult.builder()
+                        .result(attemptResult.getResult())
+                        .build()
+        );
 
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
     }
