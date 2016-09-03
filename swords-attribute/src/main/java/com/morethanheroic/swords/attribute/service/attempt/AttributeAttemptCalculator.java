@@ -45,8 +45,9 @@ public class AttributeAttemptCalculator {
                         .build()
         ));
 
-        final int rolledValue = calculateAttributeValue(userEntity, attribute);
-        final boolean result = calculateProbeResult(rolledValue) >= target;
+        final int attributeValue = calculateAttributeValue(userEntity, attribute);
+        final int rolledResult = calculateProbeResult(attributeValue);
+        final boolean result = rolledResult >= target;
 
         calculatorExtension.ifPresent((extension) -> extension.postProbeHook(
                 extensionResult,
@@ -60,7 +61,7 @@ public class AttributeAttemptCalculator {
         return AttributeAttemptCalculationResult.builder()
                 .extensionResult(extensionResult)
                 .successful(result)
-                .rolledValue(rolledValue)
+                .rolledValue(rolledResult)
                 .build();
     }
 
