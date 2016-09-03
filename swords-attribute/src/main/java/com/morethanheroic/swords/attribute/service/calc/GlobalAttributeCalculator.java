@@ -94,7 +94,7 @@ public class GlobalAttributeCalculator {
         return calculateActualValue(user, attribute, true);
     }
 
-    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shoulcCheckMinimum) {
+    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
         if (attribute == CombatAttribute.LIFE) {
             return new CombatAttributeCalculationResult(user.getHealthPoints(), (CombatAttribute) attribute);
         } else if (attribute == CombatAttribute.MANA) {
@@ -107,7 +107,7 @@ public class GlobalAttributeCalculator {
 
         final AttributeCalculationResult percentageResult = calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifier);
 
-        if (shoulcCheckMinimum) {
+        if (shouldCheckMinimum) {
             checkMinimumValue(attribute, percentageResult);
         }
 

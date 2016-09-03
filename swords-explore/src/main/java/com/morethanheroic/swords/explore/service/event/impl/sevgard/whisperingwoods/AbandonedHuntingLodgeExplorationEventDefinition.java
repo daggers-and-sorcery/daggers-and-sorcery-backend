@@ -195,7 +195,7 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newAttributeProbeEntry(PERCEPTION, 7)
+                    .newAttributeAttemptEntry(PERCEPTION, 7)
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
                             .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_6")
                             .newCombatEntry(RAT_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)
@@ -212,9 +212,7 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newCustomLogicEntry(() -> {
-                        dropAdder.addDrops(userEntity, chestDrops);
-                    })
+                    .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, chestDrops))
                     .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
                     .resetExploration(userEntity)
                     .build();
@@ -235,7 +233,7 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
             } else {
                 return explorationResultBuilderFactory
                         .newExplorationResultBuilder(userEntity)
-                        .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")
+                        .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_3")
                         .newOptionEntry(
                                 ReplyOption.builder()
                                         .message("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_1")

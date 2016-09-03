@@ -76,7 +76,7 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
 
             result.add(
                 AttackCombatStep.builder()
-                                .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_MONSTER", attacker.getName(), damage))
+                                .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_MONSTER", opponent.getName(), damage))
                                 .build()
             );
         }

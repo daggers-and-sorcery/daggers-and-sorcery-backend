@@ -6,7 +6,6 @@ import com.morethanheroic.swords.common.sql.LocalTimeHandler;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,10 +31,11 @@ public class SqlConfig {
 
     @Bean
     public DataSource getMybatisDataSource() throws URISyntaxException {
-        BasicDataSource dataSource = new BasicDataSource();
+        final BasicDataSource dataSource = new BasicDataSource();
+
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
-        dataSource.setUrl("jdbc:mysql://"+databaseIp+":3306/swords");
+        dataSource.setUrl("jdbc:mysql://" + databaseIp + ":3306/swords");
         dataSource.setUsername(user);
         dataSource.setPassword(password);
 
@@ -49,7 +49,8 @@ public class SqlConfig {
 
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
-        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+
         sessionFactory.setDataSource(getMybatisDataSource());
 
         sessionFactory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);

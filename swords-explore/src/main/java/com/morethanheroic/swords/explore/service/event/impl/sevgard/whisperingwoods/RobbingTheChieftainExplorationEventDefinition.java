@@ -153,7 +153,7 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_3")
-                .newAttributeProbeEntry(GeneralAttribute.DEXTERITY, 8)
+                .newAttributeAttemptEntry(GeneralAttribute.DEXTERITY, 8)
                 .isSuccess((explorationResultBuilder) -> explorationResultBuilder
                         .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_4")
                         .newCombatEntry(GOBLIN_CHIEFTAIN_MONSTER_ID, EVENT_ID, COMBAT_STAGE)

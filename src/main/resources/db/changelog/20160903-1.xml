@@ -1,0 +1,33 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20160903-1">
+        <insert tableName="news">
+            <column name="title" value="Lockpicking, the first shadow skill"/>
+            <column name="release_date" value="2016-09-03 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Greetings adventurers!
+
+We are happy to announce the release of a new skill, Lockpicking!
+
+Improvements:
+- Added a new event with new monsters and items.
+- Added a new skill, the Lockpicking.
+- Separated the skills on the character page to four groups instead of the existing two. (Combat, Magic, Trade and Shadow skills.)
+- Lowered the amount of the gnoll's attack.
+
+Bugfixes:
+- Fixed a bug that enabled players to gain a lot of defense experience while fighting the monsters. The defense experience that a player can gain while fighting a monster is based on the monster's level.
+- Fixed a bug that made players stuck in combat and unable to explore.
+- Fixed the combat messages when using ranged attacks. The players no longer shooting themselves.
+- Fixed a wrong text entry on the abandoned hunting lodge event.
+
+Daggers and Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

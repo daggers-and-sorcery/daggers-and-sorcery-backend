@@ -69,8 +69,7 @@ public class ShopBuyStockController {
             throw new ConflictException();
         }
 
-        //TODO: Check that the player is on the shop's position except if its the main shop.
-        //TODO: Use main shop rates if the player using the main shop.
+        //TODO: Check that the shop is in the same city as the player.
 
         final InventoryEntity inventoryEntity = inventoryFacade.getInventory(user);
 

@@ -7,9 +7,11 @@ import com.morethanheroic.swords.combat.view.response.service.CombatAttackStatus
 import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttackPartialResponseCollectionBuilderConfiguration;
 import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttackStatusPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.view.response.domain.AttributeAttemptExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.CombatExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.ExplorationResponseBuilderConfiguration;
 import com.morethanheroic.swords.explore.view.response.domain.OptionExplorationEventPartialResponse;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +73,22 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                 result.add(
                         OptionExplorationEventPartialResponse.builder()
                                 .eventOptions(optionExplorationEventEntryResult.getOptions())
+                                .build()
+                );
+            } else if (explorationEventEntryResult instanceof AttributeExplorationEventEntryResult) {
+                final AttributeExplorationEventEntryResult attributeExplorationEventEntryResult = (AttributeExplorationEventEntryResult) explorationEventEntryResult;
+
+                result.add(
+                        AttributeAttemptExplorationEventPartialResponse.builder()
+                                .messages(
+                                        attributeExplorationEventEntryResult.getResult().stream()
+                                                .map(
+                                                        (textExplorationEventEntryResult) -> TextExplorationEventPartialResponse.builder()
+                                                                .content(textExplorationEventEntryResult.getContent())
+                                                                .build()
+                                                )
+                                                .collect(Collectors.toList())
+                                )
                                 .build()
                 );
             }
