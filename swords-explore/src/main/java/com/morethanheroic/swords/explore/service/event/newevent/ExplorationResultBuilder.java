@@ -57,7 +57,7 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public ExplorationResultBuilder resetExploration(final UserEntity userEntity) {
+    public ExplorationResultBuilder resetExploration() {
         userEntity.resetActiveExploration();
 
         return this;
