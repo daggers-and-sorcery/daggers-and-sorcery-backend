@@ -233,7 +233,7 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
             } else {
                 return explorationResultBuilderFactory
                         .newExplorationResultBuilder(userEntity)
-                        .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_3")
+                        .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_3")
                         .newOptionEntry(
                                 ReplyOption.builder()
                                         .message("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_1")
