@@ -57,6 +57,12 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder setEventStage(final int eventId, final int stage) {
+        userEntity.setActiveExploration(eventId, stage);
+
+        return this;
+    }
+
     public ExplorationResultBuilder resetExploration() {
         userEntity.resetActiveExploration();
 
