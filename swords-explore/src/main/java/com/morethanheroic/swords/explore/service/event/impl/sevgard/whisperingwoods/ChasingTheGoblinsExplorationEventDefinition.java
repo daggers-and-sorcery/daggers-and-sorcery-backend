@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingwoods;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
@@ -32,6 +33,7 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
 
 
     private final ExplorationResultBuilderFactory explorationResultBuilderFactory;
+    private final CombatCalculator combatCalculator;
 
     @Override
     public int getId() {
@@ -144,11 +146,71 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
 
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
-        return null;
+        if (stage == STARTING_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_6")
+                    .newOptionEntry(
+                            ReplyOption.builder()
+                                    .message("CHASING_THE_GOBLINS_EXPLORATION_EVENT_QUESTION_REPLY_1")
+                                    .stage(KILL_THE_GOBLIN_STAGE)
+                                    .build(),
+                            ReplyOption.builder()
+                                    .message("CHASING_THE_GOBLINS_EXPLORATION_EVENT_QUESTION_REPLY_2")
+                                    .stage(FOLLOW_THE_GOBLIN_STAGE)
+                                    .build()
+                    )
+                    .setEventStage(EVENT_ID, STARTING_STAGE)
+                    .build();
+        } else if (stage == FIRST_COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    //TODO: add the text
+                    .continueCombatEntry()
+                    .build();
+        } else if (stage == SECOND_COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_9")
+                    .continueCombatEntry()
+                    .build();
+        } else if (stage == THIRD_COMBAT_STAGE) {
+            if (combatCalculator.isCombatRunning(userEntity)) {
+                return explorationResultBuilderFactory
+                        .newExplorationResultBuilder(userEntity)
+                        .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_10")
+                        .continueCombatEntry()
+                        .build();
+            } else {
+                return explorationResultBuilderFactory
+                        .newExplorationResultBuilder(userEntity)
+                        .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_11")
+                        .newOptionEntry(
+                                ReplyOption.builder()
+                                        .message("CHASING_THE_GOBLINS_EXPLORATION_EVENT_QUESTION_REPLY_3")
+                                        .stage(GO_HOME_STAGE)
+                                        .build(),
+                                ReplyOption.builder()
+                                        .message("CHASING_THE_GOBLINS_EXPLORATION_EVENT_QUESTION_REPLY_4")
+                                        .stage(ATTACK_THE_SEPARATIST_STAGE)
+                                        .build()
+                        )
+                        .build();
+            }
+        } else if (stage == FOURTH_COMBAT_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_15")
+                    .continueCombatEntry()
+                    .build();
+        }
+
+        throw new IllegalExplorationEventStateException("Explore is not available on event: " + EVENT_ID + " at stage: " + stage);
     }
 
     @Override
     public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        //TODO
         return true;
     }
 }
