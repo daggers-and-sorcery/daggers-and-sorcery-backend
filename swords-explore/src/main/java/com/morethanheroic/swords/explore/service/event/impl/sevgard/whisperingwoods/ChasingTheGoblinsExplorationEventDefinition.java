@@ -74,7 +74,7 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
         if (stage == KILL_THE_GOBLIN_STAGE) {
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    //TODO: attack text missing
+                    .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_17")
                     .newCombatEntry(GOBLIN_SEPARATIST_MONSTER_ID, EVENT_ID, FIRST_COMBAT_STAGE)
                     .build();
         } else if (stage == FIRST_COMBAT_STAGE) {
@@ -165,7 +165,7 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
         } else if (stage == FIRST_COMBAT_STAGE) {
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    //TODO: add the text
+                    .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_17")
                     .continueCombatEntry()
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
