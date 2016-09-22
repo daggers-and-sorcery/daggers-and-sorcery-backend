@@ -1,1 +1,0 @@
-web: exec /app/build/install/swords-server/bin/swords-server

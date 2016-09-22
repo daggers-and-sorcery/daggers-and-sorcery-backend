@@ -6,37 +6,35 @@ import com.morethanheroic.swords.skill.domain.SkillGroup;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 //TODO: load these maps from config xml files.
 @Service
 public class SkillTypeCalculator {
 
-    private final List<SkillType> tradeSkills;
-    private final List<SkillType> combatSkills;
+    private final Map<SkillGroup, List<SkillType>> skillsByType;
 
     public SkillTypeCalculator() {
-        final List<SkillType> temporaryTradeSkills = new ArrayList<>();
-        final List<SkillType> temporaryCombatSkills = new ArrayList<>();
+        final Map<SkillGroup, List<SkillType>> skillsByTypeResult = new HashMap<>();
         for (SkillType skillType : SkillType.values()) {
-            if (skillType.getSkillGroup() == SkillGroup.TRADE) {
-                temporaryTradeSkills.add(skillType);
-            } else {
-                temporaryCombatSkills.add(skillType);
+            final SkillGroup skillGroupOfSkillType = skillType.getSkillGroup();
+
+            if (!skillsByTypeResult.containsKey(skillGroupOfSkillType)) {
+                skillsByTypeResult.put(skillGroupOfSkillType, new ArrayList<>());
             }
+
+            skillsByTypeResult.get(skillGroupOfSkillType).add(skillType);
         }
-        this.tradeSkills = Collections.unmodifiableList(temporaryTradeSkills);
-        this.combatSkills = Collections.unmodifiableList(temporaryCombatSkills);
+
+        for(SkillGroup skillGroup : skillsByTypeResult.keySet()) {
+            skillsByTypeResult.put(skillGroup, Collections.unmodifiableList(skillsByTypeResult.get(skillGroup)));
+        }
+
+        skillsByType = Collections.unmodifiableMap(skillsByTypeResult);
     }
 
-    public List<SkillType> getTradeSkills() {
-        return tradeSkills;
-    }
-
-    public List<SkillType> getCombatSkills() {
-        return combatSkills;
+    public List<SkillType> getSkillsByGroup(final SkillGroup skillGroup) {
+        return skillsByType.get(skillGroup);
     }
 
     public SkillType getSkillFromItemType(ItemType itemType) {
@@ -146,6 +144,8 @@ public class SkillTypeCalculator {
                 return SkillType.RESTORATION;
             case ALTERATION:
                 return SkillType.ALTERATION;
+            case LOCKPICKING:
+                return SkillType.LOCKPICKING;
             default:
                 throw new IllegalArgumentException("No skill found for skill attribute type: " + skillAttribute);
         }
@@ -211,6 +211,8 @@ public class SkillTypeCalculator {
                 return SkillAttribute.RESTORATION;
             case ALTERATION:
                 return SkillAttribute.ALTERATION;
+            case LOCKPICKING:
+                return SkillAttribute.LOCKPICKING;
             default:
                 throw new IllegalArgumentException("No skill type found for attribute type: " + skillType);
         }

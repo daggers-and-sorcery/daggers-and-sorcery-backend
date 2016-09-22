@@ -4,6 +4,7 @@ import com.morethanheroic.swords.cache.value.ValueCache;
 import com.morethanheroic.swords.skill.repository.dao.SkillDatabaseEntity;
 import com.morethanheroic.swords.skill.service.SkillLevelCalculator;
 import com.morethanheroic.swords.skill.service.SkillValueCacheProvider;
+import com.morethanheroic.swords.skill.service.handler.SkillHandler;
 import com.morethanheroic.swords.skill.service.handler.SkillHandlerProvider;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,13 @@ public class SkillEntity {
     }
 
     public void decreaseExperience(SkillType skillType, int value) {
-        skillHandlerProvider.getSkillHandler(skillType).decreaseExperience(skillValueCache.getEntity(), value);
+        final SkillHandler skillHandler = skillHandlerProvider.getSkillHandler(skillType);
+
+        if(skillHandler.getExperience(skillValueCache.getEntity()) - value <= 0) {
+            skillHandler.decreaseExperience(skillValueCache.getEntity(), 0);
+        } else {
+            skillHandler.decreaseExperience(skillValueCache.getEntity(), value);
+        }
     }
 
     public int getExperience(SkillType skillType) {

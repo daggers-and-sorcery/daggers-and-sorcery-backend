@@ -66,7 +66,7 @@ public class UseSpellCombatCalculator {
             }
         }
 
-        combatTeardownCalculator.teardown(combatContext);
+        combatSteps.addAll(combatTeardownCalculator.teardown(combatContext));
 
         return AttackResult.builder()
                            .attackResult(combatSteps)

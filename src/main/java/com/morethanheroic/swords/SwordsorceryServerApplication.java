@@ -2,30 +2,20 @@ package com.morethanheroic.swords;
 
 import com.morethanheroic.application.Application;
 import com.morethanheroic.session.configuration.EnableSessionManagement;
-import com.morethanheroic.swords.common.interceptor.RegenerationInterceptor;
-import com.morethanheroic.swords.common.resolver.UserEntityHandlerMethodArgumentResolver;
-import com.morethanheroic.swords.common.sql.InstantHandler;
-import com.morethanheroic.swords.common.sql.LocalDateHandler;
-import com.morethanheroic.swords.common.sql.LocalTimeHandler;
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
+import com.morethanheroic.swords.regeneration.interceptor.RegenerationInterceptor;
+import com.morethanheroic.swords.user.resolver.UserEntityHandlerMethodArgumentResolver;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
-import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.boot.autoconfigure.web.WebMvcProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -36,12 +26,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
-import javax.sql.DataSource;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
 
@@ -49,7 +33,8 @@ import java.util.Random;
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 @ComponentScan({
         "com.morethanheroic.swords",
-        "com.morethanheroic.math"
+        "com.morethanheroic.math",
+        "com.morethanheroic.localization"
 })
 @EnableWebMvc
 @EnableScheduling

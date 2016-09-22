@@ -4,6 +4,7 @@ import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
@@ -26,6 +27,7 @@ public class PlayerDefeatHandler {
     private final SkillEntityFactory skillEntityFactory;
     private final HighestSkillCalculator highestSkillCalculator;
     private final CombatMessageFactory combatMessageFactory;
+    private final CombatMapper combatMapper;
 
     public List<CombatStep> handleDefeat(CombatContext combatContext) {
         final List<CombatStep> result = new ArrayList<>();
@@ -62,6 +64,8 @@ public class PlayerDefeatHandler {
     }
 
     private void restartRunningEvent(final UserEntity userEntity) {
+        combatMapper.removeCombatForUser(userEntity.getId());
+
         userEntity.resetActiveExploration();
     }
 
@@ -74,6 +78,10 @@ public class PlayerDefeatHandler {
     }
 
     private int calculateExperienceToRemove(SkillType skillType, SkillEntity skillEntity) {
+        if(skillEntity.getExperience(skillType) == 0) {
+            return 0;
+        }
+
         return (int) (skillEntity.getExperienceBetweenNextLevel(skillType) * PERCENTAGE_TO_REMOVE);
     }
 }

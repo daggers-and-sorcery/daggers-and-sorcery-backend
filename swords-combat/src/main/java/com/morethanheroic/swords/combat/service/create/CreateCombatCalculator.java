@@ -1,11 +1,5 @@
 package com.morethanheroic.swords.combat.service.create;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.AttackResult;
 import com.morethanheroic.swords.combat.domain.CombatContext;
@@ -25,10 +19,16 @@ import com.morethanheroic.swords.combat.service.calc.initialisation.Initialisati
 import com.morethanheroic.swords.combat.service.exception.IllegalCombatStateException;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
-
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
+@Log4j
 @RequiredArgsConstructor
 public class CreateCombatCalculator {
 
@@ -46,24 +46,27 @@ public class CreateCombatCalculator {
         final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
 
         if (combatDatabaseEntity != null) {
-            throw new IllegalCombatStateException(
-                "The user " + userEntity + " tries to create combat while one already exists. His event data is event: "
+            if (userEntity.getActiveExplorationEvent() == 0 && userEntity.getActiveExplorationState() == 0) {
+                combatMapper.removeCombatForUser(userEntity.getId());
+            }
+
+            log.error("The user " + userEntity + " tries to create combat while one already exists. His event data is event: "
                     + userEntity.getActiveExplorationEvent() + " state: " + userEntity.getActiveExplorationState() + ".");
         }
 
         final CombatContext combatContext = CombatContext.builder()
-                                                         .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
-                                                         .opponent(new MonsterCombatEntity(monsterDefinition))
-                                                         .build();
+                .user(new UserCombatEntity(userEntity, globalAttributeCalculator))
+                .opponent(new MonsterCombatEntity(monsterDefinition))
+                .build();
 
         combatInitializer.initialize(userEntity, monsterDefinition);
 
         final List<CombatStep> combatSteps = new ArrayList<>();
 
         combatSteps.add(
-            InitializationCombatStep.builder()
-                                    .message(combatMessageFactory.newMessage("start", "COMBAT_MESSAGE_NEW_FIGHT", monsterDefinition.getName()))
-                                    .build()
+                InitializationCombatStep.builder()
+                        .message(combatMessageFactory.newMessage("start", "COMBAT_MESSAGE_NEW_FIGHT", monsterDefinition.getName()))
+                        .build()
         );
 
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
@@ -84,15 +87,15 @@ public class CreateCombatCalculator {
             final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
 
             combatMapper.createCombat(userEntity.getId(), monsterDefinition.getId(), monsterCombatEntity.getActualHealth(),
-                monsterCombatEntity.getActualMana());
+                    monsterCombatEntity.getActualMana());
         } else {
             combatSteps.addAll(combatTerminator.terminate(combatContext));
         }
 
         return AttackResult.builder()
-                           .attackResult(combatSteps)
-                           .combatEnded(combatContext.getWinner() != null)
-                           .winner(combatContext.getWinner())
-                           .build();
+                .attackResult(combatSteps)
+                .combatEnded(combatContext.getWinner() != null)
+                .winner(combatContext.getWinner())
+                .build();
     }
 }

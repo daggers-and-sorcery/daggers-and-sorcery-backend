@@ -9,7 +9,7 @@ public class SkillLevelCalculator {
 
     @SuppressWarnings("checkstyle:magicnumber")
     public int getExperienceFromLevel(int level) {
-        if (level < 1) {
+        if (level <= 1) {
             return 0;
         }
 

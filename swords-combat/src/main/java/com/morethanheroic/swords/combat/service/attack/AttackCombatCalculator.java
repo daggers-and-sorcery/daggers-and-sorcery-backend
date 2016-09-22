@@ -3,6 +3,7 @@ package com.morethanheroic.swords.combat.service.attack;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,9 @@ public class AttackCombatCalculator {
             }
         }
 
+        final UserCombatEntity userCombatEntity = combatContext.getUser();
+        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userCombatEntity.getUserEntity().getMovementPoints());
+
         if (combatContext.getWinner() != null) {
             combatSteps.addAll(combatTerminator.terminate(combatContext));
 
@@ -63,7 +67,6 @@ public class AttackCombatCalculator {
 
             combatMapper.updateCombat(savedCombatEntity.getId(), monsterCombatEntity.getActualHealth(), monsterCombatEntity.getActualMana());
         }
-
         return AttackResult.builder()
            .attackResult(combatSteps)
            .combatEnded(combatContext.getWinner() != null)

@@ -11,6 +11,6 @@ public class SettingsEntity {
     }
 
     public boolean isScavengingEnabled() {
-        return settingsDatabaseEntity.isScavengingEnabled();
+        return settingsDatabaseEntity != null && settingsDatabaseEntity.isScavengingEnabled();
     }
 }

@@ -34,9 +34,10 @@ public enum SkillType {
     LEATHERWORKING(SkillGroup.TRADE),
     SMITHING(SkillGroup.TRADE),
     FOCUS(SkillGroup.COMBAT),
-    DESTRUCTION(SkillGroup.COMBAT),
-    RESTORATION(SkillGroup.COMBAT),
-    ALTERATION(SkillGroup.COMBAT);
+    DESTRUCTION(SkillGroup.MAGIC),
+    RESTORATION(SkillGroup.MAGIC),
+    ALTERATION(SkillGroup.MAGIC),
+    LOCKPICKING(SkillGroup.SHADOW);
 
     private final SkillGroup skillGroup;
 

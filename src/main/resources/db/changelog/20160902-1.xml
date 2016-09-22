@@ -1,0 +1,44 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20160902-1">
+        <modifyDataType columnName="message" newDataType="varchar(4096)" tableName="news"/>
+        <insert tableName="news">
+            <column name="title" value="Behind the Scenes - September"/>
+            <column name="release_date" value="2016-09-02 00:00:00"/>
+            <column name="icon" value="community"/>
+            <column name="message">
+                <![CDATA[
+Greetings adventurers!
+
+September is the month where we slowly start saying goodbye to the warm Summer Sun, but also a month of new adventures and challenges, for many are coming back from vacations ready to get back to work, or school. But in the land of Daggers & Sorcery, September will also bring new and exciting content, and plenty of other innovations.
+
+Being such an awesome community as you guys are, we’ve decided to unveil some of our plans we intend to bring to the game over the course of September, so you can have an insight into our train of thought. Here’s what we intend to bring on September:
+
+#### Addition of new events to the Whispering Woods.
+
+With every new event we add, we intend it to have a story unique to it. Some of the events will consist of several parts, and we’re working hard to bring you amazing content so you can enjoy countless adventures and still encounter something new even to the most experienced of players.
+
+#### Release of the official forums.
+
+Forums will be essential part of our community, where players will be able to share their findings and tactics with others, while we can also be more active in communication with you guys. It will also give you a place where all your feedback and suggestions will be visible to all of our wonderful community, so we can all contribute to further game development.
+
+#### Release of new smithing and leatherworking recipes, which will bring additional level 5 and level 10 weapons and armor pieces.
+
+And that is just the beginning. We didn’t want to add too much content early on because it could’ve been confusing. But as we progress further, we’ll add more and more crafting recipes, items and spells. Some of which will be very rare to get, available only through certain tasks and adventures. We intend to diversify the ways a player can obtain certain recipes or items, something that will keep you interested in playing the game, something that will grow the game’s fun factor even more.
+
+#### First release of the next adventure zone – the Woodland Cemetery! I’ve heard rumors of vampires, werewolves and vicious ghouls crawling all over the haunted area!
+
+And finally, we intend to release next adventure zone which will embark the very best adventurers on epic quests, fight new monsters and make some decisions that will impact their further character progression! Polish your best armor and sharpen your best sword, adventurer, for you shall be tested.
+
+Our team is working hard to bring new stuff to the game, fix every possible bug and make balance changes where necessary.
+
+Please, feel free to post your feedback and suggestions on our Facebook page! We’ll be more than happy to hear you all out!
+
+Cheers, The Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

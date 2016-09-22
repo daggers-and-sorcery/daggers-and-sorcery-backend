@@ -33,4 +33,8 @@ public class CombatCalculator {
     public MonsterDefinition getOpponentInRunningCombat(UserEntity userEntity) {
         return monsterDefinitionCache.getMonsterDefinition(combatMapper.getRunningCombat(userEntity.getId()).getMonsterId());
     }
+
+    public void removeAllCombatForUser(final UserEntity userEntity) {
+        combatMapper.removeCombatForUser(userEntity.getId());
+    }
 }

@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.domain;
 
+import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 
 public class Drop {
@@ -22,7 +23,7 @@ public class Drop {
         return amount;
     }
 
-    public boolean isIdentified() {
-        return identified;
+    public IdentificationType isIdentified() {
+        return identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED;
     }
 }

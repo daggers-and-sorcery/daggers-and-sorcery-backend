@@ -4,6 +4,7 @@ dependencies {
     }
 
     compile project(':common-math')
+    compile project(':common-localization')
 
     compile project(':swords-inventory')
     compile project(':swords-skill')

@@ -12,6 +12,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+//TODO: Stop using this and instead use an own skill calculator that resides in the skill package? We should think about this I guess.
 /**
  * Used to calculate a {@link com.morethanheroic.swords.attribute.domain.type.AttributeType#SKILL} attribute's all data related to the player.
  */
