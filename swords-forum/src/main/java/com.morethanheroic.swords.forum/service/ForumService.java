@@ -7,29 +7,20 @@ import com.morethanheroic.swords.forum.repository.dao.NewTopic;
 import com.morethanheroic.swords.forum.repository.domain.ForumCategoryRepository;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
-import com.morethanheroic.swords.user.service.UserFacade;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by root on 2016. 08. 01..
- */
-
-
 @Service
+@RequiredArgsConstructor
 public class ForumService {
 
+    private final ForumCategoryRepository forumCategoryRepository;
+    private final UserEntityFactory userEntityFactory;
 
-    @Autowired
-    private ForumCategoryRepository forumCategoryRepository;
-
-    @Autowired
-    private UserEntityFactory userEntityFactory;
-
-    public List<ForumCategoryEntity> getTopics(UserEntity userEntity) {
+    public List<ForumCategoryEntity> getCategories() {
         List<ForumCategoriesDatabaseEntity> forumCategoriesDatabaseEntities = forumCategoryRepository.getCategories();
 
         List<ForumCategoryEntity> result = new ArrayList<>();
@@ -40,7 +31,7 @@ public class ForumService {
                             .postCount(forumCategoriesDatabaseEntity.getPostCount())
                             .icon(forumCategoriesDatabaseEntity.getIcon())
                             .lastPostDate(forumCategoriesDatabaseEntity.getLastPostDate())
-                            .lastPostUser(userEntityFactory.getEntity(forumCategoriesDatabaseEntity.getLastPostUser()))
+                            .lastPostUser(forumCategoriesDatabaseEntity.getLastPostUser() > 0 ? userEntityFactory.getEntity(forumCategoriesDatabaseEntity.getLastPostUser()) : null)
                             .build()
             );
         }
@@ -48,7 +39,7 @@ public class ForumService {
         return result;
     }
 
-    public void createNewTopic(UserEntity userEntity, NewTopic newTopic) {
+    public void createNewTopic(NewTopic newTopic) {
         forumCategoryRepository.newTopic(newTopic);
     }
 
@@ -58,6 +49,7 @@ public class ForumService {
                 newComment.getContent(),
                 userEntity.getId(),
                 newComment.isAnswer() ? 1 : 0,
-                newComment.getAnswerToCommentId());
+                newComment.getAnswerToCommentId()
+        );
     }
 }

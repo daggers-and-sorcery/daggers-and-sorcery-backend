@@ -10,13 +10,10 @@ import com.morethanheroic.swords.forum.view.response.domain.ForumCommentResponse
 import com.morethanheroic.swords.forum.view.response.domain.ForumPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.forum.view.request.domain.NewTopicRequest;
 import com.morethanheroic.swords.forum.view.response.service.ForumCategoryResponseBuilder;
-import com.morethanheroic.swords.forum.view.response.service.ForumCommentPartialResponseBuilder;
 import com.morethanheroic.swords.forum.view.response.service.ForumCommentResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -41,11 +38,12 @@ public class ForumController {
      */
     @RequestMapping(value = "/forum/list/categories", method = RequestMethod.GET)
     public Response requestCategories(UserEntity userEntity) {
-        return forumCategoryResponseBuilder.build(ForumPartialResponseBuilderConfiguration.builder()
-                .userEntity(userEntity)
-                .categories(forumService.getTopics(userEntity))
-                .build()
-        );
+        return forumCategoryResponseBuilder.build
+                (ForumPartialResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .categories(forumService.getCategories())
+                        .build()
+                );
     }
 
     /**
@@ -95,15 +93,17 @@ public class ForumController {
     public Response createANewTopic(UserEntity userEntity, @RequestBody NewTopicRequest newTopicRequest) {
 
 
-        forumService.createNewTopic(userEntity, NewTopic.builder()
-                .parentCategory(newTopicRequest.getParentCategory())
-                .content(newTopicRequest.getContent())
-                .name(newTopicRequest.getName())
-                .commentCount(0)
-                .lastPostDate(Instant.now())
-                .lastPostUser(userEntity.getId())
-                .creator(userEntity.getId())
-                .build());
+        forumService.createNewTopic(
+                NewTopic.builder()
+                        .parentCategory(newTopicRequest.getParentCategory())
+                        .content(newTopicRequest.getContent())
+                        .name(newTopicRequest.getName())
+                        .commentCount(0)
+                        .lastPostDate(Instant.now())
+                        .lastPostUser(userEntity.getId())
+                        .creator(userEntity.getId())
+                        .build()
+        );
 
         return responseFactory.newSuccessfulResponse(userEntity);
     }

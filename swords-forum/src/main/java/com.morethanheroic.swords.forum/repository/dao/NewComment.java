@@ -5,10 +5,6 @@ import lombok.Getter;
 
 import java.util.Optional;
 
-/**
- * Created by root on 2016. 08. 23..
- */
-
 @Getter
 @Builder
 public class NewComment {
@@ -17,5 +13,4 @@ public class NewComment {
     private String content;
     private int answerToCommentId;
     private int topicId;
-
 }

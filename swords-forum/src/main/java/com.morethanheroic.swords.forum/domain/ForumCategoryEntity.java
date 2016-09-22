@@ -6,9 +6,6 @@ import lombok.Getter;
 
 import java.util.Date;
 
-/**
- * Created by root on 2016. 08. 03..
- */
 @Builder
 @Getter
 public class ForumCategoryEntity {

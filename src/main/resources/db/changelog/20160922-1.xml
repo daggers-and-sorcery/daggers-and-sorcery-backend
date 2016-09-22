@@ -1,0 +1,77 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20160922-1">
+        <insert tableName="forum_categories">
+            <column name="name" value="News Discussions"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="news_discussions"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Recent Game Updates"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="recent_game_updates"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Future Game Updates"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="future_game_updates"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Feedback"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="feedback"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Lore Discussion"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="lore_discussion"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Roleplaying"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="roleplaying"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Events and Competitions"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="events_and_competitions"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Off Topic"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="off_topic"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Guild Central"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="guild_central"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+        <insert tableName="forum_categories">
+            <column name="name" value="Exploration Event Discussion"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="exploration_event_discussion"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

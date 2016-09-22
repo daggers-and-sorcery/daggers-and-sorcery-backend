@@ -6,9 +6,6 @@ import lombok.Getter;
 
 import java.time.Instant;
 
-/**
- * Created by root on 2016. 08. 08..
- */
 @Getter
 @Builder
 public class NewTopic {
@@ -20,6 +17,4 @@ public class NewTopic {
     private Instant lastPostDate;
     private int lastPostUser;
     private int creator;
-
-
 }

@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class ForumCategoryPartialResponseBuilder implements PartialResponseCollectionBuilder<ForumPartialResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;
@@ -28,19 +28,17 @@ public class ForumCategoryPartialResponseBuilder implements PartialResponseColle
     public List<PartialResponse> build(ForumPartialResponseBuilderConfiguration forumPartialResponseBuilderConfiguration) {
         List<PartialResponse> result = new ArrayList<>();
 
-        for(ForumCategoryEntity forumCategoryEntity : forumPartialResponseBuilderConfiguration.getCategories()) {
+        for (ForumCategoryEntity forumCategoryEntity : forumPartialResponseBuilderConfiguration.getCategories()) {
             result.add(
                     ForumCategoryPartialResponse.builder()
-                        .icon(forumCategoryEntity.getIcon())
-                        .name(forumCategoryEntity.getName())
-                        .postCount(forumCategoryEntity.getPostCount())
-                        .lastPostDate(forumCategoryEntity.getLastPostDate())
-                        .lastPoster(forumCategoryEntity.getLastPostUser().getUsername())
-                        .build()
+                            .icon(forumCategoryEntity.getIcon())
+                            .name(forumCategoryEntity.getName())
+                            .postCount(forumCategoryEntity.getPostCount())
+                            .lastPostDate(forumCategoryEntity.getLastPostDate())
+                            .lastPoster(forumCategoryEntity.getLastPostUser() != null ? forumCategoryEntity.getLastPostUser().getUsername() : null)
+                            .build()
             );
         }
-
-
 
         return result;
     }

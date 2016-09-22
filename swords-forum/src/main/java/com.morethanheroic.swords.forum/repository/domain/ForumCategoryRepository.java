@@ -12,15 +12,8 @@ import org.springframework.stereotype.Repository;
 import java.time.Instant;
 import java.util.List;
 
-
 @Repository
 public interface ForumCategoryRepository {
-
-
-
-   /* @Insert("INSERT INTO swords.forum_categories (`name`, post_count, icon, last_post_date, last_post_user) " +
-            "values (#{name},#{postCount},#{icon},#{lastPostDate},#{lastPostUser});")
-    void newCategory(ForumCategoriesDatabaseEntity forumCategoriesDatabaseEntity);*/
 
     @Select("SELECT `name`, `post_count`,`icon`,`last_post_date`,`last_post_user` FROM swords.`forum_categories`;")
     List<ForumCategoriesDatabaseEntity> getCategories();
@@ -30,5 +23,5 @@ public interface ForumCategoryRepository {
     void newTopic(NewTopic newTopic);
 
     @Insert("INSERT INTO `forum_comment`(`topic_id`,`content`,`post_user`,`is_answer`,`answer_to_comment_id`)VALUES (#{topic_id},#{content},#{post_user_id},#{is_answer},#{answer_to_comment_id});")
-    void newComment(@Param("topic_id") int topicId,@Param("content") String content,@Param("post_user_id") int userId,@Param("is_answer") int isAnswer,@Param("answer_to_comment_id") int answerToCommentId);
+    void newComment(@Param("topic_id") int topicId, @Param("content") String content, @Param("post_user_id") int userId, @Param("is_answer") int isAnswer, @Param("answer_to_comment_id") int answerToCommentId);
 }
