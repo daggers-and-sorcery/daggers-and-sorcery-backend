@@ -25,14 +25,17 @@ public class AttributeFacade {
     @Autowired
     private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
 
+    @Deprecated
     public AttributeCalculationResult calculateAttributeValue(UserEntity userEntity, Attribute attribute) {
         return globalAttributeCalculator.calculateActualValue(userEntity, attribute);
     }
 
+    @Deprecated
     public AttributeCalculationResult calculateAttributeMaximumValue(UserEntity userEntity, Attribute attribute) {
         return globalAttributeCalculator.calculateMaximumValue(userEntity, attribute);
     }
 
+    @Deprecated
     public List<AttributeModifierEntry> calculateAttributeModifierData(UserEntity user, Attribute attribute) {
         return globalAttributeModifierCalculator.calculateModifierData(user, attribute);
     }

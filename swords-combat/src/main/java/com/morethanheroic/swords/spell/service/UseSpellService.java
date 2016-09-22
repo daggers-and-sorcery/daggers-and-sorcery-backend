@@ -85,6 +85,12 @@ public class UseSpellService {
         final List<CombatStep> combatSteps = new ArrayList<>();
 
         if (canUseSpell(combatContext.getUser(), spell)) {
+            combatSteps.add(
+                DefaultCombatStep.builder()
+                                 .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST", spell.getName()))
+                                 .build()
+            );
+
             combatSteps.addAll(applySpell(combatContext, spell, combatEffectDataHolder));
         } else {
             combatSteps.add(
@@ -94,14 +100,17 @@ public class UseSpellService {
             );
         }
 
+        final UserCombatEntity combatEntity = combatContext.getUser();
+        combatEntity.getUserEntity().setBasicStats(combatEntity.getActualHealth(), combatEntity.getActualMana(), combatEntity.getUserEntity().getMovementPoints());
+
         return combatSteps;
     }
 
     //TODO: somehow merge the two usespell together?
-    private List<CombatStep> applySpell(CombatContext combat, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
+    private List<CombatStep> applySpell(CombatContext combatContext, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
         final List<CombatStep> combatSteps = new ArrayList<>();
 
-        final UserCombatEntity combatEntity = combat.getUser();
+        final UserCombatEntity combatEntity = combatContext.getUser();
 
         for (SpellCost spellCost : spellDefinition.getSpellCosts()) {
             if (spellCost.getType() == CostType.ITEM) {
@@ -117,8 +126,8 @@ public class UseSpellService {
             final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
             for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
                 contexts.add(CombatEffectApplyingContext.builder()
-                        .source(new CombatEffectTarget(combat.getUser()))
-                        .destination(new CombatEffectTarget(combat.getUser()))
+                        .source(new CombatEffectTarget(combatContext.getUser()))
+                        .destination(new CombatEffectTarget(combatContext.getUser()))
                         .combatSteps(combatSteps)
                         .effectSettings(effectSettingDefinitionHolder)
                         .build()
@@ -131,8 +140,8 @@ public class UseSpellService {
             final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
             for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
                 contexts.add(CombatEffectApplyingContext.builder()
-                        .source(new CombatEffectTarget(combat.getUser()))
-                        .destination(new CombatEffectTarget(combat.getOpponent()))
+                        .source(new CombatEffectTarget(combatContext.getUser()))
+                        .destination(new CombatEffectTarget(combatContext.getOpponent()))
                         .combatSteps(combatSteps)
                         .effectSettings(effectSettingDefinitionHolder)
                         .build()
@@ -141,8 +150,6 @@ public class UseSpellService {
 
             combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
         }
-
-        combatEntity.getUserEntity().setBasicStats(combatEntity.getActualHealth(), combatEntity.getActualMana(), combatEntity.getUserEntity().getMovementPoints());
 
         return combatSteps;
     }

@@ -23,6 +23,7 @@ dependencies {
     compile project(':swords-equipment')
     compile project(':swords-recipe')
     compile project(':swords-inn')
+    compile project(':swords-regeneration')
     compile project(':swords-shop')
     compile project(':swords-ladder')
     compile project(':swords-metadata')
@@ -35,10 +36,3 @@ dependencies {
 
 apply plugin: 'spring-boot'
 bootRepackage.enabled = false
-
-//TODO: re-enable these asap!
-//apply plugin: 'checkstyle'
-//checkstyle checkstyle_config
-
-//apply plugin: 'findbugs'
-//findbugs findbugs_config

@@ -59,7 +59,7 @@ allprojects {
     version = '0.0.1'
 
     ext {
-        mybatis_version = '3.3.0'
+        mybatis_version = '3.4.0'
         guava_version = '18.0'
         checkstyle_version = '6.13'
         findbugs_version = '3.0.1'
@@ -82,7 +82,7 @@ allprojects {
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
         compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.79'
+        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.89'
     }
 
     compileJava {
@@ -106,10 +106,10 @@ dependencies {
 
     compile group: 'org.apache.commons', name: 'commons-math3', version: '3.5'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
-    compile group: 'org.liquibase', name: 'liquibase-core', version: '3.4.1'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.37'
-    compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.2.3'
-    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+
+    compile group: 'org.liquibase', name: 'liquibase-core'
+    compile group: 'mysql', name: 'mysql-connector-java'
+    compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.0'
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
     compile group: 'com.morethanheroic', name: 'common-session', version: '1.4.13'
@@ -122,6 +122,7 @@ dependencies {
     compile project(':xml-loader')
     compile project(':common-memoize')
     compile project(':common-validator')
+    compile project(':common-sql')
     compile project(':common-dependency-injection')
 
     compile project(':swords-equipment')

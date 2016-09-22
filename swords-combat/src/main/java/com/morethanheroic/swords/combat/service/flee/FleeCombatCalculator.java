@@ -2,6 +2,7 @@ package com.morethanheroic.swords.combat.service.flee;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.combat.domain.*;
+import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
@@ -62,6 +63,9 @@ public class FleeCombatCalculator {
                 combatSteps.addAll(monsterAttackCalculator.monsterAttack(combatContext));
             }
         }
+
+        final UserCombatEntity userCombatEntity = combatContext.getUser();
+        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userCombatEntity.getUserEntity().getMovementPoints());
 
         combatSteps.addAll(combatTeardownCalculator.teardown(combatContext));
 

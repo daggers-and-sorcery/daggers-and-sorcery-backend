@@ -20,6 +20,9 @@ public interface CombatExperienceMapper {
     @Select("SELECT * FROM combat_experience WHERE user_id = #{userId}")
     List<CombatExperienceDatabaseEntity> getAll(@Param("userId") int userId);
 
+    @Select("SELECT * FROM combat_experience WHERE user_id = #{userId} AND skill = #{skill}")
+    CombatExperienceDatabaseEntity get(@Param("userId") int userId, @Param("skill") SkillType skill);
+
     @Delete("DELETE FROM combat_experience WHERE user_id = #{userId}")
     void removeAll(@Param("userId") int userId);
 }
