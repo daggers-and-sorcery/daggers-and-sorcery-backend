@@ -30,7 +30,7 @@
             <column name="creator" type="mediumint unsigned"/>
         </createTable>
 
-        <createTable tableName="forum_topic">
+        <createTable tableName="forum_comment">
 
             <column name="id" type="int unsigned" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -40,15 +40,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="name" type="varchar(256)"/>
-
             <column name="content" type="varchar(256)"/>
 
-            <column name="comment_count" type="mediumint unsigned"/>
+            <column name="post_date" type="datetime"/>
 
-            <column name="last_post_date" type="datetime"/>
-
-            <column name="last_post_user" type="mediumint unsigned"/>
+            <column name="post_user" type="mediumint unsigned"/>
         </createTable>
     </changeSet>
 

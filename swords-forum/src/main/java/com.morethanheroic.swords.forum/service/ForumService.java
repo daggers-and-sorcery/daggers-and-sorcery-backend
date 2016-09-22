@@ -2,10 +2,11 @@ package com.morethanheroic.swords.forum.service;
 
 import com.morethanheroic.swords.forum.domain.ForumCategoryEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumCategoriesDatabaseEntity;
+import com.morethanheroic.swords.forum.repository.dao.NewComment;
+import com.morethanheroic.swords.forum.repository.dao.NewTopic;
 import com.morethanheroic.swords.forum.repository.domain.ForumCategoryRepository;
-import com.morethanheroic.swords.forum.view.response.request_objects.NewTopic;
-import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.user.service.UserEntityFactory;
 import com.morethanheroic.swords.user.service.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +22,12 @@ import java.util.List;
 @Service
 public class ForumService {
 
-    @Autowired
-    private ResponseFactory responseFactory;
 
     @Autowired
     private ForumCategoryRepository forumCategoryRepository;
 
     @Autowired
-    private UserFacade userFacade;
+    private UserEntityFactory userEntityFactory;
 
     public List<ForumCategoryEntity> getTopics(UserEntity userEntity) {
         List<ForumCategoriesDatabaseEntity> forumCategoriesDatabaseEntities = forumCategoryRepository.getCategories();
@@ -41,7 +40,7 @@ public class ForumService {
                             .postCount(forumCategoriesDatabaseEntity.getPostCount())
                             .icon(forumCategoriesDatabaseEntity.getIcon())
                             .lastPostDate(forumCategoriesDatabaseEntity.getLastPostDate())
-                            .lastPostUser(userFacade.getUser(forumCategoriesDatabaseEntity.getLastPostUser()))
+                            .lastPostUser(userEntityFactory.getEntity(forumCategoriesDatabaseEntity.getLastPostUser()))
                             .build()
             );
         }
@@ -49,8 +48,16 @@ public class ForumService {
         return result;
     }
 
-    public boolean createNewTopic(UserEntity userEntity, NewTopic newTopic){
+    public void createNewTopic(UserEntity userEntity, NewTopic newTopic) {
         forumCategoryRepository.newTopic(newTopic);
-        return true;//nop
+    }
+
+    public void createNewComment(UserEntity userEntity, NewComment newComment) {
+        forumCategoryRepository.newComment(
+                newComment.getTopicId(),
+                newComment.getContent(),
+                userEntity.getId(),
+                newComment.isAnswer() ? 1 : 0,
+                newComment.getAnswerToCommentId());
     }
 }
