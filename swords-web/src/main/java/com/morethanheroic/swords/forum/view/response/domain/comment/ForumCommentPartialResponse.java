@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.forum.view.response.domain;
+package com.morethanheroic.swords.forum.view.response.domain.comment;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import lombok.Builder;

@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface ForumCategoryRepository {
 
-    @Select("SELECT `name`, `post_count`,`icon`,`last_post_date`,`last_post_user` FROM swords.`forum_categories`;")
+    @Select("SELECT * FROM forum_categories;")
     List<ForumCategoriesDatabaseEntity> getCategories();
 
     @Insert("INSERT INTO swords.forum_topic (`parent_category`, name, content, comment_count, last_post_date, last_post_user, creator) " +

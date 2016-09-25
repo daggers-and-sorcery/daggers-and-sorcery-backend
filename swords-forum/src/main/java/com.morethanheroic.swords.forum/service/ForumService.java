@@ -27,6 +27,7 @@ public class ForumService {
         for (ForumCategoriesDatabaseEntity forumCategoriesDatabaseEntity : forumCategoriesDatabaseEntities) {
             result.add(
                     ForumCategoryEntity.builder()
+                            .id(forumCategoriesDatabaseEntity.getId())
                             .name(forumCategoriesDatabaseEntity.getName())
                             .postCount(forumCategoriesDatabaseEntity.getPostCount())
                             .icon(forumCategoriesDatabaseEntity.getIcon())

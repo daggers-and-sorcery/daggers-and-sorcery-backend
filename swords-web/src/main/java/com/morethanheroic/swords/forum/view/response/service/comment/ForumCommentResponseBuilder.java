@@ -1,9 +1,9 @@
-package com.morethanheroic.swords.forum.view.response.service;
+package com.morethanheroic.swords.forum.view.response.service.comment;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
-import com.morethanheroic.swords.forum.view.response.domain.ForumCommentPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.forum.view.response.domain.ForumCommentResponseBuilderConfiguration;
+import com.morethanheroic.swords.forum.view.response.domain.comment.ForumCommentPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.forum.view.response.domain.comment.ForumCommentResponseBuilderConfiguration;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

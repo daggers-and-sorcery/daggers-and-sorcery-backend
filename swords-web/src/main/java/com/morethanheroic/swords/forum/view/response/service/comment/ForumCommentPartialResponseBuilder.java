@@ -1,10 +1,10 @@
-package com.morethanheroic.swords.forum.view.response.service;
+package com.morethanheroic.swords.forum.view.response.service.comment;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.forum.domain.ForumCommentEntity;
-import com.morethanheroic.swords.forum.view.response.domain.ForumCommentPartialResponse;
-import com.morethanheroic.swords.forum.view.response.domain.ForumCommentPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.forum.view.response.domain.comment.ForumCommentPartialResponse;
+import com.morethanheroic.swords.forum.view.response.domain.comment.ForumCommentPartialResponseBuilderConfiguration;
 import org.springframework.stereotype.Service;
 
 @Service

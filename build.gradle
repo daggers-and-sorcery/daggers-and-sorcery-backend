@@ -114,7 +114,7 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-session', version: '1.4.13'
     compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.0'
-    compile group: 'com.morethanheroic', name: 'common-application', version: '1.0.5'
+    compile group: 'com.morethanheroic', name: 'common-application', version: '1.0.6'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'

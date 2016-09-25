@@ -6,11 +6,11 @@ import com.morethanheroic.swords.forum.repository.dao.NewComment;
 import com.morethanheroic.swords.forum.repository.dao.NewTopic;
 import com.morethanheroic.swords.forum.service.ForumService;
 import com.morethanheroic.swords.forum.view.request.domain.NewCommentRequest;
-import com.morethanheroic.swords.forum.view.response.domain.ForumCommentResponseBuilderConfiguration;
-import com.morethanheroic.swords.forum.view.response.domain.ForumPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.forum.view.response.domain.comment.ForumCommentResponseBuilderConfiguration;
+import com.morethanheroic.swords.forum.view.response.domain.category.ForumCategoryPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.forum.view.request.domain.NewTopicRequest;
-import com.morethanheroic.swords.forum.view.response.service.ForumCategoryResponseBuilder;
-import com.morethanheroic.swords.forum.view.response.service.ForumCommentResponseBuilder;
+import com.morethanheroic.swords.forum.view.response.service.category.ForumCategoryResponseBuilder;
+import com.morethanheroic.swords.forum.view.response.service.comment.ForumCommentResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ForumController {
     @RequestMapping(value = "/forum/list/categories", method = RequestMethod.GET)
     public Response requestCategories(UserEntity userEntity) {
         return forumCategoryResponseBuilder.build
-                (ForumPartialResponseBuilderConfiguration.builder()
+                (ForumCategoryPartialResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
                         .categories(forumService.getCategories())
                         .build()
@@ -62,10 +62,10 @@ public class ForumController {
     /**
      * List topics in a certain category (first 50 by default)
      */
-  /*  @RequestMapping(value = "/forum/list/category/{category_id}", method = RequestMethod.GET)
-    public Response requestSpecificCategory(UserEntity userEntity,@PathVariable int category_id){
-
-    }*/
+    @RequestMapping(value = "/forum/list/category/{categoryId}", method = RequestMethod.GET)
+    public Response requestSpecificCategory(UserEntity userEntity,@PathVariable int categoryId){
+        return null;
+    }
 
     /**
      *  Get certain topic

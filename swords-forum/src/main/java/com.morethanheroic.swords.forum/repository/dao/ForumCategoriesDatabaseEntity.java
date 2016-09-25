@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 public class ForumCategoriesDatabaseEntity {
 
+    private int id;
     private String name;
     private int postCount;
     private String icon;

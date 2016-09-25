@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.forum.view.response.domain;
+package com.morethanheroic.swords.forum.view.response.domain.comment;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.forum.domain.ForumCommentEntity;
@@ -8,9 +8,6 @@ import lombok.Getter;
 
 import java.util.List;
 
-/**
- * Created by root on 2016. 09. 05..
- */
 @Builder
 @Getter
 public class ForumCommentResponseBuilderConfiguration implements ResponseBuilderConfiguration {
