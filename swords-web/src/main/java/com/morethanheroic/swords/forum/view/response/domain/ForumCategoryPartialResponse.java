@@ -1,8 +1,6 @@
 package com.morethanheroic.swords.forum.view.response.domain;
 
 import com.morethanheroic.response.domain.PartialResponse;
-import com.morethanheroic.swords.user.domain.UserEntity;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import lombok.Builder;
 import lombok.Getter;
 
