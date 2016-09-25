@@ -45,4 +45,5 @@ include 'swords-skill-lockpicking'
 include 'common-localization'
 include 'swords-regeneration'
 include 'common-sql'
+include 'swords-forum'
 

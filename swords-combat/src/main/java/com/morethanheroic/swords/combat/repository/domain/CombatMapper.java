@@ -25,4 +25,10 @@ public interface CombatMapper {
 
     @Select("SELECT * FROM combat WHERE user_id = #{userId}")
     CombatDatabaseEntity getRunningCombat(@Param("userId") int userId);
+
+    @Select("SELECT COUNT(id) FROM combat WHERE user_id = #{userId}")
+    int getCombatCount(@Param("userId") int userId);
+
+    @Delete("DELETE FROM combat WHERE user_id = #{userId} LIMIT 1")
+    void removeOneCombatForUser(@Param("userId") int userId);
 }
