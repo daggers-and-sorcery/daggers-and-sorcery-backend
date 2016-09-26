@@ -1,22 +1,26 @@
 package com.morethanheroic.swords.forum.repository.domain;
 
-import com.morethanheroic.swords.forum.repository.dao.ForumCategoriesDatabaseEntity;
-import com.morethanheroic.swords.forum.repository.dao.NewComment;
+import com.morethanheroic.swords.forum.repository.dao.ForumCategoryDatabaseEntity;
+import com.morethanheroic.swords.forum.repository.dao.ForumTopicDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.NewTopic;
-import com.morethanheroic.swords.user.domain.UserEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
 import java.util.List;
 
 @Repository
-public interface ForumCategoryRepository {
+public interface ForumRepository {
 
-    @Select("SELECT * FROM forum_categories;")
-    List<ForumCategoriesDatabaseEntity> getCategories();
+    @Select("SELECT * FROM forum_categories")
+    List<ForumCategoryDatabaseEntity> getCategories();
+
+    @Select("SELECT * FROM forum_categories WHERE id = #{id}")
+    ForumCategoryDatabaseEntity getCategory(@Param("id") int id);
+
+    @Select("SELECT * FROM forum_topic WHERE parent_category = #{parentCategory}")
+    List<ForumTopicDatabaseEntity> getTopics(@Param("parentCategory") int parentCategory);
 
     @Insert("INSERT INTO swords.forum_topic (`parent_category`, name, content, comment_count, last_post_date, last_post_user, creator) " +
             "values (#{parentCategory},#{name},#{content},#{commentCount},#{lastPostDate},#{lastPostUser},#{creator});")

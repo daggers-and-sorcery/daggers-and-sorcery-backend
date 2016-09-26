@@ -7,10 +7,12 @@ import com.morethanheroic.swords.forum.repository.dao.NewTopic;
 import com.morethanheroic.swords.forum.service.ForumService;
 import com.morethanheroic.swords.forum.view.request.domain.NewCommentRequest;
 import com.morethanheroic.swords.forum.view.response.domain.comment.ForumCommentResponseBuilderConfiguration;
-import com.morethanheroic.swords.forum.view.response.domain.category.ForumCategoryPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.forum.view.response.domain.category.ForumCategoryListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.forum.view.request.domain.NewTopicRequest;
-import com.morethanheroic.swords.forum.view.response.service.category.ForumCategoryResponseBuilder;
+import com.morethanheroic.swords.forum.view.response.domain.topic.ForumTopicListResponseBuilderConfiguration;
+import com.morethanheroic.swords.forum.view.response.service.category.ForumCategoryListResponseBuilder;
 import com.morethanheroic.swords.forum.view.response.service.comment.ForumCommentResponseBuilder;
+import com.morethanheroic.swords.forum.view.response.service.topic.ForumTopicListResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,13 @@ import java.time.Instant;
 public class ForumController {
 
     @Autowired
-    private ForumCategoryResponseBuilder forumCategoryResponseBuilder;
+    private ForumCategoryListResponseBuilder forumCategoryResponseBuilder;
 
     @Autowired
     private ForumCommentResponseBuilder forumCommentResponseBuilder;
+
+    @Autowired
+    private ForumTopicListResponseBuilder forumTopicListResponseBuilder;
 
     @Autowired
     private ForumService forumService;
@@ -39,7 +44,7 @@ public class ForumController {
     @RequestMapping(value = "/forum/list/categories", method = RequestMethod.GET)
     public Response requestCategories(UserEntity userEntity) {
         return forumCategoryResponseBuilder.build
-                (ForumCategoryPartialResponseBuilderConfiguration.builder()
+                (ForumCategoryListPartialResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
                         .categories(forumService.getCategories())
                         .build()
@@ -63,8 +68,14 @@ public class ForumController {
      * List topics in a certain category (first 50 by default)
      */
     @RequestMapping(value = "/forum/list/category/{categoryId}", method = RequestMethod.GET)
-    public Response requestSpecificCategory(UserEntity userEntity,@PathVariable int categoryId){
-        return null;
+    public Response requestSpecificCategory(UserEntity userEntity, @PathVariable int categoryId) {
+        return forumTopicListResponseBuilder.build(
+                ForumTopicListResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .topics(forumService.getTopics(categoryId))
+                        .parentCategory(forumService.getCategory(categoryId))
+                        .build()
+        );
     }
 
     /**
