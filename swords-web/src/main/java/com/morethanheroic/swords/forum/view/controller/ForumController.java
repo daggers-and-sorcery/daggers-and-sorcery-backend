@@ -39,7 +39,7 @@ public class ForumController {
     private ResponseFactory responseFactory;
 
     /**
-     * List all available categories
+     * List all available categories.
      */
     @RequestMapping(value = "/forum/list/categories", method = RequestMethod.GET)
     public Response requestCategories(UserEntity userEntity) {
@@ -52,7 +52,7 @@ public class ForumController {
     }
 
     /**
-     * Get comments for topic
+     * Get comments for topic.
      */
     @RequestMapping(value = "/forum/list/topic/{topicId}", method = RequestMethod.GET)
     public Response requestSpecificTopicComments(UserEntity userEntity, @PathVariable int topicId) {
@@ -65,7 +65,7 @@ public class ForumController {
     }
 
     /**
-     * List topics in a certain category (first 50 by default)
+     * List topics in a certain category.
      */
     @RequestMapping(value = "/forum/list/category/{categoryId}", method = RequestMethod.GET)
     public Response requestSpecificCategory(UserEntity userEntity, @PathVariable int categoryId) {
@@ -78,32 +78,12 @@ public class ForumController {
         );
     }
 
-    /**
-     *  Get certain topic
-     */
-  /*  @RequestMapping(value = "/forum/list/topic/{topic_id}", method = RequestMethod.GET)
-    public Response requestSpecificTopic(UserEntity userEntity,@PathVariable int topic_id){
-
-
-    }*/
-
-    /**
-     *  Get comments for topic
-     */
-  /*  @RequestMapping(value = "/forum/list/topic/{topic_id}/comments", method = RequestMethod.GET)
-    public Response requestSpecificTopicComments(UserEntity userEntity,@PathVariable int topic_id){
-
-
-    }*/
-
 
     /**
      * Create new topic
      */
     @RequestMapping(value = "/forum/new_topic", method = RequestMethod.POST)
     public Response createANewTopic(UserEntity userEntity, @RequestBody NewTopicRequest newTopicRequest) {
-
-
         forumService.createNewTopic(
                 NewTopic.builder()
                         .parentCategory(newTopicRequest.getParentCategory())
@@ -124,8 +104,6 @@ public class ForumController {
      */
     @RequestMapping(value = "/forum/new_comment", method = RequestMethod.POST)
     public Response createANewComment(UserEntity userEntity, @RequestBody NewCommentRequest newCommentRequest) {
-
-
         forumService.createNewComment(userEntity, NewComment.builder()
                 .answerToCommentId(newCommentRequest.getAnswerToCommentId())
                 .content(newCommentRequest.getContent())
