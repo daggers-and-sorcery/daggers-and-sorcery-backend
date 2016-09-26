@@ -59,7 +59,7 @@ public class ForumController {
         return forumCommentResponseBuilder.build(
                 ForumCommentResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
-                        .comments(Lists.newArrayList())
+                        .comments(forumService.getComments(topicId))
                         .build()
         );
     }

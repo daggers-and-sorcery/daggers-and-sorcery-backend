@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.forum.service;
 
 import com.morethanheroic.swords.forum.domain.ForumCategoryEntity;
+import com.morethanheroic.swords.forum.domain.ForumCommentEntity;
 import com.morethanheroic.swords.forum.domain.ForumTopicEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumCategoryDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumTopicDatabaseEntity;
@@ -66,6 +67,10 @@ public class ForumService {
             );
         }
         return result;
+    }
+
+    public List<ForumCommentEntity> getComments(final int topicId) {
+        throw new RuntimeException();
     }
 
     public void createNewTopic(NewTopic newTopic) {
