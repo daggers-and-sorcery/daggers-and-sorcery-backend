@@ -33,6 +33,9 @@ public class ForumController {
     private ForumTopicListResponseBuilder forumTopicListResponseBuilder;
 
     @Autowired
+    private ForumCommentResponseBuilder forumCommentResponseBuilder;
+
+    @Autowired
     private ForumService forumService;
 
     @Autowired
@@ -78,18 +81,26 @@ public class ForumController {
         );
     }
 
+    @RequestMapping(value = "/forum/list/topic/{topicId}", method = RequestMethod.GET)
+    public Response requestSpecificTopic(UserEntity userEntity, @PathVariable int topicId) {
+        return forumCommentResponseBuilder.build(
+                ForumCommentResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .comments(forumService.getComments(topicId))
+                        .build()
+        );
+    }
 
     /**
      * Create new topic
      */
     @RequestMapping(value = "/forum/new_topic", method = RequestMethod.POST)
-    public Response createANewTopic(UserEntity userEntity, @RequestBody NewTopicRequest newTopicRequest) {
-        forumService.createNewTopic(
+    public Response createANewTopic(final UserEntity userEntity, final @RequestBody NewTopicRequest newTopicRequest) {
+        forumService.createNewTopic(userEntity,
                 NewTopic.builder()
                         .parentCategory(newTopicRequest.getParentCategory())
                         .content(newTopicRequest.getContent())
                         .name(newTopicRequest.getName())
-                        .commentCount(0)
                         .lastPostDate(Instant.now())
                         .lastPostUser(userEntity.getId())
                         .creator(userEntity.getId())

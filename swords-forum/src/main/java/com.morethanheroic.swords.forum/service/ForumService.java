@@ -3,10 +3,7 @@ package com.morethanheroic.swords.forum.service;
 import com.morethanheroic.swords.forum.domain.ForumCategoryEntity;
 import com.morethanheroic.swords.forum.domain.ForumCommentEntity;
 import com.morethanheroic.swords.forum.domain.ForumTopicEntity;
-import com.morethanheroic.swords.forum.repository.dao.ForumCategoryDatabaseEntity;
-import com.morethanheroic.swords.forum.repository.dao.ForumTopicDatabaseEntity;
-import com.morethanheroic.swords.forum.repository.dao.NewComment;
-import com.morethanheroic.swords.forum.repository.dao.NewTopic;
+import com.morethanheroic.swords.forum.repository.dao.*;
 import com.morethanheroic.swords.forum.repository.domain.ForumRepository;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
@@ -53,7 +50,7 @@ public class ForumService {
     public List<ForumTopicEntity> getTopics(final int categoryId) {
         final List<ForumTopicDatabaseEntity> forumTopics = forumRepository.getTopics(categoryId);
 
-        List<ForumTopicEntity> result = new ArrayList<>();
+        final List<ForumTopicEntity> result = new ArrayList<>();
         for (ForumTopicDatabaseEntity forumTopicDatabaseEntity : forumTopics) {
             result.add(
                     ForumTopicEntity.builder()
@@ -70,11 +67,29 @@ public class ForumService {
     }
 
     public List<ForumCommentEntity> getComments(final int topicId) {
-        throw new RuntimeException();
+        final List<ForumCommentDatabaseEntity> comments = forumRepository.getComments(topicId);
+
+        final List<ForumCommentEntity> result = new ArrayList<>();
+        for (ForumCommentDatabaseEntity comment : comments) {
+            result.add(
+                    ForumCommentEntity.builder()
+                    //TODO
+                    .build()
+            );
+        }
+        return result;
     }
 
-    public void createNewTopic(NewTopic newTopic) {
-        forumRepository.newTopic(newTopic);
+    public void createNewTopic(final UserEntity userEntity, final NewTopic newTopic) {
+        final int topicId = forumRepository.newTopic(newTopic);
+
+        forumRepository.newComment(
+                topicId,
+                newTopic.getContent(),
+                userEntity.getId(),
+                0,
+                0
+        );
     }
 
     public void createNewComment(UserEntity userEntity, NewComment newComment) {

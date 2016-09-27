@@ -13,7 +13,6 @@ public class NewTopic {
     private int parentCategory;
     private String name;
     private String content;
-    private int commentCount;
     private Instant lastPostDate;
     private int lastPostUser;
     private int creator;

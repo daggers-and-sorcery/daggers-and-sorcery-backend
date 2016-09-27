@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.forum.repository.domain;
 
 import com.morethanheroic.swords.forum.repository.dao.ForumCategoryDatabaseEntity;
+import com.morethanheroic.swords.forum.repository.dao.ForumCommentDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumTopicDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.NewTopic;
 import org.apache.ibatis.annotations.Insert;
@@ -19,13 +20,16 @@ public interface ForumRepository {
     @Select("SELECT * FROM forum_categories WHERE id = #{id}")
     ForumCategoryDatabaseEntity getCategory(@Param("id") int id);
 
-    @Select("SELECT * FROM forum_topic WHERE parent_category = #{parentCategory}")
+    @Select("SELECT * FROM forum_topic WHERE parent_category = #{parentCategory} ORDER BY last_post_date DESC")
     List<ForumTopicDatabaseEntity> getTopics(@Param("parentCategory") int parentCategory);
 
-    @Insert("INSERT INTO swords.forum_topic (`parent_category`, name, content, comment_count, last_post_date, last_post_user, creator) " +
-            "values (#{parentCategory},#{name},#{content},#{commentCount},#{lastPostDate},#{lastPostUser},#{creator});")
-    void newTopic(NewTopic newTopic);
+    @Insert("INSERT INTO swords.forum_topic (`parent_category`, name, comment_count, last_post_date, last_post_user, creator) " +
+            "values (#{parentCategory},#{name},1,#{lastPostDate},#{lastPostUser},#{creator});")
+    int newTopic(NewTopic newTopic);
 
     @Insert("INSERT INTO `forum_comment`(`topic_id`,`content`,`post_user`,`is_answer`,`answer_to_comment_id`)VALUES (#{topic_id},#{content},#{post_user_id},#{is_answer},#{answer_to_comment_id});")
     void newComment(@Param("topic_id") int topicId, @Param("content") String content, @Param("post_user_id") int userId, @Param("is_answer") int isAnswer, @Param("answer_to_comment_id") int answerToCommentId);
+
+    @Select("SELECT * FROM forum_comment WHERE topic_id = #{topicId}")
+    List<ForumCommentDatabaseEntity> getComments(@Param("topicId") int topicId);
 }
