@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 public class ForumTopicPartialResponse extends PartialResponse {
 
+    private final int id;
     private final String parentName;
     private final String name;
     private final int commentCount;

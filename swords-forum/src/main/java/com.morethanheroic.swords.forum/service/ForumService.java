@@ -54,6 +54,7 @@ public class ForumService {
         for (ForumTopicDatabaseEntity forumTopicDatabaseEntity : forumTopics) {
             result.add(
                     ForumTopicEntity.builder()
+                            .id(forumTopicDatabaseEntity.getId())
                             .commentCount(forumTopicDatabaseEntity.getCommentCount())
                             .creator(userEntityFactory.getEntity(forumTopicDatabaseEntity.getCreator()))
                             .lastPostDate(forumTopicDatabaseEntity.getLastPostDate())

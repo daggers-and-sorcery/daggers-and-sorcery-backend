@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 public class ForumTopicEntity {
 
+    private final int id;
     private final ForumCategoryEntity parent;
     private final String name;
     private final int commentCount;

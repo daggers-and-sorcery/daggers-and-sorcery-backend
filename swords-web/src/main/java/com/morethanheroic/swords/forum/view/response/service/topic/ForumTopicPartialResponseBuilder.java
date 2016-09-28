@@ -15,6 +15,7 @@ public class ForumTopicPartialResponseBuilder implements PartialResponseBuilder<
         final ForumTopicEntity forumTopicEntity = forumTopicResponseBuilderConfiguration.getForumTopicEntity();
 
         return ForumTopicPartialResponse.builder()
+                .id(forumTopicEntity.getId())
                 .parentName(forumTopicEntity.getParent().getName())
                 .commentCount(forumTopicEntity.getCommentCount())
                 .creator(forumTopicEntity.getCreator().getUsername())

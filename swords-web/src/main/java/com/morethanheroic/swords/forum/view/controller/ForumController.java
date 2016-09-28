@@ -33,9 +33,6 @@ public class ForumController {
     private ForumTopicListResponseBuilder forumTopicListResponseBuilder;
 
     @Autowired
-    private ForumCommentResponseBuilder forumCommentResponseBuilder;
-
-    @Autowired
     private ForumService forumService;
 
     @Autowired
@@ -52,19 +49,6 @@ public class ForumController {
                         .categories(forumService.getCategories())
                         .build()
                 );
-    }
-
-    /**
-     * Get comments for topic.
-     */
-    @RequestMapping(value = "/forum/list/topic/{topicId}", method = RequestMethod.GET)
-    public Response requestSpecificTopicComments(UserEntity userEntity, @PathVariable int topicId) {
-        return forumCommentResponseBuilder.build(
-                ForumCommentResponseBuilderConfiguration.builder()
-                        .userEntity(userEntity)
-                        .comments(forumService.getComments(topicId))
-                        .build()
-        );
     }
 
     /**
