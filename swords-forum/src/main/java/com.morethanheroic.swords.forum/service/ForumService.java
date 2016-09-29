@@ -8,10 +8,10 @@ import com.morethanheroic.swords.forum.repository.domain.ForumRepository;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -72,20 +72,34 @@ public class ForumService {
 
         final List<ForumCommentEntity> result = new ArrayList<>();
         for (ForumCommentDatabaseEntity comment : comments) {
-            result.add(
-                    ForumCommentEntity.builder()
-                    //TODO
-                    .build()
-            );
+            result.add(transformCommentEntity(comment));
         }
         return result;
     }
 
-    public void createNewTopic(final UserEntity userEntity, final NewTopic newTopic) {
-        final int topicId = forumRepository.newTopic(newTopic);
+    private ForumCommentEntity transformCommentEntity(final ForumCommentDatabaseEntity comment) {
+        return ForumCommentEntity.builder()
+                        .id(comment.getId())
+                        .answerToComment(comment.getAnswerToComment() > 0 ? transformCommentEntity(forumRepository.getComment(comment.getAnswerToComment())) : null)
+                        .content(comment.getContent())
+                        .postDate(comment.getPostDate().getTime())
+                        .postUser(userEntityFactory.getEntity(comment.getPostUser()))
+                        .build();
+    }
 
+    public void createNewTopic(final UserEntity userEntity, final NewTopic newTopic) {
+        final ForumTopicDatabaseEntity forumCommentDatabaseEntity = new ForumTopicDatabaseEntity();
+
+        forumCommentDatabaseEntity.setCommentCount(1);
+        forumCommentDatabaseEntity.setCreator(userEntity.getId());
+        forumCommentDatabaseEntity.setLastPostDate(new Date());
+        forumCommentDatabaseEntity.setLastPostUser(userEntity.getId());
+        forumCommentDatabaseEntity.setName(newTopic.getName());
+        forumCommentDatabaseEntity.setParentCategory(newTopic.getParentCategory());
+
+        forumRepository.newTopic(forumCommentDatabaseEntity);
         forumRepository.newComment(
-                topicId,
+                forumCommentDatabaseEntity.getId(),
                 newTopic.getContent(),
                 userEntity.getId(),
                 0,

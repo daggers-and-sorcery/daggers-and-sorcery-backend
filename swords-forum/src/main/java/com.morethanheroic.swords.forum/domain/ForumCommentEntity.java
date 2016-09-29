@@ -12,7 +12,7 @@ public class ForumCommentEntity {
 
     private final int id;
     private final String content;
-    private final Date postDate;
+    private final long postDate;
     private final UserEntity postUser;
     private final ForumCommentEntity answerToComment;
 

@@ -11,7 +11,7 @@ import java.util.Date;
 public class ForumCommentPartialResponse extends PartialResponse {
 
     private String content;
-    private Date postDate;
+    private long postDate;
     private String userName;
     private int answerToCommentId;
 }
