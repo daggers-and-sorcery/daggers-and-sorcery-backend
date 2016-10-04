@@ -10,6 +10,5 @@ import lombok.Getter;
 @Builder
 public class ForumTopicResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
-    private final UserEntity userEntity;
     private final ForumTopicEntity forumTopicEntity;
 }

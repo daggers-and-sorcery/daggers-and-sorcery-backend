@@ -8,7 +8,7 @@ import java.time.Instant;
 
 @Getter
 @Builder
-public class NewTopic {
+public class CreateTopicContext {
 
     private int parentCategory;
     private String name;

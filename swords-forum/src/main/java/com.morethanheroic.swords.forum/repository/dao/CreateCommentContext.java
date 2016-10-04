@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Getter
 @Builder
-public class NewComment {
+public class CreateCommentContext {
 
     private boolean isAnswer;
     private String content;

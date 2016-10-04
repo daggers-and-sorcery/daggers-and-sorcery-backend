@@ -67,6 +67,20 @@ public class ForumService {
         return result;
     }
 
+    public ForumTopicEntity getTopic(final int topicId) {
+        final ForumTopicDatabaseEntity forumTopic = forumRepository.getTopic(topicId);
+
+        return ForumTopicEntity.builder()
+                .id(forumTopic.getId())
+                .commentCount(forumTopic.getCommentCount())
+                .creator(userEntityFactory.getEntity(forumTopic.getCreator()))
+                .lastPostDate(forumTopic.getLastPostDate())
+                .lastPoster(userEntityFactory.getEntity(forumTopic.getLastPostUser()))
+                .name(forumTopic.getName())
+                .parent(transformCategoryEntity(forumRepository.getCategory(forumTopic.getParentCategory())))
+                .build();
+    }
+
     public List<ForumCommentEntity> getComments(final int topicId) {
         final List<ForumCommentDatabaseEntity> comments = forumRepository.getComments(topicId);
 
@@ -79,41 +93,41 @@ public class ForumService {
 
     private ForumCommentEntity transformCommentEntity(final ForumCommentDatabaseEntity comment) {
         return ForumCommentEntity.builder()
-                        .id(comment.getId())
-                        .answerToComment(comment.getAnswerToComment() > 0 ? transformCommentEntity(forumRepository.getComment(comment.getAnswerToComment())) : null)
-                        .content(comment.getContent())
-                        .postDate(comment.getPostDate().getTime())
-                        .postUser(userEntityFactory.getEntity(comment.getPostUser()))
-                        .build();
+                .id(comment.getId())
+                .answerToComment(comment.getAnswerToComment() > 0 ? transformCommentEntity(forumRepository.getComment(comment.getAnswerToComment())) : null)
+                .content(comment.getContent())
+                .postDate(comment.getPostDate().getTime())
+                .postUser(userEntityFactory.getEntity(comment.getPostUser()))
+                .build();
     }
 
-    public void createNewTopic(final UserEntity userEntity, final NewTopic newTopic) {
+    public void createNewTopic(final UserEntity userEntity, final CreateTopicContext createTopicContext) {
         final ForumTopicDatabaseEntity forumCommentDatabaseEntity = new ForumTopicDatabaseEntity();
 
         forumCommentDatabaseEntity.setCommentCount(1);
         forumCommentDatabaseEntity.setCreator(userEntity.getId());
         forumCommentDatabaseEntity.setLastPostDate(new Date());
         forumCommentDatabaseEntity.setLastPostUser(userEntity.getId());
-        forumCommentDatabaseEntity.setName(newTopic.getName());
-        forumCommentDatabaseEntity.setParentCategory(newTopic.getParentCategory());
+        forumCommentDatabaseEntity.setName(createTopicContext.getName());
+        forumCommentDatabaseEntity.setParentCategory(createTopicContext.getParentCategory());
 
         forumRepository.newTopic(forumCommentDatabaseEntity);
         forumRepository.newComment(
                 forumCommentDatabaseEntity.getId(),
-                newTopic.getContent(),
+                createTopicContext.getContent(),
                 userEntity.getId(),
                 0,
                 0
         );
     }
 
-    public void createNewComment(UserEntity userEntity, NewComment newComment) {
+    public void createNewComment(UserEntity userEntity, CreateCommentContext createCommentContext) {
         forumRepository.newComment(
-                newComment.getTopicId(),
-                newComment.getContent(),
+                createCommentContext.getTopicId(),
+                createCommentContext.getContent(),
                 userEntity.getId(),
-                newComment.isAnswer() ? 1 : 0,
-                newComment.getAnswerToCommentId()
+                createCommentContext.isAnswer() ? 1 : 0,
+                createCommentContext.getAnswerToCommentId()
         );
     }
 }

@@ -26,7 +26,6 @@ public class ForumTopicListPartialResponseBuilder implements PartialResponseColl
             result.add(
                     forumTopicPartialResponseBuilder.build(
                             ForumTopicResponseBuilderConfiguration.builder()
-                                    .userEntity(forumTopicListResponseBuilderConfiguration.getUserEntity())
                                     .forumTopicEntity(forumTopicEntity)
                                     .build()
                     )

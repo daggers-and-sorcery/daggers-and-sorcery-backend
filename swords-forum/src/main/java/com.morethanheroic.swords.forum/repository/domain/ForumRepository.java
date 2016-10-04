@@ -3,7 +3,6 @@ package com.morethanheroic.swords.forum.repository.domain;
 import com.morethanheroic.swords.forum.repository.dao.ForumCategoryDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumCommentDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumTopicDatabaseEntity;
-import com.morethanheroic.swords.forum.repository.dao.NewTopic;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -23,6 +22,9 @@ public interface ForumRepository {
 
     @Select("SELECT * FROM forum_topic WHERE parent_category = #{parentCategory} ORDER BY last_post_date DESC")
     List<ForumTopicDatabaseEntity> getTopics(@Param("parentCategory") int parentCategory);
+
+    @Select("SELECT * FROM forum_topic WHERE id = #{topicId}")
+    ForumTopicDatabaseEntity getTopic(@Param("topicId") int topicId);
 
     @Insert("INSERT INTO swords.forum_topic (`parent_category`, name, comment_count, last_post_date, last_post_user, creator) " +
             "values (#{parentCategory},#{name},1,#{lastPostDate},#{lastPostUser},#{creator});")
