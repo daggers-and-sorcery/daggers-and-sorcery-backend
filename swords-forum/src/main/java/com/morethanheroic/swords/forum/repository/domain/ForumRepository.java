@@ -3,10 +3,7 @@ package com.morethanheroic.swords.forum.repository.domain;
 import com.morethanheroic.swords.forum.repository.dao.ForumCategoryDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumCommentDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumTopicDatabaseEntity;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,4 +36,10 @@ public interface ForumRepository {
 
     @Select("SELECT * FROM forum_comment WHERE id = #{id}")
     ForumCommentDatabaseEntity getComment(@Param("id") int id);
+
+    @Update("UPDATE forum_categories SET post_count = post_count + 1, last_post_user = #{userId}, last_post_date = NOW() WHERE id = #{id}")
+    void handleNewPostOnCategory(@Param("id") int id, @Param("userId") int userId);
+
+    @Update("UPDATE forum_topic SET comment_count = comment_count + 1, last_post_user = #{userId}, last_post_date = NOW() WHERE id = #{id}")
+    void handleNewCommentOnTopic(@Param("id") int id, @Param("userId") int userId);
 }

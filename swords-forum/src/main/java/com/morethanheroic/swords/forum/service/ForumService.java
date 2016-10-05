@@ -9,6 +9,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class ForumService {
     private final ForumRepository forumRepository;
     private final UserEntityFactory userEntityFactory;
 
+    @Transactional(readOnly = true)
     public List<ForumCategoryEntity> getCategories() {
         List<ForumCategoryDatabaseEntity> forumCategoriesDatabaseEntities = forumRepository.getCategories();
 
@@ -32,6 +34,7 @@ public class ForumService {
         return result;
     }
 
+    @Transactional(readOnly = true)
     public ForumCategoryEntity getCategory(final int categoryId) {
         return transformCategoryEntity(forumRepository.getCategory(categoryId));
     }
@@ -47,6 +50,7 @@ public class ForumService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public List<ForumTopicEntity> getTopics(final int categoryId) {
         final List<ForumTopicDatabaseEntity> forumTopics = forumRepository.getTopics(categoryId);
 
@@ -67,6 +71,7 @@ public class ForumService {
         return result;
     }
 
+    @Transactional(readOnly = true)
     public ForumTopicEntity getTopic(final int topicId) {
         final ForumTopicDatabaseEntity forumTopic = forumRepository.getTopic(topicId);
 
@@ -81,6 +86,7 @@ public class ForumService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public List<ForumCommentEntity> getComments(final int topicId) {
         final List<ForumCommentDatabaseEntity> comments = forumRepository.getComments(topicId);
 
@@ -101,27 +107,32 @@ public class ForumService {
                 .build();
     }
 
+    @Transactional
     public void createNewTopic(final UserEntity userEntity, final CreateTopicContext createTopicContext) {
-        final ForumTopicDatabaseEntity forumCommentDatabaseEntity = new ForumTopicDatabaseEntity();
+        final ForumTopicDatabaseEntity newForumTopicEntity = new ForumTopicDatabaseEntity();
 
-        forumCommentDatabaseEntity.setCommentCount(1);
-        forumCommentDatabaseEntity.setCreator(userEntity.getId());
-        forumCommentDatabaseEntity.setLastPostDate(new Date());
-        forumCommentDatabaseEntity.setLastPostUser(userEntity.getId());
-        forumCommentDatabaseEntity.setName(createTopicContext.getName());
-        forumCommentDatabaseEntity.setParentCategory(createTopicContext.getParentCategory());
+        newForumTopicEntity.setCommentCount(1);
+        newForumTopicEntity.setCreator(userEntity.getId());
+        newForumTopicEntity.setLastPostDate(new Date());
+        newForumTopicEntity.setLastPostUser(userEntity.getId());
+        newForumTopicEntity.setName(createTopicContext.getName());
+        newForumTopicEntity.setParentCategory(createTopicContext.getParentCategory());
 
-        forumRepository.newTopic(forumCommentDatabaseEntity);
+        forumRepository.newTopic(newForumTopicEntity);
         forumRepository.newComment(
-                forumCommentDatabaseEntity.getId(),
+                newForumTopicEntity.getId(),
                 createTopicContext.getContent(),
                 userEntity.getId(),
                 0,
                 0
         );
+        forumRepository.handleNewPostOnCategory(createTopicContext.getParentCategory(), userEntity.getId());
     }
 
+    @Transactional
     public void createNewComment(UserEntity userEntity, CreateCommentContext createCommentContext) {
+        final ForumTopicDatabaseEntity forumTopicDatabaseEntity = forumRepository.getTopic(createCommentContext.getTopicId());
+
         forumRepository.newComment(
                 createCommentContext.getTopicId(),
                 createCommentContext.getContent(),
@@ -129,5 +140,7 @@ public class ForumService {
                 createCommentContext.isAnswer() ? 1 : 0,
                 createCommentContext.getAnswerToCommentId()
         );
+        forumRepository.handleNewCommentOnTopic(createCommentContext.getTopicId(), userEntity.getId());
+        forumRepository.handleNewPostOnCategory(forumTopicDatabaseEntity.getParentCategory(), userEntity.getId());
     }
 }
