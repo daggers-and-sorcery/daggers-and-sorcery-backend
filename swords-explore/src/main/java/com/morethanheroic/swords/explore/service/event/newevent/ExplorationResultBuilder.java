@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 @Service
@@ -147,6 +148,17 @@ public class ExplorationResultBuilder {
         );
 
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
+    }
+
+    public MultiWayExplorationResultBuilder newCustomMultiWayPath(final Callable<Boolean> calculateSuccess) {
+        final boolean isSuccess;
+        try {
+            isSuccess = calculateSuccess.call();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return new MultiWayExplorationResultBuilder(this, isSuccess);
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {
