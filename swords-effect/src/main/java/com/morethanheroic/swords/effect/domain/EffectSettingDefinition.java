@@ -1,23 +1,15 @@
 package com.morethanheroic.swords.effect.domain;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * One variable for a spell effect.
  */
+@Getter
+@RequiredArgsConstructor
 public class EffectSettingDefinition {
 
     private final String name;
     private final String value;
-
-    public EffectSettingDefinition(String name, String value) {
-        this.name = name;
-        this.value = value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getValue() {
-        return value;
-    }
 }

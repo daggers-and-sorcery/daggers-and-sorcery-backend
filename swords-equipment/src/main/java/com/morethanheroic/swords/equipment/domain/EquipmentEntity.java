@@ -10,7 +10,6 @@ import com.morethanheroic.swords.equipment.service.EquipmentValueCacheProvider;
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemRequirementDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -39,9 +38,6 @@ public class EquipmentEntity {
     private ItemRequirementToAttributeConverter itemRequirementToAttributeConverter;
 
     @Autowired
-    private InventoryFacade inventoryFacade;
-
-    @Autowired
     private InventoryEntityFactory inventoryEntityFactory;
 
     @Autowired
@@ -54,60 +50,12 @@ public class EquipmentEntity {
 
     @PostConstruct
     public void initialize() {
-        inventoryEntity = inventoryFacade.getInventory(userEntity);
+        inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
 
         equipmentProviderIntegerValueCache = new ValueCache<>(cacheableEquipmentProvider, userEntity.getId());
     }
 
-    public boolean equipItem(ItemDefinition item, boolean identified) {
-        final EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());
-
-        if (equipmentSlot == EquipmentSlot.OFFHAND) {
-            final ItemDefinition weapon = itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(EquipmentSlot.WEAPON));
-
-            if (getEquipmentIdOnSlot(EquipmentSlot.WEAPON) != 0 && equipmentSlotMapper.isTwoHandedWeapon(weapon.getSubtype())) {
-                //TODO: unequip the weapon and equip the offhand item
-                return false;
-            }
-        }
-
-        final int previousEquipment = getEquipmentIdOnSlot(equipmentSlot);
-        final int previousOffhandEquipment = getEquipmentIdOnSlot(EquipmentSlot.OFFHAND);
-
-        //Unequip the previous equipment first because the calculation should be good without it
-        unequipItem(equipmentSlot);
-        if (equipmentSlotMapper.isTwoHandedWeapon(item.getSubtype())) {
-            unequipItem(EquipmentSlot.OFFHAND);
-        }
-
-        if (canEquip(item)) {
-            equipWithoutCheck(item, identified);
-
-            final IdentificationType identificationType = identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED;
-            if (equipmentSlot != EquipmentSlot.QUIVER) {
-                inventoryEntity.removeItem(item, 1, identificationType);
-            } else {
-                inventoryEntity.removeItem(item, inventoryEntity.getItemAmount(item, identificationType), identificationType);
-            }
-
-            return true;
-        } else {
-            //Reequip the item we had before if not met the requirements for the new item after removing this (the previous)
-            if (previousEquipment != 0) {
-                equipWithoutCheck(itemDefinitionCache.getDefinition(previousEquipment), identified);
-                inventoryEntity.removeItem(previousEquipment, 1, identified);
-
-                if (previousOffhandEquipment != 0) {
-                    equipWithoutCheck(itemDefinitionCache.getDefinition(previousOffhandEquipment), identified);
-                    inventoryEntity.removeItem(previousOffhandEquipment, 1, identified);
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private void equipWithoutCheck(ItemDefinition item, boolean identified) {
+    public void equipWithoutCheck(ItemDefinition item, boolean identified) {
         final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
         final EquipmentSlot slot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());
 
