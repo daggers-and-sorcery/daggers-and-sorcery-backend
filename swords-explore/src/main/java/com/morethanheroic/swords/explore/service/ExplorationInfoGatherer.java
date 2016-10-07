@@ -5,7 +5,7 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +48,6 @@ public class ExplorationInfoGatherer {
     }
 
     private ExplorationResult buildSuccessfulInfoResult(final UserEntity userEntity, final ExplorationContext explorationContext) {
-        return ((MultiStageExplorationEventDefinition) explorationContext.getEvent()).info(userEntity, userEntity.getActiveExplorationState());
+        return ((MultiStageExplorationEventHandler) explorationContext.getEvent()).info(userEntity, userEntity.getActiveExplorationState());
     }
 }

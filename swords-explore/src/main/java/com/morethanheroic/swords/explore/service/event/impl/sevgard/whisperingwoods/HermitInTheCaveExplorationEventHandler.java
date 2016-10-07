@@ -1,15 +1,17 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingwoods;
 
 import com.google.common.collect.Lists;
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
+import com.morethanheroic.swords.combat.service.calc.drop.domain.DropSplitCalculationResult;
 import com.morethanheroic.swords.combat.service.drop.DropAdder;
 import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.exception.IllegalExplorationEventStateException;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
@@ -20,20 +22,18 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 
 import java.util.List;
 
-import static com.morethanheroic.swords.attribute.domain.GeneralAttribute.PERCEPTION;
-
 @ExplorationEvent
-public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class HermitInTheCaveExplorationEventHandler extends MultiStageExplorationEventHandler {
 
-    private static final int EVENT_ID = 13;
+    private static final int EVENT_ID = 14;
 
-    private static final int GNOLL_MONSTER_ID = 11;
-    private static final int RAT_MONSTER_ID = 12;
+    private static final int HERMIT_MONSTER_ID = 13;
 
     private static final int COMBAT_STAGE = 1;
-    private static final int BACK_TO_THE_CITY_STAGE = 2;
-    private static final int SEARCH_THE_LODGE_STAGE = 3;
-    private static final int SECOND_COMBAT_STAGE = 4;
+    private static final int SEARCH_THE_CAVE_STAGE = 2;
+    private static final int BACK_TO_THE_CITY_STAGE = 3;
+    private static final int PICK_THE_LOCK = 4;
+    private static final int SMASH_THE_LOCK = 5;
 
     private List<DropDefinition> chestDropDefinitions;
 
@@ -42,20 +42,17 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
     private final DropCalculator dropCalculator;
     private final DropAdder dropAdder;
     private final DropTextCreator dropTextCreator;
+    private final UserBasicAttributeManipulator userBasicAttributeManipulator;
 
-    public AbandonedHuntingLodgeExplorationEventDefinition(final CombatCalculator combatCalculator,
-                                                           final ExplorationResultBuilderFactory explorationResultBuilderFactory,
-                                                           final ItemDefinitionCache itemDefinitionCache,
-                                                           final DropCalculator dropCalculator,
-                                                           final DropAdder dropAdder,
-    final DropTextCreator dropTextCreator) {
-        this.combatCalculator = combatCalculator;
+    public HermitInTheCaveExplorationEventHandler(ExplorationResultBuilderFactory explorationResultBuilderFactory, CombatCalculator combatCalculator, DropCalculator dropCalculator, DropAdder dropAdder, DropTextCreator dropTextCreator, ItemDefinitionCache itemDefinitionCache, UserBasicAttributeManipulator userBasicAttributeManipulator) {
         this.explorationResultBuilderFactory = explorationResultBuilderFactory;
+        this.combatCalculator = combatCalculator;
         this.dropCalculator = dropCalculator;
         this.dropAdder = dropAdder;
         this.dropTextCreator = dropTextCreator;
+        this.userBasicAttributeManipulator = userBasicAttributeManipulator;
 
-        chestDropDefinitions = Lists.newArrayList(
+        this.chestDropDefinitions = Lists.newArrayList(
                 DropDefinition.builder()
                         .item(itemDefinitionCache.getDefinition(99))
                         .amount(
@@ -68,80 +65,47 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
                         .identified(false)
                         .build(),
                 DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(112))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(10)
+                        .identified(true)
+                        .build(),
+                DropDefinition.builder()
                         .item(itemDefinitionCache.getDefinition(1))
                         .amount(
                                 DropAmountDefinition.builder()
-                                        .minimumAmount(30)
-                                        .maximumAmount(70)
+                                        .minimumAmount(5)
+                                        .maximumAmount(50)
                                         .build()
                         )
                         .chance(100)
                         .identified(true)
                         .build(),
                 DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(36))
+                        .item(itemDefinitionCache.getDefinition(18))
                         .amount(
                                 DropAmountDefinition.builder()
                                         .minimumAmount(1)
-                                        .maximumAmount(1)
+                                        .maximumAmount(3)
                                         .build()
                         )
-                        .chance(1)
+                        .chance(100)
                         .identified(true)
                         .build(),
                 DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(95))
+                        .item(itemDefinitionCache.getDefinition(113))
                         .amount(
                                 DropAmountDefinition.builder()
                                         .minimumAmount(1)
                                         .maximumAmount(1)
                                         .build()
                         )
-                        .chance(1)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(23))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .minimumAmount(1)
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(2)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(22))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .minimumAmount(1)
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(2)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(63))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .minimumAmount(1)
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(2)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(65))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .minimumAmount(1)
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(2)
+                        .chance(4)
                         .identified(true)
                         .build()
         );
@@ -153,17 +117,13 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
     }
 
     @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.WHISPERING_WOODS;
-    }
-
-    @Override
     public ExplorationResult explore(UserEntity userEntity) {
         return explorationResultBuilderFactory
                 .newExplorationResultBuilder(userEntity)
-                .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_1")
-                .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_2")
-                .newCombatEntry(GNOLL_MONSTER_ID, EVENT_ID, COMBAT_STAGE)
+                .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_1")
+                .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_2")
+                .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_3")
+                .newCombatEntry(HERMIT_MONSTER_ID, EVENT_ID, COMBAT_STAGE)
                 .build();
     }
 
@@ -172,48 +132,71 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")
+                    .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_4")
                     .newOptionEntry(
                             ReplyOption.builder()
-                                    .message("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_1")
-                                    .stage(BACK_TO_THE_CITY_STAGE)
+                                    .message("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_QUESTION_REPLY_1")
+                                    .stage(SEARCH_THE_CAVE_STAGE)
                                     .build(),
                             ReplyOption.builder()
-                                    .message("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_2")
-                                    .stage(SEARCH_THE_LODGE_STAGE)
+                                    .message("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_QUESTION_REPLY_2")
+                                    .stage(BACK_TO_THE_CITY_STAGE)
                                     .build()
                     )
                     .build();
         } else if (stage == BACK_TO_THE_CITY_STAGE) {
-            userEntity.resetActiveExploration();
-
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_4")
+                    .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_11")
+                    .resetExploration(userEntity)
                     .build();
-        } else if (stage == SEARCH_THE_LODGE_STAGE) {
+        } else if (stage == SEARCH_THE_CAVE_STAGE) {
+            return explorationResultBuilderFactory
+                    .newExplorationResultBuilder(userEntity)
+                    .newCustomLogicEntry(() -> userBasicAttributeManipulator.decreaseMovement(userEntity, 1))
+                    .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_5")
+                    .newOptionEntry(
+                            ReplyOption.builder()
+                                    .message("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_QUESTION_REPLY_3")
+                                    .stage(PICK_THE_LOCK)
+                                    .build(),
+                            ReplyOption.builder()
+                                    .message("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_QUESTION_REPLY_4")
+                                    .stage(SMASH_THE_LOCK)
+                                    .build()
+                    )
+                    .build();
+        } else if (stage == PICK_THE_LOCK) {
+            final List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
+
+            final DropSplitCalculationResult dropSplitCalculationResult = dropCalculator.splitDrops(chestDrops, 50, true);
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newAttributeAttemptEntry(PERCEPTION, 7)
+                    .newAttributeAttemptEntry(SkillAttribute.LOCKPICKING, 2)
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
-                            .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_6")
-                            .newCombatEntry(RAT_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)
+                            .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
+                            .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, chestDrops))
+                            .resetExploration(userEntity)
                             .build()
                     )
                     .isFailure((explorationResultBuilder) -> explorationResultBuilder
+                            .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_8")
+                            .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_9", dropTextCreator.listAsText(dropSplitCalculationResult.getSuccessfulResult()), dropTextCreator.listAsText(dropSplitCalculationResult.getFailedResult()))
+                            .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, dropSplitCalculationResult.getSuccessfulResult()))
                             .resetExploration(userEntity)
-                            .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_5")
                             .build()
                     )
                     .build();
-        } else if (stage == SECOND_COMBAT_STAGE) {
+        } else if (stage == SMASH_THE_LOCK) {
             final List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
+
+            final DropSplitCalculationResult dropSplitCalculationResult = dropCalculator.splitDrops(chestDrops, 50, true);
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, chestDrops))
-                    .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
+                    .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_9", dropTextCreator.listAsText(dropSplitCalculationResult.getSuccessfulResult()), dropTextCreator.listAsText(dropSplitCalculationResult.getFailedResult()))
+                    .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, dropSplitCalculationResult.getSuccessfulResult()))
                     .resetExploration(userEntity)
                     .build();
         }
@@ -227,30 +210,39 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
             if (combatCalculator.isCombatRunning(userEntity)) {
                 return explorationResultBuilderFactory
                         .newExplorationResultBuilder(userEntity)
-                        .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_2")
+                        .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_3")
                         .continueCombatEntry()
                         .build();
             } else {
                 return explorationResultBuilderFactory
                         .newExplorationResultBuilder(userEntity)
-                        .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_3")
+                        .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_4")
                         .newOptionEntry(
                                 ReplyOption.builder()
-                                        .message("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_1")
-                                        .stage(BACK_TO_THE_CITY_STAGE)
+                                        .message("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_QUESTION_REPLY_1")
+                                        .stage(SEARCH_THE_CAVE_STAGE)
                                         .build(),
                                 ReplyOption.builder()
-                                        .message("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_2")
-                                        .stage(SEARCH_THE_LODGE_STAGE)
+                                        .message("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_QUESTION_REPLY_2")
+                                        .stage(BACK_TO_THE_CITY_STAGE)
                                         .build()
                         )
                         .build();
             }
-        } else if (stage == SECOND_COMBAT_STAGE) {
+        } else if (stage == SEARCH_THE_CAVE_STAGE) {
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity)
-                    .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_6")
-                    .continueCombatEntry()
+                    .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_5")
+                    .newOptionEntry(
+                            ReplyOption.builder()
+                                    .message("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_QUESTION_REPLY_3")
+                                    .stage(PICK_THE_LOCK)
+                                    .build(),
+                            ReplyOption.builder()
+                                    .message("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_QUESTION_REPLY_4")
+                                    .stage(SMASH_THE_LOCK)
+                                    .build()
+                    )
                     .build();
         }
 
@@ -259,22 +251,7 @@ public class AbandonedHuntingLodgeExplorationEventDefinition extends MultiStageE
 
     @Override
     public boolean isValidNextStageAtStage(int stage, int nextStage) {
-        if (stage == COMBAT_STAGE && nextStage == COMBAT_STAGE) {
-            return true;
-        }
-
-        if (stage == COMBAT_STAGE && (nextStage == BACK_TO_THE_CITY_STAGE || nextStage == SEARCH_THE_LODGE_STAGE)) {
-            return true;
-        }
-
-        if (stage == SEARCH_THE_LODGE_STAGE && nextStage == SECOND_COMBAT_STAGE) {
-            return true;
-        }
-
-        if (stage == SECOND_COMBAT_STAGE && nextStage == SECOND_COMBAT_STAGE) {
-            return true;
-        }
-
-        return false;
+        //TODO:
+        return true;
     }
 }

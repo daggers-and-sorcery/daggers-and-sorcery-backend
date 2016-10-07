@@ -2,14 +2,13 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingw
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @ExplorationEvent
-public class WolfAttackExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class WolfAttackExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 11;
 
@@ -23,11 +22,6 @@ public class WolfAttackExplorationEventDefinition extends MultiStageExplorationE
     @Override
     public int getId() {
         return 11;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.WHISPERING_WOODS;
     }
 
     @Override

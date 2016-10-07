@@ -2,12 +2,10 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -17,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @ExplorationEvent
-public class RiverCaveDejaVuExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class RiverCaveDejaVuExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 2;
 
@@ -68,16 +66,11 @@ public class RiverCaveDejaVuExplorationEventDefinition extends MultiStageExplora
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if(!combatResult.getResult().isPlayerDead()) {
+        if (!combatResult.getResult().isPlayerDead()) {
             userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
 
         return explorationResult;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.FARMFIELDS;
     }
 
     @Override

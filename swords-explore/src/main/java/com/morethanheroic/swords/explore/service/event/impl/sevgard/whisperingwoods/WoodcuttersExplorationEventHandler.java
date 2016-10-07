@@ -2,18 +2,16 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingw
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
-import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Random;
 
 @ExplorationEvent
-public class WoodcuttersExplorationEventDefinition extends ExplorationEventDefinition {
+public class WoodcuttersExplorationEventHandler extends ExplorationEventHandler {
 
     private static final int BRONZE_COIN_ID = 1;
 
@@ -24,16 +22,11 @@ public class WoodcuttersExplorationEventDefinition extends ExplorationEventDefin
     private Random random;
 
     @Autowired
-    private InventoryFacade inventoryFacade;
+    private InventoryEntityFactory inventoryEntityFactory;
 
     @Override
     public int getId() {
         return 12;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.WHISPERING_WOODS;
     }
 
     @Override
@@ -45,11 +38,7 @@ public class WoodcuttersExplorationEventDefinition extends ExplorationEventDefin
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_3")
-                .newCustomLogicEntry(() -> {
-                    final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
-
-                    inventoryEntity.addItem(BRONZE_COIN_ID, coinCount);
-                })
+                .newCustomLogicEntry(() -> inventoryEntityFactory.getEntity(userEntity.getId()).addItem(BRONZE_COIN_ID, coinCount))
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_4")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_5", coinCount)
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_6", coinCount)

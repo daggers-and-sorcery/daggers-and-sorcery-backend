@@ -3,12 +3,11 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingw
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
@@ -19,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @ExplorationEvent
-public class ForestJourneyExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class ForestJourneyExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 9;
 
@@ -71,16 +70,11 @@ public class ForestJourneyExplorationEventDefinition extends MultiStageExplorati
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
 
-        if(!combatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
+        if (!combatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
             userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
 
         return explorationResult;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.WHISPERING_WOODS;
     }
 
     @Override
@@ -105,7 +99,7 @@ public class ForestJourneyExplorationEventDefinition extends MultiStageExplorati
 
                 explorationResult.addEventEntryResult(secondCombatEventEntryEvaluatorResult.getResult());
 
-                if(!secondCombatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
+                if (!secondCombatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
                     userEntity.setActiveExploration(EVENT_ID, SECOND_COMBAT_STAGE);
                 }
             } else {

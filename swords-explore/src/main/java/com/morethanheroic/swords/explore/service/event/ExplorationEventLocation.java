@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.service.event;
 
-public enum ExplorationEventLocationType {
+public enum ExplorationEventLocation {
     // Sevgard
     FARMFIELDS,
     WHISPERING_WOODS

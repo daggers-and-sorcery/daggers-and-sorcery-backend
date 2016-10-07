@@ -5,9 +5,8 @@ import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
@@ -19,7 +18,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @ExplorationEvent
-public class CaveAtTheRiverExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class CaveAtTheRiverExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 5;
 
@@ -49,11 +48,6 @@ public class CaveAtTheRiverExplorationEventDefinition extends MultiStageExplorat
     @Override
     public int getId() {
         return EVENT_ID;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.FARMFIELDS;
     }
 
     @Override

@@ -6,8 +6,7 @@ import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -20,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @ExplorationEvent
-public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class RobbingTheChieftainExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 10;
 
@@ -33,7 +32,7 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
     private final List<DropDefinition> chestDropDefinitions;
 
     @Autowired
-    public RobbingTheChieftainExplorationEventDefinition(final ItemDefinitionCache itemDefinitionCache) {
+    public RobbingTheChieftainExplorationEventHandler(final ItemDefinitionCache itemDefinitionCache) {
         chestDropDefinitions = Lists.newArrayList(
                 DropDefinition.builder()
                         .item(itemDefinitionCache.getDefinition(99))
@@ -139,11 +138,6 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
     @Override
     public int getId() {
         return EVENT_ID;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.WHISPERING_WOODS;
     }
 
     @Override

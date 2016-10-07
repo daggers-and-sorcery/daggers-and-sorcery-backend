@@ -6,10 +6,9 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.WeaponSuperType;
@@ -23,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Optional;
 
 @ExplorationEvent
-public class WiseOldManExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class WiseOldManExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int WELCOME_STAGE = 1;
     private static final int GIVE_COIN_STAGE = 2;
@@ -245,10 +244,5 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
         }
 
         return false;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.FARMFIELDS;
     }
 }
