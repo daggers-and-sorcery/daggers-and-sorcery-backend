@@ -153,7 +153,7 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_11")
-                    .resetExploration(userEntity)
+                    .resetExploration()
                     .build();
         } else if (stage == SEARCH_THE_CAVE_STAGE) {
             return explorationResultBuilderFactory
@@ -182,14 +182,14 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
                             .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
                             .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, chestDrops))
-                            .resetExploration(userEntity)
+                            .resetExploration()
                             .build()
                     )
                     .isFailure((explorationResultBuilder) -> explorationResultBuilder
                             .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_8")
                             .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_9", dropTextCreator.listAsText(dropSplitCalculationResult.getSuccessfulResult()), dropTextCreator.listAsText(dropSplitCalculationResult.getFailedResult()))
                             .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, dropSplitCalculationResult.getSuccessfulResult()))
-                            .resetExploration(userEntity)
+                            .resetExploration()
                             .build()
                     )
                     .build();
@@ -202,7 +202,7 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
                     .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_9", dropTextCreator.listAsText(dropSplitCalculationResult.getSuccessfulResult()), dropTextCreator.listAsText(dropSplitCalculationResult.getFailedResult()))
                     .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, dropSplitCalculationResult.getSuccessfulResult()))
-                    .resetExploration(userEntity)
+                    .resetExploration()
                     .build();
         }
 

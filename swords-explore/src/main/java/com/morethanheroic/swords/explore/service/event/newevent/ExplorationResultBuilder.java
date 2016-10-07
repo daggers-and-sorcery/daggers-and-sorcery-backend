@@ -21,6 +21,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -57,8 +58,18 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public ExplorationResultBuilder resetExploration(final UserEntity userEntity) {
+    public ExplorationResultBuilder setEventStage(final int eventId, final int stage) {
+        userEntity.setActiveExploration(eventId, stage);
+
+        return this;
+    }
+
+    @Transactional
+    public ExplorationResultBuilder resetExploration() {
         userEntity.resetActiveExploration();
+
+        //// FIXME: 9/22/2016 This is a hack, this should be handled in the exploration events correctly
+        combatCalculator.removeAllCombatForUser(userEntity);
 
         return this;
     }
