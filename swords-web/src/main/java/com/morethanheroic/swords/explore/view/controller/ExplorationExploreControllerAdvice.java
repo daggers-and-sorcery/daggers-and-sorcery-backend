@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.view.controller;
 
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.view.editor.ExplorationEventLocationTypeEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;

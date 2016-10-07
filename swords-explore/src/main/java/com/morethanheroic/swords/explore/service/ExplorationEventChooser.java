@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.explore.service;
 
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.service.event.cache.EventDefinitionCache;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;

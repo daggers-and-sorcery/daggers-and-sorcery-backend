@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.view.editor;
 
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Locale;

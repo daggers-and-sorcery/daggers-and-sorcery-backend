@@ -7,7 +7,7 @@ import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventHandlerCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.cache.EventDefinitionCache;

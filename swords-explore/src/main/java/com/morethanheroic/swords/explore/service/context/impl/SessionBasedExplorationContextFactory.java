@@ -6,7 +6,7 @@ import com.morethanheroic.swords.explore.service.ExplorationEventChooser;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventHandlerCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

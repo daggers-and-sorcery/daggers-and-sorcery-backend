@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.explore.service.event.loader.domain;
 
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocation;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventRarity;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventTerrain;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventRarity;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventTerrain;
 import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;

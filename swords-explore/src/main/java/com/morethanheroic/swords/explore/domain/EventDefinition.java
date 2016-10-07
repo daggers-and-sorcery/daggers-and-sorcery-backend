@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.explore.domain;
 
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocation;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventRarity;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventTerrain;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventRarity;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventTerrain;
 import lombok.Builder;
 import lombok.Getter;
 
