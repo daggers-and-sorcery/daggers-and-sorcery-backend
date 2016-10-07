@@ -7,6 +7,7 @@ import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -135,6 +136,9 @@ public class RobbingTheChieftainExplorationEventHandler extends MultiStageExplor
     @Autowired
     private InventoryFacade inventoryFacade;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return EVENT_ID;
@@ -143,7 +147,7 @@ public class RobbingTheChieftainExplorationEventHandler extends MultiStageExplor
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_3")
@@ -169,7 +173,7 @@ public class RobbingTheChieftainExplorationEventHandler extends MultiStageExplor
             userEntity.resetActiveExploration();
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newCustomLogicEntry(() -> {
                         List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
 
@@ -195,13 +199,13 @@ public class RobbingTheChieftainExplorationEventHandler extends MultiStageExplor
             userEntity.resetActiveExploration();
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_7")
                     .build();
         }
 
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .build();
     }
 
@@ -209,20 +213,20 @@ public class RobbingTheChieftainExplorationEventHandler extends MultiStageExplor
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_4")
                     .continueCombatEntry()
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_6")
                     .continueCombatEntry()
                     .build();
         }
 
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .build();
     }
 

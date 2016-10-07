@@ -44,7 +44,7 @@ public class ExplorationInfoGatherer {
     }
 
     private ExplorationResult buildEmptyExplorationResult() {
-        return explorationResultFactory.newExplorationResult();
+        return explorationResultFactory.newExplorationResult(null);
     }
 
     private ExplorationResult buildSuccessfulInfoResult(final UserEntity userEntity, final ExplorationContext explorationContext) {

@@ -12,6 +12,7 @@ import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.exception.IllegalExplorationEventStateException;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
@@ -19,6 +20,7 @@ import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
 import com.morethanheroic.swords.monster.domain.DropDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -111,6 +113,9 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
         );
     }
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return EVENT_ID;
@@ -119,7 +124,7 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_3")
@@ -131,7 +136,7 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
     public ExplorationResult explore(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_4")
                     .newOptionEntry(
                             ReplyOption.builder()
@@ -146,13 +151,13 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
                     .build();
         } else if (stage == BACK_TO_THE_CITY_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_11")
                     .resetExploration(userEntity)
                     .build();
         } else if (stage == SEARCH_THE_CAVE_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newCustomLogicEntry(() -> userBasicAttributeManipulator.decreaseMovement(userEntity, 1))
                     .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_5")
                     .newOptionEntry(
@@ -172,7 +177,7 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
             final DropSplitCalculationResult dropSplitCalculationResult = dropCalculator.splitDrops(chestDrops, 50, true);
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newAttributeAttemptEntry(SkillAttribute.LOCKPICKING, 2)
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
                             .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
@@ -194,7 +199,7 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
             final DropSplitCalculationResult dropSplitCalculationResult = dropCalculator.splitDrops(chestDrops, 50, true);
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_9", dropTextCreator.listAsText(dropSplitCalculationResult.getSuccessfulResult()), dropTextCreator.listAsText(dropSplitCalculationResult.getFailedResult()))
                     .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, dropSplitCalculationResult.getSuccessfulResult()))
                     .resetExploration(userEntity)
@@ -209,13 +214,13 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
         if (stage == COMBAT_STAGE) {
             if (combatCalculator.isCombatRunning(userEntity)) {
                 return explorationResultBuilderFactory
-                        .newExplorationResultBuilder(userEntity)
+                        .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_3")
                         .continueCombatEntry()
                         .build();
             } else {
                 return explorationResultBuilderFactory
-                        .newExplorationResultBuilder(userEntity)
+                        .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_4")
                         .newOptionEntry(
                                 ReplyOption.builder()
@@ -231,7 +236,7 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
             }
         } else if (stage == SEARCH_THE_CAVE_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_5")
                     .newOptionEntry(
                             ReplyOption.builder()

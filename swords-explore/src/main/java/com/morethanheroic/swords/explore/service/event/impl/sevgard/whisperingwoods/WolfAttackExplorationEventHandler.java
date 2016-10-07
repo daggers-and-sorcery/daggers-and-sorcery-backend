@@ -3,6 +3,7 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingw
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class WolfAttackExplorationEventHandler extends MultiStageExplorationEven
     @Autowired
     private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return 11;
@@ -27,7 +31,7 @@ public class WolfAttackExplorationEventHandler extends MultiStageExplorationEven
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")
@@ -41,14 +45,14 @@ public class WolfAttackExplorationEventHandler extends MultiStageExplorationEven
             userEntity.resetActiveExploration();
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_4")
                     .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_5")
                     .build();
         }
 
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .build();
     }
 
@@ -56,14 +60,14 @@ public class WolfAttackExplorationEventHandler extends MultiStageExplorationEven
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")
                     .continueCombatEntry()
                     .build();
         }
 
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .build();
     }
 

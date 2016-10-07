@@ -2,7 +2,7 @@ package com.morethanheroic.swords.explore.service;
 
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
-import com.morethanheroic.swords.explore.service.event.cache.EventDefinitionCache;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class ExplorationEventChooser {
     private final Random random;
     private final Map<ExplorationEventLocation, List<ExplorationEventHandler>> locationMap;
 
-    private ExplorationEventChooser(final Random random, final EventDefinitionCache eventDefinitionCache, final List<ExplorationEventHandler> explorationEventHandlers) {
+    private ExplorationEventChooser(final Random random, final ExplorationEventDefinitionCache explorationEventDefinitionCache, final List<ExplorationEventHandler> explorationEventHandlers) {
         this.random = random;
 
         final Map<ExplorationEventLocation, List<ExplorationEventHandler>> result = new HashMap<>();
@@ -30,7 +30,7 @@ public class ExplorationEventChooser {
         }
 
         for (ExplorationEventHandler explorationEventHandler : explorationEventHandlers) {
-            result.get(eventDefinitionCache.getDefinition(explorationEventHandler.getId()).getLocation()).add(explorationEventHandler);
+            result.get(explorationEventDefinitionCache.getDefinition(explorationEventHandler.getId()).getLocation()).add(explorationEventHandler);
         }
 
         locationMap = Collections.unmodifiableMap(result);

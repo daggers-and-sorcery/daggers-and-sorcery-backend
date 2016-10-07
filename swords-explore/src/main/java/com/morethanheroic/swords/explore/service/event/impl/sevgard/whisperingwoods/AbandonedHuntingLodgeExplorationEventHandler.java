@@ -9,6 +9,7 @@ import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.exception.IllegalExplorationEventStateException;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
@@ -16,6 +17,7 @@ import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
 import com.morethanheroic.swords.monster.domain.DropDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -146,6 +148,9 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
         );
     }
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return EVENT_ID;
@@ -154,7 +159,7 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_2")
                 .newCombatEntry(GNOLL_MONSTER_ID, EVENT_ID, COMBAT_STAGE)
@@ -165,7 +170,7 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
     public ExplorationResult explore(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")
                     .newOptionEntry(
                             ReplyOption.builder()
@@ -182,13 +187,13 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
             userEntity.resetActiveExploration();
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_4")
                     .build();
         } else if (stage == SEARCH_THE_LODGE_STAGE) {
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newAttributeAttemptEntry(PERCEPTION, 7)
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
                             .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_6")
@@ -205,7 +210,7 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
             final List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, chestDrops))
                     .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_7", dropTextCreator.listAsText(chestDrops))
                     .resetExploration(userEntity)
@@ -220,13 +225,13 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
         if (stage == COMBAT_STAGE) {
             if (combatCalculator.isCombatRunning(userEntity)) {
                 return explorationResultBuilderFactory
-                        .newExplorationResultBuilder(userEntity)
+                        .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_2")
                         .continueCombatEntry()
                         .build();
             } else {
                 return explorationResultBuilderFactory
-                        .newExplorationResultBuilder(userEntity)
+                        .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_3")
                         .newOptionEntry(
                                 ReplyOption.builder()
@@ -242,7 +247,7 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
             }
         } else if (stage == SECOND_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_6")
                     .continueCombatEntry()
                     .build();

@@ -6,6 +6,7 @@ import com.morethanheroic.swords.explore.domain.event.result.impl.TextExploratio
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
@@ -31,6 +32,9 @@ public class FarmingIsHardExplorationEventHandler extends ExplorationEventHandle
     @Autowired
     private Random random;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return 8;
@@ -38,7 +42,7 @@ public class FarmingIsHardExplorationEventHandler extends ExplorationEventHandle
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(8));
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()

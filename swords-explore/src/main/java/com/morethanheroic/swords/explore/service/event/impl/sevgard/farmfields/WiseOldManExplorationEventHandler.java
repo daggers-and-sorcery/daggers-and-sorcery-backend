@@ -9,6 +9,7 @@ import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOp
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.WeaponSuperType;
@@ -44,6 +45,9 @@ public class WiseOldManExplorationEventHandler extends MultiStageExplorationEven
     @Autowired
     private InventoryFacade inventoryFacade;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return 6;
@@ -51,7 +55,7 @@ public class WiseOldManExplorationEventHandler extends MultiStageExplorationEven
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(6));
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -91,7 +95,7 @@ public class WiseOldManExplorationEventHandler extends MultiStageExplorationEven
 
     @Override
     public ExplorationResult explore(UserEntity userEntity, int stage) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(6));
 
         if (stage == GIVE_COIN_STAGE) {
             final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
@@ -211,7 +215,7 @@ public class WiseOldManExplorationEventHandler extends MultiStageExplorationEven
 
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(6));
 
         if (stage == WELCOME_STAGE) {
             explorationResult.addEventEntryResult(

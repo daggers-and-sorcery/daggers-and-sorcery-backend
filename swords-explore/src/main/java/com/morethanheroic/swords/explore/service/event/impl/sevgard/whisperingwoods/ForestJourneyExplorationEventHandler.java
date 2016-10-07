@@ -5,6 +5,7 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
@@ -42,6 +43,9 @@ public class ForestJourneyExplorationEventHandler extends MultiStageExplorationE
     @Autowired
     private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     private MonsterDefinition opponent;
 
     @PostConstruct
@@ -56,7 +60,7 @@ public class ForestJourneyExplorationEventHandler extends MultiStageExplorationE
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
 
         explorationResult.addEventEntryResult(
                 messageEventEntryEvaluator.messageEntry("FOREST_JOURNEY_EXPLORATION_EVENT_ENTRY_1")
@@ -79,7 +83,7 @@ public class ForestJourneyExplorationEventHandler extends MultiStageExplorationE
 
     @Override
     public ExplorationResult explore(UserEntity userEntity, int stage) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
 
         if (stage == COMBAT_STAGE) {
             explorationResult.addEventEntryResult(
@@ -124,19 +128,19 @@ public class ForestJourneyExplorationEventHandler extends MultiStageExplorationE
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("FOREST_JOURNEY_EXPLORATION_EVENT_ENTRY_3")
                     .continueCombatEntry()
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("FOREST_JOURNEY_EXPLORATION_EVENT_ENTRY_5")
                     .continueCombatEntry()
                     .build();
         }
 
-        return explorationResultFactory.newExplorationResult();
+        return explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
     }
 
     @Override

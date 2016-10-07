@@ -3,6 +3,7 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingw
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -24,6 +25,9 @@ public class WoodcuttersExplorationEventHandler extends ExplorationEventHandler 
     @Autowired
     private InventoryEntityFactory inventoryEntityFactory;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return 12;
@@ -34,7 +38,7 @@ public class WoodcuttersExplorationEventHandler extends ExplorationEventHandler 
         final int coinCount = rollRandomCoinReward();
 
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(12))
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_3")

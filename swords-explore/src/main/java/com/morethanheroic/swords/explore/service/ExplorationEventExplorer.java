@@ -10,7 +10,7 @@ import com.morethanheroic.swords.explore.service.context.ExplorationContextFacto
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
-import com.morethanheroic.swords.explore.service.event.cache.EventDefinitionCache;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,11 +40,11 @@ public class ExplorationEventExplorer {
     private UserBasicAttributeManipulator basicAttributeManipulator;
 
     @Autowired
-    private EventDefinitionCache eventDefinitionCache;
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
     @Transactional
     public ExplorationResult exploreNext(final UserEntity userEntity, final SessionEntity sessionEntity) {
-        return explore(userEntity, sessionEntity, eventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent()).getLocation(), userEntity.getActiveExplorationState());
+        return explore(userEntity, sessionEntity, explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent()).getLocation(), userEntity.getActiveExplorationState());
     }
 
     @Transactional
@@ -77,7 +77,7 @@ public class ExplorationEventExplorer {
     }
 
     private ExplorationResult buildFailedExplorationResult() {
-        return explorationResultFactory.newExplorationResult()
+        return explorationResultFactory.newExplorationResult(null)
                 .addEventEntryResult(
                         TextExplorationEventEntryResult.builder()
                                 .content("You feel too tired to explore, you need more than zero movement points.")

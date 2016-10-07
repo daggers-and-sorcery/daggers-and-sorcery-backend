@@ -1,19 +1,19 @@
 package com.morethanheroic.swords.explore.service.event.transformer;
 
 import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
-import com.morethanheroic.swords.explore.domain.EventDefinition;
+import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.loader.domain.RawEventDefinition;
 import org.springframework.stereotype.Service;
 
 /**
- * Transform a {@link RawEventDefinition} to an {@link EventDefinition}.
+ * Transform a {@link RawEventDefinition} to an {@link ExplorationEventDefinition}.
  */
 @Service
-public class EventDefinitionTransformer implements DefinitionTransformer<EventDefinition, RawEventDefinition> {
+public class ExplorationEventDefinitionTransformer implements DefinitionTransformer<ExplorationEventDefinition, RawEventDefinition> {
 
     @Override
-    public EventDefinition transform(RawEventDefinition rawDefinition) {
-        return EventDefinition.builder()
+    public ExplorationEventDefinition transform(RawEventDefinition rawDefinition) {
+        return ExplorationEventDefinition.builder()
                 .id(rawDefinition.getId())
                 .location(rawDefinition.getLocation())
                 .terrain(rawDefinition.getTerrain())

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.cache;
 
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
-import com.morethanheroic.swords.explore.domain.EventDefinition;
+import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.loader.EventDefinitionLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,30 +16,30 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Holds the loaded {@link EventDefinition}s.
+ * Holds the loaded {@link ExplorationEventDefinition}s.
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EventDefinitionCache implements DefinitionCache<Integer, EventDefinition> {
+public class ExplorationEventDefinitionCache implements DefinitionCache<Integer, ExplorationEventDefinition> {
 
     private final EventDefinitionLoader eventDefinitionLoader;
 
-    private Map<Integer, EventDefinition> eventDefinitionMap = new HashMap<>();
+    private Map<Integer, ExplorationEventDefinition> eventDefinitionMap = new HashMap<>();
 
     @PostConstruct
     public void init() throws IOException {
-        final List<EventDefinition> eventDefinitions = eventDefinitionLoader.loadDefinitions();
+        final List<ExplorationEventDefinition> explorationEventDefinitions = eventDefinitionLoader.loadDefinitions();
 
-        log.info("Loaded " + eventDefinitions.size() + " item definitions.");
+        log.info("Loaded " + explorationEventDefinitions.size() + " item definitions.");
 
-        for (EventDefinition eventDefinition : eventDefinitions) {
-            eventDefinitionMap.put(eventDefinition.getId(), eventDefinition);
+        for (ExplorationEventDefinition explorationEventDefinition : explorationEventDefinitions) {
+            eventDefinitionMap.put(explorationEventDefinition.getId(), explorationEventDefinition);
         }
     }
 
     @Override
-    public EventDefinition getDefinition(Integer key) {
+    public ExplorationEventDefinition getDefinition(Integer key) {
         return eventDefinitionMap.get(key);
     }
 
@@ -49,7 +49,7 @@ public class EventDefinitionCache implements DefinitionCache<Integer, EventDefin
     }
 
     @Override
-    public List<EventDefinition> getDefinitions() {
+    public List<ExplorationEventDefinition> getDefinitions() {
         return Collections.unmodifiableList(new ArrayList<>(eventDefinitionMap.values()));
     }
 
