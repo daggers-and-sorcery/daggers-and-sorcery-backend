@@ -31,7 +31,7 @@ public class ExplorationEventDefinitionCache implements DefinitionCache<Integer,
     public void init() throws IOException {
         final List<ExplorationEventDefinition> explorationEventDefinitions = eventDefinitionLoader.loadDefinitions();
 
-        log.info("Loaded " + explorationEventDefinitions.size() + " item definitions.");
+        log.info("Loaded " + explorationEventDefinitions.size() + " exploration event definitions.");
 
         for (ExplorationEventDefinition explorationEventDefinition : explorationEventDefinitions) {
             eventDefinitionMap.put(explorationEventDefinition.getId(), explorationEventDefinition);
