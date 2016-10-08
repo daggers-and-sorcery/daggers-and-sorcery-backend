@@ -24,15 +24,6 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Random;
 
-/**
- * TODO:
- * - Add the rope as drop to monsters.
- * - Add the torch as drop to monsters.
- * - Setup the smuggler correctly.
- * - Add drop definitions.
- *
- * - Add wooden handle as a drop
- */
 @ExplorationEvent
 @RequiredArgsConstructor
 public class UnderABoulderExplorationEventDefinition extends MultiStageExplorationEventHandler {

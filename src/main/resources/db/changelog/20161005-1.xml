@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20161005-1">
+        <insert tableName="news">
+            <column name="title" value="The forum is here!"/>
+            <column name="release_date" value="2016-10-05 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Adventurers!
+
+With great pleasure we are announcing the release of our forum! This is just one small step towards bigger plans! Please note that this version of forum will be updated later on, to add better functionality.
+
+So, what does the forum mean? It presents a better way for all communication, between players, and staff as well. All your feedback and suggestions will be better visible from now on, open for discussion with other players, and, who knows, maybe you will find likeminded adventurers and become very good friends?!
+
+Nonetheless, we are putting a lot of work into the game, and we think we’ve done a pretty good job so far – considering the fact that all of us have fulltime jobs, and put most of our free time into developing the game and the content.
+
+We’re very thankful to have such an awesome and supportive community!
+
+Also, a small hint: new events and a new zone are already in preparation!
+
+You’re still here? Get back to finding and forging good gear, you’ll need it!
+
+Sincerely,
+Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
