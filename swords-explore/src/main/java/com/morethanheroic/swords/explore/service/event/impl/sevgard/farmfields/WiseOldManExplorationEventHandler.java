@@ -6,10 +6,10 @@ import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.item.domain.WeaponSuperType;
@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Optional;
 
 @ExplorationEvent
-public class WiseOldManExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class WiseOldManExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int WELCOME_STAGE = 1;
     private static final int GIVE_COIN_STAGE = 2;
@@ -45,6 +45,9 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
     @Autowired
     private InventoryFacade inventoryFacade;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return 6;
@@ -52,7 +55,7 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(6));
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -92,7 +95,7 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
 
     @Override
     public ExplorationResult explore(UserEntity userEntity, int stage) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(6));
 
         if (stage == GIVE_COIN_STAGE) {
             final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
@@ -212,7 +215,7 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
 
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(6));
 
         if (stage == WELCOME_STAGE) {
             explorationResult.addEventEntryResult(
@@ -245,10 +248,5 @@ public class WiseOldManExplorationEventDefinition extends MultiStageExplorationE
         }
 
         return false;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.FARMFIELDS;
     }
 }

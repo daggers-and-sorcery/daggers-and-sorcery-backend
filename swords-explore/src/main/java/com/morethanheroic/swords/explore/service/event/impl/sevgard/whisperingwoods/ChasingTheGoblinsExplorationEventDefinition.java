@@ -4,8 +4,8 @@ import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.exception.IllegalExplorationEventStateException;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @ExplorationEvent
 @RequiredArgsConstructor
-public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 15;
 
@@ -34,6 +34,7 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
 
     private final ExplorationResultBuilderFactory explorationResultBuilderFactory;
     private final CombatCalculator combatCalculator;
+    private final ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
     @Override
     public int getId() {
@@ -41,14 +42,9 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
     }
 
     @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.WHISPERING_WOODS;
-    }
-
-    @Override
     public ExplorationResult explore(UserEntity userEntity) {
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_3")
@@ -73,32 +69,32 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
     public ExplorationResult explore(UserEntity userEntity, int stage) {
         if (stage == KILL_THE_GOBLIN_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_17")
                     .newCombatEntry(GOBLIN_SEPARATIST_MONSTER_ID, EVENT_ID, FIRST_COMBAT_STAGE)
                     .build();
         } else if (stage == FIRST_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_7")
                     .resetExploration()
                     .build();
         } else if (stage == FOLLOW_THE_GOBLIN_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_8")
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_9")
                     .newCombatEntry(GOBLIN_GUARD_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_10")
                     .newCombatEntry(GOBLIN_GUARD_MONSTER_ID, EVENT_ID, THIRD_COMBAT_STAGE)
                     .build();
         } else if (stage == THIRD_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_11")
                     .newOptionEntry(
                             ReplyOption.builder()
@@ -113,13 +109,13 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
                     .build();
         } else if (stage == GO_HOME_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_12")
                     .resetExploration()
                     .build();
         } else if (stage == ATTACK_THE_SEPARATIST_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_13")
                     .newAttributeAttemptEntry(GeneralAttribute.SWIFTNESS, 8)
                     .isSuccess((explorationResultBuilder) -> explorationResultBuilder
@@ -135,7 +131,7 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
                     .build();
         } else if (stage == FOURTH_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_16")
                     .resetExploration()
                     .build();
@@ -148,7 +144,7 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == STARTING_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_6")
                     .newOptionEntry(
                             ReplyOption.builder()
@@ -164,26 +160,26 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
                     .build();
         } else if (stage == FIRST_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_17")
                     .continueCombatEntry()
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_9")
                     .continueCombatEntry()
                     .build();
         } else if (stage == THIRD_COMBAT_STAGE) {
             if (combatCalculator.isCombatRunning(userEntity)) {
                 return explorationResultBuilderFactory
-                        .newExplorationResultBuilder(userEntity)
+                        .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_10")
                         .continueCombatEntry()
                         .build();
             } else {
                 return explorationResultBuilderFactory
-                        .newExplorationResultBuilder(userEntity)
+                        .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_11")
                         .newOptionEntry(
                                 ReplyOption.builder()
@@ -199,7 +195,7 @@ public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplo
             }
         } else if (stage == FOURTH_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_15")
                     .continueCombatEntry()
                     .build();

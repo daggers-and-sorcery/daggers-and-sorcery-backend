@@ -3,8 +3,8 @@ package com.morethanheroic.swords.explore.view.controller;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.service.ExplorationEventExplorer;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.view.response.ExplorationResponseBuilder;
 import com.morethanheroic.swords.explore.view.response.domain.ExplorationResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -24,13 +24,14 @@ public class ExplorationExploreController {
     private ExplorationResponseBuilder explorationResponseBuilder;
 
     @RequestMapping(value = "/explore/{location}/{state}", method = RequestMethod.GET)
-    public Response explore(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable ExplorationEventLocationType location, @PathVariable int state) {
+    public Response explore(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable ExplorationEventLocation location, @PathVariable int state) {
         final ExplorationResult explorationResult = explorationEventExecutor.explore(userEntity, sessionEntity, location, state);
 
-        return explorationResponseBuilder.build(ExplorationResponseBuilderConfiguration.builder()
-                .userEntity(userEntity)
-                .explorationEventEntryResults(explorationResult)
-                .build()
+        return explorationResponseBuilder.build(
+                ExplorationResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .explorationEventEntryResults(explorationResult)
+                        .build()
         );
     }
 }

@@ -5,9 +5,9 @@ import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @ExplorationEvent
-public class CaveAtTheRiverExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class CaveAtTheRiverExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 5;
 
@@ -39,6 +39,9 @@ public class CaveAtTheRiverExplorationEventDefinition extends MultiStageExplorat
     @Autowired
     private CombatCalculator combatCalculator;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     private List<MonsterDefinition> possibleOpponents;
 
     @PostConstruct
@@ -52,13 +55,8 @@ public class CaveAtTheRiverExplorationEventDefinition extends MultiStageExplorat
     }
 
     @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.FARMFIELDS;
-    }
-
-    @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
         final MonsterDefinition opponent = combatEventEntryEvaluator.calculateOpponent(possibleOpponents);
 
         explorationResult.addEventEntryResult(
@@ -88,7 +86,7 @@ public class CaveAtTheRiverExplorationEventDefinition extends MultiStageExplorat
 
     @Override
     public ExplorationResult explore(UserEntity userEntity, int stage) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
 
         if (stage == COMBAT_STAGE) {
             explorationResult.addEventEntryResult(
@@ -108,19 +106,19 @@ public class CaveAtTheRiverExplorationEventDefinition extends MultiStageExplorat
         if (stage == COMBAT_STAGE) {
             if (combatCalculator.isCombatRunning(userEntity)) {
                 return explorationResultBuilderFactory
-                        .newExplorationResultBuilder(userEntity)
+                        .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("CAVE_AT_THE_RIVER_EXPLORATION_EVENT_ENTRY_1", combatCalculator.getOpponentInRunningCombat(userEntity).getName())
                         .continueCombatEntry()
                         .build();
             } else {
                 return explorationResultBuilderFactory
-                        .newExplorationResultBuilder(userEntity)
+                        .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .continueCombatEntry()
                         .build();
             }
         }
 
-        return explorationResultFactory.newExplorationResult();
+        return explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
     }
 
     @Override

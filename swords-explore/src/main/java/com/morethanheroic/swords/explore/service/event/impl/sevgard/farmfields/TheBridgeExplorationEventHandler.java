@@ -2,12 +2,11 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
+import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -17,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @ExplorationEvent
-public class TheBridgeExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class TheBridgeExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 4;
 
@@ -34,6 +33,9 @@ public class TheBridgeExplorationEventDefinition extends MultiStageExplorationEv
     @Autowired
     private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     private MonsterDefinition opponent;
 
     @PostConstruct
@@ -48,7 +50,7 @@ public class TheBridgeExplorationEventDefinition extends MultiStageExplorationEv
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -66,9 +68,9 @@ public class TheBridgeExplorationEventDefinition extends MultiStageExplorationEv
 
         final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
 
-        explorationResult .addEventEntryResult(combatResult.getResult());
+        explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if(!combatResult.getResult().isPlayerDead()) {
+        if (!combatResult.getResult().isPlayerDead()) {
             userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
 
@@ -76,13 +78,8 @@ public class TheBridgeExplorationEventDefinition extends MultiStageExplorationEv
     }
 
     @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.FARMFIELDS;
-    }
-
-    @Override
     public ExplorationResult explore(UserEntity userEntity, int stage) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
 
         if (stage == COMBAT_STAGE) {
             explorationResult.addEventEntryResult(
@@ -101,13 +98,13 @@ public class TheBridgeExplorationEventDefinition extends MultiStageExplorationEv
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity,  explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("THE_BRIDGE_EXPLORATION_EVENT_ENTRY_1")
                     .continueCombatEntry()
                     .build();
         }
 
-        return explorationResultFactory.newExplorationResult();
+        return explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
     }
 
     @Override

@@ -2,12 +2,11 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
@@ -16,11 +15,10 @@ import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 import java.util.Random;
 
 @ExplorationEvent
-public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDefinition {
+public class FarmingIsHardExplorationEventHandler extends ExplorationEventHandler {
 
     @Autowired
     private ExplorationResultFactory explorationResultFactory;
@@ -34,6 +32,9 @@ public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDef
     @Autowired
     private Random random;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return 8;
@@ -41,7 +42,7 @@ public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDef
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(8));
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -90,10 +91,5 @@ public class FarmingIsHardExplorationEventDefinition extends ExplorationEventDef
         );
 
         return explorationResult;
-    }
-
-    @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.FARMFIELDS;
     }
 }

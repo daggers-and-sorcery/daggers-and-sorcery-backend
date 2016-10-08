@@ -3,9 +3,9 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @ExplorationEvent
-public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class GoblinRaidingPartyExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 7;
 
@@ -35,6 +35,9 @@ public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExpl
     @Autowired
     private ExplorationResultBuilderFactory explorationResultBuilderFactory;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     private MonsterDefinition goblinPikeman;
     private MonsterDefinition goblinShaman;
 
@@ -51,7 +54,7 @@ public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExpl
 
     @Override
     public ExplorationResult explore(UserEntity userEntity) {
-        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult();
+        final ExplorationResult explorationResult = explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
@@ -71,7 +74,7 @@ public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExpl
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
-        if(!combatResult.getResult().isPlayerDead()) {
+        if (!combatResult.getResult().isPlayerDead()) {
             userEntity.setActiveExploration(EVENT_ID, COMBAT_STAGE);
         }
 
@@ -79,15 +82,10 @@ public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExpl
     }
 
     @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.FARMFIELDS;
-    }
-
-    @Override
     public ExplorationResult explore(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_1")
                     .newCombatEntry(goblinShaman.getId(), EVENT_ID, SECOND_COMBAT_STAGE)
                     .build();
@@ -95,31 +93,31 @@ public class GoblinRaidingPartyExplorationEventDefinition extends MultiStageExpl
             userEntity.resetActiveExploration();
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_2")
                     .build();
         }
 
-        return explorationResultFactory.newExplorationResult();
+        return explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
     }
 
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_3")
                     .continueCombatEntry()
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_1")
                     .continueCombatEntry()
                     .build();
         }
 
-        return explorationResultFactory.newExplorationResult();
+        return explorationResultFactory.newExplorationResult(explorationEventDefinitionCache.getDefinition(EVENT_ID));
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.domain.context;
 
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,6 +8,6 @@ import lombok.Getter;
 @Builder
 public class ExplorationContext {
 
-    private final ExplorationEventDefinition event;
+    private final ExplorationEventHandler event;
     private final int stage;
 }

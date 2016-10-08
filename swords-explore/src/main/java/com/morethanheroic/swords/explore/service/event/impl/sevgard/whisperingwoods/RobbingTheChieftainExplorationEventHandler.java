@@ -6,8 +6,8 @@ import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @ExplorationEvent
-public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExplorationEventDefinition {
+public class RobbingTheChieftainExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 10;
 
@@ -33,7 +33,7 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
     private final List<DropDefinition> chestDropDefinitions;
 
     @Autowired
-    public RobbingTheChieftainExplorationEventDefinition(final ItemDefinitionCache itemDefinitionCache) {
+    public RobbingTheChieftainExplorationEventHandler(final ItemDefinitionCache itemDefinitionCache) {
         chestDropDefinitions = Lists.newArrayList(
                 DropDefinition.builder()
                         .item(itemDefinitionCache.getDefinition(99))
@@ -136,20 +136,18 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
     @Autowired
     private InventoryFacade inventoryFacade;
 
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+
     @Override
     public int getId() {
         return EVENT_ID;
     }
 
     @Override
-    public ExplorationEventLocationType getLocation() {
-        return ExplorationEventLocationType.WHISPERING_WOODS;
-    }
-
-    @Override
     public ExplorationResult explore(UserEntity userEntity) {
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_3")
@@ -175,7 +173,7 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
             userEntity.resetActiveExploration();
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newCustomLogicEntry(() -> {
                         List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
 
@@ -201,13 +199,13 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
             userEntity.resetActiveExploration();
 
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_7")
                     .build();
         }
 
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .build();
     }
 
@@ -215,20 +213,20 @@ public class RobbingTheChieftainExplorationEventDefinition extends MultiStageExp
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_4")
                     .continueCombatEntry()
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
             return explorationResultBuilderFactory
-                    .newExplorationResultBuilder(userEntity)
+                    .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("ROBBING_THE_CHIEFTAIN_EXPLORATION_EVENT_ENTRY_6")
                     .continueCombatEntry()
                     .build();
         }
 
         return explorationResultBuilderFactory
-                .newExplorationResultBuilder(userEntity)
+                .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                 .build();
     }
 
