@@ -19,8 +19,8 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class EventDefinitionLoader implements DefinitionLoader<ExplorationEventDefinition> {
 
-    private static final String EVENT_DEFINITION_LOCATION = "classpath:data/event/definition/";
-    private static final String EVENT_SCHEMA_LOCATION = "classpath:data/event/schema.xsd";
+    private static final String EVENT_DEFINITION_LOCATION = "classpath:data/exploration/definition/";
+    private static final String EVENT_SCHEMA_LOCATION = "classpath:data/exploration/schema.xsd";
     private static final int EVENT_COUNT_TO_LOAD = 50;
 
     private final NumericXmlDefinitionLoader numericXmlDefinitionLoader;

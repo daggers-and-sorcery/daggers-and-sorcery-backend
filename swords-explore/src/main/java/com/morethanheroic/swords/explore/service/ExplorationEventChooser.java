@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.explore.service;
 
-import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,11 @@ public class ExplorationEventChooser {
         }
 
         for (ExplorationEventHandler explorationEventHandler : explorationEventHandlers) {
-            result.get(explorationEventDefinitionCache.getDefinition(explorationEventHandler.getId()).getLocation()).add(explorationEventHandler);
+            if (explorationEventDefinitionCache.isDefinitionExists(explorationEventHandler.getId())) {
+                result.get(explorationEventDefinitionCache.getDefinition(explorationEventHandler.getId()).getLocation()).add(explorationEventHandler);
+            } else {
+                throw new IllegalStateException("No definition exists for exploration event handler: " + explorationEventHandler.getId());
+            }
         }
 
         locationMap = Collections.unmodifiableMap(result);
