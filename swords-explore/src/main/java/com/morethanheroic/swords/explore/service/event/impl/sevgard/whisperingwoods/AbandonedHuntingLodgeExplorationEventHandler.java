@@ -14,8 +14,8 @@ import com.morethanheroic.swords.explore.service.event.exception.IllegalExplorat
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
-import com.morethanheroic.swords.monster.domain.DropDefinition;
+import com.morethanheroic.swords.loot.domain.DropAmountDefinition;
+import com.morethanheroic.swords.loot.domain.DropDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 

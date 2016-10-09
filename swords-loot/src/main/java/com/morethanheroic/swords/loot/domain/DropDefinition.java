@@ -1,6 +1,7 @@
-package com.morethanheroic.swords.monster.domain;
+package com.morethanheroic.swords.loot.domain;
 
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.loot.domain.DropAmountDefinition;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.monster.domain;
+package com.morethanheroic.swords.loot.domain;
 
 import lombok.Builder;
 import lombok.Getter;

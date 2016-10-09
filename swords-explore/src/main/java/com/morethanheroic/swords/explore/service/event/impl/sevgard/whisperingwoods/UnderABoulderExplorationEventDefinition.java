@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingwoods;
 
-import com.google.common.collect.Lists;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.combat.service.drop.DropAdder;
@@ -15,12 +14,10 @@ import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
-import com.morethanheroic.swords.monster.domain.DropDefinition;
+import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Random;
 
@@ -47,106 +44,7 @@ public class UnderABoulderExplorationEventDefinition extends MultiStageExplorati
     private final DropAdder dropAdder;
     private final DropTextCreator dropTextCreator;
     private final Random random;
-
-    private List<DropDefinition> chestDropDefinitions;
-
-    @PostConstruct
-    public void setup() {
-        this.chestDropDefinitions = Lists.newArrayList(
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(1))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .minimumAmount(5)
-                                        .maximumAmount(10)
-                                        .build()
-                        )
-                        .chance(100)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(99))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(0.3)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(114))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(2)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(115))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(3)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(116))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .minimumAmount(1)
-                                        .maximumAmount(2)
-                                        .build()
-                        )
-                        .chance(30)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(117))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(2)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(118))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(3)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(121))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(2)
-                        .identified(true)
-                        .build(),
-                DropDefinition.builder()
-                        .item(itemDefinitionCache.getDefinition(122))
-                        .amount(
-                                DropAmountDefinition.builder()
-                                        .maximumAmount(1)
-                                        .build()
-                        )
-                        .chance(3)
-                        .identified(true)
-                        .build()
-        );
-    }
+    private final LootDefinitionCache lootDefinitionCache;
 
     @Override
     public int getId() {
@@ -206,7 +104,7 @@ public class UnderABoulderExplorationEventDefinition extends MultiStageExplorati
                     .newCombatEntry(15, EVENT_ID, SMUGGLER_COMBAT_STAGE)
                     .build();
         } else if (stage == SMUGGLER_COMBAT_STAGE) {
-            final List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
+            final List<Drop> chestDrops = dropCalculator.calculateDrops(lootDefinitionCache.getDefinition(1).getDropDefinitions());
             final int silverCount = random.nextInt(2) + 1;
 
             return explorationResultBuilderFactory
@@ -220,7 +118,7 @@ public class UnderABoulderExplorationEventDefinition extends MultiStageExplorati
                     .resetExploration()
                     .build();
         } else if (stage == LEFT_PATH_STAGE) {
-            final List<Drop> chestDrops = dropCalculator.calculateDrops(chestDropDefinitions);
+            final List<Drop> chestDrops = dropCalculator.calculateDrops(lootDefinitionCache.getDefinition(1).getDropDefinitions());
             final int silverCount = random.nextInt(2) + 1;
 
             return explorationResultBuilderFactory
