@@ -3,7 +3,7 @@ package com.morethanheroic.swords.skill.scavenging.view.controller;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.scavenging.domain.ScavengingEntity;
-import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
+import com.morethanheroic.swords.scavenging.service.ScavengingEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,16 +23,14 @@ public class ScavengingController {
     private ResponseFactory responseFactory;
 
     @Autowired
-    private ScavengingFacade scavengingFacade;
+    private ScavengingEntityFactory scavengingEntityFactory;
 
     @RequestMapping(value = "/skill/scavenging/convert", method = RequestMethod.POST)
     @Transient
     public CharacterRefreshResponse convertMovementPoints(UserEntity user, @RequestParam int pointsToConvert) {
-        CharacterRefreshResponse response = responseFactory.newResponse(user);
-
-        ScavengingEntity scavengingEntity = scavengingFacade.getEntity(user);
-
-        int actualScavengingPoints = scavengingEntity.getScavengingPoint();
+        final CharacterRefreshResponse response = responseFactory.newResponse(user);
+        final ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(user.getId());
+        final int actualScavengingPoints = scavengingEntity.getScavengingPoint();
 
         if (actualScavengingPoints + pointsToConvert * MOVEMENT_TO_SCAVENGING_POINT_CONVERSION_RATE > MAX_SCAVENGING_POINTS) {
             pointsToConvert = (int) Math.floor((MAX_SCAVENGING_POINTS - actualScavengingPoints) / 5);
