@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DropDefinitionTransformer implements DefinitionTransformer<DropDefinition, RawDropDefinition> {
+public class LootDropDefinitionTransformer implements DefinitionTransformer<DropDefinition, RawDropDefinition> {
 
     private final ItemDefinitionCache itemDefinitionCache;
     private final LootAmountDefinitionTransformer dropAmountDefinitionTransformer;

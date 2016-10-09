@@ -12,11 +12,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LootDefinitionTransformer implements DefinitionTransformer<LootDefinition, RawLootDefinition> {
 
-    private final DropDefinitionTransformer dropDefinitionTransformer;
+    private final LootDropDefinitionTransformer dropDefinitionTransformer;
 
     @Override
     public LootDefinition transform(RawLootDefinition rawDefinition) {
         return LootDefinition.builder()
+                .id(rawDefinition.getId())
                 .dropDefinitions(
                         rawDefinition.getDroplist().stream().map(dropDefinitionTransformer::transform)
                         .collect(Collectors.toList())

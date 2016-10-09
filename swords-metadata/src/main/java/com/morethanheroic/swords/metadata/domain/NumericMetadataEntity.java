@@ -31,6 +31,10 @@ public class NumericMetadataEntity implements MetadataEntity<Integer> {
 
     @Override
     public Integer getValue() {
+        if (metadataDatabaseEntity == null) {
+            return 0;
+        }
+
         return metadataDatabaseEntity.getMetaValue();
     }
 
