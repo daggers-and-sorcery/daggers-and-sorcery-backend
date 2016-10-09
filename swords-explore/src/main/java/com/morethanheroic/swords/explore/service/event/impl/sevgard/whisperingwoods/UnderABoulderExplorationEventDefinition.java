@@ -63,13 +63,13 @@ public class UnderABoulderExplorationEventDefinition extends MultiStageExplorati
 
                     return inventoryEntity.hasItem(itemDefinitionCache.getDefinition(ROPE_ID)) && inventoryEntity.hasItem(itemDefinitionCache.getDefinition(TORCH_ID));
                 })
-                .isFailure((
+                .isFailure(
                         explorationResultBuilder -> explorationResultBuilder
                                 .newMessageBoxEntry("ITEMS_REQUIRED_EXPLORATION_EVENT_ENTRY_FAILURE", "1 Rope, 1 Torch")
                                 .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_3")
                                 .build()
-                ))
-                .isSuccess((
+                )
+                .isSuccess(
                         explorationResultBuilder -> explorationResultBuilder
                                 .newMessageBoxEntry("ITEMS_REQUIRED_EXPLORATION_EVENT_ENTRY_SUCCESS", "1 Rope, 1 Torch")
                                 .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_4")
@@ -86,7 +86,7 @@ public class UnderABoulderExplorationEventDefinition extends MultiStageExplorati
                                 )
                                 .setEventStage(EVENT_ID, CHOOSE_PATH_STAGE)
                                 .build()
-                ))
+                )
                 .build();
     }
 
