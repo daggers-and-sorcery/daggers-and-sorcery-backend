@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingwoods;
 
+import com.morethanheroic.math.RandomCalculator;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.combat.service.drop.DropAdder;
@@ -43,7 +44,7 @@ public class UnderABoulderExplorationEventDefinition extends MultiStageExplorati
     private final DropCalculator dropCalculator;
     private final DropAdder dropAdder;
     private final DropTextCreator dropTextCreator;
-    private final Random random;
+    private final RandomCalculator randomCalculator;
     private final LootDefinitionCache lootDefinitionCache;
 
     @Override
@@ -105,7 +106,7 @@ public class UnderABoulderExplorationEventDefinition extends MultiStageExplorati
                     .build();
         } else if (stage == SMUGGLER_COMBAT_STAGE) {
             final List<Drop> chestDrops = dropCalculator.calculateDrops(lootDefinitionCache.getDefinition(1).getDropDefinitions());
-            final int silverCount = random.nextInt(2) + 1;
+            final int silverCount = randomCalculator.randomNumberBetween(1, 3);
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
@@ -119,7 +120,7 @@ public class UnderABoulderExplorationEventDefinition extends MultiStageExplorati
                     .build();
         } else if (stage == LEFT_PATH_STAGE) {
             final List<Drop> chestDrops = dropCalculator.calculateDrops(lootDefinitionCache.getDefinition(1).getDropDefinitions());
-            final int silverCount = random.nextInt(2) + 1;
+            final int silverCount = randomCalculator.randomNumberBetween(1, 3);
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
