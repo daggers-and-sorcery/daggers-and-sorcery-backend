@@ -26,7 +26,7 @@ public class ScavengingController {
     private ScavengingEntityFactory scavengingEntityFactory;
 
     @RequestMapping(value = "/skill/scavenging/convert", method = RequestMethod.POST)
-    @Transient
+    @Transient //TODO: Wtf is this? Is it really needed?
     public CharacterRefreshResponse convertMovementPoints(UserEntity user, @RequestParam int pointsToConvert) {
         final CharacterRefreshResponse response = responseFactory.newResponse(user);
         final ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(user.getId());
