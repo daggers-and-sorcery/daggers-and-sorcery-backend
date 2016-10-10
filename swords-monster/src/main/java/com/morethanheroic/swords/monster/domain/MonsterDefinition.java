@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.monster.domain;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
+import com.morethanheroic.swords.loot.domain.DropDefinition;
 
 import java.util.List;
 

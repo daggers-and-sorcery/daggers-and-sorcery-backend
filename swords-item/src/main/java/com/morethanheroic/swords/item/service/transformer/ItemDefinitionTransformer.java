@@ -4,9 +4,7 @@ import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionListTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,19 +13,12 @@ import java.util.List;
  * Transform a {@link RawItemDefinition} to {@link ItemDefinition}.
  */
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class ItemDefinitionTransformer implements DefinitionTransformer<ItemDefinition, RawItemDefinition> {
 
-    @NonNull
     private final ItemModifierDefinitionListTransformer itemModifierDefinitionListTransformer;
-
-    @NonNull
     private final ItemRequirementDefinitionListTransformer itemRequirementDefinitionListTransformer;
-
-    @NonNull
     private final ItemPriceDefinitionListTransformer itemPriceDefinitionListTransformer;
-
-    @NonNull
     private final EffectDefinitionListTransformer effectDefinitionListTransformer;
 
     @SuppressWarnings("unchecked")

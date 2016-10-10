@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.monster.service.transformer;
 
-import com.morethanheroic.swords.monster.domain.DropDefinition;
+import com.morethanheroic.swords.loot.domain.DropDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawDropDefinition;

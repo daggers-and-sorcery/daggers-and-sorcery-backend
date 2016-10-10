@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.login.domain.LoginRequest;
-import com.morethanheroic.swords.metadata.domain.MetadataEntity;
-import com.morethanheroic.swords.metadata.service.MetadataFacade;
+import com.morethanheroic.swords.metadata.domain.TextMetadataEntity;
+import com.morethanheroic.swords.metadata.factory.MetadataEntityFactory;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.session.SessionAttributeType;
@@ -36,7 +36,7 @@ public class UserLoginController {
     private final ResponseFactory responseFactory;
 
     @NonNull
-    private final MetadataFacade metadataFacade;
+    private final MetadataEntityFactory metadataEntityFactory;
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public CharacterRefreshResponse login(HttpSession session, @RequestBody LoginRequest loginRequest) throws UnsupportedEncodingException {
@@ -49,7 +49,7 @@ public class UserLoginController {
 
             session.setAttribute(SessionAttributeType.USER_ID.name(), userEntity.getId());
 
-            final MetadataEntity metadataEntity = metadataFacade.getEntity(userEntity, "PRELUDE_SHOWN");
+            final TextMetadataEntity metadataEntity = metadataEntityFactory.getTextEntity(userEntity, "PRELUDE_SHOWN");
 
             if (metadataEntity.getValue().equals("NOT_SHOWN")) {
                 response.setData("prelude", true);

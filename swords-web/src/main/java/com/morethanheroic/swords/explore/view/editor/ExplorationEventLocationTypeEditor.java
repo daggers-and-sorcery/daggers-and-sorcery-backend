@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.view.editor;
 
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Locale;
@@ -15,6 +15,6 @@ public class ExplorationEventLocationTypeEditor extends PropertyEditorSupport {
             return;
         }
 
-        setValue(ExplorationEventLocationType.valueOf(text.toUpperCase(Locale.US)));
+        setValue(ExplorationEventLocation.valueOf(text.toUpperCase(Locale.US)));
     }
 }

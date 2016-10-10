@@ -9,4 +9,5 @@ import lombok.Getter;
 public class ScavengingPointsPartialResponse extends PartialResponse {
 
     private final int scavengingPoints;
+    private final boolean scavengingEnabled;
 }

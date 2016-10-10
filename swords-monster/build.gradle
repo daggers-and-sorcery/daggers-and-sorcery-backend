@@ -5,6 +5,7 @@ dependencies {
 
     compile project(':swords-item')
     compile project(':swords-attribute')
+    compile project(':swords-loot')
 }
 
 apply plugin: 'spring-boot'

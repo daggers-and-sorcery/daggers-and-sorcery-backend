@@ -5,11 +5,12 @@ import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttribut
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.service.cache.ExplorationEventDefinitionCache;
+import com.morethanheroic.swords.explore.service.cache.ExplorationEventHandlerCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
-import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventDefinition;
+import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,10 +34,13 @@ public class ExplorationEventExplorer {
     private ExplorationContextFactory explorationContextFactory;
 
     @Autowired
-    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+    private ExplorationEventHandlerCache explorationEventHandlerCache;
 
     @Autowired
     private UserBasicAttributeManipulator basicAttributeManipulator;
+
+    @Autowired
+    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
     @Transactional
     public ExplorationResult exploreNext(final UserEntity userEntity, final SessionEntity sessionEntity) {
@@ -44,7 +48,7 @@ public class ExplorationEventExplorer {
     }
 
     @Transactional
-    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationEventLocationType location, final int nextState) {
+    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationEventLocation location, final int nextState) {
         if (!canExplore(userEntity, nextState)) {
             return buildFailedExplorationResult();
         }
@@ -65,7 +69,7 @@ public class ExplorationEventExplorer {
             return false;
         }
 
-        if (nextState > NOT_STARTED && !((MultiStageExplorationEventDefinition) explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent())).isValidNextStageAtStage(userEntity.getActiveExplorationState(), nextState)) {
+        if (nextState > NOT_STARTED && !((MultiStageExplorationEventHandler) explorationEventHandlerCache.getHandler(userEntity.getActiveExplorationEvent())).isValidNextStageAtStage(userEntity.getActiveExplorationState(), nextState)) {
             return false;
         }
 
@@ -73,7 +77,7 @@ public class ExplorationEventExplorer {
     }
 
     private ExplorationResult buildFailedExplorationResult() {
-        return explorationResultFactory.newExplorationResult()
+        return explorationResultFactory.newExplorationResult(null)
                 .addEventEntryResult(
                         TextExplorationEventEntryResult.builder()
                                 .content("You feel too tired to explore, you need more than zero movement points.")
@@ -94,6 +98,6 @@ public class ExplorationEventExplorer {
     }
 
     private ExplorationResult continueEvent(final UserEntity userEntity, final ExplorationContext explorationContext) {
-        return ((MultiStageExplorationEventDefinition) explorationContext.getEvent()).explore(userEntity, explorationContext.getStage());
+        return ((MultiStageExplorationEventHandler) explorationContext.getEvent()).explore(userEntity, explorationContext.getStage());
     }
 }

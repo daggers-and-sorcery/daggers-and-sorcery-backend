@@ -12,6 +12,7 @@ import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorat
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.MessageBoxMessageEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
@@ -25,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +40,9 @@ public class ExplorationResultBuilder {
 
     @Autowired
     private CombatEventEntryEvaluator combatEventEntryEvaluator;
+
+    @Autowired
+    private MessageBoxMessageEventEntryEvaluator messageBoxMessageEventEntryEvaluator;
 
     @Autowired
     private AttributeAttemptEventEntryEvaluator attributeAttemptEventEntryEvaluator;
@@ -70,6 +75,14 @@ public class ExplorationResultBuilder {
 
         //// FIXME: 9/22/2016 This is a hack, this should be handled in the exploration events correctly
         combatCalculator.removeAllCombatForUser(userEntity);
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newMessageBoxEntry(final String messageId, final Object... args) {
+        explorationResult.addEventEntryResult(
+                messageBoxMessageEventEntryEvaluator.messageEntry(messageId, args)
+        );
 
         return this;
     }
@@ -147,6 +160,17 @@ public class ExplorationResultBuilder {
         );
 
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
+    }
+
+    public MultiWayExplorationResultBuilder newCustomMultiWayPath(final Callable<Boolean> calculateSuccess) {
+        final boolean isSuccess;
+        try {
+            isSuccess = calculateSuccess.call();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return new MultiWayExplorationResultBuilder(this, isSuccess);
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {
