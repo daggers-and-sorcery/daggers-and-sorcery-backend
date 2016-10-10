@@ -1,0 +1,35 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20161010-2">
+        <insert tableName="news">
+            <column name="title" value="First batch of the level five weapons!"/>
+            <column name="release_date" value="2016-10-10 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Greetings adventurers!
+
+A new event and new level 5 weapon recipes are finally here. Check this week's patch notes for more detailed information.
+
+Improvements:
+
+- Added 'Wooden handle' as a requirement for various ax and mace recipes. It's dropped by monsters but later after the release of the fletching skill it will be a craftable material.
+- Added a new event to the 'Whispering woods' with a new monster. This new event requires a 'Torch' and a 'Rope'. Both of them added as drops to the existing monsters. They will be craftable after the release of the Crafting skill.
+- Added 2 new level five weapons as craftable equipment. Both of them are obtainable from the newly added exploration event.
+- Removed the settings page and moved the 'Enable scavenging' option to the scavenging skill's page.
+- We did some backend changes on how scavenging points are saved in the game. Because of this, the scavenging points were reset for every character. We are really sorry for the loss and will try to keep these breaking changes as minimal as possible.
+
+Bugfixes:
+
+- Fixed that the description and flavor texts were not shown on some items.
+- The scavenging can be enabled again.
+- Increased the maximum forum message length to 4000 characters because it was too low.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
