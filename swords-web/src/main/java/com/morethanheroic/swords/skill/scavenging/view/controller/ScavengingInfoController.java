@@ -1,12 +1,12 @@
 package com.morethanheroic.swords.skill.scavenging.view.controller;
 
 import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.swords.scavenging.service.ScavengingEntityFactory;
 import com.morethanheroic.swords.skill.scavenging.view.response.domain.ScavengingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.scavenging.view.response.service.ScavengingInfoResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScavengingInfoController {
 
     private final ScavengingInfoResponseBuilder scavengingInfoResponseBuilder;
+    private final ScavengingEntityFactory scavengingEntityFactory;
 
-    @RequestMapping(value = "/skill/scavenging/info", method = RequestMethod.GET)
+    @GetMapping(value = "/skill/scavenging/info")
     public Response scavengingInfo(UserEntity userEntity) {
         return scavengingInfoResponseBuilder.build(
                 ScavengingInfoResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
+                        .scavengingEntity(scavengingEntityFactory.getEntity(userEntity.getId()))
                         .build()
         );
     }

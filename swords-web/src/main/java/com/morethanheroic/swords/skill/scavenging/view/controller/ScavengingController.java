@@ -6,6 +6,7 @@ import com.morethanheroic.swords.scavenging.domain.ScavengingEntity;
 import com.morethanheroic.swords.scavenging.service.ScavengingEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,8 +26,8 @@ public class ScavengingController {
     @Autowired
     private ScavengingEntityFactory scavengingEntityFactory;
 
+    @Transactional
     @RequestMapping(value = "/skill/scavenging/convert", method = RequestMethod.POST)
-    @Transient //TODO: Wtf is this? Is it really needed?
     public CharacterRefreshResponse convertMovementPoints(UserEntity user, @RequestParam int pointsToConvert) {
         final CharacterRefreshResponse response = responseFactory.newResponse(user);
         final ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(user.getId());
