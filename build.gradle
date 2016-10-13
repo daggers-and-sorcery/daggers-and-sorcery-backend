@@ -104,6 +104,8 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+    compile group: 'org.logback-extensions', name: 'logback-ext-loggly', version: '0.1.4'
+
     compile group: 'org.apache.commons', name: 'commons-math3', version: '3.5'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
 
