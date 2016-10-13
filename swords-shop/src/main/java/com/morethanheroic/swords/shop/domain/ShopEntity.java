@@ -52,9 +52,13 @@ public class ShopEntity implements Entity {
         }
     }
 
-    public boolean hasItem(ItemDefinition itemDefinition, int amount) {
+    public boolean hasItem(ItemDefinition itemDefinition) {
         final ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
 
-        return shopItemDatabaseEntity.getItemAmount() >= amount;
+        if (shopItemDatabaseEntity == null) {
+            return false;
+        }
+
+        return shopItemDatabaseEntity.getItemAmount() >= 1;
     }
 }

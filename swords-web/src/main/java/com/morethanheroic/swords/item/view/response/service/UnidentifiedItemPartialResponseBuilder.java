@@ -23,7 +23,7 @@ public class UnidentifiedItemPartialResponseBuilder implements PartialResponseBu
         final ItemDefinition itemDefinition = unidentifiedItemPartialResponseBuilderConfiguration.getItem();
 
         return UnidentifiedItemDefinitionPartialResponse.builder()
-                .id(unidentifiedItemIdCalculator.getRealItemId(unidentifiedItemPartialResponseBuilderConfiguration.getSessionEntity(), itemDefinition.getId()))
+                .id(unidentifiedItemIdCalculator.getUnidentifiedItemId(unidentifiedItemPartialResponseBuilderConfiguration.getSessionEntity(), itemDefinition.getId()))
                 .name(UNIDENTIFIED_ITEM_NAME)
                 .equipment(itemDefinition.isEquipment())
                 .usable(itemDefinition.isUsable())
