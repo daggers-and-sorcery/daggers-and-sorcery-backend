@@ -5,7 +5,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.equipment.service.EquipmentResponseBuilder;
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EquipmentController {
 
     private final EquipmentFacade equipmentFacade;
-    private final InventoryFacade inventoryFacade;
+    private final InventoryEntityFactory inventoryEntityFactory;
     private final ItemDefinitionCache itemDefinitionCache;
     private final EquipmentResponseBuilder equipmentResponseBuilder;
     private final UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
@@ -38,7 +38,7 @@ public class EquipmentController {
         }
 
         final ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(itemId);
-        if (inventoryFacade.getInventory(user).hasItem(itemDefinition, identifiedItem) && itemDefinitionCache.getDefinition(itemId).isEquipment()) {
+        if (inventoryEntityFactory.getEntity(user.getId()).hasItem(itemDefinition, identifiedItem) && itemDefinitionCache.getDefinition(itemId).isEquipment()) {
             if (equipmentFacade.getEquipment(user).equipItem(itemDefinitionCache.getDefinition(itemId), identifiedItem == IdentificationType.IDENTIFIED)) {
                 return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
             }
@@ -50,7 +50,6 @@ public class EquipmentController {
 
     @RequestMapping(value = "/unequip/{slotId}", method = RequestMethod.GET)
     public CharacterRefreshResponse unequip(UserEntity user, @PathVariable String slotId) {
-        //TODO has enough inventory slots
         equipmentFacade.getEquipment(user).unequipItem(EquipmentSlot.valueOf(slotId));
 
         return equipmentResponseBuilder.build(user, EquipmentResponseBuilder.SUCCESSFULL_REQUEST);
