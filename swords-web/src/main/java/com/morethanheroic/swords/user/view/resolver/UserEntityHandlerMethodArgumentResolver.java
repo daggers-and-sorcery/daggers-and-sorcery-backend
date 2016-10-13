@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.user.resolver;
+package com.morethanheroic.swords.user.view.resolver;
 
 import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;

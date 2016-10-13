@@ -4,12 +4,12 @@ import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Log4j
+@Slf4j
 @Service
 public class ExplorationEventChooser {
 
