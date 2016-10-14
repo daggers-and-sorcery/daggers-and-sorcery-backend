@@ -1,11 +1,11 @@
 package com.morethanheroic.swords.inventory.service;
 
 import com.morethanheroic.session.domain.SessionEntity;
+import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.session.SessionAttributeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -16,12 +16,8 @@ public class UnidentifiedItemIdCalculator {
     @Autowired
     private Random random;
 
-    public boolean isIdentifiedItem(int itemId) {
-        return !isUnidentifiedItem(itemId);
-    }
-
-    public boolean isUnidentifiedItem(int itemId) {
-        return itemId > Short.MAX_VALUE;
+    public IdentificationType isIdentified(final int itemId) {
+        return itemId > Short.MAX_VALUE ? IdentificationType.UNIDENTIFIED : IdentificationType.IDENTIFIED;
     }
 
     @SuppressWarnings("unchecked")

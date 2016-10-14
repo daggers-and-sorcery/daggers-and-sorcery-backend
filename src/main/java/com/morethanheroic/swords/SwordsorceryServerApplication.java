@@ -3,7 +3,7 @@ package com.morethanheroic.swords;
 import com.morethanheroic.application.web.WebApplication;
 import com.morethanheroic.session.configuration.EnableSessionManagement;
 import com.morethanheroic.swords.regeneration.interceptor.RegenerationInterceptor;
-import com.morethanheroic.swords.user.resolver.UserEntityHandlerMethodArgumentResolver;
+import com.morethanheroic.swords.user.view.resolver.UserEntityHandlerMethodArgumentResolver;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

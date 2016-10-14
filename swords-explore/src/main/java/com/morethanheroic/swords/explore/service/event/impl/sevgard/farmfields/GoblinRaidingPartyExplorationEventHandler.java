@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
+import com.morethanheroic.math.RandomCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
@@ -9,13 +10,18 @@ import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDef
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
 @ExplorationEvent
+@RequiredArgsConstructor
 public class GoblinRaidingPartyExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 7;
@@ -26,17 +32,12 @@ public class GoblinRaidingPartyExplorationEventHandler extends MultiStageExplora
     private static final int COMBAT_STAGE = 1;
     private static final int SECOND_COMBAT_STAGE = 2;
 
-    @Autowired
-    private ExplorationResultFactory explorationResultFactory;
-
-    @Autowired
-    private CombatEventEntryEvaluator combatEventEntryEvaluator;
-
-    @Autowired
-    private ExplorationResultBuilderFactory explorationResultBuilderFactory;
-
-    @Autowired
-    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+    private final ExplorationResultFactory explorationResultFactory;
+    private final CombatEventEntryEvaluator combatEventEntryEvaluator;
+    private final ExplorationResultBuilderFactory explorationResultBuilderFactory;
+    private final ExplorationEventDefinitionCache explorationEventDefinitionCache;
+    private final RandomCalculator randomCalculator;
+    private final InventoryEntityFactory inventoryEntityFactory;
 
     private MonsterDefinition goblinPikeman;
     private MonsterDefinition goblinShaman;
@@ -90,11 +91,18 @@ public class GoblinRaidingPartyExplorationEventHandler extends MultiStageExplora
                     .newCombatEntry(goblinShaman.getId(), EVENT_ID, SECOND_COMBAT_STAGE)
                     .build();
         } else if (stage == SECOND_COMBAT_STAGE) {
-            userEntity.resetActiveExploration();
+            final int resultCoins = randomCalculator.randomNumberBetween(6, 12);
 
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                     .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_2")
+                    .newCustomLogicEntry(() -> {
+                        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
+
+                        inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, resultCoins);
+                    })
+                    .newMessageEntry("GOBLIN_RAIDING_PARTY_EXPLORATION_EVENT_ENTRY_4", resultCoins)
+                    .resetExploration()
                     .build();
         }
 
