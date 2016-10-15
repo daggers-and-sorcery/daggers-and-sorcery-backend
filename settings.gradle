@@ -47,4 +47,5 @@ include 'swords-regeneration'
 include 'common-sql'
 include 'swords-forum'
 include 'swords-loot'
+include 'swords-skill-fletching'
 

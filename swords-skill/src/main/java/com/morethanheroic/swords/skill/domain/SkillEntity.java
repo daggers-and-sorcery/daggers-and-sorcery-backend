@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.skill.domain;
 
+import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.cache.value.ValueCache;
 import com.morethanheroic.swords.skill.repository.dao.SkillDatabaseEntity;
 import com.morethanheroic.swords.skill.service.SkillLevelCalculator;
@@ -17,7 +18,7 @@ import javax.annotation.PostConstruct;
  * {@link com.morethanheroic.swords.skill.service.factory.SkillEntityFactory} instead.
  */
 @Configurable
-public class SkillEntity {
+public class SkillEntity implements Entity {
 
     @Autowired
     private SkillValueCacheProvider skillValueCacheProvider;
@@ -32,8 +33,13 @@ public class SkillEntity {
 
     private ValueCache<SkillDatabaseEntity, SkillValueCacheProvider, UserEntity> skillValueCache;
 
-    public SkillEntity(UserEntity userEntity) {
+    public SkillEntity(final UserEntity userEntity) {
         this.userEntity = userEntity;
+    }
+
+    @Override
+    public int getId() {
+        return userEntity.getId();
     }
 
     @PostConstruct
@@ -48,7 +54,7 @@ public class SkillEntity {
     public void decreaseExperience(SkillType skillType, int value) {
         final SkillHandler skillHandler = skillHandlerProvider.getSkillHandler(skillType);
 
-        if(skillHandler.getExperience(skillValueCache.getEntity()) - value <= 0) {
+        if (skillHandler.getExperience(skillValueCache.getEntity()) - value <= 0) {
             skillHandler.decreaseExperience(skillValueCache.getEntity(), 0);
         } else {
             skillHandler.decreaseExperience(skillValueCache.getEntity(), value);

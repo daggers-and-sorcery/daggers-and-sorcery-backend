@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Getter
 @Builder
-@ToString
+@ToString(of = {"id", "name", "type"})
 public class RecipeDefinition {
 
     private final int id;
