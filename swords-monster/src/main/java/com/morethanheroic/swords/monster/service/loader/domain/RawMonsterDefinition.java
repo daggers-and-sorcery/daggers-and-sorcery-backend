@@ -40,7 +40,7 @@ public class RawMonsterDefinition {
     private List<RawDropDefinition> rawDropDefinitions;
 
     @XmlElementWrapper(name = "scavengelist")
-    @XmlElement(name = "scavenge")
+    @XmlElement(name = "drop")
     private List<RawScavengingDefinition> rawScavengingDefinitions;
 
     public int getId() {
