@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.fletching.service;
 
-import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
+import com.morethanheroic.swords.recipe.domain.RecipeType;
 import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
 import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
 import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
@@ -25,19 +25,42 @@ public class FletchingService {
 
     @Transactional
     public FletchingResult fletch(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
-        if (canFletch(userEntity, recipeDefinition)) {
+        if (recipeDefinition == null) {
+            log.info("User was unable to fetch the recipe because it doesn't exists.");
+
+            return FletchingResult.INVALID_EVENT;
+        }
+
+        if (recipeDefinition.getType() != RecipeType.FLETCHING) {
+            log.warn("The user tried to craft with fletching the recipe: " + recipeDefinition + " but it's not a fletching recipe!");
+
+            return FletchingResult.INVALID_EVENT;
+        }
+
+        if (!learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)) {
             log.info("User was unable to fetch the recipe: " + recipeDefinition + ".");
 
-            return FletchingResult.UNABLE_TO_FETCH;
+            return FletchingResult.INVALID_EVENT;
+        }
+
+        if (!recipeIngredientEvaluator.hasIngredients(userEntity, recipeDefinition)) {
+            log.info("User was unable to fetch the recipe: " + recipeDefinition + ".");
+
+            return FletchingResult.MISSING_INGREDIENTS;
+        }
+
+        if (!recipeRequirementEvaluator.hasRequirements(userEntity, recipeDefinition)) {
+            log.info("User was unable to fetch the recipe: " + recipeDefinition + ".");
+
+            return FletchingResult.MISSING_REQUIREMENTS;
+        }
+
+        if (userEntity.getMovementPoints() <= 0) {
+            log.info("User was unable to fetch the recipe: " + recipeDefinition + ".");
+
+            return FletchingResult.NOT_ENOUGH_MOVEMENT;
         }
 
         return fletchingEvaluator.doFletching(userEntity, recipeDefinition);
-    }
-
-    private boolean canFletch(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
-        return recipeRequirementEvaluator.hasRequirements(userEntity, recipeDefinition)
-                && recipeIngredientEvaluator.hasIngredients(userEntity, recipeDefinition)
-                && learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)
-                && userEntity.getMovementPoints() > 0;
     }
 }

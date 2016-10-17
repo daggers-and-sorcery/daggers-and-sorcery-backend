@@ -9,5 +9,5 @@ import lombok.Getter;
 @Builder
 public class FletchingCreatePartialResponse extends PartialResponse {
 
-    private final FletchingResult fletchingResult;
+    private final FletchingResult result;
 }

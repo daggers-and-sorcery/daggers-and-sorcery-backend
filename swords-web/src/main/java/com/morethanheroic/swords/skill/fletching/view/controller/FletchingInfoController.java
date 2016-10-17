@@ -17,7 +17,7 @@ public class FletchingInfoController {
     private final FletchingInfoResponseBuilder fletchingInfoResponseBuilder;
     private final SkillEntityFactory skillEntityFactory;
 
-    @GetMapping(value = "/skill/fletching/info")
+    @GetMapping("/skill/fletching/info")
     public Response smeltingInfo(UserEntity userEntity) {
         return fletchingInfoResponseBuilder.build(
                 FletchingInfoResponseBuilderConfigration.builder()

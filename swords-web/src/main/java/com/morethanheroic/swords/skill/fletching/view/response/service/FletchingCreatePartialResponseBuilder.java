@@ -12,7 +12,7 @@ public class FletchingCreatePartialResponseBuilder implements PartialResponseBui
     @Override
     public PartialResponse build(FletchingCreateResponseBuilderConfiguration fletchingCreateResponseBuilderConfiguration) {
         return FletchingCreatePartialResponse.builder()
-                .fletchingResult(fletchingCreateResponseBuilderConfiguration.getFletchingResult())
+                .result(fletchingCreateResponseBuilderConfiguration.getFletchingResult())
                 .build();
     }
 }

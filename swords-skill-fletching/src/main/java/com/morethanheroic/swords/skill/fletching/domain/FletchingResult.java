@@ -1,5 +1,5 @@
 package com.morethanheroic.swords.skill.fletching.domain;
 
 public enum FletchingResult {
-    UNABLE_TO_FETCH, SUCCESSFUL, UNSUCCESSFUL
+    SUCCESSFUL, UNSUCCESSFUL, INVALID_EVENT, MISSING_REQUIREMENTS, MISSING_INGREDIENTS, NOT_ENOUGH_MOVEMENT
 }

@@ -29,23 +29,12 @@ public class FletchingCreateController {
     private final RecipeDefinitionCache recipeDefinitionCache;
     private final FletchingCreateResponseBuilder fletchingCreateResponseBuilder;
 
-    @PostMapping(value = "/skill/fletching/create")
+    @PostMapping("/skill/fletching/create")
     public Response create(UserEntity userEntity, @RequestBody @Valid FletchingCreateRequest fletchingCreateRequest) {
-        if (!recipeDefinitionCache.isDefinitionExists(fletchingCreateRequest.getRecipeId())) {
-            log.warn("The user tried to craft fletching recipe with id: " + fletchingCreateRequest.getRecipeId() + " but it doesn not exists!");
+        log.info("Got a call for the fletching controller.");
 
-            throw new NotFoundException();
-        }
-
-        final RecipeDefinition recipeDefinition = recipeDefinitionCache.getDefinition(fletchingCreateRequest.getRecipeId());
-
-        if (recipeDefinition.getType() != RecipeType.FLETCHING) {
-            log.warn("The user tried to craft with fletching the recipe: " + recipeDefinition + " but it's not a fletching recipe!");
-
-            throw new ConflictException();
-        }
-
-        final FletchingResult fletchingResult = fletchingService.fletch(userEntity, recipeDefinition);
+        final FletchingResult fletchingResult = fletchingService.fletch(userEntity,
+                recipeDefinitionCache.getDefinition(fletchingCreateRequest.getRecipeId()));
 
         return fletchingCreateResponseBuilder.build(
                 FletchingCreateResponseBuilderConfiguration.builder()
