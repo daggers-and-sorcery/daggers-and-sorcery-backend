@@ -120,4 +120,6 @@
     <include file="changelog/20161010-2.xml" relativeToChangelogFile="true"/>
 
     <include file="changelog/20161016-1.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog/20161019-1.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
