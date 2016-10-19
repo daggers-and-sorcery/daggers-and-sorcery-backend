@@ -33,6 +33,7 @@ public enum SkillType {
     COOKING(SkillGroup.TRADE),
     LEATHERWORKING(SkillGroup.TRADE),
     SMITHING(SkillGroup.TRADE),
+    FLETCHING(SkillGroup.TRADE),
     FOCUS(SkillGroup.COMBAT),
     DESTRUCTION(SkillGroup.MAGIC),
     RESTORATION(SkillGroup.MAGIC),
@@ -49,8 +50,11 @@ public enum SkillType {
         return skillGroup;
     }
 
+    /**
+     * Use SkillAttributeDefinition#getName()
+     */
+    @Deprecated
     public String getName() {
-        //TODO: Get this from definition if definition handling is exist.
         return capitalizeFully(name().replace("_", " "));
     }
 }

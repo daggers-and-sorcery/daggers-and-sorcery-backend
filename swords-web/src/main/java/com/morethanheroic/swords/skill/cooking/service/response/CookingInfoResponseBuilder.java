@@ -8,11 +8,10 @@ import com.morethanheroic.swords.recipe.service.response.domain.configuration.Re
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.cooking.service.response.domain.configuration.CookingInfoResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CookingInfoResponseBuilder implements ResponseBuilder<CookingInfoResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;

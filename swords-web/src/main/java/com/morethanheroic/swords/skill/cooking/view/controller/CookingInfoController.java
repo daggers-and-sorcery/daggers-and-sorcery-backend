@@ -5,23 +5,21 @@ import com.morethanheroic.swords.skill.cooking.service.response.CookingInfoRespo
 import com.morethanheroic.swords.skill.cooking.service.response.domain.configuration.CookingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CookingInfoController {
 
     private final CookingInfoResponseBuilder cookingInfoResponseBuilder;
 
-    @RequestMapping(value = "/skill/cooking/info", method = RequestMethod.GET)
+    @GetMapping(value = "/skill/cooking/info")
     public Response cookingInfo(UserEntity userEntity) {
         return cookingInfoResponseBuilder.build(
                 CookingInfoResponseBuilderConfiguration.builder()
-                .userEntity(userEntity)
-                .build()
+                        .userEntity(userEntity)
+                        .build()
         );
     }
 }

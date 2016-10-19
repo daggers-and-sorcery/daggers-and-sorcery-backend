@@ -29,7 +29,7 @@ public class StartSmeltingController {
     private SmeltingService smeltingService;
 
     @RequestMapping(value = "/skill/smithing/smelting/start", method = RequestMethod.POST)
-    public Response startTanning(final UserEntity userEntity, @RequestBody @Valid final SmeltingCreateRequest smeltingCreateRequest) {
+    public Response startSmelting(final UserEntity userEntity, @RequestBody @Valid final SmeltingCreateRequest smeltingCreateRequest) {
         final SmeltingResult smeltingResult = smeltingService.smelt(userEntity, recipeDefinitionCache.getDefinition(smeltingCreateRequest.getRecipeId()));
 
         return smeltingStartResponseBuilder.build(
