@@ -33,7 +33,7 @@ public enum ItemType {
     TOOL,
     RECIPE,
     FOOD,
-    SCROLL,
+    SPELL_TOME,
     AMULET,
     GLOVES,
     BOOTS,
