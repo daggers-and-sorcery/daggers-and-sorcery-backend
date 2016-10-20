@@ -12,7 +12,6 @@ import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalc
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
+@RequiredArgsConstructor
 public class RangedAttackCalculator extends GeneralAttackCalculator {
 
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
@@ -62,6 +61,8 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
                                 .build()
             );
         } else {
+            addAttackXp((UserCombatEntity) attacker, damage * 2);
+
             if (random.nextInt(100) > 75) {
                 equipmentFacade.getEquipment(((UserCombatEntity) attacker).getUserEntity()).decreaseAmmunition(1);
 
@@ -71,8 +72,6 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
                                 .build()
                 );
             }
-
-            addAttackXp((UserCombatEntity) attacker, damage * 2);
 
             result.add(
                 AttackCombatStep.builder()

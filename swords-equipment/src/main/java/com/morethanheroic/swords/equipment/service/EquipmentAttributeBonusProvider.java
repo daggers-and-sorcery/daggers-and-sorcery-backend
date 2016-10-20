@@ -11,6 +11,7 @@ import com.morethanheroic.swords.attribute.service.calc.domain.calculation.Comba
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,13 +61,24 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
     }
 
     private void calculateNoWeaponFistfightModifiers(AttributeCalculationResult result, EquipmentEntity equipmentEntity, UserEntity userEntity) {
-        if (equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.WEAPON) == EMPTY_EQUIPMENT_SLOT) {
+        if (isFistfighting(equipmentEntity)) {
             if (result.getAttribute() == CombatAttribute.ATTACK) {
                 ((CombatAttributeCalculationResult) result).increaseD4(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 4));
             } else if (result.getAttribute() == CombatAttribute.DAMAGE) {
                 ((CombatAttributeCalculationResult) result).increaseD2(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 4));
             }
         }
+    }
+
+    private boolean isFistfighting(final EquipmentEntity equipmentEntity) {
+        return equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.WEAPON) == EMPTY_EQUIPMENT_SLOT
+                || (hasBowWeapon(equipmentEntity) && equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.QUIVER) == EMPTY_EQUIPMENT_SLOT);
+    }
+
+    private boolean hasBowWeapon(final EquipmentEntity equipmentEntity) {
+        final ItemType weaponType = equipmentEntity.getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON).getSubtype();
+
+        return weaponType == ItemType.SHORTBOWS || weaponType == ItemType.LONGBOWS || weaponType == ItemType.CROSSBOWS;
     }
 
     private void calculateItemModifiers(AttributeCalculationResult result, ItemDefinition itemDefinition) {
