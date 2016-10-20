@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.skill.lockpicking.service;
 
+import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.attempt.extension.AttributeAttemptCalculatorExtension;
@@ -16,20 +17,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LockpickingAttributeAttemptCalculatorExtension
-    implements AttributeAttemptCalculatorExtension<LockpickingAttributeAttemptCalculatorExtensionResult> {
+        implements AttributeAttemptCalculatorExtension<LockpickingAttributeAttemptCalculatorExtensionResult> {
 
     private static final int LOCKPICK_ITEM_ID = 111;
+    private static final int CHANCE_TO_LOST_ON_FAIL = 60;
 
     private final InventoryEntityFactory inventoryEntityFactory;
     private final SkillEntityFactory skillEntityFactory;
-    private final LockpickLossChanceCalculator lockpickLossChanceCalculator;
+    private final PercentageCalculator percentageCalculator;
 
     private final ItemDefinition lockpick;
 
-    public LockpickingAttributeAttemptCalculatorExtension(final InventoryEntityFactory inventoryEntityFactory, final LockpickLossChanceCalculator lockpickLossChanceCalculator, final ItemDefinitionCache itemDefinitionCache, final SkillEntityFactory skillEntityFactory) {
+    public LockpickingAttributeAttemptCalculatorExtension(final InventoryEntityFactory inventoryEntityFactory, final PercentageCalculator percentageCalculator, final ItemDefinitionCache itemDefinitionCache, final SkillEntityFactory skillEntityFactory) {
         this.inventoryEntityFactory = inventoryEntityFactory;
-        this.lockpickLossChanceCalculator = lockpickLossChanceCalculator;
         this.skillEntityFactory = skillEntityFactory;
+        this.percentageCalculator = percentageCalculator;
 
         lockpick = itemDefinitionCache.getDefinition(LOCKPICK_ITEM_ID);
     }
@@ -51,7 +53,8 @@ public class LockpickingAttributeAttemptCalculatorExtension
 
     @Override
     public void postProbeHook(final LockpickingAttributeAttemptCalculatorExtensionResult lockpickingAttributeProbeCalculatorExtensionResult, final PostAttemptHookData postAttemptHookData) {
-        final boolean isLostLockpick = lockpickLossChanceCalculator.isLoss(postAttemptHookData.isSuccessfulProbe());
+        final boolean isLostLockpick = percentageCalculator.calculatePercentageHit(CHANCE_TO_LOST_ON_FAIL);
+
         lockpickingAttributeProbeCalculatorExtensionResult.setLostLockpick(isLostLockpick);
 
         if (isLostLockpick) {
@@ -61,7 +64,7 @@ public class LockpickingAttributeAttemptCalculatorExtension
         final int experienceReward = calculateExperienceReward(postAttemptHookData.getTargetToHit(), postAttemptHookData.isSuccessfulProbe());
 
         lockpickingAttributeProbeCalculatorExtensionResult.setExperienceReward(experienceReward);
-        skillEntityFactory.getSkillEntity(postAttemptHookData.getUserEntity()).increaseExperience(SkillType.LOCKPICKING, experienceReward);
+        skillEntityFactory.getEntity(postAttemptHookData.getUserEntity().getId()).increaseExperience(SkillType.LOCKPICKING, experienceReward);
     }
 
     @Override
@@ -70,7 +73,7 @@ public class LockpickingAttributeAttemptCalculatorExtension
     }
 
     private int calculateExperienceReward(final int target, final boolean isSuccessful) {
-        if(isSuccessful) {
+        if (isSuccessful) {
             return target * 20;
         } else {
             return target * 10;
