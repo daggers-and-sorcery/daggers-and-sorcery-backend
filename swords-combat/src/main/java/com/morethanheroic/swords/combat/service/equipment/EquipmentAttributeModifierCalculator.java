@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.equipment.service;
+package com.morethanheroic.swords.combat.service.equipment;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;

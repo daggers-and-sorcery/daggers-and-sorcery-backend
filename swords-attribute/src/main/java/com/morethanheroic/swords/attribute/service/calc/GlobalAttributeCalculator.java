@@ -31,8 +31,6 @@ import java.util.List;
 @Service
 public class GlobalAttributeCalculator {
 
-    private static final int MINIMUM_COMBAT_ATTRIBUTE_VALUE = 20;
-
     @Autowired
     private GeneralAttributeCalculator generalAttributeCalculator;
 

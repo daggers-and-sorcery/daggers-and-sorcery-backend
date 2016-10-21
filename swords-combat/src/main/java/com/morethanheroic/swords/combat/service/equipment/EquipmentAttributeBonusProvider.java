@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.equipment.service;
+package com.morethanheroic.swords.combat.service.equipment;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
@@ -8,9 +8,12 @@ import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.combat.service.CombatUtil;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
+import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,9 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
     @Autowired
     private ItemModifierToAttributeConverter itemModifierToAttributeConverter;
 
+    @Autowired
+    private CombatUtil combatUtil;
+
     @Override
     public AttributeCalculationResult calculateBonus(UserEntity userEntity, Attribute attribute) {
         final AttributeCalculationResult result = createAttributeCalculationResult(attribute);
@@ -46,7 +52,7 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
             }
         }
 
-        calculateNoWeaponFistfightModifiers(result, equipmentEntity, userEntity);
+        calculateNoWeaponFistfightModifiers(result, userEntity);
 
         return result;
     }
@@ -59,8 +65,8 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
         }
     }
 
-    private void calculateNoWeaponFistfightModifiers(AttributeCalculationResult result, EquipmentEntity equipmentEntity, UserEntity userEntity) {
-        if (equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.WEAPON) == EMPTY_EQUIPMENT_SLOT) {
+    private void calculateNoWeaponFistfightModifiers(AttributeCalculationResult result, UserEntity userEntity) {
+        if (combatUtil.isFistfighting(userEntity)) {
             if (result.getAttribute() == CombatAttribute.ATTACK) {
                 ((CombatAttributeCalculationResult) result).increaseD4(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 4));
             } else if (result.getAttribute() == CombatAttribute.DAMAGE) {

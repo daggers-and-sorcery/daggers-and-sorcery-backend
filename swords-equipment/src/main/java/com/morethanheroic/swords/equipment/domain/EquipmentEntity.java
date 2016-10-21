@@ -403,6 +403,10 @@ public class EquipmentEntity {
     public void decreaseAmmunition(final int amount) {
         final int equippedAmount = getAmountOnSlot(EquipmentSlot.QUIVER);
 
+        if (equippedAmount == 0) {
+            return;
+        }
+
         if (equippedAmount - amount <= 0) {
             equipmentMapper.equipQuiver(userEntity.getId(), 0, true, 0);
         } else {
