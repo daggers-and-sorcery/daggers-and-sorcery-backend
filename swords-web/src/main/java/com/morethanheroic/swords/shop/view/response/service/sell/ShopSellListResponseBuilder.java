@@ -30,15 +30,19 @@ public class ShopSellListResponseBuilder implements ResponseBuilder<ShopSellList
         response.setData("items",
                 responseBuilderConfiguration.getItems().entrySet()
                         .stream()
-                        .map(itemTypeListEntry ->
-                                shopSellTypeListPartialResponseBuilder.build(
-                                        ShopSellTypeListPartialResponseBuilderConfiguration.builder()
-                                                .sessionEntity(responseBuilderConfiguration.getSessionEntity())
-                                                .itemType(itemTypeListEntry.getKey())
-                                                .items(itemTypeListEntry.getValue())
-                                                .build()
-                                )
-                        ).collect(Collectors.toList())
+                        .map(
+                                itemTypeListEntry ->
+                                        shopSellTypeListPartialResponseBuilder.build(
+                                                ShopSellTypeListPartialResponseBuilderConfiguration.builder()
+                                                        .sessionEntity(responseBuilderConfiguration.getSessionEntity())
+                                                        .itemType(itemTypeListEntry.getKey())
+                                                        .items(itemTypeListEntry.getValue())
+                                                        .build()
+                                        )
+                        )
+                        .collect(
+                                Collectors.toList()
+                        )
         );
 
         response.setData("definition", shopDefinitionPartialResponseBuilder.build(
