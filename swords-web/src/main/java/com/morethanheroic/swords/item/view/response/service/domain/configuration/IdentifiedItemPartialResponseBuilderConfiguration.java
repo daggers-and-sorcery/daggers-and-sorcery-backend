@@ -10,4 +10,5 @@ import lombok.Getter;
 public class IdentifiedItemPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final ItemDefinition item;
+    private final int maximumAmount;
 }

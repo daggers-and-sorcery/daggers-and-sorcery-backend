@@ -11,5 +11,6 @@ import lombok.Getter;
 public class ShowItemToSellResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final UserEntity userEntity;
+    private final int amount;
     private final ItemDefinition item;
 }

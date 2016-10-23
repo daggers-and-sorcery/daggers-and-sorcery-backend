@@ -24,6 +24,7 @@ public class SellItemToMarketItemTypeListPartialResponseBuilder implements Parti
                 .items(
                         sellItemToMarketItemTypeListPartialResponseBuilderConfiguration.getItems()
                                 .stream()
+                                .filter(inventoryItem -> inventoryItem.getItem().isTradeable())
                                 .map(
                                         (inventoryItem) -> SellItemToMaketItemPartialResponse.builder()
                                                 .amount(inventoryItem.getAmount())

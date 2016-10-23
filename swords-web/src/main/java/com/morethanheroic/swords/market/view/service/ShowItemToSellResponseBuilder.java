@@ -23,6 +23,7 @@ public class ShowItemToSellResponseBuilder implements ResponseBuilder<ShowItemTo
         response.setData("item", identifiedItemPartialResponseBuilder.build(
                 IdentifiedItemPartialResponseBuilderConfiguration.builder()
                         .item(showItemToSellResponseBuilderConfiguration.getItem())
+                        .maximumAmount(showItemToSellResponseBuilderConfiguration.getAmount())
                         .build()
                 )
         );

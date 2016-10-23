@@ -30,7 +30,7 @@ public class ItemDefinition {
     private final List<ItemRequirementDefinition> requirements;
 
     public boolean isTradeable() {
-        return priceDefinitions.size() > 0 || type == ItemType.MONEY;
+        return priceDefinitions.size() > 0 && type != ItemType.MONEY;
     }
 
     public boolean hasPriceDefinitionFor(MoneyType moneyType) {
