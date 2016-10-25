@@ -31,7 +31,7 @@ public class SellItemToMarketController {
         return responseFactory.successfulResponse(userEntity);
     }
 
-    //TODO: Moce this to somewhere else. Maybe create a calculator sercvice for monay calculation? How?
+    //TODO: Move this to somewhere else. Maybe create a calculator service for money calculation? How?
     private int calculatePrice(final SellItemData sellItemData) {
         return sellItemData.getPriceBronze() + sellItemData.getPriceSilver() * 100 + sellItemData.getPriceGold() * 100 * 100;
     }

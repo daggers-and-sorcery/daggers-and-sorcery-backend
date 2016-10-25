@@ -1,9 +1,9 @@
-package com.morethanheroic.swords.market.view.service;
+package com.morethanheroic.swords.market.view.service.sell;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
-import com.morethanheroic.swords.market.view.service.domain.ListItemsToSellResponseBuilderConfiguration;
-import com.morethanheroic.swords.market.view.service.domain.SellItemToMarketItemTypeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.market.view.service.domain.sell.ListItemsToSellResponseBuilderConfiguration;
+import com.morethanheroic.swords.market.view.service.domain.sell.SellItemToMarketItemTypeListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -8,8 +8,8 @@ import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.market.view.service.ShowItemToSellResponseBuilder;
-import com.morethanheroic.swords.market.view.service.domain.ShowItemToSellResponseBuilderConfiguration;
+import com.morethanheroic.swords.market.view.service.sell.ShowItemToSellResponseBuilder;
+import com.morethanheroic.swords.market.view.service.domain.sell.ShowItemToSellResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 import lombok.RequiredArgsConstructor;
