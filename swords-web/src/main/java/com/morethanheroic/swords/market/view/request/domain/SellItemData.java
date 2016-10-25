@@ -10,6 +10,9 @@ public class SellItemData {
     @Min(1)
     private int item;
 
+    @Min(1)
+    private int amount;
+
     @Min(0)
     private int priceBronze;
 

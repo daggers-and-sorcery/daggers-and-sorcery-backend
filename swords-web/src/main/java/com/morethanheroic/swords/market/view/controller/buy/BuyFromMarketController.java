@@ -14,7 +14,7 @@ public class BuyFromMarketController {
         return null;
     }
 
-    @GetMapping("/market/show/sell/{target}")
+    @GetMapping("/market/show/buy/{target}")
     public Response showItemToBuy(final UserEntity userEntity, final int target) {
         return null;
     }
