@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class ShowItemsToSellToMarketController {
+public class ShowItemToSellToMarketController {
 
     private final ShowItemToSellResponseBuilder showItemToSellResponseBuilder;
     private final ItemDefinitionCache itemDefinitionCache;

@@ -21,7 +21,7 @@ public class ListItemsToBuyToMarketController {
         return listItemsToBuyResponseBuilder.build(
                 ListItemsToBuyResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
-                        .items(marketService.getAllItemWithMarketOffer())
+                        .offers(marketService.getMarketOfferInformation())
                         .build()
         );
     }

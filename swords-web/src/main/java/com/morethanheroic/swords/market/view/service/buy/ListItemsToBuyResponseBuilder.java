@@ -3,14 +3,25 @@ package com.morethanheroic.swords.market.view.service.buy;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.market.view.service.domain.buy.ListItemsToBuyResponseBuilderConfiguration;
+import com.morethanheroic.swords.response.service.ResponseFactory;
+
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ListItemsToBuyResponseBuilder implements ResponseBuilder<ListItemsToBuyResponseBuilderConfiguration> {
+
+    private final ResponseFactory responseFactory;
+    private final ListedItemsPartialResponseCollectionBuilder listedItemsPartialResponseCollectionBuilder;
 
     @Override
     public Response build(ListItemsToBuyResponseBuilderConfiguration listItemsToBuyResponseBuilderConfiguration) {
-        //TODO
-        return null;
+        final Response response = responseFactory.newResponse(listItemsToBuyResponseBuilderConfiguration.getUserEntity());
+
+        response.setData("items", listedItemsPartialResponseCollectionBuilder.build(listItemsToBuyResponseBuilderConfiguration));
+
+        return response;
     }
 }
