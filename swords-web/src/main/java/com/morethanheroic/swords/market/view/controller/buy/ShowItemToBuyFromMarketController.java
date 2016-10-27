@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.service.MarketService;
 import com.morethanheroic.swords.market.view.service.buy.ShowItemToBuyResponseBuilder;
@@ -22,10 +23,13 @@ public class ShowItemToBuyFromMarketController {
 
     @GetMapping("/market/show/buy/{itemId}")
     public Response showItemToBuy(final UserEntity userEntity, final int itemId) {
+        final ItemDefinition item = itemDefinitionCache.getDefinition(itemId);
+
         return showItemToBuyResponseBuilder.build(
             ShowItemToBuyResponseBuilderConfiguration.builder()
                 .userEntity(userEntity)
-                .listings(marketService.getAllMarketOfferForItem(itemDefinitionCache.getDefinition(itemId)))
+                .item(item)
+                .listings(marketService.getAllMarketOfferForItem(item))
                 .build()
         );
     }
