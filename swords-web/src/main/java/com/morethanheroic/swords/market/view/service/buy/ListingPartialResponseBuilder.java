@@ -8,9 +8,9 @@ import com.morethanheroic.swords.market.view.service.domain.buy.ListingPartialRe
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.stereotype.Service;
 
-@Getter
-@Builder
+@Service
 public class ListingPartialResponseBuilder implements PartialResponseBuilder<ListingPartialResponseBuilderConfiguration> {
 
     @Override
@@ -18,8 +18,8 @@ public class ListingPartialResponseBuilder implements PartialResponseBuilder<Lis
         final MarketEntity listing = listingPartialResponseBuilderConfiguration.getListing();
 
         return ListingPartialResponse.builder()
-            .seller(listing.getSeller().getUsername())
-            .price(listing.getPrice())
-            .build();
+                .seller(listing.getSeller().getUsername())
+                .price(listing.getPrice())
+                .build();
     }
 }
