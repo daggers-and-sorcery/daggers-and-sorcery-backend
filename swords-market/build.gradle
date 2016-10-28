@@ -4,6 +4,7 @@ dependencies {
     }
 
     compile project(':swords-item')
+    compile project(':swords-inventory')
     compile project(':swords-user')
 }
 

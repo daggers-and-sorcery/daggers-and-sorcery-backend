@@ -2,6 +2,7 @@ package com.morethanheroic.swords.market.view.controller.sell;
 
 import javax.validation.Valid;
 
+import com.morethanheroic.swords.market.service.SellerService;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +20,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SellItemToMarketController {
 
-    private final MarketService marketService;
+    private final SellerService sellerService;
     private final ItemDefinitionCache itemDefinitionCache;
     private final ResponseFactory responseFactory;
 
     @PostMapping("/market/sell")
     public Response sellItem(final UserEntity userEntity, @RequestBody @Valid final SellItemData sellItemData) {
 
-        marketService.sellToMarket(userEntity, itemDefinitionCache.getDefinition(sellItemData.getItem()), calculatePrice(sellItemData));
+        sellerService.sellToMarket(userEntity, itemDefinitionCache.getDefinition(sellItemData.getItem()), calculatePrice(sellItemData), sellItemData.getAmount());
 
         return responseFactory.successfulResponse(userEntity);
     }
