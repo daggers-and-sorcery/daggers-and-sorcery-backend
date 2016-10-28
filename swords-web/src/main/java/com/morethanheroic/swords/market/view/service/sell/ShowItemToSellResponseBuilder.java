@@ -15,6 +15,7 @@ public class ShowItemToSellResponseBuilder implements ResponseBuilder<ShowItemTo
 
     private final ResponseFactory responseFactory;
     private final IdentifiedItemPartialResponseBuilder identifiedItemPartialResponseBuilder;
+    private final SellDataPartialResponseBuilder sellDataPartialResponseBuilder;
 
     @Override
     public Response build(final ShowItemToSellResponseBuilderConfiguration showItemToSellResponseBuilderConfiguration) {
@@ -23,10 +24,10 @@ public class ShowItemToSellResponseBuilder implements ResponseBuilder<ShowItemTo
         response.setData("item", identifiedItemPartialResponseBuilder.build(
                 IdentifiedItemPartialResponseBuilderConfiguration.builder()
                         .item(showItemToSellResponseBuilderConfiguration.getItem())
-                        .maximumAmount(showItemToSellResponseBuilderConfiguration.getAmount())
                         .build()
                 )
         );
+        response.setData("sellData", sellDataPartialResponseBuilder.build(showItemToSellResponseBuilderConfiguration));
 
         return response;
     }
