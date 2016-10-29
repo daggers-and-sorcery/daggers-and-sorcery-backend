@@ -18,7 +18,7 @@ public interface MarketMapper {
     @Select("SELECT * FROM market WHERE id = #{id}")
     MarketDatabaseEntity getMarketInfo(@Param("id") final int id);
 
-    @Select("SELECT item, SUM(amount), MIN(price) FROM market GROUP BY item")
+    @Select("SELECT item, SUM(amount) as amount, MIN(price) as price FROM market GROUP BY item")
     List<MarketDatabaseInformation> getAllItem();
 
     @Select("SELECT * FROM market WHERE item = #{itemId}")

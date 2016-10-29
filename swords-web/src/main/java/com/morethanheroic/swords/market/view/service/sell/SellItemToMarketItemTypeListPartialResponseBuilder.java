@@ -4,6 +4,7 @@ import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.item.view.response.service.IdentifiedItemPartialResponseBuilder;
 import com.morethanheroic.swords.item.view.response.service.domain.configuration.IdentifiedItemPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.market.view.service.domain.sell.SellItemToMaketItemPartialResponse;
 import com.morethanheroic.swords.market.view.service.domain.sell.SellItemToMarketItemTypeListPartialResponse;
 import com.morethanheroic.swords.market.view.service.domain.sell.SellItemToMarketItemTypeListPartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;

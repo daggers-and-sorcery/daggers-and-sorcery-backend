@@ -20,7 +20,7 @@ public class ListItemsToBuyResponseBuilder implements ResponseBuilder<ListItemsT
     public Response build(ListItemsToBuyResponseBuilderConfiguration listItemsToBuyResponseBuilderConfiguration) {
         final Response response = responseFactory.newResponse(listItemsToBuyResponseBuilderConfiguration.getUserEntity());
 
-        response.setData("items", listedItemsPartialResponseCollectionBuilder.build(listItemsToBuyResponseBuilderConfiguration));
+        response.setData("types", listedItemsPartialResponseCollectionBuilder.build(listItemsToBuyResponseBuilderConfiguration));
 
         return response;
     }

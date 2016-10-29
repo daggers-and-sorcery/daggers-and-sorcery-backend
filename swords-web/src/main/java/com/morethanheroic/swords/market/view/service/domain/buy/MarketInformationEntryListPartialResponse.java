@@ -1,15 +1,15 @@
 package com.morethanheroic.swords.market.view.service.domain.buy;
 
 import com.morethanheroic.response.domain.PartialResponse;
-
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Builder
 @Getter
-public class ListedItemsPartialResponse extends PartialResponse {
+public class MarketInformationEntryListPartialResponse extends PartialResponse {
 
-    private final PartialResponse definition;
-    private final int amount;
-    private final int cheapestPrice;
+    private final String typeName;
+    private final List<PartialResponse> offers;
 }

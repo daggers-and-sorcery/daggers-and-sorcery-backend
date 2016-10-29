@@ -6,7 +6,7 @@ import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.inventory.service.InventoryItemTypeSorter;
+import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.money.domain.MoneyType;
