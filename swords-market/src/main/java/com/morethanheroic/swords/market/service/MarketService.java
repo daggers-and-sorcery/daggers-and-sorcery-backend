@@ -1,11 +1,5 @@
 package com.morethanheroic.swords.market.service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.domain.MarketEntity;
@@ -14,9 +8,13 @@ import com.morethanheroic.swords.market.repository.domain.MarketDatabaseEntity;
 import com.morethanheroic.swords.market.repository.domain.MarketDatabaseInformation;
 import com.morethanheroic.swords.market.repository.repository.MarketMapper;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j
 @Service
@@ -33,11 +31,11 @@ public class MarketService {
         return Collections.unmodifiableList(
                 allItems.stream()
                         .map(
-                            (marketDatabaseInformation) -> MarketOfferInformationEntry.builder()
-                               .amount(marketDatabaseInformation.getAmount())
-                               .lowestPrice(marketDatabaseInformation.getPrice())
-                               .item(itemDefinitionCache.getDefinition(marketDatabaseInformation.getItem()))
-                               .build()
+                                (marketDatabaseInformation) -> MarketOfferInformationEntry.builder()
+                                        .amount(marketDatabaseInformation.getAmount())
+                                        .lowestPrice(marketDatabaseInformation.getPrice())
+                                        .item(itemDefinitionCache.getDefinition(marketDatabaseInformation.getItem()))
+                                        .build()
                         )
                         .collect(Collectors.toList())
         );
@@ -47,14 +45,16 @@ public class MarketService {
         final List<MarketDatabaseEntity> entities = marketMapper.getOffersForItem(itemDefinition.getId());
 
         return entities.stream()
-            .map((entity) -> MarketEntity.builder()
-                 .id(entity.getId())
-                 .seller(userEntityFactory.getEntity(entity.getSeller()))
-                 .item(itemDefinitionCache.getDefinition(entity.getItem()))
-                 .build()
-            )
-            .collect(
-                Collectors.toList()
-            );
+                .map((entity) -> MarketEntity.builder()
+                        .id(entity.getId())
+                        .seller(userEntityFactory.getEntity(entity.getSeller()))
+                        .amount(entity.getAmount())
+                        .price(entity.getPrice())
+                        .item(itemDefinitionCache.getDefinition(entity.getItem()))
+                        .build()
+                )
+                .collect(
+                        Collectors.toList()
+                );
     }
 }

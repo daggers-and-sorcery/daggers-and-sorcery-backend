@@ -9,4 +9,5 @@ public class MarketDatabaseEntity {
     private int seller;
     private int item;
     private int price;
+    private int amount;
 }

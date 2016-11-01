@@ -15,6 +15,5 @@ public class MarketEntity implements Entity {
     private final UserEntity seller;
     private final ItemDefinition item;
     private final int price;
-    //TODO: add amount to the db
     private final int amount;
 }

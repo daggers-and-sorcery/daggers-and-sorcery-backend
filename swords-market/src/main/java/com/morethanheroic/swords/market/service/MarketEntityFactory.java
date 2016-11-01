@@ -23,6 +23,8 @@ public class MarketEntityFactory implements EntityFactory<MarketEntity> {
 
         return MarketEntity.builder()
                 .id(marketDatabaseEntity.getId())
+                .price(marketDatabaseEntity.getPrice())
+                .amount(marketDatabaseEntity.getAmount())
                 .seller(userEntityFactory.getEntity(marketDatabaseEntity.getSeller()))
                 .item(itemDefinitionCache.getDefinition(marketDatabaseEntity.getItem()))
                 .build();
