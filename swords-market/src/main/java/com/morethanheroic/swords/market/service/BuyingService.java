@@ -19,9 +19,12 @@ public class BuyingService {
 
     private final MarketMapper marketMapper;
     private final InventoryEntityFactory inventoryEntityFactory;
+    private final MarketEntityFactory marketEntityFactory;
 
     @Transactional
-    public BuyingResult buyFromMarket(final UserEntity userEntity, final MarketEntity marketEntity) {
+    public BuyingResult buyFromMarket(final UserEntity userEntity, final int marketEntityId) {
+        final MarketEntity marketEntity = marketEntityFactory.getEntity(marketEntityId);
+
         if (marketEntity == null) {
             return BuyingResult.MARKETING_ENTRY_DOES_NOT_EXISTS;
         }
