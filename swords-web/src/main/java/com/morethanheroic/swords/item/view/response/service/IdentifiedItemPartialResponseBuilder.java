@@ -1,10 +1,9 @@
 package com.morethanheroic.swords.item.view.response.service;
 
-import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemModifierPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.view.response.service.domain.configuration.IdentifiedItemPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemModifierPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemRequirementPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.view.response.service.domain.response.IdentifiedItemDefinitionPartialResponse;
 import com.morethanheroic.swords.item.view.response.service.domain.response.ItemDefinitionPartialResponse;

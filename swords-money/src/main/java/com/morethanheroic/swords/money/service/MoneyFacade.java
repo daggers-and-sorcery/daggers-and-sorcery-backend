@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.money.service;
 
+import org.springframework.stereotype.Service;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.money.domain.Conversion;
@@ -8,19 +10,16 @@ import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.cache.MoneyDefinitionCache;
-import lombok.NonNull;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * An easy to use API for all money functions.
  */
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class MoneyFacade {
 
-    @NonNull
     private final MoneyDefinitionCache moneyDefinitionCache;
 
     public MoneyDefinition getDefinition(MoneyType moneyType) {

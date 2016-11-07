@@ -4,6 +4,7 @@ import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @Getter
 @Builder
+@ToString(of = {"id", "name"})
 public class ItemDefinition {
 
     private final int id;
@@ -30,7 +32,7 @@ public class ItemDefinition {
     private final List<ItemRequirementDefinition> requirements;
 
     public boolean isTradeable() {
-        return priceDefinitions.size() > 0 || type == ItemType.MONEY;
+        return priceDefinitions.size() > 0 && type != ItemType.MONEY;
     }
 
     public boolean hasPriceDefinitionFor(MoneyType moneyType) {
