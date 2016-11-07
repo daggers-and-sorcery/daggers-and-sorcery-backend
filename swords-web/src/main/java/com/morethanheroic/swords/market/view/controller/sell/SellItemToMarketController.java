@@ -4,7 +4,7 @@ import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.domain.SellingResult;
 import com.morethanheroic.swords.market.service.SellingService;
-import com.morethanheroic.swords.market.view.request.domain.SellItemData;
+import com.morethanheroic.swords.market.view.request.domain.SellItemRequest;
 import com.morethanheroic.swords.market.view.response.service.domain.sell.SellItemResponseBuilderConfiguration;
 import com.morethanheroic.swords.market.view.response.service.sell.SellItemResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
@@ -26,8 +26,8 @@ public class SellItemToMarketController {
     private final SellItemResponseBuilder sellItemResponseBuilder;
 
     @PostMapping("/market/sell")
-    public Response sellItem(final UserEntity userEntity, @RequestBody @Valid final SellItemData sellItemData) {
-        final SellingResult sellingResult = sellingService.sellToMarket(userEntity, itemDefinitionCache.getDefinition(sellItemData.getItem()), calculatePrice(sellItemData), sellItemData.getAmount());
+    public Response sellItem(final UserEntity userEntity, @RequestBody @Valid final SellItemRequest sellItemRequest) {
+        final SellingResult sellingResult = sellingService.sellToMarket(userEntity, itemDefinitionCache.getDefinition(sellItemRequest.getItem()), calculatePrice(sellItemRequest), sellItemRequest.getAmount());
 
         return sellItemResponseBuilder.build(
                 SellItemResponseBuilderConfiguration.builder()
@@ -38,7 +38,7 @@ public class SellItemToMarketController {
     }
 
     //TODO: Move this to somewhere else. Maybe create a calculator service for money calculation? How?
-    private int calculatePrice(final SellItemData sellItemData) {
-        return sellItemData.getPriceBronze() + sellItemData.getPriceSilver() * 100 + sellItemData.getPriceGold() * 100 * 100;
+    private int calculatePrice(final SellItemRequest sellItemRequest) {
+        return sellItemRequest.getPriceBronze() + sellItemRequest.getPriceSilver() * 100 + sellItemRequest.getPriceGold() * 100 * 100;
     }
 }

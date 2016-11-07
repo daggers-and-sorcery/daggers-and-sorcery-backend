@@ -5,7 +5,7 @@ import javax.validation.constraints.Min;
 import lombok.Data;
 
 @Data
-public class SellItemData {
+public class SellItemRequest {
 
     @Min(1)
     private int item;
