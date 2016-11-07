@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SellItemToMarketItemTypeListPartialResponseBuilder implements PartialResponseBuilder<SellItemToMarketItemTypeListPartialResponseBuilderConfiguration> {
+public class MarketEntityTypeInformationPartialResponseBuilder implements PartialResponseBuilder<SellItemToMarketItemTypeListPartialResponseBuilderConfiguration> {
 
     private final IdentifiedItemPartialResponseBuilder identifiedItemPartialResponseBuilder;
 

@@ -24,6 +24,9 @@ public interface MarketMapper {
     @Select("SELECT * FROM market WHERE item = #{itemId}")
     List<MarketDatabaseEntity> getOffersForItem(@Param("itemId") final int itemId);
 
+    @Select("SELECT * FROM market WHERE seller = #{seller}")
+    List<MarketDatabaseEntity> getMyOffers(@Param("seller") final int seller);
+
     @Insert("INSERT INTO market SET seller = #{seller}, item = #{item}, price = #{price}, amount = #{amount}")
     void insertMarketOffer(@Param("seller") final int seller, @Param("item") final int item, @Param("price") final int price, @Param("amount") final int amount);
 

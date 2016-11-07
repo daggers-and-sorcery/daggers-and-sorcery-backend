@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ListItemsToSellResponseBuilder implements ResponseBuilder<ListItemsToSellResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;
-    private final SellItemToMarketItemTypeListPartialResponseBuilder sellItemToMarketItemTypeListPartialResponseBuilder;
+    private final MarketEntityTypeInformationPartialResponseBuilder marketEntityTypeInformationPartialResponseBuilder;
 
     @Override
     public Response build(final ListItemsToSellResponseBuilderConfiguration listItemsToSellResponseBuilderConfiguration) {
@@ -26,7 +26,7 @@ public class ListItemsToSellResponseBuilder implements ResponseBuilder<ListItems
                         .stream()
                         .map(
                                 itemTypeListEntry ->
-                                        sellItemToMarketItemTypeListPartialResponseBuilder.build(
+                                        marketEntityTypeInformationPartialResponseBuilder.build(
                                                 SellItemToMarketItemTypeListPartialResponseBuilderConfiguration.builder()
                                                         .itemType(itemTypeListEntry.getKey().getName())
                                                         .items(itemTypeListEntry.getValue())
