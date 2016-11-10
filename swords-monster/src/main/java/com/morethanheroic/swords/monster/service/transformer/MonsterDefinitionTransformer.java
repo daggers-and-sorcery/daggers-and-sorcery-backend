@@ -2,7 +2,9 @@ package com.morethanheroic.swords.monster.service.transformer;
 
 import com.morethanheroic.swords.loot.domain.DropDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.domain.MonsterType;
 import com.morethanheroic.swords.monster.domain.ScavengingDefinition;
+import com.morethanheroic.swords.monster.domain.WeaponType;
 import com.morethanheroic.swords.monster.service.loader.domain.RawDropDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawScavengingDefinition;
@@ -47,6 +49,10 @@ public class MonsterDefinitionTransformer {
         monsterDefinitionBuilder.setHealth(rawMonsterDefinition.getHealth());
         monsterDefinitionBuilder.setMana(rawMonsterDefinition.getMana());
         monsterDefinitionBuilder.setLevel(rawMonsterDefinition.getLevel());
+
+        monsterDefinitionBuilder.setType(MonsterType.valueOf(rawMonsterDefinition.getType()));
+        monsterDefinitionBuilder.setSubtype(MonsterType.valueOf(rawMonsterDefinition.getSubtype()));
+        monsterDefinitionBuilder.setWeaponType(WeaponType.valueOf(rawMonsterDefinition.getWeapontype()));
 
         monsterDefinitionBuilder.setDropDefinitions(transformDropDefinitions(rawMonsterDefinition.getDropDefinitions()));
         monsterDefinitionBuilder.setScavengeDefinitions(transformScavengingDefinitions(rawMonsterDefinition.getScavengeDefinitions()));

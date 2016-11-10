@@ -3,11 +3,10 @@ package com.morethanheroic.swords.combat.domain.effect.entry;
 import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 
 import lombok.RequiredArgsConstructor;
 

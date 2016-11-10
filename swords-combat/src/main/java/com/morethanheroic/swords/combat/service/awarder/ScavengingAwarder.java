@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.service.awarder;
 
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.scavenging.domain.ScavengingResult;
 import com.morethanheroic.swords.scavenging.domain.ScavengingResultEntity;

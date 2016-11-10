@@ -13,7 +13,7 @@ import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
-import com.morethanheroic.swords.combat.service.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
