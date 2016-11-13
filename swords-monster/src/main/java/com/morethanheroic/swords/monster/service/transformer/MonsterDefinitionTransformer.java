@@ -51,8 +51,14 @@ public class MonsterDefinitionTransformer {
         monsterDefinitionBuilder.setLevel(rawMonsterDefinition.getLevel());
 
         monsterDefinitionBuilder.setType(MonsterType.valueOf(rawMonsterDefinition.getType()));
-        monsterDefinitionBuilder.setSubtype(MonsterType.valueOf(rawMonsterDefinition.getSubtype()));
-        monsterDefinitionBuilder.setWeaponType(WeaponType.valueOf(rawMonsterDefinition.getWeapontype()));
+
+        if (rawMonsterDefinition.getSubtype() != null) {
+            monsterDefinitionBuilder.setSubtype(MonsterType.valueOf(rawMonsterDefinition.getSubtype()));
+        }
+
+        if (rawMonsterDefinition.getWeapontype() != null) {
+            monsterDefinitionBuilder.setWeaponType(WeaponType.valueOf(rawMonsterDefinition.getWeapontype()));
+        }
 
         monsterDefinitionBuilder.setDropDefinitions(transformDropDefinitions(rawMonsterDefinition.getDropDefinitions()));
         monsterDefinitionBuilder.setScavengeDefinitions(transformScavengingDefinitions(rawMonsterDefinition.getScavengeDefinitions()));

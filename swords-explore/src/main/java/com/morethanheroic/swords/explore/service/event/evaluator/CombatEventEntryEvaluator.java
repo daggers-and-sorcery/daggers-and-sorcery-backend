@@ -41,7 +41,8 @@ public class CombatEventEntryEvaluator {
                                 .combatSteps(combatResult.getAttackResult())
                                 .combatEnded(combatResult.isCombatEnded())
                                 .playerDead(combatResult.getWinner() == Winner.MONSTER)
-                                .build())
+                                .build()
+                )
                 .build();
     }
 

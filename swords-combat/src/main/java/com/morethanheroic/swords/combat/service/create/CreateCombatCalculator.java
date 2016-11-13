@@ -82,6 +82,9 @@ public class CreateCombatCalculator {
             }
         }
 
+        final UserCombatEntity userCombatEntity = combatContext.getUser();
+        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userCombatEntity.getUserEntity().getMovementPoints());
+
         if (combatContext.getWinner() == null) {
             final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
 
