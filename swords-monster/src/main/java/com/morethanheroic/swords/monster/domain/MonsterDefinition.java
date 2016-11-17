@@ -2,6 +2,8 @@ package com.morethanheroic.swords.monster.domain;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.loot.domain.DropDefinition;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -14,6 +16,19 @@ public class MonsterDefinition {
     private int level;
     private int defense;
     private int spellResistance;
+
+    @Getter
+    @Setter
+    private MonsterType type;
+
+    @Getter
+    @Setter
+    private MonsterType subtype;
+
+    @Getter
+    @Setter
+    private WeaponType weaponType;
+
     private DiceAttribute initiation;
     private DiceAttribute attack;
     private DiceAttribute aiming;
@@ -158,6 +173,18 @@ public class MonsterDefinition {
 
         public void setAttackType(MonsterAttackType attackType) {
             monsterDefinition.attackType = attackType;
+        }
+
+        public void setType(final MonsterType type) {
+            monsterDefinition.type = type;
+        }
+
+        public void setSubtype(final MonsterType subtype) {
+            monsterDefinition.subtype = subtype;
+        }
+
+        public void setWeaponType(final WeaponType weaponType) {
+            monsterDefinition.weaponType = weaponType;
         }
 
         public void setDropDefinitions(List<DropDefinition> dropDefinitions) {

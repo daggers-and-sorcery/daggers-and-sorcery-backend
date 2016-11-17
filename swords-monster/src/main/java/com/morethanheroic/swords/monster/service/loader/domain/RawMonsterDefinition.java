@@ -1,6 +1,8 @@
 package com.morethanheroic.swords.monster.service.loader.domain;
 
 import com.morethanheroic.swords.monster.domain.MonsterAttackType;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -34,6 +36,18 @@ public class RawMonsterDefinition {
     private RawDiceAttribute damage;
     @XmlElement(name = "attack-type")
     private MonsterAttackType attackType;
+
+    @Getter
+    @Setter
+    private String type;
+
+    @Getter
+    @Setter
+    private String subtype;
+
+    @Getter
+    @Setter
+    private String weapontype;
 
     @XmlElementWrapper(name = "droplist")
     @XmlElement(name = "drop")

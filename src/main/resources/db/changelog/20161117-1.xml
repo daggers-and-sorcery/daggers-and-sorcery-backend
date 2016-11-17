@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20161117-1">
+        <insert tableName="news">
+            <column name="title" value="The marketplace opens and the Goblin king is released!"/>
+            <column name="release_date" value="2016-11-17 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+This weeks patch took a long time to make but finally it's here and probably this is our biggest patch ever. Welcome the market, where you fellow players can sell items to each other and the kings of the goblins who will supply the level 5 equipment that required for the soon upcoming Woodland Cemetery zone.
+
+Improvements:
+- Added the goblin king in a new exploration event. Be super careful when attacking it however! He's super tough.
+- Added the market where players can trade with each other.
+- Added icons to the header of every page.
+- Improved the display of the choose options in exploration events.
+- Added a search bar to the shop.
+
+Bugfixes:
+- Fixed that the dice-roll bonuses were not shown on items in the shop.
+- Fixed that the inn showed healing instead of mana regeneration.
+- Added picture for the 'Bronze dirk' and 'Bronze warhammer' items.
+- Fixed that players did not take damage from the first hit in combat.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
