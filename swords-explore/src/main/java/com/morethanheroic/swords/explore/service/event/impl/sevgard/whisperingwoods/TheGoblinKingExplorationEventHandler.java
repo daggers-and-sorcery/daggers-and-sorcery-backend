@@ -6,7 +6,6 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationConte
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
-import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 
 @ExplorationEvent
@@ -30,8 +29,6 @@ public class TheGoblinKingExplorationEventHandler extends ImprovedExplorationEve
 
     @Override
     public ExplorationResult handleExplore(ExplorationContext explorationContext) {
-        final UserEntity userEntity = explorationContext.getUserEntity();
-
         return explorationResultStageBuilderFactory.newBuilder()
                 .addStage(STARTER_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
@@ -60,14 +57,13 @@ public class TheGoblinKingExplorationEventHandler extends ImprovedExplorationEve
                 .addStage(
                         GO_HOME_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
-                                .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_5")
+                                .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_4")
                                 .resetExploration()
                                 .build()
                 )
                 .addStage(
                         COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
-                                //TODO: add loot!
                                 .resetExploration()
                                 .build()
                 )
