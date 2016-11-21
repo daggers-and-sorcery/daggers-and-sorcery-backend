@@ -64,6 +64,9 @@ public class TheGoblinKingExplorationEventHandler extends ImprovedExplorationEve
                 .addStage(
                         COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_6")
+                                .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_7")
+                                .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_8")
                                 .resetExploration()
                                 .build()
                 )
@@ -73,7 +76,7 @@ public class TheGoblinKingExplorationEventHandler extends ImprovedExplorationEve
     @Override
     public ExplorationResult handleInfo(ExplorationContext explorationContext) {
         return explorationResultStageBuilderFactory.newBuilder()
-                .addStage(STARTER_STAGE,
+                .addStage(CHOOSE_PATH_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_3")
                                 .newOptionEntry(
@@ -86,7 +89,6 @@ public class TheGoblinKingExplorationEventHandler extends ImprovedExplorationEve
                                                 .stage(GO_HOME_STAGE)
                                                 .build()
                                 )
-                                .setEventStage(EVENT_ID, CHOOSE_PATH_STAGE)
                                 .build()
                 ).addStage(COMBAT_STAGE,
                         explorationResultBuilder -> explorationResultBuilder
