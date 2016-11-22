@@ -16,6 +16,9 @@ import com.morethanheroic.swords.explore.service.event.evaluator.MessageBoxMessa
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -52,6 +55,15 @@ public class ExplorationResultBuilder {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    private InventoryEntityFactory inventoryEntityFactory;
+
+    @Autowired
+    private ItemDefinitionCache itemDefinitionCache;
+
+    @Autowired
+    private MultiWayExplorationResultBuilderFactory multiWayExplorationResultBuilderFactory;
 
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
@@ -165,15 +177,24 @@ public class ExplorationResultBuilder {
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
     }
 
+    public MultiWayExplorationResultBuilder newHasItemMultiWayPath(final ExplorationContext explorationContext, final int... items) {
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(explorationContext.getUserEntity().getId());
+
+        for (int item : items) {
+            if(!inventoryEntity.hasItem(itemDefinitionCache.getDefinition(item))) {
+                return multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+            }
+        }
+
+        return multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this);
+    }
+
     public MultiWayExplorationResultBuilder newCustomMultiWayPath(final Callable<Boolean> calculateSuccess) {
-        final boolean isSuccess;
         try {
-            isSuccess = calculateSuccess.call();
+            return multiWayExplorationResultBuilderFactory.newMultiWayExplorationResultBuilder(this, calculateSuccess.call());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return new MultiWayExplorationResultBuilder(this, isSuccess);
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {

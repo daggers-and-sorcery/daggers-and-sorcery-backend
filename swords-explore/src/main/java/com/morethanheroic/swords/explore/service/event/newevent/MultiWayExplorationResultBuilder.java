@@ -8,7 +8,7 @@ public class MultiWayExplorationResultBuilder {
     private ExplorationResult explorationResult;
     private boolean isSuccess;
 
-    public MultiWayExplorationResultBuilder(ExplorationResultBuilder explorationResultBuilder, boolean isSuccess) {
+    public MultiWayExplorationResultBuilder(final ExplorationResultBuilder explorationResultBuilder, final boolean isSuccess) {
         this.explorationResultBuilder = explorationResultBuilder;
         this.isSuccess = isSuccess;
     }
