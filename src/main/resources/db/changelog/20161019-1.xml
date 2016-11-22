@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20161019-1">
+        <insert tableName="news">
+            <column name="title" value="Fletching and bugfixes!"/>
+            <column name="release_date" value="2016-10-19 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Greetings adventurers!
+
+We are happy to announce our latest major update to the game, the Fletching skill and also we are paving the way to the boss exploration event and the next exploration zone.
+
+Improvements:
+- Added the fletching skill to the game. With it came 6 new recipes and lots of new materials.
+- Added an auto-refresh feature to the Health/Mana/Movement bar. The data of the bars are refreshed once in every two minutes.
+- Added an event location and a rarity icon to every exploration event. The icon is located on the top right corner of the exploration screen. Later we are planning to add different bonuses to each location and also add more rare events.
+- Renamed the 'Scroll' items to 'Spell tome' items. _(Thanks to Maroš "Verienn" Chovanec)_
+
+Bugfixes:
+- Players no longer able to send empty forum messages or create topics with empty title or content.
+- Fixed an error that very rarely not let players buy items from the shop.
+- Fixed that the farmer did not give the said coins after one of the exploration events in the Farmfields region.
+- Added a missing description to the 'Fried peanut' item.
+- The players were unable to equip unidentified items. This was an unintended behavior and now it's fixed.
+- Fixed the incorrect weight on 'Bronze Dirk' and 'Bronze Warhammer' items. _(Thanks to Maroš "Verienn" Chovanec)_
+- Renamed the incorrectly named 'Robinia stave' to 'Robinia staff'. _(Thanks to Maroš "Verienn" Chovanec)_
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -3,11 +3,10 @@ package com.morethanheroic.swords.combat.service.calc.drop;
 import com.morethanheroic.math.PercentageCalculator;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.calc.drop.domain.DropSplitCalculationResult;
-import com.morethanheroic.swords.monster.domain.DropAmountDefinition;
-import com.morethanheroic.swords.monster.domain.DropDefinition;
+import com.morethanheroic.swords.loot.domain.DropAmountDefinition;
+import com.morethanheroic.swords.loot.domain.DropDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

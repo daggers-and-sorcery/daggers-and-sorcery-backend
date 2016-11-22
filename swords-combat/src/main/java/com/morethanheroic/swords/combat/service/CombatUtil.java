@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
+import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
@@ -9,24 +10,21 @@ import com.morethanheroic.swords.item.domain.WeaponSuperType;
 import com.morethanheroic.swords.item.service.WeaponSuperTypeCalculator;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CombatUtil {
+
+    private static final int EMPTY_EQUIPMENT_SLOT = 0;
 
     private final SkillTypeCalculator skillTypeCalculator;
     private final EquipmentFacade equipmentFacade;
     private final WeaponSuperTypeCalculator weaponSuperTypeCalculator;
-
-    @Autowired
-    public CombatUtil(SkillTypeCalculator skillTypeCalculator, EquipmentFacade equipmentFacade, WeaponSuperTypeCalculator weaponSuperTypeCalculator) {
-        this.skillTypeCalculator = skillTypeCalculator;
-        this.equipmentFacade = equipmentFacade;
-        this.weaponSuperTypeCalculator = weaponSuperTypeCalculator;
-    }
 
     public SkillType getUserArmorSkillType(UserEntity user) {
         final ItemType itemType = getUserArmorType(user);
@@ -96,5 +94,18 @@ public class CombatUtil {
         final Optional<ItemType> itemType = getUserOffhandType(userEntity);
 
         return itemType.isPresent() && itemType.get() == ItemType.SHIELD;
+    }
+
+    public boolean isFistfighting(final UserEntity userEntity) {
+        final EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
+
+        return equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.WEAPON) == EMPTY_EQUIPMENT_SLOT
+                || (hasBowWeapon(equipmentEntity) && equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.QUIVER) == EMPTY_EQUIPMENT_SLOT);
+    }
+
+    public boolean hasBowWeapon(final EquipmentEntity equipmentEntity) {
+        final ItemType weaponType = equipmentEntity.getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON).getSubtype();
+
+        return weaponType == ItemType.SHORTBOWS || weaponType == ItemType.LONGBOWS || weaponType == ItemType.CROSSBOWS;
     }
 }

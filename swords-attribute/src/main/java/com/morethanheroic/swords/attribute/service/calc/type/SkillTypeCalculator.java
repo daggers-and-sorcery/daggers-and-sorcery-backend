@@ -146,6 +146,8 @@ public class SkillTypeCalculator {
                 return SkillType.ALTERATION;
             case LOCKPICKING:
                 return SkillType.LOCKPICKING;
+            case FLETCHING:
+                return SkillType.FLETCHING;
             default:
                 throw new IllegalArgumentException("No skill found for skill attribute type: " + skillAttribute);
         }
@@ -213,6 +215,8 @@ public class SkillTypeCalculator {
                 return SkillAttribute.ALTERATION;
             case LOCKPICKING:
                 return SkillAttribute.LOCKPICKING;
+            case FLETCHING:
+                return SkillAttribute.FLETCHING;
             default:
                 throw new IllegalArgumentException("No skill type found for attribute type: " + skillType);
         }

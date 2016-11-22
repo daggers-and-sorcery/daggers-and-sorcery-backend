@@ -1,47 +1,51 @@
 package com.morethanheroic.swords.explore.service;
 
-import com.morethanheroic.swords.explore.service.event.ExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.ExplorationEventLocationType;
-import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
+import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
+@Slf4j
 @Service
-@Log4j
 public class ExplorationEventChooser {
 
-    @Autowired
-    private Random random;
+    private final Random random;
+    private final Map<ExplorationEventLocation, List<ExplorationEventHandler>> locationMap;
 
-    private final Map<ExplorationEventLocationType, List<ExplorationEventDefinition>> locationMap;
+    private ExplorationEventChooser(final Random random, final ExplorationEventDefinitionCache explorationEventDefinitionCache, final List<ExplorationEventHandler> explorationEventHandlers) {
+        this.random = random;
 
-    @Autowired
-    private ExplorationEventChooser(final List<ExplorationEventDefinition> explorationEventDefinitions) {
-        final Map<ExplorationEventLocationType, List<ExplorationEventDefinition>> result = new HashMap<>();
+        final Map<ExplorationEventLocation, List<ExplorationEventHandler>> result = new HashMap<>();
 
-        for (ExplorationEventLocationType explorationEventLocationType : ExplorationEventLocationType.values()) {
-            result.put(explorationEventLocationType, new ArrayList<>());
+        for (ExplorationEventLocation explorationEventLocation : ExplorationEventLocation.values()) {
+            result.put(explorationEventLocation, new ArrayList<>());
         }
 
-        for (ExplorationEventDefinition explorationEventDefinition : explorationEventDefinitions) {
-            result.get(explorationEventDefinition.getLocation()).add(explorationEventDefinition);
+        for (ExplorationEventHandler explorationEventHandler : explorationEventHandlers) {
+            if (explorationEventDefinitionCache.isDefinitionExists(explorationEventHandler.getId())) {
+                final ExplorationEventDefinition explorationEventDefinition = explorationEventDefinitionCache.getDefinition(explorationEventHandler.getId());
+
+                final List<ExplorationEventHandler> targetEventList = result.get(explorationEventDefinition.getLocation());
+                for(int i = 0; i < explorationEventDefinition.getRarity().getChance(); i++) {
+                    targetEventList.add(explorationEventHandler);
+                }
+            } else {
+                throw new IllegalStateException("No definition exists for exploration event handler: " + explorationEventHandler.getId());
+            }
         }
 
         locationMap = Collections.unmodifiableMap(result);
     }
 
-    public ExplorationEventDefinition getEvent(final ExplorationEventLocationType locationType) {
-        final List<ExplorationEventDefinition> locationDefinitionInfo = locationMap.get(locationType);
-        final ExplorationEventDefinition result = locationDefinitionInfo.get(random.nextInt(locationDefinitionInfo.size()));
+    public ExplorationEventHandler getEvent(final ExplorationEventLocation locationType) {
+        final List<ExplorationEventHandler> locationDefinitionInfo = locationMap.get(locationType);
+        final ExplorationEventHandler result = locationDefinitionInfo.get(random.nextInt(locationDefinitionInfo.size()));
 
-        log.info("Choosen exploration event is " + result.getId());
+        log.info("Chosen exploration event is " + result.getId());
 
         return result;
     }

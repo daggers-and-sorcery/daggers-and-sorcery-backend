@@ -244,6 +244,10 @@ public class InventoryEntity implements Entity {
         return moneyFacade.getMoneyAmount(MoneyType.MONEY, moneyCalculationQuery);
     }
 
+    public boolean hasMoneyAmount(final MoneyType moneyType, final int amount) {
+        return getMoneyAmount(moneyType) >= amount;
+    }
+
     public void decreaseMoneyAmount(final MoneyType moneyType, final int amount) {
         final MoneyDefinition moneyDefinition = moneyFacade.getDefinition(moneyType);
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQuery(moneyDefinition);

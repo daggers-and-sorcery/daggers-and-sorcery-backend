@@ -61,6 +61,8 @@ public class IdentifiedItemPartialResponseBuilder implements PartialResponseBuil
                                         )
                                 ).collect(Collectors.toList())
                 )
+                .description(itemDefinition.getDescription())
+                .flavour(itemDefinition.getFlavour())
                 .build();
     }
 }

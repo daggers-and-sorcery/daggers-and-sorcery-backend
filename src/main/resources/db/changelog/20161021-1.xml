@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20161019-1">
+        <insert tableName="news">
+            <column name="title" value="Small improvements and more bugfixes!"/>
+            <column name="release_date" value="2016-10-21 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+This week's second patch brings a few small but handy improvements and bugfixes to the game.
+
+Improvements:
+- Added four new robe equipment for mages. _(Thanks to Maroš "Verienn" Chovanec)_
+- Renamed the Goblin Piker to Goblin Pikeman. _(Thanks to Maroš "Verienn" Chovanec)_
+- Added description to the 'Cooking' skill. _(Thanks to Maroš "Verienn" Chovanec)_
+- Added mana restore ability for the services in the inn.
+- Added description for the inn's services. _(Thanks to Maroš "Verienn" Chovanec)_
+- Lockpicks no longer break on successful lockpicking attempts.
+
+Bugfixes:
+- Fixed the price of the 'Bronze bastard sword'. _(Thanks to Maroš "Verienn" Chovanec)_
+- Fixed that the item type was still 'Scroll' for some 'Spell tome' items. _(Thanks to Maroš "Verienn" Chovanec)_
+- Fixed the name of the 'Leather tunic' recipe. _(Thanks to Maroš "Verienn" Chovanec)_
+- Fixed that the 'Robinia staff's recipe was not renamed from 'Robinia stave' in the last update. _(Thanks to Maroš "Verienn" Chovanec)_
+- Fixed that the player did not get the bonuses from 'Fistfighting' when fought by hand because he/she ran out of arrows.
+- Fixed that the player got archery experience when fought by hand because he/she ran out of arrows.
+- Made the 'Healing potion' usable.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

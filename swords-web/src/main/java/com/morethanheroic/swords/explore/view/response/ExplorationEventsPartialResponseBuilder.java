@@ -9,11 +9,13 @@ import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttac
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.MessageBoxExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.view.response.domain.AttributeAttemptExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.CombatExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.ExplorationResponseBuilderConfiguration;
+import com.morethanheroic.swords.explore.view.response.domain.MessageBoxExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.OptionExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.TextExplorationEventPartialResponse;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +45,14 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                 result.add(
                         TextExplorationEventPartialResponse.builder()
                                 .content(textExplorationEventEntryResult.getContent())
+                                .build()
+                );
+            } else if (explorationEventEntryResult instanceof MessageBoxExplorationEventEntryResult) {
+                final MessageBoxExplorationEventEntryResult messageBoxExplorationEventEntryResult = (MessageBoxExplorationEventEntryResult) explorationEventEntryResult;
+
+                result.add(
+                        MessageBoxExplorationEventPartialResponse.builder()
+                                .content(messageBoxExplorationEventEntryResult.getContent())
                                 .build()
                 );
             } else if (explorationEventEntryResult instanceof CombatExplorationEventEntryResult) {

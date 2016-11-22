@@ -1,0 +1,12 @@
+<configuration debug="false">
+  <include resource="org/springframework/boot/logging/logback/base.xml"/>
+  <springProfile name="production">
+    <appender name="loggly" class="ch.qos.logback.ext.loggly.LogglyAppender">
+      <endpointUrl>http://logs-01.loggly.com/inputs/0b98c52b-4805-4a02-9af0-9a389be52992/tag/logback</endpointUrl>
+      <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+    </appender>
+    <root level="info">
+      <appender-ref ref="loggly"/>
+    </root>
+  </springProfile>
+</configuration>

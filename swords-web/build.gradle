@@ -32,6 +32,7 @@ dependencies {
     compile project(':swords-skill-cooking')
     compile project(':swords-skill-leatherworking')
     compile project(':swords-skill-smithing')
+    compile project(':swords-skill-fletching')
 }
 
 apply plugin: 'spring-boot'

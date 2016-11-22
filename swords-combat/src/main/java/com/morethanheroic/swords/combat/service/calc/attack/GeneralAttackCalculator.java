@@ -11,6 +11,8 @@ import com.morethanheroic.swords.combat.repository.dao.CombatExperienceDatabaseE
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
 import com.morethanheroic.swords.combat.service.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.CombatUtil;
+import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
+import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
 
     @Autowired
     private CombatExperienceMapper combatExperienceMapper;
+
+    @Autowired
+    private EquipmentFacade equipmentFacade;
 
     //TODO: move the calculation logic into a separate class
     protected void addDefenseXp(final CombatContext combatContext, final int amount) {
@@ -58,7 +63,7 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
     protected void addAttackXp(final UserCombatEntity userCombatEntity, final int amount) {
         final UserEntity userEntity = userCombatEntity.getUserEntity();
 
-        if (combatUtil.getUserWeaponType(userEntity) != null) {
+        if (!combatUtil.isFistfighting(userEntity)) {
             combatExperienceMapper.addExperience(userEntity.getId(), combatUtil.getUserWeaponSkillType(userEntity), amount);
         } else {
             combatExperienceMapper.addExperience(userEntity.getId(), SkillType.FISTFIGHT, amount);

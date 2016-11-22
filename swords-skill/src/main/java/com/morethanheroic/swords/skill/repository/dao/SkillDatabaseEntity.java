@@ -39,4 +39,5 @@ public class SkillDatabaseEntity {
     private int restorationXp;
     private int destructionXp;
     private int lockpickingXp;
+    private int fletchingXp;
 }
