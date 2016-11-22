@@ -7,14 +7,18 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.combat.service.message.domain.CombatMessageContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
+import com.morethanheroic.swords.monster.domain.MonsterType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
     private final CombatMessageFactory combatMessageFactory;
+    private final Random random;
 
     @Override
     public List<CombatStep> calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
@@ -51,9 +56,25 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
         if (attacker instanceof MonsterCombatEntity) {
             addDefenseXp(combatContext, damage * 2);
 
+            final MonsterDefinition monsterDefinition = ((MonsterCombatEntity) attacker).getMonsterDefinition();
+            final CombatMessageContext combatMessageContext = CombatMessageContext.builder()
+                    .type(monsterDefinition.getType())
+                    .subtype(monsterDefinition.getSubtype())
+                    .weaponType(monsterDefinition.getWeaponType())
+                    .build();
+
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_PLAYER", attacker.getName(), damage))
+                            .message(
+                                    combatMessageFactory.newMessage(
+                                            "damage_gained",
+                                            "COMBAT_MESSAGE_MELEE_DAMAGE_TO_PLAYER",
+                                            combatMessageContext,
+                                            attacker.getName(),
+                                            damage,
+                                            getRandomBodySlot(combatMessageContext)
+                                    )
+                            )
                             .build()
             );
         } else {
@@ -67,6 +88,16 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
         }
 
         return result;
+    }
+
+    public String getRandomBodySlot(final CombatMessageContext messageContext) {
+        if (messageContext.getType() == MonsterType.UNDEAD && messageContext.getSubtype() == MonsterType.SKELETON) {
+            final String[] slots = new String[]{"stomach", "arm", "shoulder", "knee", "thigh"};
+
+            return slots[random.nextInt(slots.length)];
+        }
+
+        return "";
     }
 
     private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {

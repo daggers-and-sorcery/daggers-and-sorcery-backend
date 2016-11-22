@@ -11,7 +11,6 @@ import java.util.Map;
 public class ExplorationResultStageBuilder {
 
     private final ExplorationResultBuilderFactory explorationResultBuilderFactory;
-    private final ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
     private Map<Integer, ExplorationResultRuntime> stageMap = new HashMap<>();
 

@@ -9,14 +9,13 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.InitializationCombatStep;
 import com.morethanheroic.swords.combat.repository.dao.CombatDatabaseEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
-import com.morethanheroic.swords.combat.service.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.attack.MonsterAttackCalculator;
 import com.morethanheroic.swords.combat.service.attack.PlayerAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.CombatInitializer;
 import com.morethanheroic.swords.combat.service.calc.CombatTerminator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
-import com.morethanheroic.swords.combat.service.exception.IllegalCombatStateException;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +81,9 @@ public class CreateCombatCalculator {
                 combatSteps.addAll(monsterAttackCalculator.monsterAttack(combatContext));
             }
         }
+
+        final UserCombatEntity userCombatEntity = combatContext.getUser();
+        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userCombatEntity.getUserEntity().getMovementPoints());
 
         if (combatContext.getWinner() == null) {
             final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();

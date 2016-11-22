@@ -7,20 +7,16 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.journal.model.JournalType;
 import com.morethanheroic.swords.journal.service.JournalManager;
-import com.morethanheroic.swords.money.domain.Conversion;
-import com.morethanheroic.swords.money.domain.MoneyCalculationQuery;
-import com.morethanheroic.swords.money.domain.MoneyCalculationResult;
-import com.morethanheroic.swords.money.domain.MoneyDefinition;
-import com.morethanheroic.swords.money.domain.MoneyType;
+import com.morethanheroic.swords.money.domain.*;
 import com.morethanheroic.swords.money.service.MoneyFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Configurable
 @RequiredArgsConstructor
@@ -45,13 +41,6 @@ public class InventoryEntity implements Entity {
     }
 
     /**
-     * @deprecated Use {@link #hasItem(ItemDefinition)} instead.
-     */
-    public boolean hasItem(int itemId) {
-        return hasItem(itemId, true);
-    }
-
-    /**
      * @deprecated Use {@link #hasItem(ItemDefinition, IdentificationType)} instead.
      */
     public boolean hasItem(int itemId, boolean identified) {
@@ -66,26 +55,12 @@ public class InventoryEntity implements Entity {
         return hasItemAmount(item.getId(), amount, IdentificationType.IDENTIFIED);
     }
 
-    /**
-     * @deprecated Use {@link #hasItemAmount(int, int, IdentificationType)} instead.
-     */
-    public boolean hasItemAmount(ItemDefinition item, int amount, boolean identified) {
-        return hasItemAmount(item, amount, identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED);
-    }
-
     public boolean hasItemAmount(ItemDefinition item, int amount, IdentificationType identified) {
         return hasItemAmount(item.getId(), amount, identified);
     }
 
     private boolean hasItemAmount(int itemId, int amount, IdentificationType identified) {
         return getItemAmount(itemId, identified) >= amount;
-    }
-
-    /**
-     * @deprecated Use {@link #hasItemAmount(ItemDefinition, int)}
-     */
-    public boolean hasItemAmount(int itemId, int amount) {
-        return hasItemAmount(itemId, amount, IdentificationType.IDENTIFIED);
     }
 
     /**
@@ -211,30 +186,23 @@ public class InventoryEntity implements Entity {
     }
 
     public List<InventoryItem> getItems() {
-        final List<ItemDatabaseEntity> itemDatabaseEntities = inventoryMapper.getAllItems(userEntity.getId());
-
-        final List<InventoryItem> result = new ArrayList<>();
-        for (ItemDatabaseEntity itemDatabaseEntity : itemDatabaseEntities) {
-            result.add(InventoryItem.builder()
-                    .item(itemDefinitionCache.getDefinition(itemDatabaseEntity.getItemId()))
-                    .amount(itemDatabaseEntity.getAmount())
-                    .identified(itemDatabaseEntity.isIdentified() ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED)
-                    .build()
-            );
-        }
-
-        return Collections.unmodifiableList(result);
+        return getItems(IdentificationType.IDENTIFIED);
     }
 
-    /**
-     * @deprecated Use {@link #getItems()} instead.
-     */
-    public List<ItemDatabaseEntity> getItemsLegacy() {
-        return inventoryMapper.getAllItems(userEntity.getId());
-    }
-
-    public List<ItemDatabaseEntity> getItemsLegacy(IdentificationType identified) {
-        return inventoryMapper.getItems(userEntity.getId(), identified.getId());
+    public List<InventoryItem> getItems(final IdentificationType identified) {
+        return Collections.unmodifiableList(
+                inventoryMapper.getItems(userEntity.getId(), identified.getId())
+                        .stream()
+                        .map(
+                                itemDatabaseEntity -> InventoryItem.builder()
+                                        .item(itemDefinitionCache.getDefinition(itemDatabaseEntity.getItemId()))
+                                        .amount(itemDatabaseEntity.getAmount())
+                                        .identified(itemDatabaseEntity.isIdentified() ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED)
+                                        .build())
+                        .collect(
+                                Collectors.toList()
+                        )
+        );
     }
 
     public int getMoneyAmount(final MoneyType moneyType) {

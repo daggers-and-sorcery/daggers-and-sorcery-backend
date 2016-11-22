@@ -10,7 +10,7 @@ import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContex
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
-import com.morethanheroic.swords.combat.service.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;

@@ -135,16 +135,19 @@ public class ExplorationResultBuilder {
                 CombatEventEntryEvaluatorResult.builder()
                         .result(
                                 CombatExplorationEventEntryResult.builder()
-                                        .combatSteps(Lists.newArrayList(
-                                                DefaultCombatStep.builder()
-                                                        .message(combatMessage)
-                                                        .build()
-                                        ))
+                                        .combatSteps(
+                                                Lists.newArrayList(
+                                                        DefaultCombatStep.builder()
+                                                                .message(combatMessage)
+                                                                .build()
+                                                )
+                                        )
                                         .combatEnded(!combatCalculator.isCombatRunning(userEntity))
                                         .playerDead(false)
                                         .build()
                         )
-                        .build().getResult()
+                        .build()
+                        .getResult()
         );
 
         return this;

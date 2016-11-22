@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 public class ShopBuyListResponseBuilder implements ResponseBuilder<ShopBuyListResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;
-    private final ShopBuyListItemPartialResponseCollectionBuilder shopBuyListItemPartialResponseCollectionBuilder;
     private final ShopDefinitionPartialResponseBuilder shopDefinitionPartialResponseBuilder;
     private final ShopBuyTypeListPartialResponseBuilder shopBuyTypeListPartialResponseBuilder;
     private final PlayerMoneyPartialResponseBuilder playerMoneyPartialResponseBuilder;
@@ -31,14 +30,18 @@ public class ShopBuyListResponseBuilder implements ResponseBuilder<ShopBuyListRe
         response.setData("items",
                 responseBuilderConfiguration.getItems().entrySet()
                         .stream()
-                        .map(itemTypeListEntry ->
-                                shopBuyTypeListPartialResponseBuilder.build(
-                                        ShopBuyTypeListPartialResponseBuilderConfiguration.builder()
-                                                .itemType(itemTypeListEntry.getKey())
-                                                .items(itemTypeListEntry.getValue())
-                                                .build()
-                                )
-                        ).collect(Collectors.toList())
+                        .map(
+                                itemTypeListEntry ->
+                                        shopBuyTypeListPartialResponseBuilder.build(
+                                                ShopBuyTypeListPartialResponseBuilderConfiguration.builder()
+                                                        .itemType(itemTypeListEntry.getKey())
+                                                        .items(itemTypeListEntry.getValue())
+                                                        .build()
+                                        )
+                        )
+                        .collect(
+                                Collectors.toList()
+                        )
         );
 
         response.setData("definition", shopDefinitionPartialResponseBuilder.build(

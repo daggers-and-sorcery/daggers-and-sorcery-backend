@@ -3,6 +3,7 @@ package com.morethanheroic.swords.combat.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;

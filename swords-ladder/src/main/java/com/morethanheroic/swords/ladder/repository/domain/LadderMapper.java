@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface LadderMapper {
 
-    @Select("SELECT * FROM skills ORDER BY ${skillname} DESC LIMIT ${limitStart}, ${limitEnd}")
+    @Select("SELECT * FROM skills ORDER BY #{skillname} DESC LIMIT #{limitStart}, #{limitEnd}")
     List<SkillDatabaseEntity> getLadderData(@Param("skillname") String skill, @Param("limitStart") int limitStart, @Param("limitEnd") int limitEnd);
 
     @Select("SELECT COUNT(*) FROM skills")

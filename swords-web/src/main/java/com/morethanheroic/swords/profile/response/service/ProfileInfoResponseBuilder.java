@@ -9,7 +9,7 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.inventory.service.InventoryItemTypeSorter;
+import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
