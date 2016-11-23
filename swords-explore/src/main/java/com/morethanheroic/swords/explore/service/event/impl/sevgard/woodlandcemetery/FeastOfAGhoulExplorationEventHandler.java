@@ -24,34 +24,34 @@ public class FeastOfAGhoulExplorationEventHandler extends ImprovedExplorationEve
     @Override
     public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
         return explorationResultStageBuilderFactory.newBuilder()
-           .addStage(STARTER_STAGE,
-               explorationResultBuilder1 -> explorationResultBuilder1
-                   .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_1")
-                   .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_2")
-                   .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_3")
-                   .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_4")
-                   .newCombatEntry(GHOUL_MONSTER_ID, EVENT_ID, COMBAT_STAGE)
-               .build()
-           )
-           .addStage(COMBAT_STAGE,
-               explorationResultBuilder1 -> explorationResultBuilder1
-                   .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_5")
-                   .resetExploration()
-                   .build()
-           )
-           .runStage(explorationContext);
+                .addStage(STARTER_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_1")
+                                .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_2")
+                                .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_3")
+                                .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_4")
+                                .newCombatEntry(GHOUL_MONSTER_ID, EVENT_ID, COMBAT_STAGE)
+                                .build()
+                )
+                .addStage(COMBAT_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_5")
+                                .resetExploration()
+                                .build()
+                )
+                .runStage(explorationContext);
     }
 
     @Override
     public ExplorationResult handleInfo(final ExplorationContext explorationContext) {
         return explorationResultStageBuilderFactory.newBuilder()
-             .addStage(COMBAT_STAGE,
-                explorationResultBuilder -> explorationResultBuilder
-                    .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_4")
-                    .continueCombatEntry()
-                    .build()
-            )
-                                                   .runStage(explorationContext);
+                .addStage(COMBAT_STAGE,
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_4")
+                                .continueCombatEntry()
+                                .build()
+                )
+                .runStage(explorationContext);
     }
 
     @Override
