@@ -59,7 +59,7 @@ allprojects {
     version = '0.0.1'
 
     ext {
-        mybatis_version = '3.4.0'
+        mybatis_version = '3.4.1'
         guava_version = '18.0'
         checkstyle_version = '6.13'
         findbugs_version = '3.0.1'
