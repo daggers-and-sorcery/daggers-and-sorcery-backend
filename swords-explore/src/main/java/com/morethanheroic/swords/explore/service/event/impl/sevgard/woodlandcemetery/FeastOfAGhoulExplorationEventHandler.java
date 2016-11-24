@@ -17,7 +17,7 @@ public class FeastOfAGhoulExplorationEventHandler extends ImprovedExplorationEve
     private static final int STARTER_STAGE = 0;
     private static final int COMBAT_STAGE = 1;
 
-    private static final int GHOUL_MONSTER_ID = 16;
+    private static final int GHOUL_MONSTER_ID = 18;
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
 

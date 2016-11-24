@@ -16,7 +16,7 @@ public class MadMageExplorationEventHandler extends ImprovedExplorationEventHand
     private static final int STARTER_STAGE = 0;
     private static final int COMBAT_STAGE = 1;
 
-    private static final int MAD_MAGE_MONSTER_ID = 16;
+    private static final int MAD_MAGE_MONSTER_ID = 19;
     private static final int MAD_MAGE_REWARD_CHEST_LOOT_ID = 99;
 
     private static final int TORCH_ID = 120;
