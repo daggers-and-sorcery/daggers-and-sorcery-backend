@@ -22,4 +22,8 @@ public class EffectSettingDefinitionHolder {
     public EffectSettingDefinition getSetting(String name) {
         return settings.get(name);
     }
+
+    public int getSettingAsInt(final String settingsName) {
+        return Integer.parseInt(settings.get(settingsName).getValue());
+    }
 }
