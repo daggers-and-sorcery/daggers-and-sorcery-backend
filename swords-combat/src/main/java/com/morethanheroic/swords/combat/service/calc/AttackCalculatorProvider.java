@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.service.calc.attack.AttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.attack.AttackType;
-import com.morethanheroic.swords.combat.service.calc.attack.MagicAttackCalculator;
-import com.morethanheroic.swords.combat.service.calc.attack.MeleeAttackCalculator;
-import com.morethanheroic.swords.combat.service.calc.attack.RangedAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.attack.magic.MagicAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.attack.melee.MeleeAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.attack.ranged.RangedAttackCalculator;
 import com.morethanheroic.swords.monster.domain.MonsterAttackType;
 
 import lombok.RequiredArgsConstructor;

@@ -38,6 +38,11 @@ public class UserCombatEntity extends CombatEntity {
     }
 
     @Override
+    public DiceAttribute getDamageReduction() {
+        return attributeCalculationToDiceAttribute(globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.DAMAGE_REDUCTION));
+    }
+
+    @Override
     public DiceAttribute getDamage() {
         return attributeCalculationToDiceAttribute(globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.DAMAGE));
     }
