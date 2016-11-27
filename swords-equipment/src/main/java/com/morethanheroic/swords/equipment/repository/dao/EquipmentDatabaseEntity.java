@@ -20,6 +20,7 @@ public class EquipmentDatabaseEntity {
     private int chest;
     private int legs;
     private int quiver;
+    private int belt;
 
     private int quiverAmount;
 
@@ -34,4 +35,5 @@ public class EquipmentDatabaseEntity {
     private boolean chestIdentified;
     private boolean legsIdentified;
     private boolean quiverIdentified;
+    private boolean beltIdentified;
 }

@@ -117,6 +117,18 @@ public class EquipmentEntity {
 
                 equipmentMapper.equipHelm(userEntity.getId(), item.getId(), identified);
                 break;
+            case BRACER:
+                equipmentDatabaseEntity.setBracer(item.getId());
+                equipmentDatabaseEntity.setBeltIdentified(identified);
+
+                equipmentMapper.equipBracer(userEntity.getId(), item.getId(), identified);
+                break;
+            case BELT:
+                equipmentDatabaseEntity.setBelt(item.getId());
+                equipmentDatabaseEntity.setBeltIdentified(identified);
+
+                equipmentMapper.equipBelt(userEntity.getId(), item.getId(), identified);
+                break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
         }
@@ -257,6 +269,19 @@ public class EquipmentEntity {
                 }
 
                 return previousBracer;
+            case BELT:
+                final int previousBelt = equipmentDatabaseEntity.getBelt();
+
+                if (previousBelt != 0) {
+                    inventoryEntity.addItem(previousBelt, 1, equipmentDatabaseEntity.isBeltIdentified());
+
+                    equipmentDatabaseEntity.setBelt(0);
+                    equipmentDatabaseEntity.setBeltIdentified(true);
+
+                    equipmentMapper.equipBelt(userEntity.getId(), 0, true);
+                }
+
+                return previousBelt;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
@@ -303,6 +328,8 @@ public class EquipmentEntity {
                 return equipmentDatabaseEntity.getLegs();
             case QUIVER:
                 return equipmentDatabaseEntity.getQuiver();
+            case BELT:
+                return equipmentDatabaseEntity.getBelt();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
         }
@@ -335,6 +362,8 @@ public class EquipmentEntity {
                 return equipmentDatabaseEntity.isLegsIdentified();
             case QUIVER:
                 return equipmentDatabaseEntity.isQuiverIdentified();
+            case BELT:
+                return equipmentDatabaseEntity.isBeltIdentified();
             default:
                 throw new IllegalArgumentException("Wrong slot: " + slot);
         }
