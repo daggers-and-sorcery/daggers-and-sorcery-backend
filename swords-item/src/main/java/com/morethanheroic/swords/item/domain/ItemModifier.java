@@ -10,6 +10,7 @@ public enum ItemModifier {
 
     //Basic
     MOVEMENT,
+    SCAVENGING_BONUS,
 
     //Combat
     MANA,

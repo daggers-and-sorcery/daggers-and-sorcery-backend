@@ -6,7 +6,7 @@ import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.scavenging.domain.ScavengingResult;
 import com.morethanheroic.swords.scavenging.domain.ScavengingResultEntity;
-import com.morethanheroic.swords.scavenging.service.ScavengingFacade;
+import com.morethanheroic.swords.scavenging.service.ScavengingAttemptCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ public class ScavengingAwarder {
 
     private static final String UNIDENTIFIED_ITEM_NAME = "Unidentified item";
 
-    private final ScavengingFacade scavengingFacade;
+    private final ScavengingAttemptCalculator scavengingAttemptCalculator;
     private final CombatMessageFactory combatMessageFactory;
 
     public List<CombatStep> addScavengingDropsToUserFromMonsterDefinition(UserEntity userEntity, MonsterDefinition monster) {
         final List<CombatStep> result = new ArrayList<>();
 
-        final ScavengingResult scavengingResult = scavengingFacade.handleScavenging(userEntity, monster);
+        final ScavengingResult scavengingResult = scavengingAttemptCalculator.handleScavenging(userEntity, monster);
 
         if (scavengingResult.isSuccessfulScavenge()) {
             for (ScavengingResultEntity scavengingResultEntity : scavengingResult.getScavengingResultList()) {
