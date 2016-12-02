@@ -44,7 +44,8 @@ public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> 
                     try {
                         return unmarshaller.unmarshal(resource.getInputStream());
                     } catch (JAXBException | IOException e) {
-                        throw new DefinitionLoaderException("Error happened while trying to load definition: " + resourcePath + " with name: " + resource.getFilename(), e);
+                        throw new DefinitionLoaderException("Error happened while trying to load definition: "
+                                + resourcePath + " with name: " + resource.getFilename(), e);
                     }
                 })
                 .collect(Collectors.toList());
