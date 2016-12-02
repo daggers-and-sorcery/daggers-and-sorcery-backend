@@ -2,16 +2,17 @@ package com.morethanheroic.swords.definition.service.loader;
 
 import com.morethanheroic.swords.definition.service.loader.exception.DefinitionLoaderException;
 import com.morethanheroic.swords.definition.service.loader.unmarshaller.UnmarshallerBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Load xml classes and validate them based on the given schema url. it tries to load that many files with numeric numbers
@@ -20,40 +21,36 @@ import java.util.List;
  * loads as many files as it founds.
  */
 @Service
+@RequiredArgsConstructor
 public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final UnmarshallerBuilder unmarshallerBuilder;
 
-    @Autowired
-    private UnmarshallerBuilder unmarshallerBuilder;
-
+    //TODO: maximumFileCount is not needed anymore, remove it somehow!
     public List loadDefinitions(Class clazz, String resourcePath, String schemaPath, Integer maximumFileCount) throws IOException {
         try {
-            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath, maximumFileCount);
+            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath);
         } catch (JAXBException e) {
             throw new IOException(e);
         }
     }
 
     @SuppressWarnings({"unchecked", "checkstyle:IllegalCatch"})
-    private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath, int maximumFileCount) throws JAXBException, IOException {
-        final List list = new ArrayList<>();
+    private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath) throws JAXBException, IOException {
+        final ResourcePatternResolver resourcePatternResolver = buildResourcePatternResolver();
 
-        for (int i = 1; i < maximumFileCount; i++) {
-            try {
-                final Resource resource = applicationContext.getResource(resourcePath + i + ".xml");
+        return Arrays.stream(resourcePatternResolver.getResources(resourcePath + "*.xml"))
+                .map(resource -> {
+                    try {
+                        return unmarshaller.unmarshal(resource.getInputStream());
+                    } catch (JAXBException | IOException e) {
+                        throw new DefinitionLoaderException("Error happened while trying to load definition: " + resourcePath + " with name: " + resource.getFilename(), e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 
-                if (!resource.exists()) {
-                    return list;
-                }
-
-                list.add(unmarshaller.unmarshal(applicationContext.getResource(resourcePath + i + ".xml").getInputStream()));
-            } catch (Exception e) {
-                throw new DefinitionLoaderException("Error happened while trying to load definition: " + resourcePath + " with id: " + i, e);
-            }
-        }
-
-        throw new IllegalStateException("Should be here! There is more items to read than the actual maxvalue!");
+    private ResourcePatternResolver buildResourcePatternResolver() {
+        return new PathMatchingResourcePatternResolver(this.getClass().getClassLoader());
     }
 }

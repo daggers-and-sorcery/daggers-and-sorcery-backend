@@ -123,7 +123,7 @@ public class WiseOldManExplorationEventHandler extends MultiStageExplorationEven
 
             explorationResult.addEventEntryResult(
                     TextExplorationEventEntryResult.builder()
-                            .content("***Two bronze coins is removed from your pouch.***")
+                            .content("***Two bronze coins are removed from your pouch.***")
                             .build()
             ).addEventEntryResult(
                     TextExplorationEventEntryResult.builder()

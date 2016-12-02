@@ -16,7 +16,7 @@ public class MeleeDamageCalculator {
     public int calculateDamage(final CombatEntity attacker, final CombatEntity opponent) {
         final int resultDamage = calculateBaseDamage(attacker) - calculateDamageReduction(opponent);
 
-        return resultDamage > 0 ? resultDamage : 0;
+        return resultDamage > 1 ? resultDamage : 1;
     }
 
     private int calculateBaseDamage(final CombatEntity attacker) {

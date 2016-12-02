@@ -1,15 +1,14 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
-import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Service
 public class CombatStepListBuilder {
 
-    private List<CombatStep> combatSteps;
+    private List<CombatStep> combatSteps = new ArrayList<>();
 
     public static CombatStepListBuilder builder() {
         return new CombatStepListBuilder();
