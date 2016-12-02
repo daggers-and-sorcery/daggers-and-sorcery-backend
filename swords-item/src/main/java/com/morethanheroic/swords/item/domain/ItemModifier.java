@@ -21,6 +21,7 @@ public enum ItemModifier {
     MAGIC_DAMAGE,
     AIMING,
     DEFENSE,
+    DAMAGE_REDUCTION,
     SPELL_RESISTANCE,
     DAMAGE,
     RANGED_DAMAGE,

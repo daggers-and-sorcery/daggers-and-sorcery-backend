@@ -27,6 +27,8 @@ public class ItemModifierToAttributeConverter {
                 return CombatAttribute.AIMING;
             case DEFENSE:
                 return CombatAttribute.DEFENSE;
+            case DAMAGE_REDUCTION:
+                return CombatAttribute.DAMAGE_REDUCTION;
             case SPELL_RESISTANCE:
                 return CombatAttribute.SPELL_RESISTANCE;
             case DAMAGE:
@@ -55,6 +57,8 @@ public class ItemModifierToAttributeConverter {
                 return GeneralAttribute.WILLPOWER;
             case CHARISMA:
                 return GeneralAttribute.CHARISMA;
+            case SCAVENGING_BONUS:
+                return BasicAttribute.SCAVENGING_BONUS;
             case TWO_HANDED_CRUSHING_WEAPONS:
                 return SkillAttribute.TWO_HANDED_CRUSHING_WEAPONS;
             case ONE_HANDED_CRUSHING_WEAPONS:

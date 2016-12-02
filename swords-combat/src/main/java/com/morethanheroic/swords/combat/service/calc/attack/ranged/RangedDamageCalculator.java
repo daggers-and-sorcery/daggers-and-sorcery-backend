@@ -14,7 +14,9 @@ public class RangedDamageCalculator {
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
 
     public int calculateDamage(final CombatEntity attacker, final CombatEntity opponent) {
-        return calculateBaseDamage(attacker) - calculateDamageReduction(opponent);
+        final int resultDamage = calculateBaseDamage(attacker) - calculateDamageReduction(opponent);
+
+        return resultDamage > 0 ? resultDamage : 0;
     }
 
     private int calculateBaseDamage(final CombatEntity attacker) {

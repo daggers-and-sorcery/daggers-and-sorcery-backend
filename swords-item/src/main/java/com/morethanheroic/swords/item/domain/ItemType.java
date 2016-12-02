@@ -45,6 +45,7 @@ public enum ItemType {
     WEAPON,
     PROJECTILE,
     JEWELRY,
+    BELT,
     POTION;
 
     public String getName() {
