@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.attribute.domain;
 
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.WordUtils;
 
 import java.util.Locale;
@@ -12,7 +11,8 @@ import java.util.Locale;
 public enum BasicAttribute implements Attribute {
 
     //TODO: Load these values from an xml file and use a BasicAttributeDefinition class.
-    MOVEMENT(30, false);
+    MOVEMENT(30, false),
+    SCAVENGING_BONUS(0, true);
 
     private final int initialValue;
     private final boolean unlimited;

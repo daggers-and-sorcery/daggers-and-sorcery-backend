@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
@@ -67,16 +68,17 @@ public class UseItemService {
 
     //TODO: merge the two applyItem together somehow!
     private void applyItem(CombatEntity combatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
-        final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
-        for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : item.getCombatEffects()) {
-            contexts.add(CombatEffectApplyingContext.builder()
-                    .source(new CombatEffectTarget(combatEntity))
-                    .destination(new CombatEffectTarget(combatEntity))
-                    .combatSteps(Lists.newArrayList())
-                    .effectSettings(effectSettingDefinitionHolder)
-                    .build()
-            );
-        }
+        final List<CombatEffectApplyingContext> contexts = item.getCombatEffects().stream()
+                .map(effectSettingDefinitionHolder -> CombatEffectApplyingContext.builder()
+                        .source(new CombatEffectTarget(combatEntity))
+                        .destination(new CombatEffectTarget(combatEntity))
+                        .combatSteps(Lists.newArrayList())
+                        .effectSettings(effectSettingDefinitionHolder)
+                        .sessionEntity(combatEffectDataHolder.getSessionEntity())
+                        .parameters(combatEffectDataHolder.getParameters())
+                        .build()
+                )
+                .collect(Collectors.toList());
 
         combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
     }
@@ -84,16 +86,17 @@ public class UseItemService {
     private void applyItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
         final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
 
-        final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
-        for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : item.getCombatEffects()) {
-            contexts.add(CombatEffectApplyingContext.builder()
-                    .source(new CombatEffectTarget(userCombatEntity))
-                    .destination(new CombatEffectTarget(userCombatEntity))
-                    .combatSteps(Lists.newArrayList())
-                    .effectSettings(effectSettingDefinitionHolder)
-                    .build()
-            );
-        }
+        final List<CombatEffectApplyingContext> contexts = item.getCombatEffects().stream()
+                .map(effectSettingDefinitionHolder -> CombatEffectApplyingContext.builder()
+                        .source(new CombatEffectTarget(userCombatEntity))
+                        .destination(new CombatEffectTarget(userCombatEntity))
+                        .combatSteps(Lists.newArrayList())
+                        .effectSettings(effectSettingDefinitionHolder)
+                        .sessionEntity(combatEffectDataHolder.getSessionEntity())
+                        .parameters(combatEffectDataHolder.getParameters())
+                        .build()
+                )
+                .collect(Collectors.toList());
 
         combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
 

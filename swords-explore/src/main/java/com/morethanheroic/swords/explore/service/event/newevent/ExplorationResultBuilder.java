@@ -3,8 +3,11 @@ package com.morethanheroic.swords.explore.service.event.newevent;
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
+import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
+import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
@@ -16,6 +19,10 @@ import com.morethanheroic.swords.explore.service.event.evaluator.MessageBoxMessa
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -24,7 +31,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.AttributeList;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -52,6 +62,24 @@ public class ExplorationResultBuilder {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    private InventoryEntityFactory inventoryEntityFactory;
+
+    @Autowired
+    private ItemDefinitionCache itemDefinitionCache;
+
+    @Autowired
+    private MultiWayExplorationResultBuilderFactory multiWayExplorationResultBuilderFactory;
+
+    @Autowired
+    private LootDefinitionCache lootDefinitionCache;
+
+    @Autowired
+    private DropCalculator dropCalculator;
+
+    @Autowired
+    private DropTextCreator dropTextCreator;
 
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
@@ -153,6 +181,21 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder newLootEntry(final int lootId, final String messageId, final Object... messageArgs) {
+        final List<Drop> chestDrops = dropCalculator.calculateDrops(lootDefinitionCache.getDefinition(lootId).getDropDefinitions());
+
+        final List<Object> finalMessageArgs = new ArrayList<>();
+
+        finalMessageArgs.add( dropTextCreator.listAsText(chestDrops));
+        finalMessageArgs.addAll(Arrays.asList(messageArgs));
+
+        explorationResult.addEventEntryResult(
+                messageEventEntryEvaluator.messageEntry(messageId, finalMessageArgs.toArray())
+        );
+
+        return this;
+    }
+
     public MultiWayExplorationResultBuilder newAttributeAttemptEntry(final Attribute attribute, final int valueToHit) {
         final AttributeAttemptEventEntryEvaluatorResult attemptResult = attributeAttemptEventEntryEvaluator.attributeAttempt(userEntity, attribute, valueToHit);
 
@@ -165,15 +208,24 @@ public class ExplorationResultBuilder {
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
     }
 
+    public MultiWayExplorationResultBuilder newHasItemMultiWayPath(final ExplorationContext explorationContext, final int... items) {
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(explorationContext.getUserEntity().getId());
+
+        for (int item : items) {
+            if (!inventoryEntity.hasItem(itemDefinitionCache.getDefinition(item))) {
+                return multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+            }
+        }
+
+        return multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this);
+    }
+
     public MultiWayExplorationResultBuilder newCustomMultiWayPath(final Callable<Boolean> calculateSuccess) {
-        final boolean isSuccess;
         try {
-            isSuccess = calculateSuccess.call();
+            return multiWayExplorationResultBuilderFactory.newMultiWayExplorationResultBuilder(this, calculateSuccess.call());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return new MultiWayExplorationResultBuilder(this, isSuccess);
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {

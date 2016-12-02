@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.domain.effect.entry;
+package com.morethanheroic.swords.combat.domain.effect.entry.spell;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LesserIdentifyEffectDefinition extends CombatEffectDefinition {
+public class LesserIdentifySpellEffectDefinition extends CombatEffectDefinition {
 
     private static final int ALTERATION_EXPERIENCE_REWARD = 150;
 
@@ -39,7 +39,7 @@ public class LesserIdentifyEffectDefinition extends CombatEffectDefinition {
             inventoryEntity.addItem(realItem, 1, IdentificationType.IDENTIFIED);
         }
 
-        skillEntityFactory.getSkillEntity(userEntity).increaseExperience(SkillType.ALTERATION, ALTERATION_EXPERIENCE_REWARD);
+        skillEntityFactory.getEntity(userEntity.getId()).increaseExperience(SkillType.ALTERATION, ALTERATION_EXPERIENCE_REWARD);
     }
 
     @Override

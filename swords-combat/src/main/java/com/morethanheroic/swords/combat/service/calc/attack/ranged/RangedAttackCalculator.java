@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.attack;
+package com.morethanheroic.swords.combat.service.calc.attack.ranged;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -7,8 +7,10 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.CombatStepListBuilder;
+import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,8 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
     private final DiceRollCalculator diceRollCalculator;
     private final EquipmentFacade equipmentFacade;
     private final CombatMessageFactory combatMessageFactory;
+    private final RangedDamageCalculator rangedDamageCalculator;
+    private final AmmunitionLossCalculator ammunitionLossCalculator;
     private final Random random;
 
     @Override
@@ -46,41 +50,42 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
     }
 
     private List<CombatStep> dealDamage(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
-        final List<CombatStep> result = new ArrayList<>();
-
-        final int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getRangedDamage()));
+        final int damage = rangedDamageCalculator.calculateDamage(attacker, opponent);
 
         opponent.decreaseActualHealth(damage);
 
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(combatContext, damage * 2);
+            return calculateMonsterDamage((MonsterCombatEntity) attacker, combatContext, damage);
+        } else {
+            return calculatePlayerDamage((UserCombatEntity) attacker, opponent, damage);
+        }
+    }
 
-            result.add(
-                AttackCombatStep.builder()
+    private List<CombatStep> calculateMonsterDamage(final MonsterCombatEntity attacker, final CombatContext combatContext, final int damage) {
+        addDefenseXp(combatContext, damage * 2);
+
+        return CombatStepListBuilder.builder()
+                .withCombatStep(
+                        AttackCombatStep.builder()
                                 .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_PLAYER", attacker.getName(), damage))
                                 .build()
-            );
-        } else {
-            addAttackXp((UserCombatEntity) attacker, damage * 2);
+                )
+                .build();
+    }
 
-            if (random.nextInt(100) > 75) {
-                equipmentFacade.getEquipment(((UserCombatEntity) attacker).getUserEntity()).decreaseAmmunition(1);
+    private List<CombatStep> calculatePlayerDamage(final UserCombatEntity attacker, final CombatEntity opponent, final int damage) {
+        addAttackXp(attacker, damage * 2);
 
-                result.add(
+        return CombatStepListBuilder.builder()
+                .withCombatStep(
                         AttackCombatStep.builder()
-                                .message(combatMessageFactory.newMessage("ammunition", "COMBAT_MESSAGE_ARROW_LOST", 1))
-                                .build()
-                );
-            }
-
-            result.add(
-                AttackCombatStep.builder()
                                 .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_MONSTER", opponent.getName(), damage))
                                 .build()
-            );
-        }
-
-        return result;
+                )
+                .withCombatSteps(
+                        ammunitionLossCalculator.calculateAmmunitionLoss(attacker)
+                )
+                .build();
     }
 
     private CombatStep dealMiss(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {

@@ -20,6 +20,8 @@ public class TheGoblinKingExplorationEventHandler extends ImprovedExplorationEve
     private static final int ATTACK_THE_GOBLIN_STAGE = 3;
     private static final int COMBAT_STAGE = 4;
 
+    private static final int GOBLIN_KING_MONSTER_ID = 16;
+
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
 
     @Override
@@ -51,18 +53,16 @@ public class TheGoblinKingExplorationEventHandler extends ImprovedExplorationEve
                 .addStage(ATTACK_THE_GOBLIN_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_5")
-                                .newCombatEntry(16, EVENT_ID, COMBAT_STAGE)
+                                .newCombatEntry(GOBLIN_KING_MONSTER_ID, EVENT_ID, COMBAT_STAGE)
                                 .build()
                 )
-                .addStage(
-                        GO_HOME_STAGE,
+                .addStage(GO_HOME_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_4")
                                 .resetExploration()
                                 .build()
                 )
-                .addStage(
-                        COMBAT_STAGE,
+                .addStage(COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_6")
                                 .newMessageEntry("GOBLIN_KING_EXPLORATION_EVENT_ENTRY_7")

@@ -24,6 +24,7 @@ public enum CombatAttribute implements Attribute {
     MAGIC_DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.WILLPOWER}, 0.25, 3),
     AIMING(10, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY, GeneralAttribute.PERCEPTION}, 0.5, 20),
     DEFENSE(10, true, new GeneralAttribute[]{GeneralAttribute.ENDURANCE, GeneralAttribute.DEXTERITY}, 0.5, 20),
+    DAMAGE_REDUCTION(0, true, new GeneralAttribute[]{GeneralAttribute.STRENGTH}, 0.1, 0),
     SPELL_RESISTANCE(10, true, new GeneralAttribute[]{GeneralAttribute.WILLPOWER, GeneralAttribute.WISDOM}, 0.5, 20),
     DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.STRENGTH}, 0.25, 3),
     RANGED_DAMAGE(1, true, new GeneralAttribute[]{GeneralAttribute.DEXTERITY}, 0.25, 3);

@@ -43,6 +43,8 @@ public class EquipmentSlotMapper {
                 return EquipmentSlot.QUIVER;
             case HELM:
                 return EquipmentSlot.HELM;
+            case BELT:
+                return EquipmentSlot.BELT;
             default:
                 throw new IllegalArgumentException("Unsupported item type: " + itemType);
         }

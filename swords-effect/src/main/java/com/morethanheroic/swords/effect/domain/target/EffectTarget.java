@@ -6,5 +6,4 @@ package com.morethanheroic.swords.effect.domain.target;
 public interface EffectTarget {
 
     boolean isUser();
-
 }

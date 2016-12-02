@@ -53,12 +53,8 @@ public class LockpickingAttributeAttemptCalculatorExtension
 
     @Override
     public void postProbeHook(final LockpickingAttributeAttemptCalculatorExtensionResult lockpickingAttributeProbeCalculatorExtensionResult, final PostAttemptHookData postAttemptHookData) {
-        final boolean isLostLockpick = percentageCalculator.calculatePercentageHit(CHANCE_TO_LOST_ON_FAIL);
-
-        lockpickingAttributeProbeCalculatorExtensionResult.setLostLockpick(isLostLockpick);
-
-        if (isLostLockpick) {
-            inventoryEntityFactory.getEntity(postAttemptHookData.getUserEntity().getId()).removeItem(lockpick, 1);
+        if (shouldCalculateLockpickLoss(postAttemptHookData)) {
+            calculateLockpickLoss(postAttemptHookData.getUserEntity(), lockpickingAttributeProbeCalculatorExtensionResult);
         }
 
         final int experienceReward = calculateExperienceReward(postAttemptHookData.getTargetToHit(), postAttemptHookData.isSuccessfulProbe());
@@ -70,6 +66,20 @@ public class LockpickingAttributeAttemptCalculatorExtension
     @Override
     public Attribute supportedAttribute() {
         return SkillAttribute.LOCKPICKING;
+    }
+
+    private boolean shouldCalculateLockpickLoss(final PostAttemptHookData postAttemptHookData) {
+        return !postAttemptHookData.isSuccessfulProbe();
+    }
+
+    private void calculateLockpickLoss(final UserEntity userEntity, final LockpickingAttributeAttemptCalculatorExtensionResult lockpickingAttributeAttemptCalculatorExtensionResult) {
+        final boolean isLostLockpick = percentageCalculator.calculatePercentageHit(CHANCE_TO_LOST_ON_FAIL);
+
+        lockpickingAttributeAttemptCalculatorExtensionResult.setLostLockpick(isLostLockpick);
+
+        if (isLostLockpick) {
+            inventoryEntityFactory.getEntity(userEntity.getId()).removeItem(lockpick, 1);
+        }
     }
 
     private int calculateExperienceReward(final int target, final boolean isSuccessful) {

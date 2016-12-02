@@ -1,43 +1,35 @@
 package com.morethanheroic.swords.scavenging.service;
 
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.scavenging.domain.ScavengingEntity;
 import com.morethanheroic.swords.scavenging.domain.ScavengingResult;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
-import com.morethanheroic.swords.skill.service.SkillFacade;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
 @Service
-public class ScavengingFacade {
+@RequiredArgsConstructor
+public class ScavengingAttemptCalculator {
 
-    @Autowired
-    private ScavengingResultAwarder scavengingResultAwarder;
-
-    @Autowired
-    private ScavengingCalculator scavengingCalculator;
-
-    @Autowired
-    private InventoryFacade inventoryFacade;
-
-    @Autowired
-    private SkillFacade skillFacade;
-
-    @Autowired
-    private ScavengingEntityFactory scavengingEntityFactory;
+    private final ScavengingResultAwarder scavengingResultAwarder;
+    private final ScavengingCalculator scavengingCalculator;
+    private final InventoryEntityFactory inventoryEntityFactory;
+    private final SkillEntityFactory skillEntityFactory;
+    private final ScavengingEntityFactory scavengingEntityFactory;
 
     public ScavengingResult handleScavenging(UserEntity userEntity, MonsterDefinition monsterDefinition) {
-        ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(userEntity.getId());
-        SkillEntity skillEntity = skillFacade.getSkills(userEntity);
-        InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
+        final ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(userEntity.getId());
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity.getId());
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
 
         if (shouldScavenge(scavengingEntity)) {
-            ScavengingResult scavengingResult = scavengingCalculator.calculateScavenge(skillEntity, monsterDefinition);
+            final ScavengingResult scavengingResult = scavengingCalculator.calculateScavenge(userEntity, skillEntity, monsterDefinition);
 
             scavengingResultAwarder.awardScavengingResultToUser(skillEntity, inventoryEntity, scavengingResult);
 

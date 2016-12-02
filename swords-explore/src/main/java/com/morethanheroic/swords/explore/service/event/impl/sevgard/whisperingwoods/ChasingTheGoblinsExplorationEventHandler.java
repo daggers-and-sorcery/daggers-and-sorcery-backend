@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @ExplorationEvent
 @RequiredArgsConstructor
-public class ChasingTheGoblinsExplorationEventDefinition extends MultiStageExplorationEventHandler {
+public class ChasingTheGoblinsExplorationEventHandler extends MultiStageExplorationEventHandler {
 
     private static final int EVENT_ID = 15;
 

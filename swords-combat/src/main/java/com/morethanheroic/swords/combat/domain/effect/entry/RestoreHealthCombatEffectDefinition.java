@@ -11,11 +11,11 @@ import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Heal the user for a given amount of health points.
+ * Restore given amount of health points to the user.
  */
 @Service
 @RequiredArgsConstructor
-public class HealCombatEffectDefinition extends CombatEffectDefinition {
+public class RestoreHealthCombatEffectDefinition extends CombatEffectDefinition {
 
     private final CombatMessageFactory combatMessageFactory;
 
@@ -24,9 +24,9 @@ public class HealCombatEffectDefinition extends CombatEffectDefinition {
         final int amount = Integer.parseInt(effectApplyingContext.getEffectSettings().getSetting("amount").getValue());
 
         effectApplyingContext.addCombatStep(
-            DefaultCombatStep.builder()
-                             .message(combatMessageFactory.newMessage("heal", "HEAL_EFFECT_SPELL_HEALING_DONE", amount))
-                             .build()
+                DefaultCombatStep.builder()
+                        .message(combatMessageFactory.newMessage("heal", "RESTORE_HEALTH_EFFECT_SPELL_HEALING_DONE", amount))
+                        .build()
         );
 
         effectApplyingContext.getDestination().getCombatEntity().increaseActualHealth(amount);
@@ -34,6 +34,6 @@ public class HealCombatEffectDefinition extends CombatEffectDefinition {
 
     @Override
     public String getId() {
-        return "heal";
+        return "restore_health";
     }
 }

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.attack;
+package com.morethanheroic.swords.combat.service.calc.attack.melee;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -7,8 +7,9 @@ import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.message.domain.CombatMessageContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -27,6 +28,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
     private final CombatMessageFactory combatMessageFactory;
+    private final MeleeDamageCalculator meleeDamageCalculator;
     private final Random random;
 
     @Override
@@ -49,7 +51,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
     private List<CombatStep> dealDamage(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
         final List<CombatStep> result = new ArrayList<>();
 
-        final int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getDamage()));
+        final int damage = meleeDamageCalculator.calculateDamage(attacker, opponent);
 
         opponent.decreaseActualHealth(damage);
 
@@ -90,7 +92,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
         return result;
     }
 
-    public String getRandomBodySlot(final CombatMessageContext messageContext) {
+    private String getRandomBodySlot(final CombatMessageContext messageContext) {
         if (messageContext.getType() == MonsterType.UNDEAD && messageContext.getSubtype() == MonsterType.SKELETON) {
             final String[] slots = new String[]{"stomach", "arm", "shoulder", "knee", "thigh"};
 

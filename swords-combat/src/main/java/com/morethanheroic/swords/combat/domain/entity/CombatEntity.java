@@ -77,6 +77,8 @@ public abstract class CombatEntity {
 
     public abstract DiceAttribute getDefense();
 
+    public abstract DiceAttribute getDamageReduction();
+
     public abstract DiceAttribute getDamage();
 
     public abstract DiceAttribute getRangedDamage();

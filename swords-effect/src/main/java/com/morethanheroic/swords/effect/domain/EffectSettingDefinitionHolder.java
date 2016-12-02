@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.effect.domain;
 
-import java.util.Map;
-
 import lombok.Getter;
+
+import java.util.Map;
 
 /**
  * Holds the settings for an effect.
@@ -21,5 +21,9 @@ public class EffectSettingDefinitionHolder {
 
     public EffectSettingDefinition getSetting(String name) {
         return settings.get(name);
+    }
+
+    public int getSettingAsInt(final String settingsName) {
+        return settings.get(settingsName) == null ? 0 : Integer.parseInt(settings.get(settingsName).getValue());
     }
 }
