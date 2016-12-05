@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20161204-1">
+        <insert tableName="news">
+            <column name="title" value="Preparing for the woodland cemetery"/>
+            <column name="release_date" value="2016-12-04 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+With this week's patch, we are preparing for the release of the Woodland cemetery. We fixed a lot of small bugs in the game and started to work on being more beginner friendly. We made good improvements on mobile devices also and we start to assign the same priority to mobile browsing experience as we do to the desktop because we see higher and higher activity coming from mobile devices.
+
+Improvements:
+- Added the first belt to the game. It's a very rare drop from the goblin king and it requires 3 "Bead of Luck" for crafting. This will be the first epic rarity gear in the game when the rarity system will be released. A new attribute was added to this belt called 'Scavenging bonus'. This attribute will give a percentage bonus for the scavenging rolls. For example, if you had 1/10 chance for a scavenging drop and equip a new item with 20% scavenging bonus you will have 1.2/10 chance for the drop in the future.
+- Added level 5 melee armor drops to the goblin king.
+- Improved the site look on mobile devices. We plan on pushing an advertisement campaign for mobile devices when we release the Woodland cemetery.
+- Started to work on the very base of the 'Knowledge base'.
+- Added description to the "Woodland cemetery".
+
+Bugfixes:
+- Fixed that for some players the exploration screen was not opened if they left the combat screen while fighting the goblin king.
+- Fixed that the goblin king event had no ending text.
+- Fixed a few typos and incorrect texts on the goblin king event.
+- Fixed that the dice (1d2, 1d4 etc) variables were not shown on the market page when the player examined an item via the "eye" icon.
+- Fixed that the identification spell's page said 'Unidentify' instead of 'Identify' on its identification button.
+- Lockpicks are no longer lost on successful lockpicking attempts. This bug was fixed once a while ago but it started to re-appear again. Now it's fixed hopefully forever.
+- Fixed that the ladder was not working correctly. Now it's fully functional again and also it's pager got shortened, now it only displays the nearest 10 page (you can still quickly jump to the first or the last page however).
+- Fixed the 'Robinia longbow' and 'Robinia shortbow' to have ranged damage bonus instead of melee damage bonus.
+- Fixed that the 'Small mana crystal' was not equipable.
+- Fixed that the display of the received combat experience was in a wrong order.
+- Fixed that on the journal page under an item's equipable label the game showed either true or false. Now it shows yes or no.
+- Fixed few typos in the wise old man event.
+
+Huge thanks to Tomáš "Tousticek" Cigánek, Maroš "Verienn" Chovanec and Nemanja "Wolfanir" Kuzmanovic!
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
