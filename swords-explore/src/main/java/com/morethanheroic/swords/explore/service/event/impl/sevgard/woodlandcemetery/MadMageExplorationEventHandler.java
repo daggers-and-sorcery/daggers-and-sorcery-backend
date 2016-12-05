@@ -7,7 +7,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResul
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import lombok.RequiredArgsConstructor;
 
-//@ExplorationEvent
+@ExplorationEvent
 @RequiredArgsConstructor
 public class MadMageExplorationEventHandler extends ImprovedExplorationEventHandler {
 

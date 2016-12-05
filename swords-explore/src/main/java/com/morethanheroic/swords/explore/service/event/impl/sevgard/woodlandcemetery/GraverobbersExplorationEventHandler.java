@@ -9,7 +9,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
 
 import lombok.RequiredArgsConstructor;
 
-//@ExplorationEvent
+@ExplorationEvent
 @RequiredArgsConstructor
 public class GraverobbersExplorationEventHandler extends ImprovedExplorationEventHandler {
 
