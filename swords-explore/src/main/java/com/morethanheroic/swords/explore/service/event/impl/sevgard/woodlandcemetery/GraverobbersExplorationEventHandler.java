@@ -19,8 +19,10 @@ public class GraverobbersExplorationEventHandler extends ImprovedExplorationEven
     private static final int PAY_COINS_STAGE = 1;
     private static final int FIRST_COMBAT_STAGE = 2;
     private static final int SECOND_COMBAT_STAGE = 3;
+    private static final int END_STAGE = 4;
 
     private static final int GRAVEROBBER_MONSTER_ID = 17;
+    private static final int GRAVEROBBERS_SHACK_LOOT_ID = 3;
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
 
@@ -57,13 +59,19 @@ public class GraverobbersExplorationEventHandler extends ImprovedExplorationEven
                 .addStage(FIRST_COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("GRAVEROBBERS_EXPLORATION_EVENT_ENTRY_9")
-                                .newCombatEntry(GRAVEROBBER_MONSTER_ID, EVENT_ID, FIRST_COMBAT_STAGE)
+                                .newCombatEntry(GRAVEROBBER_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)
                                 .build()
                 )
                 .addStage(SECOND_COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("GRAVEROBBERS_EXPLORATION_EVENT_ENTRY_6")
-                                .newCombatEntry(GRAVEROBBER_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)
+                                .newCombatEntry(GRAVEROBBER_MONSTER_ID, EVENT_ID, END_STAGE)
+                                .build()
+                )
+                .addStage(END_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newLootEntry(GRAVEROBBERS_SHACK_LOOT_ID, "GRAVEROBBERS_EXPLORATION_EVENT_ENTRY_7")
+                                .resetExploration()
                                 .build()
                 )
                 .runStage(explorationContext);
@@ -87,13 +95,13 @@ public class GraverobbersExplorationEventHandler extends ImprovedExplorationEven
                                 )
                                 .build()
                 )
-                .addStage(FIRST_COMBAT_STAGE,
+                .addStage(SECOND_COMBAT_STAGE,
                         explorationResultBuilder -> explorationResultBuilder
                                 .newMessageEntry("GRAVEROBBERS_EXPLORATION_EVENT_ENTRY_9")
                                 .continueCombatEntry()
                                 .build()
                 )
-                .addStage(SECOND_COMBAT_STAGE,
+                .addStage(END_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("GRAVEROBBERS_EXPLORATION_EVENT_ENTRY_6")
                                 .continueCombatEntry()

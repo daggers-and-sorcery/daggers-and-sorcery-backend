@@ -21,6 +21,10 @@ public class ExplorationResultStageBuilder {
     }
 
     public ExplorationResult runStage(final ExplorationContext context) {
+        if (!stageMap.containsKey(context.getStage())) {
+            throw new ExplorationStageMissingException("Missing exploration stage for event: " + context.getEvent().getId() + " and stage: " + context.getStage() + ".");
+        }
+
         return stageMap.get(context.getStage()).run(
                 explorationResultBuilderFactory.newExplorationResultBuilder(context.getUserEntity(), context.getEvent())
         );
