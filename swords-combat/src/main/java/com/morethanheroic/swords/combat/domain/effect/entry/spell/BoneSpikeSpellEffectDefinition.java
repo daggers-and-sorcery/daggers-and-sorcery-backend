@@ -9,45 +9,54 @@ import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
-import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
+import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class FireballSpellEffectDefinition extends ImprovedCombatEffectDefinition {
+public class BoneSpikeSpellEffectDefinition extends ImprovedCombatEffectDefinition {
 
-    private static final int AWARDED_DESTRUCTION_XP = 30;
+    private static final int AWARDED_DESTRUCTION_XP = 25;
+
+    private static final int BONE_ID = 164;
 
     private final DiceRollCalculator diceRollCalculator;
-    private final SkillEntityFactory skillEntityFactory;
     private final CombatMessageFactory combatMessageFactory;
     private final CombatCalculator combatCalculator;
     private final DiceRollFromDamageSettingsBuilder diceRollFromDamageSettingsBuilder;
+    private final InventoryEntityFactory inventoryEntityFactory;
+    private final ItemDefinitionCache itemDefinitionCache;
 
     @Override
     public void apply(CombatEffectApplyingContext effectApplyingContext) {
         final DiceRollCalculationContext diceRollCalculationContext = diceRollFromDamageSettingsBuilder.buildDiceRollCalculationContext(effectApplyingContext.getEffectSettings());
 
-        int damage = diceRollCalculator.rollDices(diceRollCalculationContext);
+        final int damage = diceRollCalculator.rollDices(diceRollCalculationContext);
 
         if (effectApplyingContext.getSource().isUser()) {
             final UserEntity userEntity = ((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity();
+            final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
 
-            final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity.getId());
+            if (!inventoryEntity.hasItem(itemDefinitionCache.getDefinition(BONE_ID))) {
+                effectApplyingContext.addCombatStep(
+                        DefaultCombatStep.builder()
+                                .message(combatMessageFactory.newMessage("damage_done", "REQUIRED_ITEM_BONE_MISSING", damage))
+                                .build()
+                );
 
-            if (skillEntity.getLevel(SkillType.DESTRUCTION) <= 10) {
-                damage += Math.floor(skillEntity.getLevel(SkillType.DESTRUCTION) / 2);
-            } else {
-                damage += 5;
+                return;
             }
+
+            inventoryEntity.removeItem(itemDefinitionCache.getDefinition(BONE_ID), 1);
 
             effectApplyingContext.addCombatStep(
                     DefaultCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("damage_done", "FIREBALL_SPELL_DAMAGE_DONE", damage))
+                            .message(combatMessageFactory.newMessage("damage_done", "BONE_SPIKE_SPELL_DAMAGE_DONE", damage))
                             .build()
             );
 
@@ -55,12 +64,14 @@ public class FireballSpellEffectDefinition extends ImprovedCombatEffectDefinitio
 
             combatCalculator.addCombatExperience(userEntity, SkillType.DESTRUCTION, AWARDED_DESTRUCTION_XP);
         } else {
+            //TODO: Enable monsters to use this spell.
+
             throw new IllegalArgumentException("Caster as a monster is not supported for fireball.");
         }
     }
 
     @Override
     public String getId() {
-        return "fireball_spell";
+        return "bone_spike_spell";
     }
 }
