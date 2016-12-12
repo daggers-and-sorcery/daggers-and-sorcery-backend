@@ -18,9 +18,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class FireballSpellEffectDefinition extends ImprovedCombatEffectDefinition {
+public class LightningBoltSpellEffectDefinition extends ImprovedCombatEffectDefinition {
 
-    private static final int AWARDED_DESTRUCTION_XP = 30;
+    private static final int AWARDED_DESTRUCTION_XP = 50;
 
     private final DiceRollCalculator diceRollCalculator;
     private final SkillEntityFactory skillEntityFactory;
@@ -39,15 +39,15 @@ public class FireballSpellEffectDefinition extends ImprovedCombatEffectDefinitio
 
             final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity.getId());
 
-            if (skillEntity.getLevel(SkillType.DESTRUCTION) <= 10) {
-                damage += Math.floor(skillEntity.getLevel(SkillType.DESTRUCTION) / 2);
+            if (skillEntity.getLevel(SkillType.DESTRUCTION) <= 15) {
+                damage += Math.floor(skillEntity.getLevel(SkillType.DESTRUCTION) / 3);
             } else {
-                damage += 5;
+                damage += 7;
             }
 
             effectApplyingContext.addCombatStep(
                     DefaultCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("damage_done", "FIREBALL_SPELL_DAMAGE_DONE", damage))
+                            .message(combatMessageFactory.newMessage("damage_done", "LIGHTNING_BOLT_SPELL_DAMAGE_DONE", damage))
                             .build()
             );
 
@@ -61,6 +61,6 @@ public class FireballSpellEffectDefinition extends ImprovedCombatEffectDefinitio
 
     @Override
     public String getId() {
-        return "fireball_spell";
+        return "lightning_bolt_spell";
     }
 }

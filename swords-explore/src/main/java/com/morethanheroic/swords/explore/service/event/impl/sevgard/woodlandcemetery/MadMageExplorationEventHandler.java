@@ -7,7 +7,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResul
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import lombok.RequiredArgsConstructor;
 
-//@ExplorationEvent
+@ExplorationEvent
 @RequiredArgsConstructor
 public class MadMageExplorationEventHandler extends ImprovedExplorationEventHandler {
 
@@ -17,7 +17,7 @@ public class MadMageExplorationEventHandler extends ImprovedExplorationEventHand
     private static final int COMBAT_STAGE = 1;
 
     private static final int MAD_MAGE_MONSTER_ID = 19;
-    private static final int MAD_MAGE_REWARD_CHEST_LOOT_ID = 99;
+    private static final int MAD_MAGE_REWARD_CHEST_LOOT_ID = 4;
 
     private static final int TORCH_ID = 120;
 
@@ -41,13 +41,13 @@ public class MadMageExplorationEventHandler extends ImprovedExplorationEventHand
                                 .newHasItemMultiWayPath(explorationContext, TORCH_ID)
                                 .isSuccess(
                                         explorationResultBuilder2 -> explorationResultBuilder2
-                                                .newMessageEntry("MAD_MAGE_EXPLORATION_EVENT_ENTRY_6")
+                                                .newLootEntry(MAD_MAGE_REWARD_CHEST_LOOT_ID, "MAD_MAGE_EXPLORATION_EVENT_ENTRY_7")
                                                 .resetExploration()
                                                 .build()
                                 )
                                 .isFailure(
                                         explorationResultBuilder2 -> explorationResultBuilder2
-                                                .newLootEntry(MAD_MAGE_REWARD_CHEST_LOOT_ID, "MAD_MAGE_EXPLORATION_EVENT_ENTRY_7")
+                                                .newMessageEntry("MAD_MAGE_EXPLORATION_EVENT_ENTRY_6")
                                                 .resetExploration()
                                                 .build()
                                 )
@@ -58,7 +58,14 @@ public class MadMageExplorationEventHandler extends ImprovedExplorationEventHand
 
     @Override
     public ExplorationResult handleInfo(final ExplorationContext explorationContext) {
-        return null;
+        return explorationResultStageBuilderFactory.newBuilder()
+                .addStage(COMBAT_STAGE,
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newMessageEntry("MAD_MAGE_EXPLORATION_EVENT_ENTRY_4")
+                                .continueCombatEntry()
+                                .build()
+                )
+                .runStage(explorationContext);
     }
 
     @Override

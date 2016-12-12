@@ -8,7 +8,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorat
 
 import lombok.RequiredArgsConstructor;
 
-//@ExplorationEvent
+@ExplorationEvent
 @RequiredArgsConstructor
 public class FeastOfAGhoulExplorationEventHandler extends ImprovedExplorationEventHandler {
 

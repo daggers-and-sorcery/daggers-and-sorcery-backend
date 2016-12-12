@@ -38,6 +38,8 @@ public class EquipmentSlotMapper {
             case AMULET:
                 return EquipmentSlot.AMULET;
             case PLATELEGS:
+            case STOCKINGS:
+            case LEGGINGS:
                 return EquipmentSlot.LEGS;
             case ARROW:
                 return EquipmentSlot.QUIVER;
