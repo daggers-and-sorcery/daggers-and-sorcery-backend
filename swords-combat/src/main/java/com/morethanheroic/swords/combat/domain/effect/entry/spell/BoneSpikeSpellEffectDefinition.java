@@ -45,7 +45,7 @@ public class BoneSpikeSpellEffectDefinition extends ImprovedCombatEffectDefiniti
             if (!inventoryEntity.hasItem(itemDefinitionCache.getDefinition(BONE_ID))) {
                 effectApplyingContext.addCombatStep(
                         DefaultCombatStep.builder()
-                                .message(combatMessageFactory.newMessage("damage_done", "REQUIRED_ITEM_BONE_MISSING", damage))
+                                .message(combatMessageFactory.newMessage("spell", "REQUIRED_ITEM_BONE_MISSING", damage))
                                 .build()
                 );
 

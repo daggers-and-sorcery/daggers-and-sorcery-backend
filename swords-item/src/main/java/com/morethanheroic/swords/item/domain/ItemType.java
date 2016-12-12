@@ -46,7 +46,11 @@ public enum ItemType {
     PROJECTILE,
     JEWELRY,
     BELT,
-    POTION;
+    POTION,
+    STOCKINGS,
+    LEGGINGS,
+    HERB,
+    CLOTH;
 
     public String getName() {
         return WordUtils.capitalize(name().toLowerCase().replace("_", " "));

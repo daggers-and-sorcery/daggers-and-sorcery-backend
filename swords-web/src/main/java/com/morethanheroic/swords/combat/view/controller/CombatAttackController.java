@@ -28,6 +28,7 @@ public class CombatAttackController {
                 .combatSteps(attackResult.getAttackResult())
                 .combatEnded(attackResult.isCombatEnded())
                 .playerDead(attackResult.getWinner() == Winner.MONSTER)
-                .build());
+                .build()
+        );
     }
 }
