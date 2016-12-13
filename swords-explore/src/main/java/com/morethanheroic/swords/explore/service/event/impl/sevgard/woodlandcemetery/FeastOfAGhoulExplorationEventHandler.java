@@ -19,6 +19,8 @@ public class FeastOfAGhoulExplorationEventHandler extends ImprovedExplorationEve
 
     private static final int GHOUL_MONSTER_ID = 18;
 
+    private static final int ADVENTURER_POUCH_LOOT_ID = 5;
+
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
 
     @Override
@@ -35,7 +37,7 @@ public class FeastOfAGhoulExplorationEventHandler extends ImprovedExplorationEve
                 )
                 .addStage(COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
-                                .newMessageEntry("FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_5")
+                                .newLootEntry(ADVENTURER_POUCH_LOOT_ID, "FEAST_OF_A_GHOUL_EXPLORATION_EVENT_ENTRY_5")
                                 .resetExploration()
                                 .build()
                 )
