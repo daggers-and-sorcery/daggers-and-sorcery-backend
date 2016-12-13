@@ -18,8 +18,6 @@ public class DropAdder {
     public void addDrops(final UserEntity userEntity, final List<Drop> drops) {
         final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
 
-        for (Drop drop : drops) {
-            inventoryEntity.addItem(drop.getItem(), drop.getAmount(), drop.isIdentified());
-        }
+        drops.forEach(drop -> inventoryEntity.addItem(drop.getItem(), drop.getAmount(), drop.isIdentified()));
     }
 }
