@@ -171,7 +171,7 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
         if (stage == COMBAT_STAGE) {
             return explorationResultBuilderFactory
                     .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
-                    .newMessageEntry("WOLF_ATTACK_EXPLORATION_EVENT_ENTRY_3")
+                    .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_3")
                     .newOptionEntry(
                             ReplyOption.builder()
                                     .message("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_QUESTION_REPLY_1")

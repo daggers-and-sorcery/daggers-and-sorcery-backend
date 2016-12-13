@@ -63,7 +63,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_MONSTER", attacker.getName(), damage))
+                            .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_MONSTER", opponent.getName(), damage))
                             .build()
             );
         }

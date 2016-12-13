@@ -7,6 +7,7 @@ import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
+import com.morethanheroic.swords.combat.service.drop.DropAdder;
 import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
@@ -80,6 +81,9 @@ public class ExplorationResultBuilder {
 
     @Autowired
     private DropTextCreator dropTextCreator;
+
+    @Autowired
+    private DropAdder dropAdder;
 
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
@@ -181,12 +185,16 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    //TODO: move the content of this bs to somewhere
     public ExplorationResultBuilder newLootEntry(final int lootId, final String messageId, final Object... messageArgs) {
         final List<Drop> chestDrops = dropCalculator.calculateDrops(lootDefinitionCache.getDefinition(lootId).getDropDefinitions());
 
-        final List<Object> finalMessageArgs = new ArrayList<>();
+        //Award the drops
+        dropAdder.addDrops(userEntity, chestDrops);
 
-        finalMessageArgs.add( dropTextCreator.listAsText(chestDrops));
+        //Print the drops
+        final List<Object> finalMessageArgs = new ArrayList<>();
+        finalMessageArgs.add(dropTextCreator.listAsText(chestDrops));
         finalMessageArgs.addAll(Arrays.asList(messageArgs));
 
         explorationResult.addEventEntryResult(
