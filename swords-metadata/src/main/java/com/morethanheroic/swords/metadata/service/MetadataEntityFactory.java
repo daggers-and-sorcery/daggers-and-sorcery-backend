@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.metadata.factory;
+package com.morethanheroic.swords.metadata.service;
 
 import com.morethanheroic.swords.metadata.domain.NumericMetadataEntity;
 import com.morethanheroic.swords.metadata.domain.TextMetadataEntity;

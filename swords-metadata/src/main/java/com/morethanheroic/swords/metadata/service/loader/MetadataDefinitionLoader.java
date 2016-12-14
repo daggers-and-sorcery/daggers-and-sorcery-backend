@@ -8,7 +8,6 @@ import com.morethanheroic.swords.metadata.service.loader.domain.RawMetadataDefin
 import com.morethanheroic.swords.metadata.service.transformer.MetadataDefinitionTransformer;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,7 +17,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class MetadataDefinitionLoader implements DefinitionLoader<MetadataDefinition> {
 
     private static final String METADATA_DEFINITION_LOCATION = "classpath:data/metadata/definition/";

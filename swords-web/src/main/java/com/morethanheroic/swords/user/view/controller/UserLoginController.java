@@ -2,7 +2,7 @@ package com.morethanheroic.swords.user.view.controller;
 
 import com.morethanheroic.login.domain.LoginRequest;
 import com.morethanheroic.swords.metadata.domain.TextMetadataEntity;
-import com.morethanheroic.swords.metadata.factory.MetadataEntityFactory;
+import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;
 import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.session.SessionAttributeType;

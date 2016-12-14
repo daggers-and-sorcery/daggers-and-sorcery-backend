@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.scavenging.service;
 
 import com.morethanheroic.entity.service.factory.EntityFactory;
-import com.morethanheroic.swords.metadata.factory.MetadataEntityFactory;
+import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;
 import com.morethanheroic.swords.scavenging.domain.ScavengingEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
