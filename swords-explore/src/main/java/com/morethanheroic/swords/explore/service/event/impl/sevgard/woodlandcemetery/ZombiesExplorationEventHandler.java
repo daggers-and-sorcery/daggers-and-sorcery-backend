@@ -37,13 +37,14 @@ public class ZombiesExplorationEventHandler extends ImprovedExplorationEventHand
                 .addStage(FIRST_COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("ZOMBIES_EXPLORATION_EVENT_ENTRY_6")
-                                .newCombatEntry(ZOMBIE_MONSTER_ID, EVENT_ID, FIRST_COMBAT_STAGE)
+                                .newCombatEntry(ZOMBIE_MONSTER_ID, EVENT_ID, SECOND_COMBAT_STAGE)
                                 .build()
                 )
                 .addStage(SECOND_COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("ZOMBIES_EXPLORATION_EVENT_ENTRY_7")
                                 .newMessageEntry("ZOMBIES_EXPLORATION_EVENT_ENTRY_8")
+                                .resetExploration()
                                 .build()
                 )
                 .runStage(explorationContext);
@@ -51,11 +52,25 @@ public class ZombiesExplorationEventHandler extends ImprovedExplorationEventHand
 
     @Override
     public ExplorationResult handleInfo(ExplorationContext explorationContext) {
-        return null;
+        return explorationResultStageBuilderFactory.newBuilder()
+                .addStage(FIRST_COMBAT_STAGE,
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newMessageEntry("ZOMBIES_EXPLORATION_EVENT_ENTRY_5")
+                                .continueCombatEntry()
+                                .build()
+                )
+                .addStage(SECOND_COMBAT_STAGE,
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newMessageEntry("ZOMBIES_EXPLORATION_EVENT_ENTRY_6")
+                                .continueCombatEntry()
+                                .build()
+                )
+                .runStage(explorationContext);
     }
 
     @Override
     public boolean isValidNextStageAtStage(int stage, int nextStage) {
+        //TODO
         return true;
     }
 
