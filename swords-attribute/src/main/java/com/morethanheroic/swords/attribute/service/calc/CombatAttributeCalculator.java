@@ -1,25 +1,33 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
+import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Used to calculate a {@link com.morethanheroic.swords.attribute.domain.type.AttributeType#COMBAT} attribute's all data related to the player.
  */
 @Service
-public class CombatAttributeCalculator implements AttributeCalculator<CombatAttribute> {
+public class CombatAttributeCalculator extends GenericAttributeCalculator<CombatAttribute> {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
 
     @Autowired
     private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
+
+    @Autowired
+    private List<AttributeBonusProvider> attributeBonusProviders;
 
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, CombatAttribute attribute) {
@@ -34,6 +42,40 @@ public class CombatAttributeCalculator implements AttributeCalculator<CombatAttr
     @Override
     public Class<CombatAttribute> getSupportedType() {
         return CombatAttribute.class;
+    }
+
+    @Override
+    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
+        if (attribute == CombatAttribute.LIFE) {
+            return new CombatAttributeCalculationResult(user.getHealthPoints(), (CombatAttribute) attribute);
+        } else if (attribute == CombatAttribute.MANA) {
+            return new CombatAttributeCalculationResult(user.getManaPoints(), (CombatAttribute) attribute);
+        }
+
+        return super.calculateActualValue(user, attribute, shouldCheckMinimum);
+    }
+
+    @Override
+    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
+        final AttributeCalculationResult result = new CombatAttributeCalculationResult((CombatAttribute) attribute);
+
+        for (AttributeBonusProvider attributeBonusProvider : attributeBonusProviders) {
+            result.addCalculationResult(attributeBonusProvider.calculateBonus(userEntity, attribute));
+        }
+
+        result.increaseValue(attribute.getInitialValue());
+        result.increaseValue(calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute));
+
+        return result;
+    }
+
+    @Override
+    public AttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
+        final AttributeCalculationResult result = super.calculateMaximumBeforePercentageMultiplication(userEntity, attribute);
+
+        result.increaseValue(calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute));
+
+        return result;
     }
 
     public int calculateAllBonusByGeneralAttributes(UserEntity user, CombatAttribute attribute) {

@@ -1,6 +1,8 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
+import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Service;
  * Used to calculate a {@link com.morethanheroic.swords.attribute.domain.type.AttributeType#SKILL} attribute's all data related to the player.
  */
 @Service
-public class SkillAttributeCalculator implements AttributeCalculator<SkillAttribute> {
+public class SkillAttributeCalculator extends GenericAttributeCalculator<SkillAttribute> {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
@@ -45,6 +47,15 @@ public class SkillAttributeCalculator implements AttributeCalculator<SkillAttrib
                 .nextLevelXp(skillEntity.getExperienceToNextLevel(skillType))
                 .xpBetweenLevels(skillEntity.getExperienceBetweenNextLevel(skillType))
                 .build();
+    }
+
+    @Override
+    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
+        final AttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(userEntity, attribute);
+
+        result.increaseValue(skillFacade.getSkills(userEntity).getLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
+
+        return result;
     }
 
     @Override
