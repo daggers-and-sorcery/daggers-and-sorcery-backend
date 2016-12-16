@@ -5,6 +5,7 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.shop.repository.dao.ShopItemDatabaseEntity;
 import com.morethanheroic.swords.shop.repository.domain.ShopMapper;
 import com.morethanheroic.swords.shop.service.transformer.ShopItemTransformer;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -34,8 +35,8 @@ public class ShopEntity implements Entity {
         return shopDefinition.getId();
     }
 
-    public List<ShopItem> getAllItems() {
-        return shopItemTransformer.transform(shopMapper.getItemsInShop(shopDefinition.getId()));
+    public List<ShopItem> getAllItems(final UserEntity userEntity) {
+        return shopItemTransformer.transform(userEntity, shopMapper.getItemsInShop(shopDefinition.getId()));
     }
 
     public void buyItem(ItemDefinition itemDefinition, int amount) {

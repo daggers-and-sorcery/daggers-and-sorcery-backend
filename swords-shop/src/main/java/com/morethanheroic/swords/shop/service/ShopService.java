@@ -7,6 +7,9 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
+import com.morethanheroic.swords.shop.service.price.ItemBuyPriceCalculator;
+import com.morethanheroic.swords.shop.service.price.ItemSellPriceCalculator;
+import com.morethanheroic.swords.shop.service.price.domain.ItemPriceCalculationContext;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ShopService {
 
     private final InventoryEntityFactory inventoryEntityFactory;
-    private final ItemPriceCalculator itemPriceCalculator;
+    private final ItemSellPriceCalculator itemSellPriceCalculator;
+    private final ItemBuyPriceCalculator itemBuyPriceCalculator;
 
     //TODO: Check that the shop is in the same city as the player.
     @Transactional
@@ -32,11 +36,17 @@ public class ShopService {
 
         final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
 
+        final int itemBuyPrice = itemBuyPriceCalculator.calculateBuyPrice(
+                ItemPriceCalculationContext.builder()
+                        .userEntity(userEntity)
+                        .itemDefinition(itemDefinition)
+                        .build()
+        );
         //ATM we only use money as money, no support for special trades
-        if (itemPriceCalculator.getBuyPrice(itemDefinition) <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
+        if (itemBuyPrice <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
             log.info("The user bought an item: " + itemDefinition.getId());
 
-            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getBuyPrice(itemDefinition));
+            inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, itemBuyPrice);
 
             inventoryEntity.addItem(itemDefinition, 1);
 
@@ -60,7 +70,12 @@ public class ShopService {
         if (inventoryEntity.hasItem(itemDefinition)) {
             log.info("The user sold an item: " + itemDefinition.getId() + " to the shop.");
 
-            inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, itemPriceCalculator.getSellPrice(itemDefinition));
+            inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, itemSellPriceCalculator.calculateSellPrice(
+                    ItemPriceCalculationContext.builder()
+                            .userEntity(userEntity)
+                            .itemDefinition(itemDefinition)
+                            .build()
+            ));
             inventoryEntity.removeItem(itemDefinition, 1, itemIdentificationType);
 
             shopEntity.buyItem(itemDefinition, 1);

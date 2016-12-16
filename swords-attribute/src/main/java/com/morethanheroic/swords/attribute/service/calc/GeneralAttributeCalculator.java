@@ -3,12 +3,12 @@ package com.morethanheroic.swords.attribute.service.calc;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.service.AttributeFacade;
 import com.morethanheroic.swords.attribute.service.AttributeToRacialModifierConverter;
 import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
+import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceDefinition;
 import com.morethanheroic.swords.race.model.modifier.RacialModifier;
@@ -29,9 +29,6 @@ public class GeneralAttributeCalculator extends GenericAttributeCalculator<Gener
     private static final int STARTING_SKILL_LEVEL = 1;
 
     @Autowired
-    private AttributeFacade attributeFacade;
-
-    @Autowired
     private SkillFacade skillFacade;
 
     @Autowired
@@ -46,13 +43,19 @@ public class GeneralAttributeCalculator extends GenericAttributeCalculator<Gener
     @Autowired
     private RaceDefinitionCache raceDefinitionCache;
 
+    @Autowired
+    private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
+
     @Override
     public GeneralAttributeData calculateAttributeValue(UserEntity user, GeneralAttribute attribute) {
         return GeneralAttributeData.generalAttributeDataBuilder()
                 .attribute(attribute)
-                .actual(attributeFacade.calculateAttributeValue(user, attribute))
-                .maximum(attributeFacade.calculateAttributeMaximumValue(user, attribute))
-                .modifierData(attributeFacade.calculateAttributeModifierData(user, attribute))
+                .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
+                .maximum(globalAttributeCalculator.calculateMaximumValue(user, attribute))
+                .modifierData(globalAttributeModifierCalculator.calculateModifierData(user, attribute))
                 .pointsToNextLevel(calculatePointsToAttributeLevel(user, attribute))
                 .build();
     }
