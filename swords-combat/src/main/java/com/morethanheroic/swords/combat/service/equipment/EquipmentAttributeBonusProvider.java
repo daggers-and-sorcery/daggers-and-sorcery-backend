@@ -9,40 +9,38 @@ import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculato
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import com.morethanheroic.swords.combat.service.CombatUtil;
+import com.morethanheroic.swords.equipment.EquipmentEntityFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+/**
+ * Calculate and provide the bonuses of the equipments for the attributes.
+ */
 @Service
+@RequiredArgsConstructor
 public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
 
     private static final int EMPTY_EQUIPMENT_SLOT = 0;
 
-    @Autowired
-    private EquipmentFacade equipmentFacade;
-
-    @Autowired
-    private ItemDefinitionCache itemDefinitionCache;
-
-    @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
-
-    @Autowired
-    private ItemModifierToAttributeConverter itemModifierToAttributeConverter;
-
-    @Autowired
-    private CombatUtil combatUtil;
+    private final EquipmentEntityFactory equipmentEntityFactory;
+    private final ItemDefinitionCache itemDefinitionCache;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
+    private final ItemModifierToAttributeConverter itemModifierToAttributeConverter;
+    private final CombatUtil combatUtil;
 
     @Override
-    public AttributeCalculationResult calculateBonus(UserEntity userEntity, Attribute attribute) {
+    public Optional<AttributeCalculationResult> calculateBonus(UserEntity userEntity, Attribute attribute) {
         final AttributeCalculationResult result = createAttributeCalculationResult(attribute);
-        final EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
+        final EquipmentEntity equipmentEntity = equipmentEntityFactory.getEntity(userEntity);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             final int item = equipmentEntity.getEquipmentIdOnSlot(slot);
@@ -54,7 +52,7 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
 
         calculateNoWeaponFistfightModifiers(result, userEntity);
 
-        return result;
+        return Optional.of(result);
     }
 
     private AttributeCalculationResult createAttributeCalculationResult(Attribute attribute) {

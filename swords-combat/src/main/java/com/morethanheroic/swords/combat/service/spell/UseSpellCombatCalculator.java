@@ -41,7 +41,7 @@ public class UseSpellCombatCalculator {
 
     @Transactional
     public AttackResult useSpell(final UserEntity userEntity, final SessionEntity sessionEntity, final SpellDefinition spellDefinition) {
-        final SavedCombatEntity savedCombatEntity = savedCombatEntityFactory.getEntity(userEntity.getId());
+        final SavedCombatEntity savedCombatEntity = savedCombatEntityFactory.getEntity(userEntity);
         final CombatContext combatContext = combatContextFactory.newContext(savedCombatEntity);
 
         final CombatEffectDataHolder combatEffectDataHolder = new CombatEffectDataHolder(new HashMap<>(), sessionEntity);

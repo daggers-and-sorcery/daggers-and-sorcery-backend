@@ -24,7 +24,7 @@ public class ScavengingAttemptCalculator {
     private final ScavengingEntityFactory scavengingEntityFactory;
 
     public ScavengingResult handleScavenging(UserEntity userEntity, MonsterDefinition monsterDefinition) {
-        final ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(userEntity.getId());
+        final ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(userEntity);
         final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity.getId());
         final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
 

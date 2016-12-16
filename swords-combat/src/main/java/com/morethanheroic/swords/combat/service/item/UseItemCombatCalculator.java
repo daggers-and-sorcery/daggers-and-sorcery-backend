@@ -37,7 +37,7 @@ public class UseItemCombatCalculator {
 
     @Transactional
     public AttackResult useItem(final UserEntity userEntity, final SessionEntity sessionEntity, final ItemDefinition itemDefinition) {
-        final SavedCombatEntity savedCombatEntity = savedCombatEntityFactory.getEntity(userEntity.getId());
+        final SavedCombatEntity savedCombatEntity = savedCombatEntityFactory.getEntity(userEntity);
         final CombatContext combatContext = combatContextFactory.newContext(savedCombatEntity);
 
         final List<CombatStep> combatSteps = new ArrayList<>();

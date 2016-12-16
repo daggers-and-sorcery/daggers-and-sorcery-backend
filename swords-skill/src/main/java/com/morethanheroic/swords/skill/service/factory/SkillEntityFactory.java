@@ -9,9 +9,12 @@ import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * A factory to create {@link SkillEntityFactory}s.
+ */
 @Service
 @RequiredArgsConstructor
-public class SkillEntityFactory implements EntityFactory<SkillEntity> {
+public class SkillEntityFactory implements EntityFactory<SkillEntity, UserEntity> {
 
     private final UserEntityFactory userEntityFactory;
 
@@ -25,10 +28,24 @@ public class SkillEntityFactory implements EntityFactory<SkillEntity> {
         return new SkillEntity(userEntity);
     }
 
+    /**
+     * @deprecated Use {@link #getEntity(UserEntity)} instead.
+     */
     @Memoize
     @InjectAtReturn
-    @Override
+    @Deprecated
     public SkillEntity getEntity(int id) {
-        return new SkillEntity(userEntityFactory.getEntity(id));
+        return getEntity(userEntityFactory.getEntity(id));
+    }
+
+    /**
+     * Return the {@link SkillEntity} of a given user.
+     *
+     * @param userEntity the user we are returning the skills for
+     * @return the created skills
+     */
+    @Override
+    public SkillEntity getEntity(UserEntity userEntity) {
+        return new SkillEntity(userEntity);
     }
 }

@@ -20,7 +20,7 @@ public class BasicAttributeCalculator extends GenericAttributeCalculator<BasicAt
     private final GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
 
     @Override
-    public AttributeData calculateAttributeValue(UserEntity user, BasicAttribute attribute) {
+    public AttributeData calculateAttributeValue(final UserEntity user, final BasicAttribute attribute) {
         return AttributeData.attributeDataBuilder()
                 .attribute(attribute)
                 .actual(globalAttributeCalculator.calculateActualValue(user, attribute))
@@ -30,7 +30,7 @@ public class BasicAttributeCalculator extends GenericAttributeCalculator<BasicAt
     }
 
     @Override
-    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
+    public AttributeCalculationResult calculateActualValue(final UserEntity user, final Attribute attribute, final boolean shouldCheckMinimum) {
         if (attribute == BasicAttribute.MOVEMENT) {
             return new AttributeCalculationResult(user.getMovementPoints(), attribute);
         }
@@ -39,7 +39,7 @@ public class BasicAttributeCalculator extends GenericAttributeCalculator<BasicAt
     }
 
     @Override
-    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
+    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity user, final Attribute attribute) {
         final AttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(user, attribute);
 
         result.increaseValue(attribute.getInitialValue());

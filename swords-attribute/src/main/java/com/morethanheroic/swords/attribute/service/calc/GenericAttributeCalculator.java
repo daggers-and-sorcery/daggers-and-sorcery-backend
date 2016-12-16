@@ -36,7 +36,7 @@ public abstract class GenericAttributeCalculator<T extends Attribute> implements
         final AttributeCalculationResult result = new AttributeCalculationResult(attribute);
 
         for (AttributeBonusProvider attributeBonusProvider : attributeBonusProviders) {
-            result.addCalculationResult(attributeBonusProvider.calculateBonus(user, attribute));
+            attributeBonusProvider.calculateBonus(user, attribute).ifPresent(result::addCalculationResult);
         }
 
         return result;
@@ -64,7 +64,7 @@ public abstract class GenericAttributeCalculator<T extends Attribute> implements
         result.increaseValue(attribute.getInitialValue());
 
         for (AttributeBonusProvider attributeBonusProvider : attributeBonusProviders) {
-            result.addCalculationResult(attributeBonusProvider.calculateBonus(userEntity, attribute));
+            attributeBonusProvider.calculateBonus(userEntity, attribute).ifPresent(result::addCalculationResult);
         }
 
         return result;

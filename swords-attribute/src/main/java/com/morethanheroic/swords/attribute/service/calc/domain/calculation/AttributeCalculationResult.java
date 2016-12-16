@@ -32,8 +32,4 @@ public class AttributeCalculationResult {
     public void addCalculationResult(AttributeCalculationResult attributeCalculationResult) {
         this.value += attributeCalculationResult.value;
     }
-
-    public boolean isZero() {
-        return value == 0;
-    }
 }

@@ -5,7 +5,6 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -14,7 +13,7 @@ import java.time.Instant;
  * Creates a new user and saves them to the database.
  */
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class NewUserCreator {
 
     private static final int STARTING_MOVEMENT_POINTS_AMOUNT = 30;

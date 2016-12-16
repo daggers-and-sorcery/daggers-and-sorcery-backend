@@ -9,7 +9,7 @@ import com.morethanheroic.swords.attribute.service.calc.domain.calculation.Comba
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,16 +18,12 @@ import java.util.List;
  * Used to calculate a {@link com.morethanheroic.swords.attribute.domain.type.AttributeType#COMBAT} attribute's all data related to the player.
  */
 @Service
+@RequiredArgsConstructor
 public class CombatAttributeCalculator extends GenericAttributeCalculator<CombatAttribute> {
 
-    @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
-
-    @Autowired
-    private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
-
-    @Autowired
-    private List<AttributeBonusProvider> attributeBonusProviders;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
+    private final GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
+    private final List<AttributeBonusProvider> attributeBonusProviders;
 
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, CombatAttribute attribute) {
@@ -60,7 +56,7 @@ public class CombatAttributeCalculator extends GenericAttributeCalculator<Combat
         final AttributeCalculationResult result = new CombatAttributeCalculationResult((CombatAttribute) attribute);
 
         for (AttributeBonusProvider attributeBonusProvider : attributeBonusProviders) {
-            result.addCalculationResult(attributeBonusProvider.calculateBonus(userEntity, attribute));
+            attributeBonusProvider.calculateBonus(userEntity, attribute).ifPresent(result::addCalculationResult);
         }
 
         result.increaseValue(attribute.getInitialValue());

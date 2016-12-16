@@ -48,4 +48,5 @@ include 'swords-forum'
 include 'swords-loot'
 include 'swords-skill-fletching'
 include 'swords-market'
+include 'swords-vampire'
 

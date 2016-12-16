@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.equipment.domain;
 
+import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.cache.value.ValueCache;
@@ -20,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @RequiredArgsConstructor
-public class EquipmentEntity {
+public class EquipmentEntity implements Entity {
 
     @Autowired
     private EquipmentMapper equipmentMapper;
@@ -389,5 +390,10 @@ public class EquipmentEntity {
         } else {
             equipmentMapper.equipQuiver(userEntity.getId(), getEquipmentIdOnSlot(EquipmentSlot.QUIVER), isEquipmentIdentifiedOnSlot(EquipmentSlot.QUIVER), equippedAmount - amount);
         }
+    }
+
+    @Override
+    public int getId() {
+        return equipmentProviderIntegerValueCache.getEntity().getUserId();
     }
 }

@@ -15,17 +15,15 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SavedCombatEntityFactory implements EntityFactory<SavedCombatEntity>{
+public class SavedCombatEntityFactory implements EntityFactory<SavedCombatEntity, UserEntity>{
 
     private final CombatMapper combatMapper;
     private final UserEntityFactory userEntityFactory;
     private final MonsterDefinitionCache monsterDefinitionCache;
 
     @Override
-    public SavedCombatEntity getEntity(final int id) {
-        final UserEntity userEntity = userEntityFactory.getEntity(id);
-
-        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(id);
+    public SavedCombatEntity getEntity(final UserEntity userEntity) {
+        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
 
         if (combatDatabaseEntity == null) {
             throw new IllegalCombatStateException(

@@ -34,7 +34,7 @@ public class AttackCombatCalculator {
 
     @Transactional
     public AttackResult attack(final UserEntity userEntity) {
-        final SavedCombatEntity savedCombatEntity = savedCombatEntityFactory.getEntity(userEntity.getId());
+        final SavedCombatEntity savedCombatEntity = savedCombatEntityFactory.getEntity(userEntity);
         final CombatContext combatContext = combatContextFactory.newContext(savedCombatEntity);
 
         final List<CombatStep> combatSteps = new ArrayList<>();

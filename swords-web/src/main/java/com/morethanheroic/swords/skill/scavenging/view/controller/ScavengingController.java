@@ -30,7 +30,7 @@ public class ScavengingController {
     @RequestMapping(value = "/skill/scavenging/convert", method = RequestMethod.POST)
     public CharacterRefreshResponse convertMovementPoints(UserEntity user, @RequestParam int pointsToConvert) {
         final CharacterRefreshResponse response = responseFactory.newResponse(user);
-        final ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(user.getId());
+        final ScavengingEntity scavengingEntity = scavengingEntityFactory.getEntity(user);
         final int actualScavengingPoints = scavengingEntity.getScavengingPoint();
 
         if (actualScavengingPoints + pointsToConvert * MOVEMENT_TO_SCAVENGING_POINT_CONVERSION_RATE > MAX_SCAVENGING_POINTS) {

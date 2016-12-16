@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * Create an {@link UserEntity} in various ways.
  */
 @Service
-public class UserEntityFactory implements EntityFactory<UserEntity> {
+public class UserEntityFactory implements EntityFactory<UserEntity, Integer> {
 
     @Autowired
     private UserMapper userMapper;
@@ -25,7 +25,7 @@ public class UserEntityFactory implements EntityFactory<UserEntity> {
     @Memoize
     @InjectAtReturn
     @Override
-    public UserEntity getEntity(int userId) {
+    public UserEntity getEntity(Integer userId) {
         return new UserEntity(userMapper.findById(userId));
     }
 
