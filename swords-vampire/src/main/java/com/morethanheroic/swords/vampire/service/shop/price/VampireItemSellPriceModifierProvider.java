@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.vampire.service.price;
+package com.morethanheroic.swords.vampire.service.shop.price;
 
 import com.morethanheroic.swords.shop.service.price.modifier.domain.ItemPriceModificationContext;
 import com.morethanheroic.swords.shop.service.price.modifier.domain.ItemPriceModifier;

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.vampire.service.inn;
+package com.morethanheroic.swords.vampire.service.inn.service;
 
 import com.morethanheroic.swords.inn.domain.service.ServiceType;
 import com.morethanheroic.swords.inn.service.server.availability.InnServiceAvailabilityChecker;

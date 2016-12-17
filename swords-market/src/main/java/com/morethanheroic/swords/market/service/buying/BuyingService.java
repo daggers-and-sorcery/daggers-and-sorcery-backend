@@ -1,10 +1,12 @@
-package com.morethanheroic.swords.market.service;
+package com.morethanheroic.swords.market.service.buying;
 
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.market.domain.BuyingResult;
 import com.morethanheroic.swords.market.domain.MarketEntity;
 import com.morethanheroic.swords.market.repository.repository.MarketMapper;
+import com.morethanheroic.swords.market.service.MarketEntityFactory;
+import com.morethanheroic.swords.market.service.selling.fee.SellingFeeCalculator;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class BuyingService {
     private final MarketMapper marketMapper;
     private final InventoryEntityFactory inventoryEntityFactory;
     private final MarketEntityFactory marketEntityFactory;
+    private final SellingFeeCalculator sellingFeeCalculator;
 
     @Transactional
     public BuyingResult buyFromMarket(final UserEntity userEntity, final int marketEntityId) {
@@ -29,7 +32,7 @@ public class BuyingService {
             return BuyingResult.MARKETING_ENTRY_DOES_NOT_EXISTS;
         }
 
-        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
 
         if (!inventoryEntity.hasMoneyAmount(MoneyType.MONEY, marketEntity.getPrice())) {
             return BuyingResult.INSUFFICIENT_RESOURCES;
@@ -39,7 +42,7 @@ public class BuyingService {
 
         decreaseMoneyFromBuyer(inventoryEntity, marketEntity);
         awardItemToBuyer(inventoryEntity, marketEntity);
-        awardPriceToSeller(marketEntity);
+        awardMoneyToSeller(marketEntity);
 
         log.info("The user is trying to buy the item: " + marketEntity.getItem() + " with price: " + marketEntity.getPrice() + " from the market!");
 
@@ -62,9 +65,12 @@ public class BuyingService {
         inventoryEntity.addItem(marketEntity.getItem(), 1);
     }
 
-    private void awardPriceToSeller(final MarketEntity marketEntity) {
-        final InventoryEntity sellerInventoryEntity = inventoryEntityFactory.getEntity(marketEntity.getSeller().getId());
+    private void awardMoneyToSeller(final MarketEntity marketEntity) {
+        inventoryEntityFactory.getEntity(marketEntity.getSeller())
+                .increaseMoneyAmount(MoneyType.MONEY, calculateMoneyForSelling(marketEntity.getSeller(), marketEntity));
+    }
 
-        sellerInventoryEntity.increaseMoneyAmount(MoneyType.MONEY, (int) Math.floor(marketEntity.getPrice() * 0.90));
+    private int calculateMoneyForSelling(final UserEntity seller, final MarketEntity marketEntity) {
+        return (int) Math.floor(marketEntity.getPrice() - sellingFeeCalculator.calculateSellingFee(seller, marketEntity));
     }
 }

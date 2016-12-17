@@ -2,7 +2,7 @@ package com.morethanheroic.swords.market.view.controller.buy;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.market.domain.BuyingResult;
-import com.morethanheroic.swords.market.service.BuyingService;
+import com.morethanheroic.swords.market.service.buying.BuyingService;
 import com.morethanheroic.swords.market.view.request.domain.BuyItemRequest;
 import com.morethanheroic.swords.market.view.response.service.buy.BuyItemResponseBuilder;
 import com.morethanheroic.swords.market.view.response.service.domain.buy.BuyItemResponseBuilderConfiguration;

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.profile.response.service;
+package com.morethanheroic.swords.profile.response.service.attribute;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;

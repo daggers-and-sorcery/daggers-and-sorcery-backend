@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.market.service;
+package com.morethanheroic.swords.market.service.selling;
 
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.profile.response.service;
+package com.morethanheroic.swords.profile.response.service.attribute;
 
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;

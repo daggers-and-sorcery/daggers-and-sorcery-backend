@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.profile.response.service;
+package com.morethanheroic.swords.profile.response.service.attribute;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import lombok.Builder;

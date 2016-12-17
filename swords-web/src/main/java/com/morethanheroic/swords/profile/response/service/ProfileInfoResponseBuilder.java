@@ -9,16 +9,19 @@ import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
+import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.profile.response.service.attribute.AttributeValuePartialResponseBuilder;
 import com.morethanheroic.swords.profile.response.service.inventory.InventoryPartialResponseBuilder;
 import com.morethanheroic.swords.profile.response.service.inventory.domain.configuration.InventoryPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
-import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.profile.response.service.skill.SkillPartialResponseBuilder;
 import com.morethanheroic.swords.profile.response.service.skill.domain.SkillPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.profile.response.service.special.SpecialPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
+import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifiedItemEntryResponseBuilder;
+import com.morethanheroic.swords.profile.service.response.special.SpecialPartialResponseBuilder;
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.SkillGroup;
@@ -27,6 +30,7 @@ import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import com.morethanheroic.swords.vampire.service.VampireCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +77,12 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     private InventoryEntityFactory inventoryEntityFactory;
 
     @Autowired
+    private SpecialPartialResponseBuilder specialPartialResponseBuilder;
+
+    @Autowired
+    private VampireCalculator vampireCalculator;
+
+    @Autowired
     public ProfileInfoResponseBuilder(ItemDefinitionCache itemDefinitionCache, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
         this.itemDefinitionCache = itemDefinitionCache;
         this.equipmentFacade = equipmentFacade;
@@ -112,6 +122,11 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         );
         response.setData("equipment", buildEquipmentResponse(userEntity, sessionEntity));
         response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(userEntity.getId())));
+        response.setData("special", specialPartialResponseBuilder.build(
+                SpecialPartialResponseBuilderConfiguration.builder()
+                        .isVampire(vampireCalculator.isVampire(userEntity))
+                        .build()
+        ));
 
         return response;
     }

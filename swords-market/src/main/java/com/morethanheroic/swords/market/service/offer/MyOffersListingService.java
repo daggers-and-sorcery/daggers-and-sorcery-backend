@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.market.service;
+package com.morethanheroic.swords.market.service.offer;
 
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.domain.MarketEntity;
