@@ -55,9 +55,9 @@ public class CombatAttributeCalculator extends GenericAttributeCalculator<Combat
     public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
         final AttributeCalculationResult result = new CombatAttributeCalculationResult((CombatAttribute) attribute);
 
-        for (AttributeBonusProvider attributeBonusProvider : attributeBonusProviders) {
-            attributeBonusProvider.calculateBonus(userEntity, attribute).ifPresent(result::addCalculationResult);
-        }
+        attributeBonusProviders.forEach(attributeBonusProvider -> attributeBonusProvider.calculateBonus(userEntity, attribute)
+                .ifPresent(result::addCalculationResult)
+        );
 
         result.increaseValue(attribute.getInitialValue());
         result.increaseValue(calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute));

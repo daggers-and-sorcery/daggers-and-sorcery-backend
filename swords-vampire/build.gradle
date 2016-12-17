@@ -5,7 +5,9 @@ dependencies {
 
     compile project(':swords-user')
     compile project(':swords-metadata')
+    compile project(':swords-shop')
     compile project(':swords-attribute')
+    compile project(':swords-inn')
 }
 
 apply plugin: 'spring-boot'

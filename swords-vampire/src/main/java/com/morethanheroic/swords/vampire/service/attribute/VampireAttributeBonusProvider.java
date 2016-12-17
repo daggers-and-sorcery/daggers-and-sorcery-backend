@@ -32,7 +32,7 @@ public class VampireAttributeBonusProvider implements AttributeBonusProvider {
     @Override
     public Optional<AttributeCalculationResult> calculateBonus(final UserEntity userEntity, final Attribute attribute) {
         if (attribute == CombatAttribute.LIFE && vampireCalculator.isVampire(userEntity)) {
-            Optional.of(new AttributeCalculationResult(VAMPIRE_BONUS, CombatAttribute.LIFE));
+            return Optional.of(new AttributeCalculationResult(VAMPIRE_BONUS, CombatAttribute.LIFE));
         }
 
         return Optional.empty();
