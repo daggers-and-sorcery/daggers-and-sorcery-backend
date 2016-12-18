@@ -9,7 +9,6 @@ import com.morethanheroic.swords.event.domain.EventType;
 import com.morethanheroic.swords.event.service.EventRegistry;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.stereotype.Service;
 
 /**
