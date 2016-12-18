@@ -32,7 +32,7 @@ public class EnumXmlDefinitionLoader implements XmlDefinitionLoader<Class<? exte
     private ApplicationContext applicationContext;
 
     @Override
-    public List loadDefinitions(Class clazz, String resourcePath, String schemaPath, Class<? extends Enum> target) throws IOException {
+    public <T> List<T> loadDefinitions(Class<T> clazz, String resourcePath, String schemaPath, Class<? extends Enum> target) throws IOException {
         try {
             return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath, target);
         } catch (JAXBException e) {

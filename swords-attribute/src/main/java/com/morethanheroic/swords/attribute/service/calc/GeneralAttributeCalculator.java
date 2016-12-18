@@ -15,7 +15,7 @@ import com.morethanheroic.swords.race.model.modifier.RacialModifier;
 import com.morethanheroic.swords.race.model.modifier.entry.NumericRacialModifierEntry;
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
-import com.morethanheroic.swords.skill.service.SkillFacade;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class GeneralAttributeCalculator extends GenericAttributeCalculator<Gener
     private static final int STARTING_SKILL_LEVEL = 1;
 
     @Autowired
-    private SkillFacade skillFacade;
+    private SkillEntityFactory skillEntityFactory;
 
     @Autowired
     private SkillTypeCalculator skillTypeCalculator;
@@ -93,7 +93,7 @@ public class GeneralAttributeCalculator extends GenericAttributeCalculator<Gener
     }
 
     public int calculatePointsToAttributeLevel(UserEntity user, Attribute attribute) {
-        final SkillEntity skillEntity = skillFacade.getSkills(user);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(user);
 
         //TODO: this can be further optimized.
         int result = 0;
@@ -107,7 +107,7 @@ public class GeneralAttributeCalculator extends GenericAttributeCalculator<Gener
     }
 
     public int calculatePointsBonusBySkills(UserEntity user, Attribute attribute) {
-        final SkillEntity skillEntity = skillFacade.getSkills(user);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(user);
 
         //TODO: this can be further optimized.
         int result = 0;

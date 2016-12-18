@@ -9,7 +9,7 @@ import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import com.morethanheroic.swords.skill.service.SkillFacade;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class SkillAttributeCalculator extends GenericAttributeCalculator<SkillAt
     private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
 
     @Autowired
-    private SkillFacade skillFacade;
+    private SkillEntityFactory skillEntityFactory;
 
     @Autowired
     private SkillTypeCalculator skillTypeCalculator;
@@ -36,7 +36,7 @@ public class SkillAttributeCalculator extends GenericAttributeCalculator<SkillAt
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, SkillAttribute attribute) {
         final SkillType skillType = skillTypeCalculator.getSkillTypeFromSkillAttribute(attribute);
-        final SkillEntity skillEntity = skillFacade.getSkills(user);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(user);
 
         return SkillAttributeData.skillAttributeDataBuilder()
                 .attribute(attribute)
@@ -53,7 +53,7 @@ public class SkillAttributeCalculator extends GenericAttributeCalculator<SkillAt
     public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
         final AttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(userEntity, attribute);
 
-        result.increaseValue(skillFacade.getSkills(userEntity).getLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
+        result.increaseValue(skillEntityFactory.getEntity(userEntity).getLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
 
         return result;
     }

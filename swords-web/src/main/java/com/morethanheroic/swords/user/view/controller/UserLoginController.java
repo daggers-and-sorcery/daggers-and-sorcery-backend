@@ -7,7 +7,7 @@ import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import com.morethanheroic.swords.user.service.UserFacade;
+import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class UserLoginController {
     private static final UserEntity LOGGED_OUT_USER = null;
 
     @NonNull
-    private final UserFacade userFacade;
+    private final UserEntityFactory userEntityFactory;
 
     @NonNull
     private final ResponseFactory responseFactory;
@@ -40,7 +40,7 @@ public class UserLoginController {
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public CharacterRefreshResponse login(HttpSession session, @RequestBody LoginRequest loginRequest) throws UnsupportedEncodingException {
-        final UserEntity userEntity = userFacade.getUser(loginRequest.getUsername(), loginRequest.getPassword());
+        final UserEntity userEntity = userEntityFactory.getEntity(loginRequest.getUsername(), loginRequest.getPassword());
 
         //TODO: Create response builders for this and separate action from response building.
         final CharacterRefreshResponse response = responseFactory.newResponse(userEntity);

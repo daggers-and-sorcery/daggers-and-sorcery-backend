@@ -38,7 +38,7 @@ public class FletchingService {
         }
 
         if (!learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)) {
-            log.info("User was unable to fetch the recipe: " + recipeDefinition + ".");
+            log.info("User doesn't have the target recipe learned: " + recipeDefinition + ".");
 
             return FletchingResult.INVALID_EVENT;
         }

@@ -27,7 +27,7 @@ public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> 
     private final UnmarshallerBuilder unmarshallerBuilder;
 
     //TODO: maximumFileCount is not needed anymore, remove it somehow!
-    public List loadDefinitions(Class clazz, String resourcePath, String schemaPath, Integer maximumFileCount) throws IOException {
+    public <T> List<T> loadDefinitions(Class<T> clazz, String resourcePath, String schemaPath, Integer maximumFileCount) throws IOException {
         try {
             return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath);
         } catch (JAXBException e) {

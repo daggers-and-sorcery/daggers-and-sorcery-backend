@@ -9,5 +9,6 @@ import java.util.List;
  */
 public interface XmlDefinitionLoader<T> {
 
-    List loadDefinitions(Class clazz, String resourcePath, String schemaPath, T target) throws IOException;
+    //TODO: Define a loading context instead because target is not needed in every implementation.
+    <Z> List<Z> loadDefinitions(Class<Z> clazz, String resourcePath, String schemaPath, T target) throws IOException;
 }

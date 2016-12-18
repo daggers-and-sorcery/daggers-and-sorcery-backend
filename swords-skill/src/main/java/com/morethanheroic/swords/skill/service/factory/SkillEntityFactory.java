@@ -22,17 +22,13 @@ public class SkillEntityFactory implements EntityFactory<SkillEntity, UserEntity
      * @deprecated Use #getEntity(int) instead.
      */
     @Deprecated
-    @Memoize
-    @InjectAtReturn
     public SkillEntity getSkillEntity(UserEntity userEntity) {
-        return new SkillEntity(userEntity);
+        return getEntity(userEntity);
     }
 
     /**
      * @deprecated Use {@link #getEntity(UserEntity)} instead.
      */
-    @Memoize
-    @InjectAtReturn
     @Deprecated
     public SkillEntity getEntity(int id) {
         return getEntity(userEntityFactory.getEntity(id));
@@ -44,6 +40,8 @@ public class SkillEntityFactory implements EntityFactory<SkillEntity, UserEntity
      * @param userEntity the user we are returning the skills for
      * @return the created skills
      */
+    @Memoize
+    @InjectAtReturn
     @Override
     public SkillEntity getEntity(UserEntity userEntity) {
         return new SkillEntity(userEntity);

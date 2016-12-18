@@ -4,14 +4,12 @@ import com.morethanheroic.swords.login.service.event.RegistrationEventDispatcher
 import com.morethanheroic.swords.login.service.event.domain.RegistrationEventConfiguration;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.security.PasswordEncoder;
-import com.morethanheroic.swords.skill.service.SkillFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
-import com.morethanheroic.swords.user.service.UserFacade;
+import com.morethanheroic.swords.user.service.NewUserCreator;
 import com.morethanheroic.swords.user.view.request.RegistrationRequest;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,17 +28,14 @@ import java.util.List;
  * Handles all registration related requests.
  */
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class UserRegistrationController {
 
     @NonNull
     private final PasswordEncoder passwordEncoder;
 
     @NonNull
-    private final UserFacade userFacade;
-
-    @NonNull
-    private final SkillFacade skillFacade;
+    private final NewUserCreator newUserCreator;
 
     @NonNull
     private final RegistrationEventDispatcher loginEventDispatcher;
@@ -67,7 +62,7 @@ public class UserRegistrationController {
             final String email = registrationRequest.getEmail();
             final Race race = Race.valueOf(registrationRequest.getRace());
 
-            final UserEntity userEntity = userFacade.createUser(username, password, email, race);
+            final UserEntity userEntity = newUserCreator.createUser(username, password, email, race);
 
             loginEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
 

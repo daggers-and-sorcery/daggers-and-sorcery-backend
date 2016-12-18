@@ -11,7 +11,7 @@ public class MapBasedDefinitionCache<K, T> implements DefinitionCache<K, T> {
 
     private Map<K, T> definitionMap;
 
-    public MapBasedDefinitionCache(final Map<K, T> backingMap) {
+    protected MapBasedDefinitionCache(final Map<K, T> backingMap) {
         definitionMap = Collections.unmodifiableMap(backingMap);
     }
 

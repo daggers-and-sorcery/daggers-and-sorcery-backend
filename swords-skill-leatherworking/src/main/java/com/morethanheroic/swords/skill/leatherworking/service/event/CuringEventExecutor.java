@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.leatherworking.service.event;
 
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.result.RecipeExperienceAwarder;
 import com.morethanheroic.swords.recipe.service.result.RecipeResultAwarder;
@@ -11,7 +11,6 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//TODO: Event should come from definition files!
 /**
  * Evaluate a curing event. Award the resulting experience and items.
  */
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class CuringEventExecutor {
 
     @Autowired
-    private InventoryFacade inventoryFacade;
+    private InventoryEntityFactory inventoryEntityFactory;
 
     @Autowired
     private SkillEntityFactory skillEntityFactory;
@@ -31,8 +30,8 @@ public class CuringEventExecutor {
     private RecipeExperienceAwarder recipeExperienceAwarder;
 
     public void evaluateEvent(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
-        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
         recipeResultAwarder.awardRewards(inventoryEntity, recipeDefinition);
         recipeExperienceAwarder.awardExperience(skillEntity, recipeDefinition);

@@ -1,31 +1,24 @@
 package com.morethanheroic.swords.event.service;
 
-import com.morethanheroic.swords.event.service.event.Event;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.google.common.collect.ImmutableMap;
+import com.morethanheroic.swords.event.domain.Event;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class EventProvider {
 
-    @Autowired
-    private List<Event> events;
+    private final Map<Integer, Event> eventMap;
 
-    private Map<Integer, Event> eventMap;
-
-    @PostConstruct
-    public void initialize() {
-        final Map<Integer, Event> mappedEvents = new HashMap<>();
-        for (Event event : events) {
-            mappedEvents.put(event.getId(), event);
-        }
-
-        eventMap = Collections.unmodifiableMap(mappedEvents);
+    public EventProvider(final List<Event> events) {
+        eventMap = events.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toMap(Event::getId, Function.identity()), ImmutableMap::copyOf));
     }
 
     public Event getEvent(int id) {

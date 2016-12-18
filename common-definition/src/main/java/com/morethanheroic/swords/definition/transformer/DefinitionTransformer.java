@@ -8,5 +8,11 @@ package com.morethanheroic.swords.definition.transformer;
  */
 public interface DefinitionTransformer<T, K> {
 
+    /**
+     * Transform a freshly loaded raw definition into a domain object.
+     *
+     * @param rawDefinition the raw definition to transform
+     * @return the new object
+     */
     T transform(K rawDefinition);
 }
