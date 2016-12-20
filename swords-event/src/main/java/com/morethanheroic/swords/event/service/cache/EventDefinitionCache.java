@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class EventDefinitionCache extends MapBasedDefinitionCache<Integer, EventDefinition> {
 
     public EventDefinitionCache(final EventDefinitionLoader eventDefinitionLoader) throws IOException {

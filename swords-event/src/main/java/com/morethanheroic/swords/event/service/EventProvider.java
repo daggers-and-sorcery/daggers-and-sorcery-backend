@@ -11,7 +11,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class EventProvider {
 
     private final Map<Integer, Event> eventMap;
@@ -23,9 +22,5 @@ public class EventProvider {
 
     public Event getEvent(int id) {
         return eventMap.get(id);
-    }
-
-    public boolean eventExists(int id) {
-        return eventMap.containsKey(id);
     }
 }

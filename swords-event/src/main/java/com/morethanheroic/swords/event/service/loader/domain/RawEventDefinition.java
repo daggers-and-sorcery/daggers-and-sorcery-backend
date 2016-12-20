@@ -1,11 +1,12 @@
 package com.morethanheroic.swords.event.service.loader.domain;
 
-import com.morethanheroic.swords.event.domain.EventType;
-import lombok.Getter;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.morethanheroic.swords.event.domain.EventType;
+
+import lombok.Getter;
 
 /**
  * A freshly loaded event definition data from the item's xml file.

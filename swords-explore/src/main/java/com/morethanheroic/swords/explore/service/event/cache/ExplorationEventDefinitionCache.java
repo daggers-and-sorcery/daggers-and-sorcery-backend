@@ -2,7 +2,7 @@ package com.morethanheroic.swords.explore.service.event.cache;
 
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
-import com.morethanheroic.swords.explore.service.event.loader.EventDefinitionLoader;
+import com.morethanheroic.swords.explore.service.event.loader.ExplorationEventDefinitionLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,13 +23,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ExplorationEventDefinitionCache implements DefinitionCache<Integer, ExplorationEventDefinition> {
 
-    private final EventDefinitionLoader eventDefinitionLoader;
+    private final ExplorationEventDefinitionLoader explorationEventDefinitionLoader;
 
     private Map<Integer, ExplorationEventDefinition> eventDefinitionMap = new HashMap<>();
 
     @PostConstruct
     public void init() throws IOException {
-        final List<ExplorationEventDefinition> explorationEventDefinitions = eventDefinitionLoader.loadDefinitions();
+        final List<ExplorationEventDefinition> explorationEventDefinitions = explorationEventDefinitionLoader.loadDefinitions();
 
         log.info("Loaded " + explorationEventDefinitions.size() + " exploration event definitions.");
 
