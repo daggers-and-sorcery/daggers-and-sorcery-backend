@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.skill.smithing.service;
+package com.morethanheroic.swords.skill.herblore.service.cleaning;
 
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
@@ -9,21 +9,21 @@ import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
 import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
 import com.morethanheroic.swords.recipe.service.result.RecipeEvaluator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
+import com.morethanheroic.swords.skill.herblore.service.cleaning.domain.CleaningResult;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
-import com.morethanheroic.swords.skill.smithing.domain.SmeltingResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * This service is responsible for the handling of the smelting tasks in the Smithing skill.
+ * This service is responsible for the handling of the cleaning tasks in the Herblore skill.
  */
 @Service
 @RequiredArgsConstructor
-public class SmeltingService {
+public class CleaningService {
 
-    private static final int SMELTING_MOVEMENT_POINT_COST = 1;
+    private static final int CLEANING_MOVEMENT_POINT_COST = 1;
 
     private final RecipeEvaluator recipeEvaluator;
     private final InventoryEntityFactory inventoryEntityFactory;
@@ -32,31 +32,42 @@ public class SmeltingService {
     private final RecipeRequirementEvaluator recipeRequirementEvaluator;
     private final UserBasicAttributeManipulator userBasicAttributeManipulator;
 
+    /**
+     * Contains the logic of the herb cleaning.
+     *
+     * @param userEntity the user who attempt to clean a herb
+     * @param recipeDefinition the recipe used in the cleaning
+     * @return the result of the cleaning
+     */
     @Transactional
-    public SmeltingResult smelt(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
-        if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.SMITHING_SMELTING) {
-            return SmeltingResult.INVALID_EVENT;
+    public CleaningResult clean(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
+        if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.HERBLORE_CLEANING) {
+            return CleaningResult.INVALID_EVENT;
         }
 
         if (!recipeIngredientEvaluator.hasIngredients(userEntity, recipeDefinition)) {
-            return SmeltingResult.MISSING_INGREDIENTS;
+            return CleaningResult.MISSING_INGREDIENTS;
         }
 
         if (!recipeRequirementEvaluator.hasRequirements(userEntity, recipeDefinition)) {
-            return SmeltingResult.MISSING_REQUIREMENTS;
+            return CleaningResult.MISSING_REQUIREMENTS;
         }
 
-        if (userEntity.getMovementPoints() <= 0) {
-            return SmeltingResult.NOT_ENOUGH_MOVEMENT;
+        if (userEntity.getMovementPoints() < CLEANING_MOVEMENT_POINT_COST) {
+            return CleaningResult.NOT_ENOUGH_MOVEMENT;
         }
 
+        return calculateCleaning(userEntity, recipeDefinition);
+    }
+
+    private CleaningResult calculateCleaning(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
         final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
         final boolean isSuccessful = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
 
-        userBasicAttributeManipulator.decreaseMovement(userEntity, SMELTING_MOVEMENT_POINT_COST);
+        userBasicAttributeManipulator.decreaseMovement(userEntity, CLEANING_MOVEMENT_POINT_COST);
 
-        return isSuccessful ? SmeltingResult.SUCCESSFUL : SmeltingResult.UNSUCCESSFUL;
+        return isSuccessful ? CleaningResult.SUCCESSFUL : CleaningResult.UNSUCCESSFUL;
     }
 }

@@ -6,15 +6,14 @@ import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.tanning.TanningInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
-import com.morethanheroic.swords.skill.view.response.service.SkillLevelPartialResponseBuilder;
 import com.morethanheroic.swords.skill.view.response.domain.configuration.SkillLevelPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.view.response.service.SkillLevelPartialResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class TanningInfoResponseBuilder implements ResponseBuilder<TanningInfoResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;
@@ -37,6 +36,6 @@ public class TanningInfoResponseBuilder implements ResponseBuilder<TanningInfoRe
     }
 
     private int getLeatherworkingLevel(final UserEntity userEntity) {
-        return skillEntityFactory.getSkillEntity(userEntity).getLevel(SkillType.LEATHERWORKING);
+        return skillEntityFactory.getEntity(userEntity).getLevel(SkillType.LEATHERWORKING);
     }
 }

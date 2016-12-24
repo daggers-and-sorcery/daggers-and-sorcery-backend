@@ -3,24 +3,21 @@ package com.morethanheroic.swords.skill.leatherworking.view.controller.curing;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.event.domain.EventType;
 import com.morethanheroic.swords.event.service.EventRegistry;
-import com.morethanheroic.swords.skill.leatherworking.view.response.service.curing.CuringInfoResponseBuilder;
 import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing.CuringInfoResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.leatherworking.view.response.service.curing.CuringInfoResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class CuringInfoController {
 
-    @Autowired
-    private CuringInfoResponseBuilder curingInfoResponseBuilder;
+    private final CuringInfoResponseBuilder curingInfoResponseBuilder;
+    private final EventRegistry eventRegistry;
 
-    @Autowired
-    private EventRegistry eventRegistry;
-
-    @RequestMapping(value = "/skill/leatherworking/curing/info", method = RequestMethod.GET)
+    @GetMapping(value = "/skill/leatherworking/curing/info")
     public Response curingInfo(UserEntity userEntity) {
         return curingInfoResponseBuilder.build(
                 CuringInfoResponseBuilderConfiguration.builder()

@@ -1,11 +1,11 @@
 package com.morethanheroic.swords.skill.leatherworking.view.response.service.curing;
 
+import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
 import com.morethanheroic.swords.recipe.service.learn.LearnedRecipeEvaluator;
 import com.morethanheroic.swords.recipe.service.response.RecipePartialResponseBuilder;
-import com.morethanheroic.swords.recipe.service.response.domain.RecipePartialResponse;
 import com.morethanheroic.swords.recipe.service.response.domain.configuration.RecipePartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing.CuringInfoResponseBuilderConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,8 @@ public class CuringRecipeListPartialResponseBuilder implements PartialResponseCo
     private RecipePartialResponseBuilder recipePartialResponseBuilder;
 
     @Override
-    public List<RecipePartialResponse> build(CuringInfoResponseBuilderConfiguration responseBuilderConfiguration) {
-        final List<RecipePartialResponse> result = new ArrayList<>();
+    public List<PartialResponse> build(CuringInfoResponseBuilderConfiguration responseBuilderConfiguration) {
+        final List<PartialResponse> result = new ArrayList<>();
 
         final List<RecipeDefinition> recipeEntities = learnedRecipeEvaluator.getLearnedRecipes(responseBuilderConfiguration.getUserEntity(), RecipeType.LEATHERWORKING_CURING);
         for (RecipeDefinition recipeDefinition : recipeEntities) {
