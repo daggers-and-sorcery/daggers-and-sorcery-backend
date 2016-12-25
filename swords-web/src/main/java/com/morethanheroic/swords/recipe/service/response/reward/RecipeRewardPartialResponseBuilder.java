@@ -6,11 +6,10 @@ import com.morethanheroic.swords.recipe.domain.RecipeReward;
 import com.morethanheroic.swords.recipe.service.response.reward.domain.RecipeRewardPartialResponse;
 import com.morethanheroic.swords.recipe.service.response.reward.domain.RecipeRewardPartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class RecipeRewardPartialResponseBuilder implements PartialResponseBuilder<RecipeRewardPartialResponseBuilderConfiguration> {
 
     private final ItemDefinitionCache itemDefinitionCache;

@@ -21,6 +21,8 @@ public class SkillEntityFactory implements EntityFactory<SkillEntity, UserEntity
     /**
      * @deprecated Use #getEntity(int) instead.
      */
+    @Memoize
+    @InjectAtReturn
     @Deprecated
     public SkillEntity getSkillEntity(UserEntity userEntity) {
         return getEntity(userEntity);
@@ -29,6 +31,8 @@ public class SkillEntityFactory implements EntityFactory<SkillEntity, UserEntity
     /**
      * @deprecated Use {@link #getEntity(UserEntity)} instead.
      */
+    @Memoize
+    @InjectAtReturn
     @Deprecated
     public SkillEntity getEntity(int id) {
         return getEntity(userEntityFactory.getEntity(id));
