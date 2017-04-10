@@ -17,7 +17,7 @@ public class StartGatheringController {
     private final GatheringService gatheringService;
     private final GatheringStartResponseBuilder gatheringStartResponseBuilder;
 
-    @PostMapping(value = "/skill/herblore/gathering/start")
+    @PostMapping("/skill/herblore/gathering/start")
     public Response startCuring(final UserEntity userEntity) {
         final GatheringResult result = gatheringService.gather(userEntity);
 

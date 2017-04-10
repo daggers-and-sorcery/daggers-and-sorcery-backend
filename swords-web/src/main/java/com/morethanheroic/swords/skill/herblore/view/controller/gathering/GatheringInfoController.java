@@ -17,7 +17,7 @@ public class GatheringInfoController {
     private final GatheringInfoResponseBuilder gatheringInfoResponseBuilder;
     private final EventRegistry eventRegistry;
 
-    @GetMapping(value = "/skill/herblore/gathering/info")
+    @GetMapping("/skill/herblore/gathering/info")
     public Response curingInfo(UserEntity userEntity) {
         return gatheringInfoResponseBuilder.build(
                 GatheringInfoResponseBuilderConfiguration.builder()
