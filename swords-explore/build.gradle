@@ -8,6 +8,7 @@ dependencies {
     compile project(':common-definition')
 
     compile project(':swords-user')
+    compile project(':swords-vampire')
     compile project(':swords-response')
     compile project(':swords-combat')
     compile project(':swords-skill-lockpicking')
