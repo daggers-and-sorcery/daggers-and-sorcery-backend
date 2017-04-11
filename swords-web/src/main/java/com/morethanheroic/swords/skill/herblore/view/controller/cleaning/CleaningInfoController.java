@@ -17,17 +17,11 @@ public class CleaningInfoController {
     private final CleaningInfoResponseBuilder cleaningInfoResponseBuilder;
 
     @GetMapping("/skill/herblore/cleaning/info")
-    public Response curingInfo(UserEntity userEntity) {
+    public Response cleaningInfo(UserEntity userEntity) {
         return cleaningInfoResponseBuilder.build(
                 CleaningInfoResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
                         .build()
         );
-    }
-
-    public void ass(int val) {
-        Function<Integer, Integer> asd = myval -> myval + val;
-
-        System.out.println(asd);
     }
 }
