@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-public class UserRegistrationController {
+public class RegistrationController {
 
     @NonNull
     private final PasswordEncoder passwordEncoder;

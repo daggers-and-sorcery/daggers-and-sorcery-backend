@@ -13,7 +13,7 @@ import com.morethanheroic.swords.user.repository.domain.UserMapper;
 /**
  * Contains the data of an user. These methods doesn't take the attribute modifications and maximum/minimum values
  * into account, this class only represent the raw user data in the database. If you need the maximum/minimum values or
- * want to change these attributes use the classes that contains the logic for the changings and don't use this class
+ * want to change these attributes use the classes that contains the logic for the changes and don't use this class
  * directly!
  */
 @Configurable
