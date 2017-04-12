@@ -15,6 +15,4 @@ public class LoginResponseBuilderConfiguration implements ResponseBuilderConfigu
 
     private final UserEntity userEntity;
     private final boolean successful;
-    private final boolean showPrelude;
-    private final String error;
 }

@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.function.Function;
-
 @RestController
 @RequiredArgsConstructor
 public class CleaningInfoController {

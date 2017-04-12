@@ -3,8 +3,6 @@ package com.morethanheroic.swords.user.view.controller;
 import com.morethanheroic.login.domain.LoginRequest;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.session.domain.SessionEntity;
-import com.morethanheroic.swords.metadata.domain.TextMetadataEntity;
-import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;
 import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
@@ -20,13 +18,11 @@ import java.io.UnsupportedEncodingException;
  * Handles all login and user information related requests.
  */
 @RestController
-@SuppressWarnings("checkstyle:multiplestringliterals")
 @RequiredArgsConstructor
 public class LoginController {
 
 
     private final UserEntityFactory userEntityFactory;
-    private final MetadataEntityFactory metadataEntityFactory;
     private final LoginResponseBuilder loginResponseBuilder;
 
     @PostMapping("/user/login")
@@ -35,12 +31,6 @@ public class LoginController {
 
         if (userEntity != null) {
             //TODO: Move the logic to a service!
-            final TextMetadataEntity preludeMetadata = metadataEntityFactory.getTextEntity(userEntity, "PRELUDE_SHOWN");
-
-            if (preludeMetadata.getValue().equals("NOT_SHOWN")) {
-                preludeMetadata.setValue("ALREADY_SHOWN");
-            }
-
             sessionEntity.setAttribute(SessionAttributeType.USER_ID.name(), userEntity.getId());
 
             userEntity.setLastLoginDateToNow();
@@ -49,14 +39,12 @@ public class LoginController {
                 LoginResponseBuilderConfiguration.builder()
                     .successful(true)
                     .userEntity(userEntity)
-                    .showPrelude(preludeMetadata.getValue().equals("NOT_SHOWN"))
                     .build()
             );
         } else {
             return loginResponseBuilder.build(
                 LoginResponseBuilderConfiguration.builder()
                      .successful(false)
-                     .error("Wrong username or password!")
                      .build()
             );
         }
