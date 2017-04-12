@@ -29,6 +29,7 @@ dependencies {
     compile project(':swords-market')
     compile project(':swords-ladder')
     compile project(':swords-metadata')
+    compile project(':swords-starter')
     compile project(':swords-registration')
     compile project(':swords-skill-scavenging')
     compile project(':swords-skill-cooking')

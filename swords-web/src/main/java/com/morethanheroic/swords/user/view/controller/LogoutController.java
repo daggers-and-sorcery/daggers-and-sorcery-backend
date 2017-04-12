@@ -23,6 +23,7 @@ public class LogoutController {
 
     @GetMapping("/user/logout")
     public Response logout(final SessionEntity sessionEntity) {
+        //TODO: User real response builders!
         sessionEntity.close();
 
         final Response response = responseFactory.newResponse(LOGGED_OUT_USER);

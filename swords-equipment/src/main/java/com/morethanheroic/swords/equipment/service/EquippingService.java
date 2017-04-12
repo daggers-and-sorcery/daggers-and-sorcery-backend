@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.equipment.service;
 
+import com.morethanheroic.swords.equipment.EquipmentEntityFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
@@ -17,12 +18,12 @@ public class EquippingService {
 
     private final EquipmentSlotMapper equipmentSlotMapper;
     private final ItemDefinitionCache itemDefinitionCache;
-    private final EquipmentFacade equipmentFacade;
+    private final EquipmentEntityFactory equipmentFacade;
     private final InventoryEntityFactory inventoryEntityFactory;
 
     public boolean equipItem(final UserEntity userEntity, final ItemDefinition item, final IdentificationType identification) {
-        final EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
-        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
+        final EquipmentEntity equipmentEntity = equipmentFacade.getEntity(userEntity);
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
 
         final EquipmentSlot equipmentSlot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());
 

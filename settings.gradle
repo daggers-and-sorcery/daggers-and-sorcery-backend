@@ -50,4 +50,5 @@ include 'swords-skill-fletching'
 include 'swords-market'
 include 'swords-vampire'
 include 'swords-skill-herblore'
+include 'swords-starter'
 

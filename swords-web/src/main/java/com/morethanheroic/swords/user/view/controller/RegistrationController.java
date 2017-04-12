@@ -7,7 +7,7 @@ import com.morethanheroic.swords.security.PasswordEncoder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.service.NewUserCreator;
-import com.morethanheroic.swords.user.view.request.RegistrationRequest;
+import com.morethanheroic.swords.user.view.request.domain.registration.RegistrationRequest;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

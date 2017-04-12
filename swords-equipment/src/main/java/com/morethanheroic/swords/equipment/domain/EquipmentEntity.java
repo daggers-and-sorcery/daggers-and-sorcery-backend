@@ -56,6 +56,14 @@ public class EquipmentEntity implements Entity {
         equipmentProviderIntegerValueCache = new ValueCache<>(cacheableEquipmentProvider, userEntity.getId());
     }
 
+    /**
+     * Equip an item directly without checking if the player is able to wear it etc. Most of the time you
+     * don't need this but {@link com.morethanheroic.swords.equipment.service.EquippingService#equipItem(UserEntity, ItemDefinition, IdentificationType)}.
+     */
+    /*
+     * TODO: Rewrite this somewhere else! It's disgusting. Also create a good logic for equipping ammunition without actually getting
+     * the amount of the arrows from the player's inventory.
+     */
     public void equipWithoutCheck(ItemDefinition item, boolean identified) {
         final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
         final EquipmentSlot slot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());

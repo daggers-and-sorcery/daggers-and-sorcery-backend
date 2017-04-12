@@ -34,6 +34,7 @@ public class LoginController {
         final UserEntity userEntity = userEntityFactory.getEntity(loginRequest.getUsername(), loginRequest.getPassword());
 
         if (userEntity != null) {
+            //TODO: Move the logic to a service!
             final TextMetadataEntity preludeMetadata = metadataEntityFactory.getTextEntity(userEntity, "PRELUDE_SHOWN");
 
             if (preludeMetadata.getValue().equals("NOT_SHOWN")) {
