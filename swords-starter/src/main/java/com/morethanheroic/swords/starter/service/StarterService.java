@@ -71,7 +71,7 @@ public class StarterService {
 
         equippingService.equipItem(userEntity, starterArmorSet.getArmor(), IdentificationType.IDENTIFIED);
         equippingService.equipItem(userEntity, starterArmorSet.getBoots(), IdentificationType.IDENTIFIED);
-        if (startingEquipmentAwardingContext.getStartingWeapon() != StartingWeapon.BOW) {
+        if (startingEquipmentAwardingContext.getStartingWeapon() != StartingWeapon.BOW && startingEquipmentAwardingContext.getStartingWeapon() != StartingWeapon.STAFF) {
             equippingService.equipItem(userEntity, starterArmorSet.getOffhand(), IdentificationType.IDENTIFIED);
         }
     }
