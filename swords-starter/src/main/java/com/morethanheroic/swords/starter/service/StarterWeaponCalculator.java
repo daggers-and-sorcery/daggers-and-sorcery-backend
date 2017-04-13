@@ -24,7 +24,7 @@ public class StarterWeaponCalculator {
     private static final int OLD_STAFF_ID = 144;
     private static final int DULL_SWORD_ID = 141;
     private static final int CRACKED_WAND_ID = 139;
-    private static final int BRONZE_ARROW_ID = 5;
+    private static final int BRONZE_ARROW_ID = 6;
 
     private final Map<StartingWeapon, StartingWeaponSet> startingWeaponMap;
 
