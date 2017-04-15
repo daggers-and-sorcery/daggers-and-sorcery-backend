@@ -3,13 +3,13 @@ package com.morethanheroic.swords.item.service.loader;
 import com.google.common.collect.ImmutableList;
 import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.loader.domain.RawItemDefinition;
 import com.morethanheroic.swords.item.service.transformer.ItemDefinitionTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -30,15 +30,21 @@ public class ItemDefinitionLoader implements DefinitionLoader<ItemDefinition> {
     private final ItemDefinitionTransformer itemDefinitionTransformer;
 
     @Override
-    public List<ItemDefinition> loadDefinitions() throws IOException {
-        return loadRawItemDefinitions().stream().map(itemDefinitionTransformer::transform).collect(
-                collectingAndThen(toList(), ImmutableList::copyOf)
-        );
+    public List<ItemDefinition> loadDefinitions() {
+        return loadRawItemDefinitions().stream()
+                .map(itemDefinitionTransformer::transform)
+                .collect(
+                        collectingAndThen(toList(), ImmutableList::copyOf)
+                );
     }
 
-    @SuppressWarnings("unchecked")
-    private List<RawItemDefinition> loadRawItemDefinitions() throws IOException {
-        return numericXmlDefinitionLoader.loadDefinitions(RawItemDefinition.class, ITEM_DEFINITION_LOCATION,
-                ITEM_SCHEMA_LOCATION, ITEM_COUNT_TO_LOAD);
+    private List<RawItemDefinition> loadRawItemDefinitions() {
+        return numericXmlDefinitionLoader.loadDefinitions(
+                NumericDefinitionLoadingContext.<RawItemDefinition>builder()
+                        .clazz(RawItemDefinition.class)
+                        .resourcePath(ITEM_DEFINITION_LOCATION)
+                        .schemaPath(ITEM_SCHEMA_LOCATION)
+                        .build()
+        );
     }
 }
