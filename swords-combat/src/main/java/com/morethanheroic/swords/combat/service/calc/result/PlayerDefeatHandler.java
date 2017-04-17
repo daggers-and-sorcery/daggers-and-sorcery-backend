@@ -12,14 +12,13 @@ import com.morethanheroic.swords.skill.service.HighestSkillCalculator;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
+@RequiredArgsConstructor
 public class PlayerDefeatHandler {
 
     private static final double PERCENTAGE_TO_REMOVE = 0.25;
@@ -45,7 +44,7 @@ public class PlayerDefeatHandler {
 
         final List<CombatStep> result = new ArrayList<>();
 
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
         final List<SkillType> highestTreeSkill = highestSkillCalculator.getHighestSkills(skillEntity);
         for (SkillType skillType : highestTreeSkill) {

@@ -34,7 +34,7 @@ public class LearnRecipeEffectDefinition extends ImprovedCombatEffectDefinition 
         if (!learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)) {
             recipeLearnerService.learnRecipe(userEntity, recipeDefinition);
 
-            inventoryEntityFactory.getEntity(userEntity.getId()).removeItem(itemDefinitionCache.getDefinition(recipeItemId), 1);
+            inventoryEntityFactory.getEntity(userEntity).removeItem(itemDefinitionCache.getDefinition(recipeItemId), 1);
         }
     }
 
