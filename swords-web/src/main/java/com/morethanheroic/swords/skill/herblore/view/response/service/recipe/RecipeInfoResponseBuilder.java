@@ -17,6 +17,9 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Build a response for a herblore recipe info request.
+ */
 @Service
 @RequiredArgsConstructor
 public class RecipeInfoResponseBuilder implements ResponseBuilder<RecipeInfoResponseBuilderConfiguration> {

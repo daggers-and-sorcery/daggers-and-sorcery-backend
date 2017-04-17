@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class GatheringInfoController {
+public class HerbloreGatheringInfoController {
 
     private final GatheringInfoResponseBuilder gatheringInfoResponseBuilder;
     private final EventRegistry eventRegistry;
