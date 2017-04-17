@@ -4,7 +4,7 @@ import com.morethanheroic.swords.definition.cache.EntityCache;
 import com.morethanheroic.swords.news.domain.NewsEntity;
 import com.morethanheroic.swords.news.repository.domain.NewsMapper;
 import com.morethanheroic.swords.news.service.transformer.NewsEntityTransformer;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,13 +16,11 @@ import java.util.stream.Collectors;
  * Cache news entries.
  */
 @Service
+@RequiredArgsConstructor
 public class NewsEntityCache implements EntityCache<Integer, NewsEntity> {
 
-    @Autowired
-    private NewsEntityTransformer newsEntityTransformer;
-
-    @Autowired
-    private NewsMapper newsMapper;
+    private final NewsEntityTransformer newsEntityTransformer;
+    private final NewsMapper newsMapper;
 
     private Map<Integer, NewsEntity> newsEntityMap = new HashMap<>();
 
@@ -35,8 +33,10 @@ public class NewsEntityCache implements EntityCache<Integer, NewsEntity> {
     }
 
     //TODO: optimize this further if possible/needed
-    public List<NewsEntity> getLastNewsEntity(int amount) {
-        return newsMapper.findLast(amount).stream().map(newsDatabaseEntity -> getEntity(newsDatabaseEntity.getId())).collect(Collectors.toList());
+    public List<NewsEntity> getLastNewsEntity(final int amountOfEntries) {
+        return newsMapper.findLast(amountOfEntries).stream()
+                .map(newsDatabaseEntity -> getEntity(newsDatabaseEntity.getId()))
+                .collect(Collectors.toList());
     }
 
     private void loadNewsEntity(int entityId) {
