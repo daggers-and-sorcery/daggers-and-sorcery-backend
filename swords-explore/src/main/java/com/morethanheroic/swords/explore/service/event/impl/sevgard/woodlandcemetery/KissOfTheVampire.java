@@ -26,7 +26,7 @@ public class KissOfTheVampire extends ImprovedExplorationEventHandler {
     private static final int VAMPIRE_HEALING_STAGE = 5;
     private static final int VAMPIRE_RUNNING_STAGE = 6;
 
-    private static final int VAMPIRE_MONSTER_ID = 0;
+    private static final int VAMPIRE_MONSTER_ID = 21;
 
     private static final int HEALING_AMOUNT = 10;
 
