@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.definition.loader;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -10,5 +9,5 @@ import java.util.List;
  */
 public interface DefinitionLoader<T> {
 
-    List<T> loadDefinitions() throws IOException;
+    List<T> loadDefinitions();
 }

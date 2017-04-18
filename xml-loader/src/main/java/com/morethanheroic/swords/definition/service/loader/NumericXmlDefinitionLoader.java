@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.definition.service.loader;
 
+import com.morethanheroic.swords.definition.service.loader.domain.DefinitionLoadingContext;
+import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.definition.service.loader.exception.DefinitionLoaderException;
 import com.morethanheroic.swords.definition.service.loader.unmarshaller.UnmarshallerBuilder;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +28,13 @@ public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> 
 
     private final UnmarshallerBuilder unmarshallerBuilder;
 
-    //TODO: maximumFileCount is not needed anymore, remove it somehow!
-    public <T> List<T> loadDefinitions(Class<T> clazz, String resourcePath, String schemaPath, Integer maximumFileCount) throws IOException {
+    public <T> List<T> loadDefinitions(final DefinitionLoadingContext definitionLoadingContext) {
+        final NumericDefinitionLoadingContext numericDefinitionLoadingContext1 = (NumericDefinitionLoadingContext) definitionLoadingContext;
+
         try {
-            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath);
-        } catch (JAXBException e) {
-            throw new IOException(e);
+            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(numericDefinitionLoadingContext1.getClazz(), numericDefinitionLoadingContext1.getSchemaPath()), numericDefinitionLoadingContext1.getResourcePath());
+        } catch (JAXBException | IOException e) {
+            throw new DefinitionLoaderException("Error while loading number based xml definitions.", e);
         }
     }
 

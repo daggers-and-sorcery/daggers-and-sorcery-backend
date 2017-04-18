@@ -1,33 +1,41 @@
 package com.morethanheroic.swords.monster.service.loader;
 
+import com.google.common.collect.ImmutableList;
 import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
-import com.morethanheroic.swords.monster.service.transformer.MonsterDefinitionTransformer;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.morethanheroic.swords.monster.service.transformer.MonsterDefinitionTransformer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.xml.sax.SAXException;
 
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 @Service
+@RequiredArgsConstructor
 public class MonsterDefinitionLoader {
 
-    @Autowired
-    private NumericXmlDefinitionLoader numericXmlDefinitionLoader;
+    private final NumericXmlDefinitionLoader numericXmlDefinitionLoader;
+    private final MonsterDefinitionTransformer monsterDefinitionTransformer;
 
-    @Autowired
-    private MonsterDefinitionTransformer monsterDefinitionTransformer;
-
-    public List<MonsterDefinition> loadMonsterDefinitions() throws JAXBException, IOException, SAXException {
-        return loadRawMonsterDefinitions().stream().map(monsterDefinitionTransformer::transform).collect(Collectors.toList());
+    public List<MonsterDefinition> loadMonsterDefinitions() {
+        return loadRawMonsterDefinitions().stream()
+                .map(monsterDefinitionTransformer::transform)
+                .collect(
+                        collectingAndThen(toList(), ImmutableList::copyOf)
+                );
     }
 
-    @SuppressWarnings("unchecked")
-    private List<RawMonsterDefinition> loadRawMonsterDefinitions() throws JAXBException, IOException, SAXException {
-        return numericXmlDefinitionLoader.loadDefinitions(RawMonsterDefinition.class, "classpath:data/monster/definition/", "classpath:data/monster/schema.xsd", 100);
+    private List<RawMonsterDefinition> loadRawMonsterDefinitions() {
+        return numericXmlDefinitionLoader.loadDefinitions(
+                NumericDefinitionLoadingContext.<RawMonsterDefinition>builder()
+                        .clazz(RawMonsterDefinition.class)
+                        .resourcePath("classpath:data/monster/definition/")
+                        .schemaPath("classpath:data/monster/schema.xsd")
+                        .build()
+        );
     }
 }

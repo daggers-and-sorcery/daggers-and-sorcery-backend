@@ -4,6 +4,7 @@ import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
@@ -12,14 +13,14 @@ import com.morethanheroic.swords.skill.service.HighestSkillCalculator;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
+@RequiredArgsConstructor
 public class PlayerDefeatHandler {
 
     private static final double PERCENTAGE_TO_REMOVE = 0.25;
@@ -27,6 +28,7 @@ public class PlayerDefeatHandler {
     private final SkillEntityFactory skillEntityFactory;
     private final HighestSkillCalculator highestSkillCalculator;
     private final CombatMessageFactory combatMessageFactory;
+    private final CombatExperienceMapper combatExperienceMapper;
     private final CombatMapper combatMapper;
 
     public List<CombatStep> handleDefeat(CombatContext combatContext) {
@@ -43,27 +45,24 @@ public class PlayerDefeatHandler {
     private List<CombatStep> handleDeath(UserEntity userEntity) {
         restartRunningEvent(userEntity);
 
-        final List<CombatStep> result = new ArrayList<>();
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
+        return highestSkillCalculator.getHighestSkills(skillEntity).stream()
+                .map(skillType -> {
+                    final int experienceToRemove = calculateExperienceToRemove(skillType, skillEntity);
 
-        final List<SkillType> highestTreeSkill = highestSkillCalculator.getHighestSkills(skillEntity);
-        for (SkillType skillType : highestTreeSkill) {
-            final int experienceToRemove = calculateExperienceToRemove(skillType, skillEntity);
 
-            result.add(
-                    DefaultCombatStep.builder()
+                    skillEntity.decreaseExperience(skillType, experienceToRemove);
+
+                    return DefaultCombatStep.builder()
                             .message(combatMessageFactory.newMessage("xploss", "COMBAT_MESSAGE_DYING_EXPERIENCE_LOSS", experienceToRemove, skillType.getName()))
-                            .build()
-            );
-
-            skillEntity.decreaseExperience(skillType, experienceToRemove);
-        }
-
-        return result;
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 
     private void restartRunningEvent(final UserEntity userEntity) {
+        combatExperienceMapper.removeAll(userEntity.getId());
         combatMapper.removeCombatForUser(userEntity.getId());
 
         userEntity.resetActiveExploration();
@@ -73,12 +72,12 @@ public class PlayerDefeatHandler {
         userEntity.setBasicStats(userCombatEntity.getMaximumHealth(), userCombatEntity.getMaximumMana(), userEntity.getMovementPoints());
 
         return DefaultCombatStep.builder()
-             .message(combatMessageFactory.newMessage("resurrection", "COMBAT_MESSAGE_RESURRECTION"))
-             .build();
+                .message(combatMessageFactory.newMessage("resurrection", "COMBAT_MESSAGE_RESURRECTION"))
+                .build();
     }
 
     private int calculateExperienceToRemove(SkillType skillType, SkillEntity skillEntity) {
-        if(skillEntity.getExperience(skillType) == 0) {
+        if (skillEntity.getExperience(skillType) == 0) {
             return 0;
         }
 

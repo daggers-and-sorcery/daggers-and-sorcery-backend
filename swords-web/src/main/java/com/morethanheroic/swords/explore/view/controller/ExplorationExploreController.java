@@ -8,22 +8,19 @@ import com.morethanheroic.swords.explore.service.ExplorationEventExplorer;
 import com.morethanheroic.swords.explore.view.response.ExplorationResponseBuilder;
 import com.morethanheroic.swords.explore.view.response.domain.ExplorationResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class ExplorationExploreController {
 
-    @Autowired
-    private ExplorationEventExplorer explorationEventExecutor;
+    private final ExplorationEventExplorer explorationEventExecutor;
+    private final ExplorationResponseBuilder explorationResponseBuilder;
 
-    @Autowired
-    private ExplorationResponseBuilder explorationResponseBuilder;
-
-    @RequestMapping(value = "/explore/{location}/{state}", method = RequestMethod.GET)
+    @GetMapping("/explore/{location}/{state}")
     public Response explore(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable ExplorationEventLocation location, @PathVariable int state) {
         final ExplorationResult explorationResult = explorationEventExecutor.explore(userEntity, sessionEntity, location, state);
 

@@ -4,15 +4,15 @@ import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
+import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventHandlerCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
-import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,26 +21,18 @@ import org.springframework.transaction.annotation.Transactional;
  * has an event already in progress.
  */
 @Service
+@RequiredArgsConstructor
 public class ExplorationEventExplorer {
 
     private static final int NOT_STARTED = 0;
     private static final int NO_EVENT = 0;
     private static final int MINIMUM_MOVEMENT_POINTS = 0;
 
-    @Autowired
-    private ExplorationResultFactory explorationResultFactory;
-
-    @Autowired
-    private ExplorationContextFactory explorationContextFactory;
-
-    @Autowired
-    private ExplorationEventHandlerCache explorationEventHandlerCache;
-
-    @Autowired
-    private UserBasicAttributeManipulator basicAttributeManipulator;
-
-    @Autowired
-    private ExplorationEventDefinitionCache explorationEventDefinitionCache;
+    private final ExplorationResultFactory explorationResultFactory;
+    private final ExplorationContextFactory explorationContextFactory;
+    private final ExplorationEventHandlerCache explorationEventHandlerCache;
+    private final UserBasicAttributeManipulator basicAttributeManipulator;
+    private final ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
     @Transactional
     public ExplorationResult exploreNext(final UserEntity userEntity, final SessionEntity sessionEntity) {

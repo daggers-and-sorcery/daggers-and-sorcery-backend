@@ -1,43 +1,51 @@
 package com.morethanheroic.swords.money.service.loader;
 
+import com.google.common.collect.ImmutableList;
 import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.domain.EnumDefinitionLoadingContext;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.loader.domain.RawMoneyDefinition;
 import com.morethanheroic.swords.money.service.transformer.MoneyDefinitionTransformer;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Loads the {@link MoneyDefinition}s from xml files.
  */
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class MoneyDefinitionLoader implements DefinitionLoader<MoneyDefinition> {
 
     private static final String MONEY_DEFINITION_LOCATION = "classpath:data/money/definition/";
     private static final String MONEY_SCHEMA_LOCATION = "classpath:data/money/schema.xsd";
 
-    @NonNull
     private final EnumXmlDefinitionLoader enumXmlDefinitionLoader;
-
-    @NonNull
     private final MoneyDefinitionTransformer moneyDefinitionTransformer;
 
     @Override
-    public List<MoneyDefinition> loadDefinitions() throws IOException {
-        return loadRawMoneyDefinitions().stream().map(moneyDefinitionTransformer::transform).collect(Collectors.toList());
+    public List<MoneyDefinition> loadDefinitions() {
+        return loadRawMoneyDefinitions().stream()
+                .map(moneyDefinitionTransformer::transform)
+                .collect(
+                        collectingAndThen(toList(), ImmutableList::copyOf)
+                );
     }
 
-    @SuppressWarnings("unchecked")
-    public List<RawMoneyDefinition> loadRawMoneyDefinitions() throws IOException {
-        return enumXmlDefinitionLoader.loadDefinitions(RawMoneyDefinition.class, MONEY_DEFINITION_LOCATION, MONEY_SCHEMA_LOCATION, MoneyType.class);
+    private List<RawMoneyDefinition> loadRawMoneyDefinitions() {
+        return enumXmlDefinitionLoader.loadDefinitions(
+                EnumDefinitionLoadingContext.<RawMoneyDefinition>builder()
+                        .clazz(RawMoneyDefinition.class)
+                        .resourcePath(MONEY_DEFINITION_LOCATION)
+                        .schemaPath(MONEY_SCHEMA_LOCATION)
+                        .target(MoneyType.class)
+                        .build()
+        );
     }
 }

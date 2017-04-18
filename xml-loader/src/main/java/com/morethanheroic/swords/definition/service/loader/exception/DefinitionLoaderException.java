@@ -8,4 +8,8 @@ public class DefinitionLoaderException extends RuntimeException {
     public DefinitionLoaderException(String message, Throwable throwable) {
         super(message, throwable);
     }
+
+    public DefinitionLoaderException(String message) {
+        super(message);
+    }
 }
