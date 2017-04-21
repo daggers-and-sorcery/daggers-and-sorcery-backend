@@ -48,7 +48,7 @@ public class StarterItemCalculator {
                         .build()
                 )
             )
-            .put(StartingArmor.CLOTH, Lists.newArrayList(
+            .put(StartingArmor.ROBE, Lists.newArrayList(
                     StartingItem.builder()
                         .itemDefinition(itemDefinitionCache.getDefinition(APPLE_PIE_ID))
                         .itemAmount(2)

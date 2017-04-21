@@ -42,7 +42,7 @@ public class StarterArmorCalculator {
                     .boots(itemDefinitionCache.getDefinition(WORN_LEATHER_BOOTS_ID))
                     .build()
             )
-            .put(StartingArmor.CLOTH,
+            .put(StartingArmor.ROBE,
                 StarterArmorSet.builder()
                     .armor(itemDefinitionCache.getDefinition(ROUGHLY_STICHED_ROBES_ID))
                     .offhand(itemDefinitionCache.getDefinition(SPELLBOOK_ID))

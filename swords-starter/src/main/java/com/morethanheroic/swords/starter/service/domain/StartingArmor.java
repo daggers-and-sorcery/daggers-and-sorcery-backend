@@ -7,5 +7,5 @@ public enum  StartingArmor {
 
     HEAVY,
     LIGHT,
-    CLOTH
+    ROBE
 }
