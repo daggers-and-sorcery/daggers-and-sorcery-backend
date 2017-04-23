@@ -33,10 +33,10 @@ public class RecipeInfoResponseBuilder implements ResponseBuilder<RecipeInfoResp
     public Response build(final RecipeInfoResponseBuilderConfiguration recipeInfoResponseBuilderConfiguration) {
         final Response response = responseFactory.newResponse(recipeInfoResponseBuilderConfiguration.getUserEntity());
 
-        response.setData("working_recipes", recipeListPartialResponseBuilder.build(
+        response.setData("recipes", recipeListPartialResponseBuilder.build(
             RecipeListPartialResponseBuilderConfiguration.builder()
                  .userEntity(recipeInfoResponseBuilderConfiguration.getUserEntity())
-                 .recipeType(RecipeType.LEATHERWORKING)
+                 .recipeType(RecipeType.HERBLORE)
                  .build()
         ));
         response.setData("skill", skillLevelPartialResponseBuilder.build(SkillLevelPartialResponseBuilderConfiguration.builder()

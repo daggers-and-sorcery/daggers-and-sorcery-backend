@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class CleaningService {
+public class HerbloreCleaningService {
 
     private static final int CLEANING_MOVEMENT_POINT_COST = 1;
 

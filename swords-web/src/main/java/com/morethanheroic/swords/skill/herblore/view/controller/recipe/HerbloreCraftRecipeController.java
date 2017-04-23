@@ -10,7 +10,7 @@ import com.morethanheroic.swords.skill.herblore.view.response.service.recipe.Her
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +28,7 @@ public class HerbloreCraftRecipeController {
     private final RecipeDefinitionCache recipeDefinitionCache;
     private final HerbloreCraftResponseBuilder herbloreCraftResponseBuilder;
 
-    @GetMapping("/skill/herblore/recipe/craft")
+    @PostMapping("/skill/herblore/recipe/craft")
     public Response craft(final UserEntity userEntity, @RequestBody @Valid final HerbloreCraftRequest herbloreCraftRequest) {
         log.info("Got a call for the herblore controller.");
 
