@@ -6,7 +6,7 @@
 image: java:8
 
 pipelines:
-  custom:
+  default:
     - step:
         script:
           - bash ./gradlew clean build
