@@ -38,15 +38,17 @@ public class EnumXmlDefinitionLoader implements XmlDefinitionLoader<Class<? exte
         final EnumDefinitionLoadingContext enumDefinitionLoadingContext = (EnumDefinitionLoadingContext) definitionLoadingContext;
 
         try {
-            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(enumDefinitionLoadingContext.getClazz(), enumDefinitionLoadingContext.getSchemaPath()), enumDefinitionLoadingContext.getResourcePath(), enumDefinitionLoadingContext.getTarget());
+            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(enumDefinitionLoadingContext.getClazz(),
+                enumDefinitionLoadingContext.getSchemaPath()), enumDefinitionLoadingContext.getResourcePath(),
+                enumDefinitionLoadingContext.getTarget());
         } catch (JAXBException | IOException e) {
             throw new DefinitionLoaderException("Error while loading enum based xml definitions.", e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    private List unmarshallTargetFiles(final Unmarshaller unmarshaller,final String resourcePath,final Class<? extends Enum> enumClass) throws JAXBException,
-            IOException {
+    private List unmarshallTargetFiles(final Unmarshaller unmarshaller, final String resourcePath,
+        final Class<? extends Enum> enumClass) throws JAXBException, IOException {
         return Arrays.stream(enumClass.getEnumConstants())
                 .map(actualEnum -> unmarshallTargetFile(unmarshaller, resourcePath, actualEnum))
                 .collect(Collectors.toList());

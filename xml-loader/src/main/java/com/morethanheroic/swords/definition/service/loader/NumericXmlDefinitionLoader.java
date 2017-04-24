@@ -32,7 +32,8 @@ public class NumericXmlDefinitionLoader implements XmlDefinitionLoader<Integer> 
         final NumericDefinitionLoadingContext numericDefinitionLoadingContext1 = (NumericDefinitionLoadingContext) definitionLoadingContext;
 
         try {
-            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(numericDefinitionLoadingContext1.getClazz(), numericDefinitionLoadingContext1.getSchemaPath()), numericDefinitionLoadingContext1.getResourcePath());
+            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(numericDefinitionLoadingContext1.getClazz(),
+                numericDefinitionLoadingContext1.getSchemaPath()), numericDefinitionLoadingContext1.getResourcePath());
         } catch (JAXBException | IOException e) {
             throw new DefinitionLoaderException("Error while loading number based xml definitions.", e);
         }

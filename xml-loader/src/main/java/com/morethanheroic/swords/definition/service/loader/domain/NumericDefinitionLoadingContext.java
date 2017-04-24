@@ -5,6 +5,8 @@ import lombok.Getter;
 
 /**
  * Used when loading definitions based on an numeric id using {@link com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader}.
+ *
+ * @param <T> the type of the class to load the definitions to.
  */
 @Builder
 @Getter
