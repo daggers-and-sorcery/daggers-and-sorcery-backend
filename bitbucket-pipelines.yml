@@ -9,5 +9,5 @@ pipelines:
   default:
     - step:
         script:
-          - bash pip install --upgrade --user awscli
+          - pip install --upgrade --user awscli
           - bash ./gradlew clean build
