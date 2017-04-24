@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.equipment.domain;
 
+import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.cache.value.ValueCache;
@@ -20,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 
 @RequiredArgsConstructor
-public class EquipmentEntity {
+public class EquipmentEntity implements Entity {
 
     @Autowired
     private EquipmentMapper equipmentMapper;
@@ -55,6 +56,14 @@ public class EquipmentEntity {
         equipmentProviderIntegerValueCache = new ValueCache<>(cacheableEquipmentProvider, userEntity.getId());
     }
 
+    /**
+     * Equip an item directly without checking if the player is able to wear it etc. Most of the time you
+     * don't need this but {@link com.morethanheroic.swords.equipment.service.EquippingService#equipItem(UserEntity, ItemDefinition, IdentificationType)}.
+     */
+    /*
+     * TODO: Rewrite this somewhere else! It's disgusting. Also create a good logic for equipping ammunition without actually getting
+     * the amount of the arrows from the player's inventory.
+     */
     public void equipWithoutCheck(ItemDefinition item, boolean identified) {
         final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
         final EquipmentSlot slot = equipmentSlotMapper.getEquipmentSlotFromItemType(item.getSubtype());
@@ -389,5 +398,10 @@ public class EquipmentEntity {
         } else {
             equipmentMapper.equipQuiver(userEntity.getId(), getEquipmentIdOnSlot(EquipmentSlot.QUIVER), isEquipmentIdentifiedOnSlot(EquipmentSlot.QUIVER), equippedAmount - amount);
         }
+    }
+
+    @Override
+    public int getId() {
+        return equipmentProviderIntegerValueCache.getEntity().getUserId();
     }
 }

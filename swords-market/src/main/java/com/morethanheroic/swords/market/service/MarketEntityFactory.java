@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MarketEntityFactory implements EntityFactory<MarketEntity> {
+public class MarketEntityFactory implements EntityFactory<MarketEntity, Integer> {
 
     private final MarketMapper marketMapper;
     private final UserEntityFactory userEntityFactory;
     private final ItemDefinitionCache itemDefinitionCache;
 
     @Override
-    public MarketEntity getEntity(final int marketId) {
+    public MarketEntity getEntity(final Integer marketId) {
         final MarketDatabaseEntity marketDatabaseEntity = marketMapper.getMarketInfo(marketId);
 
         return MarketEntity.builder()

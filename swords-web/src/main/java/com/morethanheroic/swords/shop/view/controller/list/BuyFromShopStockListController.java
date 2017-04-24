@@ -45,7 +45,7 @@ public class BuyFromShopStockListController {
                         .silver((moneyAmount / 100) % 100)
                         .gold(moneyAmount / 10000)
                         .shopDefinition(shopDefinitionCache.getDefinition(shopId))
-                        .items(shopItemTypeSorter.sortByType(shopEntityFactory.getEntity(shopId).getAllItems()))
+                        .items(shopItemTypeSorter.sortByType(shopEntityFactory.getEntity(shopId).getAllItems(userEntity)))
                         .build()
         );
     }

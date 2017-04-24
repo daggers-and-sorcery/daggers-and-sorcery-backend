@@ -1,13 +1,15 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
+import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import com.morethanheroic.swords.skill.service.SkillFacade;
+import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Service;
  * Used to calculate a {@link com.morethanheroic.swords.attribute.domain.type.AttributeType#SKILL} attribute's all data related to the player.
  */
 @Service
-public class SkillAttributeCalculator implements AttributeCalculator<SkillAttribute> {
+public class SkillAttributeCalculator extends GenericAttributeCalculator<SkillAttribute> {
 
     @Autowired
     private GlobalAttributeCalculator globalAttributeCalculator;
@@ -26,7 +28,7 @@ public class SkillAttributeCalculator implements AttributeCalculator<SkillAttrib
     private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
 
     @Autowired
-    private SkillFacade skillFacade;
+    private SkillEntityFactory skillEntityFactory;
 
     @Autowired
     private SkillTypeCalculator skillTypeCalculator;
@@ -34,7 +36,7 @@ public class SkillAttributeCalculator implements AttributeCalculator<SkillAttrib
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, SkillAttribute attribute) {
         final SkillType skillType = skillTypeCalculator.getSkillTypeFromSkillAttribute(attribute);
-        final SkillEntity skillEntity = skillFacade.getSkills(user);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(user);
 
         return SkillAttributeData.skillAttributeDataBuilder()
                 .attribute(attribute)
@@ -45,6 +47,15 @@ public class SkillAttributeCalculator implements AttributeCalculator<SkillAttrib
                 .nextLevelXp(skillEntity.getExperienceToNextLevel(skillType))
                 .xpBetweenLevels(skillEntity.getExperienceBetweenNextLevel(skillType))
                 .build();
+    }
+
+    @Override
+    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
+        final AttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(userEntity, attribute);
+
+        result.increaseValue(skillEntityFactory.getEntity(userEntity).getLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
+
+        return result;
     }
 
     @Override

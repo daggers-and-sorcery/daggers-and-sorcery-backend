@@ -7,11 +7,11 @@ import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
-import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.money.domain.MoneyType;
-import com.morethanheroic.swords.shop.service.ItemPriceCalculator;
 import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
+import com.morethanheroic.swords.shop.service.price.ItemSellPriceCalculator;
+import com.morethanheroic.swords.shop.service.price.domain.ItemPriceCalculationContext;
 import com.morethanheroic.swords.shop.view.response.domain.sell.configuration.ShopSellListResponseBuilderConfiguration;
 import com.morethanheroic.swords.shop.view.response.service.sell.ShopSellItem;
 import com.morethanheroic.swords.shop.view.response.service.sell.ShopSellListResponseBuilder;
@@ -35,7 +35,7 @@ public class SellToShopStockListController {
     private final ShopDefinitionCache shopDefinitionCache;
     private final InventoryEntityFactory inventoryEntityFactory;
     private final InventoryItemTypeSorter inventoryItemTypeSorter;
-    private final ItemPriceCalculator itemPriceCalculator;
+    private final ItemSellPriceCalculator itemSellPriceCalculator;
 
     @RequestMapping(value = "/shop/selllist/{shopId}", method = RequestMethod.GET)
     public Response listStock(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable int shopId) {
@@ -56,12 +56,12 @@ public class SellToShopStockListController {
                         .silver((moneyAmount / 100) % 100)
                         .gold(moneyAmount / 10000)
                         .shopDefinition(shopDefinitionCache.getDefinition(shopId))
-                        .items(transform(inventoryItemTypeSorter.sortByType(inventoryEntity.getItems())))
+                        .items(transform(userEntity, inventoryItemTypeSorter.sortByType(inventoryEntity.getItems())))
                         .build()
         );
     }
 
-    private Map<ItemType, List<ShopSellItem>> transform(final Map<ItemType, List<InventoryItem>> items) {
+    private Map<ItemType, List<ShopSellItem>> transform(final UserEntity userEntity, final Map<ItemType, List<InventoryItem>> items) {
         final Map<ItemType, List<ShopSellItem>> result = new HashMap<>();
 
         for (Map.Entry<ItemType, List<InventoryItem>> item : items.entrySet()) {
@@ -74,12 +74,15 @@ public class SellToShopStockListController {
             }
 
             for (InventoryItem inventoryItem : item.getValue()) {
-                final ItemDefinition itemDefinition = inventoryItem.getItem();
-
                 result.get(item.getKey()).add(
                         ShopSellItem.builder()
                                 .inventoryItem(inventoryItem)
-                                .sellPrice(itemPriceCalculator.getSellPrice(itemDefinition))
+                                .sellPrice(itemSellPriceCalculator.calculateSellPrice(
+                                        ItemPriceCalculationContext.builder()
+                                                .userEntity(userEntity)
+                                                .itemDefinition(inventoryItem.getItem())
+                                                .build()
+                                ))
                                 .build()
                 );
             }

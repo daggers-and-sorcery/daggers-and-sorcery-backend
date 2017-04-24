@@ -6,6 +6,8 @@ import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
  * List of the available skills in the game.
  */
 //TODO: Create a definition loader like in race.
+//TODO: Maybe we should remove this enum altogether and use SkillAttribute instead? That sounds like the wisest choice.
+//This is however only possible after we moved the skillgroups into a definition file.
 public enum SkillType {
 
     TWO_HANDED_CRUSHING_WEAPONS(SkillGroup.COMBAT),
@@ -28,13 +30,14 @@ public enum SkillType {
     SHIELD_DEFENSE(SkillGroup.COMBAT),
     STAFF(SkillGroup.COMBAT),
     WAND(SkillGroup.COMBAT),
+    FOCUS(SkillGroup.COMBAT),
     SPECTRE(SkillGroup.COMBAT),
     SCAVENGING(SkillGroup.TRADE),
     COOKING(SkillGroup.TRADE),
     LEATHERWORKING(SkillGroup.TRADE),
     SMITHING(SkillGroup.TRADE),
     FLETCHING(SkillGroup.TRADE),
-    FOCUS(SkillGroup.COMBAT),
+    HERBLORE(SkillGroup.TRADE),
     DESTRUCTION(SkillGroup.MAGIC),
     RESTORATION(SkillGroup.MAGIC),
     ALTERATION(SkillGroup.MAGIC),
@@ -51,7 +54,7 @@ public enum SkillType {
     }
 
     /**
-     * Use SkillAttributeDefinition#getName()
+     * @deprecated Use SkillAttributeDefinition#getName().
      */
     @Deprecated
     public String getName() {

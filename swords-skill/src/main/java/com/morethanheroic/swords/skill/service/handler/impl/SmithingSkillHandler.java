@@ -4,14 +4,14 @@ import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.repository.dao.SkillDatabaseEntity;
 import com.morethanheroic.swords.skill.repository.domain.SkillMapper;
 import com.morethanheroic.swords.skill.service.handler.SkillHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class SmithingSkillHandler implements SkillHandler {
 
-    @Autowired
-    private SkillMapper skillMapper;
+    private final SkillMapper skillMapper;
 
     @Override
     public void increaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value) {

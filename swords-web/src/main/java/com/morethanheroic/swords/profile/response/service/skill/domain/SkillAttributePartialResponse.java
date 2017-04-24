@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.profile.response.service.skill.domain;
 
 import com.morethanheroic.response.domain.PartialResponse;
-import com.morethanheroic.swords.profile.response.service.AttributeCalculationResultPartialResponse;
-import com.morethanheroic.swords.profile.response.service.AttributeDefinitionPartialResponse;
-import com.morethanheroic.swords.profile.response.service.AttributeModifierPartialResponse;
+import com.morethanheroic.swords.profile.response.service.attribute.AttributeCalculationResultPartialResponse;
+import com.morethanheroic.swords.profile.response.service.attribute.AttributeDefinitionPartialResponse;
+import com.morethanheroic.swords.profile.response.service.attribute.AttributeModifierPartialResponse;
 import lombok.Builder;
 import lombok.Getter;
 

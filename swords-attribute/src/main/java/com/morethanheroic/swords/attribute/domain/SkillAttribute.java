@@ -37,7 +37,8 @@ public enum SkillAttribute implements Attribute {
     RESTORATION,
     ALTERATION,
     LOCKPICKING,
-    FLETCHING;
+    FLETCHING,
+    HERBLORE;
 
     @Override
     public AttributeType getAttributeType() {

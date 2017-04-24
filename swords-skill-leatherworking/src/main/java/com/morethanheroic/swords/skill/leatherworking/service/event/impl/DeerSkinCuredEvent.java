@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.skill.leatherworking.service.event.impl;
 
-import com.morethanheroic.swords.event.domain.EventType;
-import com.morethanheroic.swords.event.service.event.Event;
+import com.morethanheroic.swords.event.domain.Event;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.leatherworking.service.event.CuringEventExecutor;
@@ -33,20 +32,5 @@ public class DeerSkinCuredEvent implements Event {
     @Override
     public int getId() {
         return DEER_SKIN_EVENT_ID;
-    }
-
-    @Override
-    public EventType getType() {
-        return EventType.LEATHERWORKING_CURING;
-    }
-
-    @Override
-    public String getName() {
-        return "Deer skin (cured)";
-    }
-
-    @Override
-    public int getLength() {
-        return 3 * 60 * 1000;
     }
 }

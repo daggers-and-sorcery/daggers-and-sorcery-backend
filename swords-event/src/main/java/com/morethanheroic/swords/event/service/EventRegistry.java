@@ -1,46 +1,45 @@
 package com.morethanheroic.swords.event.service;
 
+import com.morethanheroic.swords.event.domain.EventDefinition;
 import com.morethanheroic.swords.event.domain.EventEntity;
 import com.morethanheroic.swords.event.domain.EventType;
 import com.morethanheroic.swords.event.repository.dao.EventDatabaseEntity;
 import com.morethanheroic.swords.event.repository.domain.EventMapper;
-import com.morethanheroic.swords.event.service.event.Event;
+import com.morethanheroic.swords.event.service.cache.EventDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Register events for processing.
+ */
 @Service
+@RequiredArgsConstructor
 public class EventRegistry {
 
-    @Autowired
-    private EventMapper eventMapper;
-
-    @Autowired
-    private EventProvider eventProvider;
-
-    @Autowired
-    private EventEntityTransformer eventEntityTransformer;
+    private final EventMapper eventMapper;
+    private final EventEntityTransformer eventEntityTransformer;
+    private final EventDefinitionCache eventDefinitionCache;
 
     public void registerEvent(final EventEntity event) {
-        final Event realEvent = eventProvider.getEvent(event.getEventId());
+        final EventDefinition eventDefinition = eventDefinitionCache.getDefinition(event.getEventId());
 
         final EventDatabaseEntity eventDatabaseEntity = new EventDatabaseEntity();
         eventDatabaseEntity.setEventId(event.getEventId());
         eventDatabaseEntity.setUserId(event.getUser().getId());
-        eventDatabaseEntity.setEndingDate(new Date(System.currentTimeMillis() + realEvent.getLength()));
-        eventDatabaseEntity.setEventType(realEvent.getType());
+        eventDatabaseEntity.setEndingDate(new Date(System.currentTimeMillis() + eventDefinition.getLength()));
+        eventDatabaseEntity.setEventType(eventDefinition.getType());
 
         eventMapper.insertEvent(eventDatabaseEntity);
     }
 
     public List<EventEntity> getRegisteredEvents(final UserEntity userEntity, final EventType eventType) {
-        return eventMapper.getEventsByType(userEntity.getId(), eventType)
-                .stream()
-                .map(eventDatabaseEntity -> eventEntityTransformer.transform(eventDatabaseEntity))
+        return eventMapper.getEventsByType(userEntity.getId(), eventType).stream()
+                .map(eventEntityTransformer::transform)
                 .collect(Collectors.toList());
     }
 

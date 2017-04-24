@@ -1,8 +1,11 @@
 package com.morethanheroic.swords.definition.service.loader;
 
+import com.morethanheroic.swords.definition.service.loader.domain.DefinitionLoadingContext;
+import com.morethanheroic.swords.definition.service.loader.domain.EnumDefinitionLoadingContext;
+import com.morethanheroic.swords.definition.service.loader.exception.DefinitionLoaderException;
 import com.morethanheroic.swords.definition.service.loader.unmarshaller.UnmarshallerBuilder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -10,9 +13,10 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 /**
  * An {@link XmlDefinitionLoader} that loads xml information based on a {@link java.lang.Enum}. The loader looks
@@ -23,40 +27,46 @@ import java.util.Locale;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class EnumXmlDefinitionLoader implements XmlDefinitionLoader<Class<? extends Enum>> {
 
-    @Autowired
-    private UnmarshallerBuilder unmarshallerBuilder;
-
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final UnmarshallerBuilder unmarshallerBuilder;
+    private final ApplicationContext applicationContext;
 
     @Override
-    public List loadDefinitions(Class clazz, String resourcePath, String schemaPath, Class<? extends Enum> target) throws IOException {
+    public <T> List<T> loadDefinitions(final DefinitionLoadingContext definitionLoadingContext) {
+        final EnumDefinitionLoadingContext enumDefinitionLoadingContext = (EnumDefinitionLoadingContext) definitionLoadingContext;
+
         try {
-            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(clazz, schemaPath), resourcePath, target);
-        } catch (JAXBException e) {
-            throw new IOException(e);
+            return unmarshallTargetFiles(unmarshallerBuilder.buildUnmarshaller(enumDefinitionLoadingContext.getClazz(),
+                enumDefinitionLoadingContext.getSchemaPath()), enumDefinitionLoadingContext.getResourcePath(),
+                enumDefinitionLoadingContext.getTarget());
+        } catch (JAXBException | IOException e) {
+            throw new DefinitionLoaderException("Error while loading enum based xml definitions.", e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    private List unmarshallTargetFiles(Unmarshaller unmarshaller, String resourcePath, Class<? extends Enum> enumClass) throws JAXBException,
-            IOException {
-        final List list = new ArrayList<>();
+    private List unmarshallTargetFiles(final Unmarshaller unmarshaller, final String resourcePath,
+        final Class<? extends Enum> enumClass) throws JAXBException, IOException {
+        return Arrays.stream(enumClass.getEnumConstants())
+                .map(actualEnum -> unmarshallTargetFile(unmarshaller, resourcePath, actualEnum))
+                .collect(Collectors.toList());
+    }
 
-        for (Enum actualEnum : enumClass.getEnumConstants()) {
-            final String enumResourcePath = resourcePath + getFileNameFromEnum(actualEnum);
-            final Resource resource = applicationContext.getResource(enumResourcePath);
+    private Object unmarshallTargetFile(final Unmarshaller unmarshaller, final String resourcePath, final Enum actualEnum) {
+        final String enumResourcePath = resourcePath + getFileNameFromEnum(actualEnum);
+        final Resource resource = applicationContext.getResource(enumResourcePath);
 
-            if (!resource.exists()) {
-                throw new IllegalArgumentException("Definition for enum: " + actualEnum.name() + " at " + enumResourcePath + " does not exists!");
-            }
-
-            list.add(unmarshaller.unmarshal(applicationContext.getResource(enumResourcePath).getInputStream()));
+        if (!resource.exists()) {
+            throw new DefinitionLoaderException("Definition for enum: " + actualEnum.name() + " at " + enumResourcePath + " does not exists!");
         }
 
-        return list;
+        try {
+            return unmarshaller.unmarshal(applicationContext.getResource(enumResourcePath).getInputStream());
+        } catch (JAXBException | IOException e) {
+            throw new DefinitionLoaderException("Error occured while loading definitions!", e);
+        }
     }
 
     private String getFileNameFromEnum(Enum enumValue) {

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Holds the loaded {@link ItemDefinition}s in a cached manner.
+ * Holds the loaded {@link ItemDefinition}s.
  */
 @Slf4j
 @Service

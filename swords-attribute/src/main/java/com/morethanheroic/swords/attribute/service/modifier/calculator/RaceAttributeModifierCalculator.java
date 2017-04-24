@@ -5,7 +5,7 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierUnitType;
-import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.calc.GeneralAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.attribute.service.modifier.domain.PercentageAttributeModifierEntry;
@@ -22,7 +22,7 @@ public class RaceAttributeModifierCalculator implements AttributeModifierCalcula
     private static final int NO_RACIAL_MODIFIER = 0;
 
     @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
+    private GeneralAttributeCalculator globalAttributeCalculator;
 
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, Attribute attribute) {

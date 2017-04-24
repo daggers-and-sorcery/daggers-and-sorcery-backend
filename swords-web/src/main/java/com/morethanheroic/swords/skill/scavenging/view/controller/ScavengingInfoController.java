@@ -21,7 +21,7 @@ public class ScavengingInfoController {
         return scavengingInfoResponseBuilder.build(
                 ScavengingInfoResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
-                        .scavengingEntity(scavengingEntityFactory.getEntity(userEntity.getId()))
+                        .scavengingEntity(scavengingEntityFactory.getEntity(userEntity))
                         .build()
         );
     }

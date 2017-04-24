@@ -1,10 +1,11 @@
 package com.morethanheroic.swords.spell.service.loader;
 
 import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
+import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellDefinition;
 import com.morethanheroic.swords.spell.service.transformer.SpellDefinitionTransformer;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
@@ -14,20 +15,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SpellDefinitionLoader {
 
-    @Autowired
-    private NumericXmlDefinitionLoader numericXmlDefinitionLoader;
-
-    @Autowired
-    private SpellDefinitionTransformer spellDefinitionTransformer;
+    private final NumericXmlDefinitionLoader numericXmlDefinitionLoader;
+    private final SpellDefinitionTransformer spellDefinitionTransformer;
 
     public List<SpellDefinition> loadSpellDefinitions() throws JAXBException, IOException, SAXException {
         return loadRawSpellDefinitions().stream().map(spellDefinitionTransformer::transform).collect(Collectors.toList());
     }
 
-    @SuppressWarnings("unchecked")
     private List<RawSpellDefinition> loadRawSpellDefinitions() throws JAXBException, IOException, SAXException {
-        return numericXmlDefinitionLoader.loadDefinitions(RawSpellDefinition.class, "classpath:data/spell/definition/", "classpath:data/spell/schema.xsd", 100);
+        return numericXmlDefinitionLoader.loadDefinitions(
+                NumericDefinitionLoadingContext.<RawSpellDefinition>builder()
+                        .clazz(RawSpellDefinition.class)
+                        .resourcePath("classpath:data/spell/definition/")
+                        .schemaPath("classpath:data/spell/schema.xsd")
+                        .build()
+        );
     }
 }

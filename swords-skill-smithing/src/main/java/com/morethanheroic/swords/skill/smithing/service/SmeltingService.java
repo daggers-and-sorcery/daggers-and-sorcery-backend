@@ -2,8 +2,9 @@ package com.morethanheroic.swords.skill.smithing.service;
 
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
+import com.morethanheroic.swords.recipe.domain.RecipeType;
 import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
 import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
 import com.morethanheroic.swords.recipe.service.result.RecipeEvaluator;
@@ -11,36 +12,29 @@ import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.skill.smithing.domain.SmeltingResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * This service is responsible for the handling of the smelting tasks in the Smithing skill.
+ */
 @Service
+@RequiredArgsConstructor
 public class SmeltingService {
 
     private static final int SMELTING_MOVEMENT_POINT_COST = 1;
 
-    @Autowired
-    private RecipeEvaluator recipeEvaluator;
-
-    @Autowired
-    private InventoryFacade inventoryFacade;
-
-    @Autowired
-    private SkillEntityFactory skillEntityFactory;
-
-    @Autowired
-    private RecipeIngredientEvaluator recipeIngredientEvaluator;
-
-    @Autowired
-    private RecipeRequirementEvaluator recipeRequirementEvaluator;
-
-    @Autowired
-    private UserBasicAttributeManipulator userBasicAttributeManipulator;
+    private final RecipeEvaluator recipeEvaluator;
+    private final InventoryEntityFactory inventoryEntityFactory;
+    private final SkillEntityFactory skillEntityFactory;
+    private final RecipeIngredientEvaluator recipeIngredientEvaluator;
+    private final RecipeRequirementEvaluator recipeRequirementEvaluator;
+    private final UserBasicAttributeManipulator userBasicAttributeManipulator;
 
     @Transactional
     public SmeltingResult smelt(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
-        if (recipeDefinition == null) {
+        if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.SMITHING_SMELTING) {
             return SmeltingResult.INVALID_EVENT;
         }
 
@@ -56,8 +50,8 @@ public class SmeltingService {
             return SmeltingResult.NOT_ENOUGH_MOVEMENT;
         }
 
-        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
         final boolean isSuccessful = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
 

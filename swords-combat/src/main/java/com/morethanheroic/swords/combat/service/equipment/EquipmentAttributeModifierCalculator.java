@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EquipmentAttributeModifierCalculator implements AttributeModifierCalculator {
@@ -27,16 +28,16 @@ public class EquipmentAttributeModifierCalculator implements AttributeModifierCa
     //Todo: write a factory for AttributeModifierEntry and use that to initialize the instances.
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, Attribute attribute) {
-        final AttributeCalculationResult attributeCalculationResult = equipmentAttributeBonusProvider.calculateBonus(user, attribute);
+        final Optional<AttributeCalculationResult> attributeCalculationResult = equipmentAttributeBonusProvider.calculateBonus(user, attribute);
 
-        if (!attributeCalculationResult.isZero()) {
+        if (attributeCalculationResult.isPresent()) {
             if (attribute instanceof CombatAttribute) {
                 return Lists.newArrayList(
-                        new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue((CombatAttributeCalculationResult) attributeCalculationResult))
+                        new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue((CombatAttributeCalculationResult) attributeCalculationResult.get()))
                 );
             } else {
                 return Lists.newArrayList(
-                        new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierUnitType.VALUE, new AttributeModifierValue(attributeCalculationResult))
+                        new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierUnitType.VALUE, new AttributeModifierValue(attributeCalculationResult.get()))
                 );
             }
         }

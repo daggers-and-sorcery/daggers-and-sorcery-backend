@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.definition.service.loader;
 
-import java.io.IOException;
+import com.morethanheroic.swords.definition.service.loader.domain.DefinitionLoadingContext;
+
 import java.util.List;
 
 /**
@@ -9,5 +10,5 @@ import java.util.List;
  */
 public interface XmlDefinitionLoader<T> {
 
-    List loadDefinitions(Class clazz, String resourcePath, String schemaPath, T target) throws IOException;
+    <Z> List<Z> loadDefinitions(DefinitionLoadingContext definitionLoadingContext);
 }

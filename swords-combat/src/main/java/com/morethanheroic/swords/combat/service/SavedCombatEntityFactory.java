@@ -1,7 +1,5 @@
 package com.morethanheroic.swords.combat.service;
 
-import org.springframework.stereotype.Service;
-
 import com.morethanheroic.entity.service.factory.EntityFactory;
 import com.morethanheroic.swords.combat.domain.SavedCombatEntity;
 import com.morethanheroic.swords.combat.repository.dao.CombatDatabaseEntity;
@@ -9,23 +7,19 @@ import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.exception.IllegalCombatStateException;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import com.morethanheroic.swords.user.service.UserEntityFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SavedCombatEntityFactory implements EntityFactory<SavedCombatEntity>{
+public class SavedCombatEntityFactory implements EntityFactory<SavedCombatEntity, UserEntity>{
 
     private final CombatMapper combatMapper;
-    private final UserEntityFactory userEntityFactory;
     private final MonsterDefinitionCache monsterDefinitionCache;
 
     @Override
-    public SavedCombatEntity getEntity(final int id) {
-        final UserEntity userEntity = userEntityFactory.getEntity(id);
-
-        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(id);
+    public SavedCombatEntity getEntity(final UserEntity userEntity) {
+        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
 
         if (combatDatabaseEntity == null) {
             throw new IllegalCombatStateException(

@@ -4,7 +4,10 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.shop.domain.ShopItem;
 import com.morethanheroic.swords.shop.repository.dao.ShopItemDatabaseEntity;
-import com.morethanheroic.swords.shop.service.ItemPriceCalculator;
+import com.morethanheroic.swords.shop.service.price.ItemBuyPriceCalculator;
+import com.morethanheroic.swords.shop.service.price.ItemSellPriceCalculator;
+import com.morethanheroic.swords.shop.service.price.domain.ItemPriceCalculationContext;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +19,32 @@ import java.util.stream.Collectors;
 public class ShopItemTransformer {
 
     private final ItemDefinitionCache itemDefinitionCache;
-    private final ItemPriceCalculator itemPriceCalculator;
+    private final ItemSellPriceCalculator itemSellPriceCalculator;
+    private final ItemBuyPriceCalculator itemBuyPriceCalculator;
 
-    public List<ShopItem> transform(List<ShopItemDatabaseEntity> shopItemDatabaseEntityList) {
-        return shopItemDatabaseEntityList.stream().map(this::transform).collect(Collectors.toList());
+    public List<ShopItem> transform(final UserEntity userEntity, final List<ShopItemDatabaseEntity> shopItemDatabaseEntityList) {
+        return shopItemDatabaseEntityList.stream()
+                .map(shopItemDatabaseEntity -> transform(userEntity, shopItemDatabaseEntity))
+                .collect(Collectors.toList());
     }
 
-    public ShopItem transform(ShopItemDatabaseEntity shopItemDatabaseEntity) {
+    public ShopItem transform(final UserEntity userEntity, final ShopItemDatabaseEntity shopItemDatabaseEntity) {
         final ItemDefinition itemDefinition = itemDefinitionCache.getDefinition(shopItemDatabaseEntity.getItemId());
 
         return ShopItem.builder()
                 .amount(shopItemDatabaseEntity.getItemAmount())
-                .buyPrice(itemPriceCalculator.getBuyPrice(itemDefinition))
-                .sellPrice(itemPriceCalculator.getSellPrice(itemDefinition))
+                .buyPrice(itemBuyPriceCalculator.calculateBuyPrice(
+                        ItemPriceCalculationContext.builder()
+                                .userEntity(userEntity)
+                                .itemDefinition(itemDefinition)
+                                .build()
+                ))
+                .sellPrice(itemSellPriceCalculator.calculateSellPrice(
+                        ItemPriceCalculationContext.builder()
+                                .userEntity(userEntity)
+                                .itemDefinition(itemDefinition)
+                                .build()
+                ))
                 .item(itemDefinitionCache.getDefinition(shopItemDatabaseEntity.getItemId()))
                 .shopId(shopItemDatabaseEntity.getShopId())
                 .build();

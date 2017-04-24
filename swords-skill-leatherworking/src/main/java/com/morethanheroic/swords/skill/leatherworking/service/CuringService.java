@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.skill.leatherworking.service;
 
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
+import com.morethanheroic.swords.attribute.service.calc.BasicAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.event.domain.EventEntity;
 import com.morethanheroic.swords.event.domain.EventType;
@@ -42,6 +44,9 @@ public class CuringService {
     @Autowired
     private UserBasicAttributeManipulator userBasicAttributeManipulator;
 
+    @Autowired
+    private BasicAttributeCalculator basicAttributeCalculator;
+
     @Transactional
     public CuringResult cure(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null) {
@@ -60,7 +65,7 @@ public class CuringService {
             return CuringResult.MISSING_REQUIREMENTS;
         }
 
-        if (userEntity.getMovementPoints() <= 0) {
+        if (basicAttributeCalculator.calculateActualValue(userEntity, BasicAttribute.MOVEMENT, false).getValue()  < CURING_MOVEMENT_POINT_COST) {
             return CuringResult.NOT_ENOUGH_MOVEMENT;
         }
 

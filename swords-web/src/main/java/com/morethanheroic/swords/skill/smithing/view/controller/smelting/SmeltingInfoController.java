@@ -6,21 +6,18 @@ import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.skill.smithing.view.response.domain.configuration.smelting.SmeltingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.smithing.view.response.service.smelting.SmeltingInfoResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class SmeltingInfoController {
 
-    @Autowired
-    private SmeltingInfoResponseBuilder smeltingInfoResponseBuilder;
+    private final SmeltingInfoResponseBuilder smeltingInfoResponseBuilder;
+    private final SkillEntityFactory skillEntityFactory;
 
-    @Autowired
-    private SkillEntityFactory skillEntityFactory;
-
-    @RequestMapping(value = "/skill/smithing/smelting/info", method = RequestMethod.GET)
+    @GetMapping("/skill/smithing/smelting/info")
     public Response smeltingInfo(UserEntity userEntity) {
         return smeltingInfoResponseBuilder.build(
                 SmeltingInfoResponseBuilderConfiguration.builder()

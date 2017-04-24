@@ -6,15 +6,14 @@ import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.curing.CuringInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
-import com.morethanheroic.swords.skill.view.response.service.SkillLevelPartialResponseBuilder;
 import com.morethanheroic.swords.skill.view.response.domain.configuration.SkillLevelPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.skill.view.response.service.SkillLevelPartialResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CuringInfoResponseBuilder implements ResponseBuilder<CuringInfoResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;

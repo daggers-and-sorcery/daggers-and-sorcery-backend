@@ -19,6 +19,6 @@ public class InventoryFacade {
      */
     @Deprecated
     public InventoryEntity getInventory(UserEntity userEntity) {
-        return inventoryEntityFactory.getEntity(userEntity.getId());
+        return inventoryEntityFactory.getEntity(userEntity);
     }
 }

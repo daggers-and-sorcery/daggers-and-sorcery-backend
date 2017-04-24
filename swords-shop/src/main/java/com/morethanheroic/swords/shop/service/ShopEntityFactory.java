@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ShopEntityFactory implements EntityFactory<ShopEntity> {
+public class ShopEntityFactory implements EntityFactory<ShopEntity, Integer> {
 
     private final ShopDefinitionCache shopDefinitionCache;
 
     @Override
     @InjectAtReturn
-    public ShopEntity getEntity(final int shopId) {
+    public ShopEntity getEntity(final Integer shopId) {
         return new ShopEntity(shopDefinitionCache.getDefinition(shopId));
     }
 }

@@ -13,11 +13,10 @@ import com.morethanheroic.swords.skill.view.response.service.SkillLevelPartialRe
 import com.morethanheroic.swords.skill.view.response.domain.configuration.SkillLevelPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class WorkingInfoResponseBuilder implements ResponseBuilder<WorkingInfoResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;
@@ -45,6 +44,6 @@ public class WorkingInfoResponseBuilder implements ResponseBuilder<WorkingInfoRe
     }
 
     private int getLeatherworkingLevel(final UserEntity userEntity) {
-        return skillEntityFactory.getSkillEntity(userEntity).getLevel(SkillType.LEATHERWORKING);
+        return skillEntityFactory.getEntity(userEntity).getLevel(SkillType.LEATHERWORKING);
     }
 }

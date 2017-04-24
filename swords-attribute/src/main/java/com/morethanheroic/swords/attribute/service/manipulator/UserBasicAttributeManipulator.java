@@ -6,7 +6,7 @@ import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculato
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
+@RequiredArgsConstructor
 public class UserBasicAttributeManipulator {
 
-    @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
 
     public void increaseHealth(final UserEntity userEntity, final int amount) {
         final AttributeData attributeData = globalAttributeCalculator.calculateAttributeValue(userEntity, CombatAttribute.LIFE);

@@ -9,9 +9,8 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.dao.CombatExperienceDatabaseEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.CombatUtil;
-import com.morethanheroic.swords.equipment.service.EquipmentFacade;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,6 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
 
     @Autowired
     private CombatExperienceMapper combatExperienceMapper;
-
-    @Autowired
-    private EquipmentFacade equipmentFacade;
 
     //TODO: move the calculation logic into a separate class
     protected void addDefenseXp(final CombatContext combatContext, final int amount) {

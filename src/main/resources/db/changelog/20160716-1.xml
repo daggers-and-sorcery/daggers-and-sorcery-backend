@@ -24,5 +24,4 @@
             <column name="last_post_user" type="mediumint unsigned"/>
         </createTable>
     </changeSet>
-
 </databaseChangeLog>

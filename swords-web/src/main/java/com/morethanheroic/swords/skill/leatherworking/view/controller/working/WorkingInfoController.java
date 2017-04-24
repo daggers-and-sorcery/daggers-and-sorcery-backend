@@ -1,21 +1,22 @@
 package com.morethanheroic.swords.skill.leatherworking.view.controller.working;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.working.WorkingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.leatherworking.view.response.service.working.WorkingInfoResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class WorkingInfoController {
 
-    @Autowired
-    private WorkingInfoResponseBuilder workingInfoResponseBuilder;
+    private final WorkingInfoResponseBuilder workingInfoResponseBuilder;
 
-    @RequestMapping(value = "/skill/leatherworking/working/info", method = RequestMethod.GET)
+    @GetMapping("/skill/leatherworking/working/info")
     public Response workingInfo(UserEntity userEntity) {
         return workingInfoResponseBuilder.build(
                 WorkingInfoResponseBuilderConfiguration.builder()
