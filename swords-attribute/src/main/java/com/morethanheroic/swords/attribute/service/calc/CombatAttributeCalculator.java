@@ -9,7 +9,7 @@ import com.morethanheroic.swords.attribute.service.calc.domain.calculation.Comba
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,12 +18,16 @@ import java.util.List;
  * Used to calculate a {@link com.morethanheroic.swords.attribute.domain.type.AttributeType#COMBAT} attribute's all data related to the player.
  */
 @Service
-@RequiredArgsConstructor
 public class CombatAttributeCalculator extends GenericAttributeCalculator<CombatAttribute> {
 
-    private final GlobalAttributeCalculator globalAttributeCalculator;
-    private final GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
-    private final List<AttributeBonusProvider> attributeBonusProviders;
+    @Autowired
+    private GlobalAttributeCalculator globalAttributeCalculator;
+
+    @Autowired
+    private GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
+
+    @Autowired
+    private List<AttributeBonusProvider> attributeBonusProviders;
 
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, CombatAttribute attribute) {
