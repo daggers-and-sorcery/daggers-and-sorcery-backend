@@ -9,6 +9,5 @@ pipelines:
   default:
     - step:
         script:
-          - bash apk -Uuv add groff less python py-pip
-          - bash pip install awscli
+          - bash pip install --upgrade --user awscli
           - bash ./gradlew clean build
