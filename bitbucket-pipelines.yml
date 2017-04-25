@@ -12,3 +12,4 @@ pipelines:
           - apt-get update
           - apt-get install -y awscli
           - bash ./gradlew clean build
+          - aws s3 cp ./build/libs/swords-server-0.0.1.jar s3://swords-runtime/swords-server.jar
