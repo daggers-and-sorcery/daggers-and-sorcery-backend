@@ -29,6 +29,7 @@ public class ThePitExplorationEventHandler extends ImprovedExplorationEventHandl
     private static final int SECOND_COMBAT_STAGE = 2;
     private static final int GO_DEEPER_STAGE = 3;
     private static final int GO_TO_EXIT_STAGE = 4;
+    private static final int THIRD_COMBAT_STAGE = 5;
 
     private static final int TORCH_ID = 120;
     private static final int BRONZE_COIN_ID = 1;
@@ -96,8 +97,10 @@ public class ThePitExplorationEventHandler extends ImprovedExplorationEventHandl
                                 .newHasItemMultiWayPath(explorationContext, TORCH_ID)
                                 .isSuccess(
                                         explorationResultBuilder2 -> explorationResultBuilder2
-                                                //TODO: Successfully have the torch
-                                                //Yes: You take out your torch and light it before going into the corridor. ...
+                                                .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_12")
+                                                .newCombatEntry(SKELETON_MONSTER_ID, EVENT_ID, THIRD_COMBAT_STAGE)
+                                                .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_13")
+                                                //TODO: Lockpicking check
                                                 .build()
                                 )
                                 .isFailure(
