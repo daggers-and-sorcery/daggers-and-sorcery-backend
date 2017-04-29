@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.woodlandcemetery;
 
+import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
@@ -33,6 +34,9 @@ public class ThePitExplorationEventHandler extends ImprovedExplorationEventHandl
 
     private static final int TORCH_ID = 120;
     private static final int BRONZE_COIN_ID = 1;
+
+    private static final int SUCCESSFUL_CHEST_OPENING_RESULT_LOOT_ID = 0;
+    private static final int FAILED_CHEST_OPENING_RESULT_LOOT_ID = 0;
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
     private final UserBasicAttributeManipulator userBasicAttributeManipulator;
@@ -93,14 +97,12 @@ public class ThePitExplorationEventHandler extends ImprovedExplorationEventHandl
                                 .build()
                 )
                 .addStage(GO_DEEPER_STAGE,
-                        explorationResultBuilder1 -> explorationResultBuilder1
+                        explorationResultBuilder -> explorationResultBuilder
                                 .newHasItemMultiWayPath(explorationContext, TORCH_ID)
                                 .isSuccess(
                                         explorationResultBuilder2 -> explorationResultBuilder2
                                                 .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_12")
                                                 .newCombatEntry(SKELETON_MONSTER_ID, EVENT_ID, THIRD_COMBAT_STAGE)
-                                                .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_13")
-                                                //TODO: Lockpicking check
                                                 .build()
                                 )
                                 .isFailure(
@@ -112,6 +114,27 @@ public class ThePitExplorationEventHandler extends ImprovedExplorationEventHandl
                                                 .newMessageBoxEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_17")
                                                 .resetExploration()
                                                 .build()
+                                )
+                                .build()
+                )
+                .addStage(THIRD_COMBAT_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_13")
+                                .newAttributeAttemptEntry(SkillAttribute.LOCKPICKING, 5)
+                                .isSuccess((explorationResultBuilder) -> explorationResultBuilder
+                                        .newLootEntry(SUCCESSFUL_CHEST_OPENING_RESULT_LOOT_ID, "THE_PIT_EXPLORATION_EVENT_ENTRY_16")
+                                        .newCustomLogicEntry(() ->
+                                                inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(BRONZE_COIN_ID), 30)
+                                        )
+                                        .newMessageBoxEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_17")
+                                        .resetExploration()
+                                        .build()
+                                )
+                                .isFailure((explorationResultBuilder) -> explorationResultBuilder
+                                        .newLootEntry(FAILED_CHEST_OPENING_RESULT_LOOT_ID, "THE_PIT_EXPLORATION_EVENT_ENTRY_14")
+                                        .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_15")
+                                        .resetExploration()
+                                        .build()
                                 )
                                 .build()
                 )
