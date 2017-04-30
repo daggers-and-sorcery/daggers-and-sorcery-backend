@@ -12,26 +12,26 @@
 Various parts of this patch were released in waves and are out for a long time but we want to list all of the changes here for historical reasons.
 
 Improvements:
- - The Woodland Cemetery is released. You can now explore this region with all of it's "beauty".
- - Added the "Feast of Ghouls" event to the Woodland Cemetery.
- - Added the "Mad Mage" event to the Woodland Cemetery.
- - Added the "Zombies" event to the Woodland Cemetery.
- - Added the "Kiss of a Vampire" exploration event.
- - The players can turn to vampires. However, turning back is not possible at the moment. The Vampire form has various pros and cons, the players can know more about these pros and cons when turning into a vampire. (We don't want to spoil these for now.)
- - Added the starter equipment to the game. The players get a long dialogue after reading the Prelude where they can choose their starter equipment in an interactive way. (Huge thanks to Tomáš "Tousticek" Cigánek for the texts of this new feature.)
- - Added Herblore as a new skill. Players can use it to create various kinds of potions.
- - Various site-wide enchantments and small fixes on the frontend of the game like new cursors, better mobile support etc.
- - The website is moved to https so it's more secure and players on new browsers don't get notifications security notifications and alerts anymore.
+- The Woodland Cemetery is released. You can now explore this region with all of it's "beauty".
+- Added the "Feast of Ghouls" event to the Woodland Cemetery.
+- Added the "Mad Mage" event to the Woodland Cemetery.
+- Added the "Zombies" event to the Woodland Cemetery.
+- Added the "Kiss of a Vampire" exploration event.
+- The players can turn to vampires. However, turning back is not possible at the moment. The Vampire form has various pros and cons, the players can know more about these pros and cons when turning into a vampire. (We don't want to spoil these for now.)
+- Added the starter equipment to the game. The players get a long dialogue after reading the Prelude where they can choose their starter equipment in an interactive way. (Huge thanks to Tomáš "Tousticek" Cigánek for the texts of this new feature.)
+- Added Herblore as a new skill. Players can use it to create various kinds of potions.
+- Various site-wide enchantments and small fixes on the frontend of the game like new cursors, better mobile support etc.
+- The website is moved to https so it's more secure and players on new browsers don't get notifications security notifications and alerts anymore.
 
- Bugfixes:
- - Made the Scavenging Belt recipe useable.
- - Fixed a few wrong texts in the Gnoll event.
- - Fixed that some of the drops from event loots were not added to the inventory.
- - The apple cider healed less than intended so we increased its healing ability.
- - The mage combat texts said that they are shooting themselves with magic missiles instead of the monsters. This has been fixed.
- - The experience you gain after a fight was not reset after dying so at the end of the next combat you got both combat's (the one you died in and the actual combat you finished) experience. This has been fixed. When you die the combat experience will be reset and you will start with a clean experience table for the next combat.
+Bugfixes:
+- Made the Scavenging Belt recipe usable.
+- Fixed a few wrong texts in the Gnoll event.
+- Fixed that some of the drops from event loots were not added to the inventory.
+- The apple cider healed less than intended so we increased its healing ability.
+- The mage combat texts said that they are shooting themselves with magic missiles instead of the monsters. This has been fixed.
+- The experience you gain after a fight was not reset after dying so at the end of the next combat you got both combat's (the one you died in and the actual combat you finished) experience. This has been fixed. When you die the combat experience will be reset and you will start with a clean experience table for the next combat.
 
- Sincerely, Daggers & Sorcery Team
+Sincerely, Daggers & Sorcery Team
                 ]]>
             </column>
         </insert>
