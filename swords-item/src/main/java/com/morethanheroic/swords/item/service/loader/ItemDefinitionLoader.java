@@ -24,7 +24,6 @@ public class ItemDefinitionLoader implements DefinitionLoader<ItemDefinition> {
 
     private static final String ITEM_DEFINITION_LOCATION = "classpath:data/item/definition/";
     private static final String ITEM_SCHEMA_LOCATION = "classpath:data/item/schema.xsd";
-    private static final int ITEM_COUNT_TO_LOAD = 200;
 
     private final NumericXmlDefinitionLoader numericXmlDefinitionLoader;
     private final ItemDefinitionTransformer itemDefinitionTransformer;
