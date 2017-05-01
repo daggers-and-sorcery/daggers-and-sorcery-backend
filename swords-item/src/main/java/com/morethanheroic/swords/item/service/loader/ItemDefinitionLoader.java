@@ -32,9 +32,7 @@ public class ItemDefinitionLoader implements DefinitionLoader<ItemDefinition> {
     public List<ItemDefinition> loadDefinitions() {
         return loadRawItemDefinitions().stream()
                 .map(itemDefinitionTransformer::transform)
-                .collect(
-                        collectingAndThen(toList(), ImmutableList::copyOf)
-                );
+                .collect(collectingAndThen(toList(), ImmutableList::copyOf));
     }
 
     private List<RawItemDefinition> loadRawItemDefinitions() {
