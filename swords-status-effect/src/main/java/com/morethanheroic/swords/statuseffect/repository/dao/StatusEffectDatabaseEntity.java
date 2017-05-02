@@ -10,7 +10,7 @@ import java.time.Instant;
 @Data
 public class StatusEffectDatabaseEntity {
 
-    private long id;
+    private int id;
     private int userId;
     private int statusEffectId;
     private Instant expirationTime;

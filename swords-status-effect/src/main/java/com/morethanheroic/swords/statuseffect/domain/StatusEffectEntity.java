@@ -15,7 +15,7 @@ import java.time.Instant;
 @Getter
 public class StatusEffectEntity implements Entity {
 
-    private final long id;
+    private final int id;
     private final UserEntity userEntity;
     private final StatusEffectDefinition statusEffect;
     private final Instant expirationTime;

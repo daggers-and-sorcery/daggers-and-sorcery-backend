@@ -1,0 +1,21 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20170502-1">
+        <createTable tableName="statuseffect">
+            <column name="id" type="bigint unsigned" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int unsigned">
+                <constraints primaryKey="false" nullable="false"/>
+            </column>
+            <column name="status_effect_id" type="int unsigned">
+                <constraints primaryKey="false" nullable="false"/>
+            </column>
+            <column name="expiration_time" type="timestamp unsigned">
+                <constraints primaryKey="false" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
