@@ -6,6 +6,8 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.Instant;
+
 /**
  * Contains the data of a status effect.
  */
@@ -13,8 +15,8 @@ import lombok.Getter;
 @Getter
 public class StatusEffectEntity implements Entity {
 
-    private final int id;
+    private final long id;
     private final UserEntity userEntity;
     private final StatusEffectDefinition statusEffect;
-    private final Integer expirationTime;
+    private final Instant expirationTime;
 }

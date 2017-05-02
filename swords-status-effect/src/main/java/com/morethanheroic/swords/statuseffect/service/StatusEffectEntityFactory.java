@@ -19,7 +19,7 @@ public class StatusEffectEntityFactory implements EntityListFactory<StatusEffect
 
     @Override
     public List<StatusEffectEntity> getEntity(UserEntity userEntity) {
-        return statusEffectMapper.getEffects(userEntity.getId()).stream()
+        return statusEffectMapper.getAllStatusEffects(userEntity.getId()).stream()
                 .map(statusEffectEntityTransformer::transform)
                 .collect(Collectors.toList());
     }
