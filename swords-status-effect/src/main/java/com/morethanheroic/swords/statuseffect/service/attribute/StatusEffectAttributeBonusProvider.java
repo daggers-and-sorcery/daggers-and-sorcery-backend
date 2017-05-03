@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.statuseffect.service.attribute;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
-import com.morethanheroic.swords.statuseffect.domain.StatusEffectEntity;
 import com.morethanheroic.swords.statuseffect.service.StatusEffectEntityFactory;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -29,39 +27,34 @@ public class StatusEffectAttributeBonusProvider implements AttributeBonusProvide
 
     @Override
     public Optional<AttributeCalculationResult> calculateBonus(final UserEntity userEntity, final Attribute attribute) {
-        final List<StatusEffectEntity> statusEffectEntities = statusEffectEntityFactory.getEntity(userEntity);
+        final AttributeCalculationResult attributeCalculationResult = buildResult(attribute);
 
-        int attributeBonus = 0;
-        int d2 = 0;
-        int d4 = 0;
-        int d6 = 0;
-        int d8 = 0;
-        int d10 = 0;
-        for (StatusEffectEntity statusEffectEntity : statusEffectEntities) {
-            for (StatusEffectModifierDefinition statusEffectModifierDefinition : statusEffectEntity.getStatusEffect().getModifiers()) {
-                if (statusEffectModifierToAttributeConverter.convert(statusEffectModifierDefinition.getModifier()) == attribute) {
-                    attributeBonus += statusEffectModifierDefinition.getAmount();
-                    d2 += statusEffectModifierDefinition.getD2();
-                    d4 += statusEffectModifierDefinition.getD4();
-                    d6 += statusEffectModifierDefinition.getD6();
-                    d8 += statusEffectModifierDefinition.getD8();
-                    d10 += statusEffectModifierDefinition.getD10();
+        statusEffectEntityFactory.getEntity(userEntity).stream()
+            .flatMap(statusEffectEntity -> statusEffectEntity.getStatusEffect().getModifiers().stream())
+            .filter(statusEffectModifierDefinition -> isModifierForAttribute(statusEffectModifierDefinition, attribute))
+            .forEach(statusEffectModifierDefinitionConsumer -> {
+                attributeCalculationResult.increaseValue(statusEffectModifierDefinitionConsumer.getAmount());
+
+                if (attribute instanceof CombatAttribute) {
+                    final CombatAttributeCalculationResult combatAttributeCalculationResult = (CombatAttributeCalculationResult) attributeCalculationResult;
+
+                    combatAttributeCalculationResult.increaseD2(statusEffectModifierDefinitionConsumer.getD2());
+                    combatAttributeCalculationResult.increaseD4(statusEffectModifierDefinitionConsumer.getD4());
+                    combatAttributeCalculationResult.increaseD6(statusEffectModifierDefinitionConsumer.getD6());
+                    combatAttributeCalculationResult.increaseD8(statusEffectModifierDefinitionConsumer.getD8());
+                    combatAttributeCalculationResult.increaseD10(statusEffectModifierDefinitionConsumer.getD10());
                 }
-            }
-        }
+            });
 
-        if (attribute instanceof CombatAttribute) {
-            CombatAttributeCalculationResult result = new CombatAttributeCalculationResult(attributeBonus, (CombatAttribute) attribute);
+        return Optional.of(attributeCalculationResult);
+    }
 
-            result.increaseD2(d2);
-            result.increaseD4(d4);
-            result.increaseD6(d6);
-            result.increaseD8(d8);
-            result.increaseD10(d10);
+    private AttributeCalculationResult buildResult(final Attribute attribute) {
+        return attribute instanceof CombatAttribute ? new CombatAttributeCalculationResult((CombatAttribute) attribute)
+                : new AttributeCalculationResult(attribute);
+    }
 
-            return Optional.of(result);
-        } else {
-            return Optional.of(new AttributeCalculationResult(attributeBonus, attribute));
-        }
+    private boolean isModifierForAttribute(final StatusEffectModifierDefinition statusEffectModifierDefinition, final Attribute attribute) {
+        return statusEffectModifierToAttributeConverter.convert(statusEffectModifierDefinition.getModifier()) == attribute;
     }
 }
