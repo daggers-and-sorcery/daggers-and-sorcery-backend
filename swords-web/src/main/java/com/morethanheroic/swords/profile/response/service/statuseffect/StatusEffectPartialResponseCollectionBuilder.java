@@ -31,7 +31,7 @@ public class StatusEffectPartialResponseCollectionBuilder implements PartialResp
                 .map(statusEffectEntity -> StatusEffectPartialResponse.builder()
                         .id(statusEffectEntity.getStatusEffect().getId())
                         .name(statusEffectEntity.getStatusEffect().getName())
-                        .description(statusEffectEntity.getStatusEffect().getName())
+                        .description(statusEffectEntity.getStatusEffect().getDescription())
                         .expirationTime(statusEffectEntity.getExpirationTime())
                         .modifiers(
                             statusEffectEntity.getStatusEffect().getModifiers().stream()

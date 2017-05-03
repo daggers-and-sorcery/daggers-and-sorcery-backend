@@ -1,19 +1,19 @@
 package com.morethanheroic.swords.definition.service.loader.unmarshaller;
 
-        import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.context.ApplicationContext;
-        import org.springframework.stereotype.Service;
-        import org.xml.sax.SAXException;
+import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
+import org.xml.sax.SAXException;
 
-        import javax.xml.XMLConstants;
-        import javax.xml.bind.JAXBContext;
-        import javax.xml.bind.JAXBException;
-        import javax.xml.bind.Unmarshaller;
-        import javax.xml.transform.stream.StreamSource;
-        import javax.xml.validation.Schema;
-        import javax.xml.validation.SchemaFactory;
-        import java.io.IOException;
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import java.io.IOException;
 
 /**
  * Build an {@link Unmarshaller} that can be used in {@link NumericXmlDefinitionLoader}.

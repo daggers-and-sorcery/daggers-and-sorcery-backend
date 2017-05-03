@@ -18,7 +18,7 @@ public class StatusEffectModifierPartialResponseBuilder implements PartialRespon
         final StatusEffectModifierDefinition statusEffectModifierDefinition = statusEffectModifierResponseBuilderConfiguration.getStatusEffectModifierDefinition();
 
         return StatusEffectModifierPartialResponse.builder()
-            .modifier(statusEffectModifierDefinition.getModifier())
+            .modifier(statusEffectModifierDefinition.getModifier().getName())
             .amount(statusEffectModifierDefinition.getAmount())
             .d2(statusEffectModifierDefinition.getD2())
             .d4(statusEffectModifierDefinition.getD4())

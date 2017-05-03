@@ -13,7 +13,7 @@ import lombok.Getter;
 @Builder
 public class StatusEffectModifierPartialResponse extends PartialResponse {
 
-    private final StatusEffectModifier modifier;
+    private final String modifier;
     private final int amount;
     private final int d2;
     private final int d4;
