@@ -4,7 +4,7 @@ dependencies {
     }
 
     compile project(':swords-user')
-    compile project(':swords-effect')
+    compile project(':swords-attribute')
 }
 
 apply plugin: 'spring-boot'

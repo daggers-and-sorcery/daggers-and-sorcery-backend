@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class RawStatusEffectDefinition {
     private String name;
     private String description;
 
-    @XmlElementWrapper(name = "effect-list")
-    @XmlElement(name = "effect")
-    private List<RawStatusEffectEffectDefinition> effectList;
+    @XmlElementWrapper(name = "modifiers")
+    @XmlElement(name = "modifier")
+    private ArrayList<RawStatusEffectModifierDefinition> modifiers;
 }

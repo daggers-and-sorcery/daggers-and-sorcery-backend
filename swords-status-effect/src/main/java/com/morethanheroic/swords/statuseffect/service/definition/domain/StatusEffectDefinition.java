@@ -16,5 +16,5 @@ public class StatusEffectDefinition {
     private final int id;
     private final String name;
     private final String description;
-    private List<EffectSettingDefinitionHolder> combatEffects;
+    private final List<StatusEffectModifierDefinition> modifiers;
 }
