@@ -22,9 +22,6 @@ public interface StatusEffectMapper {
     @Insert("INSERT INTO status_effects SET user_id = #{userId}, status_effect_id = #{statusEffectId}, expiration_time = #{expiration_time}")
     void giveStatusEffect(@Param("userId") final int userId, @Param("statusEffectId") final int statusEffectId, @Param("expiration_time") final Instant expirationTime);
 
-    @Delete("DELETE FROM status_effect WHERE id = #{id}")
-    void removeStatusEffect(@Param("id") final long id);
-
     @Delete("DELETE FROM status_effect WHERE expiration_time < NOW()")
     void removeExpiredEvents();
 }

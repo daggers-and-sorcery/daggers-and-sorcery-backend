@@ -15,8 +15,8 @@ public class CharacterProfileController {
 
     private final ProfileInfoResponseBuilder profileInfoResponseBuilder;
 
-    @GetMapping(value = "/character/info")
-    public Response info(UserEntity user, SessionEntity sessionEntity) {
+    @GetMapping("/character/info")
+    public Response info(final UserEntity user, final SessionEntity sessionEntity) {
         return profileInfoResponseBuilder.build(
                 ProfileInfoResponseBuilderConfiguration.builder()
                         .userEntity(user)

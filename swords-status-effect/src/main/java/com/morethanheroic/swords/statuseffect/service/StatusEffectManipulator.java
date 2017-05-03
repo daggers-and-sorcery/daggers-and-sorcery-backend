@@ -1,6 +1,5 @@
 package com.morethanheroic.swords.statuseffect.service;
 
-import com.morethanheroic.swords.statuseffect.domain.StatusEffectEntity;
 import com.morethanheroic.swords.statuseffect.repository.domain.StatusEffectMapper;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -20,9 +19,5 @@ public class StatusEffectManipulator {
 
     public void applyStatusEffect(final UserEntity userEntity, final StatusEffectDefinition statusEffectDefinition, final Instant expirationTime) {
         statusEffectMapper.giveStatusEffect(userEntity.getId(), statusEffectDefinition.getId(), expirationTime);
-    }
-
-    public void removeStatusEffect(final StatusEffectEntity statusEffectEntity) {
-        statusEffectMapper.removeStatusEffect(statusEffectEntity.getId());
     }
 }

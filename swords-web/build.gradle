@@ -13,6 +13,7 @@ dependencies {
     compile project(':common-validator')
 
     compile project(':swords-vampire')
+    compile project(':swords-status-effect')
     compile project(':swords-forum')
     compile project(':swords-news')
     compile project(':swords-event')
