@@ -11,6 +11,9 @@ public enum StatusEffectModifier {
     //Basic
     MOVEMENT,
     SCAVENGING_BONUS,
+    HEALTH_REGENERATION,
+    MANA_REGENERATION,
+    MOVEMENT_REGENERATION,
 
     //Combat
     MANA,

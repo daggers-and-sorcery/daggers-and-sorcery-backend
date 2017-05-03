@@ -110,6 +110,12 @@ public class StatusEffectModifierToAttributeConverter {
             return SkillAttribute.SCAVENGING;
         case COOKING:
             return SkillAttribute.COOKING;
+        case MANA_REGENERATION:
+            return BasicAttribute.MANA_REGENERATION;
+        case HEALTH_REGENERATION:
+            return BasicAttribute.HEALTH_REGENERATION;
+        case MOVEMENT_REGENERATION:
+            return BasicAttribute.MOVEMENT_REGENERATION;
         default:
             throw new IllegalArgumentException("Item modifier cannot be converted to attribute");
         }
