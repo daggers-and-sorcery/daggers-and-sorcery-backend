@@ -1,28 +1,36 @@
 package com.morethanheroic.swords.regeneration.service.calc;
 
+import org.springframework.stereotype.Service;
+
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class MovementRegenerationCalculator implements RegenerationCalculator {
 
-    private static final int MOVEMENT_REGENERATION_UNIT = 1;
-
-    @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
 
     @Override
-    public int calculateRegeneration(UserEntity user, int durationToCalculate) {
-        int newMovement = user.getMovementPoints() + MOVEMENT_REGENERATION_UNIT * durationToCalculate;
-        int maxMovement = globalAttributeCalculator.calculateMaximumValue(user, BasicAttribute.MOVEMENT).getValue();
+    public int calculateRegeneration(UserEntity userEntity, int durationToCalculate) {
+        int newMovement = calculateNewMovement(userEntity, durationToCalculate);
+        int maxMovement = calculateMaxMovement(userEntity);
 
-        if (newMovement > maxMovement) {
-            return maxMovement;
-        }
+        return newMovement > maxMovement ? maxMovement : newMovement;
+    }
 
-        return newMovement;
+    private int calculateNewMovement(final UserEntity userEntity, final int durationToCalculate) {
+        return userEntity.getMovementPoints() + calculateMovementRegeneration(userEntity) * durationToCalculate;
+    }
+
+    private int calculateMovementRegeneration(final UserEntity userEntity) {
+        return globalAttributeCalculator.calculateActualValue(userEntity, BasicAttribute.MOVEMENT_REGENERATION).getValue();
+    }
+
+    private int calculateMaxMovement(final UserEntity userEntity) {
+        return globalAttributeCalculator.calculateMaximumValue(userEntity, BasicAttribute.MOVEMENT).getValue();
     }
 }

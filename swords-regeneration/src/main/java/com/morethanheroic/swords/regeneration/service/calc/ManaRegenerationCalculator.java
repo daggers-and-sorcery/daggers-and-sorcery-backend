@@ -1,28 +1,37 @@
 package com.morethanheroic.swords.regeneration.service.calc;
 
+import org.springframework.stereotype.Service;
+
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ManaRegenerationCalculator implements RegenerationCalculator {
 
-    private static final int MANA_REGENERATION_UNIT = 2;
-
-    @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
 
     @Override
-    public int calculateRegeneration(UserEntity user, int durationToCalculate) {
-        int newMana = user.getManaPoints() + MANA_REGENERATION_UNIT * durationToCalculate;
-        int maxMana = globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.MANA).getValue();
+    public int calculateRegeneration(UserEntity userEntity, int durationToCalculate) {
+        int newMana = calculateNewMana(userEntity, durationToCalculate);
+        int maxMana = calculateMaxMana(userEntity);
 
-        if (newMana > maxMana) {
-            return maxMana;
-        }
+        return newMana > maxMana ? maxMana : newMana;
+    }
 
-        return newMana;
+    private int calculateNewMana(final UserEntity userEntity, final int durationToCalculate) {
+        return userEntity.getManaPoints() + calculateManaRegeneration(userEntity) * durationToCalculate;
+    }
+
+    private int calculateManaRegeneration(final UserEntity userEntity) {
+        return globalAttributeCalculator.calculateActualValue(userEntity, BasicAttribute.MANA_REGENERATION).getValue();
+    }
+
+    private int calculateMaxMana(final UserEntity userEntity) {
+        return globalAttributeCalculator.calculateMaximumValue(userEntity, CombatAttribute.MANA).getValue();
     }
 }

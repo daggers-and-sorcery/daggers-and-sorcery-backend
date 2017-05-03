@@ -12,6 +12,9 @@ public enum BasicAttribute implements Attribute {
 
     //TODO: Load these values from an xml file and use a BasicAttributeDefinition class.
     MOVEMENT(30, false),
+    HEALTH_REGENERATION(2, true),
+    MANA_REGENERATION(2, true),
+    MOVEMENT_REGENERATION(1, true),
     SCAVENGING_BONUS(0, true);
 
     private final int initialValue;
