@@ -35,8 +35,8 @@ public class ThePitExplorationEventHandler extends ImprovedExplorationEventHandl
     private static final int TORCH_ID = 120;
     private static final int BRONZE_COIN_ID = 1;
 
-    private static final int SUCCESSFUL_CHEST_OPENING_RESULT_LOOT_ID = 0;
-    private static final int FAILED_CHEST_OPENING_RESULT_LOOT_ID = 0;
+    private static final int SUCCESSFUL_CHEST_OPENING_RESULT_LOOT_ID = 7;
+    private static final int FAILED_CHEST_OPENING_RESULT_LOOT_ID = 6;
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
     private final UserBasicAttributeManipulator userBasicAttributeManipulator;
