@@ -21,7 +21,7 @@ public class ThePitExplorationEventHandler extends ImprovedExplorationEventHandl
 
     private static final int EVENT_ID = 23;
 
-    private static final int SKELETON_MONSTER_ID = 1;
+    private static final int SKELETON_MONSTER_ID = 22;
 
     private static final int HEALT_LOSS_AMOUNT = 5;
 
@@ -143,8 +143,46 @@ public class ThePitExplorationEventHandler extends ImprovedExplorationEventHandl
 
     @Override
     public ExplorationResult handleInfo(ExplorationContext explorationContext) {
-        //TODO!!!!!
-        return null;
+        return explorationResultStageBuilderFactory.newBuilder()
+                .addStage(FIRST_COMBAT_STAGE,
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_5")
+                                .continueCombatEntry()
+                                .build()
+                )
+                .addStage(SECOND_COMBAT_STAGE,
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newIsCombatRunningMultiWayPath(explorationContext)
+                                .isSuccess(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_8")
+                                                .continueCombatEntry()
+                                                .build()
+                                )
+                                .isFailure(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_9")
+                                                .newOptionEntry(
+                                                        ReplyOption.builder()
+                                                                .message("THE_PIT_EXPLORATION_EVENT_QUESTION_REPLY_1")
+                                                                .stage(GO_DEEPER_STAGE)
+                                                                .build(),
+                                                        ReplyOption.builder()
+                                                                .message("THE_PIT_EXPLORATION_EVENT_QUESTION_REPLY_2")
+                                                                .stage(GO_TO_EXIT_STAGE)
+                                                                .build()
+                                                )
+                                                .build()
+                                )
+                                .build()
+                )
+                .addStage(THIRD_COMBAT_STAGE,
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newMessageEntry("THE_PIT_EXPLORATION_EVENT_ENTRY_12")
+                                .continueCombatEntry()
+                                .build()
+                )
+                .runStage(explorationContext);
     }
 
     @Override
