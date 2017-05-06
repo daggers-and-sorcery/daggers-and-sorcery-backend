@@ -12,6 +12,7 @@ dependencies {
     compile project(':common-security')
     compile project(':common-validator')
 
+    compile project(':swords-witchhunters-guild')
     compile project(':swords-vampire')
     compile project(':swords-status-effect')
     compile project(':swords-forum')

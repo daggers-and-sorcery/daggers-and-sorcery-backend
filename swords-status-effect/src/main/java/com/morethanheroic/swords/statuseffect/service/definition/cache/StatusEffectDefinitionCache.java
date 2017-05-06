@@ -20,7 +20,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 @Service
 public class StatusEffectDefinitionCache implements DefinitionCache<Integer, StatusEffectDefinition> {
 
-    private Map<Integer, StatusEffectDefinition> statusEffectDefinitionMap = new HashMap<>();
+    private final Map<Integer, StatusEffectDefinition> statusEffectDefinitionMap;
 
     public StatusEffectDefinitionCache(final StatusEffectDefinitionLoader statusEffectDefinitionLoader) {
         statusEffectDefinitionMap = statusEffectDefinitionLoader.loadDefinitions().stream()

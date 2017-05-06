@@ -52,4 +52,5 @@ include 'swords-vampire'
 include 'swords-skill-herblore'
 include 'swords-starter'
 include 'swords-status-effect'
+include 'swords-witchhunters-guild'
 

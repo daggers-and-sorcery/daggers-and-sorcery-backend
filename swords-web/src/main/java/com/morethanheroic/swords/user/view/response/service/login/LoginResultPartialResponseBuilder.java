@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.user.view.response.service;
+package com.morethanheroic.swords.user.view.response.service.login;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
