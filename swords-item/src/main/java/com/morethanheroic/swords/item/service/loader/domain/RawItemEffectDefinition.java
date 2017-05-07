@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A freshly loaded effect data from the item's xml file.
@@ -28,7 +29,7 @@ public class RawItemEffectDefinition extends RawEffectDefinition {
     }
 
     @Override
-    public ArrayList<ItemEffectSetting> getEffectSettings() {
+    public List<ItemEffectSetting> getEffectSettings() {
         return effectSettings;
     }
 }

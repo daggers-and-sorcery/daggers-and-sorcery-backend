@@ -1,4 +1,0 @@
-[Refactor]:
-
-    - Use builders and Response at NewsController.
-    - Re-enable the checkstyle and findbugs modules.

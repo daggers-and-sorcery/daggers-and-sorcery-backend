@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @ExplorationEvent
 @RequiredArgsConstructor
-public class KissOfTheVampire extends ImprovedExplorationEventHandler {
+public class KissOfTheVampireExplorationEventHandler extends ImprovedExplorationEventHandler {
 
     private static final int EVENT_ID = 22;
 

@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -54,17 +55,11 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
 
     @Override
     public Collection<PartialResponse> build(ProfileInfoResponseBuilderConfiguration responseBuilderConfiguration) {
-        final LinkedList<PartialResponse> result = new LinkedList<>();
-        for (Attribute attribute : attributes) {
+        return attributes.stream()
             //Skipping skill attributes because they are already refactored from this mess.
-            if (attribute instanceof SkillAttribute) {
-                continue;
-            }
-
-            result.add(buildAttributeResponse(responseBuilderConfiguration.getUserEntity(), attribute));
-        }
-
-        return result;
+            .filter(attribute -> !(attribute instanceof SkillAttribute))
+            .map(attribute -> buildAttributeResponse(responseBuilderConfiguration.getUserEntity(), attribute))
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     private PartialResponse buildAttributeResponse(UserEntity user, Attribute attribute) {

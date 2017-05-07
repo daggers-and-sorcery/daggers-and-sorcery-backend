@@ -1,28 +1,37 @@
 package com.morethanheroic.swords.regeneration.service.calc;
 
+import org.springframework.stereotype.Service;
+
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class HealthRegenerationCalculator implements RegenerationCalculator {
 
-    private static final int HEALTH_REGENERATION_UNIT = 2;
-
-    @Autowired
-    private GlobalAttributeCalculator globalAttributeCalculator;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
 
     @Override
-    public int calculateRegeneration(UserEntity user, int durationToCalculate) {
-        int newHealth = user.getHealthPoints() + HEALTH_REGENERATION_UNIT * durationToCalculate;
-        int maxHealth = globalAttributeCalculator.calculateMaximumValue(user, CombatAttribute.LIFE).getValue();
+    public int calculateRegeneration(UserEntity userEntity, int durationToCalculate) {
+        int newHealth = calculateNewHealth(userEntity, durationToCalculate);
+        int maxHealth = calculateMaxHealth(userEntity);
 
-        if (newHealth > maxHealth) {
-            return maxHealth;
-        }
+        return newHealth > maxHealth ? maxHealth : newHealth;
+    }
 
-        return newHealth;
+    private int calculateNewHealth(final UserEntity userEntity, final int durationToCalculate) {
+        return userEntity.getHealthPoints() + calculateHealthRegeneration(userEntity) * durationToCalculate;
+    }
+
+    private int calculateHealthRegeneration(final UserEntity userEntity) {
+        return globalAttributeCalculator.calculateActualValue(userEntity, BasicAttribute.HEALTH_REGENERATION).getValue();
+    }
+
+    private int calculateMaxHealth(final UserEntity userEntity) {
+        return globalAttributeCalculator.calculateMaximumValue(userEntity, CombatAttribute.LIFE).getValue();
     }
 }

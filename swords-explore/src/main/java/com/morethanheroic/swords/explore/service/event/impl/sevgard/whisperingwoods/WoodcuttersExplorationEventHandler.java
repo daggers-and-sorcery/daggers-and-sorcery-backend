@@ -42,7 +42,7 @@ public class WoodcuttersExplorationEventHandler extends ExplorationEventHandler 
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_1")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_2")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_3")
-                .newCustomLogicEntry(() -> inventoryEntityFactory.getEntity(userEntity.getId()).addItem(BRONZE_COIN_ID, coinCount))
+                .newCustomLogicEntry(() -> inventoryEntityFactory.getEntity(userEntity).addItem(BRONZE_COIN_ID, coinCount))
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_4")
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_5", coinCount)
                 .newMessageEntry("WOODCUTTERS_EXPLORATION_EVENT_ENTRY_6", coinCount)

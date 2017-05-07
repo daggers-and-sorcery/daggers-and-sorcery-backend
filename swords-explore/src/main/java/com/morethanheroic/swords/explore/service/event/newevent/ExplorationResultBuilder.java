@@ -15,8 +15,8 @@ import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorat
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
-import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageBoxMessageEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
@@ -32,7 +32,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.AttributeList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -234,6 +233,12 @@ public class ExplorationResultBuilder {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath(final ExplorationContext explorationContext) {
+        return combatCalculator.isCombatRunning(explorationContext.getUserEntity()) ?
+                multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
+                multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {

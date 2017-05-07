@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class InventoryItemPartialResponseBuilder implements PartialResponseBuilder<InventoryItemPartialResponseBuilderConfiguration> {
 
-    private static final int WEIGHT_DIVIDER = 100;
-    private static final String UNIDENTIFIED_ITEM_NAME = "Unidentified item";
-
     private final IdentifiedItemPartialResponseBuilder identifiedItemPartialResponseBuilder;
     private final UnidentifiedItemPartialResponseBuilder unidentifiedItemPartialResponseBuilder;
 

@@ -6,16 +6,16 @@ import java.util.List;
  * Show the public API of a standardized definition cache. The definition caches can be used to query
  * cached definitions from it.
  *
- * @param <K> The key's type that can be used to access the stored values.
- * @param <T> The definition's type that's stored in the cache.
+ * @param <KEY> The key's type that can be used to access the stored values.
+ * @param <TYPE> The definition's type that's stored in the cache.
  */
-public interface DefinitionCache<K, T> {
+public interface DefinitionCache<KEY, TYPE> {
 
-    T getDefinition(K key);
+    TYPE getDefinition(KEY key);
 
     int getSize();
 
-    List<T> getDefinitions();
+    List<TYPE> getDefinitions();
 
-    boolean isDefinitionExists(K key);
+    boolean isDefinitionExists(KEY key);
 }

@@ -13,6 +13,7 @@ dependencies {
     compile project(':swords-recipe')
     compile project(':swords-dice')
     compile project(':swords-vampire')
+    compile project(':swords-status-effect')
     compile project(':swords-skill-scavenging')
 }
 

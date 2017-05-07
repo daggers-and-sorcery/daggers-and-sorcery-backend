@@ -19,7 +19,7 @@ public class EquipmentEntityFactory implements EntityFactory<EquipmentEntity, Us
     @Override
     @Memoize
     @InjectAtReturn
-    public EquipmentEntity getEntity(UserEntity userEntity) {
+    public EquipmentEntity getEntity(final UserEntity userEntity) {
         return new EquipmentEntity(userEntity);
     }
 }

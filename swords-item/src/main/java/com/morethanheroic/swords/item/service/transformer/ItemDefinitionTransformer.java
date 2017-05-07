@@ -21,6 +21,7 @@ public class ItemDefinitionTransformer implements DefinitionTransformer<ItemDefi
     private final ItemPriceDefinitionListTransformer itemPriceDefinitionListTransformer;
     private final EffectDefinitionListTransformer effectDefinitionListTransformer;
 
+    @Override
     @SuppressWarnings("unchecked")
     public ItemDefinition transform(RawItemDefinition rawItemDefinition) {
         return ItemDefinition.builder()

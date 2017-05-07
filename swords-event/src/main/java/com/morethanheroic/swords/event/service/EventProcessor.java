@@ -8,8 +8,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
  * Periodically checks for events that should be completed and process the completed events.
  */
@@ -29,12 +27,12 @@ public class EventProcessor {
     @Transactional
     @Scheduled(fixedRate = EVENT_CHECK_RATE_IN_MILLISECONDS)
     public void processEvents() {
-        final List<EventDatabaseEntity> endingEvents = eventMapper.getEndingEvents();
+        eventMapper.getEndingEvents().forEach(this::processEvent);
+    }
 
-        for (EventDatabaseEntity eventDatabaseEntity : endingEvents) {
-            eventProvider.getEvent(eventDatabaseEntity.getEventId()).processEvent(userEntityFactory.getEntity(eventDatabaseEntity.getUserId()));
+    private void processEvent(final EventDatabaseEntity eventDatabaseEntity) {
+        eventProvider.getEvent(eventDatabaseEntity.getEventId()).processEvent(userEntityFactory.getEntity(eventDatabaseEntity.getUserId()));
 
-            eventMapper.deleteEvent(eventDatabaseEntity.getId());
-        }
+        eventMapper.deleteEvent(eventDatabaseEntity.getId());
     }
 }

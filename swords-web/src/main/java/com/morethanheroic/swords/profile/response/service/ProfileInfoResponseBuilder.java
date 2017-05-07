@@ -19,6 +19,8 @@ import com.morethanheroic.swords.profile.response.service.inventory.domain.confi
 import com.morethanheroic.swords.profile.response.service.skill.SkillPartialResponseBuilder;
 import com.morethanheroic.swords.profile.response.service.skill.domain.SkillPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.response.service.special.SpecialPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.profile.response.service.statuseffect.StatusEffectPartialResponseCollectionBuilder;
+import com.morethanheroic.swords.profile.response.service.statuseffect.domain.configuration.StatusEffectResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.service.response.item.ProfileIdentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.item.ProfileUnidentifiedItemEntryResponseBuilder;
 import com.morethanheroic.swords.profile.service.response.special.SpecialPartialResponseBuilder;
@@ -83,6 +85,9 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     private VampireCalculator vampireCalculator;
 
     @Autowired
+    private StatusEffectPartialResponseCollectionBuilder statusEffectPartialResponseCollectionBuilder;
+
+    @Autowired
     public ProfileInfoResponseBuilder(ItemDefinitionCache itemDefinitionCache, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
         this.itemDefinitionCache = itemDefinitionCache;
         this.equipmentFacade = equipmentFacade;
@@ -126,6 +131,11 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
                 SpecialPartialResponseBuilderConfiguration.builder()
                         .isVampire(vampireCalculator.isVampire(userEntity))
                         .build()
+        ));
+        response.setData("statusEffect", statusEffectPartialResponseCollectionBuilder.build(
+            StatusEffectResponseBuilderConfiguration.builder()
+                .userEntity(userEntity)
+                .build()
         ));
 
         return response;
