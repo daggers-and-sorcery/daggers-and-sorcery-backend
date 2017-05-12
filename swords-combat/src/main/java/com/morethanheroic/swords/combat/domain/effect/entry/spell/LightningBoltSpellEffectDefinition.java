@@ -37,7 +37,7 @@ public class LightningBoltSpellEffectDefinition extends ImprovedCombatEffectDefi
         if (effectApplyingContext.getSource().isUser()) {
             final UserEntity userEntity = ((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity();
 
-            final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity.getId());
+            final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
             if (skillEntity.getLevel(SkillType.DESTRUCTION) <= 15) {
                 damage += Math.floor(skillEntity.getLevel(SkillType.DESTRUCTION) / 3);
