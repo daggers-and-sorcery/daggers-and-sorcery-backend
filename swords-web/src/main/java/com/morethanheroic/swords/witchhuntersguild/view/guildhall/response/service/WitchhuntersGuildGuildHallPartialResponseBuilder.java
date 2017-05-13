@@ -16,7 +16,7 @@ public class WitchhuntersGuildGuildHallPartialResponseBuilder implements Partial
 
         return WitchhuntersGuildGuildHallPartialResponse.builder()
                 .reputationPoints(witchhuntersGuildEntity.getReputationPoints())
-                .rank(witchhuntersGuildEntity.getRank())
+                .rank(witchhuntersGuildEntity.getRank().getName())
                 .build();
     }
 }

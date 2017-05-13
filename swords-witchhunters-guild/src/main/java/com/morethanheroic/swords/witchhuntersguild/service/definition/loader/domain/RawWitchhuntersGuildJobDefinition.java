@@ -17,6 +17,7 @@ public class RawWitchhuntersGuildJobDefinition {
     private int id;
     private String name;
     private String description;
+    private int reward;
 
     @XmlElementWrapper(name = "requirements")
     @XmlElement(name = "requirement")

@@ -7,21 +7,19 @@ import com.morethanheroic.swords.item.view.response.service.domain.configuration
 import com.morethanheroic.swords.item.view.response.service.domain.configuration.ItemRequirementPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.view.response.service.domain.response.IdentifiedItemDefinitionPartialResponse;
 import com.morethanheroic.swords.item.view.response.service.domain.response.ItemDefinitionPartialResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class IdentifiedItemPartialResponseBuilder implements PartialResponseBuilder<IdentifiedItemPartialResponseBuilderConfiguration> {
 
     private static final int WEIGHT_DIVIDER = 100;
 
-    @Autowired
-    private ItemRequirementPartialResponseBuilder itemRequirementPartialResponseBuilder;
-
-    @Autowired
-    private ItemModifierPartialResponseBuilder itemModifierPartialResponseBuilder;
+    private final ItemRequirementPartialResponseBuilder itemRequirementPartialResponseBuilder;
+    private final ItemModifierPartialResponseBuilder itemModifierPartialResponseBuilder;
 
     @Override
     public ItemDefinitionPartialResponse build(IdentifiedItemPartialResponseBuilderConfiguration identifiedItemPartialResponseBuilderConfiguration) {

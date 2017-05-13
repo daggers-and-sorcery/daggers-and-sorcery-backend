@@ -29,6 +29,7 @@ public class WitchhuntersGuildJobDefinitionTransformer implements DefinitionTran
                 .id(rawWitchhuntersGuildJobDefinition.getId())
                 .name(rawWitchhuntersGuildJobDefinition.getName())
                 .description(rawWitchhuntersGuildJobDefinition.getDescription())
+                .reward(rawWitchhuntersGuildJobDefinition.getReward())
                 .requirements(transformRequirement(rawWitchhuntersGuildJobDefinition.getRequirements()))
                 .build();
     }
