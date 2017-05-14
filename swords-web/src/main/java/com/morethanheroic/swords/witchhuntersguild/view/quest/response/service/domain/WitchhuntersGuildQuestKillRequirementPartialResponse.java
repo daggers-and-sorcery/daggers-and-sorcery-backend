@@ -9,6 +9,7 @@ public class WitchhuntersGuildQuestKillRequirementPartialResponse extends Witchh
 
     private final String monsterName;
     private final int amount;
+    private final int done;
 
     @Override
     public WitchhuntersGuildQuestItemRequirementType getType() {

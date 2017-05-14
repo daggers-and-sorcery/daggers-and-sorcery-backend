@@ -10,6 +10,7 @@ public class WitchhuntersGuildQuestItemRequirementPartialResponse extends Witchh
 
     private final ItemDefinitionPartialResponse item;
     private final int amount;
+    private final int done;
 
     @Override
     public WitchhuntersGuildQuestItemRequirementType getType() {
