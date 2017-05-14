@@ -9,17 +9,19 @@ import com.morethanheroic.swords.witchhuntersguild.domain.definition.Witchhunter
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobItemRequirement;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobKillRequirement;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobRequirement;
+import com.morethanheroic.swords.witchhuntersguild.service.definition.cache.WitchhuntersGuildJobDefinitionCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-    public class WitchhuntersGuildHandInQuestCalculator {
+public class WitchhuntersGuildHandInQuestCalculator {
 
     private final WitchhuntersGuildEntityFactory witchhuntersGuildEntityFactory;
     private final InventoryEntityFactory inventoryEntityFactory;
     private final MetadataEntityFactory metadataEntityFactory;
+    private final WitchhuntersGuildJobDefinitionCache witchhuntersGuildJobDefinitionCache;
 
     @Transactional
     public boolean handInQuest(final UserEntity userEntity) {
@@ -30,6 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
         if (allRequirementsMet) {
             removeRequirements(userEntity, witchhuntersGuildEntity.getJob());
         }
+
+        updateToNextJob(userEntity, witchhuntersGuildEntity);
 
         return allRequirementsMet;
     }
@@ -82,5 +86,28 @@ import org.springframework.transaction.annotation.Transactional;
                         throw new IllegalStateException("Unknown WitchhuntersGuildJobRequirement type: " + witchhuntersGuildJobRequirement + "!");
                     }
                 });
+    }
+
+    private void updateToNextJob(final UserEntity userEntity, final WitchhuntersGuildEntity witchhuntersGuildEntity) {
+        final WitchhuntersGuildJobDefinition nextJob = witchhuntersGuildJobDefinitionCache.getDefinition(witchhuntersGuildEntity.getJob().getId() + 1);
+
+        metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_JOB").setValue(nextJob.getId());
+
+        for (int i = 1; i <= 2; i++) {
+            metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + i + "_MONSTER_ID").setValue(-1);
+            metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + i + "_MONSTER_COUNT").setValue(-1);
+        }
+
+        int lastUsedKillCountId = 1;
+        for (WitchhuntersGuildJobRequirement witchhuntersGuildJobRequirement : nextJob.getRequirements()) {
+            if (witchhuntersGuildJobRequirement instanceof WitchhuntersGuildJobKillRequirement) {
+                final WitchhuntersGuildJobKillRequirement witchhuntersGuildJobKillRequirement = ((WitchhuntersGuildJobKillRequirement) witchhuntersGuildJobRequirement);
+
+                metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + lastUsedKillCountId + "_MONSTER_ID").setValue(witchhuntersGuildJobKillRequirement.getMonster().getId());
+                metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + lastUsedKillCountId + "_MONSTER_COUNT").setValue(0);
+
+                lastUsedKillCountId++;
+            }
+        }
     }
 }

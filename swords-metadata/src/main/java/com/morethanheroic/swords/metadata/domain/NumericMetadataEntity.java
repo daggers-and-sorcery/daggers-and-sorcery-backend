@@ -38,6 +38,10 @@ public class NumericMetadataEntity implements MetadataEntity<Integer> {
         return metadataDatabaseEntity.getMetaValue();
     }
 
+    public void increaseValue(final int amount) {
+        setValue(getValue() + amount);
+    }
+
     @Override
     public void setValue(Integer value) {
         metadataMapper.setMetadata(userEntity.getId(), metadataDefinition.getId(), value);
