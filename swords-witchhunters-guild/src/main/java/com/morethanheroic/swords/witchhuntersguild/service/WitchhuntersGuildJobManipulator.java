@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class WitchhunterGuildJobManipulator {
+public class WitchhuntersGuildJobManipulator {
 
     private final MetadataEntityFactory metadataEntityFactory;
     private final WitchhuntersGuildJobDefinitionCache witchhuntersGuildJobDefinitionCache;

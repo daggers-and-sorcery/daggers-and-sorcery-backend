@@ -28,7 +28,7 @@ public class InventoryEntityFactory implements EntityFactory<InventoryEntity, Us
     @Override
     @Memoize
     @InjectAtReturn
-    public InventoryEntity getEntity(UserEntity id) {
+    public InventoryEntity getEntity(final UserEntity id) {
         return new InventoryEntity(id);
     }
 }
