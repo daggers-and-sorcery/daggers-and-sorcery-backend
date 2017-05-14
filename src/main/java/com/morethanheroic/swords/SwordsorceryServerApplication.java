@@ -51,7 +51,8 @@ import java.util.Random;
                 "/skill/*",
                 "/spell/*",
                 "/explore/*",
-                "/inn/*"
+                "/inn/*",
+                "/witchhunters-guild/*",
         }
 )
 @MapperScan(value = "com.morethanheroic.swords", annotationClass = Repository.class)

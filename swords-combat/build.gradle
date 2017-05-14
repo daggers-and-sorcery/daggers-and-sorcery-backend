@@ -6,6 +6,9 @@ dependencies {
     compile project(':common-math')
     compile project(':common-localization')
 
+    compile project(':swords-combat-entity')
+    compile project(':swords-combat-step')
+    compile project(':swords-combat-event')
     compile project(':swords-inventory')
     compile project(':swords-skill')
     compile project(':swords-item')

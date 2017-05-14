@@ -1,10 +1,10 @@
 package com.morethanheroic.swords.combat.domain.entity;
 
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
+import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
-import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 public class UserCombatEntity extends CombatEntity {

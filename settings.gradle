@@ -53,4 +53,7 @@ include 'swords-skill-herblore'
 include 'swords-starter'
 include 'swords-status-effect'
 include 'swords-witchhunters-guild'
+include 'swords-combat-entity'
+include 'swords-combat-event'
+include 'swords-combat-step'
 

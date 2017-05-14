@@ -3,12 +3,10 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-user')
-    compile project(':swords-metadata')
-    compile project(':swords-item')
     compile project(':swords-monster')
-    compile project(':swords-inventory')
-    compile project(':swords-combat-event')
+    compile project(':swords-user')
+    compile project(':swords-attribute')
+    compile project(':swords-dice')
 }
 
 apply plugin: 'spring-boot'

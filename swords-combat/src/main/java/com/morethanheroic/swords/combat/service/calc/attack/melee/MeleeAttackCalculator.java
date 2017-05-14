@@ -8,6 +8,7 @@ import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.message.domain.CombatMessageContext;
@@ -29,6 +30,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
     private final DiceRollCalculator diceRollCalculator;
     private final CombatMessageFactory combatMessageFactory;
     private final MeleeDamageCalculator meleeDamageCalculator;
+    private final DeathCalculator deathCalculator;
     private final Random random;
 
     @Override
@@ -39,7 +41,7 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
             result.addAll(dealDamage(attacker, opponent, combatContext));
 
             if (opponent.getActualHealth() <= 0) {
-                result.add(handleDeath(attacker, opponent, combatContext));
+                result.addAll(deathCalculator.handleDeath(attacker, opponent, combatContext));
             }
         } else {
             result.add(dealMiss(attacker, opponent, combatContext));
