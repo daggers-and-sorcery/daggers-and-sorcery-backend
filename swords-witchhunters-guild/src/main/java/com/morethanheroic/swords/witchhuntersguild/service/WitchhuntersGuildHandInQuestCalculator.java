@@ -22,6 +22,7 @@ public class WitchhuntersGuildHandInQuestCalculator {
     private final InventoryEntityFactory inventoryEntityFactory;
     private final MetadataEntityFactory metadataEntityFactory;
     private final WitchhuntersGuildJobDefinitionCache witchhuntersGuildJobDefinitionCache;
+    private final WitchhuntersGuildQuestUpdater witchhuntersGuildQuestUpdater;
 
     @Transactional
     public boolean handInQuest(final UserEntity userEntity) {
@@ -33,7 +34,7 @@ public class WitchhuntersGuildHandInQuestCalculator {
             removeRequirements(userEntity, witchhuntersGuildEntity.getJob());
         }
 
-        updateToNextJob(userEntity, witchhuntersGuildEntity);
+        witchhuntersGuildQuestUpdater.assignQuest(userEntity, calculateNextQuest(witchhuntersGuildEntity));
 
         return allRequirementsMet;
     }
@@ -88,26 +89,7 @@ public class WitchhuntersGuildHandInQuestCalculator {
                 });
     }
 
-    private void updateToNextJob(final UserEntity userEntity, final WitchhuntersGuildEntity witchhuntersGuildEntity) {
-        final WitchhuntersGuildJobDefinition nextJob = witchhuntersGuildJobDefinitionCache.getDefinition(witchhuntersGuildEntity.getJob().getId() + 1);
-
-        metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_JOB").setValue(nextJob.getId());
-
-        for (int i = 1; i <= 2; i++) {
-            metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + i + "_MONSTER_ID").setValue(-1);
-            metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + i + "_MONSTER_COUNT").setValue(-1);
-        }
-
-        int lastUsedKillCountId = 1;
-        for (WitchhuntersGuildJobRequirement witchhuntersGuildJobRequirement : nextJob.getRequirements()) {
-            if (witchhuntersGuildJobRequirement instanceof WitchhuntersGuildJobKillRequirement) {
-                final WitchhuntersGuildJobKillRequirement witchhuntersGuildJobKillRequirement = ((WitchhuntersGuildJobKillRequirement) witchhuntersGuildJobRequirement);
-
-                metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + lastUsedKillCountId + "_MONSTER_ID").setValue(witchhuntersGuildJobKillRequirement.getMonster().getId());
-                metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + lastUsedKillCountId + "_MONSTER_COUNT").setValue(0);
-
-                lastUsedKillCountId++;
-            }
-        }
+    private WitchhuntersGuildJobDefinition calculateNextQuest(final WitchhuntersGuildEntity witchhuntersGuildEntity) {
+        return witchhuntersGuildJobDefinitionCache.getDefinition(witchhuntersGuildEntity.getJob().getId() + 1);
     }
 }

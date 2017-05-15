@@ -7,6 +7,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResul
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
 import com.morethanheroic.swords.vampire.service.VampireCalculator;
+import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildManipulator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +22,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     private static final int COMBAT_STAGE = 0;
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
+    private final WitchhuntersGuildManipulator witchhuntersGuildManipulator;
     private final VampireCalculator vampireCalculator;
 
     @Override
@@ -48,9 +50,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                 .isFailure(
                                     explorationResultBuilder -> explorationResultBuilder
                                         .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
-                                        .newCustomLogicEntry(() ->{
-                                            //TODO: Open the witchhunter's guild
-                                        })
+                                        .newCustomLogicEntry(() -> witchhuntersGuildManipulator.unlockWitchhuntersGuildForUser(explorationContext.getUserEntity()))
                                         .build()
                                 )
                                 .build()

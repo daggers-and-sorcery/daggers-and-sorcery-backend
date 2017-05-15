@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WitchhuntersGuildEntityFactory implements EntityFactory<WitchhuntersGuildEntity, UserEntity> {
 
+    private static final String WITCHUNTERS_GUILD_REPUTATION_POINTS = "WITCHUNTERS_GUILD_REPUTATION_POINTS";
     private static final String WITCHHUNTERS_GUILD_JOB_ID = "WITCHHUNTERS_GUILD_JOB";
 
-    private final WitchhuntersGuildCalculator witchhuntersGuildCalculator;
     private final WitchhuntersGuildRankCalculator witchhuntersGuildRankCalculator;
     private final WitchhuntersGuildJobDefinitionCache witchhuntersGuildJobDefinitionCache;
     private final MetadataEntityFactory metadataEntityFactory;
@@ -25,9 +25,13 @@ public class WitchhuntersGuildEntityFactory implements EntityFactory<Witchhunter
 
         return WitchhuntersGuildEntity.builder()
                 .id(userEntity.getId())
-                .reputationPoints(witchhuntersGuildCalculator.calculateReputationPoints(userEntity))
+                .reputationPoints(calculateReputationPoints(userEntity))
                 .rank(witchhuntersGuildRankCalculator.calculate(userEntity))
                 .job(witchhuntersGuildJobDefinitionCache.getDefinition(jobId))
                 .build();
+    }
+
+    private int calculateReputationPoints(final UserEntity userEntity) {
+        return metadataEntityFactory.getNumericEntity(userEntity, WITCHUNTERS_GUILD_REPUTATION_POINTS).getValue();
     }
 }
