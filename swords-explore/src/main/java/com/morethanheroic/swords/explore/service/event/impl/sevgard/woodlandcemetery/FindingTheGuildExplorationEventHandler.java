@@ -6,9 +6,8 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationConte
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
+import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
 import com.morethanheroic.swords.vampire.service.VampireCalculator;
-import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildManipulator;
-
 import lombok.RequiredArgsConstructor;
 
 @ExplorationEvent
@@ -18,12 +17,14 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     private static final int EVENT_ID = 24;
 
     private static final int STARTER_STAGE = 0;
-    private static final int ASK_FOR_HELP_STAGE = 0;
-    private static final int COMBAT_STAGE = 0;
+    private static final int ASK_FOR_HELP_STAGE = 1;
+    private static final int COMBAT_STAGE = 2;
+    private static final int ACCEPT_QUEST_STAGE = 3;
+    private static final int DECLINE_QUEST_STAGE = 4;
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
-    private final WitchhuntersGuildManipulator witchhuntersGuildManipulator;
     private final VampireCalculator vampireCalculator;
+    private final QuestDefinitionCache questDefinitionCache;
 
     @Override
     public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
@@ -33,26 +34,26 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_1")
                                 .newCustomMultiWayPath(() -> vampireCalculator.isVampire(explorationContext.getUserEntity()))
                                 .isSuccess(
-                                    explorationResultBuilder -> explorationResultBuilder
-                                        .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_2")
-                                        .newOptionEntry(
-                                            ReplyOption.builder()
-                                                       .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_1")
-                                                       .stage(ASK_FOR_HELP_STAGE)
-                                                       .build(),
-                                            ReplyOption.builder()
-                                                       .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_2")
-                                                       .stage(COMBAT_STAGE)
-                                                       .build()
-                                        )
-                                        .build()
+                                        explorationResultBuilder -> explorationResultBuilder
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_2")
+                                                .newOptionEntry(
+                                                        ReplyOption.builder()
+                                                                .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_1")
+                                                                .stage(ASK_FOR_HELP_STAGE)
+                                                                .build(),
+                                                        ReplyOption.builder()
+                                                                .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_2")
+                                                                .stage(COMBAT_STAGE)
+                                                                .build()
+                                                )
+                                                .build()
                                 )
                                 .isFailure(
-                                    explorationResultBuilder -> explorationResultBuilder
-                                        .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
-                                        //TODO: Instead of this we should add a quest and the user will need to finish that.
-                                        .newCustomLogicEntry(() -> witchhuntersGuildManipulator.unlockWitchhuntersGuildForUser(explorationContext.getUserEntity()))
-                                        .build()
+                                        explorationResultBuilder -> explorationResultBuilder
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
+                                                .newQuestEntry(questDefinitionCache.getDefinition(1), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
+                                                //.newCustomLogicEntry(() -> witchhuntersGuildManipulator.unlockWitchhuntersGuildForUser(explorationContext.getUserEntity()))
+                                                .build()
                                 )
                                 .build()
                 )

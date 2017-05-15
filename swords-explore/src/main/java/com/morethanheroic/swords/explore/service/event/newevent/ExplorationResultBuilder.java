@@ -17,6 +17,7 @@ import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOp
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageBoxMessageEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.QuestEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
@@ -24,6 +25,7 @@ import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
+import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -84,6 +86,9 @@ public class ExplorationResultBuilder {
     @Autowired
     private DropAdder dropAdder;
 
+    @Autowired
+    private QuestEventEntryEvaluator questEventEntryEvaluator;
+
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
 
@@ -121,6 +126,14 @@ public class ExplorationResultBuilder {
     public ExplorationResultBuilder newMessageEntry(final String messageId, final Object... args) {
         explorationResult.addEventEntryResult(
                 messageEventEntryEvaluator.messageEntry(messageId, args)
+        );
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newQuestEntry(final QuestDefinition questDefinition, final int acceptQuestStage, final int declineQuestStage) {
+        explorationResult.addEventEntryResult(
+                questEventEntryEvaluator.questEntry(questDefinition.getName(), questDefinition.getDefinition(), acceptQuestStage, declineQuestStage)
         );
 
         return this;

@@ -22,7 +22,7 @@ import java.util.List;
 @Order(-1)
 @Service
 @RequiredArgsConstructor
-public class QuestTargetMonsterDeathCombatEventHandler implements MonsterDeathCombatEventHandler {
+public class WitchhuntersGuildQuestTargetMonsterDeathCombatEventHandler implements MonsterDeathCombatEventHandler {
 
     private final MetadataEntityFactory metadataEntityFactory;
 

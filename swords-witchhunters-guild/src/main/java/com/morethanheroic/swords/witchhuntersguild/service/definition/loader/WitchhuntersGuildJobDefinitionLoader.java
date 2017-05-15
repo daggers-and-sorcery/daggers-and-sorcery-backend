@@ -27,12 +27,12 @@ public class WitchhuntersGuildJobDefinitionLoader implements DefinitionLoader<Wi
 
     @Override
     public List<WitchhuntersGuildJobDefinition> loadDefinitions() {
-        return loadRawStatusEffectDefinitions().stream()
+        return loadRawWitchhuntersGuildJobDefinitions().stream()
                 .map(witchhuntersGuildJobDefinitionTransformer::transform)
                 .collect(collectingAndThen(toList(), ImmutableList::copyOf));
     }
 
-    private List<RawWitchhuntersGuildJobDefinition> loadRawStatusEffectDefinitions() {
+    private List<RawWitchhuntersGuildJobDefinition> loadRawWitchhuntersGuildJobDefinitions() {
         return numericXmlDefinitionLoader.loadDefinitions(
                 NumericDefinitionLoadingContext.<RawWitchhuntersGuildJobDefinition>builder()
                         .clazz(RawWitchhuntersGuildJobDefinition.class)

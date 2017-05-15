@@ -56,4 +56,5 @@ include 'swords-witchhunters-guild'
 include 'swords-combat-entity'
 include 'swords-combat-event'
 include 'swords-combat-step'
+include 'swords-quest'
 
