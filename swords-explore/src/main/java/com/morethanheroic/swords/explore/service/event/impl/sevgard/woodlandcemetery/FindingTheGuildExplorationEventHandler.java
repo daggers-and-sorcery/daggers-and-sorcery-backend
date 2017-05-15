@@ -5,6 +5,9 @@ import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationContext;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
+import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
+import com.morethanheroic.swords.vampire.service.VampireCalculator;
+
 import lombok.RequiredArgsConstructor;
 
 @ExplorationEvent
@@ -14,8 +17,11 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     private static final int EVENT_ID = 24;
 
     private static final int STARTER_STAGE = 0;
+    private static final int ASK_FOR_HELP_STAGE = 0;
+    private static final int COMBAT_STAGE = 0;
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
+    private final VampireCalculator vampireCalculator;
 
     @Override
     public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
@@ -23,16 +29,33 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                 .addStage(STARTER_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_1")
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_2")
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_4")
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_5")
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_6")
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_7")
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_8")
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_9")
+                                .newCustomMultiWayPath(() -> vampireCalculator.isVampire(explorationContext.getUserEntity()))
+                                .isSuccess(
+                                    explorationResultBuilder -> explorationResultBuilder
+                                        .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_2")
+                                        .newOptionEntry(
+                                            ReplyOption.builder()
+                                                       .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_1")
+                                                       .stage(ASK_FOR_HELP_STAGE)
+                                                       .build(),
+                                            ReplyOption.builder()
+                                                       .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_2")
+                                                       .stage(COMBAT_STAGE)
+                                                       .build()
+                                        )
+                                        .build()
+                                )
+                                .isFailure(
+                                    explorationResultBuilder -> explorationResultBuilder
+                                        .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
+                                        .newCustomLogicEntry(() ->{
+                                            //TODO: Open the witchhunter's guild
+                                        })
+                                        .build()
+                                )
                                 .build()
                 )
+                //TODO: Other stages!
                 .runStage(explorationContext);
     }
 
