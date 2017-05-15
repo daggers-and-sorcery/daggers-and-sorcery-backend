@@ -50,6 +50,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                 .isFailure(
                                     explorationResultBuilder -> explorationResultBuilder
                                         .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
+                                        //TODO: Instead of this we should add a quest and the user will need to finish that.
                                         .newCustomLogicEntry(() -> witchhuntersGuildManipulator.unlockWitchhuntersGuildForUser(explorationContext.getUserEntity()))
                                         .build()
                                 )
