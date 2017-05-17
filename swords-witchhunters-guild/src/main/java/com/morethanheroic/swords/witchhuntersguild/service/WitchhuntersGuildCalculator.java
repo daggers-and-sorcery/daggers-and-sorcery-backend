@@ -12,12 +12,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WitchhuntersGuildCalculator {
 
-    private static final String WITCHUNTERS_GUILD_UNLOCKED = "WITCHUNTERS_GUILD_UNLOCKED";
-    private static final String WITCHUNTERS_GUILD_UNLOCKED_VALUE = "UNLOCKED";
+    private static final String WITCHHUNTERS_GUILD_UNLOCKED = "WITCHHUNTERS_GUILD_UNLOCKED";
+    private static final String WITCHHUNTERS_GUILD_UNLOCKED_VALUE = "UNLOCKED";
+
+    private static final String WITCHHUNTERS_GUILD_REPUTATION_POINTS = "WITCHHUNTERS_GUILD_REPUTATION_POINTS";
 
     private final MetadataEntityFactory metadataEntityFactory;
 
     public boolean isWitchhuntersGuildUnlocked(final UserEntity userEntity) {
-        return metadataEntityFactory.getTextEntity(userEntity, WITCHUNTERS_GUILD_UNLOCKED).getValue().equals(WITCHUNTERS_GUILD_UNLOCKED_VALUE);
+        return metadataEntityFactory.getTextEntity(userEntity, WITCHHUNTERS_GUILD_UNLOCKED).getValue().equals(WITCHHUNTERS_GUILD_UNLOCKED_VALUE);
+    }
+
+    public int calculateReputationPoints(final UserEntity userEntity) {
+        return metadataEntityFactory.getNumericEntity(userEntity, WITCHHUNTERS_GUILD_REPUTATION_POINTS).getValue();
     }
 }
