@@ -26,6 +26,7 @@ import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
+import com.morethanheroic.swords.quest.service.QuestManipulator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -89,6 +90,9 @@ public class ExplorationResultBuilder {
     @Autowired
     private QuestEventEntryEvaluator questEventEntryEvaluator;
 
+    @Autowired
+    private QuestManipulator questManipulator;
+
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
 
@@ -131,10 +135,16 @@ public class ExplorationResultBuilder {
         return this;
     }
 
-    public ExplorationResultBuilder newQuestEntry(final QuestDefinition questDefinition, final int acceptQuestStage, final int declineQuestStage) {
+    public ExplorationResultBuilder newQuestDialogEntry(final QuestDefinition questDefinition, final int acceptQuestStage, final int declineQuestStage) {
         explorationResult.addEventEntryResult(
                 questEventEntryEvaluator.questEntry(questDefinition.getName(), questDefinition.getDefinition(), acceptQuestStage, declineQuestStage)
         );
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newAcceptQuestEntry(final QuestDefinition questDefinition) {
+        questManipulator.startQuest(userEntity, questDefinition);
 
         return this;
     }

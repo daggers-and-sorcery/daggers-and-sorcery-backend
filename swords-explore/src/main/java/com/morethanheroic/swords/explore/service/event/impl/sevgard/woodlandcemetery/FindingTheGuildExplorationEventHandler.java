@@ -16,11 +16,14 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
 
     private static final int EVENT_ID = 24;
 
+    private static final int WITCHHUNTER_GUILD_JOIN_QUEST_ID = 1;
+
     private static final int STARTER_STAGE = 0;
     private static final int ASK_FOR_HELP_STAGE = 1;
     private static final int COMBAT_STAGE = 2;
     private static final int ACCEPT_QUEST_STAGE = 3;
     private static final int DECLINE_QUEST_STAGE = 4;
+    private static final int AFTER_COMBAT_STAGE = 5;
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
     private final VampireCalculator vampireCalculator;
@@ -31,11 +34,12 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
         return explorationResultStageBuilderFactory.newBuilder()
                 .addStage(STARTER_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
-                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_1")
                                 .newCustomMultiWayPath(() -> vampireCalculator.isVampire(explorationContext.getUserEntity()))
                                 .isSuccess(
                                         explorationResultBuilder -> explorationResultBuilder
-                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_2")
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_4")
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_5")
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_6")
                                                 .newOptionEntry(
                                                         ReplyOption.builder()
                                                                 .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_1")
@@ -50,11 +54,37 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                 )
                                 .isFailure(
                                         explorationResultBuilder -> explorationResultBuilder
-                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
-                                                .newQuestEntry(questDefinitionCache.getDefinition(1), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
-                                                //.newCustomLogicEntry(() -> witchhuntersGuildManipulator.unlockWitchhuntersGuildForUser(explorationContext.getUserEntity()))
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_1")
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_2")
+                                                .newQuestDialogEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
                                                 .build()
                                 )
+                                .build()
+                )
+                .addStage(COMBAT_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_7")
+                                .newCombatEntry(10, EVENT_ID, AFTER_COMBAT_STAGE)
+                                .build()
+                )
+                .addStage(AFTER_COMBAT_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_8")
+                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_9")
+                                .resetExploration()
+                                .build()
+                )
+                .addStage(ACCEPT_QUEST_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
+                                .newAcceptQuestEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID))
+                                .resetExploration()
+                                .build()
+                )
+                .addStage(DECLINE_QUEST_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_3")
+                                .resetExploration()
                                 .build()
                 )
                 //TODO: Other stages!
@@ -65,6 +95,8 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     public ExplorationResult handleInfo(ExplorationContext explorationContext) {
         return null;
     }
+
+    //TODO: Something that lets us decide whenever the player already started the quest or not
 
     @Override
     public int getId() {
