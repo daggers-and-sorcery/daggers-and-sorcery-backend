@@ -2,11 +2,14 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.woodlandcem
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationAssignmentContext;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationContext;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
+import com.morethanheroic.swords.quest.service.QuestManipulator;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.vampire.service.VampireCalculator;
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +31,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
     private final VampireCalculator vampireCalculator;
     private final QuestDefinitionCache questDefinitionCache;
+    private final QuestManipulator questManipulator;
 
     @Override
     public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
@@ -87,7 +91,6 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                 .resetExploration()
                                 .build()
                 )
-                //TODO: Other stages!
                 .runStage(explorationContext);
     }
 
@@ -96,7 +99,10 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
         return null;
     }
 
-    //TODO: Something that lets us decide whenever the player already started the quest or not
+    @Override
+    public boolean shouldAssign(ExplorationAssignmentContext explorationAssignmentContext) {
+        return questManipulator.startedQuest(explorationAssignmentContext.getUserEntity(), questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID));
+    }
 
     @Override
     public int getId() {

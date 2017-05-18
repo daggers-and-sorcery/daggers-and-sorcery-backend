@@ -1,13 +1,20 @@
 package com.morethanheroic.swords.explore.service;
 
+import static java.util.stream.Collectors.collectingAndThen;
+
+import com.google.common.collect.ImmutableMap;
 import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
+import com.morethanheroic.swords.explore.service.event.newevent.ExplorationAssignmentContext;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -19,11 +26,8 @@ public class ExplorationEventChooser {
     private ExplorationEventChooser(final Random random, final ExplorationEventDefinitionCache explorationEventDefinitionCache, final List<ExplorationEventHandler> explorationEventHandlers) {
         this.random = random;
 
-        final Map<ExplorationEventLocation, List<ExplorationEventHandler>> result = new HashMap<>();
-
-        for (ExplorationEventLocation explorationEventLocation : ExplorationEventLocation.values()) {
-            result.put(explorationEventLocation, new ArrayList<>());
-        }
+        final Map<ExplorationEventLocation, List<ExplorationEventHandler>> result = Arrays.stream(ExplorationEventLocation.values())
+              .collect(collectingAndThen(Collectors.toMap(Function.identity(), explorationEventLocation -> new ArrayList<ExplorationEventHandler>()), ImmutableMap::copyOf));
 
         for (ExplorationEventHandler explorationEventHandler : explorationEventHandlers) {
             if (explorationEventDefinitionCache.isDefinitionExists(explorationEventHandler.getId())) {
@@ -41,12 +45,21 @@ public class ExplorationEventChooser {
         locationMap = Collections.unmodifiableMap(result);
     }
 
-    public ExplorationEventHandler getEvent(final ExplorationEventLocation locationType) {
-        final List<ExplorationEventHandler> locationDefinitionInfo = locationMap.get(locationType);
-        final ExplorationEventHandler result = locationDefinitionInfo.get(random.nextInt(locationDefinitionInfo.size()));
+    public ExplorationEventHandler getEvent(final ExplorationEventLocation locationType, final ExplorationAssignmentContext explorationAssignmentContext) {
+        ExplorationEventHandler result = getRandomEventOnLocation(locationType);
+
+        while(!result.shouldAssign(explorationAssignmentContext)) {
+            result = getRandomEventOnLocation(locationType);
+        }
 
         log.info("Chosen exploration event is " + result.getId());
 
         return result;
+    }
+
+    private ExplorationEventHandler getRandomEventOnLocation(final ExplorationEventLocation locationType) {
+        final List<ExplorationEventHandler> locationDefinitionInfo = locationMap.get(locationType);
+
+        return locationDefinitionInfo.get(random.nextInt(locationDefinitionInfo.size()));
     }
 }

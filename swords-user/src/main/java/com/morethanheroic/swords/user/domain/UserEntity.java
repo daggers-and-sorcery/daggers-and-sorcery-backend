@@ -19,6 +19,8 @@ import com.morethanheroic.swords.user.repository.domain.UserMapper;
 @Configurable
 public class UserEntity implements Entity {
 
+    private static final int NO_EVENT = 0;
+
     @Autowired
     private UserMapper userMapper;
 
@@ -93,6 +95,10 @@ public class UserEntity implements Entity {
         userDatabaseEntity.setMovement(movement);
 
         userMapper.updateBasicCombatStats(userDatabaseEntity.getId(), health, mana, movement);
+    }
+
+    public boolean hasActiveExplorationEvent() {
+        return getActiveExplorationEvent() != NO_EVENT;
     }
 
     public int getActiveExplorationEvent() {
