@@ -11,14 +11,10 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class QuestEventEntryEvaluator {
 
-    private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
-
-    private final MessageSource messageSource;
-
-    public QuestExplorationEventEntryResult questEntry(final String questName, final String questDescription, final int acceptQuestStage, final int declineQuestStage, final Object... args) {
+    public QuestExplorationEventEntryResult questEntry(final String questName, final String questDescription, final int acceptQuestStage, final int declineQuestStage) {
         return QuestExplorationEventEntryResult.builder()
-                .name(messageSource.getMessage(questName, args, DEFAULT_LOCALE))
-                .description(messageSource.getMessage(questDescription, args, DEFAULT_LOCALE))
+                .name(questName)
+                .description(questDescription)
                 .acceptQuestStage(acceptQuestStage)
                 .declineQuestStage(declineQuestStage)
                 .build();

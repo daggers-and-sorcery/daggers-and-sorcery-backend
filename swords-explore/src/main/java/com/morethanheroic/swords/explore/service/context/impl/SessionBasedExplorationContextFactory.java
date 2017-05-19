@@ -22,17 +22,17 @@ public class SessionBasedExplorationContextFactory implements ExplorationContext
 
     private static final String EXPLORATION_EVENT_OVERRIDE_SESSION_ENTRY_KEY = "EXPLORATION_EVENT_OVERRIDE";
 
-    private ExplorationEventHandlerCache explorationEventHandlerCache;
-    private ExplorationEventChooser explorationEventChooser;
+    private final ExplorationEventHandlerCache explorationEventHandlerCache;
+    private final ExplorationEventChooser explorationEventChooser;
 
     @Override
     public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, ExplorationEventLocation location, int nextStage) {
         final ExplorationEventHandler explorationEvent;
 
-        if (!userEntity.hasActiveExplorationEvent()) {
-            explorationEvent = explorationEventHandlerCache.getHandler(getEventId(userEntity, sessionEntity, location));
-        } else {
+        if (userEntity.hasActiveExplorationEvent()) {
             explorationEvent = explorationEventHandlerCache.getHandler(userEntity.getActiveExplorationEvent());
+        } else {
+            explorationEvent = explorationEventHandlerCache.getHandler(getEventId(userEntity, sessionEntity, location));
         }
 
         return ExplorationContext.builder()
