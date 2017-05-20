@@ -9,7 +9,6 @@ import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorat
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
 import com.morethanheroic.swords.quest.service.QuestManipulator;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
-import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.vampire.service.VampireCalculator;
 import lombok.RequiredArgsConstructor;
 
@@ -54,6 +53,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                                                 .stage(COMBAT_STAGE)
                                                                 .build()
                                                 )
+                                                .setEventStage(EVENT_ID, STARTER_STAGE)
                                                 .build()
                                 )
                                 .isFailure(
@@ -61,6 +61,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_1")
                                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_2")
                                                 .newQuestDialogEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
+                                                .setEventStage(EVENT_ID, STARTER_STAGE)
                                                 .build()
                                 )
                                 .build()
@@ -76,6 +77,11 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_8")
                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_9")
                                 .resetExploration()
+                                .build()
+                )
+                .addStage(ASK_FOR_HELP_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newQuestDialogEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
                                 .build()
                 )
                 .addStage(ACCEPT_QUEST_STAGE,
@@ -96,7 +102,48 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
 
     @Override
     public ExplorationResult handleInfo(ExplorationContext explorationContext) {
-        return null;
+        return explorationResultStageBuilderFactory.newBuilder()
+                .addStage(STARTER_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newCustomMultiWayPath(() -> vampireCalculator.isVampire(explorationContext.getUserEntity()))
+                                .isSuccess(
+                                        explorationResultBuilder -> explorationResultBuilder
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_4")
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_5")
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_6")
+                                                .newOptionEntry(
+                                                        ReplyOption.builder()
+                                                                .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_1")
+                                                                .stage(ASK_FOR_HELP_STAGE)
+                                                                .build(),
+                                                        ReplyOption.builder()
+                                                                .message("FINDING_THE_GUILD_EXPLORATION_EVENT_QUESTION_REPLY_2")
+                                                                .stage(COMBAT_STAGE)
+                                                                .build()
+                                                )
+                                                .build()
+                                )
+                                .isFailure(
+                                        explorationResultBuilder -> explorationResultBuilder
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_1")
+                                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_2")
+                                                .newQuestDialogEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
+                                                .build()
+                                )
+                                .build()
+                )
+                .addStage(ASK_FOR_HELP_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newQuestDialogEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
+                                .build()
+                )
+                .addStage(COMBAT_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_7")
+                                .continueCombatEntry()
+                                .build()
+                )
+                .runStage(explorationContext);
     }
 
     @Override

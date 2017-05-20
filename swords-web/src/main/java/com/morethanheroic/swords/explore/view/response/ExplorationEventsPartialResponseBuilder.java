@@ -11,12 +11,14 @@ import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplo
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.MessageBoxExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.QuestExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.view.response.domain.AttributeAttemptExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.CombatExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.ExplorationResponseBuilderConfiguration;
 import com.morethanheroic.swords.explore.view.response.domain.MessageBoxExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.OptionExplorationEventPartialResponse;
+import com.morethanheroic.swords.explore.view.response.domain.QuestExplorationEventPartialResponse;
 import com.morethanheroic.swords.explore.view.response.domain.TextExplorationEventPartialResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -99,6 +101,17 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                                                 )
                                                 .collect(Collectors.toList())
                                 )
+                                .build()
+                );
+            } else if (explorationEventEntryResult instanceof QuestExplorationEventEntryResult) {
+                final QuestExplorationEventEntryResult questExplorationEventEntryResult = (QuestExplorationEventEntryResult) explorationEventEntryResult;
+
+                result.add(
+                        QuestExplorationEventPartialResponse.builder()
+                                .name(questExplorationEventEntryResult.getName())
+                                .description(questExplorationEventEntryResult.getDescription())
+                                .acceptQuestStage(questExplorationEventEntryResult.getAcceptQuestStage())
+                                .declineQuestStage(questExplorationEventEntryResult.getDeclineQuestStage())
                                 .build()
                 );
             }
