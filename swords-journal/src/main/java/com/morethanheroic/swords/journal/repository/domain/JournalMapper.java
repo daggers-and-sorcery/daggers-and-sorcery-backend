@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.repository.domain;
 
-import com.morethanheroic.swords.journal.model.JournalType;
+import com.morethanheroic.swords.journal.domain.JournalType;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;

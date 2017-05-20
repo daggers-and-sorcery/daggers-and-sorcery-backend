@@ -31,7 +31,7 @@ public class CombatCalculator {
 
     @Transactional
     public MonsterDefinition getOpponentInRunningCombat(UserEntity userEntity) {
-        return monsterDefinitionCache.getMonsterDefinition(combatMapper.getRunningCombat(userEntity.getId()).getMonsterId());
+        return monsterDefinitionCache.getDefinition(combatMapper.getRunningCombat(userEntity.getId()).getMonsterId());
     }
 
     public void removeAllCombatForUser(final UserEntity userEntity) {

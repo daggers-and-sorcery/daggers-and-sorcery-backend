@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.monster.service.loader;
 
 import com.google.common.collect.ImmutableList;
+import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -16,17 +17,16 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
-public class MonsterDefinitionLoader {
+public class MonsterDefinitionLoader implements DefinitionLoader<MonsterDefinition> {
 
     private final NumericXmlDefinitionLoader numericXmlDefinitionLoader;
     private final MonsterDefinitionTransformer monsterDefinitionTransformer;
 
-    public List<MonsterDefinition> loadMonsterDefinitions() {
+    @Override
+    public List<MonsterDefinition> loadDefinitions() {
         return loadRawMonsterDefinitions().stream()
                 .map(monsterDefinitionTransformer::transform)
-                .collect(
-                        collectingAndThen(toList(), ImmutableList::copyOf)
-                );
+                .collect(collectingAndThen(toList(), ImmutableList::copyOf));
     }
 
     private List<RawMonsterDefinition> loadRawMonsterDefinitions() {

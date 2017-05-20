@@ -30,7 +30,7 @@ public class SavedCombatEntityFactory implements EntityFactory<SavedCombatEntity
         return SavedCombatEntity.builder()
             .id(combatDatabaseEntity.getId())
             .user(userEntity)
-            .monster(monsterDefinitionCache.getMonsterDefinition(combatDatabaseEntity.getMonsterId()))
+            .monster(monsterDefinitionCache.getDefinition(combatDatabaseEntity.getMonsterId()))
             .monsterHealth(combatDatabaseEntity.getMonsterHealth())
             .monsterMana(combatDatabaseEntity.getMonsterMana())
             .build();

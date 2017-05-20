@@ -1,4 +1,0 @@
-[Refactor]:
-
-    - This module is just fastly moved out from the main sources. Need more care and refactoring!
-    - Add checkstyle and findbugs support.

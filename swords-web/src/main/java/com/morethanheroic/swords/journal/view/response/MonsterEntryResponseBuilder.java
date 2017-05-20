@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.journal.service.response;
+package com.morethanheroic.swords.journal.view.response;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;

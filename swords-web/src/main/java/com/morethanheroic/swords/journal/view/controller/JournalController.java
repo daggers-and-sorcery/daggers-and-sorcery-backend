@@ -1,38 +1,31 @@
 package com.morethanheroic.swords.journal.view.controller;
 
-import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
-import com.morethanheroic.swords.journal.model.JournalType;
-import com.morethanheroic.swords.journal.service.JournalEntryResponseBuilder;
-import com.morethanheroic.swords.journal.service.JournalListResponseBuilder;
-import com.morethanheroic.swords.journal.service.JournalManager;
+import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.swords.journal.domain.JournalType;
+import com.morethanheroic.swords.journal.service.JournalEntityFactory;
+import com.morethanheroic.swords.journal.view.response.JournalEntryResponseBuilder;
+import com.morethanheroic.swords.journal.view.response.JournalListResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class JournalController {
 
-    private final JournalManager journalManager;
+    private final JournalEntityFactory journalManager;
     private final JournalListResponseBuilder journalListResponseBuilder;
     private final JournalEntryResponseBuilder journalEntryResponseBuilder;
 
-    @Autowired
-    public JournalController(JournalManager journalManager, JournalListResponseBuilder journalListResponseBuilder, JournalEntryResponseBuilder journalEntryResponseBuilder) {
-        this.journalManager = journalManager;
-        this.journalListResponseBuilder = journalListResponseBuilder;
-        this.journalEntryResponseBuilder = journalEntryResponseBuilder;
-    }
-
-    @RequestMapping(value = "/journal/list/{journal_type}", method = RequestMethod.GET)
-    public CharacterRefreshResponse listJournal(UserEntity userEntity, @PathVariable("journal_type") JournalType journalType) {
+    @GetMapping("/journal/list/{journal_type}")
+    public Response listJournal(UserEntity userEntity, @PathVariable("journal_type") JournalType journalType) {
         return journalListResponseBuilder.build(userEntity, journalType);
     }
 
-    @RequestMapping(value = "/journal/entry/{journal_type}/{journal_id}", method = RequestMethod.GET)
-    public CharacterRefreshResponse journalEntry(UserEntity userEntity, @PathVariable("journal_type") JournalType journalType, @PathVariable("journal_id") int journalId) {
+    @GetMapping("/journal/entry/{journal_type}/{journal_id}")
+    public Response journalEntry(UserEntity userEntity, @PathVariable("journal_type") JournalType journalType, @PathVariable("journal_id") int journalId) {
         if (journalManager.hasJournal(userEntity, journalType, journalId)) {
             return journalEntryResponseBuilder.build(userEntity, journalType, journalId);
         } else {

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.view.controller;
 
-import com.morethanheroic.swords.journal.model.JournalType;
+import com.morethanheroic.swords.journal.domain.JournalType;
 import com.morethanheroic.swords.journal.view.editor.JournalTypeEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
