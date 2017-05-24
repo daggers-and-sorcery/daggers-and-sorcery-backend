@@ -137,7 +137,7 @@ public class ExplorationResultBuilder {
 
     public ExplorationResultBuilder newQuestDialogEntry(final QuestDefinition questDefinition, final int acceptQuestStage, final int declineQuestStage) {
         explorationResult.addEventEntryResult(
-                questEventEntryEvaluator.questEntry(questDefinition.getName(), questDefinition.getDefinition(), acceptQuestStage, declineQuestStage)
+                questEventEntryEvaluator.questEntry(questDefinition.getName(), questDefinition.getDescription(), acceptQuestStage, declineQuestStage)
         );
 
         return this;

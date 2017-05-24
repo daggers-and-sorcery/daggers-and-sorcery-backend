@@ -4,6 +4,7 @@ import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.journal.view.response.quest.domain.QuestJournalListEntryPartialResponse;
 import com.morethanheroic.swords.journal.view.response.quest.domain.QuestJournalListResponseBuilderConfiguration;
+import com.morethanheroic.swords.quest.domain.QuestEntity;
 import com.morethanheroic.swords.quest.service.QuestListEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,13 @@ public class QuestJournalListEntryPartialResponseBuilder implements PartialRespo
     @Override
     public Collection<? extends PartialResponse> build(QuestJournalListResponseBuilderConfiguration questJournalListResponseBuilderConfiguration) {
         return questListEntityFactory.getEntity(questJournalListResponseBuilderConfiguration.getUserEntity()).stream()
+                .filter(QuestEntity::isStarted)
                 .map(questEntity ->
                         QuestJournalListEntryPartialResponse.builder()
                                 .id(questEntity.getQuestDefinition().getId())
                                 .name(questEntity.getQuestDefinition().getName())
-                                .questState(questEntity.getState())
+                                .description(questEntity.getQuestDefinition().getDescription())
+                                .questState(questEntity.getState().getName())
                                 .build()
                 )
                 .collect(Collectors.toList());

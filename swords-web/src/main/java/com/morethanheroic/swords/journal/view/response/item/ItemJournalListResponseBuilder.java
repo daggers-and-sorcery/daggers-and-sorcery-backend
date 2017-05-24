@@ -9,9 +9,11 @@ import com.morethanheroic.swords.journal.view.response.item.domain.ItemJournalLi
 import com.morethanheroic.swords.journal.view.response.domain.JournalListResponseEntry;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
+@Service
 @RequiredArgsConstructor
 public class ItemJournalListResponseBuilder implements ResponseBuilder<ItemJournalListResponseBuilderConfiguration> {
 

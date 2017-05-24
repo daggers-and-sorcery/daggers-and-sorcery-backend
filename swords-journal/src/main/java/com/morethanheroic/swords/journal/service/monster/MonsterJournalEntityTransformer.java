@@ -5,9 +5,11 @@ import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-@Getter
-@Builder
+@Service
+@RequiredArgsConstructor
 public class MonsterJournalEntityTransformer {
 
     private final MonsterDefinitionCache monsterDefinitionCache;

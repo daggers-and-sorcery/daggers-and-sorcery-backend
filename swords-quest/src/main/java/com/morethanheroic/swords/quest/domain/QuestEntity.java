@@ -17,4 +17,8 @@ public class QuestEntity implements Entity {
     public int getId() {
         return questDefinition.getId();
     }
+
+    public boolean isStarted() {
+        return state != QuestState.NOT_STARTED;
+    }
 }
