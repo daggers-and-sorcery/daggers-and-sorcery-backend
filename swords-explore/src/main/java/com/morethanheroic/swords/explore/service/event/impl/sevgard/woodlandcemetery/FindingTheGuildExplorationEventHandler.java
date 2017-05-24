@@ -2,12 +2,8 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.woodlandcem
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
-import com.morethanheroic.swords.explore.service.event.newevent.ExplorationAssignmentContext;
-import com.morethanheroic.swords.explore.service.event.newevent.ExplorationContext;
-import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
-import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
-import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
-import com.morethanheroic.swords.quest.service.QuestManipulator;
+import com.morethanheroic.swords.explore.service.event.newevent.*;
+import com.morethanheroic.swords.quest.service.QuestStateCalculator;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
 import com.morethanheroic.swords.vampire.service.VampireCalculator;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +15,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     private static final int EVENT_ID = 24;
 
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_ID = 1;
+    private static final int WITCHHUNTER_GUILD_JOIN_QUEST_STARTED_STATE_ID = 1;
 
     private static final int STARTER_STAGE = 0;
     private static final int ASK_FOR_HELP_STAGE = 1;
@@ -30,7 +27,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
     private final VampireCalculator vampireCalculator;
     private final QuestDefinitionCache questDefinitionCache;
-    private final QuestManipulator questManipulator;
+    private final QuestStateCalculator questStateCalculator;
 
     @Override
     public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
@@ -148,7 +145,8 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
 
     @Override
     public boolean shouldAssign(ExplorationAssignmentContext explorationAssignmentContext) {
-        return questManipulator.startedQuest(explorationAssignmentContext.getUserEntity(), questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID));
+        return questStateCalculator.getQuestStage(explorationAssignmentContext.getUserEntity(), questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID))
+                == WITCHHUNTER_GUILD_JOIN_QUEST_STARTED_STATE_ID;
     }
 
     @Override

@@ -10,4 +10,5 @@ public class QuestDefinition {
     private final int id;
     private final String name;
     private final String definition;
+    private final int completedAtStage;
 }

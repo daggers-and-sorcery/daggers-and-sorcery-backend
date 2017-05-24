@@ -1,11 +1,11 @@
-package com.morethanheroic.swords.journal.view.response;
+package com.morethanheroic.swords.journal.view.response.item;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.journal.domain.entity.ItemJournalEntity;
 import com.morethanheroic.swords.journal.service.item.ItemJournalEntityFactory;
-import com.morethanheroic.swords.journal.view.response.domain.ItemJournalListResponseBuilderConfiguration;
+import com.morethanheroic.swords.journal.view.response.item.domain.ItemJournalListResponseBuilderConfiguration;
 import com.morethanheroic.swords.journal.view.response.domain.JournalListResponseEntry;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import lombok.RequiredArgsConstructor;

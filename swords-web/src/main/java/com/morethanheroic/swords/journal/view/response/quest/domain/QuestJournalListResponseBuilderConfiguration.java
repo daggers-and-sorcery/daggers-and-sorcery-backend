@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.journal.view.response.domain;
+package com.morethanheroic.swords.journal.view.response.quest.domain;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class MonsterJournalListResponseBuilderConfiguration implements ResponseBuilderConfiguration {
+public class QuestJournalListResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
     private final UserEntity userEntity;
 }
