@@ -7,7 +7,7 @@ import com.morethanheroic.swords.explore.service.context.ExplorationContextFacto
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,20 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
  * options the user can take and a few words about where is he at the moment.
  */
 @Service
-public class ExplorationInfoGatherer {
+@RequiredArgsConstructor
+public class ExplorationEventInfoGatherer {
 
     private static final int NO_EVENT = 0;
 
-    @Autowired
-    private ExplorationResultFactory explorationResultFactory;
-
-    @Autowired
-    private ExplorationContextFactory explorationContextFactory;
+    private final ExplorationResultFactory explorationResultFactory;
+    private final ExplorationContextFactory explorationContextFactory;
 
     @Transactional
     public ExplorationResult info(final UserEntity userEntity, final SessionEntity sessionEntity) {
-        if (!hasInfo(userEntity)) {
-            return buildEmptyExplorationResult();
+        if (!userEntity.hasActiveExplorationEvent()) {
+            return explorationResultFactory.newEmptyExplorationResult();
         }
 
         return buildSuccessfulInfoResult(userEntity, createExplorationContext(userEntity, sessionEntity));
@@ -37,14 +35,6 @@ public class ExplorationInfoGatherer {
 
     private ExplorationContext createExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity) {
         return explorationContextFactory.newExplorationContext(userEntity, sessionEntity, null, userEntity.getActiveExplorationState());
-    }
-
-    private boolean hasInfo(final UserEntity userEntity) {
-        return userEntity.getActiveExplorationEvent() > NO_EVENT;
-    }
-
-    private ExplorationResult buildEmptyExplorationResult() {
-        return explorationResultFactory.newExplorationResult(null);
     }
 
     private ExplorationResult buildSuccessfulInfoResult(final UserEntity userEntity, final ExplorationContext explorationContext) {

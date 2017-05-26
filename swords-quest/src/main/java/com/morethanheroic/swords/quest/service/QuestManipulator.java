@@ -5,6 +5,9 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Provides entry point for manipulating the quest related properties of the user.
+ */
 @Service
 @RequiredArgsConstructor
 public class QuestManipulator {
@@ -14,6 +17,6 @@ public class QuestManipulator {
     private final QuestStateCalculator questStateCalculator;
 
     public void startQuest(final UserEntity userEntity, final QuestDefinition questDefinition) {
-        questStateCalculator.setQuestState(userEntity, questDefinition, STARTING_QUEST_STAGE);
+        questStateCalculator.setQuestStage(userEntity, questDefinition, STARTING_QUEST_STAGE);
     }
 }

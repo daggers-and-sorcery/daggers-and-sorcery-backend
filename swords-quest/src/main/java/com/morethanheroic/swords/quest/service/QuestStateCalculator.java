@@ -38,7 +38,7 @@ public class QuestStateCalculator {
         return metadataEntityFactory.getNumericEntity(userEntity, "QUEST_" + questDefinition.getId() + "_STAGE").getValue();
     }
 
-    public void setQuestState(final UserEntity userEntity, final QuestDefinition questDefinition, final int newQuestStage) {
+    public void setQuestStage(final UserEntity userEntity, final QuestDefinition questDefinition, final int newQuestStage) {
         metadataEntityFactory.getNumericEntity(userEntity, "QUEST_" + questDefinition.getId() + "_STAGE").setValue(newQuestStage);
     }
 }

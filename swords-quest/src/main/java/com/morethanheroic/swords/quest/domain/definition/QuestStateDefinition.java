@@ -8,4 +8,6 @@ import lombok.Getter;
 public class QuestStateDefinition {
 
     private final String description;
+    private final int eventId;
+    private final int eventStage;
 }

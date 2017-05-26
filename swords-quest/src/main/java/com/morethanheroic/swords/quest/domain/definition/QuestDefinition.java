@@ -12,6 +12,7 @@ public class QuestDefinition {
     private final int id;
     private final String name;
     private final String description;
+    //TODO: Rename to stages and QuestStageDefinition
     private final List<QuestStateDefinition> states;
 
     public int getCompletedAtStage() {

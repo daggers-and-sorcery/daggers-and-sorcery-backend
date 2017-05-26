@@ -5,7 +5,7 @@ import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.journal.view.response.quest.domain.QuestJournalListEntryPartialResponse;
 import com.morethanheroic.swords.journal.view.response.quest.domain.QuestJournalListResponseBuilderConfiguration;
 import com.morethanheroic.swords.quest.domain.QuestEntity;
-import com.morethanheroic.swords.quest.service.QuestListEntityFactory;
+import com.morethanheroic.swords.quest.service.entity.QuestListEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

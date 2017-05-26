@@ -1,8 +1,9 @@
-package com.morethanheroic.swords.quest.service;
+package com.morethanheroic.swords.quest.service.entity;
 
 import com.morethanheroic.entity.service.factory.EntityListFactory;
 import com.morethanheroic.swords.quest.domain.QuestEntity;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
+import com.morethanheroic.swords.quest.service.entity.domain.QuestEntityFactoryContext;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,18 +15,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QuestListEntityFactory implements EntityListFactory<QuestEntity, UserEntity> {
 
-    private final QuestStateCalculator questStateCalculator;
     private final QuestDefinitionCache questDefinitionCache;
+    private final QuestEntityFactory questEntityFactory;
 
     @Override
     public List<QuestEntity> getEntity(final UserEntity userEntity) {
         return questDefinitionCache.getDefinitions().stream()
                 .map(questDefinition ->
-                        QuestEntity.builder()
-                                .questDefinition(questDefinition)
-                                .stage(questStateCalculator.getQuestStage(userEntity, questDefinition))
-                                .state(questStateCalculator.getQuestState(userEntity, questDefinition))
-                                .build()
+                        questEntityFactory.getEntity(
+                                QuestEntityFactoryContext.builder()
+                                        .userEntity(userEntity)
+                                        .questDefinition(questDefinition)
+                                        .build()
+                        )
                 )
                 .collect(Collectors.toList());
     }
