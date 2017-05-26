@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.journal.view.controller;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.journal.view.response.MonsterJournalListResponseBuilder;
-import com.morethanheroic.swords.journal.view.response.domain.MonsterJournalListResponseBuilderConfiguration;
+import com.morethanheroic.swords.journal.view.response.monster.MonsterJournalListResponseBuilder;
+import com.morethanheroic.swords.journal.view.response.monster.domain.MonsterJournalListResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

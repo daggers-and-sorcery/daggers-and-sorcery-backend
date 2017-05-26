@@ -3,11 +3,18 @@ package com.morethanheroic.swords.quest.domain.definition;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder
 public class QuestDefinition {
 
     private final int id;
     private final String name;
-    private final String definition;
+    private final String description;
+    private final List<QuestStateDefinition> states;
+
+    public int getCompletedAtStage() {
+        return states.size();
+    }
 }

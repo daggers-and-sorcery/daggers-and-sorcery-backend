@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.journal.view.response.domain;
+package com.morethanheroic.swords.journal.view.response.item.domain;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;

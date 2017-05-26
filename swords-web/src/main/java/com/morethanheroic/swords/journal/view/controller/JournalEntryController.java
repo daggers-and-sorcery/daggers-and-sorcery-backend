@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class JournalController {
+public class JournalEntryController {
 
     private final JournalEntityFactory journalManager;
     private final JournalEntryResponseBuilder journalEntryResponseBuilder;
