@@ -118,7 +118,6 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
     compile group: 'com.morethanheroic', name: 'common-session', version: '1.4.13'
-    compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.0'
     compile group: 'com.morethanheroic', name: 'common-application', version: '1.0.7'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
