@@ -12,6 +12,8 @@ public class QuestStateDefinitionTransformer implements DefinitionTransformer<Qu
     public QuestStateDefinition transform(RawQuestStateDefinition rawDefinition) {
         return QuestStateDefinition.builder()
                 .description(rawDefinition.getDescription())
+                .eventId(rawDefinition.getEventId())
+                .eventStage(rawDefinition.getEventStage())
                 .build();
     }
 }
