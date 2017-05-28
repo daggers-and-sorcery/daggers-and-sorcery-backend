@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.morethanheroic.swords.combat.domain.AttackResult;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.service.create.CreateCombatCalculator;
+import com.morethanheroic.swords.combat.service.create.domain.CombatCreationContext;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -31,7 +32,12 @@ public class CombatEventEntryEvaluator {
     }
 
     public CombatEventEntryEvaluatorResult calculateCombat(final UserEntity userEntity, final MonsterDefinition opponent) {
-        final AttackResult combatResult = createCombatCalculator.createCombat(userEntity, opponent);
+        final AttackResult combatResult = createCombatCalculator.createCombat(
+                CombatCreationContext.builder()
+                        .userEntity(userEntity)
+                        .monsterDefinition(opponent)
+                        .build()
+        );
 
         return CombatEventEntryEvaluatorResult.builder()
                 .result(

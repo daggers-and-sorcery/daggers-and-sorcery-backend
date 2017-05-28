@@ -3,6 +3,7 @@ package com.morethanheroic.swords.explore.service.event.newevent;
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
@@ -150,6 +151,10 @@ public class ExplorationResultBuilder {
     }
 
     public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage) {
+        return this.newCombatEntry(opponentId, eventId, stage, 0);
+    }
+
+    public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage, final int questId) {
         final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId));
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
@@ -196,7 +201,7 @@ public class ExplorationResultBuilder {
                                                                 .build()
                                                 )
                                         )
-                                        .combatEnded(!combatCalculator.isCombatRunning(userEntity))
+                                        .combatEnded(!combatCalculator.isCombatRunning(userEntity, CombatType.EXPLORE))
                                         .playerDead(false)
                                         .build()
                         )

@@ -15,6 +15,7 @@ dependencies {
     compile project(':swords-equipment')
     compile project(':swords-recipe')
     compile project(':swords-dice')
+    compile project(':swords-quest')
     compile project(':swords-vampire')
     compile project(':swords-status-effect')
     compile project(':swords-skill-scavenging')
