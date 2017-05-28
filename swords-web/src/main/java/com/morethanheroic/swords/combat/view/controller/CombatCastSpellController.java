@@ -25,7 +25,7 @@ public class CombatCastSpellController {
     private final UseSpellCombatCalculator useSpellCombatCalculator;
     private final CombatContextFactory combatContextFactory;
 
-    @GetMapping("/combat/cast/{combatType}/{spell}")
+    @GetMapping("/combat/{combatType}/cast/{spell}")
     public Response castSpell(final UserEntity userEntity, final SessionEntity sessionEntity, @PathVariable final CombatType combatType,
                               @PathVariable final SpellDefinition spell) {
         final CombatContext combatContext = combatContextFactory.newContext(userEntity, combatType);

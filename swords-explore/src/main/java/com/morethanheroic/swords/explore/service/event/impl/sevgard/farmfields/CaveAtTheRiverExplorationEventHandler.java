@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
 import com.google.common.collect.Lists;
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
@@ -73,7 +74,7 @@ public class CaveAtTheRiverExplorationEventHandler extends MultiStageExploration
                         .build()
         );
 
-        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent, CombatType.EXPLORE);
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 
@@ -104,10 +105,10 @@ public class CaveAtTheRiverExplorationEventHandler extends MultiStageExploration
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
-            if (combatCalculator.isCombatRunning(userEntity)) {
+            if (combatCalculator.isCombatRunning(userEntity, CombatType.EXPLORE)) {
                 return explorationResultBuilderFactory
                         .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
-                        .newMessageEntry("CAVE_AT_THE_RIVER_EXPLORATION_EVENT_ENTRY_1", combatCalculator.getOpponentInRunningCombat(userEntity).getName())
+                        .newMessageEntry("CAVE_AT_THE_RIVER_EXPLORATION_EVENT_ENTRY_1", combatCalculator.getOpponentInRunningCombat(userEntity, CombatType.EXPLORE).getName())
                         .continueCombatEntry()
                         .build();
             } else {

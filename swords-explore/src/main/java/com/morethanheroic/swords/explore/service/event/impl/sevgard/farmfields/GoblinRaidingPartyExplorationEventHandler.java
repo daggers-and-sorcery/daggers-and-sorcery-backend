@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
 import com.morethanheroic.math.RandomCalculator;
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
@@ -71,7 +72,7 @@ public class GoblinRaidingPartyExplorationEventHandler extends MultiStageExplora
                         .build()
         );
 
-        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, goblinPikeman);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, goblinPikeman, CombatType.EXPLORE);
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 

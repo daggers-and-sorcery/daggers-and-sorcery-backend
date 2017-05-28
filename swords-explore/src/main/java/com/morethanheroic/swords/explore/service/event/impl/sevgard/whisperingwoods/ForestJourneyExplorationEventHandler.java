@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingwoods;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.ExplorationResultFactory;
@@ -70,7 +71,7 @@ public class ForestJourneyExplorationEventHandler extends MultiStageExplorationE
                 messageEventEntryEvaluator.messageEntry("FOREST_JOURNEY_EXPLORATION_EVENT_ENTRY_3")
         );
 
-        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent, CombatType.EXPLORE);
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
 
@@ -99,7 +100,7 @@ public class ForestJourneyExplorationEventHandler extends MultiStageExplorationE
                         messageEventEntryEvaluator.messageEntry("FOREST_JOURNEY_EXPLORATION_EVENT_ENTRY_5")
                 );
 
-                final CombatEventEntryEvaluatorResult secondCombatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
+                final CombatEventEntryEvaluatorResult secondCombatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent, CombatType.EXPLORE);
 
                 explorationResult.addEventEntryResult(secondCombatEventEntryEvaluatorResult.getResult());
 

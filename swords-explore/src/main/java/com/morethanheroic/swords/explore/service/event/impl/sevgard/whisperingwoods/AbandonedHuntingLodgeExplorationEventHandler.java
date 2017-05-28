@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingwoods;
 
 import com.google.common.collect.Lists;
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
@@ -223,7 +224,7 @@ public class AbandonedHuntingLodgeExplorationEventHandler extends MultiStageExpl
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
-            if (combatCalculator.isCombatRunning(userEntity)) {
+            if (combatCalculator.isCombatRunning(userEntity, CombatType.EXPLORE)) {
                 return explorationResultBuilderFactory
                         .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("ABANDONED_HUNTING_LODGE_EXPLORATION_EVENT_ENTRY_2")

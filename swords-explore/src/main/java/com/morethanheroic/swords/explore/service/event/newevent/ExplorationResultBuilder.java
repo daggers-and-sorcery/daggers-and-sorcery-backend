@@ -155,7 +155,8 @@ public class ExplorationResultBuilder {
     }
 
     public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage, final int questId) {
-        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId));
+        final CombatType combatType = questId > 0 ? CombatType.valueOf("QUEST_" + questId) : CombatType.EXPLORE;
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId), combatType);
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
 
@@ -264,7 +265,11 @@ public class ExplorationResultBuilder {
     }
 
     public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath(final ExplorationContext explorationContext) {
-        return combatCalculator.isCombatRunning(explorationContext.getUserEntity()) ?
+        return newIsCombatRunningMultiWayPath(explorationContext, CombatType.EXPLORE);
+    }
+
+    public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath(final ExplorationContext explorationContext, final CombatType combatType) {
+        return combatCalculator.isCombatRunning(explorationContext.getUserEntity(), combatType) ?
                 multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
                 multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
     }

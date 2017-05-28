@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.view.request.advice;
 
-import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
+import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +18,7 @@ public class SpellDefinitionControllerAdvice {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(QuestDefinition.class, new PropertyEditorSupport() {
+        binder.registerCustomEditor(SpellDefinition.class, new PropertyEditorSupport() {
 
             @Override
             public void setAsText(final String spellId) {

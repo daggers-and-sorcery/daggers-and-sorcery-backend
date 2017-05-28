@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingwoods;
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
@@ -171,7 +172,7 @@ public class ChasingTheGoblinsExplorationEventHandler extends MultiStageExplorat
                     .continueCombatEntry()
                     .build();
         } else if (stage == THIRD_COMBAT_STAGE) {
-            if (combatCalculator.isCombatRunning(userEntity)) {
+            if (combatCalculator.isCombatRunning(userEntity, CombatType.EXPLORE)) {
                 return explorationResultBuilderFactory
                         .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("CHASING_THE_GOBLINS_EXPLORATION_EVENT_ENTRY_10")

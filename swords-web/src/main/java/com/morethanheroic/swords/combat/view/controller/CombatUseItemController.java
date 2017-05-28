@@ -26,7 +26,7 @@ public class CombatUseItemController {
     private final UseItemCombatCalculator useItemCombatCalculator;
     private final CombatContextFactory combatContextFactory;
 
-    @GetMapping("/combat/use/{combatType}/{itemId}")
+    @GetMapping("/combat/{combatType}/use/{itemId}")
     public Response useItem(final UserEntity userEntity, final SessionEntity sessionEntity, @PathVariable final CombatType combatType,
                             @PathVariable final int itemId) {
         final CombatContext combatContext = combatContextFactory.newContext(userEntity, combatType);
