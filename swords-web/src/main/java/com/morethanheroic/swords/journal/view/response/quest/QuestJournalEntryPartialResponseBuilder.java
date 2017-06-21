@@ -24,6 +24,7 @@ public class QuestJournalEntryPartialResponseBuilder implements PartialResponseB
         final QuestDefinition questDefinition = questJournalEntryResponseBuilderConfiguration.getQuestDefinition();
 
         return QuestJournalEntryPartialResponse.builder()
+                .id(questDefinition.getId())
                 .name(questDefinition.getName())
                 .description(questDefinition.getDescription())
                 .state(questStateCalculator.getQuestState(questJournalEntryResponseBuilderConfiguration.getUserEntity(), questDefinition))

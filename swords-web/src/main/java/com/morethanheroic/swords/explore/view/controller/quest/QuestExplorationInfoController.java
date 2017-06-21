@@ -19,7 +19,7 @@ public class QuestExplorationInfoController {
     private final QuestExplorationEventInfoGatherer questExplorationEventInfoGatherer;
     private final ExplorationResponseBuilder explorationResponseBuilder;
 
-    @GetMapping(value = "/explore/quest/info/{questId}")
+    @GetMapping("/explore/quest/info/{questId}")
     public Response exploreInfo(final UserEntity userEntity, @PathVariable("questId") QuestDefinition questDefinition) {
         final ExplorationResult explorationResult = questExplorationEventInfoGatherer.info(userEntity, questDefinition);
 

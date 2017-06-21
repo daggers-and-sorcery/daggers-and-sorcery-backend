@@ -29,7 +29,7 @@ public class QuestExplorationEventInfoGatherer {
     }
 
     private ExplorationResult buildSuccessfulInfoResult(final UserEntity userEntity, final ExplorationContext explorationContext) {
-        return ((MultiStageExplorationEventHandler) explorationContext.getEvent()).info(userEntity, userEntity.getActiveExplorationState());
+        return ((MultiStageExplorationEventHandler) explorationContext.getEvent()).info(userEntity, explorationContext.getStage());
     }
 
     private ExplorationContext buildExplorationContextForQuest(final UserEntity userEntity, final QuestDefinition questDefinition) {

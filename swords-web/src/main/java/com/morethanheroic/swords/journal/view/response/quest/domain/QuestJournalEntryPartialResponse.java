@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 public class QuestJournalEntryPartialResponse extends PartialResponse {
 
+    private final int id;
     private final String name;
     private final String description;
     private final QuestState state;

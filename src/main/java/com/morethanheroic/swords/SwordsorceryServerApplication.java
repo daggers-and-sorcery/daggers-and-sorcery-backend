@@ -32,7 +32,8 @@ import java.util.Random;
                 "com.morethanheroic",
         },
         excludeFilters = {
-                @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.morethanheroic.login.*")
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.morethanheroic.login.*"),
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.morethanheroic.user.*")
         }
 )
 @EnableWebMvc
@@ -79,7 +80,7 @@ public class SwordsorceryServerApplication extends WebApplication {
     }
 
     @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+    public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> argumentResolvers) {
         super.addArgumentResolvers(argumentResolvers);
 
         argumentResolvers.add(getUserEntityHandlerMethodArgumentResolver());

@@ -24,7 +24,7 @@ public class InitialUserInfoController {
         return initialUserInfoResponseBuilder.build(
                 InitialUserInfoResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
-                        .witchhuntersGuildUnlocked(witchhuntersGuildCalculator.isWitchhuntersGuildUnlocked(userEntity))
+                        .witchhuntersGuildUnlocked(userEntity != null && witchhuntersGuildCalculator.isWitchhuntersGuildUnlocked(userEntity))
                         .build()
         );
     }

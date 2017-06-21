@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ExplorationEventInfoGatherer {
 
-    private static final int NO_EVENT = 0;
-
     private final ExplorationResultFactory explorationResultFactory;
     private final ExplorationContextFactory explorationContextFactory;
 
