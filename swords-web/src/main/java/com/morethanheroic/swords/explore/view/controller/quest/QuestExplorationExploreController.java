@@ -20,8 +20,20 @@ public class QuestExplorationExploreController {
     private final ExplorationResponseBuilder explorationResponseBuilder;
 
     @GetMapping("/explore/quest/{questId}")
-    public Response explore(UserEntity userEntity, final @PathVariable("questId") QuestDefinition questDefinition) {
+    public Response explore(final UserEntity userEntity, final @PathVariable("questId") QuestDefinition questDefinition) {
         final ExplorationResult explorationResult = questExplorationEventExplorer.exploreNextStage(userEntity, questDefinition);
+
+        return explorationResponseBuilder.build(
+                ExplorationResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .explorationEventEntryResults(explorationResult)
+                        .build()
+        );
+    }
+
+    @GetMapping("/explore/quest/{questId}/{stage}")
+    public Response explore(final UserEntity userEntity, final @PathVariable("questId") QuestDefinition questDefinition, final @PathVariable int stage) {
+        final ExplorationResult explorationResult = questExplorationEventExplorer.exploreStage(userEntity, questDefinition, stage);
 
         return explorationResponseBuilder.build(
                 ExplorationResponseBuilderConfiguration.builder()

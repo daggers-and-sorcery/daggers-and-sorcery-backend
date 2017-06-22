@@ -3,7 +3,6 @@ package com.morethanheroic.swords.explore.service.quest;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventHandlerCache;
-import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
 import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEventHandler;
 import com.morethanheroic.swords.quest.domain.QuestEntity;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
@@ -21,7 +20,6 @@ public class QuestExplorationEventInfoGatherer {
 
     private final QuestEntityFactory questEntityFactory;
     private final ExplorationEventHandlerCache explorationEventHandlerCache;
-    private final ExplorationContextFactory explorationContextFactory;
 
     @Transactional
     public ExplorationResult info(final UserEntity userEntity, final QuestDefinition questDefinition) {

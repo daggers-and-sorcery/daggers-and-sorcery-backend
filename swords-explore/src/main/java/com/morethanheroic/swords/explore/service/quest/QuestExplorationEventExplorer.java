@@ -31,6 +31,28 @@ public class QuestExplorationEventExplorer {
         return buildSuccessfulExplorationResult(userEntity, buildExplorationContextForQuest(userEntity, questDefinition));
     }
 
+    public ExplorationResult exploreStage(final UserEntity userEntity, final QuestDefinition questDefinition, final int stage) {
+        if (!canExplore(userEntity, questDefinition)) {
+            throw new IllegalStateException("The user trying to complete a quest he's not started or already completed!");
+        }
+
+        final QuestEntity questEntity = questEntityFactory.getEntity(
+                QuestEntityFactoryContext.builder()
+                        .userEntity(userEntity)
+                        .questDefinition(questDefinition)
+                        .build()
+        );
+
+        final QuestStateDefinition activeQuestStage = questEntity.getDefinitionForActiveStage();
+
+        return buildSuccessfulExplorationResult(userEntity,
+                ExplorationContext.builder()
+                        .event(explorationEventHandlerCache.getHandler(activeQuestStage.getEventId()))
+                        .stage(stage)
+                        .build()
+        );
+    }
+
     private ExplorationContext buildExplorationContextForQuest(final UserEntity userEntity, final QuestDefinition questDefinition) {
         final QuestEntity questEntity = questEntityFactory.getEntity(
                 QuestEntityFactoryContext.builder()
