@@ -19,4 +19,8 @@ public class QuestManipulator {
     public void startQuest(final UserEntity userEntity, final QuestDefinition questDefinition) {
         questStateCalculator.setQuestStage(userEntity, questDefinition, STARTING_QUEST_STAGE);
     }
+
+    public void changeQuestStage(final UserEntity userEntity, final QuestDefinition questDefinition, final int stage) {
+        questStateCalculator.setQuestStage(userEntity, questDefinition, stage);
+    }
 }

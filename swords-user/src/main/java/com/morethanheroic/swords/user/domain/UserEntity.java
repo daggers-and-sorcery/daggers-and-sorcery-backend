@@ -1,14 +1,13 @@
 package com.morethanheroic.swords.user.domain;
 
-import java.time.Instant;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+
+import java.time.Instant;
 
 /**
  * Contains the data of an user. These methods doesn't take the attribute modifications and maximum/minimum values
@@ -124,6 +123,15 @@ public class UserEntity implements Entity {
         userDatabaseEntity.setLastRegenerationDate(date);
 
         userMapper.updateRegenerationDate(userDatabaseEntity.getId(), date);
+    }
+
+    /**
+     * Shows if the user is dead or not.
+     *
+     * @return is the user dead
+     */
+    public boolean isDead() {
+        return getHealthPoints() == 0;
     }
 
     @Override

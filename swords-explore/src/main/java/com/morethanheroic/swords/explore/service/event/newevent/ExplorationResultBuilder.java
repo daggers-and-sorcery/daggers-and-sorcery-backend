@@ -2,6 +2,7 @@ package com.morethanheroic.swords.explore.service.event.newevent;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.combat.domain.CombatMessage;
 import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.combat.domain.Drop;
@@ -13,6 +14,7 @@ import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.ContinueQuestExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
@@ -94,6 +96,9 @@ public class ExplorationResultBuilder {
     @Autowired
     private QuestManipulator questManipulator;
 
+    @Autowired
+    private UserBasicAttributeManipulator userBasicAttributeManipulator;
+
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
 
@@ -132,6 +137,12 @@ public class ExplorationResultBuilder {
         explorationResult.addEventEntryResult(
                 messageEventEntryEvaluator.messageEntry(messageId, args)
         );
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newUpdateQuestStage(final QuestDefinition questDefinition, final int nextStage) {
+        questManipulator.changeQuestStage(userEntity, questDefinition, nextStage);
 
         return this;
     }
@@ -181,6 +192,16 @@ public class ExplorationResultBuilder {
                                         )
                                         .collect(Collectors.toList())
                         )
+                        .build()
+        );
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newContinueQuestEntry(final QuestDefinition questDefinition) {
+        explorationResult.addEventEntryResult(
+                ContinueQuestExplorationEventEntryResult.builder()
+                        .questId(questDefinition.getId())
                         .build()
         );
 
@@ -272,6 +293,18 @@ public class ExplorationResultBuilder {
         return combatCalculator.isCombatRunning(explorationContext.getUserEntity(), combatType) ?
                 multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
                 multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+    }
+
+    public ExplorationResultBuilder newDamageEntry(final int damage) {
+        userBasicAttributeManipulator.decreaseHealth(userEntity, damage);
+
+        if (userEntity.isDead()) {
+            userBasicAttributeManipulator.increaseHealth(userEntity, 1);
+        }
+
+        newMessageBoxEntry("EXPLORATION_EVEN_ENTRY_DAMAGE", damage);
+
+        return this;
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {
