@@ -24,8 +24,12 @@ import com.morethanheroic.swords.explore.service.event.evaluator.QuestEventEntry
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
+import com.morethanheroic.swords.explore.service.event.newevent.condition.Condition;
+import com.morethanheroic.swords.explore.service.event.newevent.condition.MasterConditionEvaluator;
+import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
@@ -98,6 +102,9 @@ public class ExplorationResultBuilder {
 
     @Autowired
     private UserBasicAttributeManipulator userBasicAttributeManipulator;
+
+    @Autowired
+    private MasterConditionEvaluator masterConditionEvaluator;
 
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
@@ -265,8 +272,17 @@ public class ExplorationResultBuilder {
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
     }
 
+    public MultiWayExplorationResultBuilder newConditionalMultiWayPath(final ExplorationContext explorationContext, final List<Condition> conditions) {
+        return masterConditionEvaluator.evaluateConditions(explorationContext.getUserEntity(), conditions) ?
+                multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
+                multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+    }
+
+    /**
+     * @deprecated Use {@link #newConditionalMultiWayPath(ExplorationContext, List)} instead.
+     */
     public MultiWayExplorationResultBuilder newHasItemMultiWayPath(final ExplorationContext explorationContext, final int... items) {
-        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(explorationContext.getUserEntity().getId());
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(explorationContext.getUserEntity());
 
         for (int item : items) {
             if (!inventoryEntity.hasItem(itemDefinitionCache.getDefinition(item))) {
@@ -293,6 +309,30 @@ public class ExplorationResultBuilder {
         return combatCalculator.isCombatRunning(explorationContext.getUserEntity(), combatType) ?
                 multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
                 multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+    }
+
+    public ExplorationResultBuilder newRemoveMovementPoints(final int amount) {
+        userBasicAttributeManipulator.decreaseMovement(userEntity, amount);
+
+        newMessageBoxEntry("EXPLORATION_EVEN_ENTRY_REMOVE_MOVEMENT_POINTS", amount);
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newRemoveItemEntry(final ItemDefinition item) {
+        return newRemoveItemEntry(item, 1, IdentificationType.IDENTIFIED);
+    }
+
+    public ExplorationResultBuilder newRemoveItemEntry(final ItemDefinition item, final int amount) {
+        return newRemoveItemEntry(item, amount, IdentificationType.IDENTIFIED);
+    }
+
+    public ExplorationResultBuilder newRemoveItemEntry(final ItemDefinition item, final int amount, final IdentificationType identificationType) {
+        inventoryEntityFactory.getEntity(userEntity).removeItem(item, amount, identificationType);
+
+        newMessageBoxEntry("EXPLORATION_EVEN_ENTRY_REMOVE_ITEM", amount, item.getName());
+
+        return this;
     }
 
     public ExplorationResultBuilder newDamageEntry(final int damage) {

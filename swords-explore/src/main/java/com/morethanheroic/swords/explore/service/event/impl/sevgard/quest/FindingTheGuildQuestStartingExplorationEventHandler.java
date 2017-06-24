@@ -7,7 +7,6 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationAssig
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationContext;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
-import com.morethanheroic.swords.quest.service.QuestStateCalculator;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
 import com.morethanheroic.swords.vampire.service.VampireCalculator;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +18,8 @@ public class FindingTheGuildQuestStartingExplorationEventHandler extends Improve
     private static final int EVENT_ID = 25;
 
     private static final int STARTER_STAGE = 0;
-    private static final int FARMFIELDS_STAGE = 1;
 
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_ID = 1;
-    private static final int WITCHHUNTER_GUILD_JOIN_QUEST_STARTED_STATE_ID = 1;
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_NEXT_STAGE_ID = 2;
 
     private static final int HEALTH_LOST_ON_SHOOT = 5;
@@ -30,7 +27,6 @@ public class FindingTheGuildQuestStartingExplorationEventHandler extends Improve
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
     private final VampireCalculator vampireCalculator;
     private final QuestDefinitionCache questDefinitionCache;
-    private final QuestStateCalculator questStateCalculator;
 
     @Override
     public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
@@ -102,8 +98,7 @@ public class FindingTheGuildQuestStartingExplorationEventHandler extends Improve
 
     @Override
     public boolean shouldAssign(ExplorationAssignmentContext explorationAssignmentContext) {
-        return questStateCalculator.getQuestStage(explorationAssignmentContext.getUserEntity(), questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID))
-                == WITCHHUNTER_GUILD_JOIN_QUEST_STARTED_STATE_ID;
+        return false;
     }
 
     @Override
