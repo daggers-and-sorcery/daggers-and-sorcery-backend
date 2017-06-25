@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.quest;
 
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
+import com.morethanheroic.swords.attribute.service.calc.BasicAttributeCalculator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationAssignmentContext;
@@ -7,6 +9,8 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationConte
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.condition.ConditionFactory;
+import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +22,7 @@ public class FindingTheGuildQuestFarmfieldsExplorationEventHandler extends Impro
     private static final int EVENT_ID = 26;
 
     private static final int ROBINIA_LOG_ID = 32;
-    private static final int BRONZE_NAILS_ID = 111;
+    private static final int BRONZE_NAILS_ID = 196;
 
     private static final int STARTER_STAGE = 0;
 
@@ -29,14 +33,18 @@ public class FindingTheGuildQuestFarmfieldsExplorationEventHandler extends Impro
     private final QuestDefinitionCache questDefinitionCache;
     private final ConditionFactory conditionFactory;
     private final ItemDefinitionCache itemDefinitionCache;
+    private final InventoryEntityFactory inventoryEntityFactory;
+    private final BasicAttributeCalculator basicAttributeCalculator;
 
     @Override
-    public ExplorationResult handleExplore(ExplorationContext explorationContext) {
+    public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
         throw new IllegalStateException("Handle explore called unexpectedly under quest: " + questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID).getName());
     }
 
     @Override
-    public ExplorationResult handleInfo(ExplorationContext explorationContext) {
+    public ExplorationResult handleInfo(final ExplorationContext explorationContext) {
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(explorationContext.getUserEntity());
+
         return explorationResultStageBuilderFactory.newBuilder()
                 .addStage(STARTER_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
@@ -52,6 +60,9 @@ public class FindingTheGuildQuestFarmfieldsExplorationEventHandler extends Impro
                                 .isFailure(
                                         explorationResultBuilder2 -> explorationResultBuilder2
                                                 .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_16")
+                                                .newMessageBoxEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_19", inventoryEntity.getItemAmount(itemDefinitionCache.getDefinition(ROBINIA_LOG_ID)), 10, itemDefinitionCache.getDefinition(ROBINIA_LOG_ID).getName())
+                                                .newMessageBoxEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_19", inventoryEntity.getItemAmount(itemDefinitionCache.getDefinition(BRONZE_NAILS_ID)), 100, itemDefinitionCache.getDefinition(BRONZE_NAILS_ID).getName())
+                                                .newMessageBoxEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_19", basicAttributeCalculator.calculateAttributeValue(explorationContext.getUserEntity(), BasicAttribute.MOVEMENT).getActual().getValue(), 10, BasicAttribute.MOVEMENT.getName())
                                                 .build()
                                 )
                                 .isSuccess(

@@ -13,7 +13,7 @@ public abstract class ImprovedExplorationEventHandler extends MultiStageExplorat
 
     @Override
     @Deprecated
-    public ExplorationResult explore(UserEntity userEntity, int stage) {
+    public ExplorationResult explore(final UserEntity userEntity, final int stage) {
         return handleExplore(
                 ExplorationContext.builder()
                         .userEntity(userEntity)
@@ -25,7 +25,7 @@ public abstract class ImprovedExplorationEventHandler extends MultiStageExplorat
 
     @Override
     @Deprecated
-    public ExplorationResult info(UserEntity userEntity, int stage) {
+    public ExplorationResult info(final UserEntity userEntity, final int stage) {
         return handleInfo(
                 ExplorationContext.builder()
                         .userEntity(userEntity)

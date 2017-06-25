@@ -21,6 +21,6 @@ public class MasterConditionEvaluator {
 
     public boolean evaluateConditions(final UserEntity userEntity, final List<Condition> conditions) {
         return conditions.stream()
-                .noneMatch(condition -> conditionEvaluators.get(condition.getClass()).evaluate(userEntity, condition));
+                .allMatch(condition -> conditionEvaluators.get(condition.getClass()).evaluate(userEntity, condition));
     }
 }

@@ -88,11 +88,6 @@ public class FindingTheGuildQuestStartingExplorationEventHandler extends Improve
                                 )
                                 .build()
                 )
-                .addStage(STARTER_STAGE,
-                        explorationResultBuilder1 -> explorationResultBuilder1
-                                .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_13")
-                                .build()
-                )
                 .runStage(explorationContext);
     }
 

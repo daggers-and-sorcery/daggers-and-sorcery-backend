@@ -16,7 +16,7 @@ public class MovementConditionEvaluator implements ConditionEvaluator<MovementCo
 
     @Override
     public boolean evaluate(final UserEntity userEntity, final MovementCondition condition) {
-        return basicAttributeCalculator.calculateAttributeValue(userEntity, BasicAttribute.MOVEMENT).getActual().getValue() > condition.getAmount();
+        return basicAttributeCalculator.calculateAttributeValue(userEntity, BasicAttribute.MOVEMENT).getActual().getValue() >= condition.getAmount();
     }
 
     @Override
