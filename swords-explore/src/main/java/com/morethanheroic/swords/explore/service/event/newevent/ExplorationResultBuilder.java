@@ -26,8 +26,8 @@ import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.newevent.condition.Condition;
 import com.morethanheroic.swords.explore.service.event.newevent.condition.MasterConditionEvaluator;
+import com.morethanheroic.swords.explore.service.event.newevent.condition.impl.ItemCondition;
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
-import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
@@ -169,18 +169,24 @@ public class ExplorationResultBuilder {
     }
 
     public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage) {
-        return this.newCombatEntry(opponentId, eventId, stage, 0);
-    }
-
-    public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage, final int questId) {
-        final CombatType combatType = questId > 0 ? CombatType.valueOf("QUEST_" + questId) : CombatType.EXPLORE;
-        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId), combatType);
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId), CombatType.EXPLORE);
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
 
         if (!combatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
             userEntity.setActiveExploration(eventId, stage);
         }
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newCombatEntry(final int opponentId, final QuestDefinition quest, final int questStage) {
+        final CombatType combatType = CombatType.valueOf("QUEST_" + quest.getId());
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId), combatType);
+
+        explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
+
+        questManipulator.changeQuestStage(userEntity, quest, questStage);
 
         return this;
     }
@@ -279,18 +285,32 @@ public class ExplorationResultBuilder {
     }
 
     /**
-     * @deprecated Use {@link #newConditionalMultiWayPath(ExplorationContext, List)} instead.
+     * @deprecated Use {@link #newHasItemMultiWayPath(ExplorationContext, ItemDefinition...)} instead.
      */
     public MultiWayExplorationResultBuilder newHasItemMultiWayPath(final ExplorationContext explorationContext, final int... items) {
-        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(explorationContext.getUserEntity());
+        final List<Condition> conditions = Arrays.stream(items).boxed()
+                .map(item ->
+                        ItemCondition.builder()
+                                .itemDefinition(itemDefinitionCache.getDefinition(item))
+                                .amount(1)
+                                .build()
+                )
+                .collect(Collectors.toList());
 
-        for (int item : items) {
-            if (!inventoryEntity.hasItem(itemDefinitionCache.getDefinition(item))) {
-                return multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
-            }
-        }
+        return newConditionalMultiWayPath(explorationContext, conditions);
+    }
 
-        return multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this);
+    public MultiWayExplorationResultBuilder newHasItemMultiWayPath(final ExplorationContext explorationContext, final ItemDefinition... items) {
+        final List<Condition> conditions = Arrays.stream(items)
+                .map(item ->
+                        ItemCondition.builder()
+                                .itemDefinition(item)
+                                .amount(1)
+                                .build()
+                )
+                .collect(Collectors.toList());
+
+        return newConditionalMultiWayPath(explorationContext, conditions);
     }
 
     public MultiWayExplorationResultBuilder newCustomMultiWayPath(final Callable<Boolean> calculateSuccess) {
