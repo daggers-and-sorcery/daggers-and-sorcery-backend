@@ -19,6 +19,8 @@ public class FindingTheGuildQuestWhisperingForestExplorationEventHandler extends
     private static final int COMBAT_STAGE = 1;
 
     private static final int ROPE_ID = 119;
+    private static final int CHEST_LOOT_ID = 8;
+    private static final int GOBLIN_CHAMPION_ID = 24;
 
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_ID = 1;
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_GOBLIN_CHAMPION_COMBAT_STAGE_ID = 5;
@@ -33,8 +35,7 @@ public class FindingTheGuildQuestWhisperingForestExplorationEventHandler extends
         return explorationResultStageBuilderFactory.newBuilder()
                 .addStage(COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
-                                //TODO: ADD loot!
-                                .newLootEntry(1111, "FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_27")
+                                .newLootEntry(CHEST_LOOT_ID, "FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_27")
                                 .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_28")
                                 .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_29")
                                 .newUpdateQuestStage(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_NEXT_STAGE_ID)
@@ -57,9 +58,7 @@ public class FindingTheGuildQuestWhisperingForestExplorationEventHandler extends
                                                 .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_25")
                                                 .newRemoveItemEntry(itemDefinitionCache.getDefinition(ROPE_ID))
                                                 .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_26")
-                                                //TODO: Combat
-                                                //TODO: Acc Goblin Champion
-                                                .newCombatEntry(11, questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_GOBLIN_CHAMPION_COMBAT_STAGE_ID)
+                                                .newCombatEntry(GOBLIN_CHAMPION_ID, questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_GOBLIN_CHAMPION_COMBAT_STAGE_ID)
                                                 .build()
 
                                 )
