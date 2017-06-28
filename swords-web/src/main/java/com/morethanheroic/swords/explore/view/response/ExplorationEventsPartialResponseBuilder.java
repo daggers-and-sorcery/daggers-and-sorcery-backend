@@ -84,6 +84,15 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                                 .questId(questExplorationEventEntryResult.getQuestId())
                                 .build()
                 );
+            } else if (explorationEventEntryResult instanceof FinishQuestExplorationEventEntryResult) {
+                final FinishQuestExplorationEventEntryResult finishQuestExplorationEventPartialResponse = (FinishQuestExplorationEventEntryResult) explorationEventEntryResult;
+
+                result.add(
+                        FinishQuestExplorationEventPartialResponse.builder()
+                            .questId(finishQuestExplorationEventPartialResponse.getQuest().getId())
+                            .rewards(finishQuestExplorationEventPartialResponse.getQuest().getRewards())
+                            .build()
+                );
             } else if (explorationEventEntryResult instanceof AttributeExplorationEventEntryResult) {
                 final AttributeExplorationEventEntryResult attributeExplorationEventEntryResult = (AttributeExplorationEventEntryResult) explorationEventEntryResult;
 

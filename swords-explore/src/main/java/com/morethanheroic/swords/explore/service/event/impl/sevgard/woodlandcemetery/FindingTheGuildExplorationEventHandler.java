@@ -66,6 +66,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                 .addStage(COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_7")
+                                //TODO: Add Yip!
                                 .newCombatEntry(10, EVENT_ID, AFTER_COMBAT_STAGE)
                                 .build()
                 )
@@ -134,7 +135,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                                 .newQuestDialogEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
                                 .build()
                 )
-                .addStage(COMBAT_STAGE,
+                .addStage(AFTER_COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_7")
                                 .continueCombatEntry()

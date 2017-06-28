@@ -23,10 +23,11 @@ public class QuestExplorationInfoController {
     public Response exploreInfo(final UserEntity userEntity, @PathVariable("questId") QuestDefinition questDefinition) {
         final ExplorationResult explorationResult = questExplorationEventInfoGatherer.info(userEntity, questDefinition);
 
-        return explorationResponseBuilder.build(ExplorationResponseBuilderConfiguration.builder()
-                .userEntity(userEntity)
-                .explorationEventEntryResults(explorationResult)
-                .build()
+        return explorationResponseBuilder.build(
+                ExplorationResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .explorationEventEntryResults(explorationResult)
+                        .build()
         );
     }
 }

@@ -17,4 +17,8 @@ public class RawQuestDefinition {
     @XmlElementWrapper(name = "quest-states")
     @XmlElement(name = "quest-state")
     private List<RawQuestStateDefinition> questStates;
+
+    @XmlElementWrapper(name = "rewards")
+    @XmlElement(name = "reward")
+    private List<String> rewards;
 }

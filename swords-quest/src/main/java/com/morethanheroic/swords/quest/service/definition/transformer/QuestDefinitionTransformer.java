@@ -15,7 +15,7 @@ public class QuestDefinitionTransformer implements DefinitionTransformer<QuestDe
     private final QuestStateDefinitionTransformer questStateDefinitionTransformer;
 
     @Override
-    public QuestDefinition transform(RawQuestDefinition rawDefinition) {
+    public QuestDefinition transform(final RawQuestDefinition rawDefinition) {
         return QuestDefinition.builder()
                 .id(rawDefinition.getId())
                 .name(rawDefinition.getName())
@@ -25,6 +25,7 @@ public class QuestDefinitionTransformer implements DefinitionTransformer<QuestDe
                                 .map(questStateDefinitionTransformer::transform)
                                 .collect(Collectors.toList())
                 )
+                .rewards(rawDefinition.getRewards())
                 .build();
     }
 }

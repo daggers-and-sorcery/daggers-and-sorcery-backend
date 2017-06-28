@@ -11,9 +11,8 @@ import com.morethanheroic.swords.combat.view.response.service.CombatAttackRespon
 import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttackResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,17 +23,18 @@ public class CombatAttackController {
     private final CombatAttackResponseBuilder combatAttackResponseBuilder;
     private final CombatContextFactory combatContextFactory;
 
-    @RequestMapping(value = "/combat/{combatType}/attack", method = RequestMethod.GET)
+    @GetMapping("/combat/{combatType}/attack")
     public Response attack(final UserEntity userEntity, @PathVariable final CombatType combatType) {
         final CombatContext combatContext = combatContextFactory.newContext(userEntity, combatType);
         final AttackResult attackResult = attackCombatCalculator.attack(combatContext);
 
-        return combatAttackResponseBuilder.build(CombatAttackResponseBuilderConfiguration.builder()
-                .userEntity(userEntity)
-                .combatSteps(attackResult.getAttackResult())
-                .combatEnded(attackResult.isCombatEnded())
-                .playerDead(attackResult.getWinner() == Winner.MONSTER)
-                .build()
+        return combatAttackResponseBuilder.build(
+                CombatAttackResponseBuilderConfiguration.builder()
+                        .userEntity(userEntity)
+                        .combatSteps(attackResult.getAttackResult())
+                        .combatEnded(attackResult.isCombatEnded())
+                        .playerDead(attackResult.getWinner() == Winner.MONSTER)
+                        .build()
         );
     }
 }

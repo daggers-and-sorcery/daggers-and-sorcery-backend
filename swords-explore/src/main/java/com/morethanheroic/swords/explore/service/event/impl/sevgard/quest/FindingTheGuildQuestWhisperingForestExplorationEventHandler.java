@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.quest;
 
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationContext;
@@ -32,17 +33,7 @@ public class FindingTheGuildQuestWhisperingForestExplorationEventHandler extends
 
     @Override
     public ExplorationResult handleExplore(ExplorationContext explorationContext) {
-        return explorationResultStageBuilderFactory.newBuilder()
-                .addStage(COMBAT_STAGE,
-                        explorationResultBuilder1 -> explorationResultBuilder1
-                                .newLootEntry(CHEST_LOOT_ID, "FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_27")
-                                .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_28")
-                                .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_29")
-                                .newUpdateQuestStage(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_NEXT_STAGE_ID)
-                                .newContinueQuestEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID))
-                                .build()
-                )
-                .runStage(explorationContext);
+        throw new IllegalStateException("Handle explore called unexpectedly under quest: " + questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID).getName());
     }
 
     @Override
@@ -70,9 +61,23 @@ public class FindingTheGuildQuestWhisperingForestExplorationEventHandler extends
                                 .build()
                 )
                 .addStage(COMBAT_STAGE,
-                        explorationResultBuilder1 -> explorationResultBuilder1
-                                .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_26")
-                                .continueCombatEntry()
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_1)
+                                .isSuccess(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_26")
+                                                .continueCombatEntry(CombatType.QUEST_1)
+                                                .build()
+                                )
+                                .isFailure(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newLootEntry(CHEST_LOOT_ID, "FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_27")
+                                                .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_28")
+                                                .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_29")
+                                                .newUpdateQuestStage(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_NEXT_STAGE_ID)
+                                                .newContinueQuestEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID))
+                                                .build()
+                                )
                                 .build()
                 )
                 .runStage(explorationContext);

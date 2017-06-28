@@ -14,6 +14,7 @@ public class QuestDefinition {
     private final String description;
     //TODO: Rename to stages and QuestStageDefinition
     private final List<QuestStateDefinition> states;
+    private final List<String> rewards;
 
     public int getCompletedAtStage() {
         return states.size();

@@ -12,10 +12,7 @@ import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.combat.service.drop.DropAdder;
 import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.ContinueQuestExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.*;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageBoxMessageEventEntryEvaluator;
@@ -221,8 +218,23 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder newFinishQuestEntry(final QuestDefinition questDefinition) {
+        explorationResult.addEventEntryResult(
+                FinishQuestExplorationEventEntryResult.builder()
+                        .quest(questDefinition)
+                        .build()
+        );
+
+        return this;
+    }
+
     public ExplorationResultBuilder continueCombatEntry() {
+        return continueCombatEntry(CombatType.EXPLORE);
+    }
+
+    public ExplorationResultBuilder continueCombatEntry(final CombatType combatType) {
         final CombatMessage combatMessage = new CombatMessage();
+
         combatMessage.addData("message", "Continue fighting.");
 
         explorationResult.addEventEntryResult(
@@ -236,7 +248,7 @@ public class ExplorationResultBuilder {
                                                                 .build()
                                                 )
                                         )
-                                        .combatEnded(!combatCalculator.isCombatRunning(userEntity, CombatType.EXPLORE))
+                                        .combatEnded(!combatCalculator.isCombatRunning(userEntity, combatType))
                                         .playerDead(false)
                                         .build()
                         )
