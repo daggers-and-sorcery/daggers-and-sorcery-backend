@@ -18,6 +18,8 @@ public class FindingTheGuildQuestWoodlandCemeteryExplorationEventHandler extends
     private static final int STARTER_STAGE = 0;
     private static final int COMBAT_STAGE = 1;
 
+    private static final int KIAN_THE_FORSAKEN_ID = 25;
+
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_ID = 1;
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_KIAN_COMBAT_STAGE_ID = 7;
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_NEXT_STAGE_ID = 8;
@@ -43,9 +45,7 @@ public class FindingTheGuildQuestWoodlandCemeteryExplorationEventHandler extends
                         explorationResultBuilder -> explorationResultBuilder
                                 .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_30")
                                 .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_31")
-                                //TODO: Combat
-                                //TODO: Kian, the Forsaken
-                                .newCombatEntry(11, questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_KIAN_COMBAT_STAGE_ID)
+                                .newCombatEntry(KIAN_THE_FORSAKEN_ID, questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_KIAN_COMBAT_STAGE_ID)
                                 .build()
                 )
                 .addStage(COMBAT_STAGE,

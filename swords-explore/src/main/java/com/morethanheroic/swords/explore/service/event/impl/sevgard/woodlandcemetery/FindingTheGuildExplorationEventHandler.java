@@ -17,6 +17,8 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_ID = 1;
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_STARTED_STATE_ID = 1;
 
+    private static final int YIP_THE_VAMPIRE_HUNTER = 26;
+
     private static final int STARTER_STAGE = 0;
     private static final int ASK_FOR_HELP_STAGE = 1;
     private static final int COMBAT_STAGE = 2;
@@ -66,8 +68,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
                 .addStage(COMBAT_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("FINDING_THE_GUILD_EXPLORATION_EVENT_ENTRY_7")
-                                //TODO: Add Yip!
-                                .newCombatEntry(10, EVENT_ID, AFTER_COMBAT_STAGE)
+                                .newCombatEntry(YIP_THE_VAMPIRE_HUNTER, EVENT_ID, AFTER_COMBAT_STAGE)
                                 .build()
                 )
                 .addStage(AFTER_COMBAT_STAGE,
