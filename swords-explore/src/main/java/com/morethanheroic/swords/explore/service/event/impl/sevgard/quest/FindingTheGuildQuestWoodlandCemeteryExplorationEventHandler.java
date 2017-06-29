@@ -7,6 +7,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationConte
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
+import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildManipulator;
 import lombok.RequiredArgsConstructor;
 
 @ExplorationEvent
@@ -26,6 +27,7 @@ public class FindingTheGuildQuestWoodlandCemeteryExplorationEventHandler extends
 
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
     private final QuestDefinitionCache questDefinitionCache;
+    private final WitchhuntersGuildManipulator witchhuntersGuildManipulator;
 
     @Override
     public ExplorationResult handleExplore(ExplorationContext explorationContext) {
@@ -60,6 +62,7 @@ public class FindingTheGuildQuestWoodlandCemeteryExplorationEventHandler extends
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("FINDING_THE_GUILD_QUEST_STARTING_EXPLORATION_EVENT_ENTRY_32")
+                                                .newCustomLogicEntry(() -> witchhuntersGuildManipulator.unlockWitchhuntersGuild(explorationContext.getUserEntity()))
                                                 .newUpdateQuestStage(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_NEXT_STAGE_ID)
                                                 .newFinishQuestEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID))
                                                 .build()

@@ -30,8 +30,8 @@ public class WitchhuntersGuildQuestUpdater {
         metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_JOB").setValue(witchhuntersGuildJobDefinition.getId());
 
         for (int i = 1; i <= 2; i++) {
-            metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + i + "_MONSTER_ID").setValue(-1);
-            metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + i + "_MONSTER_COUNT").setValue(-1);
+            metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + i + "_MONSTER_ID").setValue(0);
+            metadataEntityFactory.getNumericEntity(userEntity, "WITCHHUNTERS_GUILD_KILL_TARGET_" + i + "_MONSTER_COUNT").setValue(0);
         }
 
         int lastUsedKillCountId = 1;
