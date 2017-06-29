@@ -8,6 +8,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobItemRequirement;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobKillRequirement;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobRequirement;
+import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildCalculator;
 import com.morethanheroic.swords.witchhuntersguild.view.quest.response.service.domain.WitchhuntersGuildQuestItemRequirementPartialResponse;
 import com.morethanheroic.swords.witchhuntersguild.view.quest.response.service.domain.WitchhuntersGuildQuestKillRequirementPartialResponse;
 import com.morethanheroic.swords.witchhuntersguild.view.quest.response.service.domain.WitchhuntersGuildQuestRequirementPartialResponse;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class WitchhuntersGuildQuestRequirementPartialResponseBuilder implements PartialResponseCollectionBuilder<WitchhuntersGuildQuestResponseBuilderConfiguration> {
 
     private final IdentifiedItemPartialResponseBuilder identifiedItemPartialResponseBuilder;
+    private final WitchhuntersGuildCalculator witchhuntersGuildCalculator;
     private final InventoryEntityFactory inventoryEntityFactory;
 
     @Override
@@ -52,7 +54,7 @@ public class WitchhuntersGuildQuestRequirementPartialResponseBuilder implements 
             return WitchhuntersGuildQuestKillRequirementPartialResponse.builder()
                     .monsterName(witchhuntersGuildJobKillRequirement.getMonster().getName())
                     .amount(witchhuntersGuildJobKillRequirement.getAmount())
-                    .done(0) //TODO!
+                    .done(witchhuntersGuildCalculator.calculateKilledCount(userEntity, witchhuntersGuildJobKillRequirement.getMonster()))
                     .build();
         } else {
             throw new IllegalStateException("Unknown Witchhunter guild quest requirement: " + witchhuntersGuildJobRequirement);
