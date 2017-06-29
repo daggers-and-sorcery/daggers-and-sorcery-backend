@@ -8,8 +8,6 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.service.event.MonsterDeathCombatEventHandler;
 import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import com.morethanheroic.swords.witchhuntersguild.domain.WitchhuntersGuildEntity;
-import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
