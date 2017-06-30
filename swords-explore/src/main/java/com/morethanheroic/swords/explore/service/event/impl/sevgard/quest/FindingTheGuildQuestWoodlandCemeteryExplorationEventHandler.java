@@ -65,6 +65,7 @@ public class FindingTheGuildQuestWoodlandCemeteryExplorationEventHandler extends
                                                 .newCustomLogicEntry(() -> witchhuntersGuildManipulator.unlockWitchhuntersGuild(explorationContext.getUserEntity()))
                                                 .newUpdateQuestStage(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID), WITCHHUNTER_GUILD_JOIN_QUEST_NEXT_STAGE_ID)
                                                 .newFinishQuestEntry(questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID))
+                                                .newRefreshUserEntry()
                                                 .build()
                                 )
                                 .build()

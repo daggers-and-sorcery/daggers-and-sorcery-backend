@@ -228,6 +228,15 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder newRefreshUserEntry() {
+        explorationResult.addEventEntryResult(
+                RefreshUserDataEventEntryResult.builder()
+                        .build()
+        );
+
+        return this;
+    }
+
     public ExplorationResultBuilder continueCombatEntry() {
         return continueCombatEntry(CombatType.EXPLORE);
     }

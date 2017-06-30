@@ -89,9 +89,9 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
 
                 result.add(
                         FinishQuestExplorationEventPartialResponse.builder()
-                            .questId(finishQuestExplorationEventPartialResponse.getQuest().getId())
-                            .rewards(finishQuestExplorationEventPartialResponse.getQuest().getRewards())
-                            .build()
+                                .questId(finishQuestExplorationEventPartialResponse.getQuest().getId())
+                                .rewards(finishQuestExplorationEventPartialResponse.getQuest().getRewards())
+                                .build()
                 );
             } else if (explorationEventEntryResult instanceof AttributeExplorationEventEntryResult) {
                 final AttributeExplorationEventEntryResult attributeExplorationEventEntryResult = (AttributeExplorationEventEntryResult) explorationEventEntryResult;
@@ -118,6 +118,11 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                                 .description(questExplorationEventEntryResult.getDescription())
                                 .acceptQuestStage(questExplorationEventEntryResult.getAcceptQuestStage())
                                 .declineQuestStage(questExplorationEventEntryResult.getDeclineQuestStage())
+                                .build()
+                );
+            } else if (explorationEventEntryResult instanceof RefreshUserDataEventEntryResult) {
+                result.add(
+                        RefreshUserDataEventPartialResponse.builder()
                                 .build()
                 );
             }
