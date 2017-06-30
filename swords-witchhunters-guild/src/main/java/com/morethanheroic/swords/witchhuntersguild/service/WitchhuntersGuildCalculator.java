@@ -24,8 +24,13 @@ public class WitchhuntersGuildCalculator {
         return metadataEntityFactory.getTextEntity(userEntity, WITCHHUNTERS_GUILD_UNLOCKED).getValue().equals(WITCHHUNTERS_GUILD_UNLOCKED_VALUE);
     }
 
+    //TODO: More rep point calculation out into it's own calculator class
     public int calculateReputationPoints(final UserEntity userEntity) {
         return metadataEntityFactory.getNumericEntity(userEntity, WITCHHUNTERS_GUILD_REPUTATION_POINTS).getValue();
+    }
+
+    public void increaseReputationPoints(final UserEntity userEntity, final int amount) {
+        metadataEntityFactory.getNumericEntity(userEntity, WITCHHUNTERS_GUILD_REPUTATION_POINTS).setValue(calculateReputationPoints(userEntity) + amount);
     }
 
     public int calculateKilledCount(final UserEntity userEntity, final MonsterDefinition monsterDefinition) {

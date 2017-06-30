@@ -23,20 +23,21 @@ public class WitchhuntersGuildHandInQuestCalculator {
     private final MetadataEntityFactory metadataEntityFactory;
     private final WitchhuntersGuildJobDefinitionCache witchhuntersGuildJobDefinitionCache;
     private final WitchhuntersGuildQuestUpdater witchhuntersGuildQuestUpdater;
+    private final WitchhuntersGuildCalculator witchhuntersGuildCalculator;
 
     @Transactional
-    public boolean handInQuest(final UserEntity userEntity) {
+    public void handInQuest(final UserEntity userEntity) {
         final WitchhuntersGuildEntity witchhuntersGuildEntity = witchhuntersGuildEntityFactory.getEntity(userEntity);
 
         final boolean allRequirementsMet = checkIfAllRequirementsMet(userEntity, witchhuntersGuildEntity.getJob());
 
         if (allRequirementsMet) {
+            witchhuntersGuildCalculator.increaseReputationPoints(userEntity, witchhuntersGuildEntity.getJob().getReward());
+
             removeRequirements(userEntity, witchhuntersGuildEntity.getJob());
+
+            witchhuntersGuildQuestUpdater.assignQuest(userEntity, calculateNextQuest(witchhuntersGuildEntity));
         }
-
-        witchhuntersGuildQuestUpdater.assignQuest(userEntity, calculateNextQuest(witchhuntersGuildEntity));
-
-        return allRequirementsMet;
     }
 
     private boolean checkIfAllRequirementsMet(final UserEntity userEntity, final WitchhuntersGuildJobDefinition witchhuntersGuildJobDefinition) {
