@@ -62,7 +62,13 @@ public enum ItemModifier {
     WAND,
     SPECTRE,
     SCAVENGING,
-    COOKING;
+    COOKING,
+
+    //Special
+    EXTRA_DAMAGE_AGAINST_VAMPIRES,
+    PERIODICAL_DAMAGE_AGAINST_VAMPIRES,
+
+    PERIODICAL_DAMAGE_AGAINST_UNDEAD;
 
     public String getName() {
         return WordUtils.capitalize(name().toLowerCase().replace("_", " "));
