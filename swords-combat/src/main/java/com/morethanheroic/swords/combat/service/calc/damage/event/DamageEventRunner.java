@@ -2,9 +2,9 @@ package com.morethanheroic.swords.combat.service.calc.damage.event;
 
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.service.event.damage.DamageCombatEventHandler;
-import com.morethanheroic.swords.combat.service.event.damage.DamageEventCalculationContext;
-import com.morethanheroic.swords.combat.service.event.damage.DamageEventCalculationResult;
-import com.morethanheroic.swords.combat.service.event.damage.DamageType;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationContext;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationResult;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

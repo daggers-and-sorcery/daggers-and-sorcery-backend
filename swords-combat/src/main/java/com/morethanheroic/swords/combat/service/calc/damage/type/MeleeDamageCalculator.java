@@ -6,8 +6,8 @@ import com.morethanheroic.swords.combat.service.dice.DiceAttributeRoller;
 import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
 import com.morethanheroic.swords.combat.service.calc.damage.event.DamageEventCombatStepExtractor;
 import com.morethanheroic.swords.combat.service.calc.damage.event.DamageEventRunner;
-import com.morethanheroic.swords.combat.service.event.damage.DamageEventCalculationResult;
-import com.morethanheroic.swords.combat.service.event.damage.DamageType;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationResult;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
