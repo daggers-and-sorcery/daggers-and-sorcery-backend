@@ -1,6 +1,7 @@
-package com.morethanheroic.swords.combat.service.calc.attack.ranged;
+package com.morethanheroic.swords.combat.service.calc.damage.type;
 
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
+import com.morethanheroic.swords.combat.service.calc.damage.DamageCalculator;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;
@@ -8,11 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RangedDamageCalculator {
+public class RangedDamageCalculator implements DamageCalculator {
 
     private final DiceRollCalculator diceRollCalculator;
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
 
+    //TODO!
     public int calculateDamage(final CombatEntity attacker, final CombatEntity opponent) {
         final int resultDamage = calculateBaseDamage(attacker) - calculateDamageReduction(opponent);
 

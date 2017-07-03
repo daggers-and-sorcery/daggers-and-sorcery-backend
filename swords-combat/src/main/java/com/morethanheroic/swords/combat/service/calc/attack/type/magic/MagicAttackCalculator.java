@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.attack.magic;
+package com.morethanheroic.swords.combat.service.calc.attack.type.magic;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -8,6 +8,8 @@ import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
+import com.morethanheroic.swords.combat.service.calc.damage.type.MagicDamageCalculator;
 import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
@@ -26,6 +28,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
     private final DiceRollCalculator diceRollCalculator;
     private final CombatMessageFactory combatMessageFactory;
     private final DeathCalculator deathCalculator;
+    private final MagicDamageCalculator magicDamageCalculator;
 
     @Override
     public List<CombatStep> calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
@@ -47,25 +50,26 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
     private List<CombatStep> dealDamage(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
         final List<CombatStep> result = new ArrayList<>();
 
-        final int damage = diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getMagicDamage()));
+        final DamageCalculationResult damageCalculationResult = magicDamageCalculator.calculateDamage(attacker, opponent);
+        result.addAll(damageCalculationResult.getCombatSteps());
 
-        opponent.decreaseActualHealth(damage);
+        opponent.decreaseActualHealth(damageCalculationResult.getDamage());
 
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(combatContext, damage * 2);
+            addDefenseXp(combatContext, damageCalculationResult.getDamage() * 2);
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_PLAYER", attacker.getName(), damage))
+                            .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_PLAYER", attacker.getName(), damageCalculationResult.getDamage()))
                             .build()
             );
         } else {
-            addAttackXp((UserCombatEntity) attacker, damage * 2);
-            addOffhandXp((UserCombatEntity) attacker, damage * 2);
+            addAttackXp((UserCombatEntity) attacker, damageCalculationResult.getDamage() * 2);
+            addOffhandXp((UserCombatEntity) attacker, damageCalculationResult.getDamage() * 2);
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_MONSTER", opponent.getName(), damage))
+                            .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_MONSTER", opponent.getName(), damageCalculationResult.getDamage()))
                             .build()
             );
         }

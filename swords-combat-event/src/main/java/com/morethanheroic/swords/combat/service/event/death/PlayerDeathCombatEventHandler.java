@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.event;
+package com.morethanheroic.swords.combat.service.event.death;
 
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
@@ -6,9 +6,9 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import java.util.List;
 
 /**
- * This event is fired when a monster dies in combat.
+ * This event is fired when the player dies.
  */
-public interface MonsterDeathCombatEventHandler {
+public interface PlayerDeathCombatEventHandler {
 
     List<CombatStep> handleEvent(final CombatEntity deathEntity, final CombatEntity killerEntity);
 }

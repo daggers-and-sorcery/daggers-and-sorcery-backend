@@ -2,7 +2,6 @@ package com.morethanheroic.swords.dice.service;
 
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -12,7 +11,7 @@ import java.util.Random;
  * the result as an integer.
  */
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
+@RequiredArgsConstructor
 public class DiceRollCalculator {
 
     private static final int D2_DICE_SIDE_COUNT = 2;

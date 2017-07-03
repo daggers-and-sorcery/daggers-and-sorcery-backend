@@ -3,9 +3,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-combat-step')
-    compile project(':swords-combat-entity')
-    compile project(':swords-combat-bonus')
+    compile project(':swords-combat-event')
 }
 
 apply plugin: 'spring-boot'

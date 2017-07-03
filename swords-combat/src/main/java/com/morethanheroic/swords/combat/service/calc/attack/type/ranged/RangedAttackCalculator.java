@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.attack.ranged;
+package com.morethanheroic.swords.combat.service.calc.attack.type.ranged;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -13,13 +13,11 @@ import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
-import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor

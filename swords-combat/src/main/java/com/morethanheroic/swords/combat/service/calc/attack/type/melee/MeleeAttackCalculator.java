@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.attack.melee;
+package com.morethanheroic.swords.combat.service.calc.attack.type.melee;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
@@ -8,6 +8,8 @@ import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
+import com.morethanheroic.swords.combat.service.calc.damage.type.MeleeDamageCalculator;
 import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
@@ -53,12 +55,14 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
     private List<CombatStep> dealDamage(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
         final List<CombatStep> result = new ArrayList<>();
 
-        final int damage = meleeDamageCalculator.calculateDamage(attacker, opponent);
+        final DamageCalculationResult damageCalculationResult = meleeDamageCalculator.calculateDamage(attacker, opponent);
 
-        opponent.decreaseActualHealth(damage);
+        result.addAll(damageCalculationResult.getCombatSteps());
+
+        opponent.decreaseActualHealth(damageCalculationResult.getDamage());
 
         if (attacker instanceof MonsterCombatEntity) {
-            addDefenseXp(combatContext, damage * 2);
+            addDefenseXp(combatContext, damageCalculationResult.getDamage() * 2);
 
             final MonsterDefinition monsterDefinition = ((MonsterCombatEntity) attacker).getMonsterDefinition();
             final CombatMessageContext combatMessageContext = CombatMessageContext.builder()
@@ -75,18 +79,18 @@ public class MeleeAttackCalculator extends GeneralAttackCalculator {
                                             "COMBAT_MESSAGE_MELEE_DAMAGE_TO_PLAYER",
                                             combatMessageContext,
                                             attacker.getName(),
-                                            damage,
+                                            damageCalculationResult.getDamage(),
                                             getRandomBodySlot(combatMessageContext)
                                     )
                             )
                             .build()
             );
         } else {
-            addAttackXp((UserCombatEntity) attacker, damage * 2);
+            addAttackXp((UserCombatEntity) attacker, damageCalculationResult.getDamage() * 2);
 
             result.add(
                     AttackCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_MONSTER", opponent.getName(), damage))
+                            .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MELEE_DAMAGE_TO_MONSTER", opponent.getName(), damageCalculationResult.getDamage()))
                             .build()
             );
         }

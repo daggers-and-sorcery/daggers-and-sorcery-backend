@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.attack.ranged;
+package com.morethanheroic.swords.combat.service.calc.attack.type.ranged;
 
 import com.morethanheroic.math.RandomCalculator;
 import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
