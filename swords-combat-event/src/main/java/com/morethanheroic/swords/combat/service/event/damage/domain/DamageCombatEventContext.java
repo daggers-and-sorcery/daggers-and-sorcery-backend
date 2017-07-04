@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-public class DamageEventCalculationContext {
+public class DamageCombatEventContext {
 
     private final DamageType damageType;
 }

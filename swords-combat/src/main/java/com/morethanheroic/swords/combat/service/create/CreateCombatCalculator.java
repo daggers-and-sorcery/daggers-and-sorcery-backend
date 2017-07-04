@@ -15,7 +15,9 @@ import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.CombatInitializer;
 import com.morethanheroic.swords.combat.service.calc.CombatTerminator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
+import com.morethanheroic.swords.combat.service.calc.turn.event.StartTurnCombatEventRunner;
 import com.morethanheroic.swords.combat.service.create.domain.CombatCreationContext;
+import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -40,6 +42,7 @@ public class CreateCombatCalculator {
     private final CombatTerminator combatTerminator;
     private final PlayerAttackCalculator playerAttackCalculator;
     private final MonsterAttackCalculator monsterAttackCalculator;
+    private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
     @Transactional
     public AttackResult createCombat(final CombatCreationContext combatCreationContext) {
@@ -70,6 +73,15 @@ public class CreateCombatCalculator {
                 InitializationCombatStep.builder()
                         .message(combatMessageFactory.newMessage("start", "COMBAT_MESSAGE_NEW_FIGHT", monsterDefinition.getName()))
                         .build()
+        );
+
+        combatSteps.addAll(
+                startTurnCombatEventRunner.runEvents(
+                        StartTurnCombatEventContext.builder()
+                                .player(combatContext.getUser())
+                                .monster(combatContext.getOpponent())
+                                .build()
+                )
         );
 
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {

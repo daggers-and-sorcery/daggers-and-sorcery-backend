@@ -11,7 +11,7 @@ import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalcula
 import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
 import com.morethanheroic.swords.combat.service.calc.damage.type.MeleeDamageCalculator;
 import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
-import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.attribute.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.message.domain.CombatMessageContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;

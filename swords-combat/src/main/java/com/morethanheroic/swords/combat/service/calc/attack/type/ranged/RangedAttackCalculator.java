@@ -12,7 +12,7 @@ import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalcula
 import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
 import com.morethanheroic.swords.combat.service.calc.damage.type.RangedDamageCalculator;
 import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
-import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.attribute.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;

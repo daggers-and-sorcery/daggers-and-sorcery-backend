@@ -7,11 +7,10 @@ import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
+@RequiredArgsConstructor
 public class HumanInitialisationCalculator {
 
     private final GlobalAttributeCalculator globalAttributeCalculator;

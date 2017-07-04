@@ -13,9 +13,9 @@ import java.util.List;
  */
 @Getter
 @Builder
-public class DamageEventCalculationResult {
+public class DamageCombatEventResult {
 
-    public static final DamageEventCalculationResult EMPTY_RESULT = DamageEventCalculationResult.builder()
+    public static final DamageCombatEventResult EMPTY_RESULT = DamageCombatEventResult.builder()
             .combatSteps(Collections.emptyList())
             .bonusDamage(CombatBonus.EMPTY_COMBAT_BONUS)
             .build();

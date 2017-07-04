@@ -4,6 +4,7 @@ dependencies {
     }
 
     compile project(':swords-attribute')
+    compile project(':swords-dice')
 }
 
 apply plugin: 'spring-boot'

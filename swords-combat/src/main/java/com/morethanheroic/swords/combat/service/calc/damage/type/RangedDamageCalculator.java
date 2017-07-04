@@ -3,10 +3,10 @@ package com.morethanheroic.swords.combat.service.calc.damage.type;
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.service.calc.damage.DamageCalculator;
 import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
-import com.morethanheroic.swords.combat.service.calc.damage.event.DamageEventRunner;
+import com.morethanheroic.swords.combat.service.calc.damage.event.DamageCombatEventRunner;
 import com.morethanheroic.swords.combat.service.calc.damage.event.domain.DamageEventResult;
-import com.morethanheroic.swords.combat.service.dice.CombatBonusRoller;
-import com.morethanheroic.swords.combat.service.dice.DiceAttributeRoller;
+import com.morethanheroic.swords.combat.bonus.dice.CombatBonusRoller;
+import com.morethanheroic.swords.attribute.service.dice.DiceAttributeRoller;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 public class RangedDamageCalculator implements DamageCalculator {
 
     private final DiceAttributeRoller diceAttributeRoller;
-    private final DamageEventRunner damageEventRunner;
+    private final DamageCombatEventRunner damageCombatEventRunner;
     private final CombatBonusRoller combatBonusRoller;
 
     public DamageCalculationResult calculateDamage(final CombatEntity attacker, final CombatEntity opponent) {
-        final DamageEventResult damageEventResult = damageEventRunner.runEvents(attacker, opponent, DamageType.RANGED);
+        final DamageEventResult damageEventResult = damageCombatEventRunner.runEvents(attacker, opponent, DamageType.RANGED);
 
         return DamageCalculationResult.builder()
                 .damage(calculateFinalDamage(attacker, opponent, damageEventResult))
@@ -35,10 +35,10 @@ public class RangedDamageCalculator implements DamageCalculator {
     }
 
     private int calculateBaseDamage(final CombatEntity attacker) {
-        return diceAttributeRoller.rollDicesForAttribute(attacker.getRangedDamage());
+        return diceAttributeRoller.rollDices(attacker.getRangedDamage());
     }
 
     private int calculateDamageReduction(final CombatEntity opponent) {
-        return diceAttributeRoller.rollDicesForAttribute(opponent.getDamageReduction());
+        return diceAttributeRoller.rollDices(opponent.getDamageReduction());
     }
 }

@@ -1,7 +1,7 @@
-package com.morethanheroic.swords.combat.service.dice;
+package com.morethanheroic.swords.attribute.service.dice;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
-import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,11 @@ public class DiceAttributeRoller {
     private final DiceRollCalculator diceRollCalculator;
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
 
-    public int rollDicesForAttribute(final DiceAttribute diceAttribute) {
+    public int rollDices(final DiceAttribute diceAttribute) {
         return diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(diceAttribute));
+    }
+
+    public int rollDices(final DiceValueAttributeCalculationResult diceValueAttributeCalculationResult) {
+        return diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(diceValueAttributeCalculationResult));
     }
 }

@@ -3,8 +3,8 @@ package com.morethanheroic.swords.combat.service.calc.damage.event;
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.service.calc.damage.event.domain.DamageEventResult;
 import com.morethanheroic.swords.combat.service.event.damage.DamageCombatEventHandler;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationContext;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationResult;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventContext;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventResult;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class DamageEventRunner {
+public class DamageCombatEventRunner {
 
     private final List<DamageCombatEventHandler> damageCombatEventHandlers;
-    private final DamageEventExtractor damageEventExtractor;
+    private final DamageCombatEventExtractor damageCombatEventExtractor;
 
     /**
      * Run the events that happen when a successful attack is done and the player is about to damage the monster.
@@ -31,10 +31,10 @@ public class DamageEventRunner {
      * @return the result of the events
      */
     public DamageEventResult runEvents(final CombatEntity attacker, final CombatEntity opponent, final DamageType damageType) {
-        final List<DamageEventCalculationResult> eventCalculationResults = damageCombatEventHandlers.stream()
+        final List<DamageCombatEventResult> eventCalculationResults = damageCombatEventHandlers.stream()
                 .map(damageCombatEventHandler ->
                         damageCombatEventHandler.handleEvent(attacker, opponent,
-                                DamageEventCalculationContext.builder()
+                                DamageCombatEventContext.builder()
                                         .damageType(damageType)
                                         .build()
                         )
@@ -42,8 +42,8 @@ public class DamageEventRunner {
                 .collect(Collectors.toList());
 
         return DamageEventResult.builder()
-                .combatSteps(damageEventExtractor.extractCombatSteps(eventCalculationResults))
-                .bonusDamage(damageEventExtractor.extractBonusDamage(eventCalculationResults))
+                .combatSteps(damageCombatEventExtractor.extractCombatSteps(eventCalculationResults))
+                .bonusDamage(damageCombatEventExtractor.extractBonusDamage(eventCalculationResults))
                 .build();
     }
 }

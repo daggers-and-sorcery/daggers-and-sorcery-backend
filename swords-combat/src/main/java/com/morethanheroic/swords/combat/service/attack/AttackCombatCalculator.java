@@ -2,13 +2,15 @@ package com.morethanheroic.swords.combat.service.attack;
 
 import com.morethanheroic.swords.combat.domain.AttackResult;
 import com.morethanheroic.swords.combat.domain.CombatContext;
+import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.CombatTerminator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
+import com.morethanheroic.swords.combat.service.calc.turn.event.StartTurnCombatEventRunner;
+import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +27,20 @@ public class AttackCombatCalculator {
     private final MonsterAttackCalculator monsterAttackCalculator;
     private final CombatTerminator combatTerminator;
     private final CombatMapper combatMapper;
+    private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
     @Transactional
     public AttackResult attack(final CombatContext combatContext) {
         final List<CombatStep> combatSteps = new ArrayList<>();
+
+        combatSteps.addAll(
+                startTurnCombatEventRunner.runEvents(
+                        StartTurnCombatEventContext.builder()
+                                .player(combatContext.getUser())
+                                .monster(combatContext.getOpponent())
+                                .build()
+                )
+        );
 
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
             combatSteps.addAll(monsterAttackCalculator.monsterAttack(combatContext));

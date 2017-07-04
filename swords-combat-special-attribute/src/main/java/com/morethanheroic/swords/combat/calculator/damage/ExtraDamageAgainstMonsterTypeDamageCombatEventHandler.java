@@ -11,8 +11,8 @@ import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.event.damage.DamageCombatEventHandler;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationContext;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationResult;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventContext;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterType;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -35,9 +35,8 @@ public class ExtraDamageAgainstMonsterTypeDamageCombatEventHandler implements Da
     private final CombatBonusTransformer combatBonusTransformer;
 
     @Override
-    public DamageEventCalculationResult handleEvent(final CombatEntity damagingEntity, final CombatEntity damagedEntity, final DamageEventCalculationContext damageEventCalculationContext) {
+    public DamageCombatEventResult handleEvent(final CombatEntity damagingEntity, final CombatEntity damagedEntity, final DamageCombatEventContext damageCombatEventContext) {
         if (combatEntityUtil.isPlayer(damagingEntity)) {
-            //TODO: Add combat messages!!
             CombatBonus combatBonus = CombatBonus.EMPTY_COMBAT_BONUS;
 
             final UserEntity userEntity = ((UserCombatEntity) damagingEntity).getUserEntity();
@@ -46,13 +45,13 @@ public class ExtraDamageAgainstMonsterTypeDamageCombatEventHandler implements Da
             combatBonus = combatBonus.add(calculateExtraDamageForType(userEntity, monsterDefinition.getType()));
             combatBonus = combatBonus.add(calculateExtraDamageForType(userEntity, monsterDefinition.getSubtype()));
 
-            return DamageEventCalculationResult.builder()
+            return DamageCombatEventResult.builder()
                     .combatSteps(Collections.emptyList())
                     .bonusDamage(combatBonus)
                     .build();
         }
 
-        return DamageEventCalculationResult.EMPTY_RESULT;
+        return DamageCombatEventResult.EMPTY_RESULT;
     }
 
     private CombatBonus calculateExtraDamageForType(final UserEntity userEntity, final MonsterType monsterType) {

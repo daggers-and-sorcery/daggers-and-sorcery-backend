@@ -1,19 +1,21 @@
 package com.morethanheroic.swords.combat.service.flee;
 
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.combat.domain.*;
-import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
+import com.morethanheroic.swords.combat.domain.AttackResult;
+import com.morethanheroic.swords.combat.domain.CombatContext;
+import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.CombatTeardownCalculator;
-import com.morethanheroic.swords.combat.service.SavedCombatEntityFactory;
 import com.morethanheroic.swords.combat.service.attack.MonsterAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
-import com.morethanheroic.swords.combat.service.context.CombatContextFactory;
+import com.morethanheroic.swords.combat.service.calc.turn.event.StartTurnCombatEventRunner;
+import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
 import com.morethanheroic.swords.combat.service.flee.domain.FleeResult;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,16 +30,24 @@ public class FleeCombatCalculator {
 
     private final Random random;
     private final CombatMessageFactory combatMessageFactory;
-    private final SavedCombatEntityFactory savedCombatEntityFactory;
-    private final CombatContextFactory combatContextFactory;
     private final InitialisationCalculator initialisationCalculator;
     private final MonsterAttackCalculator monsterAttackCalculator;
     private final CombatTeardownCalculator combatTeardownCalculator;
     private final CombatMapper combatMapper;
+    private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
     public AttackResult tryFleeing(final CombatContext combatContext) {
         final UserEntity userEntity = combatContext.getUser().getUserEntity();
         final List<CombatStep> combatSteps = new ArrayList<>();
+
+        combatSteps.addAll(
+                startTurnCombatEventRunner.runEvents(
+                        StartTurnCombatEventContext.builder()
+                                .player(combatContext.getUser())
+                                .monster(combatContext.getOpponent())
+                                .build()
+                )
+        );
 
         boolean fleeSuccessful = false;
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
