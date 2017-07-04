@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.combat.domain;
 
-import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

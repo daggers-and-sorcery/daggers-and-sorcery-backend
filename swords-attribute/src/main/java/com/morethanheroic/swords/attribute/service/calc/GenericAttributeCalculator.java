@@ -70,6 +70,7 @@ public abstract class GenericAttributeCalculator<T extends Attribute> implements
         return result;
     }
 
+    //TODO: What is this??? Nowhere used??? Why???
     protected void checkMinimumValue(final Attribute attribute, final AttributeCalculationResult attributeCalculationResult) {
     }
 }

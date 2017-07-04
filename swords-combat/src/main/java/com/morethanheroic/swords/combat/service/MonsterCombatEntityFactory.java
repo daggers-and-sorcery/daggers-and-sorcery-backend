@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.service;
 
 import org.springframework.stereotype.Service;
 
-import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 
 @Service

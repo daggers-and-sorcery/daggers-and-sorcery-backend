@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.service.event.damage;
 
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationContext;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageEventCalculationResult;
 

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.domain.entity;
+package com.morethanheroic.swords.combat.entity.domain;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 

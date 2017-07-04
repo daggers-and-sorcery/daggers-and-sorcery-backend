@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 @Service
 public class DamageEventExtractor {
 
-    private final static CombatBonus EMPTY_COMBAT_BONUS = CombatBonus.builder().build();
-
     public List<CombatStep> extractCombatSteps(final List<DamageEventCalculationResult> damageEventCalculationResults) {
         return damageEventCalculationResults.stream()
                 .flatMap(damageEventCalculationResult -> damageEventCalculationResult.getCombatSteps().stream())
@@ -23,6 +21,6 @@ public class DamageEventExtractor {
         return damageEventCalculationResults.stream()
                 .map(DamageEventCalculationResult::getBonusDamage)
                 .reduce(CombatBonus::add)
-                .orElse(EMPTY_COMBAT_BONUS);
+                .orElse(CombatBonus.EMPTY_COMBAT_BONUS);
     }
 }

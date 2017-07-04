@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.combat.service.calc.attack.type.ranged;
 
 import com.morethanheroic.math.RandomCalculator;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;

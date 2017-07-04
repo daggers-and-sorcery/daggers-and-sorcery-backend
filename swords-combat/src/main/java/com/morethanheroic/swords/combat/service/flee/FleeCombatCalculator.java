@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.service.flee;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.combat.domain.*;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;

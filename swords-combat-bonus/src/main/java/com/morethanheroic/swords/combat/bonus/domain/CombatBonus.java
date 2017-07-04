@@ -10,6 +10,8 @@ import lombok.Getter;
 @Builder
 public class CombatBonus {
 
+    public final static CombatBonus EMPTY_COMBAT_BONUS = CombatBonus.builder().build();
+
     private final int value;
     private final int d2;
     private final int d4;

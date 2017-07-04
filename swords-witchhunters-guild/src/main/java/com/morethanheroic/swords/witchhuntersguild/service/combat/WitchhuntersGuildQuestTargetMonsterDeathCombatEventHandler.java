@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.witchhuntersguild.service.combat;
 
 import com.google.common.collect.Lists;
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
-import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.service.event.death.MonsterDeathCombatEventHandler;
 import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;

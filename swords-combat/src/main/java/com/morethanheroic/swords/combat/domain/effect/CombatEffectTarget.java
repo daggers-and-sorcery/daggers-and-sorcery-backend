@@ -1,14 +1,14 @@
 package com.morethanheroic.swords.combat.domain.effect;
 
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.effect.domain.target.EffectTarget;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Wrapping a {@link com.morethanheroic.swords.combat.domain.entity.CombatEntity} into an {@link EffectTarget}.
+ * Wrapping a {@link CombatEntity} into an {@link EffectTarget}.
  */
 @Getter
 @RequiredArgsConstructor

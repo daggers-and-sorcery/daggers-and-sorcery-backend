@@ -4,6 +4,8 @@ dependencies {
     }
 
     compile project(':swords-combat-event')
+    compile project(':swords-attribute')
+    compile project(':swords-monster')
 }
 
 apply plugin: 'spring-boot'

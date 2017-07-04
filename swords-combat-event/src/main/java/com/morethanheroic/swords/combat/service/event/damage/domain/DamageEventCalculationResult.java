@@ -5,6 +5,7 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,6 +14,11 @@ import java.util.List;
 @Getter
 @Builder
 public class DamageEventCalculationResult {
+
+    public static final DamageEventCalculationResult EMPTY_RESULT = DamageEventCalculationResult.builder()
+            .combatSteps(Collections.emptyList())
+            .bonusDamage(CombatBonus.EMPTY_COMBAT_BONUS)
+            .build();
 
     private final List<CombatStep> combatSteps;
     private final CombatBonus bonusDamage;

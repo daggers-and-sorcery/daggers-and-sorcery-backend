@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.Winner;
-import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
