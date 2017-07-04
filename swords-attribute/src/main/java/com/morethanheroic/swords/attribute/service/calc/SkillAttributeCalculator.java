@@ -2,7 +2,7 @@ package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.SkillAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
@@ -50,8 +50,8 @@ public class SkillAttributeCalculator extends GenericAttributeCalculator<SkillAt
     }
 
     @Override
-    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
-        final AttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(userEntity, attribute);
+    public SimpleValueAttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
+        final SimpleValueAttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(userEntity, attribute);
 
         result.increaseValue(skillEntityFactory.getEntity(userEntity).getLevel(skillTypeCalculator.getSkillTypeFromSkillAttribute((SkillAttribute) attribute)));
 

@@ -3,7 +3,7 @@ package com.morethanheroic.swords.combat.calculator.damage;
 import com.google.common.collect.ImmutableMap;
 import com.morethanheroic.swords.attribute.domain.SpecialAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.swords.combat.bonus.domain.CombatBonus;
 import com.morethanheroic.swords.combat.entity.CombatEntityUtil;
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
@@ -60,7 +60,7 @@ public class ExtraDamageAgainstMonsterTypeDamageCombatEventHandler implements Da
     private int calculateExtraDamageForType(final UserEntity userEntity, final MonsterType monsterType) {
         if (MONSTER_TYPE_SPECIAL_ATTRIBUTE_MAP.containsKey(monsterType)) {
             //TODO: Be able to add d2/d4 etc damages here too
-            final AttributeCalculationResult attributeCalculationResult = globalAttributeCalculator.calculateActualValue(userEntity, MONSTER_TYPE_SPECIAL_ATTRIBUTE_MAP.get(monsterType));
+            final SimpleValueAttributeCalculationResult attributeCalculationResult = globalAttributeCalculator.calculateActualValue(userEntity, MONSTER_TYPE_SPECIAL_ATTRIBUTE_MAP.get(monsterType));
 
             return attributeCalculationResult.getValue();
         }

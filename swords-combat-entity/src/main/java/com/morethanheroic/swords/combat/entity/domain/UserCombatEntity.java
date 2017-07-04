@@ -3,8 +3,8 @@ package com.morethanheroic.swords.combat.entity.domain;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 
 public class UserCombatEntity extends CombatEntity {
@@ -77,17 +77,17 @@ public class UserCombatEntity extends CombatEntity {
         return userEntity.getUsername();
     }
 
-    private DiceAttribute attributeCalculationToDiceAttribute(AttributeCalculationResult attributeCalculationResult) {
+    private DiceAttribute attributeCalculationToDiceAttribute(SimpleValueAttributeCalculationResult attributeCalculationResult) {
         final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
 
         diceAttributeBuilder.setValue(attributeCalculationResult.getValue());
 
-        if (attributeCalculationResult instanceof CombatAttributeCalculationResult) {
-            diceAttributeBuilder.setD2(((CombatAttributeCalculationResult) attributeCalculationResult).getD2());
-            diceAttributeBuilder.setD4(((CombatAttributeCalculationResult) attributeCalculationResult).getD4());
-            diceAttributeBuilder.setD6(((CombatAttributeCalculationResult) attributeCalculationResult).getD6());
-            diceAttributeBuilder.setD8(((CombatAttributeCalculationResult) attributeCalculationResult).getD8());
-            diceAttributeBuilder.setD10(((CombatAttributeCalculationResult) attributeCalculationResult).getD10());
+        if (attributeCalculationResult instanceof DiceValueAttributeCalculationResult) {
+            diceAttributeBuilder.setD2(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD2());
+            diceAttributeBuilder.setD4(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD4());
+            diceAttributeBuilder.setD6(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD6());
+            diceAttributeBuilder.setD8(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD8());
+            diceAttributeBuilder.setD10(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD10());
         }
 
         return diceAttributeBuilder.build();

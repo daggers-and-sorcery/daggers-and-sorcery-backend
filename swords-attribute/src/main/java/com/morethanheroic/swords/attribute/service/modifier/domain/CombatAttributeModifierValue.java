@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.attribute.service.modifier.domain;
 
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import lombok.Getter;
 
 @Getter
@@ -16,7 +16,7 @@ public class CombatAttributeModifierValue extends AttributeModifierValue {
         super(value);
     }
 
-    public CombatAttributeModifierValue(CombatAttributeCalculationResult attributeCalculationResult) {
+    public CombatAttributeModifierValue(DiceValueAttributeCalculationResult attributeCalculationResult) {
         super(attributeCalculationResult);
 
         this.d2 = attributeCalculationResult.getD2();

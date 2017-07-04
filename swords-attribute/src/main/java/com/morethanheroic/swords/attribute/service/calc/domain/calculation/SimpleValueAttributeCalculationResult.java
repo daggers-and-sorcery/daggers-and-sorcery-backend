@@ -7,7 +7,7 @@ import lombok.Setter;
 /**
  * Contains the result of some attribute calculations.
  */
-public class AttributeCalculationResult {
+public class SimpleValueAttributeCalculationResult {
 
     @Getter
     private final Attribute attribute;
@@ -16,11 +16,11 @@ public class AttributeCalculationResult {
     @Setter
     private int value;
 
-    public AttributeCalculationResult(Attribute attribute) {
+    public SimpleValueAttributeCalculationResult(Attribute attribute) {
         this(0, attribute);
     }
 
-    public AttributeCalculationResult(int value, Attribute attribute) {
+    public SimpleValueAttributeCalculationResult(int value, Attribute attribute) {
         this.value = value;
         this.attribute = attribute;
     }
@@ -29,7 +29,7 @@ public class AttributeCalculationResult {
         this.value += amount;
     }
 
-    public void addCalculationResult(AttributeCalculationResult attributeCalculationResult) {
+    public void addCalculationResult(SimpleValueAttributeCalculationResult attributeCalculationResult) {
         this.value += attributeCalculationResult.value;
     }
 }

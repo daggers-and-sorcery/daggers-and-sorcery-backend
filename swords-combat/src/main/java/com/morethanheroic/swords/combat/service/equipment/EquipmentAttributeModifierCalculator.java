@@ -5,8 +5,8 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierUnitType;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.AttributeModifierCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
@@ -28,12 +28,12 @@ public class EquipmentAttributeModifierCalculator implements AttributeModifierCa
     //Todo: write a factory for AttributeModifierEntry and use that to initialize the instances.
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, Attribute attribute) {
-        final Optional<AttributeCalculationResult> attributeCalculationResult = equipmentAttributeBonusProvider.calculateBonus(user, attribute);
+        final Optional<SimpleValueAttributeCalculationResult> attributeCalculationResult = equipmentAttributeBonusProvider.calculateBonus(user, attribute);
 
         if (attributeCalculationResult.isPresent()) {
             if (attribute instanceof CombatAttribute) {
                 return Lists.newArrayList(
-                        new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue((CombatAttributeCalculationResult) attributeCalculationResult.get()))
+                        new AttributeModifierEntry(AttributeModifierType.EQUIPMENT, AttributeModifierUnitType.VALUE, new CombatAttributeModifierValue((DiceValueAttributeCalculationResult) attributeCalculationResult.get()))
                 );
             } else {
                 return Lists.newArrayList(

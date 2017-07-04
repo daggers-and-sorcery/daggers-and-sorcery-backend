@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +22,15 @@ public class GlobalAttributeCalculator {
         return attributeCalculatorLocator.getCalculator(attribute).calculateAttributeValue(user, attribute);
     }
 
-    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
+    public SimpleValueAttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute) {
         return calculateActualValue(user, attribute, true);
     }
 
-    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
+    public SimpleValueAttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
         return attributeCalculatorLocator.getCalculator(attribute).calculateActualValue(user, attribute, shouldCheckMinimum);
     }
 
-    public AttributeCalculationResult calculateMaximumValue(UserEntity user, Attribute attribute) {
+    public SimpleValueAttributeCalculationResult calculateMaximumValue(UserEntity user, Attribute attribute) {
         return attributeCalculatorLocator.getCalculator(attribute).calculateMaximumValue(user, attribute);
     }
 }

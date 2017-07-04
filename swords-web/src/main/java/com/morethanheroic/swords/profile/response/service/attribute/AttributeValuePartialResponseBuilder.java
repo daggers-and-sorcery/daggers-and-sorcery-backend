@@ -7,7 +7,7 @@ import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.service.AttributeUtil;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.profile.response.service.ProfileInfoResponseBuilderConfiguration;
@@ -82,12 +82,12 @@ public class AttributeValuePartialResponseBuilder implements PartialResponseColl
             attributeValuePartialResponseBuilder
                     .actual(combatAttributeCalculationResultPartialResponseBuilder.build(
                             CombatAttributeCalculationResultPartialResponseConfiguration.builder()
-                                    .combatAttributeCalculationResult((CombatAttributeCalculationResult) attributeData.getActual())
+                                    .combatAttributeCalculationResult((DiceValueAttributeCalculationResult) attributeData.getActual())
                                     .build()
                     ))
                     .maximum(combatAttributeCalculationResultPartialResponseBuilder.build(
                             CombatAttributeCalculationResultPartialResponseConfiguration.builder()
-                                    .combatAttributeCalculationResult((CombatAttributeCalculationResult) attributeData.getActual())
+                                    .combatAttributeCalculationResult((DiceValueAttributeCalculationResult) attributeData.getActual())
                                     .build()
                     ));
         } else {

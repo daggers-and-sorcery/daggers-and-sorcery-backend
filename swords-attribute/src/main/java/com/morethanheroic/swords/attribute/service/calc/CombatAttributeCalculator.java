@@ -4,8 +4,8 @@ import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -29,6 +29,9 @@ public class CombatAttributeCalculator extends GenericAttributeCalculator<Combat
     @Autowired
     private List<AttributeBonusProvider> attributeBonusProviders;
 
+    @Autowired
+    private AttributeCalculationResultFactory attributeCalculationResultFactory;
+
     @Override
     public AttributeData calculateAttributeValue(UserEntity user, CombatAttribute attribute) {
         return AttributeData.attributeDataBuilder()
@@ -45,19 +48,19 @@ public class CombatAttributeCalculator extends GenericAttributeCalculator<Combat
     }
 
     @Override
-    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
+    public SimpleValueAttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
         if (attribute == CombatAttribute.LIFE) {
-            return new CombatAttributeCalculationResult(user.getHealthPoints(), (CombatAttribute) attribute);
+            return attributeCalculationResultFactory.newResult(user.getHealthPoints(), attribute);
         } else if (attribute == CombatAttribute.MANA) {
-            return new CombatAttributeCalculationResult(user.getManaPoints(), (CombatAttribute) attribute);
+            return attributeCalculationResultFactory.newResult(user.getManaPoints(), attribute);
         }
 
         return super.calculateActualValue(user, attribute, shouldCheckMinimum);
     }
 
     @Override
-    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
-        final AttributeCalculationResult result = new CombatAttributeCalculationResult((CombatAttribute) attribute);
+    public SimpleValueAttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
+        final SimpleValueAttributeCalculationResult result = attributeCalculationResultFactory.newResult(attribute);
 
         attributeBonusProviders.forEach(attributeBonusProvider -> attributeBonusProvider.calculateBonus(userEntity, attribute)
                 .ifPresent(result::addCalculationResult)
@@ -70,8 +73,8 @@ public class CombatAttributeCalculator extends GenericAttributeCalculator<Combat
     }
 
     @Override
-    public AttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
-        final AttributeCalculationResult result = super.calculateMaximumBeforePercentageMultiplication(userEntity, attribute);
+    public SimpleValueAttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
+        final SimpleValueAttributeCalculationResult result = super.calculateMaximumBeforePercentageMultiplication(userEntity, attribute);
 
         result.increaseValue(calculateAllBonusByGeneralAttributes(userEntity, (CombatAttribute) attribute));
 
@@ -97,7 +100,7 @@ public class CombatAttributeCalculator extends GenericAttributeCalculator<Combat
             return 0;
         }
 
-        final AttributeCalculationResult originalAttributeValue = globalAttributeCalculator.calculateActualValue(userEntity, attribute, false);
+        final SimpleValueAttributeCalculationResult originalAttributeValue = globalAttributeCalculator.calculateActualValue(userEntity, attribute, false);
 
         if (originalAttributeValue.getValue() < attribute.getMinimalValue()) {
             return attribute.getMinimalValue() - originalAttributeValue.getValue();
