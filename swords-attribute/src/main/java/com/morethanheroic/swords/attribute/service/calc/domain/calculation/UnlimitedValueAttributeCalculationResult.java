@@ -11,4 +11,9 @@ public class UnlimitedValueAttributeCalculationResult extends SimpleValueAttribu
     public UnlimitedValueAttributeCalculationResult(Attribute attribute) {
         super(attribute);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

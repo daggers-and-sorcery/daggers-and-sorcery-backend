@@ -1,25 +1,19 @@
 package com.morethanheroic.swords.attribute.service.modifier.calculator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.morethanheroic.swords.attribute.domain.*;
+import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
+import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.morethanheroic.swords.attribute.domain.Attribute;
-import com.morethanheroic.swords.attribute.domain.BasicAttribute;
-import com.morethanheroic.swords.attribute.domain.CombatAttribute;
-import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
-import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
-import com.morethanheroic.swords.user.domain.UserEntity;
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GlobalAttributeModifierCalculator {
@@ -37,12 +31,15 @@ public class GlobalAttributeModifierCalculator {
     private BasicAttributeModifierCalculator basicAttributeModifierCalculator;
 
     @Autowired
+    private SpecialAttributeModifierCalculator specialAttributeModifierCalculator;
+
+    @Autowired
     @Qualifier("equipmentAttributeModifierCalculator")
     private AttributeModifierCalculator equipmentAttributeModifierCalculator;
 
     @Autowired
     private RaceAttributeModifierCalculator raceAttributeModifierCalculator;
-    
+
     @Autowired
     private List<AttributeModifierProvider> attributeModifierProviders;
 
@@ -54,7 +51,8 @@ public class GlobalAttributeModifierCalculator {
                 SkillAttribute.class, skillAttributeModifierCalculator,
                 GeneralAttribute.class, generalAttributeModifierCalculator,
                 CombatAttribute.class, combatAttributeModifierCalculator,
-                BasicAttribute.class, basicAttributeModifierCalculator
+                BasicAttribute.class, basicAttributeModifierCalculator,
+                SpecialAttribute.class, specialAttributeModifierCalculator
         );
     }
 

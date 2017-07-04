@@ -43,6 +43,11 @@ public class DiceValueAttributeCalculationResult extends SimpleValueAttributeCal
     }
 
     @Override
+    public boolean isEmpty() {
+        return super.isEmpty() && d2 == 0 && d4 == 0 && d6 == 0 && d8 == 0 && d10 == 0;
+    }
+
+    @Override
     public void addCalculationResult(final SimpleValueAttributeCalculationResult attributeCalculationResult) {
         super.addCalculationResult(attributeCalculationResult);
 

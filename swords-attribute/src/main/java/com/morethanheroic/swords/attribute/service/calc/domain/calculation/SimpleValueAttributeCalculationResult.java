@@ -29,6 +29,15 @@ public class SimpleValueAttributeCalculationResult {
         this.value += amount;
     }
 
+    /**
+     * A calculation result is empty when all values in it is zero.
+     *
+     * @return is the calculation result empty
+     */
+    public boolean isEmpty() {
+        return value == 0;
+    }
+
     public void addCalculationResult(SimpleValueAttributeCalculationResult attributeCalculationResult) {
         this.value += attributeCalculationResult.value;
     }
