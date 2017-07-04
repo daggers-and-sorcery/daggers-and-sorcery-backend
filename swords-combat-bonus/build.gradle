@@ -2,6 +2,8 @@ dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
+
+    compile project(':swords-attribute')
 }
 
 apply plugin: 'spring-boot'
