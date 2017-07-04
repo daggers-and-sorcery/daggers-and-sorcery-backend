@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.message;
+package com.morethanheroic.swords.combat.step.message;
 
 import lombok.Getter;
 import lombok.Setter;

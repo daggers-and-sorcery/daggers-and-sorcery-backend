@@ -4,14 +4,13 @@ import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
-import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
-import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
 import com.morethanheroic.swords.combat.service.calc.damage.type.MagicDamageCalculator;
 import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.attribute.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +58,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
             addDefenseXp(combatContext, damageCalculationResult.getDamage() * 2);
 
             result.add(
-                    AttackCombatStep.builder()
+                    DefaultCombatStep.builder()
                             .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_PLAYER", attacker.getName(), damageCalculationResult.getDamage()))
                             .build()
             );
@@ -68,7 +67,7 @@ public class MagicAttackCalculator extends GeneralAttackCalculator {
             addOffhandXp((UserCombatEntity) attacker, damageCalculationResult.getDamage() * 2);
 
             result.add(
-                    AttackCombatStep.builder()
+                    DefaultCombatStep.builder()
                             .message(combatMessageFactory.newMessage("damage_done", "COMBAT_MESSAGE_MAGIC_DAMAGE_TO_MONSTER", opponent.getName(), damageCalculationResult.getDamage()))
                             .build()
             );

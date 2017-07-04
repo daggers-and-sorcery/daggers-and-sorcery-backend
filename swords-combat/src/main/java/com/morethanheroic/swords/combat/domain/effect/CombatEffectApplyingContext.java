@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.morethanheroic.session.domain.SessionEntity;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.effect.domain.EffectApplyingContext;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 

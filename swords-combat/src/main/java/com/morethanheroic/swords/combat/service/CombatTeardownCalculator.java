@@ -3,14 +3,14 @@ package com.morethanheroic.swords.combat.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
-import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.calc.CombatTerminator;
 

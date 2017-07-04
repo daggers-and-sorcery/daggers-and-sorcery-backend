@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.domain;
+package com.morethanheroic.swords.combat.step.domain;
 
 import java.util.HashMap;
 import java.util.Map;

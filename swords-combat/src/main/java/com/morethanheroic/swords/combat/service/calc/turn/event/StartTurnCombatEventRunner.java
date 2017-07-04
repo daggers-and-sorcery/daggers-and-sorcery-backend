@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.service.calc.turn.event;
 
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.service.event.turn.StartTurnCombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
 import lombok.RequiredArgsConstructor;

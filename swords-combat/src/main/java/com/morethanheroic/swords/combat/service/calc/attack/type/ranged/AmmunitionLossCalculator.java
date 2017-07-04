@@ -1,10 +1,10 @@
 package com.morethanheroic.swords.combat.service.calc.attack.type.ranged;
 
 import com.morethanheroic.math.RandomCalculator;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
-import com.morethanheroic.swords.combat.domain.step.AttackCombatStep;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class AmmunitionLossCalculator {
             equipmentFacade.getEquipment(attacker.getUserEntity()).decreaseAmmunition(AMMUNITION_DECREASE_AMOUNT);
 
             result.add(
-                    AttackCombatStep.builder()
+                    DefaultCombatStep.builder()
                             .message(combatMessageFactory.newMessage("ammunition", "COMBAT_MESSAGE_ARROW_LOST", AMMUNITION_DECREASE_AMOUNT))
                             .build()
             );

@@ -3,10 +3,10 @@ package com.morethanheroic.swords.combat.service.create;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.AttackResult;
 import com.morethanheroic.swords.combat.domain.CombatContext;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
-import com.morethanheroic.swords.combat.domain.step.InitializationCombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.repository.dao.CombatDatabaseEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.attack.MonsterAttackCalculator;
@@ -18,7 +18,7 @@ import com.morethanheroic.swords.combat.service.calc.initialisation.Initialisati
 import com.morethanheroic.swords.combat.service.calc.turn.event.StartTurnCombatEventRunner;
 import com.morethanheroic.swords.combat.service.create.domain.CombatCreationContext;
 import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +70,7 @@ public class CreateCombatCalculator {
         final List<CombatStep> combatSteps = new ArrayList<>();
 
         combatSteps.add(
-                InitializationCombatStep.builder()
+                DefaultCombatStep.builder()
                         .message(combatMessageFactory.newMessage("start", "COMBAT_MESSAGE_NEW_FIGHT", monsterDefinition.getName()))
                         .build()
         );

@@ -5,9 +5,11 @@ import com.morethanheroic.swords.attribute.domain.SpecialAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.dice.DiceAttributeRoller;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.service.event.turn.StartTurnCombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterType;
 import lombok.RequiredArgsConstructor;
@@ -29,26 +31,37 @@ public class DamageAgainstMonsterTypeStartTurnCombatEventHandler implements Star
 
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final DiceAttributeRoller diceAttributeRoller;
+    private final CombatMessageFactory combatMessageFactory;
 
     @Override
     public List<CombatStep> handleEvent(final StartTurnCombatEventContext startTurnCombatEventContext) {
         final MonsterDefinition monsterDefinition = startTurnCombatEventContext.getMonster().getMonsterDefinition();
         final List<CombatStep> result = new ArrayList<>();
 
-        result.addAll(calculateDamageForTurn(startTurnCombatEventContext, monsterDefinition.getType()));
-        result.addAll(calculateDamageForTurn(startTurnCombatEventContext, monsterDefinition.getSubtype()));
+        result.addAll(calculateDamageForTurn(startTurnCombatEventContext, monsterDefinition, monsterDefinition.getType()));
+        result.addAll(calculateDamageForTurn(startTurnCombatEventContext, monsterDefinition, monsterDefinition.getSubtype()));
 
         return result;
     }
 
-    private List<CombatStep> calculateDamageForTurn(final StartTurnCombatEventContext startTurnCombatEventContext, final MonsterType monsterType) {
+    private List<CombatStep> calculateDamageForTurn(final StartTurnCombatEventContext startTurnCombatEventContext, final MonsterDefinition monsterDefinition, final MonsterType monsterType) {
         if (MONSTER_TYPE_SPECIAL_ATTRIBUTE_MAP.containsKey(monsterType)) {
+            final List<CombatStep> result = new ArrayList<>();
+
             final DiceValueAttributeCalculationResult attributeCalculationResult = (DiceValueAttributeCalculationResult) globalAttributeCalculator.calculateActualValue(startTurnCombatEventContext.getPlayer().getUserEntity(), MONSTER_TYPE_SPECIAL_ATTRIBUTE_MAP.get(monsterType));
 
-            startTurnCombatEventContext.getMonster().decreaseActualHealth(diceAttributeRoller.rollDices(attributeCalculationResult));
+            final int damage = diceAttributeRoller.rollDices(attributeCalculationResult);
+            startTurnCombatEventContext.getMonster().decreaseActualHealth(damage);
+
+            result.add(
+                    DefaultCombatStep.builder()
+                            .message(combatMessageFactory.newMessage("turn_start_dmg_for_monster_type", "COMBAT_MESSAGE_DAMAGE_ON_TURN_START_FOR_MONSTER_WITH_TYPE", damage, monsterDefinition.getName(), monsterType.getName()))
+                            .build()
+            );
+
+            return result;
         }
 
-        //TODO: Text!!!!!!!!!!!!!!!!!
         return Collections.emptyList();
     }
 }

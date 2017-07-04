@@ -1,13 +1,12 @@
-package com.morethanheroic.swords.combat.service.message;
+package com.morethanheroic.swords.combat.step.message;
 
 import com.morethanheroic.localization.MessageResolver;
-import com.morethanheroic.swords.combat.domain.CombatMessage;
-import com.morethanheroic.swords.combat.service.message.domain.CombatMessageContext;
+import com.morethanheroic.swords.combat.step.domain.CombatMessage;
+import com.morethanheroic.swords.combat.step.message.domain.CombatMessageContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor

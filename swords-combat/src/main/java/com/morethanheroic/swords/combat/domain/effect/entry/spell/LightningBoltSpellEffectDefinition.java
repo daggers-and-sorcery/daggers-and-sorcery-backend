@@ -4,9 +4,9 @@ import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContex
 import com.morethanheroic.swords.combat.domain.effect.DiceRollFromDamageSettingsBuilder;
 import com.morethanheroic.swords.combat.domain.effect.ImprovedCombatEffectDefinition;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
-import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import com.morethanheroic.swords.skill.domain.SkillEntity;

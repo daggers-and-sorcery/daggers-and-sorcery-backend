@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.message;
+package com.morethanheroic.swords.combat.step.message;
 
 import org.springframework.context.support.ResourceBundleMessageSource;
 

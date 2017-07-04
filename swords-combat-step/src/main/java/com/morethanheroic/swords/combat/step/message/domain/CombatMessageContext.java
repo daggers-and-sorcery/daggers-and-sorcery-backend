@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.message.domain;
+package com.morethanheroic.swords.combat.step.message.domain;
 
 import com.morethanheroic.swords.monster.domain.MonsterType;
 import com.morethanheroic.swords.monster.domain.WeaponType;

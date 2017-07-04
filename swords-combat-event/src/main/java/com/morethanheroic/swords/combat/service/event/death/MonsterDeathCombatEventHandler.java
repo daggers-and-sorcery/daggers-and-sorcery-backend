@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.combat.service.event.death;
 
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
-package com.morethanheroic.swords.combat.domain.step;
+package com.morethanheroic.swords.combat.step.domain;
 
-import com.morethanheroic.swords.combat.domain.CombatMessage;
 import lombok.Builder;
 import lombok.Getter;
 
