@@ -9,6 +9,8 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatStepListBuilder;
 import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
+import com.morethanheroic.swords.combat.service.calc.damage.type.RangedDamageCalculator;
 import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
@@ -48,15 +50,20 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
     }
 
     private List<CombatStep> dealDamage(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
-        final int damage = rangedDamageCalculator.calculateDamage(attacker, opponent);
+        final List<CombatStep> result = new ArrayList<>();
 
-        opponent.decreaseActualHealth(damage);
+        final DamageCalculationResult damageCalculationResult = rangedDamageCalculator.calculateDamage(attacker, opponent);
+        result.addAll(damageCalculationResult.getCombatSteps());
+
+        opponent.decreaseActualHealth(damageCalculationResult.getDamage());
 
         if (attacker instanceof MonsterCombatEntity) {
-            return calculateMonsterDamage((MonsterCombatEntity) attacker, combatContext, damage);
+            result.addAll(calculateMonsterDamage((MonsterCombatEntity) attacker, combatContext, damageCalculationResult.getDamage()));
         } else {
-            return calculatePlayerDamage((UserCombatEntity) attacker, opponent, damage);
+            result.addAll(calculatePlayerDamage((UserCombatEntity) attacker, opponent, damageCalculationResult.getDamage()));
         }
+
+        return result;
     }
 
     private List<CombatStep> calculateMonsterDamage(final MonsterCombatEntity attacker, final CombatContext combatContext, final int damage) {

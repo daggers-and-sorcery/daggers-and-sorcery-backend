@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.event.damage.domain;
+package com.morethanheroic.swords.combat.service.calc.damage.event.domain;
 
 import com.morethanheroic.swords.combat.bonus.domain.CombatBonus;
 import com.morethanheroic.swords.combat.domain.step.CombatStep;
@@ -7,12 +7,9 @@ import lombok.Getter;
 
 import java.util.List;
 
-/**
- * Contains the result of a damage event calculation.
- */
 @Getter
 @Builder
-public class DamageEventCalculationResult {
+public class DamageEventResult {
 
     private final List<CombatStep> combatSteps;
     private final CombatBonus bonusDamage;
