@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.repository.dao;
 
-import com.morethanheroic.swords.journal.model.JournalType;
+import com.morethanheroic.swords.journal.domain.JournalType;
 
 public class JournalDatabaseEntity {
 

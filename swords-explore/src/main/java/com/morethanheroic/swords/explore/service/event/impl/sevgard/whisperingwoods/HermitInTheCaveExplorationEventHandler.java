@@ -3,6 +3,7 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.whisperingw
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
@@ -212,7 +213,7 @@ public class HermitInTheCaveExplorationEventHandler extends MultiStageExploratio
     @Override
     public ExplorationResult info(UserEntity userEntity, int stage) {
         if (stage == COMBAT_STAGE) {
-            if (combatCalculator.isCombatRunning(userEntity)) {
+            if (combatCalculator.isCombatRunning(userEntity, CombatType.EXPLORE)) {
                 return explorationResultBuilderFactory
                         .newExplorationResultBuilder(userEntity, explorationEventDefinitionCache.getDefinition(EVENT_ID))
                         .newMessageEntry("HERMIT_IN_THE_CAVE_EXPLORATION_EVENT_ENTRY_3")

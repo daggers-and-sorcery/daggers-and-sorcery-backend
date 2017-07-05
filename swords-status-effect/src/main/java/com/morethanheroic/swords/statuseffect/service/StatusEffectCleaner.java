@@ -23,6 +23,6 @@ public class StatusEffectCleaner {
     @Transactional
     @Scheduled(fixedRate = CLEANING_RATE_IN_MILLISECONDS)
     public void cleanStatusEffects() {
-        statusEffectMapper.removeExpiredEvents();
+        statusEffectMapper.removeExpiredStatusEffects();
     }
 }

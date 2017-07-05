@@ -7,17 +7,8 @@ import com.morethanheroic.swords.combat.view.response.service.CombatAttackStatus
 import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttackPartialResponseCollectionBuilderConfiguration;
 import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttackStatusPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.MessageBoxExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.view.response.domain.AttributeAttemptExplorationEventPartialResponse;
-import com.morethanheroic.swords.explore.view.response.domain.CombatExplorationEventPartialResponse;
-import com.morethanheroic.swords.explore.view.response.domain.ExplorationResponseBuilderConfiguration;
-import com.morethanheroic.swords.explore.view.response.domain.MessageBoxExplorationEventPartialResponse;
-import com.morethanheroic.swords.explore.view.response.domain.OptionExplorationEventPartialResponse;
-import com.morethanheroic.swords.explore.view.response.domain.TextExplorationEventPartialResponse;
+import com.morethanheroic.swords.explore.domain.event.result.impl.*;
+import com.morethanheroic.swords.explore.view.response.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +76,23 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                                 .eventOptions(optionExplorationEventEntryResult.getOptions())
                                 .build()
                 );
+            } else if (explorationEventEntryResult instanceof ContinueQuestExplorationEventEntryResult) {
+                final ContinueQuestExplorationEventEntryResult questExplorationEventEntryResult = (ContinueQuestExplorationEventEntryResult) explorationEventEntryResult;
+
+                result.add(
+                        ContinueQuestExplorationEventPartialResponse.builder()
+                                .questId(questExplorationEventEntryResult.getQuestId())
+                                .build()
+                );
+            } else if (explorationEventEntryResult instanceof FinishQuestExplorationEventEntryResult) {
+                final FinishQuestExplorationEventEntryResult finishQuestExplorationEventPartialResponse = (FinishQuestExplorationEventEntryResult) explorationEventEntryResult;
+
+                result.add(
+                        FinishQuestExplorationEventPartialResponse.builder()
+                                .questId(finishQuestExplorationEventPartialResponse.getQuest().getId())
+                                .rewards(finishQuestExplorationEventPartialResponse.getQuest().getRewards())
+                                .build()
+                );
             } else if (explorationEventEntryResult instanceof AttributeExplorationEventEntryResult) {
                 final AttributeExplorationEventEntryResult attributeExplorationEventEntryResult = (AttributeExplorationEventEntryResult) explorationEventEntryResult;
 
@@ -99,6 +107,22 @@ public class ExplorationEventsPartialResponseBuilder implements PartialResponseC
                                                 )
                                                 .collect(Collectors.toList())
                                 )
+                                .build()
+                );
+            } else if (explorationEventEntryResult instanceof QuestExplorationEventEntryResult) {
+                final QuestExplorationEventEntryResult questExplorationEventEntryResult = (QuestExplorationEventEntryResult) explorationEventEntryResult;
+
+                result.add(
+                        QuestExplorationEventPartialResponse.builder()
+                                .name(questExplorationEventEntryResult.getName())
+                                .description(questExplorationEventEntryResult.getDescription())
+                                .acceptQuestStage(questExplorationEventEntryResult.getAcceptQuestStage())
+                                .declineQuestStage(questExplorationEventEntryResult.getDeclineQuestStage())
+                                .build()
+                );
+            } else if (explorationEventEntryResult instanceof RefreshUserDataEventEntryResult) {
+                result.add(
+                        RefreshUserDataEventPartialResponse.builder()
                                 .build()
                 );
             }

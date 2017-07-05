@@ -35,7 +35,7 @@ public class ExplorationEventExplorer {
     private final ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
     @Transactional
-    public ExplorationResult exploreNext(final UserEntity userEntity, final SessionEntity sessionEntity) {
+    public ExplorationResult exploreNextStage(final UserEntity userEntity, final SessionEntity sessionEntity) {
         return explore(userEntity, sessionEntity, explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent()).getLocation(), userEntity.getActiveExplorationState());
     }
 
@@ -69,7 +69,7 @@ public class ExplorationEventExplorer {
     }
 
     private ExplorationResult buildFailedExplorationResult() {
-        return explorationResultFactory.newExplorationResult(null)
+        return explorationResultFactory.newEmptyExplorationResult()
                 .addEventEntryResult(
                         TextExplorationEventEntryResult.builder()
                                 .content("You feel too tired to explore, you need more than zero movement points.")

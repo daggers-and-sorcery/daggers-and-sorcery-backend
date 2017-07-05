@@ -9,6 +9,7 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatStepListBuilder;
 import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
+import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
 import com.morethanheroic.swords.combat.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
@@ -26,11 +27,10 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
 
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
-    private final EquipmentFacade equipmentFacade;
     private final CombatMessageFactory combatMessageFactory;
     private final RangedDamageCalculator rangedDamageCalculator;
     private final AmmunitionLossCalculator ammunitionLossCalculator;
-    private final Random random;
+    private final DeathCalculator deathCalculator;
 
     @Override
     public List<CombatStep> calculateAttack(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
@@ -40,7 +40,7 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
             result.addAll(dealDamage(attacker, opponent, combatContext));
 
             if (opponent.getActualHealth() <= 0) {
-                result.add(handleDeath(attacker, opponent, combatContext));
+                result.addAll(deathCalculator.handleDeath(attacker, opponent, combatContext));
             }
         } else {
             result.add(dealMiss(attacker, opponent, combatContext));

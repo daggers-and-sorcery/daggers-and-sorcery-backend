@@ -8,26 +8,19 @@ import com.morethanheroic.swords.monster.domain.WeaponType;
 import com.morethanheroic.swords.monster.service.loader.domain.RawDropDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawScavengingDefinition;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MonsterDefinitionTransformer {
 
     private final DiceAttributeTransformer diceAttributeTransformer;
     private final DropDefinitionTransformer dropDefinitionTransformer;
-
-    @Autowired
-    private ScavengingDefinitionTransformer scavengingDefinitionTransformer;
-
-    @Autowired
-    public MonsterDefinitionTransformer(DiceAttributeTransformer diceAttributeTransformer, DropDefinitionTransformer dropDefinitionTransformer) {
-        this.diceAttributeTransformer = diceAttributeTransformer;
-        this.dropDefinitionTransformer = dropDefinitionTransformer;
-    }
+    private final ScavengingDefinitionTransformer scavengingDefinitionTransformer;
 
     public MonsterDefinition transform(RawMonsterDefinition rawMonsterDefinition) {
         MonsterDefinition.MonsterDefinitionBuilder monsterDefinitionBuilder = new MonsterDefinition.MonsterDefinitionBuilder();

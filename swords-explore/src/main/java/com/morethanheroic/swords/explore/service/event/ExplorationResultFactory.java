@@ -4,6 +4,9 @@ import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import org.springframework.stereotype.Service;
 
+/**
+ * A factory implementation to create {@link ExplorationResult} instances.
+ */
 @Service
 public class ExplorationResultFactory {
 
@@ -12,6 +15,10 @@ public class ExplorationResultFactory {
             return new ExplorationResult(explorationEventDefinition.getRarity(), explorationEventDefinition.getTerrain());
         }
 
+        return newEmptyExplorationResult();
+    }
+
+    public ExplorationResult newEmptyExplorationResult() {
         return new ExplorationResult(null, null);
     }
 }

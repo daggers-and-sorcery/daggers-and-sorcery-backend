@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.farmfields;
 
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
@@ -70,7 +71,7 @@ public class TheInnExplorationEventHandler extends MultiStageExplorationEventHan
                         .build()
         );
 
-        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent);
+        final CombatEventEntryEvaluatorResult combatResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent, CombatType.EXPLORE);
 
         explorationResult.addEventEntryResult(combatResult.getResult());
 

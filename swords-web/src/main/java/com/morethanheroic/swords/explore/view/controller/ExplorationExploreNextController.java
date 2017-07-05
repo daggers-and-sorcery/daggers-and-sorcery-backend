@@ -20,7 +20,7 @@ public class ExplorationExploreNextController {
 
     @GetMapping("/explore/next")
     public Response explore(UserEntity userEntity, SessionEntity sessionEntity) {
-        final ExplorationResult explorationResult = explorationEventExecutor.exploreNext(userEntity, sessionEntity);
+        final ExplorationResult explorationResult = explorationEventExecutor.exploreNextStage(userEntity, sessionEntity);
 
         return explorationResponseBuilder.build(ExplorationResponseBuilderConfiguration.builder()
                .userEntity(userEntity)

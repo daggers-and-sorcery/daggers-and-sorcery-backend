@@ -2,7 +2,9 @@ package com.morethanheroic.swords.explore.service.event.newevent;
 
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.Attribute;
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.combat.domain.CombatMessage;
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
@@ -10,20 +12,25 @@ import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.combat.service.drop.DropAdder;
 import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.AttributeExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.CombatExplorationEventEntryResult;
-import com.morethanheroic.swords.explore.domain.event.result.impl.OptionExplorationEventEntryResult;
+import com.morethanheroic.swords.explore.domain.event.result.impl.*;
 import com.morethanheroic.swords.explore.domain.event.result.impl.option.EventOption;
 import com.morethanheroic.swords.explore.service.event.evaluator.CombatEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageBoxMessageEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.MessageEventEntryEvaluator;
+import com.morethanheroic.swords.explore.service.event.evaluator.QuestEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.AttributeAttemptEventEntryEvaluator;
 import com.morethanheroic.swords.explore.service.event.evaluator.attempt.domain.AttributeAttemptEventEntryEvaluatorResult;
 import com.morethanheroic.swords.explore.service.event.evaluator.domain.CombatEventEntryEvaluatorResult;
-import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.explore.service.event.newevent.condition.Condition;
+import com.morethanheroic.swords.explore.service.event.newevent.condition.MasterConditionEvaluator;
+import com.morethanheroic.swords.explore.service.event.newevent.condition.impl.ItemCondition;
+import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
+import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
+import com.morethanheroic.swords.quest.service.QuestManipulator;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -84,6 +91,18 @@ public class ExplorationResultBuilder {
     @Autowired
     private DropAdder dropAdder;
 
+    @Autowired
+    private QuestEventEntryEvaluator questEventEntryEvaluator;
+
+    @Autowired
+    private QuestManipulator questManipulator;
+
+    @Autowired
+    private UserBasicAttributeManipulator userBasicAttributeManipulator;
+
+    @Autowired
+    private MasterConditionEvaluator masterConditionEvaluator;
+
     private ExplorationResult explorationResult;
     private UserEntity userEntity;
 
@@ -126,14 +145,45 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder newUpdateQuestStage(final QuestDefinition questDefinition, final int nextStage) {
+        questManipulator.changeQuestStage(userEntity, questDefinition, nextStage);
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newQuestDialogEntry(final QuestDefinition questDefinition, final int acceptQuestStage, final int declineQuestStage) {
+        explorationResult.addEventEntryResult(
+                questEventEntryEvaluator.questEntry(questDefinition.getName(), questDefinition.getDescription(), acceptQuestStage, declineQuestStage)
+        );
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newAcceptQuestEntry(final QuestDefinition questDefinition) {
+        questManipulator.startQuest(userEntity, questDefinition);
+
+        return this;
+    }
+
     public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage) {
-        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId));
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId), CombatType.EXPLORE);
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
 
         if (!combatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
             userEntity.setActiveExploration(eventId, stage);
         }
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newCombatEntry(final int opponentId, final QuestDefinition quest, final int questStage) {
+        final CombatType combatType = CombatType.valueOf("QUEST_" + quest.getId());
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId), combatType);
+
+        explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
+
+        questManipulator.changeQuestStage(userEntity, quest, questStage);
 
         return this;
     }
@@ -158,8 +208,42 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder newContinueQuestEntry(final QuestDefinition questDefinition) {
+        explorationResult.addEventEntryResult(
+                ContinueQuestExplorationEventEntryResult.builder()
+                        .questId(questDefinition.getId())
+                        .build()
+        );
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newFinishQuestEntry(final QuestDefinition questDefinition) {
+        explorationResult.addEventEntryResult(
+                FinishQuestExplorationEventEntryResult.builder()
+                        .quest(questDefinition)
+                        .build()
+        );
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newRefreshUserEntry() {
+        explorationResult.addEventEntryResult(
+                RefreshUserDataEventEntryResult.builder()
+                        .build()
+        );
+
+        return this;
+    }
+
     public ExplorationResultBuilder continueCombatEntry() {
+        return continueCombatEntry(CombatType.EXPLORE);
+    }
+
+    public ExplorationResultBuilder continueCombatEntry(final CombatType combatType) {
         final CombatMessage combatMessage = new CombatMessage();
+
         combatMessage.addData("message", "Continue fighting.");
 
         explorationResult.addEventEntryResult(
@@ -173,7 +257,7 @@ public class ExplorationResultBuilder {
                                                                 .build()
                                                 )
                                         )
-                                        .combatEnded(!combatCalculator.isCombatRunning(userEntity))
+                                        .combatEnded(!combatCalculator.isCombatRunning(userEntity, combatType))
                                         .playerDead(false)
                                         .build()
                         )
@@ -215,16 +299,39 @@ public class ExplorationResultBuilder {
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
     }
 
+    public MultiWayExplorationResultBuilder newConditionalMultiWayPath(final ExplorationContext explorationContext, final List<Condition> conditions) {
+        return masterConditionEvaluator.evaluateConditions(explorationContext.getUserEntity(), conditions) ?
+                multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
+                multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+    }
+
+    /**
+     * @deprecated Use {@link #newHasItemMultiWayPath(ExplorationContext, ItemDefinition...)} instead.
+     */
     public MultiWayExplorationResultBuilder newHasItemMultiWayPath(final ExplorationContext explorationContext, final int... items) {
-        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(explorationContext.getUserEntity().getId());
+        final List<Condition> conditions = Arrays.stream(items).boxed()
+                .map(item ->
+                        ItemCondition.builder()
+                                .itemDefinition(itemDefinitionCache.getDefinition(item))
+                                .amount(1)
+                                .build()
+                )
+                .collect(Collectors.toList());
 
-        for (int item : items) {
-            if (!inventoryEntity.hasItem(itemDefinitionCache.getDefinition(item))) {
-                return multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
-            }
-        }
+        return newConditionalMultiWayPath(explorationContext, conditions);
+    }
 
-        return multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this);
+    public MultiWayExplorationResultBuilder newHasItemMultiWayPath(final ExplorationContext explorationContext, final ItemDefinition... items) {
+        final List<Condition> conditions = Arrays.stream(items)
+                .map(item ->
+                        ItemCondition.builder()
+                                .itemDefinition(item)
+                                .amount(1)
+                                .build()
+                )
+                .collect(Collectors.toList());
+
+        return newConditionalMultiWayPath(explorationContext, conditions);
     }
 
     public MultiWayExplorationResultBuilder newCustomMultiWayPath(final Callable<Boolean> calculateSuccess) {
@@ -236,9 +343,49 @@ public class ExplorationResultBuilder {
     }
 
     public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath(final ExplorationContext explorationContext) {
-        return combatCalculator.isCombatRunning(explorationContext.getUserEntity()) ?
+        return newIsCombatRunningMultiWayPath(explorationContext, CombatType.EXPLORE);
+    }
+
+    public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath(final ExplorationContext explorationContext, final CombatType combatType) {
+        return combatCalculator.isCombatRunning(explorationContext.getUserEntity(), combatType) ?
                 multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
                 multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+    }
+
+    public ExplorationResultBuilder newRemoveMovementPoints(final int amount) {
+        userBasicAttributeManipulator.decreaseMovement(userEntity, amount);
+
+        newMessageBoxEntry("EXPLORATION_EVEN_ENTRY_REMOVE_MOVEMENT_POINTS", amount);
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newRemoveItemEntry(final ItemDefinition item) {
+        return newRemoveItemEntry(item, 1, IdentificationType.IDENTIFIED);
+    }
+
+    public ExplorationResultBuilder newRemoveItemEntry(final ItemDefinition item, final int amount) {
+        return newRemoveItemEntry(item, amount, IdentificationType.IDENTIFIED);
+    }
+
+    public ExplorationResultBuilder newRemoveItemEntry(final ItemDefinition item, final int amount, final IdentificationType identificationType) {
+        inventoryEntityFactory.getEntity(userEntity).removeItem(item, amount, identificationType);
+
+        newMessageBoxEntry("EXPLORATION_EVEN_ENTRY_REMOVE_ITEM", amount, item.getName());
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newDamageEntry(final int damage) {
+        userBasicAttributeManipulator.decreaseHealth(userEntity, damage);
+
+        if (userEntity.isDead()) {
+            userBasicAttributeManipulator.increaseHealth(userEntity, 1);
+        }
+
+        newMessageBoxEntry("EXPLORATION_EVEN_ENTRY_DAMAGE", damage);
+
+        return this;
     }
 
     public synchronized ExplorationResultBuilder newCustomLogicEntry(final Runnable runnable) {

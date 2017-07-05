@@ -35,10 +35,8 @@ public class FleeCombatCalculator {
     private final CombatTeardownCalculator combatTeardownCalculator;
     private final CombatMapper combatMapper;
 
-    public AttackResult tryFleeing(final UserEntity userEntity) {
-        final SavedCombatEntity savedCombatEntity = savedCombatEntityFactory.getEntity(userEntity);
-        final CombatContext combatContext = combatContextFactory.newContext(savedCombatEntity);
-
+    public AttackResult tryFleeing(final CombatContext combatContext) {
+        final UserEntity userEntity = combatContext.getUser().getUserEntity();
         final List<CombatStep> combatSteps = new ArrayList<>();
 
         boolean fleeSuccessful = false;

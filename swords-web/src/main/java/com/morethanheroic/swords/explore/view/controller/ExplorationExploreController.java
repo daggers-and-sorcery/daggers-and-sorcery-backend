@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ExplorationExploreController {
 
-    private final ExplorationEventExplorer explorationEventExecutor;
+    private final ExplorationEventExplorer explorationEventExplorer;
     private final ExplorationResponseBuilder explorationResponseBuilder;
 
     @GetMapping("/explore/{location}/{state}")
     public Response explore(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable ExplorationEventLocation location, @PathVariable int state) {
-        final ExplorationResult explorationResult = explorationEventExecutor.explore(userEntity, sessionEntity, location, state);
+        final ExplorationResult explorationResult = explorationEventExplorer.explore(userEntity, sessionEntity, location, state);
 
         return explorationResponseBuilder.build(
                 ExplorationResponseBuilderConfiguration.builder()

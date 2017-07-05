@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.service;
 
+import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
@@ -19,19 +20,18 @@ public class CombatCalculator {
     private final MonsterDefinitionCache monsterDefinitionCache;
 
     @Transactional
-    public boolean isCombatRunning(final UserEntity userEntity) {
-        return combatMapper.getRunningCombat(userEntity.getId()) != null;
+    public boolean isCombatRunning(final UserEntity userEntity, final CombatType combatType) {
+        return combatMapper.getRunningCombat(userEntity.getId(), combatType) != null;
     }
 
-    //TODO: move away
     @Transactional
     public void addCombatExperience(final UserEntity userEntity, final SkillType skillType, final int amount) {
         combatExperienceMapper.addExperience(userEntity.getId(), skillType, amount);
     }
 
     @Transactional
-    public MonsterDefinition getOpponentInRunningCombat(UserEntity userEntity) {
-        return monsterDefinitionCache.getMonsterDefinition(combatMapper.getRunningCombat(userEntity.getId()).getMonsterId());
+    public MonsterDefinition getOpponentInRunningCombat(UserEntity userEntity, final CombatType combatType) {
+        return monsterDefinitionCache.getDefinition(combatMapper.getRunningCombat(userEntity.getId(), combatType).getMonsterId());
     }
 
     public void removeAllCombatForUser(final UserEntity userEntity) {

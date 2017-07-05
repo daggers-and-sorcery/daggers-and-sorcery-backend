@@ -5,8 +5,8 @@ import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.journal.model.JournalType;
-import com.morethanheroic.swords.journal.service.JournalManager;
+import com.morethanheroic.swords.journal.domain.JournalType;
+import com.morethanheroic.swords.journal.service.JournalEntityFactory;
 import com.morethanheroic.swords.money.domain.*;
 import com.morethanheroic.swords.money.service.MoneyFacade;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -26,7 +26,7 @@ public class InventoryEntity implements Entity {
     private InventoryMapper inventoryMapper;
 
     @Autowired
-    private JournalManager journalManager;
+    private JournalEntityFactory journalManager;
 
     @Autowired
     private MoneyFacade moneyFacade;

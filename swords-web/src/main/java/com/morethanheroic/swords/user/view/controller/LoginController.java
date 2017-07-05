@@ -7,7 +7,7 @@ import com.morethanheroic.swords.session.SessionAttributeType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
 import com.morethanheroic.swords.user.view.response.domain.configuration.LoginResponseBuilderConfiguration;
-import com.morethanheroic.swords.user.view.response.service.LoginResponseBuilder;
+import com.morethanheroic.swords.user.view.response.service.login.LoginResponseBuilder;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,6 @@ import java.io.UnsupportedEncodingException;
 @RestController
 @RequiredArgsConstructor
 public class LoginController {
-
 
     private final UserEntityFactory userEntityFactory;
     private final LoginResponseBuilder loginResponseBuilder;

@@ -72,20 +72,4 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
                 combatExperienceMapper.addExperience(userEntity.getId(), skillType, amount)
         );
     }
-
-    protected CombatStep handleDeath(CombatEntity attacker, CombatEntity opponent, CombatContext combatContext) {
-        if (attacker instanceof MonsterCombatEntity) {
-            combatContext.setWinner(Winner.MONSTER);
-
-            return DefaultCombatStep.builder()
-                    .message(combatMessageFactory.newMessage("monster_death", "COMBAT_MESSAGE_PLAYER_DEAD", attacker.getName()))
-                    .build();
-        } else {
-            combatContext.setWinner(Winner.PLAYER);
-
-            return DefaultCombatStep.builder()
-                    .message(combatMessageFactory.newMessage("monster_death", "COMBAT_MESSAGE_MONSTER_DEAD", opponent.getName()))
-                    .build();
-        }
-    }
 }

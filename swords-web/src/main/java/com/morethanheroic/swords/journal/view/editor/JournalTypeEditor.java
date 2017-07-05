@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.view.editor;
 
-import com.morethanheroic.swords.journal.model.JournalType;
+import com.morethanheroic.swords.journal.domain.JournalType;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Locale;

@@ -9,25 +9,26 @@ import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import com.morethanheroic.swords.combat.domain.step.InitializationCombatStep;
 import com.morethanheroic.swords.combat.repository.dao.CombatDatabaseEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.attack.MonsterAttackCalculator;
 import com.morethanheroic.swords.combat.service.attack.PlayerAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.CombatInitializer;
 import com.morethanheroic.swords.combat.service.calc.CombatTerminator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
+import com.morethanheroic.swords.combat.service.create.domain.CombatCreationContext;
+import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
-@Log4j
 @RequiredArgsConstructor
 public class CreateCombatCalculator {
 
@@ -41,8 +42,11 @@ public class CreateCombatCalculator {
     private final MonsterAttackCalculator monsterAttackCalculator;
 
     @Transactional
-    public AttackResult createCombat(final UserEntity userEntity, final MonsterDefinition monsterDefinition) {
-        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId());
+    public AttackResult createCombat(final CombatCreationContext combatCreationContext) {
+        final UserEntity userEntity = combatCreationContext.getUserEntity();
+        final MonsterDefinition monsterDefinition = combatCreationContext.getMonsterDefinition();
+
+        final CombatDatabaseEntity combatDatabaseEntity = combatMapper.getRunningCombat(userEntity.getId(), combatCreationContext.getType());
 
         if (combatDatabaseEntity != null) {
             if (userEntity.getActiveExplorationEvent() == 0 && userEntity.getActiveExplorationState() == 0) {
@@ -88,7 +92,7 @@ public class CreateCombatCalculator {
         if (combatContext.getWinner() == null) {
             final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
 
-            combatMapper.createCombat(userEntity.getId(), monsterDefinition.getId(), monsterCombatEntity.getActualHealth(),
+            combatMapper.createCombat(userEntity.getId(), combatCreationContext.getType(), monsterDefinition.getId(), monsterCombatEntity.getActualHealth(),
                     monsterCombatEntity.getActualMana());
         } else {
             combatSteps.addAll(combatTerminator.terminate(combatContext));
