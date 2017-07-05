@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20170704-1">
+        <insert tableName="news">
+            <column name="title" value="Quests and the Witchhunter's Guild"/>
+            <column name="release_date" value="2017-07-04 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+With this week's patch, we are releasing the first part Witchhunter's guild. The guild is a brotherhood of monster hunters. They are accepting people into their ranks but there are some tests that everybody must pass before able to call himself a member of the guild.
+
+It took us quite a long time to achieve but the first quest is finally available in the game. We will add more and more of these quests because they will be required to progress to the next city.
+
+Some part of the Witchhunter's guild is disabled at the moment and will be enabled by weekly patches in the future.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
