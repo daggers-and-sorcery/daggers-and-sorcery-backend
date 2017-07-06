@@ -3,6 +3,7 @@ package com.morethanheroic.swords.inventory.service;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.session.SessionAttributeType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class UnidentifiedItemIdCalculator {
 
-    @Autowired
-    private Random random;
+    private final Random random;
 
     public IdentificationType isIdentified(final int itemId) {
         return itemId > Short.MAX_VALUE ? IdentificationType.UNIDENTIFIED : IdentificationType.IDENTIFIED;

@@ -13,7 +13,9 @@ import com.morethanheroic.swords.shop.service.definition.cache.ShopDefinitionCac
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -27,6 +29,7 @@ public class ShopSellItemController {
     private final ShopEntityFactory shopEntityFactory;
     private final ShopService shopService;
 
+    //TODO REGARDING THE NEW SHOP UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //TODO: Use post and real validation with spring validation
     @GetMapping(value = "/shop/{shopId}/sell/{itemId}")
     public Response sellItem(UserEntity user, SessionEntity sessionEntity, @PathVariable int shopId, @PathVariable int itemId) {

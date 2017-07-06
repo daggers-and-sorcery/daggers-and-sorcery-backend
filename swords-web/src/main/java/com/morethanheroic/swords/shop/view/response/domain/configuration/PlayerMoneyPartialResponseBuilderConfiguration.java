@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.shop.view.response.domain.configuration;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
+import com.morethanheroic.swords.inventory.service.pouch.domain.MoneyPouch;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +9,5 @@ import lombok.Getter;
 @Getter
 public class PlayerMoneyPartialResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
-    private final int bronze;
-    private final int silver;
-    private final int gold;
+    private final MoneyPouch moneyPouch;
 }

@@ -6,14 +6,15 @@ import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.memoize.Memoize;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class InventoryEntityFactory implements EntityFactory<InventoryEntity, UserEntity> {
 
-    @Autowired
-    private UserEntityFactory userEntityFactory;
+    private final UserEntityFactory userEntityFactory;
 
     /**
      * @deprecated use {@link #getEntity(UserEntity)} instead
@@ -28,7 +29,7 @@ public class InventoryEntityFactory implements EntityFactory<InventoryEntity, Us
     @Override
     @Memoize
     @InjectAtReturn
-    public InventoryEntity getEntity(final UserEntity id) {
-        return new InventoryEntity(id);
+    public InventoryEntity getEntity(final UserEntity userEntity) {
+        return new InventoryEntity(userEntity);
     }
 }
