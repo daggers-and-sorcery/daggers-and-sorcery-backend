@@ -9,7 +9,7 @@ import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.money.domain.MoneyType;
-import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
+import com.morethanheroic.swords.shop.service.definition.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.shop.service.price.ItemSellPriceCalculator;
 import com.morethanheroic.swords.shop.service.price.domain.ItemPriceCalculationContext;
 import com.morethanheroic.swords.shop.view.response.domain.sell.configuration.ShopSellListResponseBuilderConfiguration;

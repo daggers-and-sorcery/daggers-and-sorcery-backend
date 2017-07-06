@@ -1,12 +1,12 @@
-package com.morethanheroic.swords.shop.service.loader;
+package com.morethanheroic.swords.shop.service.definition.loader;
 
 import com.google.common.collect.ImmutableList;
 import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
-import com.morethanheroic.swords.shop.service.loader.domain.RawShopDefinition;
-import com.morethanheroic.swords.shop.service.transformer.ShopDefinitionTransformer;
+import com.morethanheroic.swords.shop.service.definition.loader.domain.RawShopDefinition;
+import com.morethanheroic.swords.shop.service.definition.transformer.ShopDefinitionTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

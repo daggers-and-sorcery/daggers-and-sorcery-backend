@@ -9,7 +9,7 @@ import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.service.ShopEntityFactory;
 import com.morethanheroic.swords.shop.service.ShopService;
-import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
+import com.morethanheroic.swords.shop.service.definition.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

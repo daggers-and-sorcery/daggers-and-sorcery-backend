@@ -6,7 +6,7 @@ import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.shop.service.ShopEntityFactory;
-import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
+import com.morethanheroic.swords.shop.service.definition.cache.ShopDefinitionCache;
 import com.morethanheroic.swords.shop.view.response.domain.buy.configuration.ShopBuyListResponseBuilderConfiguration;
 import com.morethanheroic.swords.shop.view.response.service.ShopItemTypeSorter;
 import com.morethanheroic.swords.shop.view.response.service.buy.ShopBuyListResponseBuilder;
