@@ -26,8 +26,9 @@ public class RawItemDefinition {
     private ItemType subtype;
 
     private boolean usable;
-    private int weight;
+    private boolean tradeable;
     private boolean equipment;
+    private int weight;
 
     @Getter
     private String description;

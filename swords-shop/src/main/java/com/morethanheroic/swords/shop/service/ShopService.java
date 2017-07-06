@@ -34,7 +34,7 @@ public class ShopService {
             return;
         }
 
-        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
 
         final int itemBuyPrice = itemBuyPriceCalculator.calculateBuyPrice(
                 ItemPriceCalculationContext.builder()
@@ -65,7 +65,7 @@ public class ShopService {
             return;
         }
 
-        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
 
         if (inventoryEntity.hasItem(itemDefinition)) {
             log.info("The user sold an item: " + itemDefinition.getId() + " to the shop.");

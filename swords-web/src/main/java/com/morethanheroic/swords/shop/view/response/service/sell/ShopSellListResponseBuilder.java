@@ -54,9 +54,7 @@ public class ShopSellListResponseBuilder implements ResponseBuilder<ShopSellList
 
         response.setData("money", playerMoneyPartialResponseBuilder.build(
                 PlayerMoneyPartialResponseBuilderConfiguration.builder()
-                        .bronze(responseBuilderConfiguration.getBronze())
-                        .silver(responseBuilderConfiguration.getSilver())
-                        .gold(responseBuilderConfiguration.getGold())
+                        .moneyPouch(responseBuilderConfiguration.getMoneyPouch())
                         .build()
         ));
 

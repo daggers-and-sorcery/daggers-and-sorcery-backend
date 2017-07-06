@@ -5,6 +5,8 @@ dependencies {
 
     compile project(':swords-monster')
     compile project(':swords-item')
+
+    compile project(':common-localization')
 }
 
 apply plugin: 'spring-boot'

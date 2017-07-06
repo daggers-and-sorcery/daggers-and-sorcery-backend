@@ -4,6 +4,7 @@ import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.shop.repository.dao.ShopItemDatabaseEntity;
 import com.morethanheroic.swords.shop.repository.domain.ShopMapper;
+import com.morethanheroic.swords.shop.service.transformer.AvailableItemTransformer;
 import com.morethanheroic.swords.shop.service.transformer.ShopItemTransformer;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,13 +32,21 @@ public class ShopEntity implements Entity {
     @Autowired
     private ShopItemTransformer shopItemTransformer;
 
+    @Autowired
+    private AvailableItemTransformer availableItemTransformer;
+
     @Override
     public int getId() {
         return shopDefinition.getId();
     }
 
     public List<ShopItem> getAllItems(final UserEntity userEntity) {
-        return shopItemTransformer.transform(userEntity, shopMapper.getItemsInShop(shopDefinition.getId()));
+        final List<ShopItem> items = new ArrayList<>();
+
+        items.addAll(shopItemTransformer.transform(userEntity, shopMapper.getItemsInShop(shopDefinition.getId())));
+        items.addAll(availableItemTransformer.transform(userEntity, shopDefinition));
+
+        return items;
     }
 
     public void buyItem(ItemDefinition itemDefinition, int amount) {
