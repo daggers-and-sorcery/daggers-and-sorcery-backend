@@ -4,9 +4,8 @@ import com.morethanheroic.response.exception.NotFoundException;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
-import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.shop.domain.ShopDefinition;
+import com.morethanheroic.swords.item.view.request.advice.domain.ItemRequestEntity;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,7 +17,7 @@ import java.beans.PropertyEditorSupport;
 
 @ControllerAdvice
 @RequiredArgsConstructor
-public class ItemDefinitionControllerAdvice {
+public class ItemRequestEntityControllerAdvice {
 
     private final ItemDefinitionCache itemDefinitionCache;
     private final UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
@@ -26,7 +25,7 @@ public class ItemDefinitionControllerAdvice {
 
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(ItemDefinition.class, new PropertyEditorSupport() {
+        binder.registerCustomEditor(ItemRequestEntity.class, new PropertyEditorSupport() {
 
             @Override
             public void setAsText(final String rawItemId) {
@@ -43,7 +42,12 @@ public class ItemDefinitionControllerAdvice {
                     throw new NotFoundException();
                 }
 
-                setValue(itemDefinitionCache.getDefinition(itemId));
+                setValue(
+                        ItemRequestEntity.builder()
+                                .identificationType(identificationType)
+                                .itemDefinition(itemDefinitionCache.getDefinition(itemId))
+                                .build()
+                );
             }
         });
     }

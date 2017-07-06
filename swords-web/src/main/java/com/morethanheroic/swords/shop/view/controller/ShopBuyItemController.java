@@ -21,7 +21,7 @@ public class ShopBuyItemController {
     private final ShopEntityFactory shopEntityFactory;
     private final ShopService shopService;
 
-    //TODO: Use post and real validation with spring validation
+    //TODO: Use post instead of get
     @GetMapping("/shop/{shopId}/buy/{itemId}")
     public Response buyItem(final UserEntity userEntity, final @PathVariable("shopId") ShopDefinition shopDefinition, final  @PathVariable("itemId") ItemDefinition itemDefinition) {
         if(!shopDefinition.getAvailableFeatures().isBuying()) {
@@ -30,6 +30,6 @@ public class ShopBuyItemController {
 
         shopService.userBuyItem(userEntity, shopEntityFactory.getEntity(shopDefinition), itemDefinition);
 
-        return responseFactory.newSuccessfulResponse(userEntity);
+        return responseFactory.successfulResponse(userEntity);
     }
 }
