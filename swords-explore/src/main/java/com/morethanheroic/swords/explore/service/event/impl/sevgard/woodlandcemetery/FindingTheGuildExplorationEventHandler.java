@@ -15,7 +15,7 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     private static final int EVENT_ID = 24;
 
     private static final int WITCHHUNTER_GUILD_JOIN_QUEST_ID = 1;
-    private static final int WITCHHUNTER_GUILD_JOIN_QUEST_STARTED_STATE_ID = 1;
+    private static final int WITCHHUNTER_GUILD_JOIN_QUEST_NOT_STARTED_STATE_ID = 0;
 
     private static final int YIP_THE_VAMPIRE_HUNTER = 26;
 
@@ -146,9 +146,9 @@ public class FindingTheGuildExplorationEventHandler extends ImprovedExplorationE
     }
 
     @Override
-    public boolean shouldAssign(ExplorationAssignmentContext explorationAssignmentContext) {
+    public boolean shouldAssign(final ExplorationAssignmentContext explorationAssignmentContext) {
         return questStateCalculator.getQuestStage(explorationAssignmentContext.getUserEntity(), questDefinitionCache.getDefinition(WITCHHUNTER_GUILD_JOIN_QUEST_ID))
-                == WITCHHUNTER_GUILD_JOIN_QUEST_STARTED_STATE_ID;
+                == WITCHHUNTER_GUILD_JOIN_QUEST_NOT_STARTED_STATE_ID;
     }
 
     @Override
