@@ -9,6 +9,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RawAvailableFeatures {
 
-    private boolean buying;
-    private boolean selling;
+    private boolean buying = true;
+    private boolean selling = true;
 }

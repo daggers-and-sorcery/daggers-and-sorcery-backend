@@ -11,6 +11,7 @@ import com.morethanheroic.swords.shop.service.definition.loader.domain.RawShopDe
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,13 @@ public class ShopDefinitionTransformer implements DefinitionTransformer<ShopDefi
     }
 
     private AvailableFeatures transform(final RawAvailableFeatures rawAvailableFeatures) {
+        if (rawAvailableFeatures == null) {
+            return AvailableFeatures.builder()
+                    .buying(true)
+                    .selling(true)
+                    .build();
+        }
+
         return AvailableFeatures.builder()
                 .buying(rawAvailableFeatures.isBuying())
                 .selling(rawAvailableFeatures.isSelling())
@@ -37,6 +45,10 @@ public class ShopDefinitionTransformer implements DefinitionTransformer<ShopDefi
     }
 
     private List<AvailableItem> transform(final List<RawAvailableItem> rawAvailableItems) {
+        if (rawAvailableItems == null) {
+            return Collections.emptyList();
+        }
+
         return rawAvailableItems.stream()
                 .map(rawAvailableItem ->
                         AvailableItem.builder()

@@ -56,20 +56,23 @@ public class ShopEntity implements Entity {
     public void sellItem(ItemDefinition itemDefinition, int amount) {
         final ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
 
-        if (shopItemDatabaseEntity.getItemAmount() - amount <= 0) {
-            shopMapper.deleteStock(shopDefinition.getId(), itemDefinition.getId());
-        } else {
-            shopMapper.removeStock(shopDefinition.getId(), itemDefinition.getId(), amount);
+        if (shopItemDatabaseEntity != null) {
+            if (shopItemDatabaseEntity.getItemAmount() - amount <= 0) {
+                shopMapper.deleteStock(shopDefinition.getId(), itemDefinition.getId());
+            } else {
+                shopMapper.removeStock(shopDefinition.getId(), itemDefinition.getId(), amount);
+            }
         }
     }
 
-    public boolean hasItem(ItemDefinition itemDefinition) {
+    public boolean hasItem(final ItemDefinition itemDefinition) {
         final ShopItemDatabaseEntity shopItemDatabaseEntity = shopMapper.getItemInShop(shopDefinition.getId(), itemDefinition.getId());
 
-        if (shopItemDatabaseEntity == null) {
-            return false;
-        }
+        return shopItemDatabaseEntity != null ? shopItemDatabaseEntity.getItemAmount() >= 1 : availableItemsHasItem(itemDefinition);
 
-        return shopItemDatabaseEntity.getItemAmount() >= 1;
+    }
+
+    private boolean availableItemsHasItem(final ItemDefinition itemDefinition) {
+        return shopDefinition.getAvailableItems().stream().anyMatch(availableItem -> availableItem.getItem().getId() == itemDefinition.getId());
     }
 }

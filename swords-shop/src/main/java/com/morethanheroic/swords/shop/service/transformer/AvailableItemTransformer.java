@@ -29,7 +29,7 @@ public class AvailableItemTransformer {
     private ShopItem transform(final UserEntity userEntity, final AvailableItem availableItem, final ShopDefinition shopDefinition) {
 
         return ShopItem.builder()
-                .amount(2000)
+                .amount(Integer.MAX_VALUE)
                 .buyPrice(itemBuyPriceCalculator.calculateBuyPrice(
                         ItemPriceCalculationContext.builder()
                                 .userEntity(userEntity)
