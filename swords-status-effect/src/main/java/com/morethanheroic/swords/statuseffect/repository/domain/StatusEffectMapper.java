@@ -26,7 +26,7 @@ public interface StatusEffectMapper {
     @Update("UPDATE status_effect SET expiration_time = #{expiration_time} WHERE user_id = #{userId}, status_effect_id = #{statusEffectId}")
     void refreshStatusEffect(@Param("userId") final int userId, @Param("statusEffectId") final int statusEffectId, @Param("expiration_time") final Instant expirationTime);
 
-    @Select("SELECT EXISTS(SELECT 1 FROM status_effect WHERE user_id=#{userId}) AND status_effect_id = #{statusEffectId}")
+    @Select("SELECT EXISTS(SELECT 1 FROM status_effect WHERE user_id = #{userId} AND status_effect_id = #{statusEffectId})")
     boolean hasStatusEffect(@Param("userId") final int userId, @Param("statusEffectId") final int statusEffectId);
 
     @Delete("DELETE FROM status_effect WHERE expiration_time < NOW()")
