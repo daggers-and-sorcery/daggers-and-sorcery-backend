@@ -46,20 +46,22 @@ public class DamageAgainstMonsterTypeStartTurnCombatEventHandler implements Star
 
     private List<CombatStep> calculateDamageForTurn(final StartTurnCombatEventContext startTurnCombatEventContext, final MonsterDefinition monsterDefinition, final MonsterType monsterType) {
         if (MONSTER_TYPE_SPECIAL_ATTRIBUTE_MAP.containsKey(monsterType)) {
-            final List<CombatStep> result = new ArrayList<>();
-
             final DiceValueAttributeCalculationResult attributeCalculationResult = (DiceValueAttributeCalculationResult) globalAttributeCalculator.calculateActualValue(startTurnCombatEventContext.getPlayer().getUserEntity(), MONSTER_TYPE_SPECIAL_ATTRIBUTE_MAP.get(monsterType));
 
-            final int damage = diceAttributeRoller.rollDices(attributeCalculationResult);
-            startTurnCombatEventContext.getMonster().decreaseActualHealth(damage);
+            if (!attributeCalculationResult.isEmpty()) {
+                final List<CombatStep> result = new ArrayList<>();
 
-            result.add(
-                    DefaultCombatStep.builder()
-                            .message(combatMessageFactory.newMessage("turn_start_dmg_for_monster_type", "COMBAT_MESSAGE_DAMAGE_ON_TURN_START_FOR_MONSTER_WITH_TYPE", damage, monsterDefinition.getName(), monsterType.getName()))
-                            .build()
-            );
+                final int damage = diceAttributeRoller.rollDices(attributeCalculationResult);
+                startTurnCombatEventContext.getMonster().decreaseActualHealth(damage);
 
-            return result;
+                result.add(
+                        DefaultCombatStep.builder()
+                                .message(combatMessageFactory.newMessage("turn_start_dmg_for_monster_type", "COMBAT_MESSAGE_DAMAGE_ON_TURN_START_FOR_MONSTER_WITH_TYPE", damage, monsterDefinition.getName(), monsterType.getName()))
+                                .build()
+                );
+
+                return result;
+            }
         }
 
         return Collections.emptyList();
