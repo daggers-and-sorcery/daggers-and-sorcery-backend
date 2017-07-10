@@ -1,7 +1,8 @@
-package com.morethanheroic.swords.witchhuntersguild.service;
+package com.morethanheroic.swords.witchhuntersguild.service.rank;
 
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.witchhuntersguild.domain.WitchhuntersGuildRank;
+import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,13 @@ public class WitchhuntersGuildRankCalculator {
     private final WitchhuntersGuildCalculator witchhuntersGuildCalculator;
 
     public WitchhuntersGuildRank calculate(final UserEntity userEntity) {
-        final int witchhunterReputationpoints = witchhuntersGuildCalculator.calculateReputationPoints(userEntity);
+        final int witchhunterReputationPoints = witchhuntersGuildCalculator.calculateReputationPoints(userEntity);
 
-        if (witchhunterReputationpoints < 25) {
+        if (witchhunterReputationPoints < 25) {
             return WitchhuntersGuildRank.NEWCOMER;
-        } else if (witchhunterReputationpoints >= 25 && witchhunterReputationpoints < 50) {
+        } else if (witchhunterReputationPoints < 50) {
             return WitchhuntersGuildRank.NOVICE;
-        } else if (witchhunterReputationpoints >= 50 && witchhunterReputationpoints < 100) {
+        } else if (witchhunterReputationPoints < 100) {
             return WitchhuntersGuildRank.APPRENTICE;
         } else {
             return WitchhuntersGuildRank.ADEPT;

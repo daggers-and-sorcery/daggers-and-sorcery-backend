@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.witchhuntersguild.service;
+package com.morethanheroic.swords.witchhuntersguild.service.quest;
 
 import org.springframework.stereotype.Service;
 

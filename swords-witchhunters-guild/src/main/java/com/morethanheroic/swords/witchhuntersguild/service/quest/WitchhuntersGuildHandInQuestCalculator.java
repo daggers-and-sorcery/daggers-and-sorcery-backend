@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.witchhuntersguild.service;
+package com.morethanheroic.swords.witchhuntersguild.service.quest;
 
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
@@ -9,6 +9,8 @@ import com.morethanheroic.swords.witchhuntersguild.domain.definition.Witchhunter
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobItemRequirement;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobKillRequirement;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.requirement.WitchhuntersGuildJobRequirement;
+import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildCalculator;
+import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildEntityFactory;
 import com.morethanheroic.swords.witchhuntersguild.service.definition.cache.WitchhuntersGuildJobDefinitionCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
