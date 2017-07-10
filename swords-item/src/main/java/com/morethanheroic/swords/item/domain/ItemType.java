@@ -50,7 +50,8 @@ public enum ItemType {
     STOCKINGS,
     LEGGINGS,
     HERB,
-    CLOTH;
+    CLOTH,
+    RING;
 
     public String getName() {
         return WordUtils.capitalize(name().toLowerCase().replace("_", " "));
