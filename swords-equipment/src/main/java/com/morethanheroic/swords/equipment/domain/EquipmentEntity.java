@@ -138,6 +138,12 @@ public class EquipmentEntity implements Entity {
 
                 equipmentMapper.equipBelt(userEntity.getId(), item.getId(), identified);
                 break;
+            case RING:
+                equipmentDatabaseEntity.setRing(item.getId());
+                equipmentDatabaseEntity.setRingIdentified(identified);
+
+                equipmentMapper.equipRing(userEntity.getId(), item.getId(), identified);
+                break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
         }
