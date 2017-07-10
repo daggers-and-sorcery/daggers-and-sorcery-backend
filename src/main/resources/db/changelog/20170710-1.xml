@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20170710-1">
+        <insert tableName="news">
+            <column name="title" value="Bugfixes and minor improvements"/>
+            <column name="release_date" value="2017-07-10 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+This week we are fixing a couple of bugs and added some small improvements to the game suggested by the community. If you have any more suggestions in this regards feel free to post them either in the Inn's chat section, on the forums or on facebook. We are open to all kind of feedback and criticism.
+
+Improvements:
+- Added descriptions for the abilities. They are visible both on the registration and the character screens.
+
+Bugfixes:
+- Fixed the display of the "big button" elements in some of the skill screens like Herblore, Smithing etc.
+- Fixed the wrong responses (mentioning Fletching) for crafting recipes with the Herblore skills.
+- Fixed the Troll's vitality spell. Now it's usable again.
+- Fixed that the "Curing (Wolf skin)" ability incorrectly said "Curing (Fox skin)" in the Leatherworking skill's menu.
+- Added the Pestle and Mortar item to the drop tables. It accidentally got removed by an earlier update.
+- Fixed multiple spelling errors in the combat texts.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
