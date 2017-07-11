@@ -24,8 +24,6 @@ public class SellToShopStockListController {
 
     @GetMapping("/shop/selllist/{shopId}")
     public Response listStock(final UserEntity userEntity, final SessionEntity sessionEntity, final @PathVariable("shopId") ShopDefinition shopDefinition) {
-        //TODO: Check that the user is in the same city as the shop.
-
         return shopSellListResponseBuilder.build(
                 ShopSellListResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)

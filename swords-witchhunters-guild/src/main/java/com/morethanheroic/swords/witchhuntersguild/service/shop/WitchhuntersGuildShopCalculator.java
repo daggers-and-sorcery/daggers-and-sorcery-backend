@@ -12,10 +12,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WitchhuntersGuildShopCalculator {
 
-    //TODO: Implement newer shops!
     private static final int NOVICE_SHOP_ID = 2;
-    private static final int APPRENTICE_SHOP_ID = NOVICE_SHOP_ID;
-    private static final int ADEPT_SHOP_ID = NOVICE_SHOP_ID;
+    private static final int APPRENTICE_SHOP_ID = 3;
+    private static final int ADEPT_SHOP_ID = APPRENTICE_SHOP_ID;
 
     private final ShopDefinitionCache shopDefinitionCache;
 

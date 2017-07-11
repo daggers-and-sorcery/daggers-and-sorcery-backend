@@ -7,6 +7,7 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
+import com.morethanheroic.swords.shop.service.availability.ShopAvailabilityCalculator;
 import com.morethanheroic.swords.shop.service.price.ItemBuyPriceCalculator;
 import com.morethanheroic.swords.shop.service.price.ItemSellPriceCalculator;
 import com.morethanheroic.swords.shop.service.price.domain.ItemPriceCalculationContext;
@@ -24,10 +25,23 @@ public class ShopService {
     private final InventoryEntityFactory inventoryEntityFactory;
     private final ItemSellPriceCalculator itemSellPriceCalculator;
     private final ItemBuyPriceCalculator itemBuyPriceCalculator;
+    private final ShopAvailabilityCalculator shopAvailabilityCalculator;
 
     //TODO: Check that the shop is in the same city as the player.
     @Transactional
     public void userBuyItem(final UserEntity userEntity, final ShopEntity shopEntity, final ItemDefinition itemDefinition) {
+        if (!shopAvailabilityCalculator.isAvailable(userEntity, shopEntity.getShopDefinition())) {
+            log.warn("The player tried to buy in a shop: " + itemDefinition.getId() + " where his access is disabled.");
+
+            return;
+        }
+
+        if (!shopEntity.getShopDefinition().getAvailableFeatures().isBuying()) {
+            log.warn("The player tried to buy in a shop: " + itemDefinition.getId() + " where buying is disabled.");
+
+            return;
+        }
+
         if (!shopEntity.hasItem(itemDefinition)) {
             log.warn("The player tried to buy an item: " + itemDefinition.getId() + " from the shop while the shop don't have it.");
 
@@ -42,7 +56,8 @@ public class ShopService {
                         .itemDefinition(itemDefinition)
                         .build()
         );
-        //ATM we only use money as money, no support for special trades
+
+        //TODO: At the moment we only use money as money, no support for special trades.
         if (itemBuyPrice <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
             log.info("The user bought an item: " + itemDefinition.getId());
 
@@ -59,6 +74,18 @@ public class ShopService {
     //TODO: Check that the shop is in the same city as the player.
     @Transactional
     public void userSellItem(final UserEntity userEntity, final ShopEntity shopEntity, final ItemDefinition itemDefinition, final IdentificationType itemIdentificationType) {
+        if (!shopAvailabilityCalculator.isAvailable(userEntity, shopEntity.getShopDefinition())) {
+            log.warn("The player tried to buy in a shop: " + itemDefinition.getId() + " where his access is disabled.");
+
+            return;
+        }
+
+        if (!shopEntity.getShopDefinition().getAvailableFeatures().isSelling()) {
+            log.warn("The player tried to sell in a shop: " + itemDefinition.getId() + " where selling is disabled.");
+
+            return;
+        }
+
         if (itemDefinition.getType() == ItemType.MONEY) {
             log.warn("The player tried to sell an item with money type! The item was: " + itemDefinition.getId());
 
@@ -76,6 +103,7 @@ public class ShopService {
                             .itemDefinition(itemDefinition)
                             .build()
             ));
+
             inventoryEntity.removeItem(itemDefinition, 1, itemIdentificationType);
 
             shopEntity.buyItem(itemDefinition, 1);

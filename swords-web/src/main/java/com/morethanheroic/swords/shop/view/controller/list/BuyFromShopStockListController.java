@@ -23,8 +23,6 @@ public class BuyFromShopStockListController {
 
     @GetMapping("/shop/buylist/{shopId}")
     public Response listStock(final UserEntity userEntity, final @PathVariable("shopId") ShopDefinition shopDefinition) {
-        //TODO: Check that the user is in the same city as the shop.
-
         return shopBuyListResponseBuilder.build(
                 ShopBuyListResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)

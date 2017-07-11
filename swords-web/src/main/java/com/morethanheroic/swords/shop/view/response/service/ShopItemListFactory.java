@@ -7,6 +7,7 @@ import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.domain.ShopItem;
 import com.morethanheroic.swords.shop.service.ShopEntityFactory;
+import com.morethanheroic.swords.shop.service.availability.ShopAvailabilityCalculator;
 import com.morethanheroic.swords.shop.service.price.ItemSellPriceCalculator;
 import com.morethanheroic.swords.shop.service.price.domain.ItemPriceCalculationContext;
 import com.morethanheroic.swords.shop.view.response.service.sell.ShopSellItem;
@@ -28,13 +29,18 @@ public class ShopItemListFactory {
     private final ShopEntityFactory shopEntityFactory;
     private final InventoryEntityFactory inventoryEntityFactory;
     private final ItemSellPriceCalculator itemSellPriceCalculator;
+    private final ShopAvailabilityCalculator shopAvailabilityCalculator;
 
     public Map<ItemType, List<ShopItem>> getItemsToBuyByThePlayerInShop(final UserEntity userEntity, final ShopDefinition shopDefinition) {
-        return shopDefinition.getAvailableFeatures().isBuying() ? shopItemTypeSorter.sortByType(shopEntityFactory.getEntity(shopDefinition).getAllItems(userEntity)) : Collections.emptyMap();
+        if(!shopAvailabilityCalculator.isAvailable(userEntity, shopDefinition) || !shopDefinition.getAvailableFeatures().isBuying()) {
+            return Collections.emptyMap();
+        }
+
+        return shopItemTypeSorter.sortByType(shopEntityFactory.getEntity(shopDefinition).getAllItems(userEntity));
     }
 
     public Map<ItemType, List<ShopSellItem>> getItemsToSellByThePlayerInShop(final UserEntity userEntity, final ShopDefinition shopDefinition) {
-        if (!shopDefinition.getAvailableFeatures().isSelling()) {
+        if(!shopAvailabilityCalculator.isAvailable(userEntity, shopDefinition) || !shopDefinition.getAvailableFeatures().isSelling()) {
             return Collections.emptyMap();
         }
 

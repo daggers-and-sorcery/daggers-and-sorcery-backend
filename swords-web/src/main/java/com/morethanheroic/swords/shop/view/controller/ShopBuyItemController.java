@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.shop.view.controller;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.response.exception.ConflictException;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
@@ -24,10 +23,6 @@ public class ShopBuyItemController {
     //TODO: Use post instead of get
     @GetMapping("/shop/{shopId}/buy/{itemId}")
     public Response buyItem(final UserEntity userEntity, final @PathVariable("shopId") ShopDefinition shopDefinition, final  @PathVariable("itemId") ItemDefinition itemDefinition) {
-        if(!shopDefinition.getAvailableFeatures().isBuying()) {
-            throw new ConflictException();
-        }
-
         shopService.userBuyItem(userEntity, shopEntityFactory.getEntity(shopDefinition), itemDefinition);
 
         return responseFactory.successfulResponse(userEntity);

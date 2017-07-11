@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.shop.view.controller;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.response.exception.ConflictException;
 import com.morethanheroic.swords.item.view.request.advice.domain.ItemRequestEntity;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
@@ -26,10 +25,6 @@ public class ShopSellItemController {
     //TODO: Use post instead of get
     @GetMapping("/shop/{shopId}/sell/{itemId}")
     public Response sellItem(final UserEntity userEntity, final @PathVariable("shopId") ShopDefinition shopDefinition, final  @PathVariable("itemId") ItemRequestEntity itemRequestEntity) {
-        if(!shopDefinition.getAvailableFeatures().isSelling()) {
-            throw new ConflictException();
-        }
-
         shopService.userSellItem(userEntity, shopEntityFactory.getEntity(shopDefinition), itemRequestEntity.getItemDefinition(), itemRequestEntity.getIdentificationType());
 
         return responseFactory.successfulResponse(userEntity);
