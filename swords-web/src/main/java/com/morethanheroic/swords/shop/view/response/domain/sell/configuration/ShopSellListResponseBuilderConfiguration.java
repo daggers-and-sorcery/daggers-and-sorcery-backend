@@ -2,6 +2,7 @@ package com.morethanheroic.swords.shop.view.response.domain.sell.configuration;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.session.domain.SessionEntity;
+import com.morethanheroic.swords.inventory.service.pouch.domain.MoneyPouch;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.view.response.service.sell.ShopSellItem;
@@ -18,9 +19,7 @@ public class ShopSellListResponseBuilderConfiguration implements ResponseBuilder
 
     private final UserEntity userEntity;
     private final SessionEntity sessionEntity;
-    private final int bronze;
-    private final int silver;
-    private final int gold;
+    private final MoneyPouch moneyPouch;
     private final ShopDefinition shopDefinition;
     private final Map<ItemType, List<ShopSellItem>> items;
 }

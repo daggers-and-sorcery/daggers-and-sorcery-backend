@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.profile.response.service.attribute;
 
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ public class CombatAttributeCalculationResultPartialResponseBuilder implements P
 
     @Override
     public CombatAttributeCalculationResultPartialResponse build(CombatAttributeCalculationResultPartialResponseConfiguration responseBuilderConfiguration) {
-        final CombatAttributeCalculationResult combatAttributeCalculationResult = responseBuilderConfiguration.getCombatAttributeCalculationResult();
+        final DiceValueAttributeCalculationResult combatAttributeCalculationResult = responseBuilderConfiguration.getCombatAttributeCalculationResult();
 
         return CombatAttributeCalculationResultPartialResponse.buildCombatAttributeCalculationResultPartialResponse()
                 .value(combatAttributeCalculationResult.getValue())

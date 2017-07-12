@@ -3,7 +3,7 @@ package com.morethanheroic.swords.attribute.service.manipulator;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class UserBasicAttributeManipulator {
     }
 
     public void decreaseHealth(final UserEntity userEntity, final int amount) {
-        final AttributeCalculationResult attributeCalculationResult = globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.LIFE);
+        final SimpleValueAttributeCalculationResult attributeCalculationResult = globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.LIFE);
 
         if (attributeCalculationResult.getValue() - amount < 0) {
             userEntity.setHealthPoints(0);
@@ -53,7 +53,7 @@ public class UserBasicAttributeManipulator {
     }
 
     public void decreaseMana(final UserEntity userEntity, final int amount) {
-        final AttributeCalculationResult attributeCalculationResult = globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.MANA);
+        final SimpleValueAttributeCalculationResult attributeCalculationResult = globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.MANA);
 
         if (attributeCalculationResult.getValue() - amount < 0) {
             userEntity.setManaPoints(0);
@@ -73,7 +73,7 @@ public class UserBasicAttributeManipulator {
     }
 
     public void decreaseMovement(final UserEntity userEntity, final int amount) {
-        final AttributeCalculationResult attributeCalculationResult = globalAttributeCalculator.calculateActualValue(userEntity, BasicAttribute.MOVEMENT);
+        final SimpleValueAttributeCalculationResult attributeCalculationResult = globalAttributeCalculator.calculateActualValue(userEntity, BasicAttribute.MOVEMENT);
 
         if (attributeCalculationResult.getValue() - amount < 0) {
             userEntity.setMovementPoints(0);

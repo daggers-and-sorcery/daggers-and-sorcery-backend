@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.profile.response.service.attribute;
 
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,5 +9,5 @@ import lombok.Getter;
 @Getter
 public class AttributeCalculationResultPartialResponseConfiguration implements ResponseBuilderConfiguration {
 
-    private AttributeCalculationResult attributeCalculationResult;
+    private SimpleValueAttributeCalculationResult attributeCalculationResult;
 }

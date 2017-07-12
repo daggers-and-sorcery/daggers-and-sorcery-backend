@@ -11,7 +11,6 @@ import com.morethanheroic.swords.item.service.WeaponSuperTypeCalculator;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -81,13 +80,9 @@ public class CombatUtil {
     }
 
     public Optional<SkillType> getUserOffhandSkillType(final UserEntity userEntity) {
-        final Optional<ItemType> itemType = getUserOffhandType(userEntity);
+        return getUserOffhandType(userEntity)
+                .map(skillTypeCalculator::getSkillFromItemType);
 
-        if (!itemType.isPresent()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(skillTypeCalculator.getSkillFromItemType(itemType.get()));
     }
 
     public boolean hasShield(final UserEntity userEntity) {

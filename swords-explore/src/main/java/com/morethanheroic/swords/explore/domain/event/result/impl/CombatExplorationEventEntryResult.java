@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.domain.event.result.impl;
 
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.explore.domain.event.result.ExplorationEventEntryResult;
 import lombok.Builder;
 import lombok.Getter;

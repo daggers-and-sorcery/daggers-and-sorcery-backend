@@ -2,8 +2,8 @@ package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.UnlimitedAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.UnlimitedValueAttributeCalculationResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,11 +14,14 @@ public abstract class GenericAttributeCalculator<T extends Attribute> implements
     @Autowired
     private List<AttributeBonusProvider> attributeBonusProviders;
 
+    @Autowired
+    private AttributeCalculationResultFactory attributeCalculationResultFactory;
+
     @Override
-    public AttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
+    public SimpleValueAttributeCalculationResult calculateActualValue(UserEntity user, Attribute attribute, boolean shouldCheckMinimum) {
         final int racialModifier = calculatePercentageModification(user, attribute);
 
-        final AttributeCalculationResult percentageResult = calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifier);
+        final SimpleValueAttributeCalculationResult percentageResult = calculatePercentageModifiedAttribute(calculateActualBeforePercentageMultiplication(user, attribute), racialModifier);
 
         if (shouldCheckMinimum) {
             checkMinimumValue(attribute, percentageResult);
@@ -32,8 +35,8 @@ public abstract class GenericAttributeCalculator<T extends Attribute> implements
         return 0;
     }
 
-    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
-        final AttributeCalculationResult result = new AttributeCalculationResult(attribute);
+    public SimpleValueAttributeCalculationResult calculateActualBeforePercentageMultiplication(UserEntity user, Attribute attribute) {
+        final SimpleValueAttributeCalculationResult result = attributeCalculationResultFactory.newResult(attribute);
 
         for (AttributeBonusProvider attributeBonusProvider : attributeBonusProviders) {
             attributeBonusProvider.calculateBonus(user, attribute).ifPresent(result::addCalculationResult);
@@ -42,15 +45,15 @@ public abstract class GenericAttributeCalculator<T extends Attribute> implements
         return result;
     }
 
-    public AttributeCalculationResult calculatePercentageModifiedAttribute(AttributeCalculationResult attributeValue, int percentage) {
+    public SimpleValueAttributeCalculationResult calculatePercentageModifiedAttribute(SimpleValueAttributeCalculationResult attributeValue, int percentage) {
         attributeValue.setValue((int) (attributeValue.getValue() * ((double) percentage / 100 + 1)));
 
         return attributeValue;
     }
 
-    public AttributeCalculationResult calculateMaximumValue(UserEntity user, Attribute attribute) {
+    public SimpleValueAttributeCalculationResult calculateMaximumValue(UserEntity user, Attribute attribute) {
         if (attribute.isUnlimited()) {
-            return new UnlimitedAttributeCalculationResult(attribute);
+            return new UnlimitedValueAttributeCalculationResult(attribute);
         }
 
         final int racialModifier = calculatePercentageModification(user, attribute);
@@ -58,8 +61,8 @@ public abstract class GenericAttributeCalculator<T extends Attribute> implements
         return calculatePercentageModifiedAttribute(calculateMaximumBeforePercentageMultiplication(user, attribute), racialModifier);
     }
 
-    public AttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
-        final AttributeCalculationResult result = new AttributeCalculationResult(attribute);
+    public SimpleValueAttributeCalculationResult calculateMaximumBeforePercentageMultiplication(UserEntity userEntity, Attribute attribute) {
+        final SimpleValueAttributeCalculationResult result = attributeCalculationResultFactory.newResult(attribute);
 
         result.increaseValue(attribute.getInitialValue());
 
@@ -70,6 +73,7 @@ public abstract class GenericAttributeCalculator<T extends Attribute> implements
         return result;
     }
 
-    protected void checkMinimumValue(final Attribute attribute, final AttributeCalculationResult attributeCalculationResult) {
+    //TODO: What is this??? Nowhere used??? Why???
+    protected void checkMinimumValue(final Attribute attribute, final SimpleValueAttributeCalculationResult attributeCalculationResult) {
     }
 }

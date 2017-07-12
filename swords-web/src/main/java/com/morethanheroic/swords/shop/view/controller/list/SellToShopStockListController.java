@@ -1,93 +1,37 @@
 package com.morethanheroic.swords.shop.view.controller.list;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.response.exception.NotFoundException;
 import com.morethanheroic.session.domain.SessionEntity;
-import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.domain.InventoryItem;
-import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
-import com.morethanheroic.swords.item.domain.ItemType;
+import com.morethanheroic.swords.inventory.service.pouch.MoneyPouchFactory;
 import com.morethanheroic.swords.money.domain.MoneyType;
-import com.morethanheroic.swords.shop.service.cache.ShopDefinitionCache;
-import com.morethanheroic.swords.shop.service.price.ItemSellPriceCalculator;
-import com.morethanheroic.swords.shop.service.price.domain.ItemPriceCalculationContext;
+import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.view.response.domain.sell.configuration.ShopSellListResponseBuilderConfiguration;
-import com.morethanheroic.swords.shop.view.response.service.sell.ShopSellItem;
+import com.morethanheroic.swords.shop.view.response.service.ShopItemListFactory;
 import com.morethanheroic.swords.shop.view.response.service.sell.ShopSellListResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 public class SellToShopStockListController {
 
     private final ShopSellListResponseBuilder shopSellListResponseBuilder;
-    private final ShopDefinitionCache shopDefinitionCache;
-    private final InventoryEntityFactory inventoryEntityFactory;
-    private final InventoryItemTypeSorter inventoryItemTypeSorter;
-    private final ItemSellPriceCalculator itemSellPriceCalculator;
+    private final MoneyPouchFactory moneyPouchFactory;
+    private final ShopItemListFactory shopItemListFactory;
 
-    @RequestMapping(value = "/shop/selllist/{shopId}", method = RequestMethod.GET)
-    public Response listStock(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable int shopId) {
-        if (!shopDefinitionCache.isDefinitionExists(shopId)) {
-            throw new NotFoundException();
-        }
-
-        //TODO: Check that the user is in the same city as the shop.
-
-        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
-        final int moneyAmount = inventoryEntity.getMoneyAmount(MoneyType.MONEY);
-
+    @GetMapping("/shop/selllist/{shopId}")
+    public Response listStock(final UserEntity userEntity, final SessionEntity sessionEntity, final @PathVariable("shopId") ShopDefinition shopDefinition) {
         return shopSellListResponseBuilder.build(
                 ShopSellListResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
                         .sessionEntity(sessionEntity)
-                        .bronze(moneyAmount % 100)
-                        .silver((moneyAmount / 100) % 100)
-                        .gold(moneyAmount / 10000)
-                        .shopDefinition(shopDefinitionCache.getDefinition(shopId))
-                        .items(transform(userEntity, inventoryItemTypeSorter.sortByType(inventoryEntity.getItems())))
+                        .moneyPouch(moneyPouchFactory.newMoneyPouch(userEntity, MoneyType.MONEY))
+                        .shopDefinition(shopDefinition)
+                        .items(shopItemListFactory.getItemsToSellByThePlayerInShop(userEntity, shopDefinition))
                         .build()
         );
-    }
-
-    private Map<ItemType, List<ShopSellItem>> transform(final UserEntity userEntity, final Map<ItemType, List<InventoryItem>> items) {
-        final Map<ItemType, List<ShopSellItem>> result = new HashMap<>();
-
-        for (Map.Entry<ItemType, List<InventoryItem>> item : items.entrySet()) {
-            if (item.getKey() == ItemType.MONEY) {
-                continue;
-            }
-
-            if (!result.containsKey(item.getKey())) {
-                result.put(item.getKey(), new ArrayList<>());
-            }
-
-            for (InventoryItem inventoryItem : item.getValue()) {
-                result.get(item.getKey()).add(
-                        ShopSellItem.builder()
-                                .inventoryItem(inventoryItem)
-                                .sellPrice(itemSellPriceCalculator.calculateSellPrice(
-                                        ItemPriceCalculationContext.builder()
-                                                .userEntity(userEntity)
-                                                .itemDefinition(inventoryItem.getItem())
-                                                .build()
-                                ))
-                                .build()
-                );
-            }
-        }
-
-        return result;
     }
 }

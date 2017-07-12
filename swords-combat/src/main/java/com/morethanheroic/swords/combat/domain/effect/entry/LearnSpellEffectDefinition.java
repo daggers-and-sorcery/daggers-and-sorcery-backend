@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.SpellLearningService;

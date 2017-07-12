@@ -138,6 +138,12 @@ public class EquipmentEntity implements Entity {
 
                 equipmentMapper.equipBelt(userEntity.getId(), item.getId(), identified);
                 break;
+            case RING:
+                equipmentDatabaseEntity.setRing(item.getId());
+                equipmentDatabaseEntity.setRingIdentified(identified);
+
+                equipmentMapper.equipRing(userEntity.getId(), item.getId(), identified);
+                break;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at equipping.");
         }
@@ -291,6 +297,19 @@ public class EquipmentEntity implements Entity {
                 }
 
                 return previousBelt;
+            case RING:
+                final int previousRing = equipmentDatabaseEntity.getRing();
+
+                if(previousRing != 0) {
+                    inventoryEntity.addItem(previousRing, 1, equipmentDatabaseEntity.isRingIdentified());
+
+                    equipmentDatabaseEntity.setRing(0);
+                    equipmentDatabaseEntity.setRingIdentified(true);
+
+                    equipmentMapper.equipRing(userEntity.getId(), 0, true);
+                }
+
+                return previousRing;
             default:
                 throw new IllegalArgumentException("Slot: " + slot + " is not supported at unequipping.");
         }
@@ -323,7 +342,6 @@ public class EquipmentEntity implements Entity {
             case GLOVES:
                 return equipmentDatabaseEntity.getGloves();
             case RING:
-            case LEFT_RING:
                 return equipmentDatabaseEntity.getRing();
             case AMULET:
                 return equipmentDatabaseEntity.getAmulet();
@@ -357,7 +375,6 @@ public class EquipmentEntity implements Entity {
             case GLOVES:
                 return equipmentDatabaseEntity.isGlovesIdentified();
             case RING:
-            case LEFT_RING:
                 return equipmentDatabaseEntity.isRingIdentified();
             case AMULET:
                 return equipmentDatabaseEntity.isAmuletIdentified();

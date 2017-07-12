@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.combat.service.awarder;
 
 import com.morethanheroic.swords.combat.domain.Drop;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
-import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;

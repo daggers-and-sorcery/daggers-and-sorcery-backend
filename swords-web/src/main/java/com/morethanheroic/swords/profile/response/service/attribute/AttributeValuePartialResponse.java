@@ -12,7 +12,7 @@ import java.util.Collection;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttributeValuePartialResponse extends PartialResponse {
 
-    //TODO: Instead of AttributeCalculationResult use PartialResponses depending on the type of the attribute.
+    //TODO: Instead of SimpleValueAttributeCalculationResult use PartialResponses depending on the type of the attribute.
     private final AttributeCalculationResultPartialResponse actual;
     private final AttributeCalculationResultPartialResponse maximum;
     private final AttributeDefinitionPartialResponse attribute;

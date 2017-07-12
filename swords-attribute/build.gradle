@@ -12,6 +12,7 @@ dependencies {
     compile project(':swords-skill')
     compile project(':swords-race')
     compile project(':swords-item')
+    compile project(':swords-dice')
 }
 
 apply plugin: 'spring-boot'

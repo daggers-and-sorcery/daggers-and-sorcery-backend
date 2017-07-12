@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.domain.effect.entry;
 
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.ImprovedCombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;

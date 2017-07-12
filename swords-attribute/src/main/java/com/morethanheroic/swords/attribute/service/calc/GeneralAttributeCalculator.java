@@ -5,7 +5,7 @@ import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.AttributeToRacialModifierConverter;
 import com.morethanheroic.swords.attribute.service.cache.SkillAttributeDefinitionCache;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.GeneralAttributeData;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
@@ -66,8 +66,8 @@ public class GeneralAttributeCalculator extends GenericAttributeCalculator<Gener
     }
 
     @Override
-    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
-        final AttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(userEntity, attribute);
+    public SimpleValueAttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity userEntity, final Attribute attribute) {
+        final SimpleValueAttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(userEntity, attribute);
 
         result.increaseValue(attribute.getInitialValue());
         result.increaseValue(calculatePointsBonusBySkills(userEntity, attribute));

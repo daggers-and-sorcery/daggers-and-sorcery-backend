@@ -2,8 +2,8 @@ package com.morethanheroic.swords.combat.domain.effect.entry;
 
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.ImprovedCombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

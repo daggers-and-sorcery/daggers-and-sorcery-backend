@@ -3,6 +3,7 @@ package com.morethanheroic.swords.witchhuntersguild.service;
 import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.witchhuntersguild.service.definition.cache.WitchhuntersGuildJobDefinitionCache;
+import com.morethanheroic.swords.witchhuntersguild.service.quest.WitchhuntersGuildQuestUpdater;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

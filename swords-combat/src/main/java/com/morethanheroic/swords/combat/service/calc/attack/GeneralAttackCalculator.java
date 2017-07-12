@@ -1,16 +1,11 @@
 package com.morethanheroic.swords.combat.service.calc.attack;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
-import com.morethanheroic.swords.combat.domain.Winner;
-import com.morethanheroic.swords.combat.domain.entity.CombatEntity;
-import com.morethanheroic.swords.combat.domain.entity.MonsterCombatEntity;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
-import com.morethanheroic.swords.combat.domain.step.DefaultCombatStep;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.repository.dao.CombatExperienceDatabaseEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
 import com.morethanheroic.swords.combat.service.CombatUtil;
-import com.morethanheroic.swords.combat.service.message.CombatMessageFactory;
+import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,6 +5,7 @@ import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.witchhuntersguild.domain.WitchhuntersGuildEntity;
 import com.morethanheroic.swords.witchhuntersguild.service.definition.cache.WitchhuntersGuildJobDefinitionCache;
+import com.morethanheroic.swords.witchhuntersguild.service.rank.WitchhuntersGuildRankCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

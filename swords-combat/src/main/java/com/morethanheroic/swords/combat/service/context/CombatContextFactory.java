@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.SavedCombatEntity;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.service.MonsterCombatEntityFactory;
 
 import lombok.RequiredArgsConstructor;

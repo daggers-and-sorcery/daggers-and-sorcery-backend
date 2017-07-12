@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.service.calc;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.Winner;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.service.calc.result.PlayerDefeatHandler;
 import com.morethanheroic.swords.combat.service.calc.result.PlayerVictoryHandler;
 import lombok.RequiredArgsConstructor;

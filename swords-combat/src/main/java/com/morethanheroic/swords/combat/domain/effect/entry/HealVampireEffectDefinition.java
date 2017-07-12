@@ -6,7 +6,7 @@ import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeDat
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.ImprovedCombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.vampire.service.VampireCalculator;
 import lombok.RequiredArgsConstructor;

@@ -105,6 +105,13 @@ public class ItemModifierToAttributeConverter {
                 return SkillAttribute.SCAVENGING;
             case COOKING:
                 return SkillAttribute.COOKING;
+                //Special
+            case EXTRA_DAMAGE_AGAINST_VAMPIRES:
+                return SpecialAttribute.EXTRA_DAMAGE_AGAINST_VAMPIRES;
+            case PERIODICAL_DAMAGE_AGAINST_VAMPIRES:
+                return SpecialAttribute.PERIODICAL_DAMAGE_AGAINST_VAMPIRES;
+            case PERIODICAL_DAMAGE_AGAINST_UNDEAD:
+                return SpecialAttribute.PERIODICAL_DAMAGE_AGAINST_UNDEAD;
             default:
                 throw new IllegalArgumentException("Item modifier cannot be converted to attribute");
         }

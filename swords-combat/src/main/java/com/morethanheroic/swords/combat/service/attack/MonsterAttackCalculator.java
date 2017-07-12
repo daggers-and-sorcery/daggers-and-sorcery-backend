@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatContext;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.service.calc.AttackCalculatorProvider;
 
 import lombok.RequiredArgsConstructor;

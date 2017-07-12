@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.ImprovedCombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;

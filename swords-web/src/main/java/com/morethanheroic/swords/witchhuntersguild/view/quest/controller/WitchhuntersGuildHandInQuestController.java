@@ -3,7 +3,7 @@ package com.morethanheroic.swords.witchhuntersguild.view.quest.controller;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildEntityFactory;
-import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildHandInQuestCalculator;
+import com.morethanheroic.swords.witchhuntersguild.service.quest.WitchhuntersGuildHandInQuestCalculator;
 import com.morethanheroic.swords.witchhuntersguild.view.quest.response.service.WitchhuntersGuildQuestResponseBuilder;
 import com.morethanheroic.swords.witchhuntersguild.view.quest.response.service.domain.WitchhuntersGuildQuestResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;

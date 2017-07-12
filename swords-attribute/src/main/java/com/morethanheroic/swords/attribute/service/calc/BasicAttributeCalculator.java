@@ -2,7 +2,7 @@ package com.morethanheroic.swords.attribute.service.calc;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.AttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.GlobalAttributeModifierCalculator;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -18,6 +18,7 @@ public class BasicAttributeCalculator extends GenericAttributeCalculator<BasicAt
 
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final GlobalAttributeModifierCalculator globalAttributeModifierCalculator;
+    private final AttributeCalculationResultFactory attributeCalculationResultFactory;
 
     @Override
     public AttributeData calculateAttributeValue(final UserEntity user, final BasicAttribute attribute) {
@@ -30,17 +31,17 @@ public class BasicAttributeCalculator extends GenericAttributeCalculator<BasicAt
     }
 
     @Override
-    public AttributeCalculationResult calculateActualValue(final UserEntity user, final Attribute attribute, final boolean shouldCheckMinimum) {
+    public SimpleValueAttributeCalculationResult calculateActualValue(final UserEntity user, final Attribute attribute, final boolean shouldCheckMinimum) {
         if (attribute == BasicAttribute.MOVEMENT) {
-            return new AttributeCalculationResult(user.getMovementPoints(), attribute);
+            return attributeCalculationResultFactory.newResult(user.getMovementPoints(), attribute);
         }
 
         return super.calculateActualValue(user, attribute, shouldCheckMinimum);
     }
 
     @Override
-    public AttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity user, final Attribute attribute) {
-        final AttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(user, attribute);
+    public SimpleValueAttributeCalculationResult calculateActualBeforePercentageMultiplication(final UserEntity user, final Attribute attribute) {
+        final SimpleValueAttributeCalculationResult result = super.calculateActualBeforePercentageMultiplication(user, attribute);
 
         result.increaseValue(attribute.getInitialValue());
 

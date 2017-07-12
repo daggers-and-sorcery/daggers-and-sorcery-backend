@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller for the Guild hall function of the Witchhunter's guild.
+ * Controller for the Guild Hall function of the Witchhunter's guild.
  */
 @RestController
 @RequiredArgsConstructor

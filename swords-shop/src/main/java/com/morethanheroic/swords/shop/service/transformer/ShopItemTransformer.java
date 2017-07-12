@@ -45,7 +45,7 @@ public class ShopItemTransformer {
                                 .itemDefinition(itemDefinition)
                                 .build()
                 ))
-                .item(itemDefinitionCache.getDefinition(shopItemDatabaseEntity.getItemId()))
+                .item(itemDefinition)
                 .shopId(shopItemDatabaseEntity.getShopId())
                 .build();
     }

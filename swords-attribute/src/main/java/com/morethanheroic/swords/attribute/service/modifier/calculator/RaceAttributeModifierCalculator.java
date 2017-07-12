@@ -10,6 +10,7 @@ import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModi
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.attribute.service.modifier.domain.PercentageAttributeModifierEntry;
 import com.morethanheroic.swords.user.domain.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RaceAttributeModifierCalculator implements AttributeModifierCalculator {
 
     private static final int NO_RACIAL_MODIFIER = 0;
 
-    @Autowired
-    private GeneralAttributeCalculator globalAttributeCalculator;
+    private final GeneralAttributeCalculator globalAttributeCalculator;
 
     @Override
     public List<AttributeModifierEntry> calculate(UserEntity user, Attribute attribute) {

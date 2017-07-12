@@ -1,15 +1,11 @@
 package com.morethanheroic.swords.statuseffect.service.attribute;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierType;
 import com.morethanheroic.swords.attribute.domain.type.AttributeModifierUnitType;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.CombatAttributeCalculationResult;
+import com.morethanheroic.swords.attribute.service.calc.AttributeCalculationResultFactory;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.modifier.calculator.AttributeModifierProvider;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierEntry;
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
@@ -17,8 +13,11 @@ import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttribu
 import com.morethanheroic.swords.statuseffect.service.StatusEffectEntityFactory;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +25,7 @@ public class StatusEffectAttributeModifierProvider implements AttributeModifierP
 
     private final StatusEffectEntityFactory statusEffectEntityFactory;
     private final StatusEffectModifierToAttributeConverter statusEffectModifierToAttributeConverter;
+    private final AttributeCalculationResultFactory attributeCalculationResultFactory;
 
     @Override
     public List<AttributeModifierEntry> calculateModifiers(final UserEntity userEntity, final Attribute attribute) {
@@ -34,7 +34,8 @@ public class StatusEffectAttributeModifierProvider implements AttributeModifierP
                 .filter(statusEffectModifierDefinition -> isModifierForAttribute(statusEffectModifierDefinition, attribute))
                 .map(statusEffectModifierDefinitionConsumer -> {
                     if (attribute instanceof CombatAttribute) {
-                        final CombatAttributeCalculationResult combatAttributeCalculationResult = new CombatAttributeCalculationResult((CombatAttribute) attribute);
+                        final DiceValueAttributeCalculationResult combatAttributeCalculationResult = (DiceValueAttributeCalculationResult) attributeCalculationResultFactory.newResult(attribute);
+
                         combatAttributeCalculationResult.setValue(statusEffectModifierDefinitionConsumer.getAmount());
                         combatAttributeCalculationResult.setD2(statusEffectModifierDefinitionConsumer.getD2());
                         combatAttributeCalculationResult.setD4(statusEffectModifierDefinitionConsumer.getD4());
@@ -44,7 +45,6 @@ public class StatusEffectAttributeModifierProvider implements AttributeModifierP
 
                         return new AttributeModifierEntry(AttributeModifierType.STATUS_EFFECT, AttributeModifierUnitType.VALUE,
                                 new CombatAttributeModifierValue(combatAttributeCalculationResult));
-
                     } else {
                         return new AttributeModifierEntry(AttributeModifierType.STATUS_EFFECT, AttributeModifierUnitType.VALUE,
                                 new AttributeModifierValue(statusEffectModifierDefinitionConsumer.getAmount()));

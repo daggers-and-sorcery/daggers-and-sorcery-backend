@@ -1,12 +1,10 @@
 package com.morethanheroic.swords.explore.view.response.domain;
 
 import com.morethanheroic.response.domain.PartialResponse;
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Collection;
-import java.util.List;
 
 @Builder
 @Getter

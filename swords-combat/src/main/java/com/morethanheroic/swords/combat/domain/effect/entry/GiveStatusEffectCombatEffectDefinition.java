@@ -2,7 +2,7 @@ package com.morethanheroic.swords.combat.domain.effect.entry;
 
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.ImprovedCombatEffectDefinition;
-import com.morethanheroic.swords.combat.domain.entity.UserCombatEntity;
+import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.statuseffect.service.StatusEffectManipulator;
 import com.morethanheroic.swords.statuseffect.service.definition.cache.StatusEffectDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;

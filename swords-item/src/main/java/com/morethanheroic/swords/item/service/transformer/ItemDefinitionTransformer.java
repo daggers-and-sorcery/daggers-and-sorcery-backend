@@ -34,6 +34,7 @@ public class ItemDefinitionTransformer implements DefinitionTransformer<ItemDefi
                 .equipment(rawItemDefinition.isEquipment())
                 .description(rawItemDefinition.getDescription())
                 .flavour(rawItemDefinition.getFlavour())
+                .tradeable(rawItemDefinition.isTradeable())
                 .priceDefinitions(itemPriceDefinitionListTransformer.transform(rawItemDefinition.getPriceList()))
                 .combatEffects(effectDefinitionListTransformer.transform((List) rawItemDefinition.getEffectList()))
                 .modifiers(itemModifierDefinitionListTransformer.transform(rawItemDefinition.getModifiers()))

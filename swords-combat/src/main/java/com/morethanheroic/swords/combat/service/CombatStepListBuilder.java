@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.combat.service;
 
-import com.morethanheroic.swords.combat.domain.step.CombatStep;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 
 import java.util.ArrayList;
 import java.util.Collection;
