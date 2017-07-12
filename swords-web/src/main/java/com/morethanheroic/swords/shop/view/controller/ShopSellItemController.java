@@ -22,7 +22,7 @@ public class ShopSellItemController {
     private final ShopEntityFactory shopEntityFactory;
     private final ShopService shopService;
 
-    //TODO: Use post instead of get
+    //TODO: Use POST instead of GET.
     @GetMapping("/shop/{shopId}/sell/{itemId}")
     public Response sellItem(final UserEntity userEntity, final @PathVariable("shopId") ShopDefinition shopDefinition, final  @PathVariable("itemId") ItemRequestEntity itemRequestEntity) {
         shopService.userSellItem(userEntity, shopEntityFactory.getEntity(shopDefinition), itemRequestEntity.getItemDefinition(), itemRequestEntity.getIdentificationType());

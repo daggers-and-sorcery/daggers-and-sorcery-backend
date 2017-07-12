@@ -26,7 +26,10 @@ public class RawItemDefinition {
     private ItemType subtype;
 
     private boolean usable;
-    private boolean tradeable;
+
+    @Getter
+    private boolean tradeable = true;
+
     private boolean equipment;
     private int weight;
 

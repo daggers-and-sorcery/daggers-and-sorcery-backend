@@ -31,19 +31,19 @@ public class ShopService {
     @Transactional
     public void userBuyItem(final UserEntity userEntity, final ShopEntity shopEntity, final ItemDefinition itemDefinition) {
         if (!shopAvailabilityCalculator.isAvailable(userEntity, shopEntity.getShopDefinition())) {
-            log.warn("The player tried to buy in a shop: " + itemDefinition.getId() + " where his access is disabled.");
+            log.warn("The player tried to buy in a shop: " + itemDefinition + " where his access is disabled.");
 
             return;
         }
 
         if (!shopEntity.getShopDefinition().getAvailableFeatures().isBuying()) {
-            log.warn("The player tried to buy in a shop: " + itemDefinition.getId() + " where buying is disabled.");
+            log.warn("The player tried to buy in a shop: " + itemDefinition + " where buying is disabled.");
 
             return;
         }
 
         if (!shopEntity.hasItem(itemDefinition)) {
-            log.warn("The player tried to buy an item: " + itemDefinition.getId() + " from the shop while the shop don't have it.");
+            log.warn("The player tried to buy an item: " + itemDefinition + " from the shop while the shop don't have it.");
 
             return;
         }
@@ -59,7 +59,7 @@ public class ShopService {
 
         //TODO: At the moment we only use money as money, no support for special trades.
         if (itemBuyPrice <= inventoryEntity.getMoneyAmount(MoneyType.MONEY)) {
-            log.info("The user bought an item: " + itemDefinition.getId());
+            log.info("The user bought an item: " + itemDefinition);
 
             inventoryEntity.decreaseMoneyAmount(MoneyType.MONEY, itemBuyPrice);
 
@@ -67,7 +67,7 @@ public class ShopService {
 
             shopEntity.sellItem(itemDefinition, 1);
         } else {
-            log.info("The user tried to buy an item: " + itemDefinition.getId() + " but did not had enough money to pay for it.");
+            log.info("The user tried to buy an item: " + itemDefinition + " but did not had enough money to pay for it.");
         }
     }
 
@@ -75,19 +75,19 @@ public class ShopService {
     @Transactional
     public void userSellItem(final UserEntity userEntity, final ShopEntity shopEntity, final ItemDefinition itemDefinition, final IdentificationType itemIdentificationType) {
         if (!shopAvailabilityCalculator.isAvailable(userEntity, shopEntity.getShopDefinition())) {
-            log.warn("The player tried to buy in a shop: " + itemDefinition.getId() + " where his access is disabled.");
+            log.warn("The player tried to buy in a shop: " + itemDefinition + " where his access is disabled.");
 
             return;
         }
 
         if (!shopEntity.getShopDefinition().getAvailableFeatures().isSelling()) {
-            log.warn("The player tried to sell in a shop: " + itemDefinition.getId() + " where selling is disabled.");
+            log.warn("The player tried to sell in a shop: " + itemDefinition + " where selling is disabled.");
 
             return;
         }
 
         if (itemDefinition.getType() == ItemType.MONEY) {
-            log.warn("The player tried to sell an item with money type! The item was: " + itemDefinition.getId());
+            log.warn("The player tried to sell an item with money type! The item was: " + itemDefinition);
 
             return;
         }
@@ -95,7 +95,7 @@ public class ShopService {
         final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
 
         if (inventoryEntity.hasItem(itemDefinition)) {
-            log.info("The user sold an item: " + itemDefinition.getId() + " to the shop.");
+            log.info("The user sold an item: " + itemDefinition + " to the shop.");
 
             inventoryEntity.increaseMoneyAmount(MoneyType.MONEY, itemSellPriceCalculator.calculateSellPrice(
                     ItemPriceCalculationContext.builder()
@@ -106,9 +106,13 @@ public class ShopService {
 
             inventoryEntity.removeItem(itemDefinition, 1, itemIdentificationType);
 
-            shopEntity.buyItem(itemDefinition, 1);
+            if (itemDefinition.isTradeable()) {
+                shopEntity.buyItem(itemDefinition, 1);
+            } else {
+                log.info("The item: " + itemDefinition + " is not added to the shop because it's not tradeable.");
+            }
         } else {
-            log.info("The player tried to sell an item: " + itemDefinition.getId() + " he don't have to the shop!");
+            log.info("The player tried to sell an item: " + itemDefinition + " he don't have to the shop!");
         }
     }
 }
