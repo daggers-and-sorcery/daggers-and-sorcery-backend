@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20170712-1">
+        <insert tableName="news">
+            <column name="title" value="Extension for the Witchhunter's Guild"/>
+            <column name="release_date" value="2017-07-12 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+We are happy to announce the first planned extension for the Witchhunter's Guild. We have enabled the shop so if you are a player
+with guild rank higher than Newcomer head to the shop of the guild and look around for some new equipment. With this patch, we added
+the first ring slot item to the game and a new arrow type that's useful for the vampire hunters.
+
+We are planning more extensions for the Witchhunter's Guild in the future so stay tuned.
+
+The next patch will probably arrive next week with some general bugfixes and small improvements. The next bigger content patch is
+scheduled for the end of the next week where we will release a new quest that will help some of the "cursed" players to find the
+cure for their misery.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
