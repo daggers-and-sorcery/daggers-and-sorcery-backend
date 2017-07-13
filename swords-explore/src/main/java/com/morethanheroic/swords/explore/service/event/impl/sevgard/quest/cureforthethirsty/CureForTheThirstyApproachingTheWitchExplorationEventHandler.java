@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.explore.service.event.impl.sevgard.quest;
+package com.morethanheroic.swords.explore.service.event.impl.sevgard.quest.cureforthethirsty;
 
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
@@ -17,7 +17,7 @@ public class CureForTheThirstyApproachingTheWitchExplorationEventHandler extends
 
     private static final int STARTER_STAGE = 0;
 
-    private static final int CURE_FOR_THE_THIRSTY_QUEST_ID = 1;
+    private static final int CURE_FOR_THE_THIRSTY_QUEST_ID = 2;
     private static final int CURE_FOR_THE_THIRSTY_QUEST_NEXT_STAGE_ID = 2;
 
     private final QuestDefinitionCache questDefinitionCache;
