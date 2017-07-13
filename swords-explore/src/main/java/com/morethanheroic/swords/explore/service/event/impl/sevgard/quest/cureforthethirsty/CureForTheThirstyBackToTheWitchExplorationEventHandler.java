@@ -47,11 +47,11 @@ public class CureForTheThirstyBackToTheWitchExplorationEventHandler extends Impr
                 )
                 .addStage(COMBAT_STAGE,
                         explorationResultBuilder -> explorationResultBuilder
-                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_1)
+                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_2)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_28")
-                                                .continueCombatEntry(CombatType.QUEST_1)
+                                                .continueCombatEntry(CombatType.QUEST_2)
                                                 .build()
                                 )
                                 .isFailure(

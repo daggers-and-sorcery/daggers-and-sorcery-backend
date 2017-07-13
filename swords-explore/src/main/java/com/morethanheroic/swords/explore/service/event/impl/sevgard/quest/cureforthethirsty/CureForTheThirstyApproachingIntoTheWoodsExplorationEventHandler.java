@@ -62,11 +62,11 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
                 )
                 .addStage(COMBAT_STAGE,
                         explorationResultBuilder -> explorationResultBuilder
-                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_1)
+                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_2)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_14")
-                                                .continueCombatEntry(CombatType.QUEST_1)
+                                                .continueCombatEntry(CombatType.QUEST_2)
                                                 .build()
                                 )
                                 .isFailure(
@@ -79,11 +79,11 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
                 )
                 .addStage(SECOND_COMBAT_STAGE,
                         explorationResultBuilder -> explorationResultBuilder
-                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_1)
+                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_2)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_15")
-                                                .continueCombatEntry(CombatType.QUEST_1)
+                                                .continueCombatEntry(CombatType.QUEST_2)
                                                 .build()
                                 )
                                 .isFailure(
@@ -110,11 +110,11 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
                 )
                 .addStage(THIRD_COMBAT_STAGE,
                         explorationResultBuilder -> explorationResultBuilder
-                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_1)
+                                .newIsCombatRunningMultiWayPath(explorationContext, CombatType.QUEST_2)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_21")
-                                                .continueCombatEntry(CombatType.QUEST_1)
+                                                .continueCombatEntry(CombatType.QUEST_2)
                                                 .build()
                                 )
                                 .isFailure(
