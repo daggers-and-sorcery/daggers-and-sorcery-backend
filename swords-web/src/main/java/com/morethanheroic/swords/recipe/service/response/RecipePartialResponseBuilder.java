@@ -13,11 +13,10 @@ import com.morethanheroic.swords.recipe.service.response.requirement.domain.Reci
 import com.morethanheroic.swords.recipe.service.response.reward.RecipeRewardListPartialResponseBuilder;
 import com.morethanheroic.swords.recipe.service.response.reward.domain.RecipeRewardListPartialResponseBuilderConfiguration;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class RecipePartialResponseBuilder implements PartialResponseBuilder<RecipePartialResponseBuilderConfiguration> {
 
     private final RecipeIngredientListPartialResponseBuilder recipeIngredientListPartialResponseBuilder;
@@ -26,7 +25,7 @@ public class RecipePartialResponseBuilder implements PartialResponseBuilder<Reci
     private final RecipeRequirementListPartialResponseBuilder recipeRequirementListPartialResponseBuilder;
 
     @Override
-    public RecipePartialResponse build(RecipePartialResponseBuilderConfiguration recipePartialResponseBuilderConfiguration) {
+    public RecipePartialResponse build(final RecipePartialResponseBuilderConfiguration recipePartialResponseBuilderConfiguration) {
         final RecipeDefinition recipeDefinition = recipePartialResponseBuilderConfiguration.getRecipeDefinition();
 
         return RecipePartialResponse.builder()
@@ -36,6 +35,7 @@ public class RecipePartialResponseBuilder implements PartialResponseBuilder<Reci
                 .recipeIngredients(
                         recipeIngredientListPartialResponseBuilder.build(
                                 RecipeIngredientListPartialResponseBuilderConfiguration.builder()
+                                        .userEntity(recipePartialResponseBuilderConfiguration.getUserEntity())
                                         .recipeIngredients(recipeDefinition.getRecipeIngredients())
                                         .build()
                         )
@@ -57,8 +57,9 @@ public class RecipePartialResponseBuilder implements PartialResponseBuilder<Reci
                 .recipeRequirements(
                         recipeRequirementListPartialResponseBuilder.build(
                                 RecipeRequirementListPartialResponseBuilderConfiguration.builder()
-                                .recipeRequirements(recipeDefinition.getRecipeRequirements())
-                                .build()
+                                        .userEntity(recipePartialResponseBuilderConfiguration.getUserEntity())
+                                        .recipeRequirements(recipeDefinition.getRecipeRequirements())
+                                        .build()
                         )
                 )
                 .build();

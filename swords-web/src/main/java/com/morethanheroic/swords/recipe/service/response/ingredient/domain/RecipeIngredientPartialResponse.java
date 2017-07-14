@@ -9,5 +9,6 @@ import lombok.Getter;
 public class RecipeIngredientPartialResponse extends PartialResponse {
 
     private final String name;
-    private final int amount;
+    private final int requiredAmount;
+    private final int existingAmount;
 }

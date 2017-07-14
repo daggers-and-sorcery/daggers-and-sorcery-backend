@@ -8,5 +8,6 @@ import lombok.Getter;
 public class RecipeItemRequirementPartialResponse extends RecipeRequirementPartialResponse {
 
     private final String itemName;
-    private final int amount;
+    private final int requiredAmount;
+    private final int existingAmount;
 }

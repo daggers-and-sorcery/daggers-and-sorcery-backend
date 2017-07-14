@@ -10,6 +10,7 @@ import lombok.Getter;
 @Builder
 public class RecipeIngredient {
 
+    //TODO: Use item definition instead!
     private final int id;
     private final int amount;
 }
