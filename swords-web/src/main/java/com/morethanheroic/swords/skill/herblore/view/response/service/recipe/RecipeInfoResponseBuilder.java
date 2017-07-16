@@ -49,6 +49,6 @@ public class RecipeInfoResponseBuilder implements ResponseBuilder<RecipeInfoResp
     }
 
     private int getHerbloreLevel(final UserEntity userEntity) {
-        return skillEntityFactory.getEntity(userEntity).getLevel(SkillType.LEATHERWORKING);
+        return skillEntityFactory.getEntity(userEntity).getLevel(SkillType.HERBLORE);
     }
 }
