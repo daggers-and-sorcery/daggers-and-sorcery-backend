@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20170717-1">
+        <insert tableName="news">
+            <column name="title" value="UI improvements and bugfixes"/>
+            <column name="release_date" value="2017-07-17 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Another week, another patchnotes. We are squashing a lot of bugs with this release and do some improvements on the recipe pages and the inventory.
+
+Improvements:
+- The recipe page shows how many items you miss to produce the item or if the required items are in your inventory.
+- Added a details popup for items required and rewarded by a recipe.
+- Added a search bar to the inventory.
+- The items and item types in the inventory are alphabetically listed.
+- Added the display image of the item if it's an equipment to the item details popup window. We do plan on adding images for more items even to those that can't be equipped.
+- Added a Facebook "Follow us" and a Patreon "Support us" buttons to the menu.
+
+Bugfixes:
+- For newly registered players the prelude was not shown correctly because of the new loading bar. This has been fixed.
+- Fixed that the player's Leatherworking skill level was shown on the Herblore's recipe page.
+- Fixed that the "Recipe: One-Handed Bronze Warhammer" gave "Bronze Warhammer" and not "One-Handed Bronze Warhammer".
+- Fixed that the "Recipe: Lesser Healing Potion" required "Grimmy Kingsblood" and not "Kingsblood".
+
+This is all for today. Later this week if everything goes right we will release a new event that will help some of our "Cursed" players to regain their true forms.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
