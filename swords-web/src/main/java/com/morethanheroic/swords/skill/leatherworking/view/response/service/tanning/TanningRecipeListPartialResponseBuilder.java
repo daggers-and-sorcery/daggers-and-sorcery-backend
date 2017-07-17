@@ -33,6 +33,7 @@ public class TanningRecipeListPartialResponseBuilder implements PartialResponseC
         for (RecipeDefinition recipeDefinition : recipeEntities) {
             result.add(recipePartialResponseBuilder.build(
                     RecipePartialResponseBuilderConfiguration.builder()
+                            .userEntity(responseBuilderConfiguration.getUserEntity())
                             .recipeDefinition(recipeDefinition)
                             .build()
             ));
