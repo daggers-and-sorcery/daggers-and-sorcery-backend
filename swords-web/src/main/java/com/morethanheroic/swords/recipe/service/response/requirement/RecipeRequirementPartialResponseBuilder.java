@@ -5,17 +5,15 @@ import com.morethanheroic.swords.recipe.domain.RecipeItemRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
 import com.morethanheroic.swords.recipe.service.response.requirement.domain.RecipeRequirementPartialResponse;
 import com.morethanheroic.swords.recipe.service.response.requirement.domain.RecipeRequirementPartialResponseBuilderConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class RecipeRequirementPartialResponseBuilder implements PartialResponseBuilder<RecipeRequirementPartialResponseBuilderConfiguration> {
 
-    @Autowired
-    private RecipeSkillRequirementPartialResponseBuilder recipeSkillRequirementPartialResponseBuilder;
-
-    @Autowired
-    private RecipeItemRequirementPartialResponseBuilder cookingRecipeItemRequirementPartialResponseBuilder;
+    private final RecipeSkillRequirementPartialResponseBuilder recipeSkillRequirementPartialResponseBuilder;
+    private final RecipeItemRequirementPartialResponseBuilder cookingRecipeItemRequirementPartialResponseBuilder;
 
     @Override
     public RecipeRequirementPartialResponse build(RecipeRequirementPartialResponseBuilderConfiguration responseBuilderConfiguration) {

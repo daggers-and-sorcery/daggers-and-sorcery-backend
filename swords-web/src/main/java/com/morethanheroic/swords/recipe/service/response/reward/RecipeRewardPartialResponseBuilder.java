@@ -2,6 +2,8 @@ package com.morethanheroic.swords.recipe.service.response.reward;
 
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.view.response.service.IdentifiedItemPartialResponseBuilder;
+import com.morethanheroic.swords.item.view.response.service.domain.configuration.IdentifiedItemPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.recipe.domain.RecipeReward;
 import com.morethanheroic.swords.recipe.service.response.reward.domain.RecipeRewardPartialResponse;
 import com.morethanheroic.swords.recipe.service.response.reward.domain.RecipeRewardPartialResponseBuilderConfiguration;
@@ -13,13 +15,20 @@ import org.springframework.stereotype.Service;
 public class RecipeRewardPartialResponseBuilder implements PartialResponseBuilder<RecipeRewardPartialResponseBuilderConfiguration> {
 
     private final ItemDefinitionCache itemDefinitionCache;
+    private final IdentifiedItemPartialResponseBuilder identifiedItemPartialResponseBuilder;
 
     @Override
     public RecipeRewardPartialResponse build(RecipeRewardPartialResponseBuilderConfiguration responseBuilderConfiguration) {
         final RecipeReward recipeReward = responseBuilderConfiguration.getRecipeReward();
 
         return RecipeRewardPartialResponse.builder()
-                .name(itemDefinitionCache.getDefinition(recipeReward.getId()).getName())
+                .item(
+                        identifiedItemPartialResponseBuilder.build(
+                                IdentifiedItemPartialResponseBuilderConfiguration.builder()
+                                        .item(itemDefinitionCache.getDefinition(recipeReward.getId()))
+                                        .build()
+                        )
+                )
                 .amount(recipeReward.getAmount())
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.recipe.service.response.requirement.domain;
 
+import com.morethanheroic.swords.item.view.response.service.domain.response.ItemDefinitionPartialResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,6 +8,7 @@ import lombok.Getter;
 @Getter
 public class RecipeItemRequirementPartialResponse extends RecipeRequirementPartialResponse {
 
-    private final String itemName;
-    private final int amount;
+    private final ItemDefinitionPartialResponse item;
+    private final int requiredAmount;
+    private final int existingAmount;
 }
