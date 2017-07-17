@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CureForTheThirstyBackToTheWitchExplorationEventHandler extends ImprovedExplorationEventHandler {
 
-    private static final int EVENT_ID = 31;
+    private static final int EVENT_ID = 32;
 
     private static final int STARTER_STAGE = 0;
     private static final int COMBAT_STAGE = 1;
