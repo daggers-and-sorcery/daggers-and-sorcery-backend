@@ -62,7 +62,6 @@ public class CureForTheThirstyBackToTheWitchExplorationEventHandler extends Impr
                                                 .newUpdateQuestStage(questDefinitionCache.getDefinition(CURE_FOR_THE_THIRSTY_QUEST_ID), CURE_FOR_THE_THIRSTY_QUEST_NEXT_STAGE_ID)
                                                 .newContinueQuestEntry(questDefinitionCache.getDefinition(CURE_FOR_THE_THIRSTY_QUEST_ID))
                                                 .build()
-                                        //TODO: Finish the final stage!!!
                                 )
                                 .build()
                 )
