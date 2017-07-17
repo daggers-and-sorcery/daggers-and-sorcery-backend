@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.explore.service.event.impl.sevgard.quest;
+package com.morethanheroic.swords.explore.service.event.impl.sevgard.quest.findingtheguild;
 
 import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.service.calc.BasicAttributeCalculator;
