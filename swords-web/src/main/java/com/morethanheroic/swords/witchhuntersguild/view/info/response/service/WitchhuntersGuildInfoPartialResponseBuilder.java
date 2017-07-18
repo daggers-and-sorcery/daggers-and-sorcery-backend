@@ -13,6 +13,7 @@ public class WitchhuntersGuildInfoPartialResponseBuilder implements PartialRespo
     public PartialResponse build(WitchhuntersGuildInfoResponseBuilderConfiguration witchhuntersGuildInfoResponseBuilderConfiguration) {
         return WitchhuntersGuildInfoPartialResponse.builder()
                 .accessible(witchhuntersGuildInfoResponseBuilderConfiguration.isAccessible())
+                .questStarted(witchhuntersGuildInfoResponseBuilderConfiguration.isQuestStarted())
                 .build();
     }
 }

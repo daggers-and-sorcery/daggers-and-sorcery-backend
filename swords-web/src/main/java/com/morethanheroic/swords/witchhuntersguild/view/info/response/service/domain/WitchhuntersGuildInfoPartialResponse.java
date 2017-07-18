@@ -9,4 +9,5 @@ import lombok.Getter;
 public class WitchhuntersGuildInfoPartialResponse extends PartialResponse {
 
     private final boolean accessible;
+    private final boolean questStarted;
 }

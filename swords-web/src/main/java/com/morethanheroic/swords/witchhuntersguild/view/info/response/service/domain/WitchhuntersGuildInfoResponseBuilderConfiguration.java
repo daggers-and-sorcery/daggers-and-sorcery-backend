@@ -11,4 +11,5 @@ public class WitchhuntersGuildInfoResponseBuilderConfiguration implements Respon
 
     private final UserEntity userEntity;
     private final boolean accessible;
+    private final boolean questStarted;
 }
