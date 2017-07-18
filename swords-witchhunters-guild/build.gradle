@@ -9,6 +9,7 @@ dependencies {
     compile project(':swords-shop')
     compile project(':swords-monster')
     compile project(':swords-inventory')
+    compile project(':swords-vampire')
     compile project(':swords-combat-event')
 }
 
