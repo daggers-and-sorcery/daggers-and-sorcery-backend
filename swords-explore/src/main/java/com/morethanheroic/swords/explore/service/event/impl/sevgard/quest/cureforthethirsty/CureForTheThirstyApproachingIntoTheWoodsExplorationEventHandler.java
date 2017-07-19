@@ -22,7 +22,7 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
     private static final int SECOND_COMBAT_STAGE = 2;
     private static final int THIRD_COMBAT_STAGE = 3;
 
-    private static final int ZOMBIE_ID = 111;
+    private static final int ZOMBIE_ID = 20;
     private static final int VOLKSTEIN_THE_NECROMANCER_ID = 112;
 
     private static final int CURE_FOR_THE_THIRSTY_QUEST_ID = 2;
