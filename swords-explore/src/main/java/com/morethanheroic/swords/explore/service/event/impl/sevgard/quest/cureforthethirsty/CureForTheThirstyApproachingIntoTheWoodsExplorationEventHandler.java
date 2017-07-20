@@ -23,7 +23,7 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
     private static final int THIRD_COMBAT_STAGE = 3;
 
     private static final int ZOMBIE_ID = 20;
-    private static final int VOLKSTEIN_THE_NECROMANCER_ID = 112;
+    private static final int VOLKSTEIN_THE_NECROMANCER_ID = 27;
 
     private static final int CURE_FOR_THE_THIRSTY_QUEST_ID = 2;
     private static final int CURE_FOR_THE_THIRSTY_QUEST_FIRST_COMBAT_STAGE_ID = 3;
@@ -89,7 +89,8 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_16")
-                                                .newAttributeAttemptEntry(GeneralAttribute.PERCEPTION, 15)
+                                                //TODO: Add mov requirement here!
+                                                .newAttributeAttemptEntry(GeneralAttribute.PERCEPTION, 10)
                                                 .isSuccess(
                                                         explorationResultBuilder2 -> explorationResultBuilder2
                                                                 .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_18")
