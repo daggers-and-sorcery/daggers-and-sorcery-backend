@@ -33,6 +33,7 @@ public class CleaningRecipeListPartialResponseBuilder implements PartialResponse
                 .map(recipeDefinition -> recipePartialResponseBuilder.build(
                         RecipePartialResponseBuilderConfiguration.builder()
                                 .recipeDefinition(recipeDefinition)
+                                .userEntity(cleaningInfoResponseBuilderConfiguration.getUserEntity())
                                 .build()
                         )
                 )
