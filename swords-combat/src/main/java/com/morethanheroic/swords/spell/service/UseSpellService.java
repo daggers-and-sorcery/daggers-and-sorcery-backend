@@ -1,31 +1,31 @@
 package com.morethanheroic.swords.spell.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
+import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
+import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatEffectApplierService;
-import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
-import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.spell.domain.CostType;
 import com.morethanheroic.swords.spell.domain.SpellCost;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.domain.SpellTarget;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.domain.UserMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
 
 //TODO: make monsters able to use combat spells too!
 @Service
@@ -33,13 +33,14 @@ import lombok.RequiredArgsConstructor;
 public class UseSpellService {
 
     private final CombatEffectApplierService combatEffectApplierService;
-    private final InventoryFacade inventoryFacade;
     private final UserMapper userMapper;
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final CombatMessageFactory combatMessageFactory;
+    private final UserBasicAttributeManipulator userBasicAttributeManipulator;
+    private final InventoryEntityFactory inventoryEntityFactory;
 
     public boolean canUseSpell(UserEntity userEntity, SpellDefinition spell) {
-        InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
+        InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
 
         for (SpellCost rawSpellCost : spell.getSpellCosts()) {
             if (rawSpellCost.getType() == CostType.ITEM) {
@@ -57,7 +58,7 @@ public class UseSpellService {
     }
 
     public boolean canUseSpell(UserCombatEntity combatEntity, SpellDefinition spell) {
-        InventoryEntity inventoryEntity = inventoryFacade.getInventory(combatEntity.getUserEntity());
+        InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(combatEntity.getUserEntity());
 
         for (SpellCost rawSpellCost : spell.getSpellCosts()) {
             if (rawSpellCost.getType() == CostType.ITEM) {
@@ -86,9 +87,9 @@ public class UseSpellService {
 
         if (canUseSpell(combatContext.getUser(), spell)) {
             combatSteps.add(
-                DefaultCombatStep.builder()
-                                 .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST", spell.getName()))
-                                 .build()
+                    DefaultCombatStep.builder()
+                            .message(combatMessageFactory.newMessage("spell", "COMBAT_MESSAGE_SPELL_CAST", spell.getName()))
+                            .build()
             );
 
             combatSteps.addAll(applySpell(combatContext, spell, combatEffectDataHolder));
@@ -116,7 +117,7 @@ public class UseSpellService {
             if (spellCost.getType() == CostType.ITEM) {
                 final UserEntity userEntity = combatEntity.getUserEntity();
 
-                inventoryFacade.getInventory(userEntity).removeItem(spellCost.getId(), spellCost.getAmount());
+                inventoryEntityFactory.getEntity(userEntity).removeItem(spellCost.getId(), spellCost.getAmount());
             } else if (spellCost.getType() == CostType.MANA) {
                 combatEntity.decreaseActualMana(spellCost.getAmount());
             }
@@ -154,12 +155,20 @@ public class UseSpellService {
         return combatSteps;
     }
 
-    private void applySpell(UserEntity userEntity, SpellDefinition spell, CombatEffectDataHolder combatEffectDataHolder) {
+    private void applySpell(UserEntity userEntity, SpellDefinition spellDefinition, CombatEffectDataHolder combatEffectDataHolder) {
         final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
 
         final List<CombatEffectApplyingContext> contexts = new ArrayList<>();
 
-        for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spell.getCombatEffects()) {
+        for (SpellCost spellCost : spellDefinition.getSpellCosts()) {
+            if (spellCost.getType() == CostType.ITEM) {
+                inventoryEntityFactory.getEntity(userEntity).removeItem(spellCost.getId(), spellCost.getAmount());
+            } else if (spellCost.getType() == CostType.MANA) {
+                userBasicAttributeManipulator.decreaseMana(userEntity, spellCost.getAmount());
+            }
+        }
+
+        for (EffectSettingDefinitionHolder effectSettingDefinitionHolder : spellDefinition.getCombatEffects()) {
             contexts.add(
                     CombatEffectApplyingContext.builder()
                             .source(new CombatEffectTarget(userCombatEntity))
