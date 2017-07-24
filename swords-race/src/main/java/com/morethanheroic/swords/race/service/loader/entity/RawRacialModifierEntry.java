@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.race.service.loader.entity.modifier.entry;
+package com.morethanheroic.swords.race.service.loader.entity;
 
 import com.morethanheroic.swords.race.model.modifier.RacialModifier;
 
