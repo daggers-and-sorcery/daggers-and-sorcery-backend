@@ -19,7 +19,7 @@ import java.time.temporal.ChronoUnit;
 public class TrollsVitalitySpellEffectDefinition extends ImprovedCombatEffectDefinition {
 
     private static final int TROLLS_VITALITY_STATUS_EFFECT_ID = 1;
-    private static final int XP_REWARD = 50;
+    private static final int XP_REWARD = 20;
 
     private final StatusEffectManipulator statusEffectManipulator;
     private final StatusEffectDefinitionCache statusEffectDefinitionCache;

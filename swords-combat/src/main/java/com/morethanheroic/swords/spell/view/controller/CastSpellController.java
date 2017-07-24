@@ -28,7 +28,7 @@ public class CastSpellController {
     private final CastSpellResponseBuilder castSpellResponseBuilder;
 
     @Transactional
-    @RequestMapping(value = "/spell/cast/{spellId}")
+    @RequestMapping("/spell/cast/{spellId}")
     @SuppressWarnings("unchecked")
     public CharacterRefreshResponse castSpell(UserEntity userEntity, SessionEntity sessionEntity, @RequestParam Map<String, String> allRequestParams, @PathVariable int spellId) {
         final SpellDefinition spellDefinition = spellDefinitionCache.getSpellDefinition(spellId);

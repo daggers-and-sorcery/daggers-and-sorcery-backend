@@ -164,7 +164,7 @@ public class UseSpellService {
             if (spellCost.getType() == CostType.ITEM) {
                 inventoryEntityFactory.getEntity(userEntity).removeItem(spellCost.getId(), spellCost.getAmount());
             } else if (spellCost.getType() == CostType.MANA) {
-                userBasicAttributeManipulator.decreaseMana(userEntity, spellCost.getAmount());
+                userCombatEntity.decreaseActualMana(spellCost.getAmount());
             }
         }
 
