@@ -34,6 +34,7 @@ public class CleaningRecipeListPartialResponseBuilder implements PartialResponse
                         RecipePartialResponseBuilderConfiguration.builder()
                                 .userEntity(cleaningInfoResponseBuilderConfiguration.getUserEntity())
                                 .recipeDefinition(recipeDefinition)
+                                .userEntity(cleaningInfoResponseBuilderConfiguration.getUserEntity())
                                 .build()
                         )
                 )

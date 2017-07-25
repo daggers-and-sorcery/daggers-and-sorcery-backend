@@ -1,6 +1,5 @@
-package com.morethanheroic.swords.race.service.loader.adapter;
+package com.morethanheroic.swords.race.service.loader.entity;
 
-import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawRacialModifierEntry;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lombok.ToString;
@@ -19,5 +18,5 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class RacialModifierEntityAdapterPlaceholder {
 
     private String type;
-    private String value;
+    private byte value;
 }

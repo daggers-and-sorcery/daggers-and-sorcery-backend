@@ -7,8 +7,8 @@ import com.morethanheroic.swords.race.model.modifier.RacialModifier;
 import com.morethanheroic.swords.race.model.modifier.entry.NumericRacialModifierEntry;
 import com.morethanheroic.swords.race.model.modifier.entry.RacialModifierEntry;
 import com.morethanheroic.swords.race.service.loader.entity.RawRaceDefinition;
-import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawNumericRacialModifierEntry;
-import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawRacialModifierEntry;
+import com.morethanheroic.swords.race.service.loader.entity.RawNumericRacialModifierEntry;
+import com.morethanheroic.swords.race.service.loader.entity.RawRacialModifierEntry;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

@@ -1,12 +1,14 @@
 package com.morethanheroic.swords.combat.domain.effect.entry.spell;
 
+import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 import com.morethanheroic.swords.combat.domain.effect.DiceRollFromDamageSettingsBuilder;
 import com.morethanheroic.swords.combat.domain.effect.ImprovedCombatEffectDefinition;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
-import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.service.CombatCalculator;
+import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.dice.domain.DiceRollCalculationContext;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
@@ -27,6 +29,7 @@ public class BanishUndeadSpellEffectDefinition extends ImprovedCombatEffectDefin
     private final DiceRollCalculator diceRollCalculator;
     private final CombatCalculator combatCalculator;
     private final DiceRollFromDamageSettingsBuilder diceRollFromDamageSettingsBuilder;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
 
     @Override
     public void apply(CombatEffectApplyingContext effectApplyingContext) {
@@ -34,16 +37,16 @@ public class BanishUndeadSpellEffectDefinition extends ImprovedCombatEffectDefin
             final MonsterDefinition opponentMonsterDefinition = ((MonsterCombatEntity) effectApplyingContext.getDestination().getCombatEntity()).getMonsterDefinition();
 
             if (opponentMonsterDefinition.getType() == MonsterType.UNDEAD) {
+                final UserEntity userEntity = ((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity();
+
                 final DiceRollCalculationContext diceRollCalculationContext = diceRollFromDamageSettingsBuilder.buildDiceRollCalculationContext(effectApplyingContext.getEffectSettings());
-                final int damage = diceRollCalculator.rollDices(diceRollCalculationContext);
+                final int damage = diceRollCalculator.rollDices(diceRollCalculationContext) + globalAttributeCalculator.calculateActualValue(userEntity, GeneralAttribute.INTELLIGENCE).getValue() / 2;
 
                 effectApplyingContext.addCombatStep(
                         DefaultCombatStep.builder()
                                 .message(combatMessageFactory.newMessage("damage_done", "BANISH_UNDEAD_DAMAGE_DONE", damage))
                                 .build()
                 );
-
-                final UserEntity userEntity = ((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity();
 
                 effectApplyingContext.getDestination().getCombatEntity().decreaseActualHealth(damage);
 
