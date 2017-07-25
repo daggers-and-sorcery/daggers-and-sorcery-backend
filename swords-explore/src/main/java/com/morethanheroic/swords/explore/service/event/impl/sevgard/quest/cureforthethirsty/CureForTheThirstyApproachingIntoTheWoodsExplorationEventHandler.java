@@ -2,6 +2,7 @@ package com.morethanheroic.swords.explore.service.event.impl.sevgard.quest.curef
 
 import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
+import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
@@ -33,6 +34,7 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
 
     private final QuestDefinitionCache questDefinitionCache;
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
+    private final UserBasicAttributeManipulator userBasicAttributeManipulator;
 
     @Override
     public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
@@ -55,7 +57,7 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
                                         .build()
                                 )
                                 .isFailure((explorationResultBuilder) -> explorationResultBuilder
-                                        //TODO: What to do when the lockpicking is failed?!
+                                        .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_40")
                                         .build()
                                 )
                                 .build()
@@ -89,20 +91,30 @@ public class CureForTheThirstyApproachingIntoTheWoodsExplorationEventHandler ext
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_16")
-                                                //TODO: Add mov requirement here!
-                                                .newAttributeAttemptEntry(GeneralAttribute.PERCEPTION, 10)
+                                                .newCustomMultiWayPath(() -> explorationContext.getUserEntity().getMovementPoints() > 0)
                                                 .isSuccess(
                                                         explorationResultBuilder2 -> explorationResultBuilder2
-                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_18")
-                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_19")
-                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_20")
-                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_21")
-                                                                .newCombatEntry(VOLKSTEIN_THE_NECROMANCER_ID, questDefinitionCache.getDefinition(CURE_FOR_THE_THIRSTY_QUEST_ID), CURE_FOR_THE_THIRSTY_QUEST_THIRD_COMBAT_STAGE_ID)
+                                                                .newCustomLogicEntry(() -> userBasicAttributeManipulator.decreaseMovement(explorationContext.getUserEntity(), 1))
+                                                                .newAttributeAttemptEntry(GeneralAttribute.PERCEPTION, 9)
+                                                                .isSuccess(
+                                                                        explorationResultBuilder3 -> explorationResultBuilder3
+                                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_18")
+                                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_19")
+                                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_20")
+                                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_21")
+                                                                                .newCombatEntry(VOLKSTEIN_THE_NECROMANCER_ID, questDefinitionCache.getDefinition(CURE_FOR_THE_THIRSTY_QUEST_ID), CURE_FOR_THE_THIRSTY_QUEST_THIRD_COMBAT_STAGE_ID)
+                                                                                .build()
+                                                                )
+                                                                .isFailure(
+                                                                        explorationResultBuilder3 -> explorationResultBuilder3
+                                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_17")
+                                                                                .build()
+                                                                )
                                                                 .build()
                                                 )
                                                 .isFailure(
                                                         explorationResultBuilder2 -> explorationResultBuilder2
-                                                                .newMessageEntry("CURE_FOR_THE_THIRSTY_QUEST_EXPLORATION_EVENT_ENTRY_17")
+                                                                .newMessageBoxEntry("EXPLORATION_EVENT_TOO_TIRED")
                                                                 .build()
                                                 )
                                                 .build()
