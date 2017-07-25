@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20170717-1">
+        <insert tableName="news">
+            <column name="title" value="Improving the scrolling issues and fixing bugs"/>
+            <column name="release_date" value="2017-07-25 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+As always, this week will start with a bunch of small but handy updates and bugfixes.
+
+Improvements:
+- The health of the user is shown on the combat screen. Later we plan on showing the monster's health too but we plan to do it in a form of a new skill that will help you analyze monsters for their health/mana points and weak points in combat.
+- We split the character screen into five different panels to lessen the scrolling required to reach some of its parts.
+- Renamed the 'Inn' to 'Tavern' to present a more welcoming look so hopefully more and more new people will find their way to the chat.
+- The 'Banish undead' spell got a little buffing. Now it scales with the user's intelligence attribute.
+- Added a new category called 'Guides' to the forum.
+
+Bugfixes:
+- 'Lesser healing potion' required 'Grimmy king's blood' instead of the cleaned one. This has been fixed.
+- The cleaning page under the Herblore skill was unreachable. This has been fixed.
+- 'Troll's vitality' spell not consumed mana nor gave XP. This has been fixed. Now it gives 20 XP and requires 10 mana to cast.
+- Fixed the coin icons on the market screens.
+- Fixed that the race bonuses were not given to the characters.
+
+This is all for today. We are working on the vampirism curing quest with all of our available resources. If everything goes right it will arrive either today or tomorrow.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
