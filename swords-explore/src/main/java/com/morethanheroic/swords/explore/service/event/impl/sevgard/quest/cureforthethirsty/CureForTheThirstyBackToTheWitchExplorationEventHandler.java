@@ -18,7 +18,7 @@ public class CureForTheThirstyBackToTheWitchExplorationEventHandler extends Impr
     private static final int STARTER_STAGE = 0;
     private static final int COMBAT_STAGE = 1;
 
-    private static final int WITCH_ID = 1113;
+    private static final int WITCH_ID = 28;
 
     private static final int CURE_FOR_THE_THIRSTY_QUEST_ID = 2;
     private static final int CURE_FOR_THE_THIRSTY_QUEST_COMBAT_WITH_THE_WITCH_STAGE_ID = 7;
