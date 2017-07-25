@@ -1,8 +1,6 @@
-package com.morethanheroic.swords.race.service.loader.adapter;
+package com.morethanheroic.swords.race.service.loader.entity;
 
 import com.morethanheroic.swords.race.model.modifier.RacialModifier;
-import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawNumericRacialModifierEntry;
-import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawRacialModifierEntry;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -12,10 +10,10 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 public class RacialModifierEntityAdapter extends XmlAdapter<RacialModifierEntityAdapterPlaceholder, RawRacialModifierEntry> {
 
     @Override
-    public RawRacialModifierEntry unmarshal(RacialModifierEntityAdapterPlaceholder element) throws Exception {
+    public RawRacialModifierEntry unmarshal(final RacialModifierEntityAdapterPlaceholder racialModifierEntityAdapterPlaceholder) throws Exception {
         return RawNumericRacialModifierEntry.builder()
-                .racialModifier(RacialModifier.valueOf(element.getType()))
-                .value(Integer.parseInt(element.getValue()))
+                .racialModifier(RacialModifier.valueOf(racialModifierEntityAdapterPlaceholder.getType()))
+                .value((int) racialModifierEntityAdapterPlaceholder.getValue())
                 .build();
     }
 

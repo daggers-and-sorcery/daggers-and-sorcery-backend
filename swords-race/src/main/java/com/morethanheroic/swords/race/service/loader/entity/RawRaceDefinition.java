@@ -1,7 +1,5 @@
 package com.morethanheroic.swords.race.service.loader.entity;
 
-import com.morethanheroic.swords.race.service.loader.adapter.RacialModifierEntityAdapter;
-import com.morethanheroic.swords.race.service.loader.entity.modifier.entry.RawRacialModifierEntry;
 import lombok.Getter;
 
 import javax.xml.bind.annotation.XmlAccessType;

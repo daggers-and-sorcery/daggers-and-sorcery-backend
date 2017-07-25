@@ -21,9 +21,9 @@ import java.util.Map;
 /**
  * Store the {@link RaceDefinition}es in a cached manner.
  */
-@Service
 @Slf4j
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Service
+@RequiredArgsConstructor
 public class RaceDefinitionCache implements DefinitionCache<Race, RaceDefinition> {
 
     private Map<Race, RaceDefinition> raceEntityMap = new EnumMap<>(Race.class);

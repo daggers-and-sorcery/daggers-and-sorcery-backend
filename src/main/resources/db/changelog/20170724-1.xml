@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="laxika" id="20170724-1">
+        <insert tableName="forum_categories">
+            <column name="name" value="Guides"/>
+            <column name="post_count" value="0"/>
+            <column name="icon" value="guides"/>
+            <column name="last_post_date" value="1970-01-01 00:00:00"/>
+            <column name="last_post_user" value="0"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
