@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20170725-2">
+        <insert tableName="news">
+            <column name="title" value="A new quest, Curing the Thirsty is here!"/>
+            <column name="release_date" value="2017-07-26 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+The new quest that will help you cure the curse of vampirism is finally here. This is the second ever quest in the game! Don't be afraid to finish the quest if you want to stay as a vampire, you will not going to be permanently cured!
+
+Next week hopefully we going to release a new boss so sharpen your swords and create your mana potions because the Lord of Vampires is approaching!
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
