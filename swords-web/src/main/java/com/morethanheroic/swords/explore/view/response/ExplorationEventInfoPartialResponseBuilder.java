@@ -12,6 +12,7 @@ public class ExplorationEventInfoPartialResponseBuilder implements PartialRespon
     @Override
     public PartialResponse build(ExplorationResponseBuilderConfiguration explorationResponseBuilderConfiguration) {
         return EventInfoPartialResponse.builder()
+                .name(explorationResponseBuilderConfiguration.getExplorationEventEntryResults().getName())
                 .terrain(explorationResponseBuilderConfiguration.getExplorationEventEntryResults().getTerrain())
                 .rarity(explorationResponseBuilderConfiguration.getExplorationEventEntryResults().getRarity())
                 .build();

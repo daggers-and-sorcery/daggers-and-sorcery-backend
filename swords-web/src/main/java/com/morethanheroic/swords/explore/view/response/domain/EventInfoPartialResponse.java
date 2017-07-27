@@ -10,6 +10,7 @@ import lombok.Getter;
 @Builder
 public class EventInfoPartialResponse extends PartialResponse {
 
-    private ExplorationEventTerrain terrain;
-    private ExplorationEventRarity rarity;
+    private final String name;
+    private final ExplorationEventTerrain terrain;
+    private final ExplorationEventRarity rarity;
 }

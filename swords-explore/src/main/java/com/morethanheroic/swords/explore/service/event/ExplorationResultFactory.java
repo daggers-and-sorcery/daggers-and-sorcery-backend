@@ -12,13 +12,13 @@ public class ExplorationResultFactory {
 
     public ExplorationResult newExplorationResult(final ExplorationEventDefinition explorationEventDefinition) {
         if (explorationEventDefinition != null) {
-            return new ExplorationResult(explorationEventDefinition.getRarity(), explorationEventDefinition.getTerrain());
+            return new ExplorationResult(explorationEventDefinition.getName(), explorationEventDefinition.getRarity(), explorationEventDefinition.getTerrain());
         }
 
         return newEmptyExplorationResult();
     }
 
     public ExplorationResult newEmptyExplorationResult() {
-        return new ExplorationResult(null, null);
+        return new ExplorationResult(null, null, null);
     }
 }
