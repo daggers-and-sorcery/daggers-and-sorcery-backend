@@ -22,6 +22,7 @@ public class GatheringEvent implements Event {
     private static final int GATHERING_EVENT_ID = 4;
     private static final int GRIMY_KINGS_BLOOD_ID = 185;
     private static final int GRIMY_SILVERLEAF_ID = 202;
+    private static final int GRIMY_PRIEST_BLOOD = 203;
 
     private final InventoryEntityFactory inventoryEntityFactory;
     private final ItemDefinitionCache itemDefinitionCache;
@@ -43,6 +44,14 @@ public class GatheringEvent implements Event {
                 herbAwarded = true;
 
                 inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(GRIMY_SILVERLEAF_ID), 1);
+            }
+        }
+
+        if (skillEntity.getLevel(SkillType.HERBLORE) > 3) {
+            if (random.nextInt(100) <= 30) {
+                herbAwarded = true;
+
+                inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(GRIMY_PRIEST_BLOOD), 1);
             }
         }
 
