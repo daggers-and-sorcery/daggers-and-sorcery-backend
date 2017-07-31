@@ -20,8 +20,8 @@ import java.util.Random;
 public class GatheringEvent implements Event {
 
     private static final int GATHERING_EVENT_ID = 4;
-    private static final int KINGS_BLOOD_ID = 185;
-    private static final int SILVERLEAF_ID = 202;
+    private static final int GRIMY_KINGS_BLOOD_ID = 185;
+    private static final int GRIMY_SILVERLEAF_ID = 202;
 
     private final InventoryEntityFactory inventoryEntityFactory;
     private final ItemDefinitionCache itemDefinitionCache;
@@ -38,17 +38,16 @@ public class GatheringEvent implements Event {
         final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
         boolean herbAwarded = false;
 
-        inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(KINGS_BLOOD_ID), 1);
-
         if (skillEntity.getLevel(SkillType.HERBLORE) > 5) {
             if (random.nextInt(100) <= 5) {
                 herbAwarded = true;
-                inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(SILVERLEAF_ID), 1);
+
+                inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(GRIMY_SILVERLEAF_ID), 1);
             }
         }
 
         if (!herbAwarded) {
-            inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(KINGS_BLOOD_ID), 1);
+            inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(GRIMY_KINGS_BLOOD_ID), 1);
         }
     }
 }
