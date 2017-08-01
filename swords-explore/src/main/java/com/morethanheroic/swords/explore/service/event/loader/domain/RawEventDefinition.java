@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RawEventDefinition {
 
     private int id;
+    private String name;
     private ExplorationEventLocation location;
     private ExplorationEventTerrain terrain;
     private ExplorationEventRarity rarity;

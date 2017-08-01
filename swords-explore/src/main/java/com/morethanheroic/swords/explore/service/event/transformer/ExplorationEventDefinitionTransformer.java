@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 public class ExplorationEventDefinitionTransformer implements DefinitionTransformer<ExplorationEventDefinition, RawEventDefinition> {
 
     @Override
-    public ExplorationEventDefinition transform(RawEventDefinition rawDefinition) {
+    public ExplorationEventDefinition transform(final RawEventDefinition rawDefinition) {
         return ExplorationEventDefinition.builder()
                 .id(rawDefinition.getId())
+                .name(rawDefinition.getName())
                 .location(rawDefinition.getLocation())
                 .terrain(rawDefinition.getTerrain())
                 .rarity(rawDefinition.getRarity())

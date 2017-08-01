@@ -10,8 +10,9 @@ import lombok.Getter;
 @Builder
 public class ExplorationEventDefinition {
 
-    private int id;
-    private ExplorationEventLocation location;
-    private ExplorationEventTerrain terrain;
-    private ExplorationEventRarity rarity;
+    private final int id;
+    private final String name;
+    private final ExplorationEventLocation location;
+    private final ExplorationEventTerrain terrain;
+    private final ExplorationEventRarity rarity;
 }

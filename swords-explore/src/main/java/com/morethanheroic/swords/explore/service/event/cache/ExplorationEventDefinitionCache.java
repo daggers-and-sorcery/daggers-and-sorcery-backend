@@ -7,35 +7,29 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.*;
+import java.util.stream.*;
 
 /**
  * Holds the loaded {@link ExplorationEventDefinition}s.
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class ExplorationEventDefinitionCache implements DefinitionCache<Integer, ExplorationEventDefinition> {
 
-    private final ExplorationEventDefinitionLoader explorationEventDefinitionLoader;
+    private final Map<Integer, ExplorationEventDefinition> eventDefinitionMap;
 
-    private Map<Integer, ExplorationEventDefinition> eventDefinitionMap = new HashMap<>();
-
-    @PostConstruct
-    public void init() throws IOException {
+    public ExplorationEventDefinitionCache(final ExplorationEventDefinitionLoader explorationEventDefinitionLoader) {
         final List<ExplorationEventDefinition> explorationEventDefinitions = explorationEventDefinitionLoader.loadDefinitions();
 
         log.info("Loaded " + explorationEventDefinitions.size() + " exploration event definitions.");
 
-        for (ExplorationEventDefinition explorationEventDefinition : explorationEventDefinitions) {
-            eventDefinitionMap.put(explorationEventDefinition.getId(), explorationEventDefinition);
-        }
+        eventDefinitionMap = explorationEventDefinitions.stream()
+                .collect(Collectors.toMap(ExplorationEventDefinition::getId, Function.identity()));
     }
 
     @Override

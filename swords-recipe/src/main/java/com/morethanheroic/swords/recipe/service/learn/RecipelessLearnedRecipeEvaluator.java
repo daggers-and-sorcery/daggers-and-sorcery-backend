@@ -15,6 +15,9 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.collectingAndThen;
 
 public class RecipelessLearnedRecipeEvaluator implements LearnedRecipeEvaluator {
 
@@ -36,22 +39,14 @@ public class RecipelessLearnedRecipeEvaluator implements LearnedRecipeEvaluator 
 
     @PostConstruct
     private void initialize() {
-        final List<RecipeDefinition> result = new ArrayList<>();
-
-        for (int i = 1; i <= recipeDefinitionCache.getSize(); i++) {
-            final RecipeDefinition recipeDefinition = recipeDefinitionCache.getDefinition(i);
-
-            if (recipeDefinition.getType() == recipeType) {
-                result.add(recipeDefinition);
-            }
-        }
-
-        recipeDefinitions = Collections.unmodifiableList(result);
+        recipeDefinitions = recipeDefinitionCache.getDefinitions().stream()
+                .filter(recipeDefinition -> recipeDefinition.getType() == recipeType)
+                .collect(collectingAndThen(Collectors.toList(), (list) -> Collections.unmodifiableList(list)));
     }
 
     @Override
     public List<RecipeDefinition> getLearnedRecipes(UserEntity userEntity, RecipeType recipeType) {
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
         final List<RecipeDefinition> result = new ArrayList<>();
         for (RecipeDefinition recipeDefinition : recipeDefinitions) {
