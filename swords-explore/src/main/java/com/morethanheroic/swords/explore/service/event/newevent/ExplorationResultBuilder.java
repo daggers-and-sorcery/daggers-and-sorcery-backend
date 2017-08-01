@@ -376,6 +376,22 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder newAddItemEntry(final ItemDefinition item) {
+        return newAddItemEntry(item, 1, IdentificationType.IDENTIFIED);
+    }
+
+    public ExplorationResultBuilder newAddItemEntry(final ItemDefinition item, final int amount) {
+        return newAddItemEntry(item, amount, IdentificationType.IDENTIFIED);
+    }
+
+    public ExplorationResultBuilder newAddItemEntry(final ItemDefinition item, final int amount, final IdentificationType identificationType) {
+        inventoryEntityFactory.getEntity(userEntity).addItem(item, amount, identificationType);
+
+        newMessageBoxEntry("EXPLORATION_EVENT_ENTRY_ADD_ITEM", amount, item.getName());
+
+        return this;
+    }
+
     public ExplorationResultBuilder newDamageEntry(final int damage) {
         userBasicAttributeManipulator.decreaseHealth(userEntity, damage);
 
