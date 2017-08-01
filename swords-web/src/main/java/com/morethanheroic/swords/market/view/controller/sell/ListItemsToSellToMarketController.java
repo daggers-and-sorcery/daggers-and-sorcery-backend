@@ -3,7 +3,7 @@ package com.morethanheroic.swords.market.view.controller.sell;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.view.response.service.domain.sell.ListItemsToSellResponseBuilderConfiguration;
 import com.morethanheroic.swords.market.view.response.service.sell.ListItemsToSellResponseBuilder;
 import com.morethanheroic.swords.market.view.response.service.sell.ShowItemToSellResponseBuilder;

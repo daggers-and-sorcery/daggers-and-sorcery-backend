@@ -5,7 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableMap;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.starter.service.domain.StarterArmorSet;
 import com.morethanheroic.swords.starter.service.domain.StartingArmor;
 

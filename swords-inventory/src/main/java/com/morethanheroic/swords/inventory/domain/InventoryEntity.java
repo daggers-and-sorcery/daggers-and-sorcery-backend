@@ -4,7 +4,7 @@ import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.journal.domain.JournalType;
 import com.morethanheroic.swords.journal.service.JournalEntityFactory;
 import com.morethanheroic.swords.money.domain.*;

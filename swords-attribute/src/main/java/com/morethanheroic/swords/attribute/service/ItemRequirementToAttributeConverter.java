@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.attribute.service;
 
 import com.morethanheroic.swords.attribute.domain.*;
-import com.morethanheroic.swords.item.domain.ItemRequirement;
+import com.morethanheroic.swords.item.domain.requirement.ItemRequirement;
 import org.springframework.stereotype.Service;
 
 @Service

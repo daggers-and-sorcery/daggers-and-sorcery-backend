@@ -7,7 +7,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationConte
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
 import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.recipe.service.learn.RecipeLearnerService;

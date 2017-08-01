@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.item.service.response;
 
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.domain.ItemModifierDefinition;
-import com.morethanheroic.swords.item.domain.ItemRequirementDefinition;
+import com.morethanheroic.swords.item.domain.modifier.ItemModifierDefinition;
+import com.morethanheroic.swords.item.domain.requirement.ItemRequirementDefinition;
 import com.morethanheroic.swords.item.service.response.domain.ItemRequirementResponseEntry;
 import org.apache.commons.lang.WordUtils;
 import org.springframework.stereotype.Service;

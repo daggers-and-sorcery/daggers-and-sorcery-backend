@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.recipe.service.transformer;
 
 import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.recipe.domain.RecipeItemRequirement;
 import com.morethanheroic.swords.recipe.service.loader.domain.RawRecipeItemRequirement;
 import org.springframework.beans.factory.annotation.Autowired;

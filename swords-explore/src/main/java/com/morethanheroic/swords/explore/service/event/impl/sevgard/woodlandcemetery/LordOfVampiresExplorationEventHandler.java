@@ -9,7 +9,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResul
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
 import com.morethanheroic.swords.explore.service.event.newevent.condition.ConditionFactory;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import lombok.RequiredArgsConstructor;
 
 @ExplorationEvent

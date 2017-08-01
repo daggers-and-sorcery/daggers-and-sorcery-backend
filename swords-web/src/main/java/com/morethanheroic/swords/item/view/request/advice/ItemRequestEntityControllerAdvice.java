@@ -4,7 +4,7 @@ import com.morethanheroic.response.exception.NotFoundException;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.view.request.advice.domain.ItemRequestEntity;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

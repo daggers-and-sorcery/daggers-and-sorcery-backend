@@ -59,4 +59,5 @@ include 'swords-combat-step'
 include 'swords-quest'
 include 'swords-combat-special-attribute'
 include 'swords-combat-bonus'
+include 'swords-item-definition'
 

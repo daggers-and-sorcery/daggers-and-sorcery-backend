@@ -12,7 +12,7 @@ import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
 import com.morethanheroic.swords.inventory.service.sorter.InventoryItemTypeSorter;
 import com.morethanheroic.swords.item.domain.ItemType;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.profile.response.service.attribute.AttributeValuePartialResponseBuilder;
 import com.morethanheroic.swords.profile.response.service.inventory.InventoryPartialResponseBuilder;
 import com.morethanheroic.swords.profile.response.service.inventory.domain.configuration.InventoryPartialResponseBuilderConfiguration;

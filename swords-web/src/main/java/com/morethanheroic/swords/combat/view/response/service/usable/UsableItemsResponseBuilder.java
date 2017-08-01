@@ -1,17 +1,12 @@
 package com.morethanheroic.swords.combat.view.response.service.usable;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
-import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
-import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
-import com.morethanheroic.swords.response.domain.CharacterRefreshResponse;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

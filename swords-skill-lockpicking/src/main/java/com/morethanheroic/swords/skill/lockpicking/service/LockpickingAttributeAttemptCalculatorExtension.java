@@ -8,7 +8,7 @@ import com.morethanheroic.swords.attribute.service.attempt.extension.domain.Post
 import com.morethanheroic.swords.attribute.service.attempt.extension.domain.PreAttemptHookData;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.lockpicking.service.domain.LockpickingAttributeAttemptCalculatorExtensionResult;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.market.service.offer;
 
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.domain.MarketEntity;
 import com.morethanheroic.swords.market.repository.repository.MarketMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;

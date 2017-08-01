@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.view.response;
 
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.service.response.ItemEntryResponseBuilder;
 import com.morethanheroic.swords.journal.domain.JournalType;
 import com.morethanheroic.swords.journal.view.response.monster.MonsterEntryResponseBuilder;

@@ -10,7 +10,7 @@ import com.morethanheroic.swords.combat.service.context.CombatContextFactory;
 import com.morethanheroic.swords.combat.service.item.UseItemCombatCalculator;
 import com.morethanheroic.swords.combat.view.response.service.CombatAttackResponseBuilder;
 import com.morethanheroic.swords.combat.view.response.service.domain.CombatAttackResponseBuilderConfiguration;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

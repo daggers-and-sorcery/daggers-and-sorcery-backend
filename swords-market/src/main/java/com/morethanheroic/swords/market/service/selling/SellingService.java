@@ -3,7 +3,7 @@ package com.morethanheroic.swords.market.service.selling;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.domain.SellingResult;
 import com.morethanheroic.swords.market.repository.repository.MarketMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;

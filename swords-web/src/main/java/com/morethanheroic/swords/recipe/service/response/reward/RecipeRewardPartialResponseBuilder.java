@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.recipe.service.response.reward;
 
 import com.morethanheroic.response.service.PartialResponseBuilder;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.item.view.response.service.IdentifiedItemPartialResponseBuilder;
 import com.morethanheroic.swords.item.view.response.service.domain.configuration.IdentifiedItemPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.recipe.domain.RecipeReward;
