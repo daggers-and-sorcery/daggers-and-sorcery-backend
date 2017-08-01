@@ -1,0 +1,33 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20170801-1">
+        <insert tableName="news">
+            <column name="title" value="Quality of life improvements"/>
+            <column name="release_date" value="2017-08-01 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are here again with a patch that brings a lot of quality of life improvements to the game. We wanted to address these issues before starting to  work on the Vampire Lord exploration event.
+
+Improvements:
+
+- Renamed the 'Lesser healing potion' to 'Potion of Healing'
+- Added icons to the item types in the inventory, on the shop page and on the market pages.
+- Added a name to every exploration event. It's visible on the exploration page's header.
+- Added 'Potion of Mana' to the game with a new herb and a recipe for it.
+- Added 'Silverleaf' to Herblore's Gathering function.
+- Created a landing page for the game. It's visible for everyone who opens the game for the first time.
+- Replaced the existing "flash texts" that showed if an action like creating something was successful or unsuccessful with popup notifications.
+- Added an explore again button to the exploration screen to lessen the scrolling required to reach different exploration locations.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
