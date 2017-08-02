@@ -3,7 +3,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-item')
+    compile project(':swords-item-definition')
     compile project(':xml-loader')
     compile project(':common-definition')
 }

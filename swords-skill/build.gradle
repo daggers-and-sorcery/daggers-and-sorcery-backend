@@ -12,6 +12,7 @@ dependencies {
     compile project(':common-dependency-injection')
 
     compile project(':swords-user')
+    compile project(':swords-skill-definition')
     compile project(':swords-registration')
 }
 

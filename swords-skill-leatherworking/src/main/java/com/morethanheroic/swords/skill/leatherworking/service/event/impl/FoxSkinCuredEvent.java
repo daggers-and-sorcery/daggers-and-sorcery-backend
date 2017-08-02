@@ -2,7 +2,7 @@ package com.morethanheroic.swords.skill.leatherworking.service.event.impl;
 
 import com.morethanheroic.swords.event.domain.Event;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.leatherworking.service.event.CuringEventExecutor;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

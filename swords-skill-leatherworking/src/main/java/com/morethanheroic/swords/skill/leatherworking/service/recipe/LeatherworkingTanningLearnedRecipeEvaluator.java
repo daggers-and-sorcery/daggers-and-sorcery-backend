@@ -2,7 +2,7 @@ package com.morethanheroic.swords.skill.leatherworking.service.recipe;
 
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.recipe.service.learn.RecipelessLearnedRecipeEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

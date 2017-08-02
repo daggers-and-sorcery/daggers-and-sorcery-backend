@@ -1,0 +1,16 @@
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+
+    compile project(':swords-item-definition')
+    compile project(':swords-skill-definition')
+
+    compile project(':common-definition')
+    compile project(':xml-loader')
+}
+
+apply plugin: 'spring-boot'
+bootRepackage.enabled = false

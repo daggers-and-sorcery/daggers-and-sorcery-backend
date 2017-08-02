@@ -4,7 +4,7 @@ import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
