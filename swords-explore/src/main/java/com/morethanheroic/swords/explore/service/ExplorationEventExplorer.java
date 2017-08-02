@@ -53,7 +53,7 @@ public class ExplorationEventExplorer {
     }
 
     private boolean canExplore(final UserEntity userEntity, int nextState) {
-        if (userEntity.getMovementPoints() <= MINIMUM_MOVEMENT_POINTS) {
+        if (userEntity.getMovementPoints() <= MINIMUM_MOVEMENT_POINTS && userEntity.getActiveExplorationEvent() == NO_EVENT) {
             return false;
         }
 
