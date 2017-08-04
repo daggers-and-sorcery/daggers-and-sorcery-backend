@@ -3,10 +3,11 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-item-definition')
-    compile project(':swords-attribute-definition')
-    compile project(':swords-loot')
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
 }
 
 apply plugin: 'spring-boot'
 bootRepackage.enabled = false
+
+apply plugin: 'findbugs'
+findbugs findbugs_config

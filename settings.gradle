@@ -62,4 +62,5 @@ include 'swords-combat-bonus'
 include 'swords-item-definition'
 include 'swords-recipe-definition'
 include 'swords-skill-definition'
+include 'swords-attribute-definition'
 
