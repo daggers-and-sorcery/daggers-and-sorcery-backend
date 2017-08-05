@@ -4,8 +4,11 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-recipe')
+    compile project(':swords-item')
     compile project(':swords-item-web')
+    compile project(':swords-combat')
+    compile project(':swords-session')
+    compile project(':swords-response')
 }
 
 apply plugin: 'spring-boot'

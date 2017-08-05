@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.item.service.response.domain;
+package com.morethanheroic.swords.item.view.response.service.domain;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.morethanheroic.swords.item.domain.modifier.ItemModifier;

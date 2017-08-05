@@ -39,6 +39,7 @@ dependencies {
     compile project(':swords-skill-fletching')
     compile project(':swords-skill-herblore')
     compile project(':swords-skill-web')
+    compile project(':swords-item-web')
 }
 
 apply plugin: 'spring-boot'
