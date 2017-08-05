@@ -23,7 +23,7 @@ dependencies {
     compile project(':swords-response')
     compile project(':swords-session')
     compile project(':swords-equipment')
-    compile project(':swords-recipe')
+    compile project(':swords-recipe-web')
     compile project(':swords-inn')
     compile project(':swords-regeneration')
     compile project(':swords-shop')
@@ -38,6 +38,7 @@ dependencies {
     compile project(':swords-skill-smithing')
     compile project(':swords-skill-fletching')
     compile project(':swords-skill-herblore')
+    compile project(':swords-skill-web')
 }
 
 apply plugin: 'spring-boot'

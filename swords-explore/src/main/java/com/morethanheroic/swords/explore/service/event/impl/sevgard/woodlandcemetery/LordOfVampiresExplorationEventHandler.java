@@ -26,9 +26,9 @@ public class LordOfVampiresExplorationEventHandler extends ImprovedExplorationEv
     private static final int THIRD_COMBAT_STAGE = 5;
     private static final int FOURTH_COMBAT_STAGE = 6;
 
-    private static final int VAMPIRE_SCOUT_ID = 123;
-    private static final int VAMPIRE_WARRIOR_ID = 123;
-    private static final int VAMPIRE_LORD_ID = 123;
+    private static final int VAMPIRE_SCOUT_ID = 29;
+    private static final int VAMPIRE_WARRIOR_ID = 30;
+    private static final int VAMPIRE_LORD_ID = 31;
 
     private static final int COIN_OF_DRAKKAR_ID = 1234;
     private static final int AMULET_PIECE_ID = 1234;

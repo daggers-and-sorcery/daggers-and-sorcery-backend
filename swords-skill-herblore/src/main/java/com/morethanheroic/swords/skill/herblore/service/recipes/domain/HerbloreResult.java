@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.herblore.service.recipes.domain;
 
 /**
- * Contains the result of a herblore creating action.x
+ * Contains the result of a herblore creating action.
  */
 public enum  HerbloreResult {
 

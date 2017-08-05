@@ -3,8 +3,8 @@ package com.morethanheroic.swords.skill.leatherworking.view.response.service.wor
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
-import com.morethanheroic.swords.recipe.service.response.RecipeListPartialResponseBuilder;
-import com.morethanheroic.swords.recipe.service.response.domain.configuration.RecipeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.recipe.view.response.RecipeListPartialResponseBuilder;
+import com.morethanheroic.swords.recipe.view.response.domain.configuration.RecipeListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.leatherworking.view.response.domain.configuration.working.WorkingInfoResponseBuilderConfiguration;

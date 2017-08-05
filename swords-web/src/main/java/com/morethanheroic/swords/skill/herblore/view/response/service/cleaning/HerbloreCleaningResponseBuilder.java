@@ -18,7 +18,7 @@ public class HerbloreCleaningResponseBuilder implements ResponseBuilder<Herblore
     private final HerbloreCleaningPartialResponseBuilder herbloreCleaningPartialResponseBuilder;
 
     @Override
-    public Response build(HerbloreCleaningResponseBuilderConfiguration herbloreCleaningResponseBuilderConfiguration) {
+    public Response build(final HerbloreCleaningResponseBuilderConfiguration herbloreCleaningResponseBuilderConfiguration) {
         final Response response = responseFactory.newResponse(herbloreCleaningResponseBuilderConfiguration.getUserEntity());
 
         response.setData("result", herbloreCleaningPartialResponseBuilder.build(herbloreCleaningResponseBuilderConfiguration));
