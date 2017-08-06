@@ -42,6 +42,6 @@ public class GemcuttingRecipeListPartialResponseBuilder implements PartialRespon
     }
 
     private List<RecipeDefinition> listLearnedGemcuttingRecipes(final UserEntity userEntity) {
-        return learnedRecipeEvaluator.getLearnedRecipes(userEntity, RecipeType.JEWELCRAFTING_GAMECUTTING);
+        return learnedRecipeEvaluator.getLearnedRecipes(userEntity, RecipeType.JEWELCRAFTING_GEMCUTTING);
     }
 }

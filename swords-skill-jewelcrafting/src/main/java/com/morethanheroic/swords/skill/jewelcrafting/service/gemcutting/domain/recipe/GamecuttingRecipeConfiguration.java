@@ -12,6 +12,6 @@ public class GamecuttingRecipeConfiguration {
 
     @Bean("jewelcraftingGemcuttingLearnedRecipeEvaluator")
     public LearnedRecipeEvaluator jewelcraftingGamecuttingLearnedRecipeEvaluator() {
-        return new RecipelessLearnedRecipeEvaluator(SkillType.JEWELCRAFTING, RecipeType.JEWELCRAFTING_GAMECUTTING);
+        return new RecipelessLearnedRecipeEvaluator(SkillType.JEWELCRAFTING, RecipeType.JEWELCRAFTING_GEMCUTTING);
     }
 }

@@ -41,7 +41,7 @@ public class JewelcraftingGemcuttingService {
      */
     @Transactional
     public GemcuttingResult cut(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
-        if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.JEWELCRAFTING_GAMECUTTING) {
+        if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.JEWELCRAFTING_GEMCUTTING) {
             return GemcuttingResult.INVALID_EVENT;
         }
 
