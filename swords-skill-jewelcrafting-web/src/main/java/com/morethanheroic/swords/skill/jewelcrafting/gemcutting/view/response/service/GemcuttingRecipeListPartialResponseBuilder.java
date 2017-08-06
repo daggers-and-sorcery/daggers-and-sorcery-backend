@@ -22,7 +22,7 @@ public class GemcuttingRecipeListPartialResponseBuilder implements PartialRespon
     private final LearnedRecipeEvaluator learnedRecipeEvaluator;
     private final RecipePartialResponseBuilder recipePartialResponseBuilder;
 
-    public GemcuttingRecipeListPartialResponseBuilder(@Qualifier("jeweleryGemcuttingLearnedRecipeEvaluator") final LearnedRecipeEvaluator learnedRecipeEvaluator, final RecipePartialResponseBuilder recipePartialResponseBuilder) {
+    public GemcuttingRecipeListPartialResponseBuilder(@Qualifier("jewelcraftingGemcuttingLearnedRecipeEvaluator") final LearnedRecipeEvaluator learnedRecipeEvaluator, final RecipePartialResponseBuilder recipePartialResponseBuilder) {
         this.learnedRecipeEvaluator = learnedRecipeEvaluator;
         this.recipePartialResponseBuilder = recipePartialResponseBuilder;
     }

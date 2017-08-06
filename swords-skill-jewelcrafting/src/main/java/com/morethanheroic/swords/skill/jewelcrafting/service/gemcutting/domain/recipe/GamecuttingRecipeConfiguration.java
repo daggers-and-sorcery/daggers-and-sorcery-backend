@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GamecuttingRecipeConfiguration {
 
-    @Bean("jewelcraftingGamecuttingLearnedRecipeEvaluator")
+    @Bean("jewelcraftingGemcuttingLearnedRecipeEvaluator")
     public LearnedRecipeEvaluator jewelcraftingGamecuttingLearnedRecipeEvaluator() {
         return new RecipelessLearnedRecipeEvaluator(SkillType.JEWELCRAFTING, RecipeType.JEWELCRAFTING_GAMECUTTING);
     }
