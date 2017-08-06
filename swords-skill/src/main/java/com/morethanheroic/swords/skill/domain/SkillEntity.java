@@ -17,6 +17,7 @@ import javax.annotation.PostConstruct;
  * Contains the data of the user's skills like level and experience. Don't create it manually, use
  * {@link com.morethanheroic.swords.skill.service.factory.SkillEntityFactory} instead.
  */
+//TODO: Remove all the services from here! Also remove the knowledge of the database!
 @Configurable
 public class SkillEntity implements Entity {
 

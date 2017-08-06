@@ -5,7 +5,6 @@ dependencies {
     }
 
     compile project(':swords-item')
-    compile project(':swords-item-web')
     compile project(':swords-combat')
     compile project(':swords-session')
     compile project(':swords-response')
