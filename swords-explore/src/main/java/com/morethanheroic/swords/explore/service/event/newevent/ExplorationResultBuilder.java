@@ -371,7 +371,7 @@ public class ExplorationResultBuilder {
     public ExplorationResultBuilder newRemoveItemEntry(final ItemDefinition item, final int amount, final IdentificationType identificationType) {
         inventoryEntityFactory.getEntity(userEntity).removeItem(item, amount, identificationType);
 
-        newMessageBoxEntry("EXPLORATION_EVEN_ENTRY_REMOVE_ITEM", amount, item.getName());
+        newMessageBoxEntry("EXPLORATION_EVENT_ENTRY_REMOVE_ITEM", amount, item.getName());
 
         return this;
     }

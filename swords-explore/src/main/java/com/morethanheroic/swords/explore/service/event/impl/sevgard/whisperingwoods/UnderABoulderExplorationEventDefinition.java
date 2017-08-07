@@ -64,7 +64,7 @@ public class UnderABoulderExplorationEventDefinition extends ImprovedExploration
                                 .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_1")
                                 .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_2")
                                 .newCustomMultiWayPath(() -> {
-                                    final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
+                                    final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
 
                                     return inventoryEntity.hasItem(itemDefinitionCache.getDefinition(ROPE_ID)) && inventoryEntity.hasItem(itemDefinitionCache.getDefinition(TORCH_ID));
                                 })
@@ -117,7 +117,7 @@ public class UnderABoulderExplorationEventDefinition extends ImprovedExploration
                                     .newCustomLogicEntry(() -> dropAdder.addDrops(userEntity, chestDrops))
                                     .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_14")
                                     .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_15")
-                                    .newCustomLogicEntry(() -> inventoryEntityFactory.getEntity(userEntity.getId()).addItem(itemDefinitionCache.getDefinition(SILVER_COIN_ID), silverCount))
+                                    .newCustomLogicEntry(() -> inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(SILVER_COIN_ID), silverCount))
                                     .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_16", silverCount)
                                     .resetExploration()
                                     .build();
@@ -133,7 +133,7 @@ public class UnderABoulderExplorationEventDefinition extends ImprovedExploration
                                     .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_17", dropTextCreator.listAsText(chestDrops))
                                     .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_18")
                                     .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_19")
-                                    .newCustomLogicEntry(() -> inventoryEntityFactory.getEntity(userEntity.getId()).addItem(itemDefinitionCache.getDefinition(SILVER_COIN_ID), silverCount))
+                                    .newCustomLogicEntry(() -> inventoryEntityFactory.getEntity(userEntity).addItem(itemDefinitionCache.getDefinition(SILVER_COIN_ID), silverCount))
                                     .newMessageEntry("UNDER_A_BOULDER_EXPLORATION_EVENT_ENTRY_20", silverCount)
                                     .resetExploration()
                                     .build();
