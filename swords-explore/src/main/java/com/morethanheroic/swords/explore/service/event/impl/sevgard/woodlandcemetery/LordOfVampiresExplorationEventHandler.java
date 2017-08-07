@@ -66,6 +66,7 @@ public class LordOfVampiresExplorationEventHandler extends ImprovedExplorationEv
                                                                 .stage(GO_HOME_STAGE)
                                                                 .build()
                                                 )
+                                                .setEventStage(EVENT_ID, STARTER_STAGE)
                                                 .build()
                                 )
                                 .build()
