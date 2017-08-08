@@ -38,7 +38,8 @@ public enum SkillAttribute implements Attribute {
     ALTERATION,
     LOCKPICKING,
     FLETCHING,
-    HERBLORE;
+    HERBLORE,
+    JEWELCRAFTING;
 
     @Override
     public AttributeType getAttributeType() {

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.leatherworking.view.controller.curing;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.leatherworking.domain.CuringResult;
 import com.morethanheroic.swords.skill.leatherworking.service.CuringService;
 import com.morethanheroic.swords.skill.leatherworking.view.request.domain.curing.CuringCreateRequest;

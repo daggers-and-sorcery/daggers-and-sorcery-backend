@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.herblore.view.controller.recipe;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.herblore.service.recipes.HerbloreRecipesService;
 import com.morethanheroic.swords.skill.herblore.service.recipes.domain.HerbloreResult;
 import com.morethanheroic.swords.skill.herblore.view.request.HerbloreCraftRequest;

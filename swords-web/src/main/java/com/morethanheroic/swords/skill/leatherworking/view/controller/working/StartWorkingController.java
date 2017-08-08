@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.leatherworking.view.controller.working;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.leatherworking.domain.LeatherworkingResult;
 import com.morethanheroic.swords.skill.leatherworking.service.LeatherworkingService;
 import com.morethanheroic.swords.skill.leatherworking.view.request.domain.working.LeatherworkingCreateRequest;

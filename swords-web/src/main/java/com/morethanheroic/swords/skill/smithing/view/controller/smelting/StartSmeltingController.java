@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.smithing.view.controller.smelting;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.smithing.domain.SmeltingResult;
 import com.morethanheroic.swords.skill.smithing.service.SmeltingService;
 import com.morethanheroic.swords.skill.smithing.view.request.domain.smelting.SmeltingCreateRequest;

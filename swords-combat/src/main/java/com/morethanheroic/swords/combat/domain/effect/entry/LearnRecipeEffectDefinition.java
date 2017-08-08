@@ -4,9 +4,9 @@ import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContex
 import com.morethanheroic.swords.combat.domain.effect.ImprovedCombatEffectDefinition;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.recipe.service.learn.DefaultLearnedRecipeEvaluator;
 import com.morethanheroic.swords.recipe.service.learn.RecipeLearnerService;
 import com.morethanheroic.swords.user.domain.UserEntity;

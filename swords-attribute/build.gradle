@@ -8,6 +8,7 @@ dependencies {
     compile project(':common-definition')
     compile project(':xml-loader')
 
+    compile project(':swords-attribute-definition')
     compile project(':swords-user')
     compile project(':swords-skill')
     compile project(':swords-race')

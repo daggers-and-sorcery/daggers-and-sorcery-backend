@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
-import com.morethanheroic.swords.recipe.service.response.RecipeListPartialResponseBuilder;
-import com.morethanheroic.swords.recipe.service.response.domain.configuration.RecipeListPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.recipe.view.response.RecipeListPartialResponseBuilder;
+import com.morethanheroic.swords.recipe.view.response.domain.configuration.RecipeListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.herblore.view.response.domain.configuration.recipe.RecipeInfoResponseBuilderConfiguration;
@@ -34,15 +34,17 @@ public class RecipeInfoResponseBuilder implements ResponseBuilder<RecipeInfoResp
         final Response response = responseFactory.newResponse(recipeInfoResponseBuilderConfiguration.getUserEntity());
 
         response.setData("recipes", recipeListPartialResponseBuilder.build(
-            RecipeListPartialResponseBuilderConfiguration.builder()
-                 .userEntity(recipeInfoResponseBuilderConfiguration.getUserEntity())
-                 .recipeType(RecipeType.HERBLORE)
-                 .build()
-        ));
-        response.setData("skill", skillLevelPartialResponseBuilder.build(SkillLevelPartialResponseBuilderConfiguration.builder()
-                  .skillLevel(getHerbloreLevel(recipeInfoResponseBuilderConfiguration.getUserEntity()))
-                  .build()
-            )
+                RecipeListPartialResponseBuilderConfiguration.builder()
+                        .userEntity(recipeInfoResponseBuilderConfiguration.getUserEntity())
+                        .recipeType(RecipeType.HERBLORE)
+                        .build()
+                )
+        );
+        response.setData("skill", skillLevelPartialResponseBuilder.build(
+                SkillLevelPartialResponseBuilderConfiguration.builder()
+                        .skillLevel(getHerbloreLevel(recipeInfoResponseBuilderConfiguration.getUserEntity()))
+                        .build()
+                )
         );
 
         return response;

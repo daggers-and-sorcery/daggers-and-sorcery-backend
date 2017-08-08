@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.cooking.service.validator;
 
 import com.morethanheroic.response.exception.NotFoundException;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.cooking.view.request.CookingCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

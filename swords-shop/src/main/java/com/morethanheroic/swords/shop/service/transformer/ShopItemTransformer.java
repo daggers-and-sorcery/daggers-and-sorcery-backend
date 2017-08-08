@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.shop.service.transformer;
 
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.shop.domain.ShopItem;
 import com.morethanheroic.swords.shop.repository.dao.ShopItemDatabaseEntity;
 import com.morethanheroic.swords.shop.service.price.ItemBuyPriceCalculator;

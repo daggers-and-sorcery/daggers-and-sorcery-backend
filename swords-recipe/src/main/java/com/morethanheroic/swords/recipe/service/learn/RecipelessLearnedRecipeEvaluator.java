@@ -4,7 +4,7 @@ import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
 import com.morethanheroic.swords.recipe.domain.RecipeType;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
@@ -66,15 +66,14 @@ public class RecipelessLearnedRecipeEvaluator implements LearnedRecipeEvaluator 
     }
 
     @Override
-    public boolean hasRecipeLearned(UserEntity userEntity, RecipeDefinition recipeDefinition) {
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
+    public boolean hasRecipeLearned(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
         for (RecipeRequirement recipeRequirement : recipeDefinition.getRecipeRequirements()) {
             if (recipeRequirement instanceof RecipeSkillRequirement) {
                 final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;
 
-                if (recipeSkillRequirement.getSkill() == skillType
-                        && skillEntity.getLevel(skillType) >= ((RecipeSkillRequirement) recipeRequirement).getAmount()) {
+                if (recipeSkillRequirement.getSkill() == skillType && skillEntity.getLevel(skillType) >= (recipeSkillRequirement).getAmount()) {
                     return true;
                 }
             }

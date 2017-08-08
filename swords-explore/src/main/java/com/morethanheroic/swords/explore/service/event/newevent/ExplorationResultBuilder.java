@@ -27,7 +27,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.condition.impl.I
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
 import com.morethanheroic.swords.quest.service.QuestManipulator;
@@ -371,7 +371,23 @@ public class ExplorationResultBuilder {
     public ExplorationResultBuilder newRemoveItemEntry(final ItemDefinition item, final int amount, final IdentificationType identificationType) {
         inventoryEntityFactory.getEntity(userEntity).removeItem(item, amount, identificationType);
 
-        newMessageBoxEntry("EXPLORATION_EVEN_ENTRY_REMOVE_ITEM", amount, item.getName());
+        newMessageBoxEntry("EXPLORATION_EVENT_ENTRY_REMOVE_ITEM", amount, item.getName());
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newAddItemEntry(final ItemDefinition item) {
+        return newAddItemEntry(item, 1, IdentificationType.IDENTIFIED);
+    }
+
+    public ExplorationResultBuilder newAddItemEntry(final ItemDefinition item, final int amount) {
+        return newAddItemEntry(item, amount, IdentificationType.IDENTIFIED);
+    }
+
+    public ExplorationResultBuilder newAddItemEntry(final ItemDefinition item, final int amount, final IdentificationType identificationType) {
+        inventoryEntityFactory.getEntity(userEntity).addItem(item, amount, identificationType);
+
+        newMessageBoxEntry("EXPLORATION_EVENT_ENTRY_ADD_ITEM", amount, item.getName());
 
         return this;
     }

@@ -3,8 +3,8 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-item')
-    compile project(':swords-attribute')
+    compile project(':swords-item-definition')
+    compile project(':swords-attribute-definition')
     compile project(':swords-loot')
 }
 

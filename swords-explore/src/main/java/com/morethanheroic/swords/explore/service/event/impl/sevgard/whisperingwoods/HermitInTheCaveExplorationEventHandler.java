@@ -17,7 +17,7 @@ import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDef
 import com.morethanheroic.swords.explore.service.event.exception.IllegalExplorationEventStateException;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.domain.DropAmountDefinition;
 import com.morethanheroic.swords.loot.domain.DropDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;

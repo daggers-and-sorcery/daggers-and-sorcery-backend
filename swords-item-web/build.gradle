@@ -1,0 +1,14 @@
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile project(':swords-item')
+    compile project(':swords-combat')
+    compile project(':swords-session')
+    compile project(':swords-response')
+}
+
+apply plugin: 'spring-boot'
+bootRepackage.enabled = false

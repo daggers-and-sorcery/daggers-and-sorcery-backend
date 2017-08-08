@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.journal.service.item;
 
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.journal.domain.entity.ItemJournalEntity;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import lombok.RequiredArgsConstructor;

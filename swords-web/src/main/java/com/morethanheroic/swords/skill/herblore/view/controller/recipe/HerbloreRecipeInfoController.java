@@ -15,7 +15,7 @@ public class HerbloreRecipeInfoController {
     private final RecipeInfoResponseBuilder recipeInfoResponseBuilder;
 
     @GetMapping("/skill/herblore/recipe/info")
-    public Response cleaningInfo(UserEntity userEntity) {
+    public Response recipeInfo(final UserEntity userEntity) {
         return recipeInfoResponseBuilder.build(
                 RecipeInfoResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)

@@ -41,4 +41,5 @@ public class SkillDatabaseEntity {
     private int destructionXp;
     private int lockpickingXp;
     private int fletchingXp;
+    private int jewelcraftingXp;
 }

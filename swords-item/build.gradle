@@ -11,6 +11,7 @@ dependencies {
 
     compile project(':swords-money')
     compile project(':swords-effect')
+    compile project(':swords-item-definition')
 }
 
 apply plugin: 'spring-boot'

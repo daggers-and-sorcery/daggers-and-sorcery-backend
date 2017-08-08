@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.service.MarketService;
 import com.morethanheroic.swords.market.view.response.service.buy.ShowItemToBuyResponseBuilder;
 import com.morethanheroic.swords.market.view.response.service.domain.buy.ShowItemToBuyResponseBuilderConfiguration;

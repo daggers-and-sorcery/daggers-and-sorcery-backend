@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.market.view.controller.sell;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.market.domain.SellingResult;
 import com.morethanheroic.swords.market.service.selling.SellingService;
 import com.morethanheroic.swords.market.view.request.domain.SellItemRequest;

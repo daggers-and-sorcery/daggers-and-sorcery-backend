@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.skill.leatherworking.view.controller.tanning;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.recipe.service.cache.RecipeDefinitionCache;
+import com.morethanheroic.swords.recipe.service.definition.cache.RecipeDefinitionCache;
 import com.morethanheroic.swords.skill.leatherworking.domain.TanningResult;
 import com.morethanheroic.swords.skill.leatherworking.service.TanningService;
 import com.morethanheroic.swords.skill.leatherworking.view.request.domain.tanning.TanningCreateRequest;

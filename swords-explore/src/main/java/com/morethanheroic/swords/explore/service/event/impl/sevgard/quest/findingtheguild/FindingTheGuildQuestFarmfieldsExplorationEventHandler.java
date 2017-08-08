@@ -11,7 +11,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorat
 import com.morethanheroic.swords.explore.service.event.newevent.condition.ConditionFactory;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.item.service.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
 import lombok.RequiredArgsConstructor;
 
