@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="laxika" id="20170808-1">
+        <insert tableName="news">
+            <column name="title" value="The Lord of Vampires is here!"/>
+            <column name="release_date" value="2017-08-08 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are happy to announce the arrival of a new boss to the game. The Lord of Vampires event is available in the Woodland cemetery, waiting for brave players to defeat the boss living there.
+
+We have to say sorry for some of the content released with the patch/event because not everything is fully finished. Some of the dropped materials are not usable in any recipes or spells. We had to choose between releasing the event as is or work on it for another week and we decided to release it now and provide small additional content patches for it in the upcoming weeks.
+
+The Jewelcrafting skill is also a new arrival in this patch. With it, you are able to craft various jewelry, like the onyx necklace. (Materials for it are dropped by the Lord of Vampires.)
+
+In the future, you should expect a new spell that going to require Vampire Ash for casting and also an use for the special material found at the end of the quest.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
