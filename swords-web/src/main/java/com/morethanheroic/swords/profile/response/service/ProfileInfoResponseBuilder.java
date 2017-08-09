@@ -142,7 +142,7 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     }
 
     private Map<ItemType, List<InventoryItem>> getSortedItems(final UserEntity userEntity) {
-        return inventoryItemTypeSorter.sortByType(inventoryEntityFactory.getEntity(userEntity.getId()).getItems());
+        return inventoryItemTypeSorter.sortByType(inventoryEntityFactory.getEntity(userEntity).getItems());
     }
 
     private Map<String, Map<String, Object>> buildEquipmentResponse(UserEntity userEntity, SessionEntity sessionEntity) {

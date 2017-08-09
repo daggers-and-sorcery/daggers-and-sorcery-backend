@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.inventory.domain;
 
+import com.google.common.collect.*;
 import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
@@ -143,14 +144,7 @@ public class InventoryEntity implements Entity {
     }
 
     public void removeItem(ItemDefinition item, int amount) {
-        removeItem(item.getId(), amount, true);
-    }
-
-    /**
-     * @deprecated Use {@link #removeItem(ItemDefinition, int, IdentificationType)} instead.
-     */
-    public void removeItem(ItemDefinition item, int amount, boolean identified) {
-        removeItem(item, amount, identified ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED);
+        removeItem(item, amount, IdentificationType.IDENTIFIED);
     }
 
     public void removeItem(ItemDefinition item, int amount, IdentificationType identified) {
@@ -186,23 +180,27 @@ public class InventoryEntity implements Entity {
     }
 
     public List<InventoryItem> getItems() {
-        return getItems(IdentificationType.IDENTIFIED);
+        return Collections.unmodifiableList(
+                inventoryMapper.getAllItems(userEntity.getId()).stream()
+                        .map(this::buildInventoryItem)
+                        .collect(Collectors.toList())
+        );
     }
 
     public List<InventoryItem> getItems(final IdentificationType identified) {
         return Collections.unmodifiableList(
-                inventoryMapper.getItems(userEntity.getId(), identified.getId())
-                        .stream()
-                        .map(
-                                itemDatabaseEntity -> InventoryItem.builder()
-                                        .item(itemDefinitionCache.getDefinition(itemDatabaseEntity.getItemId()))
-                                        .amount(itemDatabaseEntity.getAmount())
-                                        .identified(itemDatabaseEntity.isIdentified() ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED)
-                                        .build())
-                        .collect(
-                                Collectors.toList()
-                        )
+                inventoryMapper.getItems(userEntity.getId(), identified.getId()).stream()
+                        .map(this::buildInventoryItem)
+                        .collect(Collectors.toList())
         );
+    }
+
+    private InventoryItem buildInventoryItem(final ItemDatabaseEntity itemDatabaseEntity) {
+        return InventoryItem.builder()
+                .item(itemDefinitionCache.getDefinition(itemDatabaseEntity.getItemId()))
+                .amount(itemDatabaseEntity.getAmount())
+                .identified(itemDatabaseEntity.isIdentified() ? IdentificationType.IDENTIFIED : IdentificationType.UNIDENTIFIED)
+                .build();
     }
 
     public int getMoneyAmount(final MoneyType moneyType) {
