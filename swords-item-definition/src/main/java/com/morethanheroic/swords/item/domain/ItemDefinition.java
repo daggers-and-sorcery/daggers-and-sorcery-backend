@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Holds the static data of an item.
@@ -37,6 +37,17 @@ public class ItemDefinition {
 
     public boolean isTradeable() {
         return tradeable && priceDefinitions.size() > 0 && type != ItemType.MONEY;
+    }
+
+    /**
+     * Return true if the item has one of the provided types.
+     *
+     * @param type the types to check
+     * @return true if the item has at least one of the types provided
+     */
+    public boolean hasType(final ItemType... type) {
+        return Arrays.stream(type)
+                .anyMatch(targetType -> this.type == targetType || subtype == targetType);
     }
 
     public ItemPriceDefinition getPriceDefinitionFor(MoneyType moneyType) {
