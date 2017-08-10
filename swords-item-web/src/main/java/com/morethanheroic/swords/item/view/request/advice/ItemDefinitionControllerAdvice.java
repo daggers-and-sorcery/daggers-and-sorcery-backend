@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.beans.PropertyEditorSupport;
 
 @ControllerAdvice
@@ -39,7 +40,7 @@ public class ItemDefinitionControllerAdvice {
                 }
 
                 if (!itemDefinitionCache.isDefinitionExists(itemId)) {
-                    throw new NotFoundException();
+                    throw new NotFoundException("Item definition doesn't exist for id: " + itemId);
                 }
 
                 setValue(itemDefinitionCache.getDefinition(itemId));

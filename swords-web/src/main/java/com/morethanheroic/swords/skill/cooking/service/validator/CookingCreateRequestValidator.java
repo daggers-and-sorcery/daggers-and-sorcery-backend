@@ -14,7 +14,7 @@ public class CookingCreateRequestValidator {
 
     public void validate(CookingCreateRequest cookingCreateRequest) {
         if (!recipeDefinitionCache.hasDefinition(cookingCreateRequest.getRecipeId())) {
-            throw new NotFoundException();
+            throw new NotFoundException("Recipe definition doesn't exist for id: " + cookingCreateRequest.getRecipeId());
         }
     }
 }

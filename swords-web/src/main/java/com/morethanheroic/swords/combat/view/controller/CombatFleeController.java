@@ -1,9 +1,8 @@
 package com.morethanheroic.swords.combat.view.controller;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.combat.domain.AttackResult;
-import com.morethanheroic.swords.combat.domain.CombatType;
-import com.morethanheroic.swords.combat.domain.Winner;
+import com.morethanheroic.response.exception.*;
+import com.morethanheroic.swords.combat.domain.*;
 import com.morethanheroic.swords.combat.service.context.CombatContextFactory;
 import com.morethanheroic.swords.combat.service.flee.FleeCombatCalculator;
 import com.morethanheroic.swords.combat.view.response.service.CombatAttackResponseBuilder;
@@ -24,6 +23,12 @@ public class CombatFleeController {
 
     @GetMapping("/combat/{combatType}/flee")
     public Response castSpell(final UserEntity userEntity, @PathVariable final CombatType combatType) {
+        final CombatContext combatContext = combatContextFactory.newContext(userEntity, combatType);
+
+        if (combatContext.isQuestCombat()) {
+            throw new ConflictException("You are unable to flee in combat while in a quest combat!");
+        }
+
         final AttackResult attackResult = fleeCombatCalculator.tryFleeing(combatContextFactory.newContext(userEntity, combatType));
 
         return combatAttackResponseBuilder.build(CombatAttackResponseBuilderConfiguration.builder()

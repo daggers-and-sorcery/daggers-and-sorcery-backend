@@ -26,7 +26,7 @@ public class ShopDefinitionControllerAdvice {
                 final int shopId = convertToShopId(rawShopId);
 
                 if (!shopDefinitionCache.isDefinitionExists(shopId)) {
-                    throw new NotFoundException();
+                    throw new NotFoundException("Shop definition doesn't exist for id: " + shopId);
                 }
 
                 setValue(shopDefinitionCache.getDefinition(shopId));

@@ -22,26 +22,25 @@ public class CombatContextFactory {
     private final MonsterCombatEntityFactory monsterCombatEntityFactory;
     private final SavedCombatEntityFactory savedCombatEntityFactory;
 
-    public CombatContext newContext(final SavedCombatEntity savedCombatEntity) {
+    public CombatContext newContext(final UserEntity userEntity, final CombatType combatType) {
+        final SavedCombatEntity savedCombatEntity = savedCombatEntityFactory.getEntity(
+                SavedCombatEntityFactoryContext.builder()
+                        .userEntity(userEntity)
+                        .combatType(combatType)
+                        .build()
+        );
+
         return CombatContext.builder()
                 .user(new UserCombatEntity(savedCombatEntity.getUser(), globalAttributeCalculator))
-                .opponent(monsterCombatEntityFactory.newMonsterCombatEntity(
-                        savedCombatEntity.getMonster(),
-                        savedCombatEntity.getMonsterHealth(),
-                        savedCombatEntity.getMonsterMana())
+                .opponent(
+                        monsterCombatEntityFactory.newMonsterCombatEntity(
+                                savedCombatEntity.getMonster(),
+                                savedCombatEntity.getMonsterHealth(),
+                                savedCombatEntity.getMonsterMana()
+                        )
                 )
                 .combatId(savedCombatEntity.getId())
+                .type(combatType)
                 .build();
-    }
-
-    public CombatContext newContext(final UserEntity userEntity, final CombatType combatType) {
-        return newContext(
-                savedCombatEntityFactory.getEntity(
-                        SavedCombatEntityFactoryContext.builder()
-                                .userEntity(userEntity)
-                                .combatType(combatType)
-                                .build()
-                )
-        );
     }
 }
