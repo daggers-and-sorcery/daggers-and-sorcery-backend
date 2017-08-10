@@ -11,6 +11,7 @@ dependencies {
     compile project(':swords-combat-step')
     compile project(':swords-combat-event')
     compile project(':swords-combat-special-attribute')
+    compile project(':swords-combat-definition')
     compile project(':swords-inventory')
     compile project(':swords-skill')
     compile project(':swords-item')

@@ -2,11 +2,6 @@ dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
-
-    compile project(':swords-combat-step')
-    compile project(':swords-combat-entity')
-    compile project(':swords-combat-bonus')
-    compile project(':swords-combat-definition')
 }
 
 apply plugin: 'spring-boot'

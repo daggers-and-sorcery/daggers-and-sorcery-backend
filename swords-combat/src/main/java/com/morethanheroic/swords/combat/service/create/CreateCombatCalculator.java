@@ -3,6 +3,7 @@ package com.morethanheroic.swords.combat.service.create;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.AttackResult;
 import com.morethanheroic.swords.combat.domain.CombatContext;
+import com.morethanheroic.swords.combat.service.calc.terminate.domain.CombatTerminationContext;
 import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
@@ -13,7 +14,7 @@ import com.morethanheroic.swords.combat.service.attack.MonsterAttackCalculator;
 import com.morethanheroic.swords.combat.service.attack.PlayerAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.CombatInitializer;
-import com.morethanheroic.swords.combat.service.calc.CombatTerminator;
+import com.morethanheroic.swords.combat.service.calc.terminate.CombatTerminator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.event.StartTurnCombatEventRunner;
 import com.morethanheroic.swords.combat.service.create.domain.CombatCreationContext;
@@ -101,18 +102,26 @@ public class CreateCombatCalculator {
         final UserCombatEntity userCombatEntity = combatContext.getUser();
         userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userCombatEntity.getUserEntity().getMovementPoints());
 
-        if (combatContext.getWinner() == null) {
+        if (!combatContext.isCombatEnded()) {
             final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
 
             combatMapper.createCombat(userEntity.getId(), combatCreationContext.getType(), monsterDefinition.getId(), monsterCombatEntity.getActualHealth(),
                     monsterCombatEntity.getActualMana());
         } else {
-            combatSteps.addAll(combatTerminator.terminate(combatContext));
+            combatSteps.addAll(
+                    combatTerminator.terminate(
+                            CombatTerminationContext.builder()
+                                    .user(combatContext.getUser())
+                                    .opponent(combatContext.getOpponent())
+                                    .userVictory(combatContext.isUserVictory())
+                                    .build()
+                    )
+            );
         }
 
         return AttackResult.builder()
                 .attackResult(combatSteps)
-                .combatEnded(combatContext.getWinner() != null)
+                .combatEnded(combatContext.isCombatEnded())
                 .winner(combatContext.getWinner())
                 .build();
     }

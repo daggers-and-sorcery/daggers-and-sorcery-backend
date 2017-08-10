@@ -1,22 +1,21 @@
-package com.morethanheroic.swords.combat.domain;
+package com.morethanheroic.swords.combat.service.event.terminate.domain;
 
+import com.morethanheroic.swords.combat.domain.CombatType;
+import com.morethanheroic.swords.combat.domain.Winner;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Builder
-public class CombatContext {
+public class TeardownCombatEventContext {
 
     private final int combatId;
     private final UserCombatEntity user;
-    private final MonsterCombatEntity opponent;
+    private final MonsterCombatEntity monster;
     private final CombatType type;
-
-    @Setter
-    private Winner winner;
+    private final Winner winner;
 
     public boolean isUserVictory() {
         return winner == Winner.PLAYER;

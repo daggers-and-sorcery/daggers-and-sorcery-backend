@@ -73,6 +73,10 @@ public abstract class CombatEntity {
         this.actualMana = actualMana;
     }
 
+    public boolean isAlive() {
+        return actualHealth > 0;
+    }
+
     public abstract DiceAttribute getAttack();
 
     public abstract DiceAttribute getDefense();

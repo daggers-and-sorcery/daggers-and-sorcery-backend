@@ -67,4 +67,5 @@ include 'swords-skill-jewelcrafting-web'
 include 'swords-recipe-web'
 include 'swords-skill-web'
 include 'swords-item-web'
+include 'swords-combat-definition'
 
