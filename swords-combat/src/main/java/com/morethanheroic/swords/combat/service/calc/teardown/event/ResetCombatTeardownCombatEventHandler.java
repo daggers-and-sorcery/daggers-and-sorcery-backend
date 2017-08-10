@@ -1,8 +1,5 @@
 package com.morethanheroic.swords.combat.service.calc.teardown.event;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
@@ -12,6 +9,9 @@ import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This {@link TeardownCombatEventHandler} reset the state of the combat by either deleting it or resetting to the starter values.
@@ -45,7 +45,9 @@ public class ResetCombatTeardownCombatEventHandler implements TeardownCombatEven
     }
 
     private void handleQuestCombat(final TeardownCombatEventContext teardownCombatEventContext) {
-        if (!teardownCombatEventContext.isUserVictory()) {
+        if (teardownCombatEventContext.isUserVictory()) {
+            combatMapper.removeCombat(teardownCombatEventContext.getCombatId());
+        } else {
             final MonsterCombatEntity monsterCombatEntity = teardownCombatEventContext.getMonster();
 
             combatExperienceMapper.removeAll(teardownCombatEventContext.getUser().getUserEntity().getId());
