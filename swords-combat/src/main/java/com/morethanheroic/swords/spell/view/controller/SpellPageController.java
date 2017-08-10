@@ -8,10 +8,7 @@ import com.morethanheroic.swords.spell.service.page.PageEntryDataContainer;
 import com.morethanheroic.swords.spell.service.page.SpellPageRegistry;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,10 +21,10 @@ public class SpellPageController {
     @Autowired
     private SpellDefinitionCache spellDefinitionCache;
 
-    @RequestMapping(value = "/spell/page/{spellId}", method = RequestMethod.GET)
+    @GetMapping("/spell/page/{spellId}")
     public CharacterRefreshResponse castSpell(UserEntity userEntity, SessionEntity sessionEntity, @PathVariable int spellId) {
         if (!spellDefinitionCache.isSpellDefinitionExists(spellId)) {
-            throw new NotFoundException();
+            throw new NotFoundException("Spell definition doesn't exists!");
         }
 
         return spellPageRegistry.getSpellPageEntry(spellDefinitionCache.getSpellDefinition(spellId)).build(new PageEntryDataContainer(userEntity, sessionEntity));

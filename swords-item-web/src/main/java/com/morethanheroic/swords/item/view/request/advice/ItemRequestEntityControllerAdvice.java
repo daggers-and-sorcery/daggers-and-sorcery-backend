@@ -39,7 +39,7 @@ public class ItemRequestEntityControllerAdvice {
                 }
 
                 if (!itemDefinitionCache.isDefinitionExists(itemId)) {
-                    throw new NotFoundException();
+                    throw new NotFoundException("Item definition doesn't exist for id: " + itemId);
                 }
 
                 setValue(

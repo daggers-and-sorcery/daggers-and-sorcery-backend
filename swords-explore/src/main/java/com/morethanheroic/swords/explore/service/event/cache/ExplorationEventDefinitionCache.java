@@ -3,7 +3,6 @@ package com.morethanheroic.swords.explore.service.event.cache;
 import com.morethanheroic.swords.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.loader.ExplorationEventDefinitionLoader;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

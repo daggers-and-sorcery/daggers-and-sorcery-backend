@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.equipment.domain;
 
+import java.util.*;
+
 import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
@@ -300,7 +302,7 @@ public class EquipmentEntity implements Entity {
             case RING:
                 final int previousRing = equipmentDatabaseEntity.getRing();
 
-                if(previousRing != 0) {
+                if (previousRing != 0) {
                     inventoryEntity.addItem(previousRing, 1, equipmentDatabaseEntity.isRingIdentified());
 
                     equipmentDatabaseEntity.setRing(0);
@@ -325,10 +327,26 @@ public class EquipmentEntity implements Entity {
         return true;
     }
 
+    public EquipmentSlotEntity getEquipmentSlot(final EquipmentSlot slot) {
+        return EquipmentSlotEntity.builder()
+                .slot(slot)
+                .item(itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(slot)))
+                .amount(getAmountOnSlot(slot))
+                .build();
+    }
+
+    /**
+     * @deprecated Please use {@link #getEquipmentSlot(EquipmentSlot)} instead.
+     */
+    @Deprecated
     public ItemDefinition getEquipmentDefinitionOnSlot(EquipmentSlot slot) {
         return itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(slot));
     }
 
+    /**
+     * @deprecated Please use {@link #getEquipmentSlot(EquipmentSlot)} instead.
+     */
+    @Deprecated
     public int getEquipmentIdOnSlot(EquipmentSlot slot) {
         final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
 

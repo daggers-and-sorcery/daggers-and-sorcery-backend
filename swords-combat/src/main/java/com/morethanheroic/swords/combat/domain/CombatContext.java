@@ -17,4 +17,8 @@ public class CombatContext {
 
     @Setter
     private Winner winner;
+
+    public boolean isQuestCombat() {
+        return type != CombatType.EXPLORE;
+    }
 }

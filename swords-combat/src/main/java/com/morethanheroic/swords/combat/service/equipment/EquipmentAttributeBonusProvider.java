@@ -11,15 +11,13 @@ import com.morethanheroic.swords.attribute.service.calc.domain.calculation.Simpl
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.combat.service.CombatUtil;
 import com.morethanheroic.swords.equipment.EquipmentEntityFactory;
-import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
-import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.item.domain.ItemDefinition;
-import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.equipment.domain.*;
+import com.morethanheroic.swords.item.domain.*;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Calculate and provide the bonuses of the equipments for the attributes.
@@ -28,31 +26,37 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
 
-    private static final int EMPTY_EQUIPMENT_SLOT = 0;
-
     private final EquipmentEntityFactory equipmentEntityFactory;
-    private final ItemDefinitionCache itemDefinitionCache;
     private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemModifierToAttributeConverter itemModifierToAttributeConverter;
     private final AttributeCalculationResultFactory attributeCalculationResultFactory;
     private final CombatUtil combatUtil;
 
     @Override
-    public Optional<SimpleValueAttributeCalculationResult> calculateBonus(UserEntity userEntity, Attribute attribute) {
+    public Optional<SimpleValueAttributeCalculationResult> calculateBonus(final UserEntity userEntity, final Attribute attribute) {
         final SimpleValueAttributeCalculationResult result = attributeCalculationResultFactory.newResult(attribute);
         final EquipmentEntity equipmentEntity = equipmentEntityFactory.getEntity(userEntity);
 
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            final int item = equipmentEntity.getEquipmentIdOnSlot(slot);
-
-            if (item != EMPTY_EQUIPMENT_SLOT) {
-                calculateItemModifiers(result, itemDefinitionCache.getDefinition(item));
-            }
-        }
+        Arrays.stream(EquipmentSlot.values())
+                .map(equipmentEntity::getEquipmentSlot)
+                .filter(EquipmentSlotEntity::hasItem)
+                .forEach(slot -> calculateModifiersOnSlot(result, slot, equipmentEntity));
 
         calculateNoWeaponFistfightModifiers(result, userEntity);
 
         return Optional.of(result);
+    }
+
+    private void calculateModifiersOnSlot(final SimpleValueAttributeCalculationResult result, final EquipmentSlotEntity equipmentSlotEntity, final EquipmentEntity equipmentEntity) {
+        if (equipmentSlotEntity.isSlot(EquipmentSlot.QUIVER)) {
+            final EquipmentSlotEntity weaponEquipmentSlotEntity = equipmentEntity.getEquipmentSlot(EquipmentSlot.WEAPON);
+
+            if (weaponEquipmentSlotEntity.hasItem() && weaponEquipmentSlotEntity.getItem().get().hasType(ItemType.CROSSBOWS, ItemType.LONGBOWS, ItemType.SHORTBOWS)) {
+                calculateItemModifiers(result, equipmentSlotEntity.getItem().get());
+            }
+        } else {
+            calculateItemModifiers(result, equipmentSlotEntity.getItem().get());
+        }
     }
 
     private void calculateNoWeaponFistfightModifiers(SimpleValueAttributeCalculationResult result, UserEntity userEntity) {
@@ -66,16 +70,18 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
     }
 
     private void calculateItemModifiers(SimpleValueAttributeCalculationResult result, ItemDefinition itemDefinition) {
-        itemDefinition.getModifiers().stream().filter(modifierDefinition -> itemModifierToAttributeConverter.convert(modifierDefinition.getModifier()) == result.getAttribute()).forEach(modifierDefinition -> {
-            result.increaseValue(modifierDefinition.getAmount());
+        itemDefinition.getModifiers().stream()
+                .filter(modifierDefinition -> itemModifierToAttributeConverter.convert(modifierDefinition.getModifier()) == result.getAttribute())
+                .forEach(modifierDefinition -> {
+                    result.increaseValue(modifierDefinition.getAmount());
 
-            if (result.getAttribute() instanceof CombatAttribute) {
-                ((DiceValueAttributeCalculationResult) result).increaseD2(modifierDefinition.getD2());
-                ((DiceValueAttributeCalculationResult) result).increaseD4(modifierDefinition.getD4());
-                ((DiceValueAttributeCalculationResult) result).increaseD6(modifierDefinition.getD6());
-                ((DiceValueAttributeCalculationResult) result).increaseD8(modifierDefinition.getD8());
-                ((DiceValueAttributeCalculationResult) result).increaseD10(modifierDefinition.getD10());
-            }
-        });
+                    if (result.getAttribute() instanceof CombatAttribute) {
+                        ((DiceValueAttributeCalculationResult) result).increaseD2(modifierDefinition.getD2());
+                        ((DiceValueAttributeCalculationResult) result).increaseD4(modifierDefinition.getD4());
+                        ((DiceValueAttributeCalculationResult) result).increaseD6(modifierDefinition.getD6());
+                        ((DiceValueAttributeCalculationResult) result).increaseD8(modifierDefinition.getD8());
+                        ((DiceValueAttributeCalculationResult) result).increaseD10(modifierDefinition.getD10());
+                    }
+                });
     }
 }

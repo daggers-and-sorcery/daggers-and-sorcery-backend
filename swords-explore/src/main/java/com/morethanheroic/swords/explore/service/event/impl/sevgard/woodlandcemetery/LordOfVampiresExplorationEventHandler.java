@@ -4,7 +4,7 @@ import com.morethanheroic.swords.attribute.domain.GeneralAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.combat.domain.Drop;
 import com.morethanheroic.swords.combat.service.calc.drop.DropCalculator;
-import com.morethanheroic.swords.combat.service.drop.DropTextCreator;
+import com.morethanheroic.swords.combat.service.drop.*;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationContext;
@@ -47,6 +47,7 @@ public class LordOfVampiresExplorationEventHandler extends ImprovedExplorationEv
     private final DropCalculator dropCalculator;
     private final LootDefinitionCache lootDefinitionCache;
     private final DropTextCreator dropTextCreator;
+    private final DropAdder dropAdder;
 
     @Override
     public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
@@ -122,6 +123,7 @@ public class LordOfVampiresExplorationEventHandler extends ImprovedExplorationEv
 
                                             return explorationResultBuilder1
                                                     .newMessageEntry("LORD_OF_VAMPIRES_EXPLORATION_EVENT_ENTRY_14", dropTextCreator.listAsText(chestDrops))
+                                                    .newCustomLogicEntry(() -> dropAdder.addDrops(explorationContext.getUserEntity(), chestDrops))
                                                     .newConditionalMultiWayPath(explorationContext,
                                                             conditionFactory.newConditionBuilder()
                                                                     .newItemCondition(itemDefinitionCache.getDefinition(COIN_OF_DRAKKAR_ID), 3)
