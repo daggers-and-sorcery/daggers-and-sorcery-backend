@@ -10,7 +10,6 @@ import com.morethanheroic.swords.skill.service.handler.SkillHandlerProvider;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -64,8 +63,8 @@ public class LadderService {
         if (skillType == SkillType.STAFF) {
             return "staffs_xp";
         }
-        if (skillType == SkillType.SPECTRE) {
-            return "spectres_xp";
+        if (skillType == SkillType.SCEPTRE) {
+            return "sceptres_xp";
         }
         if (skillType == SkillType.WAND) {
             return "wands_xp";

@@ -31,7 +31,7 @@ public enum SkillType {
     STAFF(SkillGroup.COMBAT),
     WAND(SkillGroup.COMBAT),
     FOCUS(SkillGroup.COMBAT),
-    SPECTRE(SkillGroup.COMBAT),
+    SCEPTRE(SkillGroup.COMBAT),
     SCAVENGING(SkillGroup.TRADE),
     COOKING(SkillGroup.TRADE),
     LEATHERWORKING(SkillGroup.TRADE),

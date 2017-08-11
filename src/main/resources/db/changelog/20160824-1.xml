@@ -17,9 +17,6 @@
             <column name="is_answer" type="tinyint unsigned"/>
             <column name="answer_to_comment_id" type="int"/>
         </addColumn>
-
-
     </changeSet>
-
 </databaseChangeLog>
 

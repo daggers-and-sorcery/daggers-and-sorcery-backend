@@ -61,7 +61,7 @@ public enum ItemModifier {
     SHIELD_DEFENSE,
     STAFF,
     WAND,
-    SPECTRE,
+    SCEPTRE,
     SCAVENGING,
     COOKING,
 
