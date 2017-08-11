@@ -36,7 +36,7 @@ public class CombatCorrectionFilter implements Filter {
             final int combatCount = combatMapper.getCombatCount(userEntity.getId(), CombatType.EXPLORE);
             if (combatCount > 0) {
                 if (userEntity.getActiveExplorationEvent() == 0 && userEntity.getActiveExplorationState() == 0) {
-                    combatMapper.removeCombatForUser(userEntity.getId());
+                    combatMapper.removeExplorationCombatForUser(userEntity.getId());
                 } else {
                     if (combatCount > 1) {
                         combatMapper.removeOneCombatForUser(userEntity.getId());

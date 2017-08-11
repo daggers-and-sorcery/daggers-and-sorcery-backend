@@ -22,7 +22,7 @@ public interface CombatMapper {
     void removeCombat(@Param("id") int id);
 
     @Delete("DELETE FROM combat WHERE user_id = #{userId} AND type = 'EXPLORE'")
-    void removeCombatForUser(@Param("userId") int userId);
+    void removeExplorationCombatForUser(@Param("userId") int userId);
 
     @Select("SELECT * FROM combat WHERE user_id = #{userId} AND type = #{type}")
     CombatDatabaseEntity getRunningCombat(@Param("userId") int userId, @Param("type") CombatType type);

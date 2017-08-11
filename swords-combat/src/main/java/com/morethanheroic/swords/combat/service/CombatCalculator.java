@@ -35,6 +35,6 @@ public class CombatCalculator {
     }
 
     public void removeAllCombatForUser(final UserEntity userEntity) {
-        combatMapper.removeCombatForUser(userEntity.getId());
+        combatMapper.removeExplorationCombatForUser(userEntity.getId());
     }
 }

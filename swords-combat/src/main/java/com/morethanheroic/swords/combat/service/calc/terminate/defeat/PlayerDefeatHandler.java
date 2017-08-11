@@ -61,7 +61,7 @@ public class PlayerDefeatHandler {
 
     private void restartRunningEvent(final UserEntity userEntity) {
         combatExperienceMapper.removeAll(userEntity.getId());
-        combatMapper.removeCombatForUser(userEntity.getId());
+        combatMapper.removeExplorationCombatForUser(userEntity.getId());
 
         userEntity.resetActiveExploration();
     }
