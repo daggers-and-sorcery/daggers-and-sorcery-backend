@@ -2,12 +2,13 @@ package com.morethanheroic.swords.combat.service.attack;
 
 import com.morethanheroic.swords.combat.domain.AttackResult;
 import com.morethanheroic.swords.combat.domain.CombatContext;
+import com.morethanheroic.swords.combat.service.calc.teardown.CombatTeardownCalculator;
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
-import com.morethanheroic.swords.combat.service.calc.CombatTerminator;
+import com.morethanheroic.swords.combat.service.calc.terminate.CombatTerminator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.event.StartTurnCombatEventRunner;
 import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
@@ -25,8 +26,7 @@ public class AttackCombatCalculator {
     private final InitialisationCalculator initialisationCalculator;
     private final PlayerAttackCalculator playerAttackCalculator;
     private final MonsterAttackCalculator monsterAttackCalculator;
-    private final CombatTerminator combatTerminator;
-    private final CombatMapper combatMapper;
+    private final CombatTeardownCalculator combatTeardownCalculator;
     private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
     @Transactional
@@ -56,18 +56,7 @@ public class AttackCombatCalculator {
             }
         }
 
-        final UserCombatEntity userCombatEntity = combatContext.getUser();
-        userCombatEntity.getUserEntity().setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userCombatEntity.getUserEntity().getMovementPoints());
-
-        if (combatContext.getWinner() != null) {
-            combatSteps.addAll(combatTerminator.terminate(combatContext));
-
-            combatMapper.removeCombat(combatContext.getCombatId());
-        } else {
-            final MonsterCombatEntity monsterCombatEntity = combatContext.getOpponent();
-
-            combatMapper.updateCombat(combatContext.getCombatId(), monsterCombatEntity.getActualHealth(), monsterCombatEntity.getActualMana());
-        }
+        combatSteps.addAll(combatTeardownCalculator.teardown(combatContext));
 
         return AttackResult.builder()
                 .attackResult(combatSteps)

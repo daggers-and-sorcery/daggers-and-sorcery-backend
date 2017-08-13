@@ -1,7 +1,9 @@
-package com.morethanheroic.swords.combat.service.calc.result;
+package com.morethanheroic.swords.combat.service.calc.terminate.defeat;
 
-import com.morethanheroic.swords.combat.domain.CombatContext;
+import com.google.common.collect.Lists;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
+import com.morethanheroic.swords.combat.service.CombatStepListBuilder;
+import com.morethanheroic.swords.combat.service.calc.terminate.defeat.domain.PlayerDefeatContext;
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.repository.domain.CombatExperienceMapper;
@@ -15,7 +17,6 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,15 +32,13 @@ public class PlayerDefeatHandler {
     private final CombatExperienceMapper combatExperienceMapper;
     private final CombatMapper combatMapper;
 
-    public List<CombatStep> handleDefeat(CombatContext combatContext) {
-        final List<CombatStep> result = new ArrayList<>();
+    public List<CombatStep> handleDefeat(final PlayerDefeatContext playerDefeatContext) {
+        final UserEntity userEntity = playerDefeatContext.getUser().getUserEntity();
 
-        final UserEntity userEntity = combatContext.getUser().getUserEntity();
-
-        result.addAll(handleDeath(userEntity));
-        result.add(handleResurrection(userEntity, combatContext.getUser()));
-
-        return result;
+        return CombatStepListBuilder.builder()
+                .withCombatSteps(handleDeath(userEntity))
+                .withCombatSteps(handleResurrection(userEntity, playerDefeatContext.getUser()))
+                .build();
     }
 
     private List<CombatStep> handleDeath(UserEntity userEntity) {
@@ -50,7 +49,6 @@ public class PlayerDefeatHandler {
         return highestSkillCalculator.getHighestSkills(skillEntity).stream()
                 .map(skillType -> {
                     final int experienceToRemove = calculateExperienceToRemove(skillType, skillEntity);
-
 
                     skillEntity.decreaseExperience(skillType, experienceToRemove);
 
@@ -63,17 +61,19 @@ public class PlayerDefeatHandler {
 
     private void restartRunningEvent(final UserEntity userEntity) {
         combatExperienceMapper.removeAll(userEntity.getId());
-        combatMapper.removeCombatForUser(userEntity.getId());
+        combatMapper.removeExplorationCombatForUser(userEntity.getId());
 
         userEntity.resetActiveExploration();
     }
 
-    private CombatStep handleResurrection(UserEntity userEntity, UserCombatEntity userCombatEntity) {
+    private List<CombatStep> handleResurrection(UserEntity userEntity, UserCombatEntity userCombatEntity) {
         userEntity.setBasicStats(userCombatEntity.getMaximumHealth(), userCombatEntity.getMaximumMana(), userEntity.getMovementPoints());
 
-        return DefaultCombatStep.builder()
-                .message(combatMessageFactory.newMessage("resurrection", "COMBAT_MESSAGE_RESURRECTION"))
-                .build();
+        return Lists.newArrayList(
+                DefaultCombatStep.builder()
+                        .message(combatMessageFactory.newMessage("resurrection", "COMBAT_MESSAGE_RESURRECTION"))
+                        .build()
+        );
     }
 
     private int calculateExperienceToRemove(SkillType skillType, SkillEntity skillEntity) {

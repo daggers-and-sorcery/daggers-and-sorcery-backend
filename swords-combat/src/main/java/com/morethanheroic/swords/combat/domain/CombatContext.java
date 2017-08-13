@@ -18,7 +18,15 @@ public class CombatContext {
     @Setter
     private Winner winner;
 
+    public boolean isUserVictory() {
+        return winner == Winner.PLAYER;
+    }
+
     public boolean isQuestCombat() {
         return type != CombatType.EXPLORE;
+    }
+
+    public boolean isCombatEnded() {
+        return winner != null;
     }
 }

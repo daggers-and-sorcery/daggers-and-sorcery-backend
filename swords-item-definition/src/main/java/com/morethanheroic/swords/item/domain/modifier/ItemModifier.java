@@ -19,6 +19,7 @@ public enum ItemModifier {
     ATTACK,
     MAGIC_ATTACK,
     MAGIC_DAMAGE,
+    RANGED_ATTACK,
     AIMING,
     DEFENSE,
     DAMAGE_REDUCTION,
@@ -60,7 +61,7 @@ public enum ItemModifier {
     SHIELD_DEFENSE,
     STAFF,
     WAND,
-    SPECTRE,
+    SCEPTRE,
     SCAVENGING,
     COOKING,
 

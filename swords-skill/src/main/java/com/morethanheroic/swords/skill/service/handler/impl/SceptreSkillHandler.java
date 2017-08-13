@@ -8,32 +8,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpectresSkillHandler implements SkillHandler {
+public class SceptreSkillHandler implements SkillHandler {
 
     @Autowired
     private SkillMapper skillMapper;
 
     @Override
     public void increaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value) {
-        skillDatabaseEntity.setSpectresXp(skillDatabaseEntity.getSpectresXp() + value);
+        skillDatabaseEntity.setSceptresXp(skillDatabaseEntity.getSceptresXp() + value);
 
-        skillMapper.increaseSpectresXp(skillDatabaseEntity.getUserId(), value);
+        skillMapper.increaseSceptresXp(skillDatabaseEntity.getUserId(), value);
     }
 
     @Override
     public void decreaseExperience(SkillDatabaseEntity skillDatabaseEntity, int value) {
-        skillDatabaseEntity.setSpectresXp(skillDatabaseEntity.getSpectresXp() - value);
+        skillDatabaseEntity.setSceptresXp(skillDatabaseEntity.getSceptresXp() - value);
 
-        skillMapper.decreaseSpectresXp(skillDatabaseEntity.getUserId(), value);
+        skillMapper.decreaseSceptresXp(skillDatabaseEntity.getUserId(), value);
     }
 
     @Override
     public int getExperience(SkillDatabaseEntity skillDatabaseEntity) {
-        return skillDatabaseEntity.getSpectresXp();
+        return skillDatabaseEntity.getSceptresXp();
     }
 
     @Override
     public SkillType getSupportedSkillType() {
-        return SkillType.SPECTRE;
+        return SkillType.SCEPTRE;
     }
 }

@@ -8,7 +8,7 @@ import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
-import com.morethanheroic.swords.combat.service.CombatTeardownCalculator;
+import com.morethanheroic.swords.combat.service.calc.teardown.CombatTeardownCalculator;
 import com.morethanheroic.swords.combat.service.attack.MonsterAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;

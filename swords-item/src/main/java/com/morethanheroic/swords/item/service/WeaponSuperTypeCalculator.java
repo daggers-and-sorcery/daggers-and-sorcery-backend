@@ -35,7 +35,7 @@ public class WeaponSuperTypeCalculator {
                 return Optional.of(WeaponSuperType.RANGED);
             case STAFF:
             case WAND:
-            case SPECTRE:
+            case SCEPTRE:
                 return Optional.of(WeaponSuperType.MAGIC);
             default:
                 return Optional.empty();

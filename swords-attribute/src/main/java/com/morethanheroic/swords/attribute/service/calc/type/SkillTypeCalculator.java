@@ -75,8 +75,8 @@ public class SkillTypeCalculator {
                 return SkillType.STAFF;
             case WAND:
                 return SkillType.WAND;
-            case SPECTRE:
-                return SkillType.SPECTRE;
+            case SCEPTRE:
+                return SkillType.SCEPTRE;
             case FOCUS:
                 return SkillType.FOCUS;
             default:

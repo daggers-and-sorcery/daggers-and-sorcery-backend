@@ -58,7 +58,7 @@ public enum ItemRequirement {
     SHIELD_DEFENSE,
     STAFF,
     WAND,
-    SPECTRE,
+    SCEPTRE,
     SCAVENGING,
     COOKING,
     FOCUS;

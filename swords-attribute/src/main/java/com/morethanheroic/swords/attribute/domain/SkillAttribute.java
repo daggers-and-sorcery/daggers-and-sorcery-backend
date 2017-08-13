@@ -27,7 +27,7 @@ public enum SkillAttribute implements Attribute {
     SHIELD_DEFENSE,
     STAFF,
     WAND,
-    SPECTRE,
+    SCEPTRE,
     SCAVENGING,
     COOKING,
     LEATHERWORKING,

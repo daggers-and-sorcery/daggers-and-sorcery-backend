@@ -29,7 +29,7 @@ public class SkillDatabaseEntity {
     private int shieldDefenseXp;
     private int staffsXp;
     private int wandsXp;
-    private int spectresXp;
+    private int sceptresXp;
     private int scavengingXp;
     private int cookingXp;
     private int leatherworkingXp;

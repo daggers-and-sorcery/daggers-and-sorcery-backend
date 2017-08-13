@@ -26,7 +26,7 @@ public enum ItemType {
     SHIELD,
     STAFF,
     WAND,
-    SPECTRE,
+    SCEPTRE,
     MONEY,
     ARROW,
     MATERIAL,

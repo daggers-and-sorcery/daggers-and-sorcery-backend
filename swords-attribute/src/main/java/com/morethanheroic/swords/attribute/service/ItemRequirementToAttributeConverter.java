@@ -97,8 +97,8 @@ public class ItemRequirementToAttributeConverter {
                 return SkillAttribute.WAND;
             case FOCUS:
                 return SkillAttribute.FOCUS;
-            case SPECTRE:
-                return SkillAttribute.SPECTRE;
+            case SCEPTRE:
+                return SkillAttribute.SCEPTRE;
             case SCAVENGING:
                 return SkillAttribute.SCAVENGING;
             case COOKING:

@@ -104,8 +104,8 @@ public class StatusEffectModifierToAttributeConverter {
             return SkillAttribute.STAFF;
         case WAND:
             return SkillAttribute.WAND;
-        case SPECTRE:
-            return SkillAttribute.SPECTRE;
+        case SCEPTRE:
+            return SkillAttribute.SCEPTRE;
         case SCAVENGING:
             return SkillAttribute.SCAVENGING;
         case COOKING:

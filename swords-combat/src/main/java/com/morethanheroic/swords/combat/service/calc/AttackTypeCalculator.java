@@ -37,7 +37,7 @@ public class AttackTypeCalculator {
                 return AttackType.RANGED;
             case WAND:
             case STAFF:
-            case SPECTRE:
+            case SCEPTRE:
                 return AttackType.MAGIC;
             default:
                 throw new IllegalArgumentException("No attack type found for type: " + item.getSubtype() + " on item: " + item.getId());

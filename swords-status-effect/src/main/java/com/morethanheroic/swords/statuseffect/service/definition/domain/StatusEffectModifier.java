@@ -63,7 +63,7 @@ public enum StatusEffectModifier {
     SHIELD_DEFENSE,
     STAFF,
     WAND,
-    SPECTRE,
+    SCEPTRE,
     SCAVENGING,
     COOKING;
 

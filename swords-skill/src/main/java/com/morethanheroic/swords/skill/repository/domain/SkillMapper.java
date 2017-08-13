@@ -139,11 +139,11 @@ public interface SkillMapper {
     @Update("UPDATE skills SET wands_xp = wands_xp - #{value} WHERE user_id = #{userId}")
     void decreaseWandsXp(@Param("userId") int userId, @Param("value") long value);
 
-    @Update("UPDATE skills SET spectres_xp = spectres_xp + #{value} WHERE user_id = #{userId}")
-    void increaseSpectresXp(@Param("userId") int userId, @Param("value") long value);
+    @Update("UPDATE skills SET sceptres_xp = sceptres_xp + #{value} WHERE user_id = #{userId}")
+    void increaseSceptresXp(@Param("userId") int userId, @Param("value") long value);
 
-    @Update("UPDATE skills SET spectres_xp = spectres_xp - #{value} WHERE user_id = #{userId}")
-    void decreaseSpectresXp(@Param("userId") int userId, @Param("value") long value);
+    @Update("UPDATE skills SET sceptres_xp = sceptres_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseSceptresXp(@Param("userId") int userId, @Param("value") long value);
 
     @Update("UPDATE skills SET scavenging_xp = scavenging_xp + #{value} WHERE user_id = #{userId}")
     void increaseScavengingXp(@Param("userId") int userId, @Param("value") long value);
