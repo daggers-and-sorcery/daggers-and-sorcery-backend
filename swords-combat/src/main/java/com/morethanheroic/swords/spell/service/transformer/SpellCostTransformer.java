@@ -7,13 +7,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SpellCostTransformer {
 
-    public SpellCost transform(RawSpellCost rawSpellCost) {
-        SpellCost.SpellCostBuilder spellCostBuilder = new SpellCost.SpellCostBuilder();
-
-        spellCostBuilder.setId(rawSpellCost.getId());
-        spellCostBuilder.setAmount(rawSpellCost.getAmount());
-        spellCostBuilder.setType(rawSpellCost.getType());
-
-        return spellCostBuilder.build();
+    public SpellCost transform(final RawSpellCost rawSpellCost) {
+        return SpellCost.builder()
+                .id(rawSpellCost.getId())
+                .amount(rawSpellCost.getAmount())
+                .type(rawSpellCost.getType())
+                .build();
     }
 }

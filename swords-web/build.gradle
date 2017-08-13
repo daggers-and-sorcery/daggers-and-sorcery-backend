@@ -41,6 +41,7 @@ dependencies {
     compile project(':swords-skill-web')
     compile project(':swords-skill-jewelcrafting-web')
     compile project(':swords-item-web')
+    compile project(':swords-character-spells-web')
 }
 
 apply plugin: 'spring-boot'
