@@ -98,7 +98,7 @@ allprojects {
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
         compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.264'
+        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.266'
     }
 
     compileJava {
