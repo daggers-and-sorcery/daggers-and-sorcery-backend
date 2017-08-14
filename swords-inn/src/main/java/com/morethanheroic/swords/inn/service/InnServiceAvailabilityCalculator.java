@@ -27,9 +27,9 @@ public class InnServiceAvailabilityCalculator {
      */
     public List<ServiceType> getAvailableServices(final UserEntity userEntity) {
         return Arrays.stream(ServiceType.values())
-                .filter(serviceType -> innServiceAvailabilityCheckers.stream()
-                        .map(innServiceAvailabilityChecker -> innServiceAvailabilityChecker.shouldServiceBeAvailable(serviceType, userEntity))
-                        .allMatch(e -> e)
+                .filter(
+                        serviceType -> innServiceAvailabilityCheckers.stream()
+                                .allMatch(innServiceAvailabilityChecker -> innServiceAvailabilityChecker.shouldServiceBeAvailable(serviceType, userEntity))
                 )
                 .collect(Collectors.toList());
     }

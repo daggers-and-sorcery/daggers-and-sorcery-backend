@@ -68,4 +68,5 @@ include 'swords-recipe-web'
 include 'swords-skill-web'
 include 'swords-item-web'
 include 'swords-combat-definition'
+include 'swords-character-spells-web'
 

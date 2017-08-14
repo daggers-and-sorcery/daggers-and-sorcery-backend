@@ -1,0 +1,52 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="laxika" id="20170814-1">
+        <modifyDataType columnName="message" newDataType="varchar(8192)" tableName="news"/>
+        <insert tableName="news">
+            <column name="title" value="Improvements and bugfixes"/>
+            <column name="release_date" value="2017-08-14 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are here again with a quite big chunk of bugfixes and feature improvements. This week we are focused on eliminating some of the most annoying bugs and adding the most requested features. Also, in the meantime, we did a lot of technical improvements that are not directly visible to most of you but enable us to ship updates faster.
+
+Later this week we plan on releasing a patch with small additions to the Witchhunter's Guild, enabling the VIP feature for donators and adding 3 new weapons.
+
+We are very thankful to the community. Thanks for your bugreports and feature requests! These will make the game a lot more fun and a lot less annoying or painful to play. Also, thank you to everyone who donated via our Patreon page. We will reinvest the donated money into game assets and use it to cover the server costs.
+
+Now, let's look into the changes.
+
+Improvements:
+
+- The casting cost of a spell is added to the spell's popup on the spells section of the character page. We also redesigned this page a little bit to make it more in-line with our new graphical design.
+- Added a new spell called Mage's Clarity that gives +2 mana regeneration for 3 hours. Hopefully, this will at least a little bit going to ease the difficulty of playing with mage characters. The scroll for this spell is dropped by the Goblin Shaman and the Goblin Chieftain.
+- Added a way for players to fill vials with water. You can fill vials by "using" them on the inventory page. A maximum of five vials can be filled at a time for one movement point.
+- Renamed the three different Magic Amulets to something that resemble their bonuses so people will be able to distinguish between them a lot easier. The new names are Amulet of the Warrior, Amulet of the Ranger and Amulet of the Magi.
+- Added icons to some of the non-equipment items. This will be an ongoing effort in the future. We will try to add images, descriptions and flavor texts to every item available in the game.
+
+Bugfixes:
+
+- Fixed that weapon experience was not awarded correctly for the first hit of the fight. This created very flaky combat experience results. This has been fixed, the only items that not going to give experience in similar situations are the ones that doing damage at the start of the turn (like the Silver Ring).
+- While in quests if the player died in combat the quest automatically moved to the next stage like if the player were defeated the opponent monster. This not going to be the case anymore. The combat will reset and the monster's HP/MP will be regenerated to full.
+- Disabled fleeing from the combat in quests.
+- The Jewelcrafting screen was unopenable after adding the Onyx Necklace's recipe. This has been fixed, players are able to craft Onyx Necklace from now on.
+- The buff from Silver arrow was applied even if the player is not wielded a bow or a crossbow. This has been fixed, the buffs from arrows and bolts are only added if the player is wielding a bow or a crossbow.
+- When the user was first logged in, after choosing his/her starting gear he got redirected to a character page that was empty. This problem has been fixed, new characters will be redirected to the inventory part of the character screen.
+- Fixed that the unidentified items were not shown in the player's inventory.
+- The Vampire Lord's chest didn't give the dropped items to the player, only printed it. This has been fixed. Sadly we can't give players back the not awarded items but we will try to be more careful in the future and improved the code that handles this function.
+- When a player tried to click on one of the displayed options in exploration events and he/she had zero movement points then he got an empty exploration screen with no exploration message nor any error messages. These options never required movement points so they will work correctly even when the user has zero movement points in the future.
+- When a player tried to explore with zero movement points left he/she got an empty exploration screen with no exploration message nor any error messages. In this case, there will be an error displayed that will remind you of the lack of movement points.
+- The Bronze Tiara had no image, we added one for it.
+- The 'Sceptres' skill was accidentally named 'Spectres'. This has been fixed.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

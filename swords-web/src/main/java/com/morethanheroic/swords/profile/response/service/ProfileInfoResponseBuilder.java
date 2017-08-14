@@ -27,8 +27,6 @@ import com.morethanheroic.swords.profile.service.response.special.SpecialPartial
 import com.morethanheroic.swords.race.service.RaceDefinitionCache;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.SkillGroup;
-import com.morethanheroic.swords.spell.domain.SpellDefinition;
-import com.morethanheroic.swords.spell.repository.dao.SpellDatabaseEntity;
 import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -37,7 +35,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,8 +45,6 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     private final EquipmentFacade equipmentFacade;
     private final ResponseFactory responseFactory;
     private final ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder;
-    private final SpellDefinitionCache spellDefinitionCache;
-    private final SpellMapper spellMapper;
 
     @Autowired
     private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
@@ -93,8 +88,6 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         this.equipmentFacade = equipmentFacade;
         this.responseFactory = responseFactory;
         this.profileIdentifiedItemEntryResponseBuilder = profileIdentifiedItemEntryResponseBuilder;
-        this.spellDefinitionCache = spellDefinitionCache;
-        this.spellMapper = spellMapper;
     }
 
     public Response build(ProfileInfoResponseBuilderConfiguration profileInfoResponseBuilderConfiguration) {
@@ -126,7 +119,6 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
                 )
         );
         response.setData("equipment", buildEquipmentResponse(userEntity, sessionEntity));
-        response.setData("spell", buildSpellResponse(spellMapper.getAllSpellsForUser(userEntity.getId())));
         response.setData("special", specialPartialResponseBuilder.build(
                 SpecialPartialResponseBuilderConfiguration.builder()
                         .isVampire(vampireCalculator.isVampire(userEntity))
@@ -173,26 +165,5 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
         }
 
         return equipmentHolder;
-    }
-
-    private LinkedList<HashMap<String, Object>> buildSpellResponse(List<SpellDatabaseEntity> spells) {
-        LinkedList<HashMap<String, Object>> spellList = new LinkedList<>();
-
-        for (SpellDatabaseEntity spell : spells) {
-            SpellDefinition spellDefinition = spellDefinitionCache.getSpellDefinition(spell.getSpellId());
-
-            HashMap<String, Object> spellData = new HashMap<>();
-
-            spellData.put("id", spellDefinition.getId());
-            spellData.put("name", spellDefinition.getName());
-            spellData.put("description", spellDefinition.getDescription());
-            spellData.put("combatSpell", spellDefinition.isCombatSpell());
-            spellData.put("castingCost", spellDefinition.getSpellCosts());
-            spellData.put("openPage", spellDefinition.isOpenPage());
-
-            spellList.add(spellData);
-        }
-
-        return spellList;
     }
 }

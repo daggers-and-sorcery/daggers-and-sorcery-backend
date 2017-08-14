@@ -23,14 +23,10 @@ public class BoneSpikeSpellEffectDefinition extends ImprovedCombatEffectDefiniti
 
     private static final int AWARDED_DESTRUCTION_XP = 25;
 
-    private static final int BONE_ID = 164;
-
     private final DiceRollCalculator diceRollCalculator;
     private final CombatMessageFactory combatMessageFactory;
     private final CombatCalculator combatCalculator;
     private final DiceRollFromDamageSettingsBuilder diceRollFromDamageSettingsBuilder;
-    private final InventoryEntityFactory inventoryEntityFactory;
-    private final ItemDefinitionCache itemDefinitionCache;
 
     @Override
     public void apply(CombatEffectApplyingContext effectApplyingContext) {
@@ -40,19 +36,6 @@ public class BoneSpikeSpellEffectDefinition extends ImprovedCombatEffectDefiniti
 
         if (effectApplyingContext.getSource().isUser()) {
             final UserEntity userEntity = ((UserCombatEntity) effectApplyingContext.getSource().getCombatEntity()).getUserEntity();
-            final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity.getId());
-
-            if (!inventoryEntity.hasItem(itemDefinitionCache.getDefinition(BONE_ID))) {
-                effectApplyingContext.addCombatStep(
-                        DefaultCombatStep.builder()
-                                .message(combatMessageFactory.newMessage("spell", "REQUIRED_ITEM_BONE_MISSING", damage))
-                                .build()
-                );
-
-                return;
-            }
-
-            inventoryEntity.removeItem(itemDefinitionCache.getDefinition(BONE_ID), 1);
 
             effectApplyingContext.addCombatStep(
                     DefaultCombatStep.builder()
@@ -66,7 +49,7 @@ public class BoneSpikeSpellEffectDefinition extends ImprovedCombatEffectDefiniti
         } else {
             //TODO: Enable monsters to use this spell.
 
-            throw new IllegalArgumentException("Caster as a monster is not supported for fireball.");
+            throw new IllegalArgumentException("Caster as a monster is not supported for bone spike.");
         }
     }
 
