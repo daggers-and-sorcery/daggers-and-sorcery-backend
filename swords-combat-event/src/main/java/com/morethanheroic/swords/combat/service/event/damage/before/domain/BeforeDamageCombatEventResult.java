@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.event.damage.domain;
+package com.morethanheroic.swords.combat.service.event.damage.before.domain;
 
 import com.morethanheroic.swords.combat.bonus.domain.CombatBonus;
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
@@ -13,12 +13,7 @@ import java.util.List;
  */
 @Getter
 @Builder
-public class DamageCombatEventResult {
-
-    public static final DamageCombatEventResult EMPTY_RESULT = DamageCombatEventResult.builder()
-            .combatSteps(Collections.emptyList())
-            .bonusDamage(CombatBonus.EMPTY_COMBAT_BONUS)
-            .build();
+public class BeforeDamageCombatEventResult {
 
     private final List<CombatStep> combatSteps;
     private final CombatBonus bonusDamage;

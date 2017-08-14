@@ -10,9 +10,9 @@ import com.morethanheroic.swords.combat.entity.CombatEntityUtil;
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
-import com.morethanheroic.swords.combat.service.event.damage.DamageCombatEventHandler;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventContext;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventResult;
+import com.morethanheroic.swords.combat.service.event.damage.before.BeforeDamageCombatEventHandler;
+import com.morethanheroic.swords.combat.service.event.damage.before.domain.BeforeDamageCombatEventContext;
+import com.morethanheroic.swords.combat.service.event.damage.before.domain.BeforeDamageCombatEventResult;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterType;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -21,10 +21,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ExtraDamageAgainstMonsterTypeDamageCombatEventHandler implements DamageCombatEventHandler {
+public class ExtraDamageAgainstMonsterTypeBeforeDamageCombatEventHandler implements BeforeDamageCombatEventHandler {
 
     private final static Map<MonsterType, SpecialAttribute> MONSTER_TYPE_SPECIAL_ATTRIBUTE_MAP = new ImmutableMap.Builder<MonsterType, SpecialAttribute>()
             .put(MonsterType.VAMPIRE, SpecialAttribute.EXTRA_DAMAGE_AGAINST_VAMPIRES)
@@ -35,7 +36,7 @@ public class ExtraDamageAgainstMonsterTypeDamageCombatEventHandler implements Da
     private final CombatBonusTransformer combatBonusTransformer;
 
     @Override
-    public DamageCombatEventResult handleEvent(final CombatEntity damagingEntity, final CombatEntity damagedEntity, final DamageCombatEventContext damageCombatEventContext) {
+    public Optional<BeforeDamageCombatEventResult> handleEvent(final CombatEntity damagingEntity, final CombatEntity damagedEntity, final BeforeDamageCombatEventContext beforeDamageCombatEventContext) {
         if (combatEntityUtil.isPlayer(damagingEntity)) {
             CombatBonus combatBonus = CombatBonus.EMPTY_COMBAT_BONUS;
 
@@ -45,13 +46,15 @@ public class ExtraDamageAgainstMonsterTypeDamageCombatEventHandler implements Da
             combatBonus = combatBonus.add(calculateExtraDamageForType(userEntity, monsterDefinition.getType()));
             combatBonus = combatBonus.add(calculateExtraDamageForType(userEntity, monsterDefinition.getSubtype()));
 
-            return DamageCombatEventResult.builder()
-                    .combatSteps(Collections.emptyList())
-                    .bonusDamage(combatBonus)
-                    .build();
+            return Optional.of(
+                    BeforeDamageCombatEventResult.builder()
+                            .combatSteps(Collections.emptyList())
+                            .bonusDamage(combatBonus)
+                            .build()
+            );
         }
 
-        return DamageCombatEventResult.EMPTY_RESULT;
+        return Optional.empty();
     }
 
     private CombatBonus calculateExtraDamageForType(final UserEntity userEntity, final MonsterType monsterType) {

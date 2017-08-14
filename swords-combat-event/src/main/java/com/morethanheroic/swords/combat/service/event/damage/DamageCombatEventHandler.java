@@ -1,13 +1,14 @@
 package com.morethanheroic.swords.combat.service.event.damage;
 
-import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventContext;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventResult;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventHandlerContext;
+import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventHandlerResult;
+
+import java.util.Optional;
 
 /**
- * This event is fired when a damage is being done between two combat entities.
+ * This event will contain parts of the damage calculation.
  */
 public interface DamageCombatEventHandler {
 
-    DamageCombatEventResult handleEvent(final CombatEntity damagingEntity, final CombatEntity damagedEntity, final DamageCombatEventContext damageCombatEventContext);
+    Optional<DamageCombatEventHandlerResult> handleEvent(final DamageCombatEventHandlerContext damageCombatEventHandlerContext);
 }
