@@ -5,6 +5,7 @@ import com.morethanheroic.swords.attribute.domain.SpecialAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.dice.DiceAttributeRoller;
+import com.morethanheroic.swords.combat.service.event.CombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.turn.StartTurnCombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
@@ -13,14 +14,13 @@ import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@CombatEventHandler
 @RequiredArgsConstructor
 public class DamageAgainstMonsterTypeStartTurnCombatEventHandler implements StartTurnCombatEventHandler {
 

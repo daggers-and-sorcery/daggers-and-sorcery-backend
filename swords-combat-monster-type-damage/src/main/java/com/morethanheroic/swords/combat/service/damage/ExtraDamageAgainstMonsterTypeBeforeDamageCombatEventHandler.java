@@ -10,6 +10,7 @@ import com.morethanheroic.swords.combat.entity.CombatEntityUtil;
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
+import com.morethanheroic.swords.combat.service.event.CombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.damage.before.BeforeDamageCombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.damage.before.domain.BeforeDamageCombatEventContext;
 import com.morethanheroic.swords.combat.service.event.damage.before.domain.BeforeDamageCombatEventResult;
@@ -17,13 +18,12 @@ import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.domain.MonsterType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
+@CombatEventHandler
 @RequiredArgsConstructor
 public class ExtraDamageAgainstMonsterTypeBeforeDamageCombatEventHandler implements BeforeDamageCombatEventHandler {
 
