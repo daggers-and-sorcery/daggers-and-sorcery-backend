@@ -69,4 +69,6 @@ include 'swords-skill-web'
 include 'swords-item-web'
 include 'swords-combat-definition'
 include 'swords-character-spells-web'
+include 'swords-combat-monster-type-damage'
+include 'swords-combat-life-steal'
 

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.calculator.damage;
+package com.morethanheroic.swords.combat.service.damage;
 
 import com.google.common.collect.ImmutableMap;
 import com.morethanheroic.swords.attribute.domain.SpecialAttribute;
