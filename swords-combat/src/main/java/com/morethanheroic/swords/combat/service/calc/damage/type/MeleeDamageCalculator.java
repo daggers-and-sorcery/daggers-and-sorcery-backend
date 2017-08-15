@@ -8,6 +8,8 @@ import com.morethanheroic.swords.combat.service.calc.damage.event.before.BeforeD
 import com.morethanheroic.swords.combat.service.calc.damage.event.before.domain.BeforeDamageEventResult;
 import com.morethanheroic.swords.combat.bonus.dice.CombatBonusRoller;
 import com.morethanheroic.swords.attribute.service.dice.DiceAttributeRoller;
+import com.morethanheroic.swords.combat.service.calc.damage.event.domain.DamageCombatEventRunnerContext;
+import com.morethanheroic.swords.combat.service.calc.damage.event.domain.DamageCombatEventRunnerResult;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,18 +18,23 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MeleeDamageCalculator implements DamageCalculator {
 
-    private final DiceAttributeRoller diceAttributeRoller;
     private final BeforeDamageCombatEventRunner beforeDamageCombatEventRunner;
-    private final CombatBonusRoller combatBonusRoller;
     private final DamageCombatEventRunner damageCombatEventRunner;
 
-    public DamageCalculationResult calculateDamage(final CombatEntity attacker, final CombatEntity opponent) {
-        final BeforeDamageEventResult beforeDamageEventResult = beforeDamageCombatEventRunner.runEvents(attacker, opponent, DamageType.MELEE);
+    public DamageCalculationResult calculateDamage(final CombatEntity attacker, final CombatEntity defender) {
+        final BeforeDamageEventResult beforeDamageEventResult = beforeDamageCombatEventRunner.runEvents(attacker, defender, DamageType.MELEE);
 
-        damageCombatEventRunner.runEvents(attacker, opponent, DamageType.MELEE);
+        final DamageCombatEventRunnerResult damageCombatEventRunnerResult = damageCombatEventRunner.runEvents(
+                DamageCombatEventRunnerContext.builder()
+                        .attacker(attacker)
+                        .defender(defender)
+                        .damageType(DamageType.MELEE)
+                        .damageBonus(beforeDamageEventResult.getBonusDamage())
+                        .build()
+        );
 
         return DamageCalculationResult.builder()
-                .damage(calculateFinalDamage(attacker, opponent, beforeDamageEventResult))
+                .damage(damageCombatEventRunnerResult.getDamage())
                 .combatSteps(beforeDamageEventResult.getCombatSteps())
                 .build();
     }
