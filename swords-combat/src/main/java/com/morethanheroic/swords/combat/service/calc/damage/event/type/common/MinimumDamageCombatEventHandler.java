@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.damage.type.event;
+package com.morethanheroic.swords.combat.service.calc.damage.event.type.common;
 
 import com.morethanheroic.swords.combat.service.event.damage.DamageCombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventHandlerContext;

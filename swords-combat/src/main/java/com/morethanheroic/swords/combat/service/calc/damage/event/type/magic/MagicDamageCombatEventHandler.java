@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.damage.type.event.ranged;
+package com.morethanheroic.swords.combat.service.calc.damage.event.type.magic;
 
 import com.morethanheroic.swords.attribute.service.dice.DiceAttributeRoller;
 import com.morethanheroic.swords.combat.service.event.damage.DamageCombatEventHandler;
@@ -14,14 +14,14 @@ import java.util.Optional;
 @Order(-100)
 @Service
 @RequiredArgsConstructor
-public class RangedDamageCombatEventHandler implements DamageCombatEventHandler {
+public class MagicDamageCombatEventHandler implements DamageCombatEventHandler {
 
     private final DiceAttributeRoller diceAttributeRoller;
 
     @Override
     public Optional<DamageCombatEventHandlerResult> handleEvent(final DamageCombatEventHandlerContext damageCombatEventHandlerContext) {
-        if (damageCombatEventHandlerContext.getDamageType() == DamageType.RANGED) {
-            final int damage = diceAttributeRoller.rollDices(damageCombatEventHandlerContext.getAttacker().getRangedDamage());
+        if (damageCombatEventHandlerContext.getDamageType() == DamageType.MAGIC) {
+            final int damage = diceAttributeRoller.rollDices(damageCombatEventHandlerContext.getAttacker().getMagicDamage());
 
             return Optional.of(
                     DamageCombatEventHandlerResult.builder()

@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.damage.type.event.magic;
+package com.morethanheroic.swords.combat.service.calc.damage.event.type.common;
 
 import com.morethanheroic.swords.attribute.service.dice.DiceAttributeRoller;
 import com.morethanheroic.swords.combat.service.event.damage.DamageCombatEventHandler;
@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Order(-100)
+@Order(-90)
 @Service
 @RequiredArgsConstructor
-public class MagicDamageCombatEventHandler implements DamageCombatEventHandler {
+public class DamageReductionDamageCombatEventHandler implements DamageCombatEventHandler {
 
     private final DiceAttributeRoller diceAttributeRoller;
 
     @Override
-    public Optional<DamageCombatEventHandlerResult> handleEvent(final DamageCombatEventHandlerContext damageCombatEventHandlerContext) {
-        if (damageCombatEventHandlerContext.getDamageType() == DamageType.MAGIC) {
-            final int damage = diceAttributeRoller.rollDices(damageCombatEventHandlerContext.getAttacker().getMagicDamage());
+    public Optional<DamageCombatEventHandlerResult> handleEvent(DamageCombatEventHandlerContext damageCombatEventHandlerContext) {
+        if (damageCombatEventHandlerContext.getDamageType() == DamageType.MELEE || damageCombatEventHandlerContext.getDamageType() == DamageType.RANGED) {
+            final int damage = -diceAttributeRoller.rollDices(damageCombatEventHandlerContext.getDefender().getDamageReduction());
 
             return Optional.of(
                     DamageCombatEventHandlerResult.builder()

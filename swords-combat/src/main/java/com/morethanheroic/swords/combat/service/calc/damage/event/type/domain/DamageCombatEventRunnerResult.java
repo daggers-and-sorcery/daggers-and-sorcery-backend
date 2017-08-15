@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.combat.service.calc.damage.event.domain;
+package com.morethanheroic.swords.combat.service.calc.damage.event.type.domain;
 
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import lombok.Builder;
