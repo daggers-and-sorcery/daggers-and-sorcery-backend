@@ -3,7 +3,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile group: 'com.morethanheroic', name: 'common-session', version: '1.4.13'
+    compile group: 'com.morethanheroic', name: 'common-session', version: '1.5.0'
 
     compile project(':common-entity')
 
