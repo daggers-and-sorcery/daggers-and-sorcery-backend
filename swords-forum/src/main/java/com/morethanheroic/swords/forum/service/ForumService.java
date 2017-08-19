@@ -108,7 +108,7 @@ public class ForumService {
     }
 
     @Transactional
-    public void createNewTopic(final UserEntity userEntity, final CreateTopicContext createTopicContext) {
+    public void createTopic(final UserEntity userEntity, final CreateTopicContext createTopicContext) {
         final ForumTopicDatabaseEntity newForumTopicEntity = new ForumTopicDatabaseEntity();
 
         newForumTopicEntity.setCommentCount(1);
