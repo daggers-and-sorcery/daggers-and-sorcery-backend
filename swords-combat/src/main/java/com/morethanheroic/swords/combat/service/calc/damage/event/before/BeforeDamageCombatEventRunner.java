@@ -1,11 +1,10 @@
 package com.morethanheroic.swords.combat.service.calc.damage.event.before;
 
-import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
+import com.morethanheroic.swords.combat.service.calc.damage.event.before.domain.BeforeDamageEventContext;
 import com.morethanheroic.swords.combat.service.calc.damage.event.before.domain.BeforeDamageEventResult;
 import com.morethanheroic.swords.combat.service.event.damage.before.BeforeDamageCombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.damage.before.domain.BeforeDamageCombatEventContext;
 import com.morethanheroic.swords.combat.service.event.damage.before.domain.BeforeDamageCombatEventResult;
-import com.morethanheroic.swords.combat.service.event.damage.domain.DamageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,17 +25,14 @@ public class BeforeDamageCombatEventRunner {
     /**
      * Run the events that happen when a successful attack is done and the player is about to damage the monster.
      *
-     * @param attacker   the attacker who is doing the damage
-     * @param opponent   the opponent who will get the damage
-     * @param damageType the type of the damage
      * @return the result of the events
      */
-    public BeforeDamageEventResult runEvents(final CombatEntity attacker, final CombatEntity opponent, final DamageType damageType) {
+    public BeforeDamageEventResult runEvents(final BeforeDamageEventContext beforeDamageEventContext) {
         final List<BeforeDamageCombatEventResult> eventCalculationResults = beforeDamageCombatEventHandlers.stream()
                 .map(beforeDamageCombatEventHandler ->
-                        beforeDamageCombatEventHandler.handleEvent(attacker, opponent,
+                        beforeDamageCombatEventHandler.handleEvent(beforeDamageEventContext.getAttacker(), beforeDamageEventContext.getDefender(),
                                 BeforeDamageCombatEventContext.builder()
-                                        .damageType(damageType)
+                                        .damageType(beforeDamageEventContext.getDamageType())
                                         .build()
                         )
                 )

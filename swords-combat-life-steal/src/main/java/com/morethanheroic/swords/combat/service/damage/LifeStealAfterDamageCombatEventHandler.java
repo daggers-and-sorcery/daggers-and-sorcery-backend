@@ -1,7 +1,5 @@
 package com.morethanheroic.swords.combat.service.damage;
 
-import java.util.Optional;
-
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.domain.SpecialAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
@@ -14,6 +12,8 @@ import com.morethanheroic.swords.combat.service.event.damage.after.domain.AfterD
 import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
 
 @CombatEventHandler
 @RequiredArgsConstructor
@@ -28,17 +28,21 @@ public class LifeStealAfterDamageCombatEventHandler implements AfterDamageCombat
 
         afterDamageCombatEventContext.getAttacker().increaseActualHealth(healedAmount);
 
-        return Optional.of(
-                AfterDamageCombatEventResult.builder()
-                        .combatSteps(
-                                Lists.newArrayList(
-                                        DefaultCombatStep.builder()
-                                                .message(combatMessageFactory.newMessage("lifesteal", "COMBAT_MESSAGE_LIFE_STEAL_HEAL", healedAmount))
-                                                .build()
-                                )
-                        )
-                        .build()
-        );
+        if (healedAmount > 0) {
+            return Optional.of(
+                    AfterDamageCombatEventResult.builder()
+                            .combatSteps(
+                                    Lists.newArrayList(
+                                            DefaultCombatStep.builder()
+                                                    .message(combatMessageFactory.newMessage("lifesteal", "COMBAT_MESSAGE_LIFE_STEAL_HEAL", healedAmount))
+                                                    .build()
+                                    )
+                            )
+                            .build()
+            );
+        }
+
+        return Optional.empty();
     }
 
     private int calculateHealedAmount(final AfterDamageCombatEventContext afterDamageCombatEventContext) {
