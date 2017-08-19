@@ -5,7 +5,7 @@ import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
-import com.morethanheroic.swords.equipment.service.EquipmentFacade;
+import com.morethanheroic.swords.equipment.EquipmentEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +23,14 @@ public class AmmunitionLossCalculator {
     private static final int AMMUNITION_DECREASE_AMOUNT = 1;
 
     private final RandomCalculator randomCalculator;
-    private final EquipmentFacade equipmentFacade;
+    private final EquipmentEntityFactory equipmentEntityFactory;
     private final CombatMessageFactory combatMessageFactory;
 
     public List<CombatStep> calculateAmmunitionLoss(final UserCombatEntity attacker) {
         final List<CombatStep> result = new ArrayList<>();
 
         if (randomCalculator.randomRollForTarget(MINIMUM_ROLL, MAXIMUM_ROLL, AMMUNITION_LOST_ABOVE_TARGET)) {
-            equipmentFacade.getEquipment(attacker.getUserEntity()).decreaseAmmunition(AMMUNITION_DECREASE_AMOUNT);
+            equipmentEntityFactory.getEntity(attacker.getUserEntity()).decreaseAmmunition(AMMUNITION_DECREASE_AMOUNT);
 
             result.add(
                     DefaultCombatStep.builder()
