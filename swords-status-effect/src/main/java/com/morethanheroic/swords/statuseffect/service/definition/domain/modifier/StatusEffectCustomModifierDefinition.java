@@ -11,4 +11,5 @@ import lombok.ToString;
 public class StatusEffectCustomModifierDefinition implements StatusEffectModifierDefinition {
 
     private final CustomModifier effectId;
+    private final String description;
 }

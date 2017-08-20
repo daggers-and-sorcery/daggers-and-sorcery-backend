@@ -1,5 +1,7 @@
 package com.morethanheroic.swords.statuseffect.service.attribute;
 
+import com.google.common.collect.Lists;
+import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.statuseffect.service.attribute.custom.CustomStatusEffectAttributeModifierCalculatorProvider;
 import com.morethanheroic.swords.statuseffect.service.attribute.domain.modifier.StatusEffectAttributeModifierCalculationResult;
 import com.morethanheroic.swords.statuseffect.service.attribute.domain.modifier.impl.DefinitionBasedStatusEffectAttributeModifierCalculationResult;
@@ -10,21 +12,25 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class StatusEffectAttributeModifierCalculator {
 
-    private CustomStatusEffectAttributeModifierCalculatorProvider customStatusEffectAttributeModifierCalculatorProvider;
+    private final CustomStatusEffectAttributeModifierCalculatorProvider customStatusEffectAttributeModifierCalculatorProvider;
 
-    public StatusEffectAttributeModifierCalculationResult calculate(final UserEntity userEntity, final StatusEffectModifierDefinition statusEffectModifierDefinition) {
+    public List<StatusEffectAttributeModifierCalculationResult> calculate(final UserEntity userEntity, final StatusEffectModifierDefinition statusEffectModifierDefinition, Attribute attribute) {
         if (statusEffectModifierDefinition instanceof StatusEffectBasicModifierDefinition) {
-            return DefinitionBasedStatusEffectAttributeModifierCalculationResult.builder()
-                    .statusEffectModifierDefinition((StatusEffectBasicModifierDefinition) statusEffectModifierDefinition)
-                    .build();
+            return Lists.newArrayList(
+                    DefinitionBasedStatusEffectAttributeModifierCalculationResult.builder()
+                            .statusEffectModifierDefinition((StatusEffectBasicModifierDefinition) statusEffectModifierDefinition)
+                            .build()
+            );
         } else {
             final StatusEffectCustomModifierDefinition statusEffectCustomModifierDefinition = (StatusEffectCustomModifierDefinition) statusEffectModifierDefinition;
 
-            return customStatusEffectAttributeModifierCalculatorProvider.getCalculator(statusEffectCustomModifierDefinition.getEffectId()).calculate(userEntity);
+            return customStatusEffectAttributeModifierCalculatorProvider.getCalculator(statusEffectCustomModifierDefinition.getEffectId()).calculate(userEntity, attribute);
         }
     }
 }

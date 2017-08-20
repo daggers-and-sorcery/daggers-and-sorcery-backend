@@ -1,17 +1,18 @@
 package com.morethanheroic.swords.statuseffect.service.definition.loader.domain;
 
+import com.morethanheroic.swords.statuseffect.service.attribute.custom.domain.CustomModifier;
+import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifier;
+import lombok.Getter;
+import lombok.ToString;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-
-import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifier;
-
-import lombok.Getter;
-import lombok.Setter;
+import javax.xml.bind.annotation.XmlElement;
 
 @Getter
-@Setter
+@ToString
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RawStatusEffectBasicModifierDefinition implements RawStatusEffectModifierDefinition {
+public class StatusEffectModifierDefinitionPlaceholder {
 
     private StatusEffectModifier modifier;
     private int amount;
@@ -20,4 +21,7 @@ public class RawStatusEffectBasicModifierDefinition implements RawStatusEffectMo
     private int d6;
     private int d8;
     private int d10;
+
+    @XmlElement(name = "effect-id")
+    private CustomModifier effectId;
 }

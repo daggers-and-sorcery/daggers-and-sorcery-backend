@@ -1,12 +1,11 @@
 package com.morethanheroic.swords.profile.response.service.statuseffect.domain.response;
 
-import java.time.Instant;
-import java.util.List;
-
 import com.morethanheroic.response.domain.PartialResponse;
-
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.Instant;
+import java.util.List;
 
 /**
  * A {@link PartialResponse} about a status effect.
@@ -19,5 +18,5 @@ public class StatusEffectPartialResponse extends PartialResponse {
     private final String name;
     private final String description;
     private final Instant expirationTime;
-    private final List<StatusEffectModifierPartialResponse> modifiers;
+    private final List<? extends PartialResponse> modifiers;
 }

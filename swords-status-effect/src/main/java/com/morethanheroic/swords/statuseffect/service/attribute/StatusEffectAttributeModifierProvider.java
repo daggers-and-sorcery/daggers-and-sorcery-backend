@@ -32,7 +32,8 @@ public class StatusEffectAttributeModifierProvider implements AttributeModifierP
     public List<AttributeModifierEntry> calculateModifiers(final UserEntity userEntity, final Attribute attribute) {
         return statusEffectEntityFactory.getEntity(userEntity).stream()
                 .flatMap(statusEffectEntity -> statusEffectEntity.getStatusEffect().getModifiers().stream())
-                .map(statusEffectModifierDefinition -> statusEffectAttributeModifierCalculator.calculate(userEntity, statusEffectModifierDefinition))
+                .map(statusEffectModifierDefinition -> statusEffectAttributeModifierCalculator.calculate(userEntity, statusEffectModifierDefinition, attribute))
+                .flatMap(statusEffectAttributeModifierCalculationResults -> statusEffectAttributeModifierCalculationResults.stream())
                 .filter(statusEffectModifierDefinition -> isModifierForAttribute(statusEffectModifierDefinition, attribute))
                 .map(statusEffectModifierDefinitionConsumer -> {
                     if (attribute instanceof CombatAttribute) {

@@ -36,6 +36,17 @@ public class RobbingTheChieftainExplorationEventHandler extends MultiStageExplor
     public RobbingTheChieftainExplorationEventHandler(final ItemDefinitionCache itemDefinitionCache) {
         chestDropDefinitions = Lists.newArrayList(
                 DropDefinition.builder()
+                        .item(itemDefinitionCache.getDefinition(222))
+                        .amount(
+                                DropAmountDefinition.builder()
+                                        .minimumAmount(1)
+                                        .maximumAmount(1)
+                                        .build()
+                        )
+                        .chance(2)
+                        .identified(true)
+                        .build(),
+                DropDefinition.builder()
                         .item(itemDefinitionCache.getDefinition(99))
                         .amount(
                                 DropAmountDefinition.builder()

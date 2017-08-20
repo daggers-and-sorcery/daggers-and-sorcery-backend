@@ -29,7 +29,7 @@ public class StatusEffectDefinitionTransformer implements DefinitionTransformer<
                 .id(rawDefinition.getId())
                 .name(rawDefinition.getName())
                 .description(rawDefinition.getDescription())
-                .modifiers(transformStatusEffectModifiers(rawDefinition.getModifier()))
+                .modifiers(transformStatusEffectModifiers(rawDefinition.getModifiers()))
                 .build();
     }
 
