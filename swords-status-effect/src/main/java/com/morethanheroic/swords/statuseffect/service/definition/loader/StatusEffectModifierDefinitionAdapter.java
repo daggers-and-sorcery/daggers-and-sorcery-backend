@@ -21,12 +21,13 @@ public class StatusEffectModifierDefinitionAdapter extends XmlAdapter<StatusEffe
 
         final RawStatusEffectBasicModifierDefinition rawStatusEffectBasicModifierDefinition = new RawStatusEffectBasicModifierDefinition();
 
-        rawStatusEffectBasicModifierDefinition.setAmount(rawStatusEffectBasicModifierDefinition.getAmount());
-        rawStatusEffectBasicModifierDefinition.setD2(rawStatusEffectBasicModifierDefinition.getD2());
-        rawStatusEffectBasicModifierDefinition.setD4(rawStatusEffectBasicModifierDefinition.getD4());
-        rawStatusEffectBasicModifierDefinition.setD6(rawStatusEffectBasicModifierDefinition.getD6());
-        rawStatusEffectBasicModifierDefinition.setD8(rawStatusEffectBasicModifierDefinition.getD8());
-        rawStatusEffectBasicModifierDefinition.setD10(rawStatusEffectBasicModifierDefinition.getD10());
+        rawStatusEffectBasicModifierDefinition.setModifier(statusEffectModifierDefinitionPlaceholder.getModifier());
+        rawStatusEffectBasicModifierDefinition.setAmount(statusEffectModifierDefinitionPlaceholder.getAmount());
+        rawStatusEffectBasicModifierDefinition.setD2(statusEffectModifierDefinitionPlaceholder.getD2());
+        rawStatusEffectBasicModifierDefinition.setD4(statusEffectModifierDefinitionPlaceholder.getD4());
+        rawStatusEffectBasicModifierDefinition.setD6(statusEffectModifierDefinitionPlaceholder.getD6());
+        rawStatusEffectBasicModifierDefinition.setD8(statusEffectModifierDefinitionPlaceholder.getD8());
+        rawStatusEffectBasicModifierDefinition.setD10(statusEffectModifierDefinitionPlaceholder.getD10());
 
         return rawStatusEffectBasicModifierDefinition;
     }
