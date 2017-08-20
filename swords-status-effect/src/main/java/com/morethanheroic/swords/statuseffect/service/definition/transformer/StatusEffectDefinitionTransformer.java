@@ -1,12 +1,14 @@
 package com.morethanheroic.swords.statuseffect.service.definition.transformer;
 
 import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
-import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionListTransformer;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectDefinition;
-import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectBasicModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectCustomModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.definition.loader.domain.RawStatusEffectBasicModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.definition.loader.domain.RawStatusEffectCustomModifierDefinition;
 import com.morethanheroic.swords.statuseffect.service.definition.loader.domain.RawStatusEffectDefinition;
 import com.morethanheroic.swords.statuseffect.service.definition.loader.domain.RawStatusEffectModifierDefinition;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,21 +29,35 @@ public class StatusEffectDefinitionTransformer implements DefinitionTransformer<
                 .id(rawDefinition.getId())
                 .name(rawDefinition.getName())
                 .description(rawDefinition.getDescription())
-                .modifiers(transformStatusEffectModifiers(rawDefinition.getModifiers()))
+                .modifiers(transformStatusEffectModifiers(rawDefinition.getModifier()))
                 .build();
     }
 
     private List<StatusEffectModifierDefinition> transformStatusEffectModifiers(final List<RawStatusEffectModifierDefinition> statusEffectModifierDefinitions) {
         return statusEffectModifierDefinitions.stream()
-            .map(rawStatusEffectModifierDefinition -> StatusEffectModifierDefinition.builder()
-                .modifier(rawStatusEffectModifierDefinition.getModifier())
-                .amount(rawStatusEffectModifierDefinition.getAmount())
-                .d2(rawStatusEffectModifierDefinition.getD2())
-                .d4(rawStatusEffectModifierDefinition.getD4())
-                .d6(rawStatusEffectModifierDefinition.getD6())
-                .d8(rawStatusEffectModifierDefinition.getD8())
-                .d10(rawStatusEffectModifierDefinition.getD10())
-                .build())
-            .collect(Collectors.toList());
+                .map(rawStatusEffectModifierDefinition -> transformModifierDefinition(rawStatusEffectModifierDefinition))
+                .collect(Collectors.toList());
+    }
+
+    private StatusEffectModifierDefinition transformModifierDefinition(final RawStatusEffectModifierDefinition rawStatusEffectModifierDefinition) {
+        if (rawStatusEffectModifierDefinition instanceof RawStatusEffectBasicModifierDefinition) {
+            final RawStatusEffectBasicModifierDefinition rawStatusEffectBasicModifierDefinition = (RawStatusEffectBasicModifierDefinition) rawStatusEffectModifierDefinition;
+
+            return StatusEffectBasicModifierDefinition.builder()
+                    .modifier(rawStatusEffectBasicModifierDefinition.getModifier())
+                    .amount(rawStatusEffectBasicModifierDefinition.getAmount())
+                    .d2(rawStatusEffectBasicModifierDefinition.getD2())
+                    .d4(rawStatusEffectBasicModifierDefinition.getD4())
+                    .d6(rawStatusEffectBasicModifierDefinition.getD6())
+                    .d8(rawStatusEffectBasicModifierDefinition.getD8())
+                    .d10(rawStatusEffectBasicModifierDefinition.getD10())
+                    .build();
+        } else {
+            final RawStatusEffectCustomModifierDefinition rawStatusEffectCustomModifierDefinition = (RawStatusEffectCustomModifierDefinition) rawStatusEffectModifierDefinition;
+
+            return StatusEffectCustomModifierDefinition.builder()
+                    .effectId(rawStatusEffectCustomModifierDefinition.getEffectId())
+                    .build();
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.morethanheroic.swords.profile.response.service.statuseffect.domain.c
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.response.service.statuseffect.StatusEffectModifierPartialResponseBuilder;
-import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectBasicModifierDefinition;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -14,5 +14,5 @@ import lombok.Getter;
 @Builder
 public class StatusEffectModifierResponseBuilderConfiguration implements ResponseBuilderConfiguration {
 
-    private final StatusEffectModifierDefinition statusEffectModifierDefinition;
+    private final StatusEffectBasicModifierDefinition statusEffectModifierDefinition;
 }

@@ -1,5 +1,6 @@
-package com.morethanheroic.swords.statuseffect.service.definition.domain;
+package com.morethanheroic.swords.statuseffect.service.definition.domain.modifier;
 
+import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifier;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -10,7 +11,7 @@ import lombok.ToString;
 @Builder
 @Getter
 @ToString
-public class StatusEffectModifierDefinition {
+public class StatusEffectBasicModifierDefinition implements StatusEffectModifierDefinition {
 
     private final StatusEffectModifier modifier;
     private final int amount;

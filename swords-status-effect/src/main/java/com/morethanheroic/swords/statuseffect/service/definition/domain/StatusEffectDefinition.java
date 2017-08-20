@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.statuseffect.service.definition.domain;
 
-import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
+import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectModifierDefinition;
 import lombok.Builder;
 import lombok.Getter;
 

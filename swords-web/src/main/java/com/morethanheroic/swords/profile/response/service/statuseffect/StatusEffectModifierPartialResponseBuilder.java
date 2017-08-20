@@ -5,17 +5,17 @@ import org.springframework.stereotype.Service;
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.swords.profile.response.service.statuseffect.domain.configuration.StatusEffectModifierResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.response.service.statuseffect.domain.response.StatusEffectModifierPartialResponse;
-import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectBasicModifierDefinition;
 
 /**
- * A {@link PartialResponseBuilder} for {@link com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition}.
+ * A {@link PartialResponseBuilder} for {@link StatusEffectBasicModifierDefinition}.
  */
 @Service
 public class StatusEffectModifierPartialResponseBuilder implements PartialResponseBuilder<StatusEffectModifierResponseBuilderConfiguration> {
 
     @Override
     public StatusEffectModifierPartialResponse build(final StatusEffectModifierResponseBuilderConfiguration statusEffectModifierResponseBuilderConfiguration) {
-        final StatusEffectModifierDefinition statusEffectModifierDefinition = statusEffectModifierResponseBuilderConfiguration.getStatusEffectModifierDefinition();
+        final StatusEffectBasicModifierDefinition statusEffectModifierDefinition = statusEffectModifierResponseBuilderConfiguration.getStatusEffectModifierDefinition();
 
         return StatusEffectModifierPartialResponse.builder()
             .modifier(statusEffectModifierDefinition.getModifier().getName())

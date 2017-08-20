@@ -16,10 +16,10 @@ import java.time.temporal.ChronoUnit;
 
 @Service
 @RequiredArgsConstructor
-public class MagesClaritySpellEffectDefinition extends ImprovedCombatEffectDefinition {
+public class MightSpellEffectDefinition extends ImprovedCombatEffectDefinition {
 
-    private static final int MAGES_CLARITY_STATUS_EFFECT_ID = 2;
-    private static final int XP_REWARD = 30;
+    private static final int MAGES_CLARITY_STATUS_EFFECT_ID = 3;
+    private static final int XP_REWARD = 20;
 
     private final StatusEffectManipulator statusEffectManipulator;
     private final StatusEffectDefinitionCache statusEffectDefinitionCache;
@@ -42,6 +42,6 @@ public class MagesClaritySpellEffectDefinition extends ImprovedCombatEffectDefin
 
     @Override
     public String getId() {
-        return "mages_clarity";
+        return "might";
     }
 }
