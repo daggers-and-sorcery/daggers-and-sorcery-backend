@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="laxika" id="20170821-1">
+        <insert tableName="news">
+            <column name="title" value="Small additions"/>
+            <column name="release_date" value="2017-08-21 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+This week's patch is a smaller one but nevertheless, it will add some really great additions to the game.  The Life Leech attribute is coming to the game with a couple of new weapons.
+
+Improvements:
+- Added a new attribute called Life Leech into the game.
+- Buffed the Vampire Lord a little bit because we found it too easy to kill.
+- Added a new spell called 'Might' to the game. It's increasing the melee attack/damage and defense capabilities of the character based on its willpower.
+- Added five new weapons as drops to the Vampire Lord.
+- Added two new quests to the Witchhunter's Guild.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
