@@ -41,7 +41,7 @@ public class DamageCalculator {
                 DamageCombatEventRunnerContext.builder()
                         .attacker(attacker)
                         .defender(defender)
-                        .damageType(DamageType.MAGIC)
+                        .damageType(damageCalculationContext.getDamageType())
                         .damageBonus(beforeDamageEventResult.getBonusDamage())
                         .build()
         );

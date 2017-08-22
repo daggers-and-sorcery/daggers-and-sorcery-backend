@@ -8,7 +8,9 @@ import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,9 +29,9 @@ public class AfterDamageCombatEventRunner {
                                 .build()
                         )
                 )
-                .filter(afterDamageCombatEventResult -> afterDamageCombatEventResult.isPresent())
+                .filter(Optional::isPresent)
                 .map(afterDamageCombatEventResult -> afterDamageCombatEventResult.get().getCombatSteps())
-                .flatMap(combatSteps1 -> combatSteps1.stream())
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
         return AfterDamageEventResult.builder()
