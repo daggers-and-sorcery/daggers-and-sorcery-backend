@@ -1,29 +1,22 @@
-package com.morethanheroic.swords.combat.service.calc.damage.event.type.common;
+package com.morethanheroic.swords.combat.service.calc.damage.event.type.common.after;
 
 import com.morethanheroic.swords.combat.service.event.damage.DamageCombatEventHandler;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventHandlerContext;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageCombatEventHandlerResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Order(100)
+@Order(300)
 @Service
 @RequiredArgsConstructor
-public class MinimumDamageCombatEventHandler implements DamageCombatEventHandler {
+public class DecreaseHealthAfterDamageCombatEventHandler implements DamageCombatEventHandler {
 
     @Override
     public Optional<DamageCombatEventHandlerResult> handleEvent(DamageCombatEventHandlerContext damageCombatEventHandlerContext) {
-        if (damageCombatEventHandlerContext.getDamageAlreadyDone() <= 0) {
-            return Optional.of(
-                    DamageCombatEventHandlerResult.builder()
-                            .addedDamage(-damageCombatEventHandlerContext.getDamageAlreadyDone() + 1)
-                            .build()
-            );
-        }
+        damageCombatEventHandlerContext.getDefender().decreaseActualHealth(damageCombatEventHandlerContext.getDamageAlreadyDone());
 
         return Optional.empty();
     }

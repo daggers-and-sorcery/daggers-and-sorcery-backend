@@ -25,6 +25,7 @@ public class AfterDamageCombatEventRunner {
                         AfterDamageCombatEventContext.builder()
                                 .attacker(afterDamageEventContext.getAttacker())
                                 .defender(afterDamageEventContext.getDefender())
+                                .damageType(afterDamageEventContext.getDamageType())
                                 .damageDone(afterDamageEventContext.getDamageDone())
                                 .build()
                         )
