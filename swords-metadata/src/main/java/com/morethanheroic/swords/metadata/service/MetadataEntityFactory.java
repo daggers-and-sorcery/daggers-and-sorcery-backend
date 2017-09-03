@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.metadata.service;
 
-import com.morethanheroic.swords.metadata.domain.NumericMetadataEntity;
-import com.morethanheroic.swords.metadata.domain.TextMetadataEntity;
+import com.morethanheroic.swords.metadata.domain.entity.NumericMetadataEntity;
+import com.morethanheroic.swords.metadata.domain.entity.TextMetadataEntity;
 import com.morethanheroic.swords.metadata.repository.repository.MetadataMapper;
 import com.morethanheroic.swords.metadata.service.cache.MetadataDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;

@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.scavenging.domain;
 
 import com.morethanheroic.entity.domain.Entity;
-import com.morethanheroic.swords.metadata.domain.NumericMetadataEntity;
-import com.morethanheroic.swords.metadata.domain.TextMetadataEntity;
+import com.morethanheroic.swords.metadata.domain.entity.NumericMetadataEntity;
+import com.morethanheroic.swords.metadata.domain.entity.TextMetadataEntity;
 
 /**
  * Contains all scavenging related info.

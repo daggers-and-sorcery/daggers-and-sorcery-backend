@@ -55,7 +55,7 @@ public class TheInnExplorationEventHandler extends MultiStageExplorationEventHan
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("You awake from a refreshing nap and feel your stomach growl hungrily. As the last rays of sunlight recede through the nearby window, you slide out of bed and pack a satchel with supplies. You yearn to visit the inn outside the city, so you exit your dwelling and walk down the bustling streets of Sevgard until you arrive at the massive, oaken gate. A pair of guards waves you over the drawbridge, and you follow the beaten path to Farmfields. In the early evening, lanterns are flickering to life and illuminate the path to the quaint inn. This is the perfect opportunity to learn about the local goings-on, and your throat feels quite parched and your stomach quite empty.")
+                        .content("You awake from a refreshing nap and feel your stomach growl hungrily. As the last rays of sunlight recede through the nearby window, you slide out of bed and pack a satchel with supplies. You yearn to visit the inn outside the location, so you exit your dwelling and walk down the bustling streets of Sevgard until you arrive at the massive, oaken gate. A pair of guards waves you over the drawbridge, and you follow the beaten path to Farmfields. In the early evening, lanterns are flickering to life and illuminate the path to the quaint inn. This is the perfect opportunity to learn about the local goings-on, and your throat feels quite parched and your stomach quite empty.")
                         .build()
         ).addEventEntryResult(
                 TextExplorationEventEntryResult.builder()

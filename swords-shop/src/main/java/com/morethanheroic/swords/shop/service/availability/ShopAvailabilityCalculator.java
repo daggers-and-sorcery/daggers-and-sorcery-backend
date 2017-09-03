@@ -16,7 +16,7 @@ public class ShopAvailabilityCalculator {
 
     private final List<ShopAvailabilityEvaluator> shopAvailabilityEvaluators;
 
-    //TODO: Write an availability calculator to check that the user is in the same city as the shop.
+    //TODO: Write an availability calculator to check that the user is in the same location as the shop.
     public boolean isAvailable(final UserEntity userEntity, final ShopDefinition shopDefinition) {
         return shopAvailabilityEvaluators.stream()
                 .allMatch(shopAvailabilityEvaluators -> shopAvailabilityEvaluators.isAvailable(userEntity, shopDefinition));
