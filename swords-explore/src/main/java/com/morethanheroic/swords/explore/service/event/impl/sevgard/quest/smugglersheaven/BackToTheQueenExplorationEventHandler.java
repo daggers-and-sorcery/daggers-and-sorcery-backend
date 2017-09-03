@@ -18,7 +18,8 @@ public class BackToTheQueenExplorationEventHandler extends ImprovedExplorationEv
 
     private static final int EVENT_ID = 38;
 
-    private static final int COIN_OF_DRAKKAR_ID = 111111;
+    private static final int COIN_OF_DRAKKAR_ID = 213;
+    private static final int COIN_OF_DRAKKAR_AMOUNT_REQUIRED = 10;
 
     private static final int SMUGGLERS_HEAVEN_QUEST_ID = 3;
     private static final int SMUGGLERS_HEAVEN_QUEST_NEXT_STAGE_ID = 9;
@@ -39,26 +40,27 @@ public class BackToTheQueenExplorationEventHandler extends ImprovedExplorationEv
         return explorationResultStageBuilderFactory.newBuilder()
                 .addStage(STARTER_STAGE,
                         explorationResultBuilder1 -> explorationResultBuilder1
-                                .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_23")
                                 .newConditionalMultiWayPath(explorationContext,
                                         Lists.newArrayList(
                                                 ItemCondition.builder()
                                                         .itemDefinition(itemDefinitionCache.getDefinition(COIN_OF_DRAKKAR_ID))
-                                                        .amount(10)
+                                                        .amount(COIN_OF_DRAKKAR_AMOUNT_REQUIRED)
                                                         .build()
                                         )
                                 )
                                 .isFailure(
                                         explorationResultBuilder2 -> explorationResultBuilder2
-                                                .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_25")
+                                                .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_32")
+                                                .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_33")
+                                                .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_34")
                                                 .build()
                                 )
                                 .isSuccess(
                                         explorationResultBuilder2 -> explorationResultBuilder2
                                                 .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_24")
+                                                .newRemoveItemEntry(itemDefinitionCache.getDefinition(COIN_OF_DRAKKAR_ID), COIN_OF_DRAKKAR_AMOUNT_REQUIRED)
                                                 .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_26")
                                                 .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_27")
-                                                .newMessageEntry("SMUGGLERS_HEAVEN_QUEST_EXPLORATION_EVENT_ENTRY_28")
                                                 .newUpdateQuestStage(questDefinitionCache.getDefinition(SMUGGLERS_HEAVEN_QUEST_ID), SMUGGLERS_HEAVEN_QUEST_NEXT_STAGE_ID)
                                                 .newContinueQuestEntry(questDefinitionCache.getDefinition(SMUGGLERS_HEAVEN_QUEST_ID))
                                                 .build()

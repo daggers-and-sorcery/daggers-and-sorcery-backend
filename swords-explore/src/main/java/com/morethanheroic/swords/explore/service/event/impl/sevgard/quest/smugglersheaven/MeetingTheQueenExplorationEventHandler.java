@@ -16,7 +16,7 @@ public class MeetingTheQueenExplorationEventHandler extends ImprovedExplorationE
 
     private static final int EVENT_ID = 36;
 
-    private static final int VAMPIRE_WARRIOR_ID = 333;
+    private static final int VAMPIRE_WARRIOR_ID = 30;
 
     private static final int SMUGGLERS_HEAVEN_QUEST_ID = 3;
     private static final int SMUGGLERS_HEAVEN_QUEST_FIRST_COMBAT_STAGE_ID = 3;
