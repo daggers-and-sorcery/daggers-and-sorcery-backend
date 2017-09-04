@@ -73,4 +73,6 @@ include 'swords-combat-monster-type-damage'
 include 'swords-combat-life-steal'
 include 'swords-tavern-web'
 include 'swords-location'
+include 'swords-zone'
+include 'swords-zone-web'
 

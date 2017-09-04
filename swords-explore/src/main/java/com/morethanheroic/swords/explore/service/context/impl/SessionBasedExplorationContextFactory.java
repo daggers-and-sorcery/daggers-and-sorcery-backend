@@ -6,10 +6,9 @@ import com.morethanheroic.swords.explore.service.ExplorationEventChooser;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventHandlerCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
-import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
+import com.morethanheroic.swords.zone.domain.ExplorationZone;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationAssignmentContext;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,7 @@ public class SessionBasedExplorationContextFactory implements ExplorationContext
     private final ExplorationEventChooser explorationEventChooser;
 
     @Override
-    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, ExplorationEventLocation location, int nextStage) {
+    public ExplorationContext newExplorationContext(final UserEntity userEntity, final SessionEntity sessionEntity, ExplorationZone location, int nextStage) {
         final ExplorationEventHandler explorationEvent;
 
         if (userEntity.hasActiveExplorationEvent()) {
@@ -41,7 +40,7 @@ public class SessionBasedExplorationContextFactory implements ExplorationContext
                 .build();
     }
 
-    private int getEventId(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationEventLocation location) {
+    private int getEventId(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationZone location) {
         if (sessionEntity.isAttributeSet(EXPLORATION_EVENT_OVERRIDE_SESSION_ENTRY_KEY)) {
             return (Integer) sessionEntity.getAttribute(EXPLORATION_EVENT_OVERRIDE_SESSION_ENTRY_KEY);
         }
