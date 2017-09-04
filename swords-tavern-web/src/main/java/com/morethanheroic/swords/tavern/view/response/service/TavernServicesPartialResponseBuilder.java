@@ -2,7 +2,7 @@ package com.morethanheroic.swords.tavern.view.response.service;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
-import com.morethanheroic.swords.inn.domain.service.ServiceType;
+import com.morethanheroic.swords.tavern.domain.service.ServiceType;
 import com.morethanheroic.swords.tavern.view.response.service.domain.TavernServiceAvailabilityResponseBuilderConfiguration;
 import com.morethanheroic.swords.tavern.view.response.service.domain.InnServicePartialResponse;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.tavern.view.controller.service;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.inn.service.InnServiceAvailabilityCalculator;
+import com.morethanheroic.swords.tavern.service.InnServiceAvailabilityCalculator;
 import com.morethanheroic.swords.tavern.view.response.service.TavernServiceAvailabilityResponseBuilder;
 import com.morethanheroic.swords.tavern.view.response.service.domain.TavernServiceAvailabilityResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller for the information about the inn.
+ * Controller for the information about the tavern.
  */
 @RestController
 @RequiredArgsConstructor

@@ -7,6 +7,9 @@ dependencies {
     compile project(':swords-inventory')
     compile project(':swords-money')
     compile project(':swords-response')
+    compile project(':swords-quest')
+    compile project(':swords-vampire')
+    compile project(':swords-location')
 }
 
 apply plugin: 'spring-boot'

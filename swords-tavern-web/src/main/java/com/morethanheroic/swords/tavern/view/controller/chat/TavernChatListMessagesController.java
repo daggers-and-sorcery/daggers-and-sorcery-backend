@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.tavern.view.controller.chat;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.inn.domain.chat.ChatEntry;
-import com.morethanheroic.swords.inn.service.chat.ChatEntityFactory;
+import com.morethanheroic.swords.tavern.domain.chat.ChatEntry;
+import com.morethanheroic.swords.tavern.service.chat.ChatEntityFactory;
 import com.morethanheroic.swords.tavern.view.response.chat.list.ChatListResponseBuilder;
 import com.morethanheroic.swords.tavern.view.response.chat.list.domain.ChatListResponseBuilderConfiguration;
 import com.morethanheroic.swords.user.domain.UserEntity;

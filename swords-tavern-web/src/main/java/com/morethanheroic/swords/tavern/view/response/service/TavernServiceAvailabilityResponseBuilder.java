@@ -2,7 +2,7 @@ package com.morethanheroic.swords.tavern.view.response.service;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
-import com.morethanheroic.swords.inn.service.quest.TavernQuestCalculator;
+import com.morethanheroic.swords.tavern.service.quest.TavernQuestCalculator;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.tavern.view.response.quest.TavernQuestInfoPartialResponseBuilder;
 import com.morethanheroic.swords.tavern.view.response.quest.domain.TavernQuestInfoPartialResponseBuilderConfiguration;

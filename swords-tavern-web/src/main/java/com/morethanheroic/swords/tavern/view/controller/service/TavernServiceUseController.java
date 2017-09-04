@@ -1,11 +1,11 @@
 package com.morethanheroic.swords.tavern.view.controller.service;
 
 import com.morethanheroic.response.domain.Response;
-import com.morethanheroic.swords.inn.domain.service.ServiceType;
+import com.morethanheroic.swords.tavern.domain.service.ServiceType;
 import com.morethanheroic.swords.tavern.view.response.order.TavernServiceOrderResponseBuilder;
 import com.morethanheroic.swords.tavern.view.response.order.domain.InnServiceOrderResponseBuilderConfiguration;
-import com.morethanheroic.swords.inn.service.server.TavernServiceServer;
-import com.morethanheroic.swords.inn.service.server.context.impl.DefaultServingContext;
+import com.morethanheroic.swords.tavern.service.server.TavernServiceServer;
+import com.morethanheroic.swords.tavern.service.server.context.impl.DefaultServingContext;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
