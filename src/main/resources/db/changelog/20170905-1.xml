@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="laxika" id="20170905-1">
+        <insert tableName="news">
+            <column name="title" value="New quest: Smuggler's Heaven"/>
+            <column name="release_date" value="2017-09-05 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are happy to announce the arrival of a new quest to the game. You can unlock this quest by going into the tavern as a vampire. The reward of the quest is not going to be immediately useful but it will be quite handy for players who like to be a vampire.
+
+We plan to make this quest paid only (probably for $1) when we will add support for payments later on so we suggest to everyone to start the quest as soon as possible.
+
+We are sorry for the slowdown of the content patches in the recent weeks. Sadly the main developers of the project were incredibly busy in the recent weeks. More updates will soon follow with a new quest that will unlock three new bosses in a special new exploration zone.
+
+Bugfixes:
+- Fixed that the Life Stealing combat text was printed before the damage.
+- Fixed that some people were unable to access the Witchhunter's Guild.
+- Fixed that the ladder page was not refreshing when clicked on various skills.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
