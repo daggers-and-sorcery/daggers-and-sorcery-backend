@@ -18,9 +18,6 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
     private CombatUtil combatUtil;
 
     @Autowired
-    private CombatMessageFactory combatMessageFactory;
-
-    @Autowired
     private CombatExperienceMapper combatExperienceMapper;
 
     //TODO: move the calculation logic into a separate class
@@ -48,23 +45,5 @@ public abstract class GeneralAttackCalculator implements AttackCalculator {
                 }
             }
         }
-    }
-
-    protected void addAttackXp(final UserCombatEntity userCombatEntity, final int amount) {
-        final UserEntity userEntity = userCombatEntity.getUserEntity();
-
-        if (!combatUtil.isFistfighting(userEntity)) {
-            combatExperienceMapper.addExperience(userEntity.getId(), combatUtil.getUserWeaponSkillType(userEntity), amount);
-        } else {
-            combatExperienceMapper.addExperience(userEntity.getId(), SkillType.FISTFIGHT, amount);
-        }
-    }
-
-    protected void addOffhandXp(final UserCombatEntity userCombatEntity, final int amount) {
-        final UserEntity userEntity = userCombatEntity.getUserEntity();
-
-        combatUtil.getUserOffhandSkillType(userEntity).ifPresent((skillType) ->
-                combatExperienceMapper.addExperience(userEntity.getId(), skillType, amount)
-        );
     }
 }

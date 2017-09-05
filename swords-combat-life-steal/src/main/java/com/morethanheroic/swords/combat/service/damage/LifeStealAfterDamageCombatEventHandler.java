@@ -12,9 +12,11 @@ import com.morethanheroic.swords.combat.service.event.damage.after.domain.AfterD
 import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
 import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.Order;
 
 import java.util.Optional;
 
+@Order(500)
 @CombatEventHandler
 @RequiredArgsConstructor
 public class LifeStealAfterDamageCombatEventHandler implements AfterDamageCombatEventHandler {

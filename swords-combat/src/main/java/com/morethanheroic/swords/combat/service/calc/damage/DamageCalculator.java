@@ -50,6 +50,7 @@ public class DamageCalculator {
                 AfterDamageEventContext.builder()
                         .attacker(attacker)
                         .defender(defender)
+                        .damageType(damageCalculationContext.getDamageType())
                         .damageDone(damageCombatEventRunnerResult.getDamage())
                         .build()
         );

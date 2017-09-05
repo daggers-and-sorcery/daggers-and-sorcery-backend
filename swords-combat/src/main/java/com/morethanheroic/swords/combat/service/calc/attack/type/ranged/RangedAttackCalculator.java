@@ -1,19 +1,17 @@
 package com.morethanheroic.swords.combat.service.calc.attack.type.ranged;
 
+import com.morethanheroic.swords.attribute.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.domain.CombatContext;
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
-import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
+import com.morethanheroic.swords.combat.service.CombatStepListBuilder;
+import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.damage.DamageCalculator;
 import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationContext;
+import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
 import com.morethanheroic.swords.combat.service.event.damage.domain.DamageType;
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import com.morethanheroic.swords.combat.step.domain.DefaultCombatStep;
-import com.morethanheroic.swords.combat.service.CombatStepListBuilder;
-import com.morethanheroic.swords.combat.service.calc.attack.GeneralAttackCalculator;
-import com.morethanheroic.swords.combat.service.calc.damage.domain.DamageCalculationResult;
-import com.morethanheroic.swords.combat.service.calc.death.DeathCalculator;
-import com.morethanheroic.swords.attribute.service.dice.DiceAttributeToDiceRollCalculationContextConverter;
 import com.morethanheroic.swords.combat.step.message.CombatMessageFactory;
 import com.morethanheroic.swords.dice.service.DiceRollCalculator;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +27,6 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
     private final DiceAttributeToDiceRollCalculationContextConverter diceAttributeToDiceRollCalculationContextConverter;
     private final DiceRollCalculator diceRollCalculator;
     private final CombatMessageFactory combatMessageFactory;
-    private final AmmunitionLossCalculator ammunitionLossCalculator;
     private final DamageCalculator damageCalculator;
     private final DeathCalculator deathCalculator;
 
@@ -38,7 +35,7 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
         final List<CombatStep> result = new ArrayList<>();
 
         if (diceRollCalculator.rollDices(diceAttributeToDiceRollCalculationContextConverter.convert(attacker.getAiming())) > opponent.getDefense().getValue()) {
-            result.addAll(dealDamage(attacker, opponent, combatContext));
+            result.addAll(dealDamage(attacker, opponent));
 
             if (opponent.getActualHealth() <= 0) {
                 result.addAll(deathCalculator.handleDeath(attacker, opponent, combatContext));
@@ -50,53 +47,16 @@ public class RangedAttackCalculator extends GeneralAttackCalculator {
         return result;
     }
 
-    private List<CombatStep> dealDamage(CombatEntity attacker, CombatEntity defender, CombatContext combatContext) {
-        final List<CombatStep> result = new ArrayList<>();
-
-        final DamageCalculationResult damageCalculationResult = damageCalculator.calculateDamage(
-                DamageCalculationContext.builder()
-                        .attacker(attacker)
-                        .defender(defender)
-                        .damageType(DamageType.RANGED)
-                        .build()
-        );
-
-        result.addAll(damageCalculationResult.getCombatSteps());
-
-        defender.decreaseActualHealth(damageCalculationResult.getDamage());
-
-        if (attacker instanceof MonsterCombatEntity) {
-            result.addAll(calculateMonsterDamage((MonsterCombatEntity) attacker, combatContext, damageCalculationResult.getDamage()));
-        } else {
-            result.addAll(calculatePlayerDamage((UserCombatEntity) attacker, defender, damageCalculationResult.getDamage()));
-        }
-
-        return result;
-    }
-
-    private List<CombatStep> calculateMonsterDamage(final MonsterCombatEntity attacker, final CombatContext combatContext, final int damage) {
-        addDefenseXp(combatContext, damage * 2);
-
+    private List<CombatStep> dealDamage(CombatEntity attacker, CombatEntity defender) {
         return CombatStepListBuilder.builder()
-                .withCombatStep(
-                        DefaultCombatStep.builder()
-                                .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_PLAYER", attacker.getName(), damage))
-                                .build()
-                )
-                .build();
-    }
-
-    private List<CombatStep> calculatePlayerDamage(final UserCombatEntity attacker, final CombatEntity opponent, final int damage) {
-        addAttackXp(attacker, damage * 2);
-
-        return CombatStepListBuilder.builder()
-                .withCombatStep(
-                        DefaultCombatStep.builder()
-                                .message(combatMessageFactory.newMessage("damage_gained", "COMBAT_MESSAGE_RANGED_DAMAGE_TO_MONSTER", opponent.getName(), damage))
-                                .build()
-                )
                 .withCombatSteps(
-                        ammunitionLossCalculator.calculateAmmunitionLoss(attacker)
+                        damageCalculator.calculateDamage(
+                                DamageCalculationContext.builder()
+                                        .attacker(attacker)
+                                        .defender(defender)
+                                        .damageType(DamageType.RANGED)
+                                        .build()
+                        ).getCombatSteps()
                 )
                 .build();
     }

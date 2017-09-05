@@ -7,5 +7,5 @@ import com.morethanheroic.swords.combat.service.event.damage.after.domain.AfterD
 
 public interface AfterDamageCombatEventHandler {
 
-    Optional<AfterDamageCombatEventResult> handleEvent(final AfterDamageCombatEventContext beforeDamageCombatEventContext);
+    Optional<AfterDamageCombatEventResult> handleEvent(final AfterDamageCombatEventContext afterDamageCombatEventContext);
 }
