@@ -75,4 +75,5 @@ include 'swords-tavern-web'
 include 'swords-location'
 include 'swords-zone'
 include 'swords-zone-web'
+include 'swords-location-web'
 

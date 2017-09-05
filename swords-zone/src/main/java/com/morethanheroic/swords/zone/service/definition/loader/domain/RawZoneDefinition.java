@@ -9,7 +9,7 @@ import com.morethanheroic.swords.location.domain.Location;
 import lombok.Data;
 
 @Data
-@XmlRootElement(name = "exploration-event")
+@XmlRootElement(name = "zone")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RawZoneDefinition {
 
