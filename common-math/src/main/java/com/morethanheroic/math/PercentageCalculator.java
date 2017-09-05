@@ -16,6 +16,10 @@ public class PercentageCalculator {
         return actualValue * 100 / maximumValue;
     }
 
+    public double claclulatePercentageOf(double percentage, double value) {
+        return value * (percentage * 0.01);
+    }
+
     public boolean calculatePercentageHit(final int valueToHit) {
         return valueToHit >= randomCalculator.randomNumberBetween(1, 100);
     }

@@ -4,7 +4,7 @@ import com.morethanheroic.swords.equipment.service.EquippingService;
 import com.morethanheroic.swords.inventory.domain.IdentificationType;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.metadata.domain.TextMetadataEntity;
+import com.morethanheroic.swords.metadata.domain.entity.TextMetadataEntity;
 import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;
 import com.morethanheroic.swords.starter.service.domain.StarterArmorSet;
 import com.morethanheroic.swords.starter.service.domain.StartingEquipmentAwardingContext;

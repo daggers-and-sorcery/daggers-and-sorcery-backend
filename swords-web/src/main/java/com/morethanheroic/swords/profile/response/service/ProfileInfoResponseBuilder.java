@@ -4,9 +4,9 @@ import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
+import com.morethanheroic.swords.equipment.EquipmentEntityFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.inventory.domain.InventoryItem;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.UnidentifiedItemIdCalculator;
@@ -42,7 +42,7 @@ import java.util.Map;
 public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoResponseBuilderConfiguration> {
 
     private final ItemDefinitionCache itemDefinitionCache;
-    private final EquipmentFacade equipmentFacade;
+    private final EquipmentEntityFactory equipmentEntityFactory;
     private final ResponseFactory responseFactory;
     private final ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder;
 
@@ -83,9 +83,9 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     private StatusEffectPartialResponseCollectionBuilder statusEffectPartialResponseCollectionBuilder;
 
     @Autowired
-    public ProfileInfoResponseBuilder(ItemDefinitionCache itemDefinitionCache, EquipmentFacade equipmentFacade, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
+    public ProfileInfoResponseBuilder(ItemDefinitionCache itemDefinitionCache, EquipmentEntityFactory equipmentEntityFactory, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
         this.itemDefinitionCache = itemDefinitionCache;
-        this.equipmentFacade = equipmentFacade;
+        this.equipmentEntityFactory = equipmentEntityFactory;
         this.responseFactory = responseFactory;
         this.profileIdentifiedItemEntryResponseBuilder = profileIdentifiedItemEntryResponseBuilder;
     }
@@ -140,7 +140,7 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
     private Map<String, Map<String, Object>> buildEquipmentResponse(UserEntity userEntity, SessionEntity sessionEntity) {
         final Map<String, Map<String, Object>> equipmentHolder = new HashMap<>();
 
-        final EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
+        final EquipmentEntity equipmentEntity = equipmentEntityFactory.getEntity(userEntity);
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             final int equipment = equipmentEntity.getEquipmentIdOnSlot(slot);

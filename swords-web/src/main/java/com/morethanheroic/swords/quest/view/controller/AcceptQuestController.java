@@ -3,6 +3,8 @@ package com.morethanheroic.swords.quest.view.controller;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
+import com.morethanheroic.swords.quest.service.entity.QuestEntityFactory;
+import com.morethanheroic.swords.quest.service.entity.domain.QuestEntityFactoryContext;
 import com.morethanheroic.swords.quest.service.initialize.QuestInitializer;
 import com.morethanheroic.swords.quest.view.request.domain.AcceptQuestRequest;
 import com.morethanheroic.swords.response.service.ResponseFactory;
@@ -21,12 +23,18 @@ public class AcceptQuestController {
     private final QuestDefinitionCache questDefinitionCache;
     private final ResponseFactory responseFactory;
     private final QuestInitializer questInitializer;
+    private final QuestEntityFactory questEntityFactory;
 
     @PostMapping("/quest/accept")
     public Response acceptQuest(final UserEntity userEntity, @RequestBody @Valid final AcceptQuestRequest acceptQuestRequest) {
         final QuestDefinition questDefinition = questDefinitionCache.getDefinition(acceptQuestRequest.getQuestId());
 
-        questInitializer.startQuest(userEntity, questDefinition);
+        questInitializer.startQuest(userEntity, questEntityFactory.getEntity(
+                QuestEntityFactoryContext.builder()
+                        .userEntity(userEntity)
+                        .questDefinition(questDefinition)
+                        .build()
+        ));
 
         return responseFactory.successfulResponse(userEntity);
     }

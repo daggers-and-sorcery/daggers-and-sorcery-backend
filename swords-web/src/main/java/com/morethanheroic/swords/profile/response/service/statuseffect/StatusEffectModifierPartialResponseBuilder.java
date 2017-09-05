@@ -1,30 +1,44 @@
 package com.morethanheroic.swords.profile.response.service.statuseffect;
 
-import org.springframework.stereotype.Service;
-
+import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
+import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
 import com.morethanheroic.swords.profile.response.service.statuseffect.domain.configuration.StatusEffectModifierResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.response.service.statuseffect.domain.response.StatusEffectModifierPartialResponse;
-import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.attribute.StatusEffectAttributeModifierCalculator;
+import com.morethanheroic.swords.statuseffect.service.attribute.domain.modifier.StatusEffectAttributeModifierCalculationResult;
+import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectBasicModifierDefinition;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * A {@link PartialResponseBuilder} for {@link com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition}.
+ * A {@link PartialResponseBuilder} for {@link StatusEffectBasicModifierDefinition}.
  */
 @Service
-public class StatusEffectModifierPartialResponseBuilder implements PartialResponseBuilder<StatusEffectModifierResponseBuilderConfiguration> {
+@RequiredArgsConstructor
+public class StatusEffectModifierPartialResponseBuilder implements PartialResponseCollectionBuilder<StatusEffectModifierResponseBuilderConfiguration> {
+
+    private final StatusEffectAttributeModifierCalculator statusEffectAttributeModifierCalculator;
 
     @Override
-    public StatusEffectModifierPartialResponse build(final StatusEffectModifierResponseBuilderConfiguration statusEffectModifierResponseBuilderConfiguration) {
-        final StatusEffectModifierDefinition statusEffectModifierDefinition = statusEffectModifierResponseBuilderConfiguration.getStatusEffectModifierDefinition();
+    public List<PartialResponse> build(final StatusEffectModifierResponseBuilderConfiguration statusEffectModifierResponseBuilderConfiguration) {
+        final List<StatusEffectAttributeModifierCalculationResult> statusEffectBasicModifierDefinitions = statusEffectAttributeModifierCalculator.calculate(statusEffectModifierResponseBuilderConfiguration.getUserEntity(), statusEffectModifierResponseBuilderConfiguration.getStatusEffectModifierDefinition(), null);
 
-        return StatusEffectModifierPartialResponse.builder()
-            .modifier(statusEffectModifierDefinition.getModifier().getName())
-            .amount(statusEffectModifierDefinition.getAmount())
-            .d2(statusEffectModifierDefinition.getD2())
-            .d4(statusEffectModifierDefinition.getD4())
-            .d6(statusEffectModifierDefinition.getD6())
-            .d8(statusEffectModifierDefinition.getD8())
-            .d10(statusEffectModifierDefinition.getD10())
-            .build();
+        return statusEffectBasicModifierDefinitions.stream()
+                .map(statusEffectBasicModifierDefinition ->
+                        StatusEffectModifierPartialResponse.builder()
+                                .modifier(statusEffectBasicModifierDefinition.getModifier().getName())
+                                .amount(statusEffectBasicModifierDefinition.getAmount())
+                                .d2(statusEffectBasicModifierDefinition.getD2())
+                                .d4(statusEffectBasicModifierDefinition.getD4())
+                                .d6(statusEffectBasicModifierDefinition.getD6())
+                                .d8(statusEffectBasicModifierDefinition.getD8())
+                                .d10(statusEffectBasicModifierDefinition.getD10())
+                                .build()
+                )
+                .collect(Collectors.toList());
     }
 }

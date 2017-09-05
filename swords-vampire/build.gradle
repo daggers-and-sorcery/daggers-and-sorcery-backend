@@ -7,7 +7,6 @@ dependencies {
     compile project(':swords-metadata')
     compile project(':swords-shop')
     compile project(':swords-attribute')
-    compile project(':swords-inn')
     compile project(':swords-market')
 }
 

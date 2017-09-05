@@ -10,6 +10,7 @@ import java.util.Locale;
  */
 public enum SpecialAttribute implements Attribute {
 
+    LIFE_STEAL,
     EXTRA_DAMAGE_AGAINST_VAMPIRES,
     PERIODICAL_DAMAGE_AGAINST_VAMPIRES,
     PERIODICAL_DAMAGE_AGAINST_UNDEAD;

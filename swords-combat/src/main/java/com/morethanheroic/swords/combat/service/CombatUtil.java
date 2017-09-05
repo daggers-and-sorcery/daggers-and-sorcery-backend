@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.combat.service;
 
 import com.morethanheroic.swords.attribute.service.calc.type.SkillTypeCalculator;
+import com.morethanheroic.swords.equipment.EquipmentEntityFactory;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.EquipmentFacade;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.item.domain.WeaponSuperType;
@@ -22,7 +22,7 @@ public class CombatUtil {
     private static final int EMPTY_EQUIPMENT_SLOT = 0;
 
     private final SkillTypeCalculator skillTypeCalculator;
-    private final EquipmentFacade equipmentFacade;
+    private final EquipmentEntityFactory equipmentEntityFactory;
     private final WeaponSuperTypeCalculator weaponSuperTypeCalculator;
 
     public SkillType getUserArmorSkillType(UserEntity user) {
@@ -36,31 +36,22 @@ public class CombatUtil {
     }
 
     public SkillType getUserWeaponSkillType(UserEntity user) {
-        final ItemType itemType = getUserWeaponType(user);
+        final Optional<ItemType> itemType = getUserWeaponType(user);
 
-        if (itemType == null) {
-            return null;
-        }
-
-        return skillTypeCalculator.getSkillFromItemType(itemType);
+        return itemType.isPresent() ? skillTypeCalculator.getSkillFromItemType(itemType.get()) : null;
     }
 
-    public ItemType getUserWeaponType(UserEntity user) {
-        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.WEAPON);
-
-        if (itemDefinition == null) {
-            return null;
-        }
-
-        return itemDefinition.getSubtype();
+    public Optional<ItemType> getUserWeaponType(UserEntity user) {
+        return equipmentEntityFactory.getEntity(user).getEquipmentSlot(EquipmentSlot.WEAPON).getItem()
+                .map(itemDefinition -> itemDefinition.getSubtype());
     }
 
     public Optional<WeaponSuperType> getUserWeaponSuperType(final UserEntity userEntity) {
-        return weaponSuperTypeCalculator.calculateWeaponSuperType(getUserWeaponType(userEntity));
+        return weaponSuperTypeCalculator.calculateWeaponSuperType(getUserWeaponType(userEntity).orElse(null));
     }
 
     public ItemType getUserArmorType(UserEntity user) {
-        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(user).getEquipmentDefinitionOnSlot(EquipmentSlot.CHEST);
+        final ItemDefinition itemDefinition = equipmentEntityFactory.getEntity(user).getEquipmentDefinitionOnSlot(EquipmentSlot.CHEST);
 
         if (itemDefinition == null) {
             return null;
@@ -70,7 +61,7 @@ public class CombatUtil {
     }
 
     public Optional<ItemType> getUserOffhandType(final UserEntity userEntity) {
-        final ItemDefinition itemDefinition = equipmentFacade.getEquipment(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.OFFHAND);
+        final ItemDefinition itemDefinition = equipmentEntityFactory.getEntity(userEntity).getEquipmentDefinitionOnSlot(EquipmentSlot.OFFHAND);
 
         if (itemDefinition == null) {
             return Optional.empty();
@@ -92,7 +83,7 @@ public class CombatUtil {
     }
 
     public boolean isFistfighting(final UserEntity userEntity) {
-        final EquipmentEntity equipmentEntity = equipmentFacade.getEquipment(userEntity);
+        final EquipmentEntity equipmentEntity = equipmentEntityFactory.getEntity(userEntity);
 
         return equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.WEAPON) == EMPTY_EQUIPMENT_SLOT
                 || (hasBowWeapon(equipmentEntity) && equipmentEntity.getEquipmentIdOnSlot(EquipmentSlot.QUIVER) == EMPTY_EQUIPMENT_SLOT);

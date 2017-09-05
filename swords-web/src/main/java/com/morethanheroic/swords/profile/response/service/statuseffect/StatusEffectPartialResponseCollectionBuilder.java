@@ -1,10 +1,5 @@
 package com.morethanheroic.swords.profile.response.service.statuseffect;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
 import com.morethanheroic.response.service.PartialResponseCollectionBuilder;
@@ -12,8 +7,11 @@ import com.morethanheroic.swords.profile.response.service.statuseffect.domain.co
 import com.morethanheroic.swords.profile.response.service.statuseffect.domain.configuration.StatusEffectResponseBuilderConfiguration;
 import com.morethanheroic.swords.profile.response.service.statuseffect.domain.response.StatusEffectPartialResponse;
 import com.morethanheroic.swords.statuseffect.service.StatusEffectEntityFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A {@link PartialResponseBuilder} to build the status effect part of the character page.
@@ -34,14 +32,16 @@ public class StatusEffectPartialResponseCollectionBuilder implements PartialResp
                         .description(statusEffectEntity.getStatusEffect().getDescription())
                         .expirationTime(statusEffectEntity.getExpirationTime())
                         .modifiers(
-                            statusEffectEntity.getStatusEffect().getModifiers().stream()
-                                .map(statusEffectModifierDefinition -> statusEffectModifierPartialResponseBuilder.build(
-                                        StatusEffectModifierResponseBuilderConfiguration.builder()
-                                            .statusEffectModifierDefinition(statusEffectModifierDefinition)
-                                            .build()
-                                    )
-                                )
-                                .collect(Collectors.toList())
+                                statusEffectEntity.getStatusEffect().getModifiers().stream()
+                                        .map(statusEffectModifierDefinition -> statusEffectModifierPartialResponseBuilder.build(
+                                                StatusEffectModifierResponseBuilderConfiguration.builder()
+                                                        .userEntity(statusEffectResponseBuilderConfiguration.getUserEntity())
+                                                        .statusEffectModifierDefinition(statusEffectModifierDefinition)
+                                                        .build()
+                                                )
+                                        )
+                                        .flatMap(partialResponses -> partialResponses.stream())
+                                        .collect(Collectors.toList())
                         )
                         .build()
                 )

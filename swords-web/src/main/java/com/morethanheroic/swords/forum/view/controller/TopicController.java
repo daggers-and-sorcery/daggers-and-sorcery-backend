@@ -24,7 +24,7 @@ public class TopicController {
     /**
      * List topics in a certain category.
      */
-    @RequestMapping(value = "/forum/list/category/{categoryId}", method = RequestMethod.GET)
+    @GetMapping("/forum/list/category/{categoryId}")
     public Response requestTopicList(UserEntity userEntity, @PathVariable int categoryId) {
         return forumTopicListResponseBuilder.build(
                 ForumTopicListResponseBuilderConfiguration.builder()
@@ -34,12 +34,13 @@ public class TopicController {
                         .build()
         );
     }
+
     /**
      * Create new topic
      */
-    @RequestMapping(value = "/forum/new_topic", method = RequestMethod.POST)
-    public Response createNewTopic(final UserEntity userEntity, final @RequestBody CreateTopicRequest createTopicRequest) {
-        forumService.createNewTopic(userEntity,
+    @PostMapping("/forum/new_topic")
+    public Response createTopic(final UserEntity userEntity, final @RequestBody CreateTopicRequest createTopicRequest) {
+        forumService.createTopic(userEntity,
                 CreateTopicContext.builder()
                         .parentCategory(createTopicRequest.getParentCategory())
                         .content(createTopicRequest.getContent())

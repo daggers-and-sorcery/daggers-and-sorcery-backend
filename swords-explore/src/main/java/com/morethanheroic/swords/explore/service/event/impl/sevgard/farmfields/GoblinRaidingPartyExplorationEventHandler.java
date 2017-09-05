@@ -60,11 +60,11 @@ public class GoblinRaidingPartyExplorationEventHandler extends MultiStageExplora
 
         explorationResult.addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("You respond to a flyer posted on Sevgard's notice board. A farmer just outside the city is having a goblin problem. They are destroying his crops and slaughtering his livestock. He requires immediate assistance dealing with them, and he promises a reward. You take the flyer with you and follow the directions to the farmer's property.")
+                        .content("You respond to a flyer posted on Sevgard's notice board. A farmer just outside the location is having a goblin problem. They are destroying his crops and slaughtering his livestock. He requires immediate assistance dealing with them, and he promises a reward. You take the flyer with you and follow the directions to the farmer's property.")
                         .build()
         ).addEventEntryResult(
                 TextExplorationEventEntryResult.builder()
-                        .content("You knock on the farmer's door with the flyer in hand. You greet the farmer and explain that you want to help. The farmer is thrilled and beckons you inside his home. A worn map of Farmfields rests on the kitchen table, and he points out a set of hills behind his farm, insisting the goblins are hiding there. During the night, they appear and create the worst racket while tearing up his fields. He alerted the city guard to his plight, but they have yet to kill the goblins. That responsibility has now shifted to you.")
+                        .content("You knock on the farmer's door with the flyer in hand. You greet the farmer and explain that you want to help. The farmer is thrilled and beckons you inside his home. A worn map of Farmfields rests on the kitchen table, and he points out a set of hills behind his farm, insisting the goblins are hiding there. During the night, they appear and create the worst racket while tearing up his fields. He alerted the location guard to his plight, but they have yet to kill the goblins. That responsibility has now shifted to you.")
                         .build()
         ).addEventEntryResult(
                 TextExplorationEventEntryResult.builder()

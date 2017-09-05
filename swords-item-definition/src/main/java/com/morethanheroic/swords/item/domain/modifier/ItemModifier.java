@@ -66,9 +66,9 @@ public enum ItemModifier {
     COOKING,
 
     //Special
+    LIFE_STEAL,
     EXTRA_DAMAGE_AGAINST_VAMPIRES,
     PERIODICAL_DAMAGE_AGAINST_VAMPIRES,
-
     PERIODICAL_DAMAGE_AGAINST_UNDEAD;
 
     public String getName() {

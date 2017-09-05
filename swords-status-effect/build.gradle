@@ -5,6 +5,7 @@ dependencies {
 
     compile project(':swords-user')
     compile project(':swords-attribute')
+    compile project(':common-math')
 }
 
 apply plugin: 'spring-boot'

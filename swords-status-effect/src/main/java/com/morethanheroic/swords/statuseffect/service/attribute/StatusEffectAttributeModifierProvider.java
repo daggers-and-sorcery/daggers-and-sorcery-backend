@@ -11,7 +11,7 @@ import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModi
 import com.morethanheroic.swords.attribute.service.modifier.domain.AttributeModifierValue;
 import com.morethanheroic.swords.attribute.service.modifier.domain.CombatAttributeModifierValue;
 import com.morethanheroic.swords.statuseffect.service.StatusEffectEntityFactory;
-import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectModifierDefinition;
+import com.morethanheroic.swords.statuseffect.service.attribute.domain.modifier.StatusEffectAttributeModifierCalculationResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,11 +26,14 @@ public class StatusEffectAttributeModifierProvider implements AttributeModifierP
     private final StatusEffectEntityFactory statusEffectEntityFactory;
     private final StatusEffectModifierToAttributeConverter statusEffectModifierToAttributeConverter;
     private final AttributeCalculationResultFactory attributeCalculationResultFactory;
+    private final StatusEffectAttributeModifierCalculator statusEffectAttributeModifierCalculator;
 
     @Override
     public List<AttributeModifierEntry> calculateModifiers(final UserEntity userEntity, final Attribute attribute) {
         return statusEffectEntityFactory.getEntity(userEntity).stream()
                 .flatMap(statusEffectEntity -> statusEffectEntity.getStatusEffect().getModifiers().stream())
+                .map(statusEffectModifierDefinition -> statusEffectAttributeModifierCalculator.calculate(userEntity, statusEffectModifierDefinition, attribute))
+                .flatMap(statusEffectAttributeModifierCalculationResults -> statusEffectAttributeModifierCalculationResults.stream())
                 .filter(statusEffectModifierDefinition -> isModifierForAttribute(statusEffectModifierDefinition, attribute))
                 .map(statusEffectModifierDefinitionConsumer -> {
                     if (attribute instanceof CombatAttribute) {
@@ -49,11 +52,11 @@ public class StatusEffectAttributeModifierProvider implements AttributeModifierP
                         return new AttributeModifierEntry(AttributeModifierType.STATUS_EFFECT, AttributeModifierUnitType.VALUE,
                                 new AttributeModifierValue(statusEffectModifierDefinitionConsumer.getAmount()));
                     }
-                }).collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
     }
 
-    private boolean isModifierForAttribute(final StatusEffectModifierDefinition statusEffectModifierDefinition, final Attribute attribute) {
-        return statusEffectModifierToAttributeConverter.convert(statusEffectModifierDefinition.getModifier()) == attribute;
+    private boolean isModifierForAttribute(final StatusEffectAttributeModifierCalculationResult statusEffectAttributeModifierCalculationResult, final Attribute attribute) {
+        return statusEffectModifierToAttributeConverter.convert(statusEffectAttributeModifierCalculationResult.getModifier()) == attribute;
     }
-
 }

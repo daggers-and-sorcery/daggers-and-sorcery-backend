@@ -11,6 +11,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
  *
  * @deprecated Use {@link ImprovedExplorationEventHandler} instead.
  */
+@Deprecated
 public abstract class ExplorationEventHandler {
 
     /**

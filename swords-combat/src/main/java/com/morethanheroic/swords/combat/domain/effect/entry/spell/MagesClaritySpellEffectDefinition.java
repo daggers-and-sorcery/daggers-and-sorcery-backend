@@ -19,7 +19,7 @@ import java.time.temporal.ChronoUnit;
 public class MagesClaritySpellEffectDefinition extends ImprovedCombatEffectDefinition {
 
     private static final int MAGES_CLARITY_STATUS_EFFECT_ID = 2;
-    private static final int XP_REWARD = 20;
+    private static final int XP_REWARD = 30;
 
     private final StatusEffectManipulator statusEffectManipulator;
     private final StatusEffectDefinitionCache statusEffectDefinitionCache;

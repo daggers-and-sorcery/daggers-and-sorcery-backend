@@ -9,6 +9,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
  *
  * @deprecated Use {@link ImprovedExplorationEventHandler} instead.
  */
+@Deprecated
 public abstract class MultiStageExplorationEventHandler extends ExplorationEventHandler {
 
     public abstract ExplorationResult explore(UserEntity userEntity, int stage);

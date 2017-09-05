@@ -1,0 +1,16 @@
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile project(':swords-user')
+    compile project(':swords-inventory')
+    compile project(':swords-money')
+    compile project(':swords-response')
+    compile project(':swords-quest')
+    compile project(':swords-vampire')
+    compile project(':swords-location')
+}
+
+apply plugin: 'spring-boot'
+bootRepackage.enabled = false

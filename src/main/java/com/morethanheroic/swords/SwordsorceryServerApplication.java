@@ -52,7 +52,7 @@ import java.util.Random;
                 "/skill/*",
                 "/spell/*",
                 "/explore/*",
-                "/inn/*",
+                "/tavern/*",
                 "/witchhunters-guild/*",
         }
 )

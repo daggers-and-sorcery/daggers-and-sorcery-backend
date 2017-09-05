@@ -4,7 +4,7 @@ import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeData;
-import com.morethanheroic.swords.metadata.domain.TextMetadataEntity;
+import com.morethanheroic.swords.metadata.domain.entity.TextMetadataEntity;
 import com.morethanheroic.swords.metadata.service.MetadataEntityFactory;
 import com.morethanheroic.swords.response.domain.CharacterData;
 import com.morethanheroic.swords.user.domain.UserEntity;

@@ -2,12 +2,14 @@ package com.morethanheroic.swords.skill.domain;
 
 import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
 
-/**
- * List of the available skills in the game.
- */
-//TODO: Create a definition loader like in race.
 //TODO: Maybe we should remove this enum altogether and use SkillAttribute instead? That sounds like the wisest choice.
 //This is however only possible after we moved the skillgroups into a definition file.
+/**
+ * List of the available skills in the game.
+ *
+ * @deprecated Use {@link SkillAttribute} instead.
+ */
+@Deprecated
 public enum SkillType {
 
     TWO_HANDED_CRUSHING_WEAPONS(SkillGroup.COMBAT),

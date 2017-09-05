@@ -106,6 +106,8 @@ public class ItemModifierToAttributeConverter {
             case COOKING:
                 return SkillAttribute.COOKING;
                 //Special
+            case LIFE_STEAL:
+                return SpecialAttribute.LIFE_STEAL;
             case EXTRA_DAMAGE_AGAINST_VAMPIRES:
                 return SpecialAttribute.EXTRA_DAMAGE_AGAINST_VAMPIRES;
             case PERIODICAL_DAMAGE_AGAINST_VAMPIRES:

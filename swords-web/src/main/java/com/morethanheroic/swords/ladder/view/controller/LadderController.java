@@ -18,7 +18,7 @@ public class LadderController {
     private final LadderService ladderService;
     private final LadderResponseBuilder ladderResponseBuilder;
 
-    @GetMapping(value = "/ladder/skill/{skill}/{page}")
+    @GetMapping("/ladder/skill/{skill}/{page}")
     public Response ladderInfo(UserEntity userEntity, @PathVariable SkillType skill, @PathVariable int page) {
         return ladderResponseBuilder.build(
                 LadderResponseBuilderConfiguration.builder()

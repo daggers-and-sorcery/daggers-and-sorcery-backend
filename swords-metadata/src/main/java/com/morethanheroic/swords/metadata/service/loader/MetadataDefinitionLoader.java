@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.morethanheroic.swords.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
-import com.morethanheroic.swords.metadata.domain.MetadataDefinition;
+import com.morethanheroic.swords.metadata.domain.definition.MetadataDefinition;
 import com.morethanheroic.swords.metadata.service.loader.domain.RawMetadataDefinition;
 import com.morethanheroic.swords.metadata.service.transformer.MetadataDefinitionTransformer;
 import lombok.RequiredArgsConstructor;

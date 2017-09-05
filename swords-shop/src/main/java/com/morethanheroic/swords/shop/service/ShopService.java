@@ -27,7 +27,7 @@ public class ShopService {
     private final ItemBuyPriceCalculator itemBuyPriceCalculator;
     private final ShopAvailabilityCalculator shopAvailabilityCalculator;
 
-    //TODO: Check that the shop is in the same city as the player.
+    //TODO: Check that the shop is in the same location as the player.
     @Transactional
     public void userBuyItem(final UserEntity userEntity, final ShopEntity shopEntity, final ItemDefinition itemDefinition) {
         if (!shopAvailabilityCalculator.isAvailable(userEntity, shopEntity.getShopDefinition())) {
@@ -71,7 +71,7 @@ public class ShopService {
         }
     }
 
-    //TODO: Check that the shop is in the same city as the player.
+    //TODO: Check that the shop is in the same location as the player.
     @Transactional
     public void userSellItem(final UserEntity userEntity, final ShopEntity shopEntity, final ItemDefinition itemDefinition, final IdentificationType itemIdentificationType) {
         if (!shopAvailabilityCalculator.isAvailable(userEntity, shopEntity.getShopDefinition())) {
