@@ -15,7 +15,7 @@ public class ZoneDefinitionTransformer implements DefinitionTransformer<ZoneDefi
                 .id(ExplorationZone.valueOf(rawDefinition.getId()))
                 .name(rawDefinition.getName())
                 .location(rawDefinition.getLocation())
-                .description(rawDefinition.getDescription())
+                .description(rawDefinition.getDescription().trim())
                 .enabled(rawDefinition.isEnabled())
                 .minimumLevel(rawDefinition.getMinimumLevel())
                 .maximumLevel(rawDefinition.getMaximumLevel())
