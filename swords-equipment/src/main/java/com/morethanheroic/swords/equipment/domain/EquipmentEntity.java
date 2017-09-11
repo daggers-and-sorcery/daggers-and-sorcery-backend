@@ -1,7 +1,5 @@
 package com.morethanheroic.swords.equipment.domain;
 
-import java.util.*;
-
 import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.attribute.service.ItemRequirementToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
@@ -330,6 +328,7 @@ public class EquipmentEntity implements Entity {
     public EquipmentSlotEntity getEquipmentSlot(final EquipmentSlot slot) {
         return EquipmentSlotEntity.builder()
                 .slot(slot)
+                .identified(isEquipmentIdentifiedOnSlot(slot))
                 .item(itemDefinitionCache.getDefinition(getEquipmentIdOnSlot(slot)))
                 .amount(getAmountOnSlot(slot))
                 .build();
@@ -380,6 +379,10 @@ public class EquipmentEntity implements Entity {
         }
     }
 
+    /**
+     * @deprecated Use {@link EquipmentSlotEntity#isIdentified()}.
+     */
+    @Deprecated
     public boolean isEquipmentIdentifiedOnSlot(EquipmentSlot slot) {
         final EquipmentDatabaseEntity equipmentDatabaseEntity = equipmentProviderIntegerValueCache.getEntity();
 
@@ -413,6 +416,10 @@ public class EquipmentEntity implements Entity {
         }
     }
 
+    /**
+     * @deprecated Use {@link EquipmentSlotEntity#getAmount()} instead.
+     */
+    @Deprecated
     public int getAmountOnSlot(EquipmentSlot equipmentSlot) {
         if (equipmentSlot == EquipmentSlot.QUIVER) {
             return equipmentProviderIntegerValueCache.getEntity().getQuiverAmount();

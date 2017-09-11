@@ -31,6 +31,7 @@ import com.morethanheroic.swords.spell.repository.domain.SpellMapper;
 import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.vampire.service.VampireCalculator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,60 +40,23 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoResponseBuilderConfiguration> {
 
-    private final ItemDefinitionCache itemDefinitionCache;
-    private final EquipmentEntityFactory equipmentEntityFactory;
     private final ResponseFactory responseFactory;
-    private final ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder;
-
-    @Autowired
-    private UnidentifiedItemIdCalculator unidentifiedItemIdCalculator;
-
-    @Autowired
-    private ProfileUnidentifiedItemEntryResponseBuilder profileUnidentifiedItemEntryResponseBuilder;
-
-    @Autowired
-    private RaceDefinitionCache raceDefinitionCache;
-
-    @Autowired
-    private AttributeValuePartialResponseBuilder attributeValuePartialResponseBuilder;
-
-    @Autowired
-    private SkillPartialResponseBuilder skillPartialResponseBuilder;
-
-    @Autowired
-    private SkillTypeCalculator skillTypeCalculator;
-
-    @Autowired
-    private InventoryPartialResponseBuilder inventoryPartialResponseBuilder;
-
-    @Autowired
-    private InventoryItemTypeSorter inventoryItemTypeSorter;
-
-    @Autowired
-    private InventoryEntityFactory inventoryEntityFactory;
-
-    @Autowired
-    private SpecialPartialResponseBuilder specialPartialResponseBuilder;
-
-    @Autowired
-    private VampireCalculator vampireCalculator;
-
-    @Autowired
-    private StatusEffectPartialResponseCollectionBuilder statusEffectPartialResponseCollectionBuilder;
-
-    @Autowired
-    public ProfileInfoResponseBuilder(ItemDefinitionCache itemDefinitionCache, EquipmentEntityFactory equipmentEntityFactory, ResponseFactory responseFactory, ProfileIdentifiedItemEntryResponseBuilder profileIdentifiedItemEntryResponseBuilder, SpellDefinitionCache spellDefinitionCache, SpellMapper spellMapper) {
-        this.itemDefinitionCache = itemDefinitionCache;
-        this.equipmentEntityFactory = equipmentEntityFactory;
-        this.responseFactory = responseFactory;
-        this.profileIdentifiedItemEntryResponseBuilder = profileIdentifiedItemEntryResponseBuilder;
-    }
+    private final RaceDefinitionCache raceDefinitionCache;
+    private final AttributeValuePartialResponseBuilder attributeValuePartialResponseBuilder;
+    private final SkillPartialResponseBuilder skillPartialResponseBuilder;
+    private final SkillTypeCalculator skillTypeCalculator;
+    private final InventoryPartialResponseBuilder inventoryPartialResponseBuilder;
+    private final InventoryItemTypeSorter inventoryItemTypeSorter;
+    private final InventoryEntityFactory inventoryEntityFactory;
+    private final SpecialPartialResponseBuilder specialPartialResponseBuilder;
+    private final VampireCalculator vampireCalculator;
+    private final StatusEffectPartialResponseCollectionBuilder statusEffectPartialResponseCollectionBuilder;
 
     public Response build(ProfileInfoResponseBuilderConfiguration profileInfoResponseBuilderConfiguration) {
         final UserEntity userEntity = profileInfoResponseBuilderConfiguration.getUserEntity();
-        final SessionEntity sessionEntity = profileInfoResponseBuilderConfiguration.getSessionEntity();
 
         final Response response = responseFactory.newResponse(userEntity);
 
@@ -118,7 +82,6 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
                         .build()
                 )
         );
-        response.setData("equipment", buildEquipmentResponse(userEntity, sessionEntity));
         response.setData("special", specialPartialResponseBuilder.build(
                 SpecialPartialResponseBuilderConfiguration.builder()
                         .isVampire(vampireCalculator.isVampire(userEntity))
@@ -135,35 +98,5 @@ public class ProfileInfoResponseBuilder implements ResponseBuilder<ProfileInfoRe
 
     private Map<ItemType, List<InventoryItem>> getSortedItems(final UserEntity userEntity) {
         return inventoryItemTypeSorter.sortByType(inventoryEntityFactory.getEntity(userEntity).getItems());
-    }
-
-    private Map<String, Map<String, Object>> buildEquipmentResponse(UserEntity userEntity, SessionEntity sessionEntity) {
-        final Map<String, Map<String, Object>> equipmentHolder = new HashMap<>();
-
-        final EquipmentEntity equipmentEntity = equipmentEntityFactory.getEntity(userEntity);
-
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            final int equipment = equipmentEntity.getEquipmentIdOnSlot(slot);
-
-            final Map<String, Object> slotData = new HashMap<>();
-
-            if (equipment == 0) {
-                slotData.put("empty", true);
-            } else {
-                if (slot == EquipmentSlot.QUIVER) {
-                    slotData.put("amount", equipmentEntity.getAmountOnSlot(slot));
-                }
-
-                if (equipmentEntity.isEquipmentIdentifiedOnSlot(slot)) {
-                    slotData.put("description", profileIdentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment)));
-                } else {
-                    slotData.put("description", profileUnidentifiedItemEntryResponseBuilder.buildItemEntry(itemDefinitionCache.getDefinition(equipment), unidentifiedItemIdCalculator.getUnidentifiedItemId(sessionEntity, equipment)));
-                }
-            }
-
-            equipmentHolder.put(slot.name(), slotData);
-        }
-
-        return equipmentHolder;
     }
 }
