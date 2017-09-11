@@ -1,12 +1,11 @@
-package com.morethanheroic.swords.equipment.service;
+package com.morethanheroic.swords.equipment.view.service;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
-import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlotEntity;
-import com.morethanheroic.swords.equipment.service.domain.EquipmentPartialResponse;
-import com.morethanheroic.swords.equipment.service.domain.EquipmentPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.equipment.view.service.domain.EquipmentPartialResponse;
+import com.morethanheroic.swords.equipment.view.service.domain.EquipmentPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.item.view.response.service.IdentifiedItemPartialResponseBuilder;
 import com.morethanheroic.swords.item.view.response.service.UnidentifiedItemPartialResponseBuilder;
 import com.morethanheroic.swords.item.view.response.service.domain.configuration.IdentifiedItemPartialResponseBuilderConfiguration;

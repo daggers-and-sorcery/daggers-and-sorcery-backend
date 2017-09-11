@@ -77,4 +77,5 @@ include 'swords-zone'
 include 'swords-zone-web'
 include 'swords-location-web'
 include 'swords-configuration'
+include 'swords-equipment-web'
 

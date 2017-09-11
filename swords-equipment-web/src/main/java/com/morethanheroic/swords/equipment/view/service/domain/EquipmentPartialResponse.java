@@ -1,4 +1,4 @@
-package com.morethanheroic.swords.equipment.service.domain;
+package com.morethanheroic.swords.equipment.view.service.domain;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;

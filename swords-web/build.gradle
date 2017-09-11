@@ -44,6 +44,7 @@ dependencies {
     compile project(':swords-tavern-web')
     compile project(':swords-location-web')
     compile project(':swords-zone-web')
+    compile project(':swords-equipment-web')
     compile project(':swords-character-spells-web')
 }
 

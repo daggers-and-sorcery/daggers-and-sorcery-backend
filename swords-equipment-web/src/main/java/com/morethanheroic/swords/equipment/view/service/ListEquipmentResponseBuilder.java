@@ -1,10 +1,10 @@
-package com.morethanheroic.swords.equipment.service;
+package com.morethanheroic.swords.equipment.view.service;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
-import com.morethanheroic.swords.equipment.service.domain.EquipmentPartialResponseBuilderConfiguration;
-import com.morethanheroic.swords.equipment.service.domain.ListEquipmentResponseBuilderConfiguration;
+import com.morethanheroic.swords.equipment.view.service.domain.EquipmentPartialResponseBuilderConfiguration;
+import com.morethanheroic.swords.equipment.view.service.domain.ListEquipmentResponseBuilderConfiguration;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
