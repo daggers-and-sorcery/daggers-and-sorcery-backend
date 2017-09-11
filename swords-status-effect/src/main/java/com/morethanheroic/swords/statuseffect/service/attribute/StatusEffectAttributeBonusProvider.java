@@ -12,6 +12,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -33,7 +34,7 @@ public class StatusEffectAttributeBonusProvider implements AttributeBonusProvide
         statusEffectEntityFactory.getEntity(userEntity).stream()
                 .flatMap(statusEffectEntity -> statusEffectEntity.getStatusEffect().getModifiers().stream())
                 .map(statusEffectModifierDefinition -> statusEffectAttributeModifierCalculator.calculate(userEntity, statusEffectModifierDefinition, attribute))
-                .flatMap(statusEffectAttributeModifierCalculationResults -> statusEffectAttributeModifierCalculationResults.stream())
+                .flatMap(Collection::stream)
                 .filter(statusEffectModifierDefinition -> isModifierForAttribute(statusEffectModifierDefinition, attribute))
                 .forEach(statusEffectModifierDefinitionConsumer -> {
                     attributeCalculationResult.increaseValue(statusEffectModifierDefinitionConsumer.getAmount());

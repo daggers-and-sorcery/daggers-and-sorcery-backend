@@ -25,14 +25,14 @@ public class SkillAttributeDefinitionLoader implements DefinitionLoader<SkillAtt
 
     @Override
     public List<SkillAttributeDefinition> loadDefinitions() {
-        return loadRawSkillAttributeEntities().stream()
+        return loadRawSkillAttributeDefinitions().stream()
                 .map(skillAttributeDefinitionTransformer::transform)
                 .collect(
                         collectingAndThen(toList(), ImmutableList::copyOf)
                 );
     }
 
-    public List<RawSkillAttributeDefinition> loadRawSkillAttributeEntities() {
+    private List<RawSkillAttributeDefinition> loadRawSkillAttributeDefinitions() {
         return enumXmlDefinitionLoader.loadDefinitions(
                 EnumDefinitionLoadingContext.<RawSkillAttributeDefinition>builder()
                         .clazz(RawSkillAttributeDefinition.class)
