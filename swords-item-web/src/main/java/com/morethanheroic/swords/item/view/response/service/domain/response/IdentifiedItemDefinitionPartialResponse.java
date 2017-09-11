@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.item.view.response.service.domain.response;
 
+import com.morethanheroic.swords.item.domain.Rarity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,4 +21,5 @@ public class IdentifiedItemDefinitionPartialResponse extends ItemDefinitionParti
     private final String description;
     private final List<ItemModifierPartialResponse> modifiers;
     private final List<ItemRequirementPartialResponse> requirements;
+    private final Rarity rarity;
 }

@@ -21,6 +21,7 @@ public class ItemDefinition {
 
     private final int id;
     private final String name;
+    private final Rarity rarity;
     private final ItemType type;
     private final ItemType subtype;
     private final boolean usable;
