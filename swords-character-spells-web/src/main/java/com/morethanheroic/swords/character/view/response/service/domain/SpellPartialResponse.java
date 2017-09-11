@@ -15,6 +15,7 @@ public class SpellPartialResponse extends PartialResponse {
     private final String name;
     private final String description;
     private final boolean combatSpell;
+    private final String type;
     private final Collection<? extends CastingCostPartialResponse> castingCost;
     private final boolean openPage;
 }

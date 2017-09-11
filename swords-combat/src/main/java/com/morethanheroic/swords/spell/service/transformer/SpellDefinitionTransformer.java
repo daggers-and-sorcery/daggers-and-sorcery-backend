@@ -1,13 +1,5 @@
 package com.morethanheroic.swords.spell.service.transformer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionTransformer;
 import com.morethanheroic.swords.spell.domain.SkillAttributeRequirementDefinition;
@@ -17,18 +9,21 @@ import com.morethanheroic.swords.spell.service.loader.domain.RawSkillAttributeRe
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellCost;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellEffectDefinition;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SpellDefinitionTransformer {
 
-    @Autowired
-    private EffectDefinitionTransformer combatEffectDefinitionTransformer;
-
-    @Autowired
-    private SkillAttributeRequirementDefinitionTransformer skillAttributeRequirementDefinitionTransformer;
-
-    @Autowired
-    private SpellCostTransformer spellCostTransformer;
+    private final EffectDefinitionTransformer combatEffectDefinitionTransformer;
+    private final SkillAttributeRequirementDefinitionTransformer skillAttributeRequirementDefinitionTransformer;
+    private final SpellCostTransformer spellCostTransformer;
 
     public SpellDefinition transform(RawSpellDefinition rawSpellDefinition) {
         return SpellDefinition.builder()
@@ -40,7 +35,7 @@ public class SpellDefinitionTransformer {
                 .skillRequirements(transformSkillRequirements(rawSpellDefinition.getSkillRequirements()))
                 .spellCosts(transformSpellCosts(rawSpellDefinition.getCostList()))
                 .type(rawSpellDefinition.getType())
-                .description(rawSpellDefinition.getDescription())
+                .description(rawSpellDefinition.getDescription().trim())
                 .spellTarget(rawSpellDefinition.getSpellTarget())
                 .build();
     }
