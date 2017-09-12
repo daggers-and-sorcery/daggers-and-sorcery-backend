@@ -19,14 +19,14 @@ public class CookingCreateRequestFacade {
 
     private final CookingCreateRequestValidator cookingCreateRequestValidator;
     private final CookingCreateResponseBuilder cookingCreateResponseBuilder;
-    private final CookingFacade cookingFacade;
+    private final CookingRecipesService cookingRecipesService;
     private final RecipeDefinitionCache recipeDefinitionCache;
 
     @Transactional
     public Response handleCookingCreateRequest(UserEntity userEntity, CookingCreateRequest cookingCreateRequest) {
         cookingCreateRequestValidator.validate(cookingCreateRequest);
 
-        final CookingResult cookingResult = cookingFacade.cook(userEntity, recipeDefinitionCache.getDefinition(cookingCreateRequest.getRecipeId()));
+        final CookingResult cookingResult = cookingRecipesService.cook(userEntity, recipeDefinitionCache.getDefinition(cookingCreateRequest.getRecipeId()));
 
         return cookingCreateResponseBuilder.build(
                 CookingCreateResponseBuilderConfiguration.builder()

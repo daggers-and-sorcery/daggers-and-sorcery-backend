@@ -2,6 +2,7 @@ package com.morethanheroic.swords.skill.cooking.service;
 
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
@@ -18,11 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CookingFacade {
+public class CookingRecipesService {
 
     private static final int COOKING_MOVEMENT_POINT_COST = 1;
 
-    private final InventoryFacade inventoryFacade;
+    private final InventoryEntityFactory inventoryEntityFactory;
     private final SkillEntityFactory skillEntityFactory;
     private final RecipeIngredientEvaluator recipeIngredientEvaluator;
     private final RecipeRequirementEvaluator recipeRequirementEvaluator;
@@ -38,7 +39,7 @@ public class CookingFacade {
 
         userBasicAttributeManipulator.decreaseMovement(userEntity, COOKING_MOVEMENT_POINT_COST);
 
-        return doCooking(inventoryFacade.getInventory(userEntity), skillEntityFactory.getSkillEntity(userEntity), recipeDefinition);
+        return doCooking(inventoryEntityFactory.getEntity(userEntity), skillEntityFactory.getEntity(userEntity), recipeDefinition);
     }
 
     private boolean canCook(UserEntity userEntity, RecipeDefinition recipeDefinition) {

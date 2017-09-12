@@ -1,6 +1,4 @@
-package com.morethanheroic.swords.skill.herblore.view.response.service.recipe;
-
-import org.springframework.stereotype.Service;
+package com.morethanheroic.swords.skill.crafting.view.response.service.recipe;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
@@ -8,21 +6,18 @@ import com.morethanheroic.swords.recipe.domain.RecipeType;
 import com.morethanheroic.swords.recipe.view.response.RecipeListPartialResponseBuilder;
 import com.morethanheroic.swords.recipe.view.response.domain.configuration.RecipeListPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.response.service.ResponseFactory;
+import com.morethanheroic.swords.skill.crafting.view.response.service.resource.domain.CraftingResourceInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import com.morethanheroic.swords.skill.herblore.view.response.domain.configuration.recipe.RecipeInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.skill.view.response.domain.configuration.SkillLevelPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.view.response.service.SkillLevelPartialResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-/**
- * Build a response for a herblore recipe info request.
- */
 @Service
 @RequiredArgsConstructor
-public class RecipeInfoResponseBuilder implements ResponseBuilder<RecipeInfoResponseBuilderConfiguration> {
+public class CraftingResourceInfoResponseBuilder implements ResponseBuilder<CraftingResourceInfoResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;
     private final RecipeListPartialResponseBuilder recipeListPartialResponseBuilder;
@@ -30,19 +25,19 @@ public class RecipeInfoResponseBuilder implements ResponseBuilder<RecipeInfoResp
     private final SkillEntityFactory skillEntityFactory;
 
     @Override
-    public Response build(final RecipeInfoResponseBuilderConfiguration recipeInfoResponseBuilderConfiguration) {
-        final Response response = responseFactory.newResponse(recipeInfoResponseBuilderConfiguration.getUserEntity());
+    public Response build(final CraftingResourceInfoResponseBuilderConfiguration craftingRecipeInfoResponseBuilderConfiguration) {
+        final Response response = responseFactory.newResponse(craftingRecipeInfoResponseBuilderConfiguration.getUserEntity());
 
         response.setData("recipes", recipeListPartialResponseBuilder.build(
                 RecipeListPartialResponseBuilderConfiguration.builder()
-                        .userEntity(recipeInfoResponseBuilderConfiguration.getUserEntity())
-                        .recipeType(RecipeType.HERBLORE)
+                        .userEntity(craftingRecipeInfoResponseBuilderConfiguration.getUserEntity())
+                        .recipeType(RecipeType.CRAFTING_RESOURCE)
                         .build()
                 )
         );
         response.setData("skill", skillLevelPartialResponseBuilder.build(
                 SkillLevelPartialResponseBuilderConfiguration.builder()
-                        .skillLevel(getHerbloreLevel(recipeInfoResponseBuilderConfiguration.getUserEntity()))
+                        .skillLevel(getCraftingLevel(craftingRecipeInfoResponseBuilderConfiguration.getUserEntity()))
                         .build()
                 )
         );
@@ -50,7 +45,7 @@ public class RecipeInfoResponseBuilder implements ResponseBuilder<RecipeInfoResp
         return response;
     }
 
-    private int getHerbloreLevel(final UserEntity userEntity) {
-        return skillEntityFactory.getEntity(userEntity).getLevel(SkillType.HERBLORE);
+    private int getCraftingLevel(final UserEntity userEntity) {
+        return skillEntityFactory.getEntity(userEntity).getLevel(SkillType.CRAFTING);
     }
 }

@@ -44,7 +44,8 @@ public enum SkillType {
     RESTORATION(SkillGroup.MAGIC),
     ALTERATION(SkillGroup.MAGIC),
     LOCKPICKING(SkillGroup.SHADOW),
-    JEWELCRAFTING(SkillGroup.TRADE);
+    JEWELCRAFTING(SkillGroup.TRADE),
+    CRAFTING(SkillGroup.TRADE);
 
     private final SkillGroup skillGroup;
 

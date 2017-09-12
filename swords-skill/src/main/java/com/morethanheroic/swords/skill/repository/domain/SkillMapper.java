@@ -211,9 +211,15 @@ public interface SkillMapper {
     @Update("UPDATE skills SET fletching_xp = fletching_xp - #{value} WHERE user_id = #{userId}")
     void decreaseFletchingXp(@Param("userId") int userId, @Param("value") long value);
 
-    @Update("UPDATE skills SET Jewelcrafting_xp = Jewelcrafting_xp + #{value} WHERE user_id = #{userId}")
+    @Update("UPDATE skills SET jewelcrafting_xp = jewelcrafting_xp + #{value} WHERE user_id = #{userId}")
     void increaseJewelcraftingXp(@Param("userId") int userId, @Param("value") long value);
 
-    @Update("UPDATE skills SET jewelcrafting_xp = Jewelcrafting_xp - #{value} WHERE user_id = #{userId}")
+    @Update("UPDATE skills SET jewelcrafting_xp = jewelcrafting_xp - #{value} WHERE user_id = #{userId}")
     void decreaseJewelcraftingXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET crafting_xp = crafting_xp + #{value} WHERE user_id = #{userId}")
+    void increaseCraftingXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET crafting_xp = crafting_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseCraftingXp(@Param("userId") int userId, @Param("value") long value);
 }
