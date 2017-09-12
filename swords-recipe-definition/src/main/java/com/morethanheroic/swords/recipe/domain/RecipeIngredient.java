@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.recipe.domain;
 
+import com.morethanheroic.swords.item.domain.ItemDefinition;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,7 +11,6 @@ import lombok.Getter;
 @Builder
 public class RecipeIngredient {
 
-    //TODO: Use item definition instead!
-    private final int id;
+    private final ItemDefinition item;
     private final int amount;
 }

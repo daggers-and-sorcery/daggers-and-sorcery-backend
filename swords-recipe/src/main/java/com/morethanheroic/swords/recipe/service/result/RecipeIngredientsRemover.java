@@ -10,7 +10,7 @@ public class RecipeIngredientsRemover {
 
     public void removeIngredients(InventoryEntity inventoryEntity, RecipeDefinition recipeDefinition) {
         for (RecipeIngredient recipeIngredient : recipeDefinition.getRecipeIngredients()) {
-            inventoryEntity.removeItem(recipeIngredient.getId(), recipeIngredient.getAmount());
+            inventoryEntity.removeItem(recipeIngredient.getItem(), recipeIngredient.getAmount());
         }
     }
 }
