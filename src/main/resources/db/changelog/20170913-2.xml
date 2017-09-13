@@ -1,0 +1,45 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="laxika" id="20170913-2">
+        <insert tableName="news">
+            <column name="title" value="Two new tradeskills and balance changes"/>
+            <column name="release_date" value="2017-09-13 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We planned to release a new quest today but sadly we are unable to do so. There were some problems with the texts and because this will be our longest and most influential quest yet we want to get it a hundred percent right. We don't want to leave you without updates however so we worked really hard to create a pretty enjoyable patch-notes for the week instead.
+
+This patch mainly focused around mages because we plan on making them in-line with the other classes power wise. We know that they are quite underpowered at the moment. We added two new skills that will support mage players. These skills are in early stages (not too many recipes are available etc) but we will slowly improve them in the future.
+
+We also made a quite big nerf to the Fistfighting skill so if you feel that when you use Fistfighting against opponents your damage is severely lowered compared to pre-patch this will be the cause. We limited the maximum bonus provided by the fistfighting skill to the level of the highest leveled item available in the game. For example, if you have 22 Fistfighting but the item with the highest skill requirement to equip in the game is 15 your fistfighting bonus will be counted as if you had level 15 Fistfighting.
+
+Improvements:
+
+- Released the Crafting skill. This skill will provide you a way to create various resources used by the other skills and to create the staves used by mage characters.
+- Released the Imbuing skill. This skill will let you create magical items from ordinary ones. Not every item will work with this skill but the staves used by mages must be imbued before being used, crafting them is not enough.
+- Added the schools of the spells to their description popup. This will help you to know which skill will the spell give experience for.
+- Added icons to the spells' popup to make them a bit more interesting and detailed.
+- Added item rarities to the game. Hopefully, this will give you a higher sense of achievement when acquiring a new item, especially when the item is quite hard to get.
+- Updated the popup on the equipment screen. The items had a new popup for quite a long time but because of historical (mostly technical) reasons, the equipment that you wore had an old and clunky popup. We updated this popup to a new version that looks like the one used for the items.
+- Made the Fistfight skill limited by the available items in the game. This is a quite big nerf for the Fistfighting skill. For details see above.
+- The player is automatically logged in after successfully registering to the game.
+- New players will get five Fortune Cookies. A food that will restore 5 movement point after eating it. This will hopefully give more time to explore the world before they first run out of energy.
+
+Bugfixes:
+
+- The Bloodthirsty Sword now counts as a shortsword instead of a shortbow.
+- The Vial of Blood item has been fixed.
+- Fixed that the Smuggler's Heaven quest description was not shown correctly on the tavern page.
+- Added Honey to the game. This item was missed for quite a while. It's dropped by goblins in the Farmfields region.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
