@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SmeltingRecipeListPartialResponseBuilder implements PartialResponseCollectionBuilder<SmeltingInfoResponseBuilderConfiguration> {
@@ -27,18 +27,16 @@ public class SmeltingRecipeListPartialResponseBuilder implements PartialResponse
 
     @Override
     public List<RecipePartialResponse> build(final SmeltingInfoResponseBuilderConfiguration responseBuilderConfiguration) {
-        final List<RecipePartialResponse> result = new ArrayList<>();
-
         final List<RecipeDefinition> recipeEntities = learnedRecipeEvaluator.getLearnedRecipes(responseBuilderConfiguration.getUserEntity(), RecipeType.SMITHING_SMELTING);
-        for (RecipeDefinition recipeDefinition : recipeEntities) {
-            result.add(recipePartialResponseBuilder.build(
-                    RecipePartialResponseBuilderConfiguration.builder()
-                            .userEntity(responseBuilderConfiguration.getUserEntity())
-                            .recipeDefinition(recipeDefinition)
-                            .build()
-            ));
-        }
 
-        return result;
+        return recipeEntities.stream()
+                .map(recipeDefinition -> recipePartialResponseBuilder.build(
+                        RecipePartialResponseBuilderConfiguration.builder()
+                                .userEntity(responseBuilderConfiguration.getUserEntity())
+                                .recipeDefinition(recipeDefinition)
+                                .build()
+                        )
+                )
+                .collect(Collectors.toList());
     }
 }

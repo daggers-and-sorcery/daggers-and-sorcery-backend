@@ -9,10 +9,7 @@ import com.morethanheroic.swords.skill.smithing.view.response.domain.configurati
 import com.morethanheroic.swords.skill.smithing.view.response.service.smelting.SmeltingStartResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,7 +25,7 @@ public class StartSmeltingController {
     @Autowired
     private SmeltingService smeltingService;
 
-    @RequestMapping(value = "/skill/smithing/smelting/start", method = RequestMethod.POST)
+    @PostMapping("/skill/smithing/smelting/start")
     public Response startSmelting(final UserEntity userEntity, @RequestBody @Valid final SmeltingCreateRequest smeltingCreateRequest) {
         final SmeltingResult smeltingResult = smeltingService.smelt(userEntity, recipeDefinitionCache.getDefinition(smeltingCreateRequest.getRecipeId()));
 

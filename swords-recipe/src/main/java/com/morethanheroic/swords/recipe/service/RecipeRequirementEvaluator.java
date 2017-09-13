@@ -1,37 +1,45 @@
 package com.morethanheroic.swords.recipe.service;
 
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
-import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
-import com.morethanheroic.swords.recipe.domain.RecipeItemRequirement;
-import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
-import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
+import com.morethanheroic.swords.attribute.domain.CombatAttribute;
+import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
+import com.morethanheroic.swords.recipe.domain.*;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class RecipeRequirementEvaluator {
 
-    @Autowired
-    private SkillEntityFactory skillEntityFactory;
-
-    @Autowired
-    private InventoryFacade inventoryFacade;
+    private final SkillEntityFactory skillEntityFactory;
+    private final InventoryEntityFactory inventoryEntityFactory;
+    private final GlobalAttributeCalculator globalAttributeCalculator;
 
     public boolean hasRequirements(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         for (RecipeRequirement recipeRequirement : recipeDefinition.getRecipeRequirements()) {
             if (recipeRequirement instanceof RecipeSkillRequirement) {
                 final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;
 
-                if (skillEntityFactory.getSkillEntity(userEntity).getLevel(recipeSkillRequirement.getSkill()) < recipeSkillRequirement.getAmount()) {
+                if (skillEntityFactory.getEntity(userEntity).getLevel(recipeSkillRequirement.getSkill()) < recipeSkillRequirement.getAmount()) {
                     return false;
                 }
             } else if (recipeRequirement instanceof RecipeItemRequirement) {
                 final RecipeItemRequirement recipeItemRequirement = (RecipeItemRequirement) recipeRequirement;
 
-                if (!inventoryFacade.getInventory(userEntity).hasItemAmount(recipeItemRequirement.getItem(), recipeItemRequirement.getAmount())) {
+                if (!inventoryEntityFactory.getEntity(userEntity).hasItemAmount(recipeItemRequirement.getItem(), recipeItemRequirement.getAmount())) {
                     return false;
+                }
+            } else if (recipeRequirement instanceof RecipeResourceRequirement) {
+                final RecipeResourceRequirement recipeResourceRequirement = (RecipeResourceRequirement) recipeRequirement;
+
+                if (recipeResourceRequirement.getResource() == RecipeResource.MANA) {
+                    final int actualMana = globalAttributeCalculator.calculateActualValue(userEntity, CombatAttribute.MANA).getValue();
+
+                    if (actualMana < recipeResourceRequirement.getAmount()) {
+                        return false;
+                    }
                 }
             }
         }

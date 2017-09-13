@@ -57,7 +57,7 @@ public class CraftingRecipesService {
 
         final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
         final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
-        final boolean isSuccessfulAttempt = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
+        final boolean isSuccessfulAttempt = recipeEvaluator.evaluateResult(userEntity, inventoryEntity, skillEntity, recipeDefinition);
 
         return isSuccessfulAttempt ? CraftingResult.SUCCESSFUL : CraftingResult.UNSUCCESSFUL;
     }

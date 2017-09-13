@@ -2,7 +2,7 @@ package com.morethanheroic.swords.skill.leatherworking.service;
 
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
 import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
@@ -25,7 +25,7 @@ public class LeatherworkingService {
     private RecipeEvaluator recipeEvaluator;
 
     @Autowired
-    private InventoryFacade inventoryFacade;
+    private InventoryEntityFactory inventoryEntityFactory;
 
     @Autowired
     private SkillEntityFactory skillEntityFactory;
@@ -62,9 +62,9 @@ public class LeatherworkingService {
 
         userBasicAttributeManipulator.decreaseMovement(userEntity, LEATHERWORKING_MOVEMENT_POINT_COST);
 
-        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
-        final boolean isSuccessfulAttempt = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
+        final boolean isSuccessfulAttempt = recipeEvaluator.evaluateResult(userEntity, inventoryEntity, skillEntity, recipeDefinition);
 
         return isSuccessfulAttempt ? LeatherworkingResult.SUCCESSFUL : LeatherworkingResult.UNSUCCESSFUL;
     }

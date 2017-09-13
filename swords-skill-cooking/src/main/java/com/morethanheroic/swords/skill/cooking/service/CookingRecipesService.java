@@ -3,7 +3,6 @@ package com.morethanheroic.swords.skill.cooking.service;
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
 import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
 import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
@@ -39,7 +38,7 @@ public class CookingRecipesService {
 
         userBasicAttributeManipulator.decreaseMovement(userEntity, COOKING_MOVEMENT_POINT_COST);
 
-        return doCooking(inventoryEntityFactory.getEntity(userEntity), skillEntityFactory.getEntity(userEntity), recipeDefinition);
+        return doCooking(userEntity, inventoryEntityFactory.getEntity(userEntity), skillEntityFactory.getEntity(userEntity), recipeDefinition);
     }
 
     private boolean canCook(UserEntity userEntity, RecipeDefinition recipeDefinition) {
@@ -49,8 +48,8 @@ public class CookingRecipesService {
                 && userEntity.getMovementPoints() > 0;
     }
 
-    private CookingResult doCooking(InventoryEntity inventoryEntity, SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
-        final boolean isSuccessfulAttempt = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
+    private CookingResult doCooking(UserEntity userEntity, InventoryEntity inventoryEntity, SkillEntity skillEntity, RecipeDefinition recipeDefinition) {
+        final boolean isSuccessfulAttempt = recipeEvaluator.evaluateResult(userEntity, inventoryEntity, skillEntity, recipeDefinition);
 
         return isSuccessfulAttempt ? CookingResult.SUCCESSFUL : CookingResult.UNSUCCESSFUL;
     }

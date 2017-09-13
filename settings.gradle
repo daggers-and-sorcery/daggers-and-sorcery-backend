@@ -80,4 +80,6 @@ include 'swords-configuration'
 include 'swords-equipment-web'
 include 'swords-skill-crafting'
 include 'swords-skill-crafting-web'
+include 'swords-skill-imbuing'
+include 'swords-skill-imbuing-web'
 

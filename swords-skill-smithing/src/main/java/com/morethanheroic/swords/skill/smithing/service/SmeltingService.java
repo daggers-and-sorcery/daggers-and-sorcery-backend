@@ -53,7 +53,7 @@ public class SmeltingService {
         final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
         final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
-        final boolean isSuccessful = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
+        final boolean isSuccessful = recipeEvaluator.evaluateResult(userEntity, inventoryEntity, skillEntity, recipeDefinition);
 
         userBasicAttributeManipulator.decreaseMovement(userEntity, SMELTING_MOVEMENT_POINT_COST);
 

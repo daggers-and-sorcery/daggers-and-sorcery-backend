@@ -41,7 +41,7 @@ public class RecipelessLearnedRecipeEvaluator implements LearnedRecipeEvaluator 
     private void initialize() {
         recipeDefinitions = recipeDefinitionCache.getDefinitions().stream()
                 .filter(recipeDefinition -> recipeDefinition.getType() == recipeType)
-                .collect(collectingAndThen(Collectors.toList(), (list) -> Collections.unmodifiableList(list)));
+                .collect(collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 
     @Override
@@ -69,16 +69,9 @@ public class RecipelessLearnedRecipeEvaluator implements LearnedRecipeEvaluator 
     public boolean hasRecipeLearned(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
-        for (RecipeRequirement recipeRequirement : recipeDefinition.getRecipeRequirements()) {
-            if (recipeRequirement instanceof RecipeSkillRequirement) {
-                final RecipeSkillRequirement recipeSkillRequirement = (RecipeSkillRequirement) recipeRequirement;
-
-                if (recipeSkillRequirement.getSkill() == skillType && skillEntity.getLevel(skillType) >= (recipeSkillRequirement).getAmount()) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return recipeDefinition.getRecipeRequirements().stream()
+                .filter(recipeRequirement -> recipeRequirement instanceof RecipeSkillRequirement)
+                .map(recipeRequirement -> (RecipeSkillRequirement) recipeRequirement)
+                .anyMatch(recipeSkillRequirement -> recipeSkillRequirement.getSkill() == skillType && skillEntity.getLevel(skillType) >= (recipeSkillRequirement).getAmount());
     }
 }

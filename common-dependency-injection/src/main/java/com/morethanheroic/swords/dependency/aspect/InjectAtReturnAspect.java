@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@Order(Ordered.LOWEST_PRECEDENCE)
+@Order
 @Log4j
 public class InjectAtReturnAspect {
 
