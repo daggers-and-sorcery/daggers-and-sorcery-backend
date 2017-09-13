@@ -4,7 +4,7 @@ import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.domain.context.ExplorationContext;
-import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
+import com.morethanheroic.swords.zone.domain.ExplorationZone;
 import com.morethanheroic.swords.explore.domain.event.result.impl.TextExplorationEventEntryResult;
 import com.morethanheroic.swords.explore.service.cache.ExplorationEventHandlerCache;
 import com.morethanheroic.swords.explore.service.context.ExplorationContextFactory;
@@ -40,7 +40,7 @@ public class ExplorationEventExplorer {
     }
 
     @Transactional
-    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationEventLocation location, final int nextState) {
+    public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationZone location, final int nextState) {
         if (!canExplore(userEntity, nextState)) {
             return buildFailedExplorationResult();
         }

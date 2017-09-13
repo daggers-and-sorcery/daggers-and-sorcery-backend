@@ -31,6 +31,7 @@ public class CharacterSpellsSpellPartialResponseBuilder implements PartialRespon
                                     .id(spellDefinition.getId())
                                     .name(spellDefinition.getName())
                                     .description(spellDefinition.getDescription())
+                                    .type(spellDefinition.getType().getName())
                                     .combatSpell(spellDefinition.isCombatSpell())
                                     .openPage(spellDefinition.isOpenPage())
                                     .castingCost(

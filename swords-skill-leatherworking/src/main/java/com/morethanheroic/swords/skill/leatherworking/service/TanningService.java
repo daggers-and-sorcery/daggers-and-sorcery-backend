@@ -2,7 +2,7 @@ package com.morethanheroic.swords.skill.leatherworking.service;
 
 import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.inventory.service.InventoryFacade;
+import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.RecipeIngredientEvaluator;
 import com.morethanheroic.swords.recipe.service.RecipeRequirementEvaluator;
@@ -24,7 +24,7 @@ public class TanningService {
     private RecipeEvaluator recipeEvaluator;
 
     @Autowired
-    private InventoryFacade inventoryFacade;
+    private InventoryEntityFactory inventoryEntityFactory;
 
     @Autowired
     private SkillEntityFactory skillEntityFactory;
@@ -56,10 +56,10 @@ public class TanningService {
             return TanningResult.NOT_ENOUGH_MOVEMENT;
         }
 
-        final InventoryEntity inventoryEntity = inventoryFacade.getInventory(userEntity);
-        final SkillEntity skillEntity = skillEntityFactory.getSkillEntity(userEntity);
+        final InventoryEntity inventoryEntity = inventoryEntityFactory.getEntity(userEntity);
+        final SkillEntity skillEntity = skillEntityFactory.getEntity(userEntity);
 
-        final boolean isSuccessful = recipeEvaluator.evaluateResult(inventoryEntity, skillEntity, recipeDefinition);
+        final boolean isSuccessful = recipeEvaluator.evaluateResult(userEntity, inventoryEntity, skillEntity, recipeDefinition);
 
         userBasicAttributeManipulator.decreaseMovement(userEntity, TANNING_MOVEMENT_POINT_COST);
 

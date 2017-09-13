@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
+@RequiredArgsConstructor
 public class UseItemService {
 
     private final GlobalAttributeCalculator globalAttributeCalculator;
@@ -32,7 +32,7 @@ public class UseItemService {
     private final CombatMessageFactory combatMessageFactory;
 
     public boolean canUseItem(UserEntity userEntity, ItemDefinition item) {
-        return inventoryEntityFactory.getEntity(userEntity.getId()).hasItem(item);
+        return inventoryEntityFactory.getEntity(userEntity).hasItem(item);
     }
 
     public List<CombatStep> useItem(UserCombatEntity combatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
@@ -99,6 +99,6 @@ public class UseItemService {
 
         combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
 
-        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userEntity.getMovementPoints());
+        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userCombatEntity.getActualMovement());
     }
 }

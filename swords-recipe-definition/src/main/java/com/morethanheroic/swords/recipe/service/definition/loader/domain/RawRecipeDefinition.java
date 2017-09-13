@@ -43,7 +43,8 @@ public class RawRecipeDefinition {
 
     @XmlElements({
             @XmlElement(name = "skill-requirement", type = RawRecipeSkillRequirement.class),
-            @XmlElement(name = "item-requirement", type = RawRecipeItemRequirement.class)
+            @XmlElement(name = "item-requirement", type = RawRecipeItemRequirement.class),
+            @XmlElement(name = "resource-requirement", type = RawRecipeResourceRequirement.class)
     })
     @XmlElementWrapper(name = "requirement-list")
     private List<RawRecipeRequirement> rawRecipeRequirementList;

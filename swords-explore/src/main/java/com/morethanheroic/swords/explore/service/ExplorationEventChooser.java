@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 
 import com.google.common.collect.ImmutableMap;
 import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
-import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
+import com.morethanheroic.swords.zone.domain.ExplorationZone;
 import com.morethanheroic.swords.explore.service.event.ExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDefinitionCache;
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationAssignmentContext;
@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 public class ExplorationEventChooser {
 
     private final Random random;
-    private final Map<ExplorationEventLocation, List<ExplorationEventHandler>> locationMap;
+    private final Map<ExplorationZone, List<ExplorationEventHandler>> locationMap;
 
     private ExplorationEventChooser(final Random random, final ExplorationEventDefinitionCache explorationEventDefinitionCache, final List<ExplorationEventHandler> explorationEventHandlers) {
         this.random = random;
 
-        final Map<ExplorationEventLocation, List<ExplorationEventHandler>> result = Arrays.stream(ExplorationEventLocation.values())
+        final Map<ExplorationZone, List<ExplorationEventHandler>> result = Arrays.stream(ExplorationZone.values())
               .collect(collectingAndThen(Collectors.toMap(Function.identity(), explorationEventLocation -> new ArrayList<ExplorationEventHandler>()), ImmutableMap::copyOf));
 
         for (ExplorationEventHandler explorationEventHandler : explorationEventHandlers) {
@@ -45,7 +45,7 @@ public class ExplorationEventChooser {
         locationMap = Collections.unmodifiableMap(result);
     }
 
-    public ExplorationEventHandler getEvent(final ExplorationEventLocation locationType, final ExplorationAssignmentContext explorationAssignmentContext) {
+    public ExplorationEventHandler getEvent(final ExplorationZone locationType, final ExplorationAssignmentContext explorationAssignmentContext) {
         ExplorationEventHandler result = getRandomEventOnLocation(locationType);
 
         while(!result.shouldAssign(explorationAssignmentContext)) {
@@ -57,7 +57,7 @@ public class ExplorationEventChooser {
         return result;
     }
 
-    private ExplorationEventHandler getRandomEventOnLocation(final ExplorationEventLocation locationType) {
+    private ExplorationEventHandler getRandomEventOnLocation(final ExplorationZone locationType) {
         final List<ExplorationEventHandler> locationDefinitionInfo = locationMap.get(locationType);
 
         return locationDefinitionInfo.get(random.nextInt(locationDefinitionInfo.size()));

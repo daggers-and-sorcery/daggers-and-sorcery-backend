@@ -26,11 +26,12 @@ public class ItemDefinitionTransformer implements DefinitionTransformer<ItemDefi
 
     @Override
     @SuppressWarnings("unchecked")
-    public ItemDefinition transform(RawItemDefinition rawItemDefinition) {
+    public ItemDefinition transform(final RawItemDefinition rawItemDefinition) {
         return ItemDefinition.builder()
                 .id(rawItemDefinition.getId())
                 .name(rawItemDefinition.getName())
                 .type(rawItemDefinition.getType())
+                .rarity(rawItemDefinition.getRarity())
                 .subtype(rawItemDefinition.getSubtype())
                 .usable(rawItemDefinition.isUsable())
                 .weight(rawItemDefinition.getWeight())

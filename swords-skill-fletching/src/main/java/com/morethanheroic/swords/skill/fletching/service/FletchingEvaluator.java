@@ -30,8 +30,9 @@ public class FletchingEvaluator {
 
         return calculateFletchingResult(
                 recipeEvaluator.evaluateResult(
-                        inventoryEntityFactory.getEntity(userEntity.getId()),
-                        skillEntityFactory.getEntity(userEntity.getId()),
+                        userEntity,
+                        inventoryEntityFactory.getEntity(userEntity),
+                        skillEntityFactory.getEntity(userEntity),
                         recipeDefinition
                 )
         );

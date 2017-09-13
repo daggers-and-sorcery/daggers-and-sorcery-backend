@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.item.service.definition.loader.domain;
 
 import com.morethanheroic.swords.item.domain.ItemType;
+import com.morethanheroic.swords.item.domain.Rarity;
 import lombok.Getter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,6 +22,9 @@ public class RawItemDefinition {
     private int id;
     private String name;
     private ItemType type;
+
+    @Getter
+    private Rarity rarity;
 
     @Getter
     private ItemType subtype;

@@ -40,8 +40,13 @@ dependencies {
     compile project(':swords-skill-herblore')
     compile project(':swords-skill-web')
     compile project(':swords-skill-jewelcrafting-web')
+    compile project(':swords-skill-crafting-web')
+    compile project(':swords-skill-imbuing-web')
     compile project(':swords-item-web')
     compile project(':swords-tavern-web')
+    compile project(':swords-location-web')
+    compile project(':swords-zone-web')
+    compile project(':swords-equipment-web')
     compile project(':swords-character-spells-web')
 }
 

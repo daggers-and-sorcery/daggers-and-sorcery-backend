@@ -32,6 +32,7 @@ public class IdentifiedItemPartialResponseBuilder implements PartialResponseBuil
                 .usable(itemDefinition.isUsable())
                 .weight((double) itemDefinition.getWeight() / WEIGHT_DIVIDER)
                 .type(itemDefinition.getType().getName())
+                .rarity(itemDefinition.getRarity())
                 .subtype(itemDefinition.getSubtype() != null ? itemDefinition.getSubtype().getName() : null)
                 .requirements(
                         itemDefinition.getRequirements().stream()

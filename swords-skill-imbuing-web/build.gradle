@@ -1,0 +1,13 @@
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
+        exclude(module: 'commons-logging')
+    }
+
+    compile project(':swords-skill-imbuing')
+    compile project(':swords-skill-web')
+    compile project(':swords-recipe-web')
+}
+
+apply plugin: 'spring-boot'
+bootRepackage.enabled = false

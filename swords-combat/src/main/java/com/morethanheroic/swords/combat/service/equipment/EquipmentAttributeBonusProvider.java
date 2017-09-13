@@ -2,22 +2,23 @@ package com.morethanheroic.swords.combat.service.equipment;
 
 import com.morethanheroic.swords.attribute.domain.Attribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
-import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.service.ItemModifierToAttributeConverter;
 import com.morethanheroic.swords.attribute.service.bonus.AttributeBonusProvider;
 import com.morethanheroic.swords.attribute.service.calc.AttributeCalculationResultFactory;
-import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
-import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.swords.attribute.service.calc.domain.calculation.DiceValueAttributeCalculationResult;
-import com.morethanheroic.swords.combat.service.CombatUtil;
+import com.morethanheroic.swords.attribute.service.calc.domain.calculation.SimpleValueAttributeCalculationResult;
 import com.morethanheroic.swords.equipment.EquipmentEntityFactory;
-import com.morethanheroic.swords.equipment.domain.*;
-import com.morethanheroic.swords.item.domain.*;
+import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
+import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
+import com.morethanheroic.swords.equipment.domain.EquipmentSlotEntity;
+import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.item.domain.ItemType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Calculate and provide the bonuses of the equipments for the attributes.
@@ -27,10 +28,8 @@ import java.util.*;
 public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
 
     private final EquipmentEntityFactory equipmentEntityFactory;
-    private final GlobalAttributeCalculator globalAttributeCalculator;
     private final ItemModifierToAttributeConverter itemModifierToAttributeConverter;
     private final AttributeCalculationResultFactory attributeCalculationResultFactory;
-    private final CombatUtil combatUtil;
 
     @Override
     public Optional<SimpleValueAttributeCalculationResult> calculateBonus(final UserEntity userEntity, final Attribute attribute) {
@@ -41,8 +40,6 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
                 .map(equipmentEntity::getEquipmentSlot)
                 .filter(EquipmentSlotEntity::hasItem)
                 .forEach(slot -> calculateModifiersOnSlot(result, slot, equipmentEntity));
-
-        calculateNoWeaponFistfightModifiers(result, userEntity);
 
         return Optional.of(result);
     }
@@ -56,16 +53,6 @@ public class EquipmentAttributeBonusProvider implements AttributeBonusProvider {
             }
         } else {
             calculateItemModifiers(result, equipmentSlotEntity.getItem().get());
-        }
-    }
-
-    private void calculateNoWeaponFistfightModifiers(SimpleValueAttributeCalculationResult result, UserEntity userEntity) {
-        if (combatUtil.isFistfighting(userEntity)) {
-            if (result.getAttribute() == CombatAttribute.ATTACK) {
-                ((DiceValueAttributeCalculationResult) result).increaseD4(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 4));
-            } else if (result.getAttribute() == CombatAttribute.DAMAGE) {
-                ((DiceValueAttributeCalculationResult) result).increaseD2(1 + (int) Math.floor(globalAttributeCalculator.calculateActualValue(userEntity, SkillAttribute.FISTFIGHT).getValue() / 4));
-            }
         }
     }
 

@@ -17,6 +17,9 @@ public class EquipmentSlotEntity {
     @Getter
     private final int amount;
 
+    @Getter
+    private final boolean identified;
+
     private final ItemDefinition item;
 
     public boolean isSlot(final EquipmentSlot equipmentSlot) {

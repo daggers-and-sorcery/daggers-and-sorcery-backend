@@ -1,13 +1,19 @@
 package com.morethanheroic.swords.combat.entity.domain;
 
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public abstract class CombatEntity {
 
     private int maximumHealth;
     private int actualHealth;
     private int maximumMana;
     private int actualMana;
+    private int maximumMovement;
+    private int actualMovement;
 
     public void increaseActualHealth(int amount) {
         if (actualHealth + amount > maximumHealth) {
@@ -22,6 +28,14 @@ public abstract class CombatEntity {
             actualMana = maximumMana;
         } else {
             actualMana += amount;
+        }
+    }
+
+    public void increaseActualMovement(final int amount) {
+        if (actualMovement + amount > maximumMovement) {
+            actualMovement = maximumMovement;
+        } else {
+            actualMovement += amount;
         }
     }
 
@@ -41,36 +55,12 @@ public abstract class CombatEntity {
         }
     }
 
-    public int getMaximumHealth() {
-        return maximumHealth;
-    }
-
-    public void setMaximumHealth(int maximumHealth) {
-        this.maximumHealth = maximumHealth;
-    }
-
-    public int getActualHealth() {
-        return actualHealth;
-    }
-
-    public void setActualHealth(int actualHealth) {
-        this.actualHealth = actualHealth;
-    }
-
-    public int getMaximumMana() {
-        return maximumMana;
-    }
-
-    public void setMaximumMana(int maximumMana) {
-        this.maximumMana = maximumMana;
-    }
-
-    public int getActualMana() {
-        return actualMana;
-    }
-
-    public void setActualMana(int actualMana) {
-        this.actualMana = actualMana;
+    public void decreaseActualMovement(int amount) {
+        if (actualMovement - amount < 0) {
+            actualMovement = 0;
+        } else {
+            actualMovement -= amount;
+        }
     }
 
     public boolean isAlive() {

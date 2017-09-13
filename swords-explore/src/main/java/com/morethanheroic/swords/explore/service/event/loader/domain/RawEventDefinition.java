@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.loader.domain;
 
-import com.morethanheroic.swords.explore.domain.event.ExplorationEventLocation;
+import com.morethanheroic.swords.zone.domain.ExplorationZone;
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventRarity;
 import com.morethanheroic.swords.explore.domain.event.ExplorationEventTerrain;
 import lombok.Data;
@@ -19,7 +19,7 @@ public class RawEventDefinition {
 
     private int id;
     private String name;
-    private ExplorationEventLocation location;
+    private ExplorationZone location;
     private ExplorationEventTerrain terrain;
     private ExplorationEventRarity rarity;
 }
