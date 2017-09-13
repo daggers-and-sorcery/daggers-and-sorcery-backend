@@ -1,5 +1,6 @@
 package com.morethanheroic.swords.combat.entity.domain;
 
+import com.morethanheroic.swords.attribute.domain.BasicAttribute;
 import com.morethanheroic.swords.attribute.domain.CombatAttribute;
 import com.morethanheroic.swords.attribute.domain.DiceAttribute;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
@@ -21,6 +22,9 @@ public class UserCombatEntity extends CombatEntity {
 
         this.setActualMana(userEntity.getManaPoints());
         this.setMaximumMana(globalAttributeCalculator.calculateMaximumValue(userEntity, CombatAttribute.MANA).getValue());
+
+        this.setActualMovement(userEntity.getMovementPoints());
+        this.setMaximumMovement(globalAttributeCalculator.calculateMaximumValue(userEntity, BasicAttribute.MOVEMENT).getValue());
     }
 
     public UserEntity getUserEntity() {
