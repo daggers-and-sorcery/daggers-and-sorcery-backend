@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="laxika" id="20170914-2">
+        <insert tableName="news">
+            <column name="title" value="Rebalancing and small additions"/>
+            <column name="release_date" value="2017-09-14 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+Based on your suggestions regarding yesterday's update we have me made some small changes and rebalancing. We hope that you will like it.
+
+Improvements:
+
+- Lowered the Robinia Log requirement of the Bloodthirsty Staff's recipe from 12 to 6.
+- Added Stem as a drop to the vampires. You should use scavenging to improve your chances to acquire some.
+- Added Garlic Bread to the game. It is one of the top healing foods available in the game.
+- Added recipes for Bread and Garlic Bread.
+- Added the Magical Bronze Arrow to the game. It can be made with the Imbuing skill and provide slight bonuses over the Bronze Arrow.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
