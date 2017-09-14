@@ -8,16 +8,14 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.service.NewUserCreator;
 import com.morethanheroic.swords.user.view.request.domain.registration.RegistrationRequest;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -31,16 +29,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RegistrationController {
 
-    @NonNull
     private final PasswordEncoder passwordEncoder;
-
-    @NonNull
     private final NewUserCreator newUserCreator;
+    private final RegistrationEventDispatcher registrationEventDispatcher;
 
-    @NonNull
-    private final RegistrationEventDispatcher loginEventDispatcher;
-
-    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    @PostMapping("/user/register")
     @Transactional
     //TODO: Use Response.
     public ResponseEntity<Object> register(@Valid @RequestBody RegistrationRequest registrationRequest, BindingResult result) {
@@ -64,7 +57,7 @@ public class RegistrationController {
 
             final UserEntity userEntity = newUserCreator.createUser(username, password, email, race);
 
-            loginEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
+            registrationEventDispatcher.dispatch(new RegistrationEventConfiguration(userEntity));
 
             //TODO: add user email validation.
 
