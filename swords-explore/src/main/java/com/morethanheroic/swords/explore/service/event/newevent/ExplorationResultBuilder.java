@@ -29,6 +29,7 @@ import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
+import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
 import com.morethanheroic.swords.quest.service.QuestManipulator;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -165,6 +166,10 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    /**
+     * @deprecated Use {@link #newCombatEntry(MonsterDefinition, int, int)} instead.
+     */
+    @Deprecated
     public ExplorationResultBuilder newCombatEntry(final int opponentId, final int eventId, final int stage) {
         final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId), CombatType.EXPLORE);
 
@@ -177,9 +182,36 @@ public class ExplorationResultBuilder {
         return this;
     }
 
+    public ExplorationResultBuilder newCombatEntry(final MonsterDefinition opponent, final int eventId, final int stage) {
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent, CombatType.EXPLORE);
+
+        explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
+
+        if (!combatEventEntryEvaluatorResult.getResult().isPlayerDead()) {
+            userEntity.setActiveExploration(eventId, stage);
+        }
+
+        return this;
+    }
+
+    /**
+     * @deprecated Use {@link #newCombatEntry(MonsterDefinition, QuestDefinition, int)} instead.
+     */
+    @Deprecated
     public ExplorationResultBuilder newCombatEntry(final int opponentId, final QuestDefinition quest, final int questStage) {
         final CombatType combatType = CombatType.valueOf("QUEST_" + quest.getId());
         final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, combatEventEntryEvaluator.convertMonsterIdToDefinition(opponentId), combatType);
+
+        explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
+
+        questManipulator.changeQuestStage(userEntity, quest, questStage);
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newCombatEntry(final MonsterDefinition opponent, final QuestDefinition quest, final int questStage) {
+        final CombatType combatType = CombatType.valueOf("QUEST_" + quest.getId());
+        final CombatEventEntryEvaluatorResult combatEventEntryEvaluatorResult = combatEventEntryEvaluator.calculateCombat(userEntity, opponent, combatType);
 
         explorationResult.addEventEntryResult(combatEventEntryEvaluatorResult.getResult());
 
@@ -299,8 +331,18 @@ public class ExplorationResultBuilder {
         return new MultiWayExplorationResultBuilder(this, attemptResult.isSuccessful());
     }
 
+    /**
+     * @deprecated Use {@link #newConditionalMultiWayPath(List)} inside.
+     */
+    @Deprecated
     public MultiWayExplorationResultBuilder newConditionalMultiWayPath(final ExplorationContext explorationContext, final List<Condition> conditions) {
         return masterConditionEvaluator.evaluateConditions(explorationContext.getUserEntity(), conditions) ?
+                multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
+                multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+    }
+
+    public MultiWayExplorationResultBuilder newConditionalMultiWayPath(final List<Condition> conditions) {
+        return masterConditionEvaluator.evaluateConditions(userEntity, conditions) ?
                 multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
                 multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
     }
@@ -308,6 +350,7 @@ public class ExplorationResultBuilder {
     /**
      * @deprecated Use {@link #newHasItemMultiWayPath(ExplorationContext, ItemDefinition...)} instead.
      */
+    @Deprecated
     public MultiWayExplorationResultBuilder newHasItemMultiWayPath(final ExplorationContext explorationContext, final int... items) {
         final List<Condition> conditions = Arrays.stream(items).boxed()
                 .map(item ->
@@ -342,12 +385,30 @@ public class ExplorationResultBuilder {
         }
     }
 
+    /**
+     * @deprecated Use {@link #newIsCombatRunningMultiWayPath()} instead.
+     */
+    @Deprecated
     public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath(final ExplorationContext explorationContext) {
-        return newIsCombatRunningMultiWayPath(explorationContext, CombatType.EXPLORE);
+        return newIsCombatRunningMultiWayPath(CombatType.EXPLORE);
     }
 
+    public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath() {
+        return newIsCombatRunningMultiWayPath(CombatType.EXPLORE);
+    }
+
+    /**
+     * @deprecated Use {{@link #newIsCombatRunningMultiWayPath(CombatType)}} instead.
+     */
+    @Deprecated
     public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath(final ExplorationContext explorationContext, final CombatType combatType) {
         return combatCalculator.isCombatRunning(explorationContext.getUserEntity(), combatType) ?
+                multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
+                multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
+    }
+
+    public MultiWayExplorationResultBuilder newIsCombatRunningMultiWayPath(final CombatType combatType) {
+        return combatCalculator.isCombatRunning(userEntity, combatType) ?
                 multiWayExplorationResultBuilderFactory.newSuccessBasedMultiWayExplorationResultBuilder(this) :
                 multiWayExplorationResultBuilderFactory.newFailureBasedMultiWayExplorationResultBuilder(this);
     }
