@@ -1,7 +1,5 @@
 package com.morethanheroic.swords.explore.service.event.impl.sevgard.quest.cursedheroes;
 
-import com.google.common.collect.Lists;
-import com.morethanheroic.swords.attribute.service.manipulator.UserBasicAttributeManipulator;
 import com.morethanheroic.swords.combat.domain.CombatType;
 import com.morethanheroic.swords.explore.domain.ExplorationResult;
 import com.morethanheroic.swords.explore.service.event.ExplorationEvent;
@@ -9,7 +7,6 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationConte
 import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResultStageBuilderFactory;
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.condition.ConditionFactory;
-import com.morethanheroic.swords.explore.service.event.newevent.condition.impl.ItemCondition;
 import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.monster.service.cache.MonsterDefinitionCache;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
@@ -27,11 +24,11 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
     private static final int EXAMINING_THE_DOOR_STAGE = 3;
     private static final int FIGHTING_UTOLKA_STAGE = 4;
 
-    private static final int VAMPIRE_WARRIOR_ID = 1111;
+    private static final int VAMPIRE_WARRIOR_ID = 30;
     private static final int NARTHLOK_THE_LITERATE_ID = 1111;
-    private static final int UTOLKA_ID = 1223424;
+    private static final int UTOLKA_ID = 2222;
 
-    private static final int ONYX_ITEM_ID = 12333323;
+    private static final int ONYX_ITEM_ID = 208;
 
     private static final int CURSED_HEROES_QUEST_ID = 4;
 
@@ -42,7 +39,6 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
 
     private final QuestDefinitionCache questDefinitionCache;
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
-    private final UserBasicAttributeManipulator userBasicAttributeManipulator;
     private final ConditionFactory conditionFactory;
     private final ItemDefinitionCache itemDefinitionCache;
     private final MonsterDefinitionCache monsterDefinitionCache;
