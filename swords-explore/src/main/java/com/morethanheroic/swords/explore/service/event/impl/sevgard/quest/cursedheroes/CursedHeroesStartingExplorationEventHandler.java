@@ -61,7 +61,7 @@ public class CursedHeroesStartingExplorationEventHandler extends ImprovedExplora
                 )
                 .addStage(BRIBING_STAGE,
                         explorationResultBuilder -> explorationResultBuilder
-                                .newConditionalMultiWayPath(explorationContext,
+                                .newConditionalMultiWayPath(
                                         Lists.newArrayList(
                                                 conditionFactory.newConditionBuilder()
                                                         .newItemCondition(itemDefinitionCache.getDefinition(GOLD_COIN_ID), GOLD_COIN_REQUIRED_AMOUNT)
