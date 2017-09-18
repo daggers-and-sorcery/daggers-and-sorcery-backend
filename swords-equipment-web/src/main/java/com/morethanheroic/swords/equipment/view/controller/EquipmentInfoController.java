@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.equipment.view.controller;
 
 import com.morethanheroic.response.domain.Response;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.equipment.EquipmentEntityFactory;
 import com.morethanheroic.swords.equipment.view.service.ListEquipmentResponseBuilder;
 import com.morethanheroic.swords.equipment.view.service.domain.ListEquipmentResponseBuilderConfiguration;
@@ -17,11 +18,12 @@ public class EquipmentInfoController {
     private final EquipmentEntityFactory equipmentEntityFactory;
 
     @GetMapping("/character/equipment")
-    public Response listEquipment(final UserEntity userEntity) {
+    public Response listEquipment(final UserEntity userEntity, final SessionEntity sessionEntity) {
         return listEquipmentResponseBuilder.build(
                 ListEquipmentResponseBuilderConfiguration.builder()
                         .userEntity(userEntity)
                         .equipmentEntity(equipmentEntityFactory.getEntity(userEntity))
+                        .sessionEntity(sessionEntity)
                         .build()
         );
     }
