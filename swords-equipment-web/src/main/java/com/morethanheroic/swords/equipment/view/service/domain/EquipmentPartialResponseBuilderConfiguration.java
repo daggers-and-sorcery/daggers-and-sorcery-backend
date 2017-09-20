@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.equipment.view.service.domain;
 
 import com.morethanheroic.response.service.ResponseBuilderConfiguration;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import lombok.Builder;
@@ -12,4 +13,5 @@ public class EquipmentPartialResponseBuilderConfiguration implements ResponseBui
 
     private final EquipmentSlot equipmentSlot;
     private final EquipmentEntity equipmentEntity;
+    private final SessionEntity sessionEntity;
 }

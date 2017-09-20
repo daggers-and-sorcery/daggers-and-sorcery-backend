@@ -28,6 +28,7 @@ public class ListEquipmentResponseBuilder implements ResponseBuilder<ListEquipme
                         EquipmentPartialResponseBuilderConfiguration.builder()
                                 .equipmentSlot(equipmentSlot)
                                 .equipmentEntity(listEquipmentResponseBuilderConfiguration.getEquipmentEntity())
+                                .sessionEntity(listEquipmentResponseBuilderConfiguration.getSessionEntity())
                                 .build()
                         )
                 )
