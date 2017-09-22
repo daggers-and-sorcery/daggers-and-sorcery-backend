@@ -2,6 +2,7 @@ package com.morethanheroic.swords.equipment.view.service;
 
 import com.morethanheroic.response.domain.PartialResponse;
 import com.morethanheroic.response.service.PartialResponseBuilder;
+import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlot;
 import com.morethanheroic.swords.equipment.domain.EquipmentSlotEntity;
 import com.morethanheroic.swords.equipment.view.service.domain.EquipmentPartialResponse;
@@ -22,7 +23,7 @@ public class EquipmentPartialResponseBuilder implements PartialResponseBuilder<E
     private final UnidentifiedItemPartialResponseBuilder unidentifiedItemPartialResponseBuilder;
 
     @Override
-    public PartialResponse build(EquipmentPartialResponseBuilderConfiguration equipmentPartialResponseBuilderConfiguration) {
+    public PartialResponse build(final EquipmentPartialResponseBuilderConfiguration equipmentPartialResponseBuilderConfiguration) {
         final EquipmentSlot equipmentSlot = equipmentPartialResponseBuilderConfiguration.getEquipmentSlot();
         final EquipmentSlotEntity equipmentSlotEntity = equipmentPartialResponseBuilderConfiguration.getEquipmentEntity().getEquipmentSlot(equipmentSlot);
 
@@ -30,11 +31,11 @@ public class EquipmentPartialResponseBuilder implements PartialResponseBuilder<E
                 .slot(equipmentSlot)
                 .amount(equipmentSlotEntity.getAmount())
                 .empty(!equipmentSlotEntity.hasItem())
-                .itemDefinition(buildItemResponse(equipmentSlotEntity))
+                .itemDefinition(buildItemResponse(equipmentSlotEntity, equipmentPartialResponseBuilderConfiguration.getSessionEntity()))
                 .build();
     }
 
-    private ItemDefinitionPartialResponse buildItemResponse(final EquipmentSlotEntity equipmentSlotEntity) {
+    private ItemDefinitionPartialResponse buildItemResponse(final EquipmentSlotEntity equipmentSlotEntity, final SessionEntity sessionEntity) {
         if (equipmentSlotEntity.hasItem()) {
             if (equipmentSlotEntity.isIdentified()) {
                 return identifiedItemPartialResponseBuilder.build(
@@ -46,6 +47,7 @@ public class EquipmentPartialResponseBuilder implements PartialResponseBuilder<E
                 return unidentifiedItemPartialResponseBuilder.build(
                         UnidentifiedItemPartialResponseBuilderConfiguration.builder()
                                 .item(equipmentSlotEntity.getItem().get())
+                                .sessionEntity(sessionEntity)
                                 .build()
                 );
             }
