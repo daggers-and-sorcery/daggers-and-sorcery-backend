@@ -31,10 +31,10 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
     private static final int FIGHTING_ZYRRIG_STAGE = 9;
 
     private static final int VAMPIRE_WARRIOR_ID = 30;
-    private static final int NARTHLOK_THE_LITERATE_ID = 1111;
-    private static final int UTOLKA_ID = 2222;
-    private static final int SKELETAL_BRUTE_ID = 2222;
-    private static final int SKELETAL_MAGE_ID = 2222;
+    private static final int NARTHLOK_THE_LITERATE_ID = 33;
+    private static final int UTOLKA_ID = 34;
+    private static final int SKELETAL_BRUTE_ID = 35;
+    private static final int SKELETAL_MAGE_ID = 36;
     private static final int KYLLRIN_ID = 2222;
     private static final int RIEGHAR_ID = 2222;
     private static final int ORHOLLO_ID = 2222;
