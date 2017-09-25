@@ -29,6 +29,7 @@ import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.service.cache.LootDefinitionCache;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
 import com.morethanheroic.swords.quest.service.QuestManipulator;
@@ -433,6 +434,14 @@ public class ExplorationResultBuilder {
         inventoryEntityFactory.getEntity(userEntity).removeItem(item, amount, identificationType);
 
         newMessageBoxEntry("EXPLORATION_EVENT_ENTRY_REMOVE_ITEM", amount, item.getName());
+
+        return this;
+    }
+
+    public ExplorationResultBuilder newRemoveMoneyEntry(final MoneyType type, final int amount) {
+        inventoryEntityFactory.getEntity(userEntity).decreaseMoneyAmount(type, amount);
+
+        newMessageBoxEntry("EXPLORATION_EVENT_ENTRY_REMOVE_MONEY", amount);
 
         return this;
     }

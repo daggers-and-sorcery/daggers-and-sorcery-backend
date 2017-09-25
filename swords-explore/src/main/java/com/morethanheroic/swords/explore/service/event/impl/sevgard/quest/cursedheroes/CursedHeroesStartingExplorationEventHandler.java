@@ -10,7 +10,7 @@ import com.morethanheroic.swords.explore.service.event.newevent.ExplorationResul
 import com.morethanheroic.swords.explore.service.event.newevent.ImprovedExplorationEventHandler;
 import com.morethanheroic.swords.explore.service.event.newevent.ReplyOption;
 import com.morethanheroic.swords.explore.service.event.newevent.condition.ConditionFactory;
-import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.quest.service.definition.cache.QuestDefinitionCache;
 import lombok.RequiredArgsConstructor;
 
@@ -26,8 +26,7 @@ public class CursedHeroesStartingExplorationEventHandler extends ImprovedExplora
 
     private static final int CURSED_HEROES_QUEST_ID = 4;
 
-    private static final int GOLD_COIN_ID = 50;
-    private static final int GOLD_COIN_REQUIRED_AMOUNT = 2;
+    private static final int MONEY_REQUIRED_AMOUNT = 20000;
 
     private static final int MEETING_THE_MAGE_QUEST_STAGE_ID = 2;
     private static final int TO_THE_FOREST_QUEST_STAGE_ID = 3;
@@ -36,15 +35,40 @@ public class CursedHeroesStartingExplorationEventHandler extends ImprovedExplora
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
     private final UserBasicAttributeManipulator userBasicAttributeManipulator;
     private final ConditionFactory conditionFactory;
-    private final ItemDefinitionCache itemDefinitionCache;
 
     @Override
-    public ExplorationResult handleExplore(ExplorationContext explorationContext) {
-        throw new IllegalStateException("Handle explore called unexpectedly under quest: " + questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID).getName());
+    public ExplorationResult handleExplore(final ExplorationContext explorationContext) {
+        return explorationResultStageBuilderFactory.newBuilder()
+                .addStage(BRIBING_STAGE,
+                        explorationResultBuilder -> explorationResultBuilder
+                                .newConditionalMultiWayPath(
+                                        Lists.newArrayList(
+                                                conditionFactory.newConditionBuilder()
+                                                        .newMoneyCondition(MoneyType.MONEY, MONEY_REQUIRED_AMOUNT)
+                                                        .build()
+                                        )
+                                )
+                                .isSuccess(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_5")
+                                                .newRemoveMoneyEntry(MoneyType.MONEY, MONEY_REQUIRED_AMOUNT)
+                                                .newUpdateQuestStage(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), MEETING_THE_MAGE_QUEST_STAGE_ID)
+                                                .newContinueQuestEntry(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID))
+                                                .build()
+                                )
+                                .isFailure(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_4")
+                                                .build()
+                                )
+                                .build()
+                )
+                .runStage(explorationContext);
+        //throw new IllegalStateException("Handle explore called unexpectedly under quest: " + questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID).getName());
     }
 
     @Override
-    public ExplorationResult handleInfo(ExplorationContext explorationContext) {
+    public ExplorationResult handleInfo(final ExplorationContext explorationContext) {
         return explorationResultStageBuilderFactory.newBuilder()
                 .addStage(STARTER_STAGE,
                         explorationResultBuilder -> explorationResultBuilder
@@ -53,31 +77,8 @@ public class CursedHeroesStartingExplorationEventHandler extends ImprovedExplora
                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_3")
                                 .newOptionEntry(
                                         ReplyOption.builder()
-                                                .message("GOBLIN_KING_EXPLORATION_EVENT_QUESTION_REPLY_1")
+                                                .message("CURSED_HEROES_QUEST_EXPLORATION_EVENT_QUESTION_REPLY_1")
                                                 .stage(BRIBING_STAGE)
-                                                .build()
-                                )
-                                .build()
-                )
-                .addStage(BRIBING_STAGE,
-                        explorationResultBuilder -> explorationResultBuilder
-                                .newConditionalMultiWayPath(
-                                        Lists.newArrayList(
-                                                conditionFactory.newConditionBuilder()
-                                                        .newItemCondition(itemDefinitionCache.getDefinition(GOLD_COIN_ID), GOLD_COIN_REQUIRED_AMOUNT)
-                                                        .build()
-                                        )
-                                )
-                                .isSuccess(
-                                        explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_5")
-                                                .newRemoveItemEntry(itemDefinitionCache.getDefinition(GOLD_COIN_ID), GOLD_COIN_REQUIRED_AMOUNT)
-                                                .newUpdateQuestStage(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), MEETING_THE_MAGE_QUEST_STAGE_ID)
-                                                .build()
-                                )
-                                .isFailure(
-                                        explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_4")
                                                 .build()
                                 )
                                 .build()
@@ -95,6 +96,7 @@ public class CursedHeroesStartingExplorationEventHandler extends ImprovedExplora
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_12")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_13")
                                                 .newUpdateQuestStage(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), TO_THE_FOREST_QUEST_STAGE_ID)
+                                                .newContinueQuestEntry(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID))
                                                 .build()
                                 )
                                 .isFailure(

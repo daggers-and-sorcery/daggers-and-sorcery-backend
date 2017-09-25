@@ -84,14 +84,14 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_17")
-                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_18")
+                                                .newCombatEntry(monsterDefinitionCache.getDefinition(NARTHLOK_THE_LITERATE_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_NARTHLOK_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_18")
-                                                .newCombatEntry(monsterDefinitionCache.getDefinition(NARTHLOK_THE_LITERATE_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_NARTHLOK_QUEST_STAGE_ID)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_17")
+                                                .continueCombatEntry(CombatType.QUEST_4)
                                                 .build()
                                 )
                                 .build()
@@ -101,15 +101,15 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_18")
-                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_19")
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_20")
+                                                .newUpdateQuestStage(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), EXAMINING_THE_DOOR_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_19")
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_20")
-                                                .newUpdateQuestStage(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), EXAMINING_THE_DOOR_QUEST_STAGE_ID)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_18")
+                                                .continueCombatEntry(CombatType.QUEST_4)
                                                 .build()
                                 )
                                 .build()
