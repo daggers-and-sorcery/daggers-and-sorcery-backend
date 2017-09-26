@@ -1,6 +1,7 @@
 package com.morethanheroic.swords.statuseffect.service;
 
 import com.morethanheroic.entity.service.factory.EntityListFactory;
+import com.morethanheroic.swords.memoize.Memoize;
 import com.morethanheroic.swords.statuseffect.domain.StatusEffectEntity;
 import com.morethanheroic.swords.statuseffect.repository.domain.StatusEffectMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -17,6 +18,7 @@ public class StatusEffectEntityFactory implements EntityListFactory<StatusEffect
     private final StatusEffectMapper statusEffectMapper;
     private final StatusEffectEntityTransformer statusEffectEntityTransformer;
 
+    @Memoize
     @Override
     public List<StatusEffectEntity> getEntity(UserEntity userEntity) {
         return statusEffectMapper.getStatusEffects(userEntity.getId()).stream()

@@ -104,6 +104,7 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_19")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_20")
                                                 .newUpdateQuestStage(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), EXAMINING_THE_DOOR_QUEST_STAGE_ID)
+                                                .newContinueQuestEntry(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID))
                                                 .build()
                                 )
                                 .isSuccess(
@@ -136,7 +137,7 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_27")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_28")
                                                 .newRemoveItemEntry(itemDefinitionCache.getDefinition(ONYX_ITEM_ID))
-                                                .newCombatEntry(monsterDefinitionCache.getDefinition(UTOLKA_ID), CURSED_HEROES_QUEST_ID, FIGHTING_UTOLKA_QUEST_STAGE_ID)
+                                                .newCombatEntry(monsterDefinitionCache.getDefinition(UTOLKA_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_UTOLKA_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .build()
@@ -146,17 +147,17 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_29")
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_30")
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_31")
-                                                .newCombatEntry(monsterDefinitionCache.getDefinition(SKELETAL_BRUTE_ID), CURSED_HEROES_QUEST_ID, FIGHTING_SKELETAL_BRUTE_QUEST_STAGE_ID)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_27")
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_28")
+                                                .continueCombatEntry(CombatType.QUEST_4)
                                                 .build()
                                 )
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_27")
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_28")
-                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_29")
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_30")
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_31")
+                                                .newCombatEntry(monsterDefinitionCache.getDefinition(SKELETAL_BRUTE_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_SKELETAL_BRUTE_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .build()
@@ -166,14 +167,14 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_32")
-                                                .newCombatEntry(monsterDefinitionCache.getDefinition(SKELETAL_MAGE_ID), CURSED_HEROES_QUEST_ID, FIGHTING_SKELETAL_MAGE_QUEST_STAGE_ID)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_31")
+                                                .continueCombatEntry(CombatType.QUEST_4)
                                                 .build()
                                 )
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_31")
-                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_32")
+                                                .newCombatEntry(monsterDefinitionCache.getDefinition(SKELETAL_MAGE_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_SKELETAL_MAGE_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .build()
@@ -183,16 +184,16 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_33")
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_34")
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_35")
-                                                .newCombatEntry(monsterDefinitionCache.getDefinition(KYLLRIN_ID), CURSED_HEROES_QUEST_ID, FIGHTING_KYLLRIN_QUEST_STAGE_ID)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_32")
+                                                .continueCombatEntry(CombatType.QUEST_4)
                                                 .build()
                                 )
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_32")
-                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_33")
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_34")
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_35")
+                                                .newCombatEntry(monsterDefinitionCache.getDefinition(KYLLRIN_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_KYLLRIN_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .build()
@@ -202,18 +203,18 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_35")
+                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .build()
+                                )
+                                .isFailure(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_36")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_37")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_38")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_39")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_40")
-                                                .newCombatEntry(monsterDefinitionCache.getDefinition(RIEGHAR_ID), CURSED_HEROES_QUEST_ID, FIGHTING_RIEGHAR_QUEST_STAGE_ID)
-                                                .build()
-                                )
-                                .isFailure(
-                                        explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_35")
-                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .newCombatEntry(monsterDefinitionCache.getDefinition(RIEGHAR_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_RIEGHAR_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .build()
@@ -223,18 +224,18 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_40")
+                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .build()
+                                )
+                                .isFailure(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_41")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_42")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_43")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_44")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_45")
-                                                .newCombatEntry(monsterDefinitionCache.getDefinition(ORHOLLO_ID), CURSED_HEROES_QUEST_ID, FIGHTING_ORHOLLO_QUEST_STAGE_ID)
-                                                .build()
-                                )
-                                .isFailure(
-                                        explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_40")
-                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .newCombatEntry(monsterDefinitionCache.getDefinition(ORHOLLO_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_ORHOLLO_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .build()
@@ -244,15 +245,15 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isSuccess(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_46")
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_47")
-                                                .newCombatEntry(monsterDefinitionCache.getDefinition(ZYRRIG_ID), CURSED_HEROES_QUEST_ID, FIGHTING_ZYRRIG_QUEST_STAGE_ID)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_45")
+                                                .continueCombatEntry(CombatType.QUEST_4)
                                                 .build()
                                 )
                                 .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_45")
-                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_46")
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_47")
+                                                .newCombatEntry(monsterDefinitionCache.getDefinition(ZYRRIG_ID), questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FIGHTING_ZYRRIG_QUEST_STAGE_ID)
                                                 .build()
                                 )
                                 .build()
@@ -261,6 +262,12 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                         explorationResultBuilder -> explorationResultBuilder
                                 .newIsCombatRunningMultiWayPath(CombatType.QUEST_4)
                                 .isSuccess(
+                                        explorationResultBuilder1 -> explorationResultBuilder1
+                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_47")
+                                                .continueCombatEntry(CombatType.QUEST_4)
+                                                .build()
+                                )
+                                .isFailure(
                                         explorationResultBuilder1 -> explorationResultBuilder1
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_48")
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_49")
@@ -272,12 +279,6 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
                                                 .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_55")
                                                 .newUpdateQuestStage(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), FINAL_QUEST_STAGE_ID)
                                                 .newFinishQuestEntry(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID))
-                                                .build()
-                                )
-                                .isFailure(
-                                        explorationResultBuilder1 -> explorationResultBuilder1
-                                                .newMessageEntry("CURSED_HEROES_QUEST_EXPLORATION_EVENT_ENTRY_47")
-                                                .continueCombatEntry(CombatType.QUEST_4)
                                                 .build()
                                 )
                                 .build()
