@@ -35,10 +35,10 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
     private static final int UTOLKA_ID = 34;
     private static final int SKELETAL_BRUTE_ID = 35;
     private static final int SKELETAL_MAGE_ID = 36;
-    private static final int KYLLRIN_ID = 2222;
-    private static final int RIEGHAR_ID = 2222;
-    private static final int ORHOLLO_ID = 2222;
-    private static final int ZYRRIG_ID = 2222;
+    private static final int KYLLRIN_ID = 37;
+    private static final int RIEGHAR_ID = 38;
+    private static final int ORHOLLO_ID = 39;
+    private static final int ZYRRIG_ID = 40;
 
     private static final int ONYX_ITEM_ID = 208;
 
