@@ -27,8 +27,8 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
     private static final int FIGHTING_SKELETAL_MAGE_STAGE = 6;
     private static final int FIGHTING_KYLLRIN_STAGE = 7;
     private static final int FIGHTING_RIEGHAR_STAGE = 8;
-    private static final int FIGHTING_ORHOLLO_STAGE = 8;
-    private static final int FIGHTING_ZYRRIG_STAGE = 9;
+    private static final int FIGHTING_ORHOLLO_STAGE = 9;
+    private static final int FIGHTING_ZYRRIG_STAGE = 10;
 
     private static final int VAMPIRE_WARRIOR_ID = 30;
     private static final int NARTHLOK_THE_LITERATE_ID = 33;
@@ -52,9 +52,9 @@ public class CursedHeroesToTheForestExplorationEventHandler extends ImprovedExpl
     private static final int FIGHTING_SKELETAL_MAGE_QUEST_STAGE_ID = 9;
     private static final int FIGHTING_KYLLRIN_QUEST_STAGE_ID = 10;
     private static final int FIGHTING_RIEGHAR_QUEST_STAGE_ID = 11;
-    private static final int FIGHTING_ORHOLLO_QUEST_STAGE_ID = 11;
-    private static final int FIGHTING_ZYRRIG_QUEST_STAGE_ID = 12;
-    private static final int FINAL_QUEST_STAGE_ID = 13;
+    private static final int FIGHTING_ORHOLLO_QUEST_STAGE_ID = 12;
+    private static final int FIGHTING_ZYRRIG_QUEST_STAGE_ID = 13;
+    private static final int FINAL_QUEST_STAGE_ID = 14;
 
     private final QuestDefinitionCache questDefinitionCache;
     private final ExplorationResultStageBuilderFactory explorationResultStageBuilderFactory;
