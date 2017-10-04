@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.quest.service.definition.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
 import com.morethanheroic.swords.quest.service.definition.loader.domain.RawQuestDefinition;
 import lombok.RequiredArgsConstructor;

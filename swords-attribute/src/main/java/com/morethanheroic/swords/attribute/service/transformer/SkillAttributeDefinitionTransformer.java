@@ -3,7 +3,7 @@ package com.morethanheroic.swords.attribute.service.transformer;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttributeDefinition;
 import com.morethanheroic.swords.attribute.service.loader.entity.RawSkillAttributeDefinition;
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;

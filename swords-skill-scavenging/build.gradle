@@ -3,12 +3,13 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
+
     compile project(':swords-user')
     compile project(':swords-inventory')
     compile project(':swords-skill')
     compile project(':swords-settings')
     compile project(':swords-metadata')
-    compile project(':common-definition')
 }
 
 apply plugin: 'spring-boot'

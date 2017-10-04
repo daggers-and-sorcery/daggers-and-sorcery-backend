@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.loot.service.loader;
 
 import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.definition.loader.DefinitionLoader;
+import com.morethanheroic.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.loot.domain.LootDefinition;

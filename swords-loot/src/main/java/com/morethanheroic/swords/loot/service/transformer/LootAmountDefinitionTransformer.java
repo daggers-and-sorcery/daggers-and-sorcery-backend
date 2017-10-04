@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.loot.service.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.loot.domain.DropAmountDefinition;
 import com.morethanheroic.swords.loot.service.loader.domain.RawDropAmountDefinition;
 import org.springframework.stereotype.Service;

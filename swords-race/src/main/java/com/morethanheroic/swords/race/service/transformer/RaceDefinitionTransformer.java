@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.race.service.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceDefinition;
 import com.morethanheroic.swords.race.model.modifier.RacialModifier;

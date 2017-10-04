@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.loot.service.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.loot.domain.DropDefinition;
 import com.morethanheroic.swords.loot.service.loader.domain.RawDropDefinition;

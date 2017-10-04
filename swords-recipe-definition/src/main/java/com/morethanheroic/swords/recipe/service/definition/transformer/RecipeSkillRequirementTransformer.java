@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.recipe.service.definition.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.recipe.domain.RecipeSkillRequirement;
 import com.morethanheroic.swords.recipe.service.definition.loader.domain.RawRecipeSkillRequirement;
 import org.springframework.stereotype.Service;

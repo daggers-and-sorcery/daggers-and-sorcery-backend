@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.service.definition.transformer.requirement;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.item.domain.requirement.ItemRequirementDefinition;
 import com.morethanheroic.swords.item.service.definition.loader.domain.RawItemRequirementDefinition;
 import org.springframework.stereotype.Service;

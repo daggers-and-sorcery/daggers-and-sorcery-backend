@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.metadata.service.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.metadata.domain.definition.MetadataDefinition;
 import com.morethanheroic.swords.metadata.service.loader.domain.RawMetadataDefinition;
 import com.morethanheroic.swords.metadata.service.loader.domain.RawMetadataValueDefinition;

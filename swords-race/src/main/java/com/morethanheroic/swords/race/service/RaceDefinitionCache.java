@@ -1,13 +1,12 @@
 package com.morethanheroic.swords.race.service;
 
-import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.race.model.Race;
 import com.morethanheroic.swords.race.model.RaceDefinition;
 import com.morethanheroic.swords.race.service.loader.RaceDefinitionLoader;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

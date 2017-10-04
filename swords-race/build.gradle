@@ -2,9 +2,11 @@ dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter') {
         exclude(module: 'commons-logging')
     }
+
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
+
     compile group: 'com.google.code.findbugs', name: 'findbugs', version: findbugs_version
 
-    compile project(':common-definition')
     compile project(':xml-loader')
 }
 

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.witchhuntersguild.service.definition.cache;
 
 import com.google.common.collect.ImmutableMap;
-import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.WitchhuntersGuildJobDefinition;
 import com.morethanheroic.swords.witchhuntersguild.service.definition.loader.WitchhuntersGuildJobDefinitionLoader;
 import lombok.extern.slf4j.Slf4j;

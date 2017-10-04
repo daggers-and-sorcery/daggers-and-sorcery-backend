@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.money.service.loader;
 
 import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.definition.loader.DefinitionLoader;
+import com.morethanheroic.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.domain.EnumDefinitionLoadingContext;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;

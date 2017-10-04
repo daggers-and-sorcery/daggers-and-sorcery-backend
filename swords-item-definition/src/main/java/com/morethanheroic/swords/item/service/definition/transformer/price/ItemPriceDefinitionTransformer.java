@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.service.definition.transformer.price;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.item.domain.price.ItemPriceDefinition;
 import com.morethanheroic.swords.item.service.definition.loader.domain.RawItemPriceDefinition;
 import org.springframework.stereotype.Service;

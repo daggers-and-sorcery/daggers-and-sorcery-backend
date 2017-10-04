@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.quest.service.definition.cache;
 
 import com.google.common.collect.ImmutableMap;
-import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
 import com.morethanheroic.swords.quest.service.definition.loader.QuestDefinitionLoader;
 import lombok.extern.slf4j.Slf4j;

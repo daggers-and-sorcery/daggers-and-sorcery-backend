@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.monster.service.cache;
 
-import com.morethanheroic.swords.definition.cache.impl.MapBasedDefinitionCache;
+import com.morethanheroic.definition.cache.impl.MapBasedDefinitionCache;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.service.loader.MonsterDefinitionLoader;
 import lombok.extern.slf4j.Slf4j;

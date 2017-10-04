@@ -5,7 +5,8 @@ dependencies {
 
     compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-    compile project(':common-definition')
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
+
     compile project(':xml-loader')
 
     compile project(':swords-attribute-definition')

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.zone.service.definition.cache;
 
-import com.morethanheroic.swords.definition.cache.impl.MapBasedDefinitionCache;
+import com.morethanheroic.definition.cache.impl.MapBasedDefinitionCache;
 import com.morethanheroic.swords.location.domain.Location;
 import com.morethanheroic.swords.zone.domain.ExplorationZone;
 import com.morethanheroic.swords.zone.domain.ZoneDefinition;

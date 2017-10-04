@@ -3,15 +3,11 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':common-definition')
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
 }
 
 apply plugin: 'spring-boot'
 bootRepackage.enabled = false
-
-//TODO: re-enable this!
-//apply plugin: 'checkstyle'
-//checkstyle checkstyle_config
 
 apply plugin: 'findbugs'
 findbugs findbugs_config

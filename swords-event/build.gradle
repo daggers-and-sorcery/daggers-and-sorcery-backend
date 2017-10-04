@@ -4,12 +4,13 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
+
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
     compile project(':swords-user')
     compile project(':swords-inventory')
     compile project(':swords-skill')
-    compile project(':common-definition')
 }
 
 apply plugin: 'spring-boot'

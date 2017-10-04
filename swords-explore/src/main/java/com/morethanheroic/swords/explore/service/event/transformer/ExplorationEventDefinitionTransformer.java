@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.explore.service.event.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.explore.domain.ExplorationEventDefinition;
 import com.morethanheroic.swords.explore.service.event.loader.domain.RawEventDefinition;
 import org.springframework.stereotype.Service;

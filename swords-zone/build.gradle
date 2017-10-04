@@ -3,10 +3,11 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
+
     compile project(':swords-location')
     compile project(':swords-quest')
 
-    compile project(':common-definition')
     compile project(':xml-loader')
 }
 

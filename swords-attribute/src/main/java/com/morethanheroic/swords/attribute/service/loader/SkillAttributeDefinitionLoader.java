@@ -5,7 +5,7 @@ import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttributeDefinition;
 import com.morethanheroic.swords.attribute.service.loader.entity.RawSkillAttributeDefinition;
 import com.morethanheroic.swords.attribute.service.transformer.SkillAttributeDefinitionTransformer;
-import com.morethanheroic.swords.definition.loader.DefinitionLoader;
+import com.morethanheroic.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
 import com.morethanheroic.swords.definition.service.loader.domain.EnumDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;

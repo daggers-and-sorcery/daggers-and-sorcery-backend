@@ -135,6 +135,7 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-session', version: '1.5.2'
     compile group: 'com.morethanheroic', name: 'common-application', version: '1.0.8'
+    compile group: 'com.morethanheroic', name: 'common-sql', version: '1.0.2'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
@@ -142,7 +143,6 @@ dependencies {
     compile project(':xml-loader')
     compile project(':common-memoize')
     compile project(':common-validator')
-    compile project(':common-sql')
     compile project(':common-dependency-injection')
 
     compile project(':swords-equipment')
