@@ -6,12 +6,12 @@ dependencies {
 
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
-    compile project(':common-memoize')
-    compile project(':common-entity')
-    compile project(':common-security')
-    compile project(':common-dependency-injection')
+    compile group: 'com.morethanheroic', name: 'common-memoize', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-entity', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-security', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
 
-    compile project(':swords-race')
+    compile project(':swords-race-definition')
 }
 
 apply plugin: 'spring-boot'

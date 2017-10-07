@@ -12,7 +12,7 @@ dependencies {
     compile project(':swords-attribute-definition')
     compile project(':swords-user')
     compile project(':swords-skill')
-    compile project(':swords-race')
+    compile project(':swords-race-definition')
     compile project(':swords-item')
     compile project(':swords-dice')
 }

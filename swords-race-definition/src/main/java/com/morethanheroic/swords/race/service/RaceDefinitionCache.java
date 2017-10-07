@@ -31,7 +31,7 @@ public class RaceDefinitionCache implements DefinitionCache<Race, RaceDefinition
     private final RaceDefinitionLoader raceDefinitionLoader;
 
     @PostConstruct
-    private void initialize() throws IOException {
+    private void initialize() {
         final List<RaceDefinition> raceDefinitionList = raceDefinitionLoader.loadDefinitions();
 
         log.info("Loaded " + raceDefinitionList.size() + " race entity definitions.");

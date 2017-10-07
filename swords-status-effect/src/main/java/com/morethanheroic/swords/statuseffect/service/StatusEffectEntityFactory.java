@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.statuseffect.service;
 
 import com.morethanheroic.entity.service.factory.EntityListFactory;
-import com.morethanheroic.swords.memoize.Memoize;
+import com.morethanheroic.memoize.Memoize;
 import com.morethanheroic.swords.statuseffect.domain.StatusEffectEntity;
 import com.morethanheroic.swords.statuseffect.repository.domain.StatusEffectMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;

@@ -5,13 +5,8 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
 
-    compile group: 'com.google.code.findbugs', name: 'findbugs', version: findbugs_version
-
     compile project(':xml-loader')
 }
 
 apply plugin: 'spring-boot'
 bootRepackage.enabled = false
-
-apply plugin: 'findbugs'
-findbugs findbugs_config

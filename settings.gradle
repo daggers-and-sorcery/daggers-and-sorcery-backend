@@ -1,7 +1,7 @@
 rootProject.name = 'swords-server'
 
 include 'xml-loader'
-include 'swords-race'
+include 'swords-race-definition'
 include 'swords-effect'
 include 'swords-news'
 include 'swords-web'

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.shop.service;
 
+import com.morethanheroic.dependencyinjection.inject.InjectAtReturn;
 import com.morethanheroic.entity.service.factory.EntityFactory;
-import com.morethanheroic.swords.dependency.InjectAtReturn;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.domain.ShopEntity;
 import com.morethanheroic.swords.shop.service.definition.cache.ShopDefinitionCache;

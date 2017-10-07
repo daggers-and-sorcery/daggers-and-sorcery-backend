@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.user.view.controller;
 
+import com.morethanheroic.security.service.encoder.PasswordEncoder;
 import com.morethanheroic.swords.login.service.event.RegistrationEventDispatcher;
 import com.morethanheroic.swords.login.service.event.domain.RegistrationEventConfiguration;
 import com.morethanheroic.swords.race.model.Race;
-import com.morethanheroic.swords.security.PasswordEncoder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.repository.dao.UserDatabaseEntity;
 import com.morethanheroic.swords.user.service.NewUserCreator;
