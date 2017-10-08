@@ -4,7 +4,6 @@ dependencies {
     }
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jackson_version
-    compile group: 'com.google.code.findbugs', name: 'findbugs', version: findbugs_version
 
     compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.3'
 
@@ -15,6 +14,3 @@ dependencies {
 
 apply plugin: 'spring-boot'
 bootRepackage.enabled = false
-
-apply plugin: 'findbugs'
-findbugs findbugs_config

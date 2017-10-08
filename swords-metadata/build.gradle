@@ -6,7 +6,7 @@ dependencies {
 
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
-    compile project(':common-dependency-injection')
+    compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
 
 
 }
