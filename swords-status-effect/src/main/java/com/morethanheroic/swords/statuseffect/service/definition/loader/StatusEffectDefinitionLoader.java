@@ -2,11 +2,11 @@ package com.morethanheroic.swords.statuseffect.service.definition.loader;
 
 import com.google.common.collect.ImmutableList;
 import com.morethanheroic.definition.loader.DefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectDefinition;
 import com.morethanheroic.swords.statuseffect.service.definition.loader.domain.RawStatusEffectDefinition;
 import com.morethanheroic.swords.statuseffect.service.definition.transformer.StatusEffectDefinitionTransformer;
+import com.morethanheroic.xml.service.loader.NumericXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.NumericDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

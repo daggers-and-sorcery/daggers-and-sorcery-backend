@@ -1,13 +1,13 @@
 package com.morethanheroic.swords.attribute.service.loader;
 
 import com.google.common.collect.ImmutableList;
+import com.morethanheroic.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.attribute.domain.SkillAttribute;
 import com.morethanheroic.swords.attribute.domain.SkillAttributeDefinition;
 import com.morethanheroic.swords.attribute.service.loader.entity.RawSkillAttributeDefinition;
 import com.morethanheroic.swords.attribute.service.transformer.SkillAttributeDefinitionTransformer;
-import com.morethanheroic.definition.loader.DefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.EnumDefinitionLoadingContext;
+import com.morethanheroic.xml.service.loader.EnumXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.EnumDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

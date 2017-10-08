@@ -2,11 +2,11 @@ package com.morethanheroic.swords.quest.service.definition.loader;
 
 import com.google.common.collect.ImmutableList;
 import com.morethanheroic.definition.loader.DefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.quest.domain.definition.QuestDefinition;
 import com.morethanheroic.swords.quest.service.definition.loader.domain.RawQuestDefinition;
 import com.morethanheroic.swords.quest.service.definition.transformer.QuestDefinitionTransformer;
+import com.morethanheroic.xml.service.loader.NumericXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.NumericDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
