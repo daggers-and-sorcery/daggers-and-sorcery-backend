@@ -5,7 +5,7 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
 
-    compile project(':swords-user')
+
     compile project(':swords-inventory')
     compile project(':swords-skill')
     compile project(':swords-settings')

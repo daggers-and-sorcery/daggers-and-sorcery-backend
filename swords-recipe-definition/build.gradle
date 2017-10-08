@@ -9,8 +9,6 @@ dependencies {
 
     compile project(':swords-item-definition')
     compile project(':swords-skill-definition')
-
-    compile project(':xml-loader')
 }
 
 apply plugin: 'spring-boot'

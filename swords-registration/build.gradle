@@ -4,7 +4,7 @@ dependencies {
     }
 
     compile group: 'com.morethanheroic', name: 'common-event', version: '1.0.0'
-    compile project(':swords-user')
+
 }
 
 apply plugin: 'spring-boot'

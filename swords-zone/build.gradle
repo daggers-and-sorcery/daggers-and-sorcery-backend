@@ -7,8 +7,6 @@ dependencies {
 
     compile project(':swords-location')
     compile project(':swords-quest')
-
-    compile project(':xml-loader')
 }
 
 apply plugin: 'spring-boot'

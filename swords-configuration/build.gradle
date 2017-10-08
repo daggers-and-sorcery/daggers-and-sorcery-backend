@@ -4,8 +4,6 @@ dependencies {
     }
 
     compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
-
-    compile project(':xml-loader')
 }
 
 apply plugin: 'spring-boot'

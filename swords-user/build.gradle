@@ -4,14 +4,14 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.1'
 
     compile group: 'com.morethanheroic', name: 'common-memoize', version: '1.0.0'
     compile group: 'com.morethanheroic', name: 'common-entity', version: '1.0.0'
     compile group: 'com.morethanheroic', name: 'common-security', version: '1.0.0'
     compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
 
-    compile project(':swords-race-definition')
+    compile group: 'com.morethanheroic.swords', name: 'swords-race-definition', version: '1.0.2'
 }
 
 apply plugin: 'spring-boot'
