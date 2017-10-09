@@ -34,9 +34,21 @@ public class FindingTheCryptExplorationEventHandler extends ImprovedExplorationE
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("FINDING_THE_CRYPT_EXPLORATION_EVENT_ENTRY_1")
                                 .newMessageEntry("FINDING_THE_CRYPT_EXPLORATION_EVENT_ENTRY_2")
-                                .newMessageEntry("FINDING_THE_CRYPT_EXPLORATION_EVENT_ENTRY_3")
                                 .newQuestDialogEntry(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
                                 .setEventStage(EVENT_ID, STARTER_STAGE)
+                                .build()
+                )
+                .addStage(ACCEPT_QUEST_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FINDING_THE_CRYPT_EXPLORATION_EVENT_ENTRY_3")
+                                .newAcceptQuestEntry(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID))
+                                .resetExploration()
+                                .build()
+                )
+                .addStage(DECLINE_QUEST_STAGE,
+                        explorationResultBuilder1 -> explorationResultBuilder1
+                                .newMessageEntry("FINDING_THE_CRYPT_EXPLORATION_EVENT_ENTRY_4")
+                                .resetExploration()
                                 .build()
                 )
                 .runStage(explorationContext);
@@ -49,17 +61,6 @@ public class FindingTheCryptExplorationEventHandler extends ImprovedExplorationE
                         explorationResultBuilder1 -> explorationResultBuilder1
                                 .newMessageEntry("FINDING_THE_CRYPT_EXPLORATION_EVENT_ENTRY_3")
                                 .newQuestDialogEntry(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID), ACCEPT_QUEST_STAGE, DECLINE_QUEST_STAGE)
-                                .build()
-                )
-                .addStage(ACCEPT_QUEST_STAGE,
-                        explorationResultBuilder1 -> explorationResultBuilder1
-                                .newAcceptQuestEntry(questDefinitionCache.getDefinition(CURSED_HEROES_QUEST_ID))
-                                .resetExploration()
-                                .build()
-                )
-                .addStage(DECLINE_QUEST_STAGE,
-                        explorationResultBuilder1 -> explorationResultBuilder1
-                                .resetExploration()
                                 .build()
                 )
                 .runStage(explorationContext);
