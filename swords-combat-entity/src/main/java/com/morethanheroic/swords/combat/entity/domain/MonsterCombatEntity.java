@@ -55,7 +55,7 @@ public class MonsterCombatEntity extends CombatEntity {
     @Override
     public DiceAttribute getDamageReduction() {
         //TODO: Enable monsters to have this attribute too.
-        return new DiceAttribute.builder()
+        return DiceAttribute.builder()
                 .build();
     }
 

@@ -1,10 +1,10 @@
 package com.morethanheroic.swords.spell.service.loader;
 
-import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
 import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.loader.domain.RawSpellDefinition;
 import com.morethanheroic.swords.spell.service.transformer.SpellDefinitionTransformer;
+import com.morethanheroic.xml.service.loader.NumericXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.NumericDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
