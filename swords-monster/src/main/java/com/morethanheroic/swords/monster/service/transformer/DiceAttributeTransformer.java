@@ -8,15 +8,13 @@ import org.springframework.stereotype.Service;
 public class DiceAttributeTransformer {
 
     public DiceAttribute transform(RawDiceAttribute rawDiceAttribute) {
-        DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
-
-        diceAttributeBuilder.setValue(rawDiceAttribute.getValue());
-        diceAttributeBuilder.setD10(rawDiceAttribute.getD10());
-        diceAttributeBuilder.setD8(rawDiceAttribute.getD8());
-        diceAttributeBuilder.setD6(rawDiceAttribute.getD6());
-        diceAttributeBuilder.setD4(rawDiceAttribute.getD4());
-        diceAttributeBuilder.setD2(rawDiceAttribute.getD2());
-
-        return diceAttributeBuilder.build();
+        return DiceAttribute.builder()
+                .value(rawDiceAttribute.getValue())
+                .d2(rawDiceAttribute.getD2())
+                .d4(rawDiceAttribute.getD4())
+                .d6(rawDiceAttribute.getD6())
+                .d8(rawDiceAttribute.getD8())
+                .d10(rawDiceAttribute.getD10())
+                .build();
     }
 }

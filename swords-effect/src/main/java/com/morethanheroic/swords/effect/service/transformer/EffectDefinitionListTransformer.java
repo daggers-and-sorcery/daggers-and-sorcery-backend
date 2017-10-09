@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.effect.service.transformer;
 
 import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.definition.transformer.DefinitionListTransformer;
+import com.morethanheroic.definition.transformer.DefinitionListTransformer;
 import com.morethanheroic.swords.effect.domain.EffectSettingDefinitionHolder;
 import com.morethanheroic.swords.effect.service.domain.RawEffectDefinition;
 import lombok.RequiredArgsConstructor;

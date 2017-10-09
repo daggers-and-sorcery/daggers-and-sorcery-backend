@@ -11,12 +11,12 @@ import java.util.List;
 @Repository
 public interface SpellMapper {
 
-    @Select(value = "SELECT * FROM spells WHERE user_id = #{user_id}")
+    @Select("SELECT * FROM spells WHERE user_id = #{user_id}")
     List<SpellDatabaseEntity> getAllSpellsForUser(@Param("user_id") int userId);
 
-    @Select(value = "SELECT count(*) FROM spells WHERE user_id = #{user_id} AND spell_id = #{spell_id}")
+    @Select("SELECT count(*) FROM spells WHERE user_id = #{user_id} AND spell_id = #{spell_id}")
     int hasSpell(@Param("user_id") int userId, @Param("spell_id") int spellId);
 
-    @Insert(value = "INSERT INTO spells SET user_id = #{user_id}, spell_id = #{spell_id}")
+    @Insert("INSERT INTO spells SET user_id = #{user_id}, spell_id = #{spell_id}")
     void learnSpell(@Param("user_id") int userId, @Param("spell_id") int spellId);
 }

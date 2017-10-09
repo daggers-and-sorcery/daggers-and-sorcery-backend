@@ -3,10 +3,10 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-location')
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
 
-    compile project(':common-definition')
-    compile project(':xml-loader')
+    compile project(':swords-location')
+    compile project(':swords-quest')
 }
 
 apply plugin: 'spring-boot'

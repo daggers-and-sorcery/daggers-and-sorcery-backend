@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.tavern.service.chat.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionListTransformer;
+import com.morethanheroic.definition.transformer.DefinitionListTransformer;
 import com.morethanheroic.swords.tavern.domain.chat.ChatEntry;
 import com.morethanheroic.swords.tavern.repository.dao.ChatDatabaseEntry;
 import org.springframework.beans.factory.annotation.Autowired;

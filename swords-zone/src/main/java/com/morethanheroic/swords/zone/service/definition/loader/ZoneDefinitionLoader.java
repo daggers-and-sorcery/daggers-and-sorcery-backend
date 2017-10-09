@@ -6,13 +6,13 @@ import static java.util.stream.Collectors.toList;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.definition.loader.DefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.EnumDefinitionLoadingContext;
+import com.morethanheroic.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.zone.domain.ExplorationZone;
 import com.morethanheroic.swords.zone.domain.ZoneDefinition;
 import com.morethanheroic.swords.zone.service.definition.loader.domain.RawZoneDefinition;
 import com.morethanheroic.swords.zone.service.definition.transformer.ZoneDefinitionTransformer;
+import com.morethanheroic.xml.service.loader.EnumXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.EnumDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

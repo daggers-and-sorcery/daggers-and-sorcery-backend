@@ -1,12 +1,12 @@
 package com.morethanheroic.swords.monster.service.loader;
 
 import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.definition.loader.DefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
+import com.morethanheroic.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.monster.domain.MonsterDefinition;
 import com.morethanheroic.swords.monster.service.loader.domain.RawMonsterDefinition;
 import com.morethanheroic.swords.monster.service.transformer.MonsterDefinitionTransformer;
+import com.morethanheroic.xml.service.loader.NumericXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.NumericDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

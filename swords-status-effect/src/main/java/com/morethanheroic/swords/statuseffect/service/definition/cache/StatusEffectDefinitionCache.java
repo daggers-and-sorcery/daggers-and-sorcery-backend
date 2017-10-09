@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.statuseffect.service.definition.cache;
 
 import com.google.common.collect.ImmutableMap;
-import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectDefinition;
 import com.morethanheroic.swords.statuseffect.service.definition.loader.StatusEffectDefinitionLoader;
 import lombok.extern.slf4j.Slf4j;

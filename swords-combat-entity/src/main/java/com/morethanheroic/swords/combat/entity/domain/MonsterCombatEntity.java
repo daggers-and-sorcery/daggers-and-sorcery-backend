@@ -47,17 +47,16 @@ public class MonsterCombatEntity extends CombatEntity {
 
     @Override
     public DiceAttribute getDefense() {
-        final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
-
-        diceAttributeBuilder.setValue(monsterDefinition.getDefense());
-
-        return diceAttributeBuilder.build();
+        return DiceAttribute.builder()
+                .value(monsterDefinition.getDefense())
+                .build();
     }
 
     @Override
     public DiceAttribute getDamageReduction() {
         //TODO: Enable monsters to have this attribute too.
-        return new DiceAttribute.DiceAttributeBuilder().build();
+        return DiceAttribute.builder()
+                .build();
     }
 
     @Override
@@ -87,11 +86,9 @@ public class MonsterCombatEntity extends CombatEntity {
 
     @Override
     public DiceAttribute getSpellResistance() {
-        final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
-
-        diceAttributeBuilder.setValue(monsterDefinition.getSpellResistance());
-
-        return diceAttributeBuilder.build();
+        return DiceAttribute.builder()
+                .value(monsterDefinition.getSpellResistance())
+                .build();
     }
 
     @Override

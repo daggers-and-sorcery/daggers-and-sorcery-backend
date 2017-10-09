@@ -1,12 +1,10 @@
 package com.morethanheroic.swords.item.service.definition.transformer.modifier;
 
 import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.definition.transformer.DefinitionListTransformer;
+import com.morethanheroic.definition.transformer.DefinitionListTransformer;
 import com.morethanheroic.swords.item.domain.modifier.ItemModifierDefinition;
 import com.morethanheroic.swords.item.service.definition.loader.domain.RawItemModifierDefinition;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -19,11 +17,10 @@ import static java.util.stream.Collectors.toList;
  * Transform a {@link List} of {@link RawItemModifierDefinition} to a {@link List} of {@link ItemModifierDefinition}.
  */
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class ItemModifierDefinitionListTransformer implements DefinitionListTransformer<List<ItemModifierDefinition>,
         List<RawItemModifierDefinition>> {
 
-    @NonNull
     private final ItemModifierDefinitionTransformer itemModifierDefinitionTransformer;
 
     @Override

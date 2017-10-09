@@ -1,8 +1,8 @@
 package com.morethanheroic.swords;
 
-import com.morethanheroic.swords.common.sql.InstantHandler;
-import com.morethanheroic.swords.common.sql.LocalDateHandler;
-import com.morethanheroic.swords.common.sql.LocalTimeHandler;
+import com.morethanheroic.sql.InstantHandler;
+import com.morethanheroic.sql.LocalDateHandler;
+import com.morethanheroic.sql.LocalTimeHandler;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
-import java.net.URISyntaxException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,7 +22,7 @@ public class SqlConfig {
     private final DataSource dataSource;
 
     @Bean
-    public DataSourceTransactionManager transactionManager() throws URISyntaxException {
+    public DataSourceTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource);
     }
 

@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.recipe.service.definition.cache;
 
-import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.service.definition.exception.MissingRecipeException;
 import com.morethanheroic.swords.recipe.service.definition.loader.RecipeDefinitionLoader;
@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class RecipeDefinitionCache implements DefinitionCache<Integer, RecipeDef
     private final Map<Integer, RecipeDefinition> recipeDefinitionMap = new HashMap<>();
 
     @PostConstruct
-    private void initialize() throws IOException {
+    private void initialize() {
         final List<RecipeDefinition> recipeDefinitionList = recipeDefinitionLoader.loadDefinitions();
 
         log.info("Loaded " + recipeDefinitionList.size() + " recipe definitions.");

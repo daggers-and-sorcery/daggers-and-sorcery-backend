@@ -2,7 +2,7 @@ package com.morethanheroic.swords.configuration.service.definition.transformer;
 
 import com.morethanheroic.swords.configuration.service.definition.domain.ConfigurationDefinition;
 import com.morethanheroic.swords.configuration.service.definition.loader.domain.RawConfigurationDefinition;
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import org.springframework.stereotype.Service;
 
 @Service

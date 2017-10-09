@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.news.service.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.news.domain.NewsEntity;
 import com.morethanheroic.swords.news.repository.dao.NewsDatabaseEntity;
 import org.springframework.stereotype.Service;

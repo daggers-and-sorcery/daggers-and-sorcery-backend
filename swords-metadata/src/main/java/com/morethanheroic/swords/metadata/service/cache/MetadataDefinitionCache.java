@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.metadata.service.cache;
 
-import com.morethanheroic.swords.definition.cache.impl.MapBasedDefinitionCache;
+import com.morethanheroic.definition.cache.impl.MapBasedDefinitionCache;
 import com.morethanheroic.swords.metadata.domain.definition.MetadataDefinition;
 import com.morethanheroic.swords.metadata.service.loader.MetadataDefinitionLoader;
 import lombok.extern.slf4j.Slf4j;

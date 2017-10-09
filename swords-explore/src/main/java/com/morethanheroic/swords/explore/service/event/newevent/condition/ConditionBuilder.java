@@ -1,8 +1,10 @@
 package com.morethanheroic.swords.explore.service.event.newevent.condition;
 
 import com.morethanheroic.swords.explore.service.event.newevent.condition.impl.ItemCondition;
+import com.morethanheroic.swords.explore.service.event.newevent.condition.impl.MoneyCondition;
 import com.morethanheroic.swords.explore.service.event.newevent.condition.impl.MovementCondition;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
+import com.morethanheroic.swords.money.domain.MoneyType;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -28,6 +30,17 @@ public class ConditionBuilder {
         conditions.add(
                 ItemCondition.builder()
                         .itemDefinition(item)
+                        .amount(amount)
+                        .build()
+        );
+
+        return this;
+    }
+
+    public ConditionBuilder newMoneyCondition(final MoneyType type, final int amount) {
+        conditions.add(
+                MoneyCondition.builder()
+                        .type(type)
                         .amount(amount)
                         .build()
         );

@@ -3,8 +3,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':common-definition')
-    compile project(':xml-loader')
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
 }
 
 apply plugin: 'spring-boot'

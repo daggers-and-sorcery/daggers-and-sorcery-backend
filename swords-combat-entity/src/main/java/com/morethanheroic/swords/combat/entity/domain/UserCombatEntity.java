@@ -82,18 +82,19 @@ public class UserCombatEntity extends CombatEntity {
     }
 
     private DiceAttribute attributeCalculationToDiceAttribute(SimpleValueAttributeCalculationResult attributeCalculationResult) {
-        final DiceAttribute.DiceAttributeBuilder diceAttributeBuilder = new DiceAttribute.DiceAttributeBuilder();
-
-        diceAttributeBuilder.setValue(attributeCalculationResult.getValue());
-
         if (attributeCalculationResult instanceof DiceValueAttributeCalculationResult) {
-            diceAttributeBuilder.setD2(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD2());
-            diceAttributeBuilder.setD4(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD4());
-            diceAttributeBuilder.setD6(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD6());
-            diceAttributeBuilder.setD8(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD8());
-            diceAttributeBuilder.setD10(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD10());
+            return DiceAttribute.builder()
+                    .value(attributeCalculationResult.getValue())
+                    .d2(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD2())
+                    .d4(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD4())
+                    .d6(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD6())
+                    .d8(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD8())
+                    .d10(((DiceValueAttributeCalculationResult) attributeCalculationResult).getD10())
+                    .build();
+        } else {
+            return DiceAttribute.builder()
+                    .value(attributeCalculationResult.getValue())
+                    .build();
         }
-
-        return diceAttributeBuilder.build();
     }
 }

@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.equipment;
 
+import com.morethanheroic.dependencyinjection.inject.InjectAtReturn;
 import com.morethanheroic.entity.service.factory.EntityFactory;
-import com.morethanheroic.swords.dependency.InjectAtReturn;
+import com.morethanheroic.memoize.Memoize;
 import com.morethanheroic.swords.equipment.domain.EquipmentEntity;
-import com.morethanheroic.swords.memoize.Memoize;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.stereotype.Service;
 

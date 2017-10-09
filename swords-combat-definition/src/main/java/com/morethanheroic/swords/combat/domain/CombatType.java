@@ -7,5 +7,6 @@ public enum CombatType {
     EXPLORE,
     QUEST_1,
     QUEST_2,
-    QUEST_3
+    QUEST_3,
+    QUEST_4
 }

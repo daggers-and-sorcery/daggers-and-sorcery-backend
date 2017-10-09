@@ -5,13 +5,12 @@ dependencies {
 
     compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-    compile project(':common-definition')
-    compile project(':xml-loader')
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
+    compile group: 'com.morethanheroic', name: 'common-xml', version: '1.0.1'
 
-    compile project(':swords-attribute-definition')
-    compile project(':swords-user')
+    compile group: 'com.morethanheroic.swords', name: 'swords-attribute-definition', version: '1.0.1'
+    compile group: 'com.morethanheroic.swords', name: 'swords-race-definition', version: '1.0.2'
     compile project(':swords-skill')
-    compile project(':swords-race')
     compile project(':swords-item')
     compile project(':swords-dice')
 }

@@ -3,7 +3,7 @@ package com.morethanheroic.swords.configuration.service.definition.cache;
 import com.morethanheroic.swords.configuration.domain.Configuration;
 import com.morethanheroic.swords.configuration.service.definition.domain.ConfigurationDefinition;
 import com.morethanheroic.swords.configuration.service.definition.loader.ConfigurationDefinitionLoader;
-import com.morethanheroic.swords.definition.cache.impl.MapBasedDefinitionCache;
+import com.morethanheroic.definition.cache.impl.MapBasedDefinitionCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

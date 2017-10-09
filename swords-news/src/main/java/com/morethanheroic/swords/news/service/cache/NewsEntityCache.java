@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.news.service.cache;
 
-import com.morethanheroic.swords.definition.cache.EntityCache;
+import com.morethanheroic.definition.cache.EntityCache;
 import com.morethanheroic.swords.news.domain.NewsEntity;
 import com.morethanheroic.swords.news.repository.domain.NewsMapper;
 import com.morethanheroic.swords.news.service.transformer.NewsEntityTransformer;

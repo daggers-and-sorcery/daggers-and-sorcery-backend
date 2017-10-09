@@ -3,9 +3,9 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
+    compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
 
-    compile project(':common-definition')
+    compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 }
 
 apply plugin: 'spring-boot'

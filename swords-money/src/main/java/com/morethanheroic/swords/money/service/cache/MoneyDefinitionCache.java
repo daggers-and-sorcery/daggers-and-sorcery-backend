@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.money.service.cache;
 
-import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.loader.MoneyDefinitionLoader;

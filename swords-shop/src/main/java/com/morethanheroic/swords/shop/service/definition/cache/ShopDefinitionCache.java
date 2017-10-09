@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.shop.service.definition.cache;
 
-import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.shop.domain.ShopDefinition;
 import com.morethanheroic.swords.shop.service.definition.loader.ShopDefinitionLoader;
 import org.springframework.beans.factory.annotation.Autowired;

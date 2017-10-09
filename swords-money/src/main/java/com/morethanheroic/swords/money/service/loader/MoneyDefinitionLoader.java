@@ -1,13 +1,13 @@
 package com.morethanheroic.swords.money.service.loader;
 
 import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.definition.loader.DefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.EnumDefinitionLoadingContext;
+import com.morethanheroic.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.money.domain.MoneyDefinition;
 import com.morethanheroic.swords.money.domain.MoneyType;
 import com.morethanheroic.swords.money.service.loader.domain.RawMoneyDefinition;
 import com.morethanheroic.swords.money.service.transformer.MoneyDefinitionTransformer;
+import com.morethanheroic.xml.service.loader.EnumXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.EnumDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

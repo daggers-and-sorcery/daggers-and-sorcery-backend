@@ -5,9 +5,10 @@ import com.morethanheroic.swords.configuration.domain.Configuration;
 import com.morethanheroic.swords.configuration.service.definition.domain.ConfigurationDefinition;
 import com.morethanheroic.swords.configuration.service.definition.loader.domain.RawConfigurationDefinition;
 import com.morethanheroic.swords.configuration.service.definition.transformer.ConfigurationDefinitionTransformer;
-import com.morethanheroic.swords.definition.loader.DefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.EnumXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.EnumDefinitionLoadingContext;
+import com.morethanheroic.definition.loader.DefinitionLoader;
+
+import com.morethanheroic.xml.service.loader.EnumXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.EnumDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.morethanheroic.swords.recipe.service.definition.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionListTransformer;
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionListTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.recipe.domain.RecipeRequirement;
 import com.morethanheroic.swords.recipe.service.definition.loader.domain.RawRecipeItemRequirement;
 import com.morethanheroic.swords.recipe.service.definition.loader.domain.RawRecipeRequirement;

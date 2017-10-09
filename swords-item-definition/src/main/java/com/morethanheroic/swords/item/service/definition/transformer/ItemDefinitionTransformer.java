@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.service.definition.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.effect.service.transformer.EffectDefinitionListTransformer;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.definition.loader.domain.RawItemDefinition;

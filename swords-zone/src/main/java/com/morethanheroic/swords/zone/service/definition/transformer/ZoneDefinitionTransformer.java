@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.zone.service.definition.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.zone.domain.ExplorationZone;
 import com.morethanheroic.swords.zone.domain.ZoneDefinition;
 import com.morethanheroic.swords.zone.service.definition.loader.domain.RawZoneDefinition;

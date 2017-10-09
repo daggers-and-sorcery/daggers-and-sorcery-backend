@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.tavern.service.chat.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.tavern.domain.chat.ChatEntry;
 import com.morethanheroic.swords.tavern.repository.dao.ChatDatabaseEntry;
 import com.morethanheroic.swords.user.service.UserEntityFactory;

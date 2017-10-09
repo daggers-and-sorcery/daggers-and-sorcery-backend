@@ -1,12 +1,12 @@
 package com.morethanheroic.swords.witchhuntersguild.service.definition.loader;
 
 import com.google.common.collect.ImmutableList;
-import com.morethanheroic.swords.definition.loader.DefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.NumericXmlDefinitionLoader;
-import com.morethanheroic.swords.definition.service.loader.domain.NumericDefinitionLoadingContext;
+import com.morethanheroic.definition.loader.DefinitionLoader;
 import com.morethanheroic.swords.witchhuntersguild.domain.definition.WitchhuntersGuildJobDefinition;
 import com.morethanheroic.swords.witchhuntersguild.service.definition.loader.domain.RawWitchhuntersGuildJobDefinition;
 import com.morethanheroic.swords.witchhuntersguild.service.definition.transformer.WitchhuntersGuildJobDefinitionTransformer;
+import com.morethanheroic.xml.service.loader.NumericXmlDefinitionLoader;
+import com.morethanheroic.xml.service.loader.domain.NumericDefinitionLoadingContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

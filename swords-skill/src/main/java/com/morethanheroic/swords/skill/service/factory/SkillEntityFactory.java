@@ -1,8 +1,8 @@
 package com.morethanheroic.swords.skill.service.factory;
 
+import com.morethanheroic.dependencyinjection.inject.InjectAtReturn;
 import com.morethanheroic.entity.service.factory.EntityFactory;
-import com.morethanheroic.swords.dependency.InjectAtReturn;
-import com.morethanheroic.swords.memoize.Memoize;
+import com.morethanheroic.memoize.Memoize;
 import com.morethanheroic.swords.skill.domain.SkillEntity;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;

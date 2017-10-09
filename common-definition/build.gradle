@@ -1,4 +1,0 @@
-group 'com.morethanheroic.swords'
-version '0.0.1'
-
-apply plugin: 'java'

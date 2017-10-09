@@ -98,7 +98,9 @@ allprojects {
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
         compile group: 'com.google.guava', name: 'guava', version: guava_version
 
-        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.309'
+        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.318'
+
+        compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.2'
     }
 
     compileJava {
@@ -135,23 +137,26 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-session', version: '1.5.2'
     compile group: 'com.morethanheroic', name: 'common-application', version: '1.0.8'
+    compile group: 'com.morethanheroic', name: 'common-sql', version: '1.0.2'
+    compile group: 'com.morethanheroic', name: 'common-memoize', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-entity', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-security', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-xml', version: '1.0.1'
+    compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
+
+    compile group: 'com.morethanheroic.swords', name: 'swords-race-definition', version: '1.0.2'
+    compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.2'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 
-    compile project(':xml-loader')
-    compile project(':common-memoize')
     compile project(':common-validator')
-    compile project(':common-sql')
-    compile project(':common-dependency-injection')
 
     compile project(':swords-equipment')
     compile project(':swords-vampire')
-    compile project(':swords-user')
     compile project(':swords-response')
     compile project(':swords-skill')
     compile project(':swords-skill-scavenging')
-    compile project(':swords-race')
     compile project(':swords-effect')
     compile project(':swords-web')
     compile project(':swords-money')

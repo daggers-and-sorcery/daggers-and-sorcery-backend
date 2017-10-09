@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.statuseffect.service.definition.transformer;
 
-import com.morethanheroic.swords.definition.transformer.DefinitionTransformer;
+import com.morethanheroic.definition.transformer.DefinitionTransformer;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.StatusEffectDefinition;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectBasicModifierDefinition;
 import com.morethanheroic.swords.statuseffect.service.definition.domain.modifier.StatusEffectCustomModifierDefinition;

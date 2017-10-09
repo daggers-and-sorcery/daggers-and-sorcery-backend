@@ -16,7 +16,8 @@ public enum MonsterType {
     BEAST,
     GHOUL,
     VAMPIRE,
-    DEMON;
+    DEMON,
+    DRAGON;
 
     public String getName() {
         return WordUtils.capitalize(name().toLowerCase().replace("_", " "));

@@ -1,13 +1,12 @@
 package com.morethanheroic.swords.inventory.service;
 
+import com.morethanheroic.dependencyinjection.inject.InjectAtReturn;
 import com.morethanheroic.entity.service.factory.EntityFactory;
-import com.morethanheroic.swords.dependency.InjectAtReturn;
+import com.morethanheroic.memoize.Memoize;
 import com.morethanheroic.swords.inventory.domain.InventoryEntity;
-import com.morethanheroic.swords.memoize.Memoize;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

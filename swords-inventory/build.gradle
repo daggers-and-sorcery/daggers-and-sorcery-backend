@@ -10,7 +10,6 @@ dependencies {
     compile project(':swords-journal')
     compile project(':swords-money')
     compile project(':swords-item')
-    compile project(':swords-user')
     compile project(':swords-session')
 }
 

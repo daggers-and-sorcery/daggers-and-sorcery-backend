@@ -3,12 +3,12 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':common-memoize')
+    compile group: 'com.morethanheroic', name: 'common-memoize', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
     compile project(':common-cache')
-    compile project(':common-dependency-injection')
 
     compile project(':swords-item')
-    compile project(':swords-user')
+
     compile project(':swords-journal')
     compile project(':swords-money')
     compile project(':swords-inventory')

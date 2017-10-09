@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.service.definition.cache;
 
-import com.morethanheroic.swords.definition.cache.DefinitionCache;
+import com.morethanheroic.definition.cache.DefinitionCache;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.definition.loader.ItemDefinitionLoader;
 import lombok.RequiredArgsConstructor;

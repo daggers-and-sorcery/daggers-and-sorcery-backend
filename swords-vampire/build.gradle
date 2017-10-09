@@ -3,7 +3,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    compile project(':swords-user')
+
     compile project(':swords-metadata')
     compile project(':swords-shop')
     compile project(':swords-attribute')
