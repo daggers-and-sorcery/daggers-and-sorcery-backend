@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="laxika" id="20171010-1">
+        <insert tableName="news">
+            <column name="title" value="Welcome the Cursed Heroes!"/>
+            <column name="release_date" value="2017-10-10 00:00:00"/>
+            <column name="icon" value="update"/>
+            <column name="message">
+                <![CDATA[
+Welcome Adventurers!
+
+We are happy to announce the release of a new quest, the Cursed Heroes. This quest is by far our longest one, consist from 8000+ words and a lot of bossfights. It is accessible by finding an exploration event in the Woodland Cemetery. Be careful however, multiple bosses will await for you.
+
+Sadly the reward of the quest is not accessible at the moment, it will be released in the next update probably next week.
+
+Sincerely, Daggers & Sorcery Team
+                ]]>
+            </column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
