@@ -15,6 +15,7 @@ import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -31,7 +32,7 @@ public class CraftingRecipesService {
     private final UserBasicAttributeManipulator userBasicAttributeManipulator;
     private final LearnedRecipeEvaluator learnedRecipeEvaluator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public CraftingResult craft(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null || (recipeDefinition.getType() != RecipeType.CRAFTING && recipeDefinition.getType() != RecipeType.CRAFTING_RESOURCE) || !learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)) {
             return CraftingResult.INVALID_EVENT;

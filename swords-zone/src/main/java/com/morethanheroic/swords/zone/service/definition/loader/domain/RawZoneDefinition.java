@@ -24,4 +24,6 @@ public class RawZoneDefinition {
 
     @XmlElement(name = "maximum-level")
     private int maximumLevel;
+
+    private RawZoneAccessabilityDefinition accessibility;
 }

@@ -10,6 +10,7 @@ import com.morethanheroic.swords.event.service.EventRegistry;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -32,7 +33,7 @@ public class GatheringService {
      *
      * @param userEntity the user to start gathering to
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public GatheringResult gather(final UserEntity userEntity) {
         if (eventRegistry.getRegisteredEventCount(userEntity, EventType.HERBLORE_GATHERING) >= MAXIMUM_GATHERING_QUEUE_COUNT) {
             return GatheringResult.QUEUE_FULL;

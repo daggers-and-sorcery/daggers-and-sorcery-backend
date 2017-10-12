@@ -14,6 +14,7 @@ import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -42,7 +43,7 @@ public class LeatherworkingService {
     @Autowired
     private LearnedRecipeEvaluator learnedRecipeEvaluator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public LeatherworkingResult work(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null || !learnedRecipeEvaluator.hasRecipeLearned(userEntity, recipeDefinition)) {
             return LeatherworkingResult.INVALID_EVENT;

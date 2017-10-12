@@ -14,6 +14,7 @@ import com.morethanheroic.swords.witchhuntersguild.service.WitchhuntersGuildEnti
 import com.morethanheroic.swords.witchhuntersguild.service.definition.cache.WitchhuntersGuildJobDefinitionCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -27,7 +28,7 @@ public class WitchhuntersGuildHandInQuestCalculator {
     private final WitchhuntersGuildQuestUpdater witchhuntersGuildQuestUpdater;
     private final WitchhuntersGuildCalculator witchhuntersGuildCalculator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void handInQuest(final UserEntity userEntity) {
         final WitchhuntersGuildEntity witchhuntersGuildEntity = witchhuntersGuildEntityFactory.getEntity(userEntity);
 

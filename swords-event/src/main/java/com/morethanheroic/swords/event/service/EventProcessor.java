@@ -6,6 +6,7 @@ import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -24,7 +25,7 @@ public class EventProcessor {
     /**
      * Periodically checks for events that should be completed and process the completed events.
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Scheduled(fixedRate = EVENT_CHECK_RATE_IN_MILLISECONDS)
     public void processEvents() {
         eventMapper.getEndingEvents().forEach(this::processEvent);

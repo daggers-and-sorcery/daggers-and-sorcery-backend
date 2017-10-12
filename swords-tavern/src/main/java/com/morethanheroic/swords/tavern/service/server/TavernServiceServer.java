@@ -4,6 +4,7 @@ import com.morethanheroic.swords.tavern.domain.service.ServiceType;
 import com.morethanheroic.swords.tavern.service.server.context.ServingContext;
 import com.morethanheroic.swords.tavern.service.server.executor.ServingExecutor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
@@ -26,7 +27,7 @@ public class TavernServiceServer {
         this.executorMap = Collections.unmodifiableMap(executorMap);
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public boolean serve(ServiceType serviceType, ServingContext servingContext) {
         final ServingExecutor<ServingContext> servingExecutor = executorMap.get(serviceType);
 

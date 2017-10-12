@@ -6,13 +6,12 @@ import com.morethanheroic.swords.scavenging.domain.ScavengingEntity;
 import com.morethanheroic.swords.scavenging.service.ScavengingEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.beans.Transient;
 
 @RestController
 public class ScavengingController {
@@ -26,7 +25,7 @@ public class ScavengingController {
     @Autowired
     private ScavengingEntityFactory scavengingEntityFactory;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @RequestMapping(value = "/skill/scavenging/convert", method = RequestMethod.POST)
     public CharacterRefreshResponse convertMovementPoints(UserEntity user, @RequestParam int pointsToConvert) {
         final CharacterRefreshResponse response = responseFactory.newResponse(user);

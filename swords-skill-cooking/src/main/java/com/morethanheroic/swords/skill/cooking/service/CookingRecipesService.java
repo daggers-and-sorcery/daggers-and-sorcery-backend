@@ -14,6 +14,7 @@ import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -30,7 +31,7 @@ public class CookingRecipesService {
     private final RecipeEvaluator recipeEvaluator;
     private final UserBasicAttributeManipulator userBasicAttributeManipulator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public CookingResult cook(UserEntity userEntity, RecipeDefinition recipeDefinition) {
         if (!canCook(userEntity, recipeDefinition)) {
             return CookingResult.UNABLE_TO_COOK;

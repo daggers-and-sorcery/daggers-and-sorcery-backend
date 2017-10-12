@@ -9,6 +9,7 @@ import com.morethanheroic.swords.explore.service.event.MultiStageExplorationEven
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -22,7 +23,7 @@ public class ExplorationEventInfoGatherer {
     private final ExplorationResultFactory explorationResultFactory;
     private final ExplorationContextFactory explorationContextFactory;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ExplorationResult info(final UserEntity userEntity, final SessionEntity sessionEntity) {
         if (!userEntity.hasActiveExplorationEvent()) {
             return explorationResultFactory.newEmptyExplorationResult();

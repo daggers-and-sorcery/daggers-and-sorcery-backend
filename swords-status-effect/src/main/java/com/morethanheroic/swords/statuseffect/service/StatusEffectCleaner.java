@@ -4,6 +4,7 @@ import com.morethanheroic.swords.statuseffect.repository.domain.StatusEffectMapp
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -20,7 +21,7 @@ public class StatusEffectCleaner {
     /**
      * Remove expired status effects.
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Scheduled(fixedRate = CLEANING_RATE_IN_MILLISECONDS)
     public void cleanStatusEffects() {
         statusEffectMapper.removeExpiredStatusEffects();

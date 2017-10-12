@@ -15,6 +15,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class CreateCombatCalculator {
     private final CombatContextFactory combatContextFactory;
     private final AttackCombatCalculator attackCombatCalculator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public AttackResult createCombat(final CombatCreationContext combatCreationContext) {
         final UserEntity userEntity = combatCreationContext.getUserEntity();
         final MonsterDefinition monsterDefinition = combatCreationContext.getMonsterDefinition();

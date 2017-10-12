@@ -14,6 +14,7 @@ import com.morethanheroic.swords.explore.service.event.cache.ExplorationEventDef
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -34,12 +35,12 @@ public class ExplorationEventExplorer {
     private final UserBasicAttributeManipulator basicAttributeManipulator;
     private final ExplorationEventDefinitionCache explorationEventDefinitionCache;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ExplorationResult exploreNextStage(final UserEntity userEntity, final SessionEntity sessionEntity) {
         return explore(userEntity, sessionEntity, explorationEventDefinitionCache.getDefinition(userEntity.getActiveExplorationEvent()).getLocation(), userEntity.getActiveExplorationState());
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ExplorationResult explore(final UserEntity userEntity, final SessionEntity sessionEntity, final ExplorationZone location, final int nextState) {
         if (!canExplore(userEntity, nextState)) {
             return buildFailedExplorationResult();

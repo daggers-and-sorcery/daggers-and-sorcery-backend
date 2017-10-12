@@ -10,6 +10,7 @@ import com.morethanheroic.swords.spell.service.cache.SpellDefinitionCache;
 import com.morethanheroic.swords.spell.service.response.CastSpellResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class CastSpellController {
     private final SpellMapper spellMapper;
     private final CastSpellResponseBuilder castSpellResponseBuilder;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @RequestMapping("/spell/cast/{spellId}")
     @SuppressWarnings("unchecked")
     public CharacterRefreshResponse castSpell(UserEntity userEntity, SessionEntity sessionEntity, @RequestParam Map<String, String> allRequestParams, @PathVariable int spellId) {

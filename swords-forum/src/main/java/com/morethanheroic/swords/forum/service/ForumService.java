@@ -9,6 +9,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -107,7 +108,7 @@ public class ForumService {
                 .build();
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void createTopic(final UserEntity userEntity, final CreateTopicContext createTopicContext) {
         final ForumTopicDatabaseEntity newForumTopicEntity = new ForumTopicDatabaseEntity();
 
@@ -129,7 +130,7 @@ public class ForumService {
         forumRepository.handleNewPostOnCategory(createTopicContext.getParentCategory(), userEntity.getId());
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void createNewComment(UserEntity userEntity, CreateCommentContext createCommentContext) {
         final ForumTopicDatabaseEntity forumTopicDatabaseEntity = forumRepository.getTopic(createCommentContext.getTopicId());
 

@@ -12,6 +12,7 @@ import com.morethanheroic.swords.quest.service.entity.domain.QuestEntityFactoryC
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -21,7 +22,7 @@ public class QuestExplorationEventInfoGatherer {
     private final QuestEntityFactory questEntityFactory;
     private final ExplorationEventHandlerCache explorationEventHandlerCache;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ExplorationResult info(final UserEntity userEntity, final QuestDefinition questDefinition) {
         return buildSuccessfulInfoResult(userEntity, buildExplorationContextForQuest(userEntity, questDefinition));
     }

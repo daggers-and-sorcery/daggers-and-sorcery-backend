@@ -10,6 +10,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -23,7 +24,7 @@ public class FletchingService {
 
     private final FletchingEvaluator fletchingEvaluator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public FletchingResult fletch(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null) {
             log.info("User was unable to fetch the recipe because it doesn't exists.");

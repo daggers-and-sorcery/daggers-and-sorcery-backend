@@ -14,6 +14,7 @@ import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -39,7 +40,7 @@ public class JewelcraftingGemcuttingService {
      * @param recipeDefinition the recipe used in gamecutting
      * @return the result of the gamecutting
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public GemcuttingResult cut(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.JEWELCRAFTING_GEMCUTTING) {
             return GemcuttingResult.INVALID_EVENT;
