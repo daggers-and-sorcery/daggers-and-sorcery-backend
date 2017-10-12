@@ -15,6 +15,7 @@ import com.morethanheroic.swords.spell.domain.SpellDefinition;
 import com.morethanheroic.swords.spell.service.UseSpellService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class UseSpellCombatCalculator {
     private final UseSpellService useSpellService;
     private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public AttackResult useSpell(final CombatContext combatContext, final SessionEntity sessionEntity, final SpellDefinition spellDefinition) {
         final CombatEffectDataHolder combatEffectDataHolder = new CombatEffectDataHolder(new HashMap<>(), sessionEntity);
 

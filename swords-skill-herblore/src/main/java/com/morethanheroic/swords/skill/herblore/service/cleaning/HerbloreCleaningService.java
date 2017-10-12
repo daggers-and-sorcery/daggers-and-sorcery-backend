@@ -14,6 +14,7 @@ import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -39,7 +40,7 @@ public class HerbloreCleaningService {
      * @param recipeDefinition the recipe used in the cleaning
      * @return the result of the cleaning
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public CleaningResult clean(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.HERBLORE_CLEANING) {
             return CleaningResult.INVALID_EVENT;

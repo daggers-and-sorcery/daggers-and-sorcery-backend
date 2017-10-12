@@ -14,6 +14,7 @@ import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -29,7 +30,7 @@ public class ImbuingService {
     private final RecipeRequirementEvaluator recipeRequirementEvaluator;
     private final UserBasicAttributeManipulator userBasicAttributeManipulator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ImbuingResult craft(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.IMBUING) {
             return ImbuingResult.INVALID_RECIPE;

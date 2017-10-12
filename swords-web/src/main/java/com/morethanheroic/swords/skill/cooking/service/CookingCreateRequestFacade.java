@@ -11,6 +11,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -22,7 +23,7 @@ public class CookingCreateRequestFacade {
     private final CookingRecipesService cookingRecipesService;
     private final RecipeDefinitionCache recipeDefinitionCache;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Response handleCookingCreateRequest(UserEntity userEntity, CookingCreateRequest cookingCreateRequest) {
         cookingCreateRequestValidator.validate(cookingCreateRequest);
 

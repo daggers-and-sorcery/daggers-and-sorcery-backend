@@ -9,6 +9,7 @@ import com.morethanheroic.swords.skill.domain.SkillType;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -19,17 +20,17 @@ public class CombatCalculator {
     private final CombatExperienceMapper combatExperienceMapper;
     private final MonsterDefinitionCache monsterDefinitionCache;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public boolean isCombatRunning(final UserEntity userEntity, final CombatType combatType) {
         return combatMapper.getRunningCombat(userEntity.getId(), combatType) != null;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void addCombatExperience(final UserEntity userEntity, final SkillType skillType, final int amount) {
         combatExperienceMapper.addExperience(userEntity.getId(), skillType, amount);
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public MonsterDefinition getOpponentInRunningCombat(UserEntity userEntity, final CombatType combatType) {
         return monsterDefinitionCache.getDefinition(combatMapper.getRunningCombat(userEntity.getId(), combatType).getMonsterId());
     }

@@ -14,6 +14,7 @@ import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnComba
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class UseItemCombatCalculator {
     private final CombatTeardownCalculator combatTeardownCalculator;
     private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public AttackResult useItem(final CombatContext combatContext, final SessionEntity sessionEntity, final ItemDefinition itemDefinition) {
         final List<CombatStep> combatSteps = new ArrayList<>();
 

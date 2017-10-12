@@ -12,6 +12,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -24,7 +25,7 @@ public class BuyingService {
     private final MarketEntityFactory marketEntityFactory;
     private final SellingFeeCalculator sellingFeeCalculator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public BuyingResult buyFromMarket(final UserEntity userEntity, final int marketEntityId) {
         final MarketEntity marketEntity = marketEntityFactory.getEntity(marketEntityId);
 

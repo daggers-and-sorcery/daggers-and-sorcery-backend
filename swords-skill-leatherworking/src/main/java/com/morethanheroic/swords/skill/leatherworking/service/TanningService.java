@@ -13,6 +13,7 @@ import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -38,7 +39,7 @@ public class TanningService {
     @Autowired
     private UserBasicAttributeManipulator userBasicAttributeManipulator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public TanningResult tan(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null) {
             return TanningResult.INVALID_EVENT;

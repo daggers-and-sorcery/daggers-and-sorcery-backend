@@ -15,6 +15,7 @@ import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class ShopService {
     private final ShopAvailabilityCalculator shopAvailabilityCalculator;
 
     //TODO: Check that the shop is in the same location as the player.
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void userBuyItem(final UserEntity userEntity, final ShopEntity shopEntity, final ItemDefinition itemDefinition) {
         if (!shopAvailabilityCalculator.isAvailable(userEntity, shopEntity.getShopDefinition())) {
             log.warn("The player tried to buy in a shop: " + itemDefinition + " where his access is disabled.");
@@ -72,7 +73,7 @@ public class ShopService {
     }
 
     //TODO: Check that the shop is in the same location as the player.
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void userSellItem(final UserEntity userEntity, final ShopEntity shopEntity, final ItemDefinition itemDefinition, final IdentificationType itemIdentificationType) {
         if (!shopAvailabilityCalculator.isAvailable(userEntity, shopEntity.getShopDefinition())) {
             log.warn("The player tried to buy in a shop: " + itemDefinition + " where his access is disabled.");

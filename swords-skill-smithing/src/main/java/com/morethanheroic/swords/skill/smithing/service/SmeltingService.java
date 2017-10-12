@@ -14,6 +14,7 @@ import com.morethanheroic.swords.skill.smithing.domain.SmeltingResult;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -32,7 +33,7 @@ public class SmeltingService {
     private final RecipeRequirementEvaluator recipeRequirementEvaluator;
     private final UserBasicAttributeManipulator userBasicAttributeManipulator;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public SmeltingResult smelt(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         if (recipeDefinition == null || recipeDefinition.getType() != RecipeType.SMITHING_SMELTING) {
             return SmeltingResult.INVALID_EVENT;

@@ -11,6 +11,7 @@ import com.morethanheroic.swords.user.view.request.domain.registration.Registrat
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -34,7 +35,7 @@ public class RegistrationController {
     private final RegistrationEventDispatcher registrationEventDispatcher;
 
     @PostMapping("/user/register")
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     //TODO: Use Response.
     public ResponseEntity<Object> register(@Valid @RequestBody RegistrationRequest registrationRequest, BindingResult result) {
         if (!registrationRequest.getPasswordFirst().equals(registrationRequest.getPasswordSecond())) {

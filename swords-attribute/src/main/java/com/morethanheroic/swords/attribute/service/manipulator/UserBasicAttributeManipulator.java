@@ -8,6 +8,7 @@ import com.morethanheroic.swords.attribute.service.calc.domain.data.AttributeDat
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * you set higher amounts than that.
  */
 @Service
-@Transactional(propagation = Propagation.MANDATORY)
+@Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.SERIALIZABLE)
 @RequiredArgsConstructor
 public class UserBasicAttributeManipulator {
 

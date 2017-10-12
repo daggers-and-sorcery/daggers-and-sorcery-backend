@@ -2,18 +2,15 @@ package com.morethanheroic.swords.combat.service.attack;
 
 import com.morethanheroic.swords.combat.domain.AttackResult;
 import com.morethanheroic.swords.combat.domain.CombatContext;
-import com.morethanheroic.swords.combat.service.calc.teardown.CombatTeardownCalculator;
-import com.morethanheroic.swords.combat.step.domain.CombatStep;
-import com.morethanheroic.swords.combat.entity.domain.MonsterCombatEntity;
-import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
-import com.morethanheroic.swords.combat.repository.domain.CombatMapper;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
-import com.morethanheroic.swords.combat.service.calc.terminate.CombatTerminator;
 import com.morethanheroic.swords.combat.service.calc.initialisation.InitialisationCalculator;
+import com.morethanheroic.swords.combat.service.calc.teardown.CombatTeardownCalculator;
 import com.morethanheroic.swords.combat.service.calc.turn.event.StartTurnCombatEventRunner;
 import com.morethanheroic.swords.combat.service.event.turn.domain.StartTurnCombatEventContext;
+import com.morethanheroic.swords.combat.step.domain.CombatStep;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -29,7 +26,7 @@ public class AttackCombatCalculator {
     private final CombatTeardownCalculator combatTeardownCalculator;
     private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public AttackResult attack(final CombatContext combatContext) {
         final List<CombatStep> combatSteps = new ArrayList<>();
 

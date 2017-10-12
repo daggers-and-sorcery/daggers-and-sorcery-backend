@@ -7,6 +7,7 @@ import com.morethanheroic.swords.market.repository.repository.MarketMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -17,7 +18,7 @@ public class CancelListingService {
     private final InventoryEntityFactory inventoryEntityFactory;
     private final MarketMapper marketMapper;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void cancelListing(final UserEntity userEntity, final int marketEntityId) {
         final MarketEntity marketEntity = marketEntityFactory.getEntity(marketEntityId);
 
