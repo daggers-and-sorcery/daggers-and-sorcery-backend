@@ -76,4 +76,6 @@ include 'swords-skill-crafting'
 include 'swords-skill-crafting-web'
 include 'swords-skill-imbuing'
 include 'swords-skill-imbuing-web'
+include 'swords-skill-tailoring'
+include 'swords-skill-tailoring-web'
 
