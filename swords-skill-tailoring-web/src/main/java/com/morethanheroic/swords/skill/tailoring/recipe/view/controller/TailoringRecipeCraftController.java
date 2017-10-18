@@ -27,7 +27,7 @@ public class TailoringRecipeCraftController {
 
     @PostMapping("/skill/tailoring/recipe/craft")
     public Response craft(final UserEntity userEntity, @RequestBody @Valid final TailoringCraftRequest tailoringCraftRequest) {
-        log.info("Got a call for the jewelcrafting controller.");
+        log.info("Got a call for the tailoring controller.");
 
         final TailoringResult tailoringResult = tailoringRecipesService.create(userEntity, recipeDefinitionCache.getDefinition(tailoringCraftRequest.getRecipeId()));
 

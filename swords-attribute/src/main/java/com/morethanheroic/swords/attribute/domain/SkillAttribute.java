@@ -41,7 +41,8 @@ public enum SkillAttribute implements Attribute {
     HERBLORE,
     JEWELCRAFTING,
     CRAFTING,
-    IMBUING;
+    IMBUING,
+    TAILORING;
 
     @Override
     public AttributeType getAttributeType() {

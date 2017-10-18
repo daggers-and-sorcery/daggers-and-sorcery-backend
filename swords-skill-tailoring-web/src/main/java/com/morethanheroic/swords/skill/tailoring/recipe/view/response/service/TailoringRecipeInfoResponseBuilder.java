@@ -31,7 +31,7 @@ public class TailoringRecipeInfoResponseBuilder implements ResponseBuilder<Tailo
         response.setData("recipes", recipeListPartialResponseBuilder.build(
                 RecipeListPartialResponseBuilderConfiguration.builder()
                         .userEntity(tailoringRecipeInfoResponseBuilderConfiguration.getUserEntity())
-                        .recipeType(RecipeType.JEWELCRAFTING)
+                        .recipeType(RecipeType.TAILORING)
                         .build()
                 )
         );

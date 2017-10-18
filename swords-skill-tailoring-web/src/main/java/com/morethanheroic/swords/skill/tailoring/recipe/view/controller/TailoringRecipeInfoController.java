@@ -14,7 +14,7 @@ public class TailoringRecipeInfoController {
 
     private final TailoringRecipeInfoResponseBuilder tailoringRecipeInfoResponseBuilder;
 
-    @GetMapping("/skill/jewelcrafting/recipe/info")
+    @GetMapping("/skill/tailoring/recipe/info")
     public Response recipeInfo(final UserEntity userEntity) {
         return tailoringRecipeInfoResponseBuilder.build(
                 TailoringRecipeInfoResponseBuilderConfiguration.builder()
