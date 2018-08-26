@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * Methods to calculate percentages.
+ *
+ * @deprecated Use the common-math dependency.
  */
 @Service
+@Deprecated
 @RequiredArgsConstructor
 public class PercentageCalculator {
 
