@@ -100,7 +100,7 @@ allprojects {
 
         compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.320'
 
-        compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.2'
+        compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.3'
     }
 
     compileJava {
@@ -145,7 +145,7 @@ dependencies {
     compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
 
     compile group: 'com.morethanheroic.swords', name: 'swords-race-definition', version: '1.0.2'
-    compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.2'
+    compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.3'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'

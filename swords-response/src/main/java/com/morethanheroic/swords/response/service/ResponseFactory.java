@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * Create new {@link CharacterRefreshResponse} objects based on the data provided in the {@link UserEntity}.
  */
-@Service
+@Service("swordsResponseFactory")
 @RequiredArgsConstructor
 public class ResponseFactory {
 

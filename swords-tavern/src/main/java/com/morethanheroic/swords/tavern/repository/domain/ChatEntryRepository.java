@@ -2,12 +2,12 @@ package com.morethanheroic.swords.tavern.repository.domain;
 
 import com.morethanheroic.swords.tavern.repository.dao.ChatDatabaseEntry;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface ChatEntryRepository {
 
     @Select("SELECT * FROM chat ORDER BY writing_time DESC LIMIT 25")

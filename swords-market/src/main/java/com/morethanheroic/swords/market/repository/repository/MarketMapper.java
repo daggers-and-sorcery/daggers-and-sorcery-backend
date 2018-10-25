@@ -3,16 +3,11 @@ package com.morethanheroic.swords.market.repository.repository;
 import com.morethanheroic.swords.market.repository.domain.MarketDatabaseEntity;
 import com.morethanheroic.swords.market.repository.domain.MarketDatabaseInformation;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface MarketMapper {
 
     @Select("SELECT * FROM market WHERE id = #{id}")

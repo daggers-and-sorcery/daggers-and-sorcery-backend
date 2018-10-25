@@ -1,16 +1,12 @@
 package com.morethanheroic.swords.skill.repository.domain;
 
 import com.morethanheroic.swords.skill.repository.dao.SkillDatabaseEntity;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.*;
 
 /**
  * Contains mappings to sql queries to access skill data.
  */
-@Repository
+@Mapper
 public interface SkillMapper {
 
     @Insert("INSERT INTO skills SET user_id = #{userId}")

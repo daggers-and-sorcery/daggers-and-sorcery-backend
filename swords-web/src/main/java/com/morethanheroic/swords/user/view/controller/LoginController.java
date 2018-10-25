@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.user.view.controller;
 
-import com.morethanheroic.login.domain.LoginRequest;
+import com.morethanheroic.login.view.login.username.request.domain.UsernameBasedLoginRequest;
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.session.SessionAttributeType;
@@ -25,7 +25,7 @@ public class LoginController {
     private final LoginResponseBuilder loginResponseBuilder;
 
     @PostMapping("/user/login")
-    public Response login(final SessionEntity sessionEntity, @RequestBody final LoginRequest loginRequest) throws UnsupportedEncodingException {
+    public Response login(final SessionEntity sessionEntity, @RequestBody final UsernameBasedLoginRequest loginRequest) throws UnsupportedEncodingException {
         final UserEntity userEntity = userEntityFactory.getEntity(loginRequest.getUsername(), loginRequest.getPassword());
 
         if (userEntity != null) {

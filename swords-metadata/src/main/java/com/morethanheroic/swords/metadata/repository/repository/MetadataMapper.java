@@ -1,13 +1,9 @@
 package com.morethanheroic.swords.metadata.repository.repository;
 
 import com.morethanheroic.swords.metadata.repository.dao.MetadataDatabaseEntity;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.*;
 
-@Repository
+@Mapper
 public interface MetadataMapper {
 
     @Select("SELECT * FROM user_meta WHERE user_id = #{user_id} AND meta_id = #{meta_id}")

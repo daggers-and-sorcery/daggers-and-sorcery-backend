@@ -2,15 +2,11 @@ package com.morethanheroic.swords.combat.repository.domain;
 
 import com.morethanheroic.swords.combat.repository.dao.CombatExperienceDatabaseEntity;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface CombatExperienceMapper {
 
     //UNSAFE! If we ever going to change to master-slave based mysql setup we should fix this!

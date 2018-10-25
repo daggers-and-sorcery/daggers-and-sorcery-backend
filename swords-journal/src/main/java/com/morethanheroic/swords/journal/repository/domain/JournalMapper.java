@@ -3,13 +3,13 @@ package com.morethanheroic.swords.journal.repository.domain;
 import com.morethanheroic.swords.journal.domain.JournalType;
 import com.morethanheroic.swords.journal.repository.dao.JournalDatabaseEntity;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface JournalMapper {
 
     @Insert("INSERT INTO journal SET user_id = #{user_id}, journal_type = #{type}, journal_id = #{journal_id} ON DUPLICATE KEY UPDATE user_id = user_id")

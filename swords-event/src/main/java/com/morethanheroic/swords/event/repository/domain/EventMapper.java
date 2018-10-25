@@ -2,15 +2,11 @@ package com.morethanheroic.swords.event.repository.domain;
 
 import com.morethanheroic.swords.event.domain.EventType;
 import com.morethanheroic.swords.event.repository.dao.EventDatabaseEntity;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface EventMapper {
 
     @Select("SELECT * FROM events WHERE ending_date < NOW()")

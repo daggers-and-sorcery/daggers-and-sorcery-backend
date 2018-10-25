@@ -2,11 +2,10 @@ package com.morethanheroic.swords.inventory.repository.domain;
 
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface InventoryMapper {
 
     //UNSAFE! If we ever going to change to master-slave based mysql setup we should fix this!

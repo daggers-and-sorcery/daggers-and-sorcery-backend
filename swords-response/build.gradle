@@ -5,7 +5,7 @@ dependencies {
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jackson_version
 
-    compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.3'
+    compile group: 'com.morethanheroic', name: 'common-response', version: '1.0.4'
 
     compile project(':swords-attribute')
     compile project(':swords-metadata')

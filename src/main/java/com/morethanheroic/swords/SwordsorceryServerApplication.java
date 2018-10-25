@@ -4,6 +4,7 @@ import com.morethanheroic.application.web.WebApplication;
 import com.morethanheroic.session.configuration.EnableSessionManagement;
 import com.morethanheroic.swords.regeneration.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.user.view.resolver.UserEntityHandlerMethodArgumentResolver;
+import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -14,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -56,7 +56,7 @@ import java.util.Random;
                 "/witchhunters-guild/*",
         }
 )
-@MapperScan(value = "com.morethanheroic.swords", annotationClass = Repository.class)
+@MapperScan(value = "com.morethanheroic", annotationClass = Mapper.class)
 public class SwordsorceryServerApplication extends WebApplication {
 
     public static void main(String[] args) {
