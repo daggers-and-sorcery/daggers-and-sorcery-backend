@@ -7,6 +7,3 @@ dependencies {
     compile project(':swords-combat')
     compile project(':swords-response')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

@@ -8,6 +8,3 @@ dependencies {
     compile project(':swords-skill')
     
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

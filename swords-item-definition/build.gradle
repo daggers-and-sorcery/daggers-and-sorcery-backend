@@ -8,6 +8,3 @@ dependencies {
     compile project(':swords-money')
     compile project(':swords-effect')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

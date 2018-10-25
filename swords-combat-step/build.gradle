@@ -8,6 +8,3 @@ dependencies {
 
     compile project(':common-localization')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

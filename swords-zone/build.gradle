@@ -8,6 +8,3 @@ dependencies {
     compile project(':swords-location')
     compile project(':swords-quest')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

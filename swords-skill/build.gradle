@@ -15,8 +15,5 @@ dependencies {
     compile project(':swords-registration')
 }
 
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false
-
 apply plugin: 'findbugs'
 findbugs findbugs_config

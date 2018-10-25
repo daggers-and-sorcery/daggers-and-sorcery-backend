@@ -8,6 +8,3 @@ dependencies {
     compile project(':swords-skill-web')
     compile project(':swords-recipe-web')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

@@ -49,6 +49,3 @@ dependencies {
     compile project(':swords-equipment-web')
     compile project(':swords-character-spells-web')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

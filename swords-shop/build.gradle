@@ -10,6 +10,3 @@ dependencies {
     compile project(':swords-inventory')
     compile project(':swords-session')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false
