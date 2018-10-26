@@ -8,13 +8,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -61,12 +60,6 @@ public class SwordsorceryServerApplication extends WebApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SwordsorceryServerApplication.class, args);
-    }
-
-    //TODO: Move these beans a separate config files!
-    @Bean
-    public ShaPasswordEncoder shaPasswordEncoder() {
-        return new ShaPasswordEncoder(256);
     }
 
     @Override
