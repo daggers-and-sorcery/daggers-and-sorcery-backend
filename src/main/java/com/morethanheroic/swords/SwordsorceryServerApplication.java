@@ -1,7 +1,9 @@
 package com.morethanheroic.swords;
 
+import com.morethanheroic.application.configuration.CorsProperties;
+import com.morethanheroic.application.configuration.ResourcesProperties;
 import com.morethanheroic.application.web.WebApplication;
-import com.morethanheroic.session.configuration.EnableSessionManagement;
+import com.morethanheroic.dependencyinjection.resolver.HandlerMethodArgumentResolverRegistrationBean;
 import com.morethanheroic.swords.regeneration.interceptor.RegenerationInterceptor;
 import com.morethanheroic.swords.user.view.resolver.UserEntityHandlerMethodArgumentResolver;
 import org.apache.ibatis.annotations.Mapper;
@@ -38,28 +40,17 @@ import java.util.Random;
 @EnableWebMvc
 @EnableScheduling
 @EnableTransactionManagement
-@EnableSessionManagement(
-        sessionProtectedUrls = {
-                "/user/logout",
-                "/character/*",
-                "/map/*",
-                "/shop/*",
-                "/equip/*",
-                "/item/use/*",
-                "/journal/*",
-                "/combat/*",
-                "/skill/*",
-                "/spell/*",
-                "/explore/*",
-                "/tavern/*",
-                "/witchhunters-guild/*",
-        }
-)
 @MapperScan(value = "com.morethanheroic", annotationClass = Mapper.class)
 public class SwordsorceryServerApplication extends WebApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SwordsorceryServerApplication.class, args);
+    }
+
+    public SwordsorceryServerApplication(
+            final List<HandlerMethodArgumentResolverRegistrationBean> handlerMethodArgumentResolverRegistrationBeans,
+            final CorsProperties corsProperties, final ResourcesProperties resourcesProperties) {
+        super(handlerMethodArgumentResolverRegistrationBeans, corsProperties, resourcesProperties);
     }
 
     @Override
