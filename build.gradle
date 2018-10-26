@@ -103,9 +103,9 @@ allprojects {
     }
 
     dependencies {
-        compile group: 'org.projectlombok', name: 'lombok'
         compile group: 'log4j', name: 'log4j', version: '1.2.17'
         compile group: 'com.google.guava', name: 'guava', version: guava_version
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
 
         compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.320'
         compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.3'
@@ -148,7 +148,7 @@ dependencies {
     compile group: 'com.morethanheroic', name: 'common-sql', version: '1.0.2'
     compile group: 'com.morethanheroic', name: 'common-memoize', version: '1.0.0'
     compile group: 'com.morethanheroic', name: 'common-entity', version: '1.0.0'
-    compile group: 'com.morethanheroic', name: 'common-security', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-security', version: '2.0.0'
     compile group: 'com.morethanheroic', name: 'common-xml', version: '1.0.1'
     compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
 
@@ -176,7 +176,6 @@ dependencies {
     compile project(':swords-inventory')
     compile project(':swords-registration')
     compile project(':swords-combat')
-    compile project(':swords-settings')
 }
 
 apply plugin: 'application'

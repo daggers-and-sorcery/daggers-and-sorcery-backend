@@ -8,7 +8,6 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-login', version: '1.6.18'
 
-    compile project(':common-security')
     compile project(':common-validator')
 
     compile project(':swords-witchhunters-guild')

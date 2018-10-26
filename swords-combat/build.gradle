@@ -10,7 +10,6 @@ dependencies {
     compile project(':swords-combat-bonus')
     compile project(':swords-combat-step')
     compile project(':swords-combat-event')
-    compile project(':swords-combat-special-attribute')
     compile project(':swords-combat-life-steal')
     compile project(':swords-combat-monster-type-damage')
     compile project(':swords-combat-definition')
