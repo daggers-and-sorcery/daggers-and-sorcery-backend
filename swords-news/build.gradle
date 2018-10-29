@@ -8,9 +8,6 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 }
 
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false
-
 apply plugin: 'checkstyle'
 checkstyle checkstyle_config
 

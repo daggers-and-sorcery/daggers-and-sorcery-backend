@@ -8,6 +8,3 @@ dependencies {
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

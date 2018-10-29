@@ -1,13 +1,9 @@
 package com.morethanheroic.swords.equipment.repository.domain;
 
 import com.morethanheroic.swords.equipment.repository.dao.EquipmentDatabaseEntity;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.*;
 
-@Repository
+@Mapper
 public interface EquipmentMapper {
 
     @Select("SELECT * FROM equipment WHERE user_id = #{userId}")

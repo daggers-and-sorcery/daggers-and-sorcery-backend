@@ -1,12 +1,7 @@
 package com.morethanheroic.swords.statuseffect.repository.domain;
 
 import com.morethanheroic.swords.statuseffect.repository.dao.StatusEffectDatabaseEntity;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.*;
 
 import java.time.Instant;
 import java.util.List;
@@ -14,7 +9,7 @@ import java.util.List;
 /**
  * Contains the database requests for the status effect domain.
  */
-@Repository
+@Mapper
 public interface StatusEffectMapper {
 
     @Select("SELECT * FROM status_effect WHERE user_id = #{userId}")

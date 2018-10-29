@@ -8,9 +8,6 @@ dependencies {
     compile group: 'com.google.code.findbugs', name: 'findbugs', version: findbugs_version
 }
 
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false
-
 apply plugin: 'checkstyle'
 checkstyle checkstyle_config
 

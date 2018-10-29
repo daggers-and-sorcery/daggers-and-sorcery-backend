@@ -6,6 +6,3 @@ dependencies {
 
     compile project(':swords-attribute')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

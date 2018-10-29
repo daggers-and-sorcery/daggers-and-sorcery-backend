@@ -2,12 +2,11 @@ package com.morethanheroic.swords.shop.repository.domain;
 
 import com.morethanheroic.swords.shop.repository.dao.ShopItemDatabaseEntity;
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 //TODO: Rename item_amount to amount
-@Repository
+@Mapper
 public interface ShopMapper {
 
     @Select("SELECT * FROM shop_stock WHERE shop_id = #{shop_id}")

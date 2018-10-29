@@ -8,9 +8,5 @@ dependencies {
 
     compile project(':swords-inventory')
     compile project(':swords-skill')
-    compile project(':swords-settings')
     compile project(':swords-metadata')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

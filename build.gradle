@@ -19,13 +19,21 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.5.7.RELEASE'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.0.6.RELEASE'
     }
 }
 
 allprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
+
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.boot:spring-boot-starter-parent:2.0.6.RELEASE'
+        }
+    }
 
     repositories {
         maven {
@@ -95,12 +103,12 @@ allprojects {
     }
 
     dependencies {
-        compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
+        compile group: 'log4j', name: 'log4j', version: '1.2.17'
         compile group: 'com.google.guava', name: 'guava', version: guava_version
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
 
         compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.324'
-
-        compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.2'
+        compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.3'
     }
 
     compileJava {
@@ -135,17 +143,17 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.0'
     compile group: 'org.mybatis', name: 'mybatis', version: mybatis_version
 
-    compile group: 'com.morethanheroic', name: 'common-session', version: '1.5.2'
-    compile group: 'com.morethanheroic', name: 'common-application', version: '1.0.8'
+    compile group: 'com.morethanheroic', name: 'common-session', version: '2.3.0'
+    compile group: 'com.morethanheroic', name: 'common-application', version: '1.2.3'
     compile group: 'com.morethanheroic', name: 'common-sql', version: '1.0.2'
     compile group: 'com.morethanheroic', name: 'common-memoize', version: '1.0.0'
     compile group: 'com.morethanheroic', name: 'common-entity', version: '1.0.0'
-    compile group: 'com.morethanheroic', name: 'common-security', version: '1.0.0'
+    compile group: 'com.morethanheroic', name: 'common-security', version: '2.0.0'
     compile group: 'com.morethanheroic', name: 'common-xml', version: '1.0.1'
     compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
 
     compile group: 'com.morethanheroic.swords', name: 'swords-race-definition', version: '1.0.2'
-    compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.2'
+    compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.3'
 
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
@@ -168,12 +176,11 @@ dependencies {
     compile project(':swords-inventory')
     compile project(':swords-registration')
     compile project(':swords-combat')
-    compile project(':swords-settings')
 }
 
 apply plugin: 'application'
 mainClassName = 'com.morethanheroic.swords.SwordsorceryServerApplication'
 
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 task stage(dependsOn: ['clean', 'installApp'])

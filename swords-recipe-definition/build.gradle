@@ -10,6 +10,3 @@ dependencies {
     compile project(':swords-item-definition')
     compile project(':swords-skill-definition')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

@@ -7,8 +7,11 @@ import java.util.Random;
 
 /**
  * Contains various calculations with random numbers.
+ *
+ * @deprecated Use the common-math dependency.
  */
 @Service
+@Deprecated
 @RequiredArgsConstructor
 public class RandomCalculator {
 

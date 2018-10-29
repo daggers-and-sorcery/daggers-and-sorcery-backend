@@ -4,11 +4,10 @@ import com.morethanheroic.swords.forum.repository.dao.ForumCategoryDatabaseEntit
 import com.morethanheroic.swords.forum.repository.dao.ForumCommentDatabaseEntity;
 import com.morethanheroic.swords.forum.repository.dao.ForumTopicDatabaseEntity;
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface ForumRepository {
 
     @Select("SELECT * FROM forum_categories")

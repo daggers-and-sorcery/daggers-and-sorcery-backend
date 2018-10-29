@@ -5,6 +5,3 @@ dependencies {
 
     compile project(':swords-recipe')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

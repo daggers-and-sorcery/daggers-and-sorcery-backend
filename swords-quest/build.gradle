@@ -7,6 +7,3 @@ dependencies {
 
     compile project(':swords-metadata')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

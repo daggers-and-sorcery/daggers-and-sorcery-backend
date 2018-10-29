@@ -9,6 +9,3 @@ dependencies {
     compile project(':swords-attribute')
     compile project(':swords-market')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false
