@@ -8,6 +8,3 @@ dependencies {
     compile project(':swords-item-web')
     compile project(':swords-response')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

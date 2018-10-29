@@ -6,6 +6,3 @@ dependencies {
     compile project(':swords-recipe')
     compile project(':swords-inventory')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

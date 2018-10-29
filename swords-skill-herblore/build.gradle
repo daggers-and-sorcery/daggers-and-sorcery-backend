@@ -7,6 +7,3 @@ dependencies {
     compile project(':swords-inventory')
     compile project(':swords-event')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

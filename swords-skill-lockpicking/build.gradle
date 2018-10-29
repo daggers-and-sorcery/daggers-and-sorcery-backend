@@ -9,6 +9,3 @@ dependencies {
     compile project(':swords-inventory')
     compile project(':swords-attribute')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

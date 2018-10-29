@@ -3,6 +3,3 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false

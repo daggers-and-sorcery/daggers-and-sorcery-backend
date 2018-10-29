@@ -9,14 +9,12 @@ import com.morethanheroic.swords.market.repository.domain.MarketDatabaseInformat
 import com.morethanheroic.swords.market.repository.repository.MarketMapper;
 import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j
 @Service
 @RequiredArgsConstructor
 public class MarketService {

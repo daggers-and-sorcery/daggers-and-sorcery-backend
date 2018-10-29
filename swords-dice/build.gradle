@@ -6,9 +6,6 @@ dependencies {
     compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
 }
 
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false
-
 apply plugin: 'checkstyle'
 checkstyle checkstyle_config
 

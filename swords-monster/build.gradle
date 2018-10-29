@@ -8,6 +8,3 @@ dependencies {
     compile project(':swords-item-definition')
     compile project(':swords-loot')
 }
-
-apply plugin: 'spring-boot'
-bootRepackage.enabled = false
