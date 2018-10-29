@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,7 +24,7 @@ public class LootDefinitionCache implements DefinitionCache<Integer, LootDefinit
     private Map<Integer, LootDefinition> lootDefinitionMap = new HashMap<>();
 
     @PostConstruct
-    public void init() throws IOException {
+    public void init() {
         final List<LootDefinition> lootDefinitions = lootDefinitionLoader.loadDefinitions();
 
         log.info("Loaded " + lootDefinitions.size() + " loot definitions.");
