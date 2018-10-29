@@ -107,7 +107,7 @@ allprojects {
         compile group: 'com.google.guava', name: 'guava', version: guava_version
         compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
 
-        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.320'
+        compile group: 'com.morethanheroic.swords', name: 'swords-datapack', version: '0.0.324'
         compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.3'
     }
 

@@ -44,4 +44,5 @@ public class SkillDatabaseEntity {
     private int jewelcraftingXp;
     private int craftingXp;
     private int imbuingXp;
+    private int tailoringXp;
 }

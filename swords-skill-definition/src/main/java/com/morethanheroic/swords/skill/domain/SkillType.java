@@ -46,7 +46,8 @@ public enum SkillType {
     LOCKPICKING(SkillGroup.SHADOW),
     JEWELCRAFTING(SkillGroup.TRADE),
     CRAFTING(SkillGroup.TRADE),
-    IMBUING(SkillGroup.TRADE);
+    IMBUING(SkillGroup.TRADE),
+    TAILORING(SkillGroup.TRADE);
 
     private final SkillGroup skillGroup;
 

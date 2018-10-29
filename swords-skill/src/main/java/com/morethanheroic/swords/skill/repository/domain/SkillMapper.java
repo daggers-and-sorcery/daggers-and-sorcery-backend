@@ -224,4 +224,10 @@ public interface SkillMapper {
 
     @Update("UPDATE skills SET imbuing_xp = imbuing_xp - #{value} WHERE user_id = #{userId}")
     void decreaseImbuingXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET tailoring_xp = tailoring_xp + #{value} WHERE user_id = #{userId}")
+    void increaseTailoringXp(@Param("userId") int userId, @Param("value") long value);
+
+    @Update("UPDATE skills SET tailoring_xp = tailoring_xp - #{value} WHERE user_id = #{userId}")
+    void decreaseTailoringXp(@Param("userId") int userId, @Param("value") long value);
 }

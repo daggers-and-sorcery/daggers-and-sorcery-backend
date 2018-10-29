@@ -17,24 +17,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class GemcuttingRecipeListPartialResponseBuilder implements PartialResponseCollectionBuilder<GemcuttingInfoResponseBuilderConfiguration> {
+public class JewelcraftingGemcuttingRecipeListPartialResponseBuilder implements PartialResponseCollectionBuilder<GemcuttingInfoResponseBuilderConfiguration> {
 
     private final LearnedRecipeEvaluator learnedRecipeEvaluator;
     private final RecipePartialResponseBuilder recipePartialResponseBuilder;
 
-    public GemcuttingRecipeListPartialResponseBuilder(@Qualifier("jewelcraftingGemcuttingLearnedRecipeEvaluator") final LearnedRecipeEvaluator learnedRecipeEvaluator, final RecipePartialResponseBuilder recipePartialResponseBuilder) {
+    public JewelcraftingGemcuttingRecipeListPartialResponseBuilder(@Qualifier("jewelcraftingGemcuttingLearnedRecipeEvaluator") final LearnedRecipeEvaluator learnedRecipeEvaluator, final RecipePartialResponseBuilder recipePartialResponseBuilder) {
         this.learnedRecipeEvaluator = learnedRecipeEvaluator;
         this.recipePartialResponseBuilder = recipePartialResponseBuilder;
     }
 
     @Override
-    public Collection<? extends PartialResponse> build(final GemcuttingInfoResponseBuilderConfiguration cleaningInfoResponseBuilderConfiguration) {
-        return listLearnedGemcuttingRecipes(cleaningInfoResponseBuilderConfiguration.getUserEntity()).stream()
+    public Collection<? extends PartialResponse> build(final GemcuttingInfoResponseBuilderConfiguration gemcuttingInfoResponseBuilderConfiguration) {
+        return listLearnedGemcuttingRecipes(gemcuttingInfoResponseBuilderConfiguration.getUserEntity()).stream()
                 .map(recipeDefinition -> recipePartialResponseBuilder.build(
                         RecipePartialResponseBuilderConfiguration.builder()
-                                .userEntity(cleaningInfoResponseBuilderConfiguration.getUserEntity())
+                                .userEntity(gemcuttingInfoResponseBuilderConfiguration.getUserEntity())
                                 .recipeDefinition(recipeDefinition)
-                                .userEntity(cleaningInfoResponseBuilderConfiguration.getUserEntity())
+                                .userEntity(gemcuttingInfoResponseBuilderConfiguration.getUserEntity())
                                 .build()
                         )
                 )

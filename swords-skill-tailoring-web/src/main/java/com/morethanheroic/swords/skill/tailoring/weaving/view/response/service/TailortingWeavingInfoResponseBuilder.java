@@ -1,11 +1,11 @@
-package com.morethanheroic.swords.skill.jewelcrafting.gemcutting.view.response.service;
+package com.morethanheroic.swords.skill.tailoring.weaving.view.response.service;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.response.service.ResponseBuilder;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.skill.domain.SkillType;
-import com.morethanheroic.swords.skill.jewelcrafting.gemcutting.view.response.service.domain.GemcuttingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.service.factory.SkillEntityFactory;
+import com.morethanheroic.swords.skill.tailoring.weaving.view.response.service.domain.TailoringWeavingInfoResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.view.response.domain.configuration.SkillLevelPartialResponseBuilderConfiguration;
 import com.morethanheroic.swords.skill.view.response.service.SkillLevelPartialResponseBuilder;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -14,20 +14,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GemcuttingInfoResponseBuilder implements ResponseBuilder<GemcuttingInfoResponseBuilderConfiguration> {
+public class TailortingWeavingInfoResponseBuilder implements ResponseBuilder<TailoringWeavingInfoResponseBuilderConfiguration> {
 
     private final ResponseFactory responseFactory;
-    private final JewelcraftingGemcuttingRecipeListPartialResponseBuilder jewelcraftingGemcuttingRecipeListPartialResponseBuilder;
+    private final TailoringWeavingRecipeListPartialResponseBuilder tailoringWeavingRecipeListPartialResponseBuilder;
     private final SkillLevelPartialResponseBuilder skillLevelPartialResponseBuilder;
     private final SkillEntityFactory skillEntityFactory;
 
     @Override
-    public Response build(final GemcuttingInfoResponseBuilderConfiguration responseBuilderConfiguration) {
-        final Response response = responseFactory.newResponse(responseBuilderConfiguration.getUserEntity());
+    public Response build(TailoringWeavingInfoResponseBuilderConfiguration tailoringWeavingInfoResponseBuilderConfiguration) {
+        final Response response = responseFactory.newResponse(tailoringWeavingInfoResponseBuilderConfiguration.getUserEntity());
 
-        response.setData("recipes", jewelcraftingGemcuttingRecipeListPartialResponseBuilder.build(responseBuilderConfiguration));
+        response.setData("recipes", tailoringWeavingRecipeListPartialResponseBuilder.build(tailoringWeavingInfoResponseBuilderConfiguration));
         response.setData("skill", skillLevelPartialResponseBuilder.build(SkillLevelPartialResponseBuilderConfiguration.builder()
-                        .skillLevel(getJewelcraftingLevel(responseBuilderConfiguration.getUserEntity()))
+                        .skillLevel(getTailoringLevel(tailoringWeavingInfoResponseBuilderConfiguration.getUserEntity()))
                         .build()
                 )
         );
@@ -35,7 +35,7 @@ public class GemcuttingInfoResponseBuilder implements ResponseBuilder<Gemcutting
         return response;
     }
 
-    private int getJewelcraftingLevel(final UserEntity userEntity) {
-        return skillEntityFactory.getEntity(userEntity).getLevel(SkillType.JEWELCRAFTING);
+    private int getTailoringLevel(final UserEntity userEntity) {
+        return skillEntityFactory.getEntity(userEntity).getLevel(SkillType.TAILORING);
     }
 }
