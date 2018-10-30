@@ -14,6 +14,15 @@ public class InventoryManipulator {
 
     private final InventoryMapper inventoryMapper;
 
+    public boolean hasItem(final UserEntity userEntity, final ItemDefinition item) {
+        return hasItem(userEntity, item, IdentificationType.IDENTIFIED);
+    }
+
+    public boolean hasItem(final UserEntity userEntity, final ItemDefinition item,
+            final IdentificationType identified) {
+        return getItemAmount(userEntity, item, identified) > 0;
+    }
+
     public void removeItem(final UserEntity userEntity, final ItemDefinition item, final int amount) {
         removeItem(userEntity, item, amount, IdentificationType.IDENTIFIED);
     }

@@ -4,6 +4,7 @@ import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.service.item.UseItemService;
+import com.morethanheroic.swords.combat.service.item.domain.ItemUsageContext;
 import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.response.service.ResponseFactory;
 import com.morethanheroic.swords.user.domain.UserEntity;
@@ -27,10 +28,15 @@ public class UseItemController {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @GetMapping("/item/use/{itemId}")
-    @SuppressWarnings("unchecked")
-    public Response useItem(UserEntity userEntity, SessionEntity sessionEntity, @RequestParam Map<String, String> allRequestParams, @PathVariable int itemId) {
+    public Response useItem(final UserEntity userEntity, final SessionEntity sessionEntity,
+            final @RequestParam Map<String, String> allRequestParams, @PathVariable final int itemId) {
         if (useItemService.canUseItem(userEntity, itemDefinitionCache.getDefinition(itemId))) {
-            useItemService.useItem(userEntity, itemDefinitionCache.getDefinition(itemId), new CombatEffectDataHolder((Map) allRequestParams, sessionEntity));
+            useItemService.useItem(userEntity, itemDefinitionCache.getDefinition(itemId),
+                    ItemUsageContext.builder()
+                            .parameters(allRequestParams)
+                            .sessionEntity(sessionEntity)
+                            .build()
+            );
 
             return responseFactory.successfulResponse(userEntity);
         }

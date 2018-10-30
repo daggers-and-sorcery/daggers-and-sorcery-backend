@@ -44,6 +44,9 @@ public class InventoryEntity implements Entity {
 
     private final UserEntity userEntity;
 
+    /**
+     * @deprecated Use {@link InventoryManipulator#hasItem(UserEntity, ItemDefinition)}.
+     */
     public boolean hasItem(ItemDefinition item) {
         return hasItem(item, IdentificationType.IDENTIFIED);
     }
@@ -55,6 +58,9 @@ public class InventoryEntity implements Entity {
         return getItemAmount(itemId, identified) > 0;
     }
 
+    /**
+     * @deprecated Use {@link InventoryManipulator#hasItem(UserEntity, ItemDefinition, IdentificationType)}.
+     */
     public boolean hasItem(ItemDefinition item, IdentificationType identified) {
         return getItemAmount(item, identified) > 0;
     }
