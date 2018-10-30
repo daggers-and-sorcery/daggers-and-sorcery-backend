@@ -3,6 +3,7 @@ package com.morethanheroic.swords.combat.service.item;
 import com.google.common.collect.Lists;
 import com.morethanheroic.swords.attribute.service.calc.GlobalAttributeCalculator;
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
+import com.morethanheroic.swords.combat.domain.effect.entry.domain.cause.ItemCombatEffectCause;
 import com.morethanheroic.swords.combat.entity.domain.CombatEntity;
 import com.morethanheroic.swords.combat.entity.domain.UserCombatEntity;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectTarget;
@@ -92,6 +93,7 @@ public class UseItemService {
                         .effectSettings(effectSettingDefinitionHolder)
                         .sessionEntity(combatEffectDataHolder.getSessionEntity())
                         .parameters(combatEffectDataHolder.getParameters())
+                        .cause(new ItemCombatEffectCause(item))
                         .build()
                 )
                 .collect(Collectors.toList());

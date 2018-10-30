@@ -9,6 +9,9 @@ import com.morethanheroic.swords.user.service.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * @deprecated Use {@link InventoryManipulator} instead.
+ */
 @Service
 @RequiredArgsConstructor
 public class InventoryEntityFactory implements EntityFactory<InventoryEntity, UserEntity> {
@@ -16,7 +19,7 @@ public class InventoryEntityFactory implements EntityFactory<InventoryEntity, Us
     private final UserEntityFactory userEntityFactory;
 
     /**
-     * @deprecated use {@link #getEntity(UserEntity)} instead
+     * @deprecated Use {@link #getEntity(UserEntity)} instead.
      */
     @Memoize
     @InjectAtReturn
@@ -25,6 +28,9 @@ public class InventoryEntityFactory implements EntityFactory<InventoryEntity, Us
         return getEntity(userEntityFactory.getEntity(id));
     }
 
+    /**
+     * @deprecated Use {@link InventoryManipulator} instead.
+     */
     @Override
     @Memoize
     @InjectAtReturn

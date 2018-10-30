@@ -1,9 +1,9 @@
 package com.morethanheroic.swords.inventory.domain;
 
-import com.google.common.collect.*;
 import com.morethanheroic.entity.domain.Entity;
 import com.morethanheroic.swords.inventory.repository.dao.ItemDatabaseEntity;
 import com.morethanheroic.swords.inventory.repository.domain.InventoryMapper;
+import com.morethanheroic.swords.inventory.service.InventoryManipulator;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
 import com.morethanheroic.swords.journal.domain.JournalType;
@@ -19,6 +19,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @deprecated Use {@link InventoryManipulator} instead.
+ */
+@Deprecated
 @Configurable
 @RequiredArgsConstructor
 public class InventoryEntity implements Entity {
@@ -34,6 +38,9 @@ public class InventoryEntity implements Entity {
 
     @Autowired
     private ItemDefinitionCache itemDefinitionCache;
+
+    @Autowired
+    private InventoryManipulator inventoryManipulator;
 
     private final UserEntity userEntity;
 
@@ -96,6 +103,10 @@ public class InventoryEntity implements Entity {
         return getItemAmount(itemDefinitionCache.getDefinition(itemId), identified);
     }
 
+    /**
+     * @deprecated Use {@link InventoryManipulator#getItemAmount(UserEntity, ItemDefinition, IdentificationType)}
+     * instead.
+     */
     public int getItemAmount(ItemDefinition item, IdentificationType identified) {
         final ItemDatabaseEntity dbEntity = inventoryMapper.getItem(userEntity.getId(), item.getId(), identified.getId());
 
@@ -143,18 +154,19 @@ public class InventoryEntity implements Entity {
         }
     }
 
+    /**
+     * @deprecated Use {@link InventoryManipulator#removeItem(UserEntity, ItemDefinition, int)} instead.
+     */
     public void removeItem(ItemDefinition item, int amount) {
         removeItem(item, amount, IdentificationType.IDENTIFIED);
     }
 
+    /**
+     * @deprecated Use {@link InventoryManipulator#removeItem(UserEntity, ItemDefinition, int, IdentificationType)}
+     * instead.
+     */
     public void removeItem(ItemDefinition item, int amount, IdentificationType identified) {
-        final int amountBeforeRemove = getItemAmount(item, identified);
-
-        if (amountBeforeRemove - amount > 0) {
-            inventoryMapper.removeItem(userEntity.getId(), item.getId(), amountBeforeRemove - amount, identified.getId());
-        } else {
-            inventoryMapper.deleteItem(userEntity.getId(), item.getId(), identified.getId());
-        }
+        inventoryManipulator.removeItem(userEntity, item, amount, identified);
     }
 
     /**
