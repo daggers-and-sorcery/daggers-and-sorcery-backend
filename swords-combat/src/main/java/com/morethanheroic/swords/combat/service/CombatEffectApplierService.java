@@ -2,25 +2,26 @@ package com.morethanheroic.swords.combat.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.domain.effect.CombatEffectApplyingContext;
 
 @Service
+@RequiredArgsConstructor
 public class CombatEffectApplierService {
 
-    @Autowired
-    private CombatEffectDefinitionRegistry combatEffectDefinitionRegistry;
+    private final CombatEffectDefinitionRegistry combatEffectDefinitionRegistry;
 
-    public void applyEffects(List<CombatEffectApplyingContext> effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
-        for (CombatEffectApplyingContext combatEffect : effectApplyingContext) {
-            applyEffect(combatEffect, combatEffectDataHolder);
-        }
+    public void applyEffects(final List<CombatEffectApplyingContext> effectApplyingContext,
+            final CombatEffectDataHolder combatEffectDataHolder) {
+        effectApplyingContext.forEach(combatEffect -> applyEffect(combatEffect, combatEffectDataHolder));
     }
 
-    public void applyEffect(CombatEffectApplyingContext effectApplyingContext, CombatEffectDataHolder combatEffectDataHolder) {
-        combatEffectDefinitionRegistry.getDefinition(effectApplyingContext.getEffectSettings().getEffectId()).apply(effectApplyingContext, combatEffectDataHolder);
+    public void applyEffect(final CombatEffectApplyingContext effectApplyingContext,
+            final CombatEffectDataHolder combatEffectDataHolder) {
+        combatEffectDefinitionRegistry.getDefinition(effectApplyingContext.getEffectSettings().getEffectId())
+                .apply(effectApplyingContext, combatEffectDataHolder);
     }
 }

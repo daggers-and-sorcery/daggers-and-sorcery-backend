@@ -2,7 +2,6 @@ package com.morethanheroic.swords.item.view.controller;
 
 import com.morethanheroic.response.domain.Response;
 import com.morethanheroic.session.domain.SessionEntity;
-import com.morethanheroic.swords.combat.domain.CombatEffectDataHolder;
 import com.morethanheroic.swords.combat.service.item.UseItemService;
 import com.morethanheroic.swords.combat.service.item.domain.ItemUsageContext;
 import com.morethanheroic.swords.item.service.definition.cache.ItemDefinitionCache;
@@ -18,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * This controller is responsible for all of the use item functionality.
+ */
 @RestController
 @RequiredArgsConstructor
 public class UseItemController {
@@ -26,6 +28,15 @@ public class UseItemController {
     private final UseItemService useItemService;
     private final ItemDefinitionCache itemDefinitionCache;
 
+    /**
+     * An endpoint that provides a way to the user to use an item.
+     *
+     * @param userEntity       the user that is using the item
+     * @param sessionEntity    the session of the user
+     * @param allRequestParams additional parameters with the usage
+     * @param itemId           the id of the used item
+     * @return successful or failed response
+     */
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @GetMapping("/item/use/{itemId}")
     public Response useItem(final UserEntity userEntity, final SessionEntity sessionEntity,

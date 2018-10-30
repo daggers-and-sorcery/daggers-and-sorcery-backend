@@ -3,8 +3,8 @@ package com.morethanheroic.swords.combat.service.item;
 import com.morethanheroic.session.domain.SessionEntity;
 import com.morethanheroic.swords.combat.domain.AttackResult;
 import com.morethanheroic.swords.combat.domain.CombatContext;
+import com.morethanheroic.swords.combat.service.item.domain.ItemUsageContext;
 import com.morethanheroic.swords.combat.step.domain.CombatStep;
-import com.morethanheroic.swords.combat.service.CombatEffectDataHolderFactory;
 import com.morethanheroic.swords.combat.service.calc.teardown.CombatTeardownCalculator;
 import com.morethanheroic.swords.combat.service.attack.MonsterAttackCalculator;
 import com.morethanheroic.swords.combat.service.calc.CombatEntityType;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,7 +27,6 @@ public class UseItemCombatCalculator {
     private final InitialisationCalculator initialisationCalculator;
     private final MonsterAttackCalculator monsterAttackCalculator;
     private final UseItemService useItemService;
-    private final CombatEffectDataHolderFactory combatEffectDataHolderFactory;
     private final CombatTeardownCalculator combatTeardownCalculator;
     private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
@@ -45,12 +45,22 @@ public class UseItemCombatCalculator {
 
             if (combatContext.getUser().isAlive()) {
                 combatSteps.addAll(
-                        useItemService.useItem(combatContext.getUser(), itemDefinition, combatEffectDataHolderFactory.newDataHolder(sessionEntity))
+                        useItemService.useItem(combatContext.getUser(), itemDefinition,
+                                ItemUsageContext.builder()
+                                        .parameters(Collections.emptyMap())
+                                        .sessionEntity(sessionEntity)
+                                        .build()
+                        )
                 );
             }
         } else {
             combatSteps.addAll(
-                    useItemService.useItem(combatContext.getUser(), itemDefinition, combatEffectDataHolderFactory.newDataHolder(sessionEntity))
+                    useItemService.useItem(combatContext.getUser(), itemDefinition,
+                            ItemUsageContext.builder()
+                                    .parameters(Collections.emptyMap())
+                                    .sessionEntity(sessionEntity)
+                                    .build()
+                    )
             );
 
             if (combatContext.getOpponent().isAlive()) {

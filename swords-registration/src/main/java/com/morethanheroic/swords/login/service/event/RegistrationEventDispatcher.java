@@ -19,8 +19,7 @@ public class RegistrationEventDispatcher implements EventDispatcher<Registration
 
     @Override
     public void dispatch(final RegistrationEventConfiguration eventConfiguration) {
-        for (RegistrationEventHandler registrationEventHandler : registrationEventHandlers) {
-            registrationEventHandler.onEvent(eventConfiguration);
-        }
+        registrationEventHandlers
+                .forEach(registrationEventHandler -> registrationEventHandler.onEvent(eventConfiguration));
     }
 }
