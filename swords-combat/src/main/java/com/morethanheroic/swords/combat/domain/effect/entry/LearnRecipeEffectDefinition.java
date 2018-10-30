@@ -24,7 +24,7 @@ public class LearnRecipeEffectDefinition extends ImprovedCombatEffectDefinition 
     private final ItemDefinitionCache itemDefinitionCache;
 
     @Override
-    public void apply(CombatEffectApplyingContext effectApplyingContext) {
+    public void apply(final CombatEffectApplyingContext effectApplyingContext) {
         final int recipeItemId = effectApplyingContext.getEffectSettings().getSettingAsInt("recipe-item-id");
         final int recipeId = effectApplyingContext.getEffectSettings().getSettingAsInt("recipe-id");
 

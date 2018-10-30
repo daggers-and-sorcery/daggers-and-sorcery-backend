@@ -15,7 +15,6 @@ import com.morethanheroic.swords.inventory.service.InventoryEntityFactory;
 import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.user.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,11 +30,12 @@ public class UseItemService {
     private final InventoryEntityFactory inventoryEntityFactory;
     private final CombatMessageFactory combatMessageFactory;
 
-    public boolean canUseItem(UserEntity userEntity, ItemDefinition item) {
+    public boolean canUseItem(final UserEntity userEntity, final ItemDefinition item) {
         return inventoryEntityFactory.getEntity(userEntity).hasItem(item);
     }
 
-    public List<CombatStep> useItem(UserCombatEntity combatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
+    public List<CombatStep> useItem(final UserCombatEntity combatEntity, final ItemDefinition item,
+            final CombatEffectDataHolder combatEffectDataHolder) {
         final List<CombatStep> combatSteps = new ArrayList<>();
 
         if (canUseItem(combatEntity.getUserEntity(), item)) {
@@ -59,15 +59,32 @@ public class UseItemService {
         return combatSteps;
     }
 
-    public void useItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
+    public void useItem(final UserEntity userEntity, final ItemDefinition item,
+            final CombatEffectDataHolder combatEffectDataHolder) {
         if (canUseItem(userEntity, item)) {
             applyItem(userEntity, item, combatEffectDataHolder);
         }
     }
 
-    //TODO: merge the two applyItem together somehow!
-    private void applyItem(CombatEntity combatEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
-        final List<CombatEffectApplyingContext> contexts = item.getCombatEffects().stream()
+    private void applyItem(final UserEntity userEntity, final ItemDefinition item,
+            final CombatEffectDataHolder combatEffectDataHolder) {
+        final UserCombatEntity combatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
+
+        applyItem(combatEntity, item, combatEffectDataHolder);
+
+        userEntity.setBasicStats(combatEntity.getActualHealth(), combatEntity.getActualMana(), combatEntity.getActualMovement());
+    }
+
+    private void applyItem(final CombatEntity combatEntity, final ItemDefinition item,
+            final CombatEffectDataHolder combatEffectDataHolder) {
+        final List<CombatEffectApplyingContext> contexts = createContext(combatEntity, item, combatEffectDataHolder);
+
+        combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
+    }
+
+    private List<CombatEffectApplyingContext> createContext(final CombatEntity combatEntity, final ItemDefinition item,
+            final CombatEffectDataHolder combatEffectDataHolder) {
+        return item.getCombatEffects().stream()
                 .map(effectSettingDefinitionHolder -> CombatEffectApplyingContext.builder()
                         .source(new CombatEffectTarget(combatEntity))
                         .destination(new CombatEffectTarget(combatEntity))
@@ -78,27 +95,5 @@ public class UseItemService {
                         .build()
                 )
                 .collect(Collectors.toList());
-
-        combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
-    }
-
-    private void applyItem(UserEntity userEntity, ItemDefinition item, CombatEffectDataHolder combatEffectDataHolder) {
-        final UserCombatEntity userCombatEntity = new UserCombatEntity(userEntity, globalAttributeCalculator);
-
-        final List<CombatEffectApplyingContext> contexts = item.getCombatEffects().stream()
-                .map(effectSettingDefinitionHolder -> CombatEffectApplyingContext.builder()
-                        .source(new CombatEffectTarget(userCombatEntity))
-                        .destination(new CombatEffectTarget(userCombatEntity))
-                        .combatSteps(Lists.newArrayList())
-                        .effectSettings(effectSettingDefinitionHolder)
-                        .sessionEntity(combatEffectDataHolder.getSessionEntity())
-                        .parameters(combatEffectDataHolder.getParameters())
-                        .build()
-                )
-                .collect(Collectors.toList());
-
-        combatEffectApplierService.applyEffects(contexts, combatEffectDataHolder);
-
-        userEntity.setBasicStats(userCombatEntity.getActualHealth(), userCombatEntity.getActualMana(), userCombatEntity.getActualMovement());
     }
 }

@@ -3,19 +3,19 @@ package com.morethanheroic.swords.recipe.service.learn;
 import com.morethanheroic.swords.recipe.domain.RecipeDefinition;
 import com.morethanheroic.swords.recipe.repository.domain.RecipeMapper;
 import com.morethanheroic.swords.user.domain.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
  * Enable a way for the user to learn a recipe.
  */
 @Service
+@RequiredArgsConstructor
 public class RecipeLearnerService {
 
-    @Autowired
-    private RecipeMapper recipeMapper;
+    private final RecipeMapper recipeMapper;
 
-    public void learnRecipe(UserEntity userEntity, RecipeDefinition recipeDefinition) {
+    public void learnRecipe(final UserEntity userEntity, final RecipeDefinition recipeDefinition) {
         recipeMapper.insertRecipe(userEntity.getId(), recipeDefinition.getId());
     }
 }

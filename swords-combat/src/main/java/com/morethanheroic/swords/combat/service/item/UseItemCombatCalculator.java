@@ -32,22 +32,19 @@ public class UseItemCombatCalculator {
     private final StartTurnCombatEventRunner startTurnCombatEventRunner;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public AttackResult useItem(final CombatContext combatContext, final SessionEntity sessionEntity, final ItemDefinition itemDefinition) {
-        final List<CombatStep> combatSteps = new ArrayList<>();
-
-        combatSteps.addAll(
-                startTurnCombatEventRunner.runEvents(
-                        StartTurnCombatEventContext.builder()
-                                .player(combatContext.getUser())
-                                .monster(combatContext.getOpponent())
-                                .build()
-                )
+    public AttackResult useItem(final CombatContext combatContext, final SessionEntity sessionEntity,
+            final ItemDefinition itemDefinition) {
+        final List<CombatStep> combatSteps = startTurnCombatEventRunner.runEvents(
+                StartTurnCombatEventContext.builder()
+                        .player(combatContext.getUser())
+                        .monster(combatContext.getOpponent())
+                        .build()
         );
 
         if (initialisationCalculator.calculateInitialisation(combatContext) == CombatEntityType.MONSTER) {
             combatSteps.addAll(monsterAttackCalculator.monsterAttack(combatContext));
 
-            if (combatContext.getUser().getActualHealth() > 0) {
+            if (combatContext.getUser().isAlive()) {
                 combatSteps.addAll(
                         useItemService.useItem(combatContext.getUser(), itemDefinition, combatEffectDataHolderFactory.newDataHolder(sessionEntity))
                 );
@@ -57,7 +54,7 @@ public class UseItemCombatCalculator {
                     useItemService.useItem(combatContext.getUser(), itemDefinition, combatEffectDataHolderFactory.newDataHolder(sessionEntity))
             );
 
-            if (combatContext.getOpponent().getActualHealth() > 0) {
+            if (combatContext.getOpponent().isAlive()) {
                 combatSteps.addAll(monsterAttackCalculator.monsterAttack(combatContext));
             }
         }
@@ -66,7 +63,7 @@ public class UseItemCombatCalculator {
 
         return AttackResult.builder()
                 .attackResult(combatSteps)
-                .combatEnded(combatContext.getWinner() != null)
+                .combatEnded(combatContext.isCombatEnded())
                 .winner(combatContext.getWinner())
                 .build();
     }

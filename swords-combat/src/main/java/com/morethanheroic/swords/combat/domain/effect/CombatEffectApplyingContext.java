@@ -14,26 +14,16 @@ import lombok.Getter;
 /**
  * Context used when applying an effect.
  */
+@Getter
 @Builder
 public class CombatEffectApplyingContext implements EffectApplyingContext {
 
-    @Getter
-    private EffectSettingDefinitionHolder effectSettings;
-
-    @Getter
-    private CombatEffectTarget source;
-
-    @Getter
-    private CombatEffectTarget destination;
-
-    @Getter
-    private List<CombatStep> combatSteps;
-
-    @Getter
-    private SessionEntity sessionEntity;
-
-    @Getter
-    private Map<String, Object> parameters;
+    private final EffectSettingDefinitionHolder effectSettings;
+    private final CombatEffectTarget source;
+    private final CombatEffectTarget destination;
+    private final List<CombatStep> combatSteps;
+    private final SessionEntity sessionEntity;
+    private final Map<String, Object> parameters;
 
     public void addCombatStep(final CombatStep combatStep) {
         combatSteps.add(combatStep);
