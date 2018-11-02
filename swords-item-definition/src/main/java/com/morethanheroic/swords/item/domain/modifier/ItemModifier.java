@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.domain.modifier;
 
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 /**
  * Contains the types of the modifier an item can have. The modifiers are modify the attribute of the user somehow

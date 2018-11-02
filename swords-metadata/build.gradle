@@ -8,5 +8,5 @@ dependencies {
 
     compile group: 'com.morethanheroic', name: 'common-dependency-injection', version: '1.0.2'
 
-
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
 }

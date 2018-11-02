@@ -5,6 +5,3 @@ dependencies {
 
     compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
 }
-
-apply plugin: 'findbugs'
-findbugs findbugs_config

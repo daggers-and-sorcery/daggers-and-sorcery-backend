@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.domain.requirement;
 
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 /**
  * Contains the type of requirements an item can have. If all of the requirements not met then the user can't equip

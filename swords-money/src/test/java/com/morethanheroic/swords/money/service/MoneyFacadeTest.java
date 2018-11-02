@@ -47,7 +47,7 @@ public class MoneyFacadeTest {
 
     @Test
     @SuppressWarnings("checkstyle:magicnumber")
-    public void testGetMoneyAmountShouldReturnCorrectAmount() throws Exception {
+    public void testGetMoneyAmountShouldReturnCorrectAmount() {
         final MoneyCalculationQuery moneyCalculationQuery = buildMoneyCalculationQueryMock(3102, 12, 34, 2);
 
         final int result = underTest.getMoneyAmount(MoneyType.MONEY, moneyCalculationQuery);

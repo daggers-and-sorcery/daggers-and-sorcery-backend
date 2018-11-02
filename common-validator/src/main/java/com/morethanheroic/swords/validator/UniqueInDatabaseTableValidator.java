@@ -1,7 +1,6 @@
 package com.morethanheroic.swords.validator;
 
 import com.morethanheroic.swords.validator.annotation.UniqueInDatabaseTable;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
@@ -27,8 +26,6 @@ public class UniqueInDatabaseTableValidator implements ConstraintValidator<Uniqu
     }
 
     @Override
-    @SuppressFBWarnings(value = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
-            justification = "Only the developers edit the concatenated values, it's not visible to the user.")
     public boolean isValid(String value, ConstraintValidatorContext cxt) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {

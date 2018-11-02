@@ -3,7 +3,7 @@ package com.morethanheroic.swords.attribute.domain;
 import com.morethanheroic.swords.attribute.domain.type.AttributeType;
 import com.morethanheroic.swords.attribute.domain.type.GeneralAttributeType;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 /**
  * The {@link AttributeType#GENERAL} attributes.

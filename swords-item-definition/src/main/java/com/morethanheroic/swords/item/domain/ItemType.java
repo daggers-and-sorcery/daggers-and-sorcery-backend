@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.item.domain;
 
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 /**
  * Contains the available types of an item. the type decides for example which equipment spot does the item go on when

@@ -3,6 +3,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+    compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'
     compile group: 'com.morethanheroic.swords', name: 'swords-attribute-definition', version: '1.0.1'
 
     compile project(':swords-item-definition')

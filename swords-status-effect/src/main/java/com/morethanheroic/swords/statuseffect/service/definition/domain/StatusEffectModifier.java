@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.statuseffect.service.definition.domain;
 
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 /**
  * Contains the types of the modifier a status effect can have. The modifiers are modify the attribute of the user somehow

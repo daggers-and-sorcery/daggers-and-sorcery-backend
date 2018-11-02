@@ -1,6 +1,6 @@
 package com.morethanheroic.swords.monster.domain;
 
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 public enum MonsterType {
 

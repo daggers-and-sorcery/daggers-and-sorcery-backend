@@ -4,7 +4,7 @@ import com.morethanheroic.swords.item.domain.ItemDefinition;
 import com.morethanheroic.swords.item.domain.modifier.ItemModifierDefinition;
 import com.morethanheroic.swords.item.domain.requirement.ItemRequirementDefinition;
 import com.morethanheroic.swords.item.service.response.domain.ItemRequirementResponseEntry;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

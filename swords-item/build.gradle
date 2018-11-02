@@ -4,14 +4,10 @@ dependencies {
     }
 
     compile group: 'com.morethanheroic', name: 'common-definition', version: '1.0.2'
-
+    compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'
     compile group: 'com.google.guava', name: 'guava', version: guava_version
-    compile group: 'com.google.code.findbugs', name: 'findbugs', version: findbugs_version
 
     compile project(':swords-money')
     compile project(':swords-effect')
     compile project(':swords-item-definition')
 }
-
-apply plugin: 'findbugs'
-findbugs findbugs_config
