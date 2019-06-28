@@ -155,6 +155,11 @@ dependencies {
     compile group: 'com.morethanheroic.swords', name: 'swords-race-definition', version: '1.0.2'
     compile group: 'com.morethanheroic.swords', name: 'swords-user-service', version: '1.0.5'
 
+    implementation "javax.xml.bind:jaxb-api:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-core:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-impl:2.2.11"
+    implementation "javax.activation:activation:1.1.1"
+
     testCompile group: 'org.testng', name: 'testng', version: '6.9.9'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 
